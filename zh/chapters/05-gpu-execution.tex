@@ -1,0 +1,32 @@
+% Chinese reading copy of the completed Chapter 5.
+\chapter{面向表示的 GPU 搜索执行}
+\label{ch:gpu-execution}
+本章回答 RQ2：如何使 JHQ 的压缩表示支持正确且高效的 GPU 执行。变换、Cartesian 主码码本及残差层次继承自 JHQ\cite{jhq}；这里关注它们的执行方式。论证沿查询路径，从路由到主码选择，再到残差评分。对每种机制，分别讨论数学目标、实现条件和资源权衡，对应测量见\Cref{ch:evaluation}。工作负载级精排预算选择则在\Cref{ch:refinement}单独展开。
+
+\section{查询路径与四种不同的排序对象}
+\label{sec:5-1}
+\input{zh/chapters/05-1-query-path}
+
+\section{精确的 Cartesian LUT 分解}
+\label{sec:5-2}
+\input{zh/chapters/05-2-lut}
+
+\section{打包编码与候选并行的内存访问}
+\label{sec:5-3}
+\input{zh/chapters/05-3-packed-access}
+
+\section{通过多 block 扫描实现精确全局主码 Top-c}
+\label{sec:5-4}
+\input{zh/chapters/05-4-global-selection}
+
+\section{共享完整 Key 阈值与执行调度}
+\label{sec:5-5}
+\input{zh/chapters/05-5-bound-scheduling}
+
+\section{Lane 协作的残差评分与最终 Top-k}
+\label{sec:5-6}
+\input{zh/chapters/05-6-refinement}
+
+\section{作为独立原语的 IVF 探针选择}
+\label{sec:5-7}
+\input{zh/chapters/05-7-probe}

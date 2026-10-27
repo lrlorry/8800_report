@@ -1,0 +1,25 @@
+% Lane mapping for L=16; schematic, not a measured trace.
+\begin{tikzpicture}[font=\small,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+   text width=5.8cm,minimum height=1.5cm,inner sep=5pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box,fill=ThesisNavy!5] (a) at (0,0)
+ {Warp lanes 0--15: candidate $x_0$\\
+  subgroup lane $a$: words $a,a+16,\ldots$};
+\node[box,fill=ThesisNavy!5] (b) at (7,0)
+ {Warp lanes 16--31: candidate $x_1$\\
+  subgroup lane $a$: words $a,a+16,\ldots$};
+\node[box] (ar) at (0,-2.2)
+ {Decode coordinates; accumulate partials\\
+  Shuffle offsets $8,4,2,1$};
+\node[box] (br) at (7,-2.2)
+ {Decode coordinates; accumulate partials\\
+  Shuffle offsets $8,4,2,1$};
+\node[box,text width=11.5cm,minimum height=1.15cm] (out) at (3.5,-4.25)
+ {Lane zero of each subgroup writes\\
+  $\refineddist=\primarydist+\text{residual squared-difference sum}+\gamma(x)$};
+\draw[arr] (a) -- (ar);
+\draw[arr] (b) -- (br);
+\draw[arr] (ar.south) -- (out.north west);
+\draw[arr] (br.south) -- (out.north east);
+\end{tikzpicture}

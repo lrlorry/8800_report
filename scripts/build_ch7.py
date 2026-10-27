@@ -111,6 +111,48 @@ def main():
     table('matched97','lrrr',['Dataset','JHQ kQPS','vs CAGRA fp32','vs IVF-RaBitQ'],matched97)
     nondet=collections.Counter(p['family'] for p in points if p['deterministic'] is False)
 
+    # Repeat-call determinism (A) and cross-protocol equality (B versus A)
+    # are different diagnostics. The old report counted their union.
+    raw_baselines=[]
+    for pattern in ['cuvs_*.jsonl','rabitq_*.jsonl']:
+        for p in sorted(e1raw.glob(pattern)):
+            raw_baselines += [x for ln in p.read_text().splitlines()
+                              if (x:=json.loads(ln)).get('type')=='point']
+    e1_diagnostics=dict(
+        repeat_A=sum(x.get('deterministic') is False for x in raw_baselines),
+        B_vs_A=sum(x.get('b_matches_a') is False for x in raw_baselines),
+        union=sum(x.get('deterministic') is False or x.get('b_matches_a') is False for x in raw_baselines),
+        reduced_calls=sum(x['calls_per_round']<24 for x in raw_baselines))
+    assert e1_diagnostics==dict(repeat_A=369,B_vs_A=367,union=401,reduced_calls=274)
+    fast_rq=[x for x in raw_baselines if x['method']=='ivf-rabitq'
+             and st.median(t for rr in x['A']['call_ms'] for t in rr)<10]
+    fast_calls=[t for x in fast_rq for rr in x['A']['call_ms'] for t in rr]
+    e1_diagnostics['rabitq_fast_call_trace']=dict(calls=len(fast_calls),
+        calls_30_to_60ms=sum(30<=t<=60 for t in fast_calls),max_ms=max(fast_calls))
+    e1_memory={};ceilings={};sensitivity=[];round_spread={}
+    for ds in DS[:4]:
+        jp=families[ds,METHODS[0]]
+        cp=[x for x in indexes if x['dataset']==ds and x['method']=='cagra']
+        contexts={x['ctx_mib'] for x in cp}
+        assert contexts=={507.2}
+        jm=[(p['mem_used_mib']-507.2)/1024 for p in jp]
+        cm=[p['index_mib']/1024 for p in cp]
+        e1_memory[ds]=dict(jhq_gib=[min(jm),max(jm)],cagra_index_gib=[min(cm),max(cm)],
+                           ratio=[min(jm)/max(cm),max(jm)/min(cm)],context_mib=507.2)
+        ceilings[ds]={m:max(p['recall'] for p in families[ds,m]) for m in METHODS}
+        rp=families[ds,'IVF-RaBitQ']
+        round_spread[ds]=st.median((p['qps_A_max']-p['qps_A_min'])/p['qps_A'] for p in rp)
+        jf=e1.pareto([dict(p,qps_A=p['qps_p50']) for p in jp])
+        rf=e1.pareto([dict(p,qps_A=p['qps_p50']) for p in rp])
+        for target in targets:
+            a,_=e1.at_recall_interp(jf,target);b,_=e1.at_recall_interp(rf,target)
+            sensitivity.append(dict(dataset=ds,recall=target,ratio=a/b if a and b else None))
+    def interval(xs,dp=2):
+        return f'{min(xs):.{dp}f}--{max(xs):.{dp}f}'
+    table('e1_memory','lrrr',['Dataset','JHQ net process GiB','CAGRA fp32 index GiB','Ratio range'],
+          [[NAME[d],interval(e1_memory[d]['jhq_gib']),interval(e1_memory[d]['cagra_index_gib']),
+            interval(e1_memory[d]['ratio'])] for d in DS[:4]])
+
     # Six-dataset held-out budget protocol, parsed from printed measurements.
     cells={};cur=None
     budget_text=read('experiments/adc_v69/RAW/budget_v69.log')
@@ -136,24 +178,33 @@ def main():
         m=re.match(r'ARM ENUM S=(\d+)\s+reps=(\d+) disagree=(\d+)/(\d+) enum_ms=([\d.]+) bisect_ms=([\d.]+)',line)
         if m:c['enum'][int(m[1])]=dict(reps=int(m[4]),different=int(m[3]),enum_ms=float(m[5]),bisect_ms=float(m[6]))
     assert len(cells)==12 and all(len(c['fixed'])==8 and len(c['rule'])==3 for c in cells.values())
+    assert all(abs(c['fixed'][200]['recall']-c['oracle']['ceiling'])<1e-9 for c in cells.values())
     budgets=[]; quality=[];economics=[]
     for (ds,np),c in cells.items():
-        r=c['rule'][128]; base=c['fixed'][100]
+        r=c['rule'][128]; base=c['fixed'][100]; base64=c['fixed'][64]
         saving=c['test_n']*1000*(1/base['qps']-1/r['qps'])
         payback=r['cal_ms']/saving if saving>0 else None
         # Existing figures use 500-query equivalents, including Stella (499 held out).
         payback500=r['cal_ms']/(500000*(1/base['qps']-1/r['qps'])) if saving>0 else None
+        saving64=c['test_n']*1000*(1/base64['qps']-1/r['qps'])
+        payback64=r['cal_ms']/saving64 if saving64>0 else None
         x=dict(dataset=ds,nprobe=np,**r,fixed_recall=base['recall'],fixed_qps=base['qps'],
             approx_selected_recall=c['oracle']['ceiling']-r['mean_loss'],oracle=c['oracle'],
             gain=r['qps']/base['qps'],test_n=c['test_n'],payback=payback,payback500=payback500,
+            gain64=r['qps']/base64['qps'],fixed64_qps=base64['qps'],fixed64_recall=base64['recall'],payback64=payback64,
             full=c['full'])
         budgets.append(x)
         quality.append([NAME[ds],np,f"{r['alpha']} / {c['oracle']['alpha']}",f"{base['recall']:.4f}",
             f"{x['approx_selected_recall']:.4f}",f"{round(r['over']*r['reps'])}/{r['reps']}",f"{r['p95_loss']:.4f}"])
         economics.append([NAME[ds],np,f"{base['qps']/1000:.1f}",f"{r['qps']/1000:.1f}",f"{x['gain']:.3f}",
+            f"{x['gain64']:.3f}",
             f"{r['cal_ms']:.1f}",f"{payback:.1f}" if payback else 'Never'])
     table('budget_quality','lrrrrrr',['Dataset','Probe',r'$\alpha$: rule/oracle',r'$R_{100}$',r'$\overline{R}_{\rm rule}$','Losses',r'$L_{95}$'],quality)
-    table('budget_cost','lrrrrrr',['Dataset','Probe',r'$Q_{100}$',r'$\overline Q_{\rm rule}$','Ratio','Cal. ms','Batches'],economics)
+    table('budget_cost','lrrrrrrr',['Dataset','Probe',r'$Q_{100}$',r'$\overline Q_{\rm rule}$',r'vs 100',r'vs 64','Cal. ms','Batches'],economics)
+    budget64=dict(gmean=gmean(x['gain64'] for x in budgets),wins=sum(x['gain64']>1 for x in budgets),
+                  range=[min(x['gain64'] for x in budgets),max(x['gain64'] for x in budgets)],
+                  payback_range=[min(x['payback64'] for x in budgets if x['payback64']),
+                                 max(x['payback64'] for x in budgets if x['payback64'])])
     enum_ratios=[e['enum_ms']/e['bisect_ms'] for c in cells.values() for e in c['enum'].values()]
     enum_total=sum(e['reps'] for c in cells.values() for e in c['enum'].values())
     assert enum_total==2304 and not sum(e['different'] for c in cells.values() for e in c['enum'].values())
@@ -162,10 +213,23 @@ def main():
         losses=[c['oracle']['ceiling']-c['fixed'][a]['recall'] for c in cells.values()]
         # Printed recall has four decimals; do not infer borderline decisions.
         passed=sum(x<=.001+1e-9 for x in losses)
-        max_penalty=max(1-c['fixed'][a]['qps']/c['oracle']['qps'] for c in cells.values())
+        qualifying=[c for c,loss in zip(cells.values(),losses) if loss<=.001+1e-9]
+        max_penalty=max((1-c['fixed'][a]['qps']/c['oracle']['qps'] for c in qualifying),default=None)
         fixed_summary.append(dict(alpha=a,qualified=passed,worst_loss=max(losses),worst_qps_penalty=max_penalty))
-    table('fixed_budgets','rrrr',[r'$\alpha$','Qualifying cells','Worst recall loss','Largest QPS penalty'],
-          [[x['alpha'],f"{x['qualified']}/12",f"{x['worst_loss']:.4f}",f"{100*x['worst_qps_penalty']:.1f}\\%"] for x in fixed_summary])
+    table('fixed_budgets','rrrr',[r'$\alpha$','Qualifying cells','Worst recall loss','Max qualifying QPS deficit'],
+          [[x['alpha'],f"{x['qualified']}/12",f"{x['worst_loss']:.4f}",
+            f"{100*x['worst_qps_penalty']:.1f}\\%" if x['worst_qps_penalty'] is not None else '--'] for x in fixed_summary])
+    historical=read('paper_adc2026/data/budget_arms.log')
+    old_base=None;old_gains=[];old_cost=[]
+    for line in historical.splitlines():
+        m=re.match(r'ARM FIXED alpha=100\s+recall=[\d.]+ qps=(\d+)',line)
+        if m:old_base=int(m[1])
+        m=re.match(r'ARM RULE S=128\s+reps=64 cal_ms=([\d.]+).*mean_qps=(\d+)',line)
+        if m:old_gains.append(int(m[2])/old_base);old_cost.append(float(m[1]))
+    assert len(old_gains)==12
+    historical_budget=dict(version='v57',wins=sum(v>1 for v in old_gains),
+        winning_gain_range=[min(v for v in old_gains if v>1),max(old_gains)],
+        cal_ms_range=[min(old_cost),max(old_cost)])
 
     # Current LUT granularity: 96 configurations, all four groups in 24 cells.
     lut={}
@@ -263,7 +327,7 @@ def main():
     # The summary JSON retains paired [median,min,max] statistics. Recheck its
     # headline ratios against the underlying per-round latency arrays.
     warp=load('experiments/warp_refine/raw/summary.json')
-    warp_rows=[];warp_ratios=[]
+    warp_rows=[];warp_ratios=[];amdahl=[]
     for p in sorted((src/'experiments/warp_refine/raw/ab').glob('*.json')):
         j=json.loads(track(p).read_text());ds=p.name.split('_np')[0]
         for arm in j['alphas']:
@@ -274,6 +338,13 @@ def main():
             warp_ratios.append(ratio)
             if j['nprobe']==128 and not (ds=='arxiv-768' and arm['alpha']==200):
                 ks=s['kernel_ns']['refine']
+                if ds in ['arxiv-768','openai3-3072']:
+                    fwall=ks['0']/(j['nq']/s['variants']['0']['qps_med']*1e9)
+                    fthree=ks['0']/(ks['0']+s['kernel_ns']['scan']+s['kernel_ns']['topk'])
+                    speed=ks['0']/ks['16']
+                    amdahl.append(dict(dataset=ds,kernel_gain=speed,wall_fraction=fwall,
+                        three_stage_fraction=fthree,wall_estimate=1/(1-fwall+fwall/speed),
+                        three_stage_estimate=1/(1-fthree+fthree/speed),measured=ratio))
                 warp_rows.append([NAME[ds],arm['alpha'],f"{st.median(a/b for a,b in zip(v[0]['ms'],v[1]['ms'])):.3f}",
                                   f"{ratio:.3f}",f"{ks['0']/ks['16']:.2f}"])
     table('refinement','lrrrr',['Dataset',r'$\alpha$',r'$L1/L0$ QPS',r'$L16/L0$ QPS','Kernel gain'],warp_rows)
@@ -318,6 +389,14 @@ def main():
             ps=[p for p in big_points if p['dataset']==ds and p['family']==m]
             if ps:large_summary[ds][m]=dict(points=len(ps),max_recall=max(p['recall'] for p in ps))
     assert large_summary['bge-m3']['CAGRA int8']['max_recall']>.95
+    large_comparisons=[]
+    for ds in DS[4:]:
+        jf=e1.pareto([p for p in big_points if p['dataset']==ds and p['family']==METHODS[0]])
+        cf=e1.pareto([p for p in big_points if p['dataset']==ds and p['family']=='CAGRA int8'])
+        for target in [.88,.90,.92,.94,.95,.9579,.958,.978278,.978679,.989489]:
+            jq,jkind=e1.at_recall_interp(jf,target);cq,ckind=e1.at_recall_interp(cf,target)
+            large_comparisons.append(dict(dataset=ds,recall=target,jhq=jq,int8=cq,
+                ratio=jq/cq if jq and cq else None,jhq_kind=jkind,int8_kind=ckind))
 
     # Successful construction records; quantisation is included for int8.
     construction={}
@@ -346,6 +425,13 @@ def main():
     for p in [
         'common/recall.cuh','examples/demo_jhq_batch_pipeline.cu',
         'examples/demo_jhq_budget_arms_v69.cu',
+        'experiments/comp8800_poster_e1/bench_cuvs.py',
+        'experiments/comp8800_poster_e1/bench_rabitq_sweep.cu',
+        'experiments/practical_opt/FINAL_REPORT_CN.md',
+        'experiments/practical_opt/v69_results/dumps.sha256',
+        'experiments/practical_opt/v69_results/id_vogue-768_v65.txt',
+        'experiments/practical_opt/v69_results/t_vogue-768_1_v65.txt',
+        'experiments/practical_opt/v69_results/t_vogue-768_4_v65.txt',
         'jhq_v69_probesel/search.cu','jhq_v69_probesel/jhq_gpu_index.cu',
         'jhq_v65_schedule/search.cu','jhq_v65_schedule/jhq_gpu_index.cu',
         'jhq_v63_sharedbound/search.cu',
@@ -353,8 +439,38 @@ def main():
         'paper_adc2026/ADC/Experiment_ADC.tex','paper_adc2026/ADC/MethodPart2_ADC.tex',
         'experiments/practical_opt/v70_results/v70_summary.json',
         'experiments/adc_v69/rerun_stella_isolated.sh',
-        'experiments/adc_v69/rerun_stella_b999.sh']:
+        'experiments/adc_v69/rerun_stella_b999.sh',
+        'experiments/adc_v69/run_budget_v69.sh','experiments/adc_v69/run_lutgroups_v71.sh',
+        'experiments/comp8800_poster_e1/RAW_RESULTS/env_20261014T130637Z.txt',
+        'experiments/warp_refine/raw/env.txt','experiments/warp_refine/raw/run.log',
+        'experiments/pipeline_v62/run_v62.sh',
+        'experiments/pipeline_campaign/exp2_v63.sh',
+        'experiments/pipeline_campaign/exp47_bench.sh',
+        'experiments/practical_opt/v69_run.sh']:
         track(src/p)
+
+    # Audit the historical default, rather than interpreting a dead alternative
+    # kernel's K_LOCAL comment as the active experiment's selection contract.
+    historical_contracts=[]
+    for sha,path in [('d5e1526','jhq_v69_probesel/search.cu'),
+                     ('bf31b41','jhq_v57_launch_nq/search.cu')]:
+        code=subprocess.run(['git','show',f'{sha}:{path}'],cwd=src,
+                            capture_output=True,text=True,check=True).stdout
+        body=code[code.index('static bool exact_topck()'):]
+        assert "return !(e && e[0] == '0');" in body[:400]
+        final=code[code.index('__global__ void batched_topk_final_kernel('):]
+        assert 'for (int i = tid; i < ck; i += BLOCK)' in final[:4500]
+        assert 'id < bid' in final[:4500]
+        historical_contracts.append(dict(commit=sha,path=path,sha256=hashlib.sha256(code.encode()).hexdigest(),
+            exact_primary_default=True,final_selects_all_ck=True,final_tie_break='database ID'))
+    vogue_runs=[]
+    for name in ['id_vogue-768_v65.json','t_vogue-768_1_v65.json','t_vogue-768_4_v65.json']:
+        j=load(f'experiments/practical_opt/v69_results/{name}')
+        # Batch 32/256 uses a truncated query pool and has different recall.
+        # Compare repeated processes on the same full 1,000-query population.
+        rec=sorted({v['recall'] for rr in j['runs'] if rr['batch'] in [8,1000] for v in rr['variants']})
+        vogue_runs.append(dict(file=name,recalls=rec))
+    assert vogue_runs[0]['recalls']==[.9642] and all(x['recalls']==[.9644] for x in vogue_runs[1:])
 
     # Thesis-only plots extend existing figure coverage to measured int8 data.
     os.environ.setdefault('MPLCONFIGDIR',str(ROOT/'build/matplotlib'))
@@ -377,7 +493,8 @@ def main():
             ax.plot([p['recall'] for p in fr],[p['qps_A'] for p in fr],label=method.replace(' v69',''),
                     color=c,marker=m,ms=3,lw=1.1,ls='-' if len(fr)>1 else 'None')
         ax.set_title(f'{NAME[ds]} ({SHAPE[ds][0]/1e6:.2f}M x {SHAPE[ds][1]})')
-        ax.set_yscale('log');ax.set_xlim(.85,1.001);ax.set_xlabel('Recall@10');ax.set_ylabel('Queries/s')
+        ax.set_yscale('log');ax.set_xlim(.90,1.001);ax.axvline(.97,color='gray',lw=.7,ls=':')
+        ax.set_xlabel('Recall@10');ax.set_ylabel('Queries/s')
     h,l=axs.flat[0].get_legend_handles_labels();f.legend(h,l,loc='upper center',ncol=3,bbox_to_anchor=(.5,1.02),fontsize=8)
     f.tight_layout(rect=[0,0,1,.93]);save('frontiers')
     f,axs=plt.subplots(1,2,figsize=(7,2.8))
@@ -388,19 +505,87 @@ def main():
             ax.plot([p['recall'] for p in fr],[p['qps_A'] for p in fr],marker=markers[k],ms=3,color=colors[k],label=method.replace(' v69',''))
         ax.set_yscale('log');ax.set_xlabel('Recall@10');ax.set_ylabel('Queries/s');ax.set_title(f'{NAME[ds]} ({SHAPE[ds][0]/1e6:.2f}M)')
     axs[0].legend(fontsize=8);f.tight_layout();save('large_frontiers')
-    f,axs=plt.subplots(1,2,figsize=(7,2.7))
+    f,aa=plt.subplot_mosaic([['policy','small'],['policy','large']],figsize=(7,4.4),
+                            gridspec_kw={'width_ratios':[1.05,1]})
+    ax=aa['policy']
     for g,label in [(102,'Fixed 2 groups'),(104,'Fixed 4 groups'),(108,'Fixed 8 groups'),(-1,'Scheduled')]:
-        axs[0].plot([r['batch'] for r in pipe_summary],[r['gains'][g] for r in pipe_summary],marker='o',label=label)
-    axs[0].axhline(1,color='gray',ls=':');axs[0].set_xscale('log',base=2);axs[0].set_xticks([8,32,256,1000],['8','32','256','1000'])
-    axs[0].set_xlabel('Query batch');axs[0].set_ylabel('Geometric-mean QPS / v61 L16');axs[0].legend(fontsize=7)
+        ax.plot([r['batch'] for r in pipe_summary],[r['gains'][g] for r in pipe_summary],marker='o',label=label)
+    ax.axhline(1,color='gray',ls=':');ax.set_xscale('log',base=2);ax.set_xticks([8,32,256,1000],['8','32','256','1000'])
+    ax.set_xlabel('Query batch');ax.set_ylabel('Geometric-mean QPS / lane-refined baseline');ax.legend(fontsize=7)
     # Stage medians from the recorded Nsight summary, not inferred percentages.
     stages=load('experiments/pipeline_v62/raw/perf/stages_summary.json')
-    for ds in ['arxiv-768','vogue-768','openai3-3072']:
-        xs=[x for x in stages if x['tag']==ds and x['batch']==8 and x['G'] in [0,8] and not (ds=='arxiv-768' and x['alpha']!=100)]
-        if len(xs)==2:
-            xs.sort(key=lambda x:x['G']);axs[1].plot([1,2],[x['stages_us']['scan'] for x in xs],marker='o',label=NAME[ds])
-    axs[1].set_xticks([1,2],['One block','Eight groups']);axs[1].set_ylabel('Scan stage, microseconds');axs[1].legend(fontsize=7)
+    for batch,key in [(8,'small'),(1000,'large')]:
+        ax=aa[key];xx=np.arange(2)
+        for g,off,color in [(0,-.18,colors[0]),(8,.18,colors[1])]:
+            rows=[next(s for s in stages if s['tag']=='arxiv-768' and s['alpha']==a and s['batch']==batch and s['G']==g) for a in [100,200]]
+            scan=[r['stages_us']['scan']/1000 for r in rows];merge=[r['stages_us']['merge']/1000 for r in rows]
+            ax.bar(xx+off,scan,.32,color=color,label='One block' if g==0 else 'Eight groups')
+            if g==8:ax.bar(xx+off,merge,.32,bottom=scan,color=color,hatch='///',alpha=.45,label='Merge')
+        ax.set_title(f'Profiled scan + merge, batch {batch}',fontsize=9)
+        ax.set_xticks(xx,[r'arXiv $\alpha=100$',r'arXiv $\alpha=200$'])
+        ax.set_ylabel('Time (ms)');ax.legend(fontsize=6,ncol=3,loc='upper left')
+        ax.margins(y=.3);ax.grid(axis='x',visible=False)
     f.tight_layout();save('batch_execution')
+
+    # Table grouping: common font and notation; legend above the data.
+    f,ax=plt.subplots(figsize=(7,2.8));xx=np.arange(4)
+    for npb,color in zip([8,32,128,512],colors[:4]):
+        groups=[[c[g]['qps']/c[1]['qps'] for (d,n),c in lut.items() if n==npb] for g in [1,2,4,8]]
+        ax.plot(xx,[st.median(v) for v in groups],marker='o',label=f'nprobe = {npb}',color=color)
+        ax.fill_between(xx,[min(v) for v in groups],[max(v) for v in groups],alpha=.10,color=color)
+    ax.axhline(1,color='gray',ls=':');ax.set_xticks(xx,['1\n256','2\n2 x 16','4\n4 x 4','8\n8 x 2'])
+    ax.set_xlabel(r'Table grouping $g_{\mathrm{LUT}}$ and entries');ax.set_ylabel('QPS / one-group QPS')
+    ax.legend(ncol=4,loc='lower center',bbox_to_anchor=(.5,1.02),fontsize=8)
+    f.tight_layout();save('lutgroups')
+
+    # Risk and payback use the same draw summaries as the numeric tables.
+    dscolors=dict(zip(DS,colors))
+    f,ax=plt.subplots(figsize=(6.4,3.1))
+    for (ds,npb),c in cells.items():
+        xs=[32,64,128];ys=[100*c['rule'][s]['over'] for s in xs]
+        ax.plot(xs,ys,color=dscolors[ds],ls='-' if npb==128 else '--',marker='o',ms=3,
+                label=NAME[ds] if npb==128 else None)
+    ax.plot([],[],color='gray',ls='-',label='nprobe 128');ax.plot([],[],color='gray',ls='--',label='nprobe 512')
+    ax.set_xticks([32,64,128]);ax.set_ylim(-2,102);ax.set_xlabel('Calibration queries, S')
+    ax.set_ylabel(r'Draws losing $>10^{-3}$ recall (%)');ax.legend(ncol=4,loc='lower center',bbox_to_anchor=(.5,1.02),fontsize=8)
+    f.tight_layout();save('budget_risk')
+    f,axs=plt.subplots(1,2,figsize=(7,3.3))
+    for ax,baseline,gkey,bkey in [(axs[0],100,'gain','payback'),(axs[1],64,'gain64','payback64')]:
+        positive=[x[bkey] for x in budgets if x[bkey]];upper=max(positive)*1.65
+        for x in budgets:
+            ax.scatter(x[gkey],x[bkey] if x[bkey] else upper,color=dscolors[x['dataset']],
+                       marker='o' if x['nprobe']==128 else '^',s=22,
+                       facecolors=dscolors[x['dataset']] if x['nprobe']==128 else 'none')
+        ax.axvline(1,color='gray',ls=':',lw=.7);ax.set_yscale('log');ax.set_ylim(1,upper*1.6)
+        ax.text(.02,.98,'Top row: no throughput payback',va='top',transform=ax.transAxes,fontsize=6.5)
+        ax.set_title(rf'Fixed $\alpha={baseline}$');ax.set_xlabel('Mean selected-arm QPS / fixed QPS')
+        ax.set_ylabel('Estimated batches to repay')
+    handles=[plt.Line2D([],[],marker='o',ls='',color=dscolors[d],label=NAME[d]) for d in DS]
+    f.legend(handles=handles,loc='lower center',ncol=6,fontsize=7)
+    f.tight_layout(rect=[0,.10,1,1]);save('budget_payback')
+
+    # Memory stacks: measured total plus explicit model and unattributed remainder.
+    labels=['Primary codes','Residual codes','Corrections + IDs','Centroids','Batch tables','Query buffers','Group scratch','Unattributed']
+    memparts=[]
+    for ds in DS:
+        n,d,nl=SHAPE[ds];b=1024;c=1000
+        parts=[n*d/8,n*d,n*8,nl*d*4,b*(d/8)*32*4,
+               b*(2*d*4+nl*4+2*c*4+10*8),memory[ds]['scratch_mib']*1024**2]
+        parts.append(memory[ds]['used_mib']*1024**2-sum(parts));assert parts[-1]>=0
+        memparts.append(np.array(parts)/1024**3)
+    mat=np.array(memparts);f,axs=plt.subplots(1,2,figsize=(7,3.1),gridspec_kw={'width_ratios':[1.4,1]})
+    component_colors=['#184e77','#74a9cf','#bdd7e7','#328754','#e2b03b','#d77919','#a6659b','#dddddd']
+    for ax,values in [(axs[0],mat),(axs[1],mat/mat.sum(axis=1)[:,None]*100)]:
+        left=np.zeros(6)
+        for ci,(lab,color) in enumerate(zip(labels,component_colors)):
+            ax.barh(np.arange(6),values[:,ci],left=left,label=lab,color=color,hatch='///' if ci==7 else None)
+            left+=values[:,ci]
+        ax.invert_yaxis();ax.set_yticks(np.arange(6),[NAME[d] for d in DS] if ax is axs[0] else [])
+        ax.grid(axis='y',visible=False)
+    axs[0].set_xlabel('Device memory in use (GiB)');axs[1].set_xlabel('Share of measured total (%)')
+    axs[0].scatter(mat.sum(axis=1),np.arange(6),marker='|',color='black',s=80)
+    h,l=axs[0].get_legend_handles_labels();f.legend(h,l,ncol=4,loc='upper center',fontsize=7)
+    f.tight_layout(rect=[0,0,1,.84]);save('memory')
     f,axs=plt.subplots(1,2,figsize=(7,2.65))
     for g in [1,2]:
         xs=[8,32,128,512];groups=[[100*(r['gain']-1) for r in packing if r['g']==g and r['nprobe']==n] for n in xs]
@@ -433,18 +618,24 @@ def main():
 
     git=subprocess.run(['git','rev-parse','HEAD'],cwd=src,capture_output=True,text=True,check=True).stdout.strip()
     audit=dict(source_snapshot=git,e1=dict(points=len(points),failures=len(failures),indexes=len(indexes),
-        nondeterministic=dict(nondet),archived_matched_ratios_verified=verified),matched=matched,
-        budget=budgets,fixed_budget_summary=fixed_summary,enumeration=dict(draws=enum_total,differences=0,ratio_range=[min(enum_ratios),max(enum_ratios)]),
+        nondeterministic=dict(nondet),diagnostics=e1_diagnostics,memory=e1_memory,ceilings=ceilings,
+        latency_sensitivity=sensitivity,rabitq_round_spread=round_spread,archived_matched_ratios_verified=verified),matched=matched,
+        budget=budgets,budget_vs64=budget64,historical_budget=historical_budget,
+        fixed_budget_summary=fixed_summary,enumeration=dict(draws=enum_total,differences=0,ratio_range=[min(enum_ratios),max(enum_ratios)]),
         lut=dict(cells=len(lut),wins=dict(wins),max_recall_spread=lut_spread,ratio_range=[min(lut_ratios),max(lut_ratios)]),
         packing=dict(cells=len(packing),gain_range=[min(r['gain'] for r in packing),max(r['gain'] for r in packing)],max_recall_diff=max(abs(r['recall_difference']) for r in packing)),
         pipeline=dict(summary=pipe_summary,comparisons=len(pipe_checks),query_comparisons=sum(x['n'] for x in pipe_checks),
                       non_tie=sum(x['nontie'] for x in pipe_checks),different_sets=sum(x['n']-x['same'] for x in pipe_checks)),
         correctness=dict(v62_cases=len(v62checks),bound_cases=len(boundchecks),probe=probe['exactness'],
-                         vogue_identity=probe['identity']['vogue-768']),
+                         vogue_identity=probe['identity']['vogue-768'],vogue_baseline_runs=vogue_runs,
+                         historical_selection_contracts=historical_contracts),
         bound_gain_range=[min(r['gain'] for r in boundperf),max(r['gain'] for r in boundperf)],
-        refinement_gain_range=[min(warp_ratios),max(warp_ratios)],build=build,memory=memory,large=large_summary,
+        refinement_gain_range=[min(warp_ratios),max(warp_ratios)],amdahl=amdahl,
+        scan_stage_profiles=stages,build=build,memory=memory,large=large_summary,large_comparisons=large_comparisons,
         construction=[dict(dataset=ds,method=m,seconds=v) for (ds,m),v in construction.items()],
-        reused_figures=copied)
+        archived_figure_sources=copied,
+        generated_figures=['frontiers','lutgroups','packing_refinement','budget_risk',
+            'budget_payback','batch_execution','construction','memory','large_frontiers'])
     (out/'audit.json').write_text(json.dumps(audit,indent=2)+'\n')
     with (out/'sources.csv').open('w',newline='') as f:
         w=csv.writer(f,lineterminator='\n');w.writerow(['path_relative_to_JHQ_GPU','sha256'])

@@ -1,0 +1,97 @@
+Only the primary survivors access residual codes. This preserves a broad,
+cheap scan over $n_c$ candidates followed by a narrower $O(cd)$ scoring
+stage. Reading residuals for every visited candidate would instead move
+that coordinate work towards $O(n_cd)$. Lane cooperation accelerates the
+chosen survivors; it does not decide the refinement budget.
+
+\subsection{Reconstructed scoring and the query-only constant}
+
+Let $\widehat p(x)$ be the primary reconstruction and $\widehat r(x)$
+the decoded residual in transformed coordinates. The encoder stores
+$\gamma(x)=2\langle\widehat p(x),\widehat r(x)\rangle$.
+The implemented refined ranking score is
+\begin{align}
+ \refineddist(q,x)
+ &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
+ \label{eq:5-refined-score}\\
+ &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+ \label{eq:5-refined-constant}
+\end{align}
+The second equality follows by expanding the squared norms. Thus the
+score orders hierarchical reconstructions by squared distance, but the
+returned value includes a query-only constant. It is neither a direct
+raw-vector distance nor an unshifted reconstruction distance. The
+constant does not affect a fixed query's ordering. Reconstruction error
+remains even when selection under this score is exact \cite{jhq}.
+
+Residual coordinates use scalar codebook entries shared within a
+subspace. The scalar path walks each candidate's dimensions and sums
+their squared differences from $q'$. Query coordinates and, when space
+permits, the residual codebook are staged in shared memory; the stored
+correction and primary score are added afterwards.
+
+\subsection{Mapping lanes to words and reducing partial sums}
+
+For $\lrefine=L\in\{1,8,16,32\}$, a scan-independent refinement block
+assigns $L$ adjacent lanes to a candidate. A 32-bit residual word holds
+$R=32/B_R$ coordinate codes, where $B_R$ is the residual bit width.
+The tested eight-bit path has $R=4$; the four-bit path has $R=8$.
+Lane $a$ reads word indices $a,a+L,a+2L,\ldots$, decodes their
+coordinates and accumulates a partial sum. A butterfly shuffle reduction
+combines the $L$ partials, and lane zero writes the refined score.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/lane-refinement}
+\caption{Sixteen-lane residual refinement. A warp handles two candidates;
+lane $a$ within a candidate reads residual words $a,a+16,\ldots$.
+With eight-bit residual codes, each 32-bit word decodes four coordinates.
+Subgroup reductions combine
+partial scores before adding the retained primary score and correction.
+Candidate positions can be scattered even when each subgroup's word
+access is contiguous.}
+\label{fig:5-lane-refinement}
+\end{figure}
+
+The launch requires a word-aligned residual row and $D_s$ divisible by
+$R$, so a word never crosses a subspace's codebook boundary. All lanes
+execute the shuffle sequence, including lanes assigned to invalid or
+out-of-range survivor slots; these contribute zero before the output
+is marked infinite. This avoids making warp participation depend on
+whether a particular candidate exists. At $L=16$ a warp handles two
+candidates, rather than one candidate per lane.
+
+The experiment separates two changes. L0 is the original scalar
+byte-load path; L1 uses word loads with one lane per candidate, preserving
+its accumulation order. L8/L16/L32 additionally distribute coordinate
+work across lanes. This shortens each lane's serial walk and provides
+useful work when $c$ is small, but adds shuffles and reduces the number
+of independent candidates handled concurrently. Larger $L$ is therefore
+not automatically better. Irregular survivor positions and shared/global
+codebook placement remain relevant costs.
+
+\subsection{Final selection and the numerical boundary}
+
+For at least $k$ valid survivors with finite refined scores and unique
+database IDs, the final kernel performs exact top-$k$ selection under
+$(\refineddist,\mathrm{database\ ID})$. One block per query loads the
+$c$ scores and repeatedly reduces the minimum, emits its ID and score,
+and removes that score before the next round. All $c$ slots are scanned
+at each round; there is no fixed per-thread candidate quota. This
+correctness statement does not establish the final-output contract for
+degenerate pools with fewer than $k$ finite valid candidates.
+
+The final ID tie rule differs from the physical-position rule used for
+primary retention. An exact final selector cannot recover candidates
+discarded by routing or screening, nor remove quantisation error. Wider
+lane reductions also change floating-point association before selection,
+which can move near-tied candidates even when the real-arithmetic
+formula is unchanged.
+
+\Cref{sec:7-3} separates these effects: L1 is bit-identical in its tested
+cases, while multi-lane distance differences reach approximately
+$1.6\times10^{-6}$ relative error. The ordinary L16 end-to-end gains
+range from $1.015$ to $1.789\times$; kernel-only gains are larger and
+must not be substituted for them. The design is supported by controlled
+load-only and cooperative variants, with numerical equivalence tested
+rather than assumed.

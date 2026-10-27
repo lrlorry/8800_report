@@ -26,6 +26,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage[numbers,sort&compress]{natbib}
+\renewcommand{\bibfont}{\raggedright}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
@@ -51,6 +52,16 @@
 \widowpenalty=10000
 \clubpenalty=10000
 \raggedbottom
+% Keep result figures with nearby text; align forced float pages at the top.
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
 \usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
 \hypersetup{pdftitle={\thesistitle},pdfauthor={\thesisauthor},
   pdfsubject={COMP8800 research thesis},bookmarksnumbered=true}

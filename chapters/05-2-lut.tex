@@ -1,0 +1,110 @@
+The broad scan evaluates primary reconstructions through asymmetric
+distance computation: the query remains FP32 while a stored code selects
+reconstructed coordinates \cite{pq,jhq}. For transformed query $q'$, the
+ordinary table for primary subspace $m$ is
+\begin{equation}
+ T_m[z]=\|q'_m-C_m[z]\|_2^2,\qquad
+ \primarydist(q,x)=\sum_{m=0}^{M-1}T_m[z_m(x)].
+ \label{eq:5-primary-lut}
+\end{equation}
+With an eight-bit code, this requires 256 entries per subspace. The
+opportunity here comes from the codebook's internal Cartesian structure,
+not just the fact that the vector is partitioned into PQ subspaces.
+
+\subsection{Factorisation without changing the quantiser}
+
+For the tested $D_s=8$ Cartesian codebook, the high nibble $h$ selects
+the first four reconstructed coordinates and the low nibble $l$ selects
+the remaining four. Thus $C_m[16h+l]=(A_m[h],B_m[l])$, with no
+cross-dependence between the two coordinate groups. Define
+\begin{equation}
+ T_m^{\rm hi}[h]=\|q'_{m,\rm hi}-A_m[h]\|_2^2,\qquad
+ T_m^{\rm lo}[l]=\|q'_{m,\rm lo}-B_m[l]\|_2^2.
+ \label{eq:5-lut-halves}
+\end{equation}
+Squared-L2 additivity over disjoint coordinates gives
+\begin{equation}
+ T_m[z]=T_m^{\rm hi}[z\!\gg\!4]
+        +T_m^{\rm lo}[z\mathbin{\&}15].
+ \label{eq:5-lut-factorisation}
+\end{equation}
+Only 32 entries are stored, rather than 256. This preserves the
+reconstruction and the real-arithmetic score; no code retraining,
+extra quantisation or change in the candidate universe is involved.
+
+The builder reads representative codewords $16h$ and $l$ from the
+existing full codebook and evaluates only their corresponding coordinate
+slices. The zero digits in the other slice are irrelevant. This is valid
+only when all codewords sharing a nibble share that slice. The
+\texttt{verify\_split\_lut} check compares the stored codeword slices
+against their representatives and rejects incompatible codebooks.
+An arbitrary learned 256-centroid PQ subcodebook need not satisfy this
+condition: dividing its code labels into nibbles does not factor its
+centroid coordinates.
+
+The mathematical identity does not promise bitwise FP32 equality. A
+full eight-coordinate accumulation and two four-coordinate sums followed
+by an addition associate the operations differently. The implementations
+therefore retain FP32 tables and separately check numerical and ranking
+effects. Replacing table entries with FP16 would introduce another
+rounding operation and is a different design choice.
+
+\subsection{Grouping, construction work and resource cost}
+
+The v71 ablation generalises the split to $g=\glut\in\{1,2,4,8\}$
+contiguous coordinate groups whose bit fields match the Cartesian
+digits. For eight bits and $D_s=8$, each group has $2^{8/g}$ entries;
+the total entries and FP32 storage per query are
+\begin{equation}
+ E(g)=g2^{8/g},\qquad W_{\rm LUT}(g)=4ME(g)\ \text{bytes}.
+ \label{eq:5-lut-cost}
+\end{equation}
+Independent entry construction evaluates $D_s2^{8/g}$ coordinate
+contributions per subspace. Two groups therefore reduce table storage
+eightfold and coordinate work sixteenfold relative to independently
+constructing every full-table entry. These are table-level cost ratios,
+not predicted application speedups.
+
+\begin{table}[tbp]
+\centering
+\caption{Cartesian table trade-offs for an eight-bit, eight-coordinate
+primary subspace. Combining additions are the algebraic minimum for
+joining the looked-up values, excluding accumulation across subspaces;
+they are not measured instruction counts.}
+\label{tab:5-lut-resources}
+\small
+\begin{tabular}{@{}rrrrrr@{}}
+\toprule
+$\glut$ & Entries & FP32 bytes & Lookups & Combining adds & Build terms \\
+\midrule
+1 & 256 & 1,024 & 1 & 0 & 2,048 \\
+2 & 32 & 128 & 2 & 1 & 128 \\
+4 & 16 & 64 & 4 & 3 & 32 \\
+8 & 16 & 64 & 8 & 7 & 16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The table is first built in global workspace. A scan block stages it
+cooperatively in shared memory when the table and that kernel's candidate
+buffer fit the device's configured limit; a block barrier completes
+staging before lookup. Otherwise it reads the global table. The shared
+footprint must include selection scratch: $W_{\rm LUT}$ alone does not
+determine residency. Grouped scan blocks may each stage the same query's
+table, coupling this design to \Cref{sec:5-5}.
+
+At $M=96$ and 384, full FP32 tables require 96 and 384\,KiB per query;
+two-group tables require 12 and 48\,KiB. The smaller footprint creates
+placement opportunities, but four and eight groups make more lookups and
+combine more values even though both store only 16 entries per subspace.
+Index extraction, dependent lookups, synchronisation and residency all
+contribute to the resulting trade-off. Table size alone cannot identify
+the fastest design or establish a unique cache/bank-conflict explanation.
+
+Small-table execution has substantial precedent in PQ Fast Scan and
+Quicker ADC \cite{fastscan,quickeradc}. This implementation applies exact
+coordinate factorisation to JHQ's existing Cartesian codebook and measures
+the GPU grouping trade-off; it does not claim to invent small LUTs.
+\Cref{sec:7-3} reports the controlled v71 sweep: two groups lead in
+22/24 cells, with the other two differences below 1\%. That result supports
+the selected operating point rather than a universal optimum.

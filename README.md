@@ -4,14 +4,26 @@
 
 ## 当前审核入口
 
-第七章已写入论文总稿，其余章节仍为写作骨架。
+第五章（5.1--5.7）和第七章已写入论文总稿；其他未完成正文仍为写作骨架。
 
 - [论文总稿 thesis.pdf](thesis.pdf)
+- [中文阅读对照稿 thesis-zh.pdf](thesis-zh.pdf)：包含第五章、第七章的完整翻译。
+- [第 5.1 节：查询路径与排序对象](chapters/05-1-query-path.tex)
+- [第 5.1 节核对与命题排版说明](assessment/ch5-section-1-evidence.txt)
+- [第 5.2 节：LUT](chapters/05-2-lut.tex)、[5.3：packed access](chapters/05-3-packed-access.tex)、[5.6：精排](chapters/05-6-refinement.tex)、[5.7：probe selection](chapters/05-7-probe.tex)
+- [第 5.2、5.3、5.6、5.7 节核对记录](assessment/ch5-sections-2-3-6-7-evidence.txt)
+- [第 5.4 节：全局主码 top-c](chapters/05-4-global-selection.tex)与[第 5.5 节：共享界和调度](chapters/05-5-bound-scheduling.tex)
+- [第 5.4、5.5 节源码核对记录](assessment/ch5-sections-4-5-evidence.txt)
 - [第七章正文](chapters/07-evaluation.tex)
 - [数据核对说明（含中文结论）](data/ch7/README.txt)
 - [数值核对结果](data/ch7/audit.json)与[原始证据文件哈希](data/ch7/sources.csv)
+- [Claude 审稿意见逐项复核与处理](assessment/ch7-review-response.txt)
+- [GPT 旧版审稿意见复核](assessment/ch7-gpt-review-response.txt)
+- [待补实验清单（GPU 可用后）](assessment/ch7-pending-experiments.txt)
 
-审核重点：结论是否得到实验支持、跨系统比较是否公平、精确性声明是否限定到相应阶段，以及校准的质量风险和回本估计是否表述准确。原始实验文件位于同一账号的 `JHQ_GPU` 仓库，文件路径见证据清单；本仓库提供分析脚本和生成的图表。
+审核重点：结论是否得到实验支持、跨系统比较是否公平、精确性声明是否限定到相应阶段，以及校准的质量风险和回本估计是否表述准确。原始实验输入来自本地同级 `JHQ_GPU` 工作区，路径见证据清单；本报告仓库提供分析脚本和衍生数据，但不包含全部原始输入。重新生成分析需要另外取得清单中的文件及相关历史源码，不能将哈希清单本身视为原始文件已公开或 GPU 实验已独立重现的证明。
+
+当前审核应覆盖已完成的第五章、第七章与附录 A。第 5.5 节明确保留共享界 `volatile` 读取的并发保证限制；相关实现修订和 GPU 复验仍在待办清单中。第 5.6 节区分精排排序分数与原空间距离；第七章区分实测结果、离线收益估算及尚未执行的补充实验。
 
 ## 编译
 
@@ -24,6 +36,8 @@ latexmk -pdf main.tex
 直接编译输出为 `build/main.pdf`。运行 `make pdf` 会将论文总稿更新到根目录的 `thesis.pdf`，第七章已放入总稿。模板采用 pdfLaTeX + BibTeX；不需要 shell escape、外部字体、Python 或额外绘图程序。
 
 Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **pdfLaTeX**。若修改编译输出目录，请同步检查输出路径。避免将 `build/` 中的历史中间文件上传为源文件。
+
+中文阅读稿运行 `make pdf-zh`，输出为 `thesis-zh.pdf`。它使用 `main-zh.tex`、XeLaTeX 和 TeX 随附的 Fandol 中文字体，保持英文稿的章节与图表编号。中文正文位于 `zh/chapters/`；图内英文标签保留，第七章表格数字由 `scripts/build_zh_tables.py` 从英文表格复用。英文提交稿仍使用原来的 `make pdf`。
 
 ## 从哪里开始
 

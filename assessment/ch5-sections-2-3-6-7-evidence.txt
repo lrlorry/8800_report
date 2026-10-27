@@ -1,0 +1,80 @@
+第 5.2、5.3、5.6、5.7 节：写作与核对记录
+日期：2026-10-28（Australia/Sydney）
+状态：基于已有源码和归档实验完成中英文正文；未执行 GPU 实验。
+5.4、5.5 保留；5.1 与第五章引言仍待写，不能称整章全部完成。
+
+5.2 LUT
+--------
+* 从 Cartesian 坐标分离推导 256 -> 16+16 的实数恒等式；固定码本，
+  不把任意 learned PQ codebook 视为均能精确拆分。
+* v69 build_byte_lut_kernel 使用代表码字及对应半区坐标。
+  v71 verify_split_lut 对每个分组逐坐标验证代表码字一致性。
+* g_LUT=1/2/4/8 的资源表来自公式：表项 256/32/16/16，FP32 字节
+  1024/128/64/64，查表数 1/2/4/8，代数合并加法 0/1/3/7，
+  独立建表坐标贡献 2048/128/32/16。不是 GPU 指令计数或总加速。
+* 共享驻留需计入选择工作区，不能仅凭 LUT 大小声称 occupancy。
+* 22/24 与浮点影响沿用已核对的 Ch7；不把实数恒等式当逐位证明。
+* 既有 PQ Fast Scan / Quicker ADC 作为先例，一手论文核对入口：
+  https://www.vldb.org/pvldb/vol9/p288-andre.pdf
+  https://arxiv.org/abs/1812.09162
+
+5.3 packed access
+=================
+* byte 布局 P[m*N+p]；word 布局 W[j*N+p]，word 内打包同一候选
+  的 P[4j,p]、P[4j+1,p]、P[4j+2,p]、P[4j+3,p]。
+* 实际 repack_primary_words_kernel 将四个子空间字节组合，不是简单
+  reinterpret，也不是将四个候选打成一个 word。
+* M 必须能被四整除；编码载荷仍是每向量 M 字节。一次 word load
+  替代四次 byte load 是源码操作层面的区别，不声称事务/HBM 流量
+  必然降低四倍。连续候选跨 list 边界时可能不再物理连续。
+* 48 个历史配对都已经是 subspace-major 类型；不归因于 transpose
+  的独立收益。run_lut_layout6.sh 明确为 v59 byte/word x g1/g2。
+* 新图为地址示意，不是 profiler trace。
+
+5.6 精排与 final top-k
+=====================
+* 直接检查 encode.cu：存储 correction = 2 * dot(primary,residual)。
+* search.cu 实际返回 D_P + sum((q'-residual)^2) + correction。
+  展开得到 ||q'-primary-residual||^2 + ||q'||^2。后项仅与查询有关，
+  不改变同查询排序，但返回值不能直接称为原空间距离或未平移的重建
+  距离。符号表 D_H 的说明同步改为 refined ranking score。
+* Br=8 时一个 32-bit 残差 word 解四坐标，Br=4 时解八坐标；word
+  不跨 subspace，要求 Ds 和残差行满足对齐/整除条件。
+* L=1 保持标量累加顺序，L=8/16/32 改为 lane 部分和加 butterfly
+  reduction；所有 lane 参与 shuffle，无效槽位贡献零后写 INF。
+* 最终选择每轮扫描全部 ck 个槽位，按 (refined score,database ID)
+  取最小，无 K_LOCAL 截断。精确性限定至少 k 个有限分数的有效候选
+  且数据库 ID 唯一；退化池或非有限分数不在此陈述内。
+* L1 逐位相等与多 lane 小数值差异分开；内核收益与端到端收益分开。
+  数字引用 Ch7.3 已审计结果，不复用旧报告中有分母问题的 Amdahl 占比。
+
+5.7 probe selection
+===================
+* 路由分数 ||centroid||^2 - 2*dot 可为负；省略 query norm 不改顺序。
+  与主码非负 score key 的表示前提不同。
+* probe_key 先统一 signed zero，再按符号对 bit pattern 取反或置
+  最高位；域为非 NaN 浮点数，包含 +/-infinity。
+* 四轮最高字节优先 radix 找 cutoff；256*32 个 uint32 histogram
+  为 32 KiB。lane 复制减少同 warp 热点，不消除跨 warp 竞争。
+* cutoff ties 过多时按 list ID 重新有序收集，不由 atomic arrival
+  决定最终 tied subset；再以 rank-count 恢复已选 probes 的顺序。
+* 选择 P=min(nprobe,nlist)，排序工作 O(P^2)；最后 block prefix-scan
+  列表长度。nprobe>nlist 的重复 ID padding 长度为零，不重复访问。
+* probe_test.txt 原始文本及 checker 确认 1792 cases / 0 failing。
+  检查的是 IDs/offsets/totals，不证明主码 top-c 或原空间 exact kNN。
+* 保留 Vogue pipeline anomaly；FP16 v70 明确归为另一个近似路径。
+
+来源登记
+========
+data/ch5/execution-review.json 给出本轮消费的本地源码/归档记录 SHA-256，
+并引用 data/ch7/audit.json 的文件身份。checkpoint 不冒充各实验的
+binary hash，也不声称原始输入都可从 public main 获取。
+中英文数学、引用和标签逐项比对；英文/中文 PDF 分别编译并检查版面。
+
+最终验证
+========
+make pdf 与 make pdf-zh 均成功；最终日志没有引用、字体、缺字或排版
+警告。总稿英文 80 页、中文 71 页；第五章现有 4 张方法图、2 张表。
+完成的六节均无写作占位提示，章节号仍为 5.1--5.7。PDF 文本解析无
+错误，根目录输出与 build 产物一致；已视觉检查 packed/lane 图及
+中文 LUT 表与精排图，19 个本轮源文件身份均核对匹配。

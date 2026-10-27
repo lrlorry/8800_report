@@ -1,0 +1,28 @@
+% Algorithm diagram; the whole-key-read premise is discussed in Section 5.5.
+\begin{tikzpicture}[
+  font=\small\linespread{1}\selectfont,
+  box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+    inner sep=5pt,text width=6.2cm,minimum height=.9cm},
+  side/.style={box,text width=4.1cm,fill=ThesisNavy!5},
+  arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (score) at (0,0) {Read primary code; compute full $\primarydist$\\
+  Form $K=(\primarydist,p)$};
+\node[box,fill=ThesisNavy!5] (admit) at (0,-1.8)
+  {Admission: $K\prec\lambda_g$ and $K\preceq\tau_{\rm seen}$};
+\node[box] (compact) at (0,-3.8) {Append admitted keys\\
+  Compact when necessary\\Keep at most $c$};
+\node[box] (trim) at (0,-5.9) {Final compaction and prefix trim\\
+  Emit valid keys $K\preceq\tau_{\rm seen}$ to merge};
+\node[side] (shared) at (6.3,-.1) {Per-query shared word $Q$\\
+  Encodes bound $\tau$\\Initially all ones\\$\tau\succeq K_{(c)}$};
+\node[side] (publish) at (6.3,-3.8) {Only with $c$ valid witnesses:\\
+  $\operatorname{atomicMin}(Q,E(\tau_g))$};
+\draw[arr] (score) -- (admit);
+\draw[arr] (admit) -- node[right,font=\footnotesize] {yes} (compact);
+\draw[arr] (compact) -- (trim);
+\draw[arr] (compact.east) -- (publish.west);
+\draw[arr] (publish.north) -- (shared.south);
+\draw[arr,dashed] (shared.west) -- ++(-.35,0) |- (admit.east);
+\node[align=center,font=\footnotesize,text width=4.2cm] at (6.3,-5.8)
+  {Rejected keys skip admission,\\not primary scoring.};
+\end{tikzpicture}

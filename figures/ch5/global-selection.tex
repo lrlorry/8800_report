@@ -1,0 +1,30 @@
+% Schematic only: illustrative keys, not experimental observations.
+\begin{tikzpicture}[
+  font=\small\linespread{1}\selectfont,
+  box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+    inner sep=5pt,text width=2.65cm,minimum height=2.05cm},
+  merged/.style={box,text width=5.55cm,minimum height=1.05cm,
+    fill=ThesisNavy!5},
+  arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (g0) at (0,0) {$\operatorname{Top}_3(U_0)$\\[2pt]
+  $\mathbf{(1,8)}$\\$\mathbf{(2,6)}$\\$(2,9)$};
+\node[box] (g1) at (3.5,0) {$\operatorname{Top}_3(U_1)$\\[2pt]
+  $(4,1)$\\$(5,4)$\\\textit{length 2}};
+\node[box] (g2) at (7,0) {$\operatorname{Top}_3(U_2)$\\[2pt]
+  $\varnothing$\\\textit{length 0}};
+\node[box] (g3) at (10.5,0) {$\operatorname{Top}_3(U_3)$\\[2pt]
+  $\mathbf{(2,3)}$\\$(7,2)$\\$(8,5)$};
+\node[merged] (m0) at (1.75,-2.5) {Merge and retain first 3\\[2pt]
+  $\mathbf{(1,8)},\ \mathbf{(2,6)},\ (2,9)$};
+\node[merged] (m1) at (8.75,-2.5) {Merge and retain first 3\\[2pt]
+  $\mathbf{(2,3)},\ (7,2),\ (8,5)$};
+\node[merged,text width=6.8cm,fill=ThesisNavy!12] (out) at (5.25,-4.3)
+  {Global primary top-3\\[2pt]
+   $\mathbf{(1,8)},\ \mathbf{(2,3)},\ \mathbf{(2,6)}$};
+\draw[arr] (g0.south) -- (m0.north west);
+\draw[arr] (g1.south) -- (m0.north east);
+\draw[arr] (g2.south) -- (m1.north west);
+\draw[arr] (g3.south) -- (m1.north east);
+\draw[arr] (m0.south) -- (out.north west);
+\draw[arr] (m1.south) -- (out.north east);
+\end{tikzpicture}

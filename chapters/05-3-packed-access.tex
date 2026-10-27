@@ -1,0 +1,76 @@
+LUT factorisation reduces the query-specific table; code layout determines
+how lanes fetch each candidate's table indices. These are separate
+optimisations. The scan assigns neighbouring lanes to neighbouring
+candidate occurrences, so its broad phase benefits from storing codes
+by subspace across candidates rather than storing each candidate's full
+primary code contiguously.
+
+\subsection{Address mapping and four-byte packing}
+
+Let $o_\ell$ be the start of inverted list $\ell$, $r$ the row within
+that list and $p=o_\ell+r$ its physical position. If $P[m,p]$ denotes
+the eight-bit code for primary subspace $m$, the byte-oriented scan copy
+stores it at byte offset $mN+p$. Candidate-major storage would instead
+use $pM+m$. When lanes visit consecutive positions within a list, the
+former makes their accesses at fixed $m$ adjacent. At list boundaries,
+positions can jump, so the mapping does not guarantee one contiguous
+transaction for every warp.
+
+The packed representation combines four subspace codes of the same
+candidate into one unsigned word:
+\begin{equation}
+ W[j,p]=\sum_{t=0}^{3}2^{8t}P[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(W[j,p])=4(jN+p).
+ \label{eq:5-packed-layout}
+\end{equation}
+The four codes are recovered exactly by
+$(W[j,p]\gg(8t))\mathbin{\&}255$. Each recovered code then supplies the
+high and low nibble indices in \cref{eq:5-lut-factorisation}. Packing
+four subspaces is distinct from Cartesian splitting of one subspace's
+eight-bit label, and from packing codes for four different candidates.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/packed-access}
+\caption{Packed candidate-parallel access, showing a subset of warp lanes.
+At fixed word group $j$, consecutive positions access adjacent four-byte
+words. Each word contains four subspace codes of one candidate. Unpacking
+preserves each code byte; LUT splitting happens afterwards. The diagram
+illustrates addresses, not a measured number of memory transactions.}
+\label{fig:5-packed-access}
+\end{figure}
+
+The build path explicitly repacks the $[M,N]$ byte array into
+$[M/4,N]$ words. Merely reinterpreting the original byte array as
+\texttt{uint32\_t} would combine consecutive candidate bytes rather
+than the required subspaces. The implementation requires $M$ divisible
+by four and rejects a partial final word. The repack reads and writes
+$NM$ code bytes once at construction, with old and new storage briefly
+coexisting; it is outside the search timing boundary.
+
+\subsection{What packed access saves, and what it preserves}
+
+At the source level, a candidate now obtains four codes with one word
+load instead of four byte loads, followed by shifts and masks in
+registers. Within a contiguous list segment, 32 lanes request a logical
+128-byte word window. Actual transactions depend on alignment, active
+lanes and the memory hierarchy. A fourfold reduction in source-level
+load operations does not establish a fourfold reduction in transactions
+or elapsed time.
+
+The logical payload remains $M$ bytes per candidate: this repacking
+does not further compress the index. Both byte and word alternatives
+already organise the scan copy by subspace or subspace group. The
+historical on/off comparison therefore measures the net effect of the
+packed layout and its load/unpack path, not the isolated contribution
+of transposing candidate-major storage. It also cannot uniquely separate
+instruction count, addressing and cache effects.
+
+\Cref{sec:7-3} reports 48 matched byte/word configurations with throughput
+ratios $1.012$--$1.658\times$. Each arm has one aggregate rate, so these
+records provide weaker variability evidence than the newer repeated
+LUT sweep. The integer representation identity is exact, while the
+observed recall spread of at most $10^{-4}$ belongs to the complete
+measured execution. The method claim is preservation of code values
+with fewer load/address operations, qualified by the experiment's
+measurement scope.

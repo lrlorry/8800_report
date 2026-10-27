@@ -1,0 +1,51 @@
+探针选择发生在主码扫描之前，选择的是倒排列表，而不是数据库向量保留候选。对 IVF 中心 $\mu_i$，选择器对以下计算所得 FP32 路由分数排序：
+\begin{equation}
+ s_i=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+ \qquad (s_i,i)\ \text{ordered lexicographically}.
+ \label{eq:5-probe-score}
+\end{equation}
+省略共同的查询范数不改变中心排序。与主码平方距离表不同，这些分数可以为负。所需输出是按分数排序的前 $P=\min(n_{\rm probe},n_{\rm list})$ 个中心 ID，并列时较小列表 ID 优先，以及它们列表长度的前缀偏移。
+
+\subsection{Radix 选择与确定性排序}
+
+v65 选择器对逐渐填充的候选缓冲区反复执行 bitonic 排序。v69 替代方案仍为每条查询使用一个 block，但通过四轮从最高有效字节开始的 radix pass 确定截断值。每轮只统计匹配此前已选前缀的 key，再找到包含剩余顺序统计量的 bin。四轮之后，得到 cutoff key 及仍需选择的同 cutoff 条目数。
+
+浮点映射先将正负零均规范化为正零，再对 32-bit 表示 $u$ 作变换：
+\begin{equation}
+ F(u)=\begin{cases}
+       \mathop{\sim}u,&\text{if the sign bit is set},\\
+       u\mathbin{|}2^{31},&\text{otherwise}.
+      \end{cases}
+ \label{eq:5-probe-key}
+\end{equation}
+对非 NaN 浮点数，它保持数值顺序，包括负分数和无穷；规范化使相等的零具有同一 key。这与\cref{eq:5-packed-key}的非负分数编码不同。NaN 不属于选择器的排序契约。每轮使用相同、明确舍入的 \texttt{fma} 表达式重新计算分数，因此轮次改变不会改变 key。
+
+直方图有 256 个 bin 和 32 份 lane 副本，仅计数器就占 32\,KiB。副本将同一 warp 内对热门 bin 的原子更新分开，不同 warp 之间仍可能竞争。这是以共享存储和归约工作换取更分散的直方图更新，不是消除全部竞争。
+
+收集阶段先取得所有小于 cutoff 的 key。如果等于 cutoff 的 key 过多，就按 ID 顺序重新扫描，通过 ballot 和前缀计数选取恰好所需数量、且列表 ID 最小的成员。因此最终并列子集不由原子到达顺序决定。随后，对 $P$ 个已选条目分别统计有多少其他已选 key 在 $(s_i,i)$ 顺序中排在它之前，再写入相应名次。这无需排序全部中心，就恢复了确定性的有序输出。
+
+最后，block 前缀扫描生成所选列表长度的偏移和总候选数。当 $n_{\rm probe}>n_{\rm list}$ 时，实现通过重复最后一个已选 ID 填充 ID 数组，但将多余条目的长度置为零，不会再次扫描同一列表。这里假设中心集合非空，且请求探针数为正。
+
+\subsection{成本与独立正确性契约}
+
+直方图和收集各轮会重复访问中心分数行；名次统计需要 $O(P^2)$ 次比较。因此该算法不是对任意探针数都具有统一线性成本的替代品。较大的 $P$ 同时增加排序工作与已选条目的共享存储，而中心集合较小时也仍需预留直方图空间。Radix selection 是已有选择技术；这里的贡献是它在该查询流水线中的确定性集成及实测执行权衡。
+
+\begin{table}[tbp]
+\centering
+\caption{各选择阶段的对象、并列规则和 reference checks 不同。一个阶段的证据不能建立另一阶段的正确性。}
+\label{tab:5-selection-contracts}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+阶段 & 排序对象 & 并列 key & 对应证据 \\
+\midrule
+探针 & 中心路由分数 & 列表 ID & 合成 ID、偏移与总数；真实输入 dump \\
+主码 & 已访问候选的主码分数 & 分组路径中的物理位置 & local／merge 证明；独立界／共享界检查 \\
+最终 & 保留候选的精排分数 & 数据库 ID & 全 $c$ 选择代码；残差／输出比较 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+归档探针 checker 报告 1,792 个用例，与早期选择器比较 ID、偏移和总候选数，差异为零。输入分布覆盖大量并列、全部相等、混合正负零、大部分为无穷和极大量级；还覆盖请求探针数大于列表数的情况。这是针对探针原语的有限测试，不是主码 top-$c$ 或原空间精确近邻的证明。
+
+\Cref{sec:7-4}给出真实查询一致性检查、阶段计时和端到端对照，也保留了 Vogue 跨进程异常：probe／primary dump 匹配不意味着最终流水线输出必定相同。可选 v70 FP16 路由改变分数精度，属于独立近似；探针高重合度或 recall 不变，都不能使其归入 FP32 等价性主张。

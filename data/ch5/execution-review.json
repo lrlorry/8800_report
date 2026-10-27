@@ -1,0 +1,92 @@
+{
+  "review_date": "2026-10-28",
+  "timezone": "Australia/Sydney",
+  "scope": "Offline source review for Sections 5.2, 5.3, 5.6 and 5.7; no GPU experiment or implementation modification.",
+  "analysis_checkout": "218fd2ed9110722a18bad841941e683fd0c1eda5",
+  "inputs": [
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v69_probesel/search.cu",
+      "sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v69_probesel/search.cuh",
+      "sha256": "6cc63c57c69c16e17c9ec53cc2967f6a2d60155d6a1697e126f9587cf2890faf"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v69_probesel/jhq_gpu_index.cu",
+      "sha256": "504f631427cbfa644c87d5cc4e6535ee2b1b53e90fffd67e1f2c5725c39797c1"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v69_probesel/encode.cu",
+      "sha256": "b4fc992a3ca2671dccef20d98bbb3e14a50aeca6fe088294f0f2a6ae1428c1f7"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v71_lutgroups/search.cu",
+      "sha256": "cc6a81db23cf7045590084e13f7201ba89231fa72b6d69d939808cdb60fc1ff7"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v71_lutgroups/search.cuh",
+      "sha256": "5193a3af4d360bf7ba3668b10c233235a3034b834396128a198daf089b50174f"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v71_lutgroups/jhq_gpu_index.cu",
+      "sha256": "f938265fb787cfc0ebfcfee752d156612374c6302b39a90af8997e1222ccbfe3"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v59_lutgroups/search.cu",
+      "sha256": "f7e1b8f52bc8b613695112f433a508d270bb8fa3900755aeac0eca694ee9fb52"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "scripts/run_lut_layout6.sh",
+      "sha256": "fd54437bf7593f844cdec0674037763ad6808d8b1d3989696f350a2a37e07e23"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "paper_adc2026/data/layout6.log",
+      "sha256": "b2e62e42fddde63e42896608f1a1618c691dec1f8b3808b64319ddcc7603de1d"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "paper_adc2026/ADC/MethodPart1_ADC.tex",
+      "sha256": "faba3cd2b321b1b7edf968f4231619a497ee9cd9b75c4088d4ca12084fb43122"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/warp_refine/WARP_REFINE_REPORT.md",
+      "sha256": "f7eef5f9f01f45dbe3239aa70c15da0377e4ed050cb83864858e8fff05597eee"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/warp_refine/raw/summary.json",
+      "sha256": "c812770998694b5d55c577c00199994d5eb2bc05bdb631eeb9fb5835faaca755"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/practical_opt/probe_select_test.py",
+      "sha256": "b839e3b2937f64d114afaefb91fe5c2bc26d0339ff090965689370e57994c419"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/practical_opt/FINAL_REPORT_CN.md",
+      "sha256": "e8551072ddedc5b57d3a69776af41da13922b0c05116894f301dbca8dd124bc9"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/practical_opt/v69_results/probe_test.txt",
+      "sha256": "1aee5bf5619ff076f2fd66691565a63a27eee2f3f99dbf0d62edd4091b7c6cbf"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/practical_opt/v69_results/v69_summary.json",
+      "sha256": "c286d310b2497a7759db3ccd63c5eb9693f7a59b8517d0b891bf42bcefe86eb2"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/practical_opt/v69_results/dumps.sha256",
+      "sha256": "536cb4511ecc4031ae48659569b0a14d26ec7ef05c8bdac4e37746873e36dd00"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/practical_opt/v70_results/v70_summary.json",
+      "sha256": "750daf572b05806a2604a49d14350906904156986298bf0317b74adb1dd85468"
+    }
+  ],
+  "chapter7_audit_sha256": "e75be69102050e107de2e549549765fcb28d446452fa7875542f903a74cc323e",
+  "refined_score_contract": "D_P + ||q-rhat||^2 + 2<phat,rhat> = ||q-phat-rhat||^2 + ||q||^2 in real arithmetic, all in transformed coordinates.",
+  "final_selection_scope": "At least k finite-scored valid survivors with unique database IDs; no guarantee for degenerate pools inferred.",
+  "probe_tests": {
+    "cases": 1792,
+    "failing": 0,
+    "status": "Existing archived result; not rerun."
+  }
+}

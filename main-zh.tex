@@ -1,0 +1,48 @@
+% Chinese reading copy: make pdf-zh (XeLaTeX).
+% Chapters 5 and 7 are translated; other unfinished text remains a skeleton.
+\documentclass[a4paper,12pt,oneside,openany]{report}
+
+\input{config/metadata}
+\renewcommand{\thesistitle}{JHQ-GPU：面向表示的 GPU 近似最近邻搜索与工作负载级精排预算校准}
+\input{zh/preamble}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{zh/title}
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\input{frontmatter/declaration}
+\input{frontmatter/abstract}
+\input{frontmatter/acknowledgements}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\input{frontmatter/notation}
+
+\clearpage
+\pagenumbering{arabic}
+\input{chapters/01-introduction}
+\input{chapters/02-background}
+\input{chapters/03-methodology}
+\input{chapters/04-architecture}
+\input{zh/chapters/05-gpu-execution}
+\input{chapters/06-refinement}
+\input{zh/chapters/07-evaluation}
+\input{chapters/08-discussion}
+\input{chapters/09-conclusion}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+\input{appendices/a-reproducibility}
+\input{appendices/b-supplementary}
+\input{appendices/c-author-tools}
+\ifdraftthesis
+  \input{appendices/d-template-examples}
+\fi
+\end{document}

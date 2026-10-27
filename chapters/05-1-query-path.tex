@@ -1,0 +1,67 @@
+For a fixed index, a query is transformed to $q'=\Pi q$, routed to
+selected inverted lists, screened using primary codes and refined only
+on the surviving candidates. The final selector returns $k$ database
+IDs and their computed scores. \Cref{fig:5-query-path} distinguishes the
+three runtime selection decisions; the ground-truth ordering is an
+external evaluation object.
+
+Four quantities must be kept separate:
+\begin{align}
+ s_i(q)&=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+                   &&\text{centroid routing score},\nonumber\\
+ \primarydist(q,x)&=\|q'-\widehat p(x)\|_2^2,
+                   &&\text{primary score},\nonumber\\
+ \refineddist(q,x)&=\|q'-\widehat p(x)-\widehat r(x)\|_2^2
+                       +\|q'\|_2^2,
+                   &&\text{refined ranking score},\nonumber\\
+ \rawdist(q,x)&=\|q-x\|_2^2,
+                   &&\text{raw-space distance}.
+ \label{eq:5-ranking-objects}
+\end{align}
+Here $\mu_i$ is an IVF centroid in transformed coordinates,
+$\widehat p(x)$ is the primary reconstruction and $\widehat r(x)$ is
+the decoded residual. The runtime refined score includes a query-only
+constant, as derived from the implemented correction in \Cref{sec:5-6}.
+It preserves the ordering of reconstructed distances for a fixed query,
+but neither it nor the primary score is the original-vector distance.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/query-path}
+\caption{Query execution and its separate selection boundaries. Routing
+selects lists, primary screening selects vector candidates, and final
+selection ranks refined survivors. Raw-space ground truth is used for
+evaluation; it is not an input to these search decisions.}
+\label{fig:5-query-path}
+\end{figure}
+
+Routing computes centroid scores and selects $n_{\rm probe}$ lists
+(\Cref{sec:5-7}). Concatenating those lists defines the visited universe
+$U$ of size $n_c$. An exact probe primitive selects the requested
+centroids under the computed routing scores; it does not certify that
+$U$ contains every raw-space neighbour. The prefix offsets also expose
+the actual candidate counts needed for scanning and scheduling.
+
+Primary screening builds query-specific LUTs and reads primary codes
+for the visited vectors. It retains up to
+$c=\max\{k,\lceil\alpha k\rceil\}$ candidates under $\primarydist$.
+With fixed table grouping, score evaluation costs $O(n_cM)$, in addition
+to local-selection and merge work. \Cref{sec:5-2,sec:5-3} address table
+and code access; \Cref{sec:5-4,sec:5-5} establish selection invariants
+and examine the cost of exposing more parallelism.
+
+Residual scoring then reads residual codes only for valid survivors,
+performs $O(cd)$ coordinate work and supplies $\refineddist$ to the final
+selector (\Cref{sec:5-6}). In this path, compressed reconstructions replace
+search-time raw-vector reads. The implementation's final repeated-minimum
+selector scans $c$ slots for each of $k$ outputs, with additional block
+reduction work.
+
+Deterministic ordering keys attach tie rules to these scores: centroid
+selection uses list ID, complete-key primary selection uses physical row
+position, and final selection uses database ID. The query-centric legacy
+primary path has a different cutoff-tie rule, qualified in
+\Cref{sec:5-4,sec:5-5}. Consequently, score preservation, survivor-set
+agreement, ordered-output equality and raw-space recall are separate
+claims. Chapter 7 tests them at their respective boundaries rather than
+treating a single unchanged recall value as proof of the whole pipeline.

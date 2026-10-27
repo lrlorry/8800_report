@@ -1,0 +1,163 @@
+Full local top-$c$ retention establishes correctness, but can produce
+$Gc$ intermediate survivors for only $c$ global outputs. The shared-bound
+component (v63) reduces this excess selection work. The scheduler (v65)
+then chooses how much scan parallelism to expose. Both operate at a fixed
+refinement budget; choosing that budget is the separate problem in
+\Cref{ch:refinement}.
+
+\subsection{A complete-key upper bound with explicit witnesses}
+
+Let $K_{(c)}$ be the global $c$th key when $|U|\geq c$. If a group holds
+$c$ distinct, fully scored candidates, the largest key among those
+witnesses, $\tau_g$, satisfies $K_{(c)}\preceq\tau_g$. There are already
+$c$ candidates no later than $\tau_g$ in the global universe. The shared
+bound is initialised to a top sentinel and updated by
+\begin{equation}
+ \tau\leftarrow\min_{\prec}(\tau,\tau_g).
+ \label{eq:5-shared-update}
+\end{equation}
+No bound is published from fewer than $c$ valid candidates. If the entire
+universe has fewer than $c$, no group can publish such a bound and all
+valid candidates remain eligible.
+
+\begin{proposition}[Safe rejection by a witnessed bound]
+\label{prop:5-shared-bound}
+Assume fixed keys, publications backed by $c$ distinct candidates, and
+reads that return either the initial sentinel or one complete published
+key. Rejecting a candidate only when $K_q(x)\succ\tau$ cannot remove a
+global top-$c$ candidate, irrespective of publication timing.
+\end{proposition}
+\begin{proof}
+Every published bound is at least $K_{(c)}$, and the minimum of such
+bounds is also at least $K_{(c)}$. A global winner satisfies
+$K_q(x)\preceq K_{(c)}\preceq\tau$, so it is never rejected. An older
+bound remains an upper bound and merely permits extra work. Publications
+made after earlier safe rejections remain valid: any $c$ retained
+distinct candidates still supply $c$ witnesses, whether or not they are
+the best $c$ of their group.
+\end{proof}
+
+This last distinction matters. With sharing enabled, a group need not
+return its own full local top-$c$: it can discard locally competitive
+candidates already certified as globally uncompetitive. Correctness
+requires the union still to contain every global winner. The truncated
+merge argument of \Cref{prop:5-local-coverage} then applies to that union.
+Candidates equal to the shared bound remain eligible, including the
+witness that established it. The implemented admission condition is
+\begin{equation}
+ K_q(x)\prec\lambda_g
+ \quad\text{and}\quad
+ K_q(x)\preceq\tau_{\rm seen},
+ \label{eq:5-admission}
+\end{equation}
+where $\lambda_g$ is the local compaction threshold and
+$\tau_{\rm seen}$ is the group's last observed shared bound.
+
+\subsection{Publication, filtering and implementation limits}
+
+For nonnegative FP32 scores generated as sums of squares, the code packs
+the distance bits and nonnegative position into an unsigned 64-bit key:
+\begin{equation}
+ E(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
+ \label{eq:5-packed-key}
+\end{equation}
+Unsigned integer comparison then agrees with the lexicographic order.
+This relies on positive-zero encoding and excludes NaNs and negative
+scores; it is not a general signed-float encoding. Positive infinity
+orders after finite scores, and the all-one initial word orders after
+valid encodings. Invalid positions are excluded from bound publication.
+These are score-domain and representation preconditions, not properties
+inferred from unchanged recall.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/shared-bound}
+\caption{Shared complete-key filtering for one scan group. A candidate's
+full primary score is computed before admission. A valid $c$-candidate
+witness set can tighten the per-query bound; a stale but complete bound
+only weakens filtering. Final prefix trimming reduces the valid merge
+input, while the allocated workspace capacity remains unchanged.
+The whole-key-read premise is qualified in the text.}
+\label{fig:5-shared-bound}
+\end{figure}
+
+One thread per block reads the query's bound for each chunk. After
+compaction, it publishes the local $c$th key through 64-bit
+\texttt{atomicMin} when enough valid entries exist. At scan completion,
+another publication and a binary search retain only the sorted prefix
+no later than the observed bound. There is no cross-block barrier or
+wait for other groups. A late update can leave extra entries in another
+group's output, which the exact merge safely removes. Bounds are reset
+before every search in the same stream, and the merge runs after the
+scan kernel finishes.
+
+The read premise deserves a separate qualification. The archived code
+publishes atomically but polls through \texttt{volatile} 64-bit loads.
+CUDA does not guarantee atomicity or inter-thread synchronisation for
+\texttt{volatile} accesses \cite{cuda_programming_guide}. Portable
+realisation of the proposition requires device-scope atomic reads as
+well. The recorded 48 paired checks in \Cref{sec:7-4} support observed
+agreement for the tested build, not a language-level concurrency proof.
+An atomic-read revision and its GPU revalidation have not been performed.
+
+\Cref{fig:5-shared-bound} also identifies what this optimisation saves.
+Every scanned candidate still loads its primary code and computes its
+complete primary score. The bound avoids some buffer appends, local
+sorts and intermediate writes, and shortens the lists consumed by the
+merge. It does not implement partial-distance early termination or
+reduce the number of primary scores evaluated. Its benefit competes
+with polling and atomic-update overhead. The observed paired speedup
+range includes a slight slowdown, as reported in \Cref{sec:7-4}.
+
+\subsection{Choosing parallelism without changing the budget}
+
+For batch size $b$, grouped scanning launches $bG$ blocks instead of $b$.
+This can expose otherwise unavailable parallelism, but duplicates table
+staging and local selection and introduces a merge. The fixed-group
+design therefore cannot be uniformly preferable. Smaller static quotas
+would reduce intermediate storage, but require a certificate or fallback
+to preserve coverage; the pilot's concentrated survivor distribution
+motivated using witnessed thresholds instead (\Cref{sec:7-4}).
+
+The implemented scheduler uses a fill proxy and a workload-skew
+statistic. Let $T$ be scan threads per block, $H$ the number of SMs times
+the maximum resident threads per SM, and
+$v=\operatorname{sd}(n_c)/\operatorname{mean}(n_c)$ the candidate-count
+coefficient of variation. Its rule is
+\begin{align}
+ G_{\rm fill}
+ &=\max\!\left(\{1\}\cup
+       \{g\in\{2,4,8\}:bgT\leq0.6H\}\right),
+       \label{eq:5-fill-rule}\\
+ G_{\rm skew}&=
+   \begin{cases}4,&v\geq0.3,\\1,&v<0.3,\end{cases}
+ \qquad
+ G_{\rm chosen}=\max(G_{\rm fill},G_{\rm skew}).
+ \label{eq:5-skew-rule}
+\end{align}
+The skew rule may override the fill limit. In the evaluation harness,
+$v$ is calibrated using 512 database vectors as pseudoqueries and a
+fixed routing configuration; it uses no ground-truth labels. This is
+distinct from Chapter 6's sampled output-agreement calibration. Once
+calibrated, scheduling uses the batch size and stored statistic without
+an additional per-search host readback. The constants were fitted on
+four pilot configurations and then evaluated on further configurations.
+
+When $G_{\rm chosen}=1$, the implementation selects the faster
+query-centric path, labelled $G=0$. It leaves the index, probe count
+and refinement budget unchanged, but inherits that path's distance-only
+cutoff ties. The common-total-order premise must therefore be checked
+before claiming identical survivor sets across all scheduler choices.
+\Cref{sec:7-6} reports the separate integrated-output checks and the
+scheduler's measured gains and regret.
+
+The rule is a heuristic rather than an occupancy calculation or a
+latency oracle: it omits register pressure, shared-memory residency,
+budget-dependent compaction cost and merge cost. A frozen pseudoquery
+statistic can also misrepresent future queries. In the recorded campaign
+the largest regret occurs at batch 256, where a fixed-group alternative
+is about $1.217\times$ faster. Thus the design contribution is a tested
+combination of parallel candidate scanning, witnessed filtering and
+workload-dependent execution, not a new universal top-$c$ identity or a
+guarantee of optimal scheduling. Refinement and final top-$k$ consume
+the resulting valid survivors as described in \Cref{sec:5-6}.

@@ -1,13 +1,151 @@
 \chapter{Reproducibility and Experiment Manifest}
 \label{app:reproducibility}
+
 \section{Source and Build Environment}
-\draftnote{Record immutable source commits, compiler options, GPU and host
-details, dependencies, and how the binaries were built. Distinguish the thesis
-repository from the implementation repository.}
+
+Chapter 7 is an offline analysis of archived measurements in the sibling
+\texttt{JHQ\_GPU} repository. The analysis checkout is recorded in
+\path{data/ch7/audit.json}; this is distinct from each experimental run's
+source head. \Cref{tab:a-components} maps component names to implementations,
+recorded provenance and executable names. A run-head commit identifies
+source visible to a run, not a cryptographic identity of its binary.
+The archives do not supply a complete collection of executable SHA-256
+hashes or immutable trained-state hashes. Missing identities are left
+explicit rather than reconstructed from the current checkout.
+
+\begin{table}[tbp]
+\centering
+\caption{Component and run provenance. ``Report'' distinguishes a version
+stated in an experiment report from a raw run-header commit. The exact
+E1 build state is not inferred from a baseline's metadata.}
+\label{tab:a-components}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.16\linewidth}>{\raggedright\arraybackslash}p{.22\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Component & Recorded source evidence & Executable or harness & Run/state source \\
+\midrule
+E1 final pipeline & Environment logs include \texttt{a31c22d}; extensions
+have their own metadata & \path{demo_jhq_v69_batch};
+\path{bench_cuvs.py}; \path{bench_rabitq_sweep} & E1 \path{RAW_RESULTS/};
+shared trained-state cache \\
+Lane refinement (v61) & Raw header \texttt{b37efa4} &
+\path{demo_jhq_v61_ab} & \path{warp_refine/raw/run.log};
+\path{arms6_cache} \\
+Grouped scan (v62) & Report: \texttt{862543a}; run script
+\texttt{e0d0518} & \path{demo_jhq_v62_batch} &
+\path{pipeline_v62/raw/}; recorded compiler flags \\
+Shared bound (v63) & Implementation and build flags archived;
+no run-head claim inferred here & \path{demo_jhq_v63_batch} &
+\path{pipeline_campaign/exp2/v63_raw/} \\
+Batch scheduling (v65) & Raw header \texttt{d425ab8} &
+\path{demo_jhq_v65_batch} & \path{exp47/raw/run.log};
+\path{arms6_cache} \\
+Radix probe (v69) & Comparative runs and source archived;
+binary SHA not recorded & \path{demo_jhq_v65_batch},
+\path{demo_jhq_v69_batch} & \path{practical_opt/v69_run.sh};
+\path{v69_results/dumps.sha256} \\
+Budget / table sweep & Raw header \texttt{d5e1526} &
+\path{demo_jhq_v69_budget_arms}; \path{demo_jhq_v71_gN_batch},
+$N\in\{1,2,4,8\}$ & \path{adc_v69/RAW/}, \path{RAW_LUT/};
+\path{arms6_cache} \\
+Large int8 rerun & Stella degree-64 metadata \texttt{ad433a4} &
+\path{bench_cuvs.py} & \path{adc_v69/RAW_BIG/}; isolated processes \\
+Historical budget & Raw header \texttt{bf31b41} (v57 family) &
+\path{demo_jhq_budget_arms.cu} harness &
+\path{paper_adc2026/data/budget_arms.log} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The principal environment is RTX 5090, driver 595.71.05 and CUDA 13.0;
+E1 uses cuVS 26.08.01. Release JHQ targets compute\_80 PTX, JIT-compiled
+on the device. Native-library baselines and C++/Python interface
+boundaries differ. E1 improves comparability by reusing resources,
+preallocating outputs, using pinned input staging and timing int8 query
+quantization. JHQ and baseline output buffers still have different host
+memory types. These details limit interpretations of small margins.
+
+The adaptive call budget uses a warm-up interval containing the first
+call. In the Python baseline harness that interval also includes initial
+result conversion and validation before the decision; it is not a pure
+steady-state latency measurement. The 274 reduced-call points therefore
+include a RaBitQ point above 507 kQPS. Actual calls and five round arrays
+remain in the JSONL records. The default exact-selection setting was
+also inspected at the budget run's historical source head, not merely
+in the current checkout: \texttt{JHQ\_EXACT\_TOPCK=0} opts into the old
+lossy primary-retention implementation. Final selection scans all
+retained refined scores and breaks ties by database ID.
+
 \section{Data and Trained States}
-\draftnote{Document dataset identifiers, preprocessing, query and GT hashes,
-split rules, trained-state cache identities, and exclusions.}
+
+The six database shapes and actual query counts are stated in Chapter 7.
+The comparisons use the same exported vectors and squared-L2 ground
+truth per dataset. The budget split uses even query indices for
+calibration and odd indices for evaluation; Stella has 500/499 queries.
+Search sweeps load the recorded \path{arms6_cache} trained states,
+whereas cold-build records explicitly start without trained state.
+The chapter's file ledger hashes analysis inputs, not the full underlying
+vector files or every cache object; it does not certify unrecorded data
+or binary identities.
+
+The Vogue probe comparison stores matching SHA-256 hashes for the
+one-group, batch-8 probe/primary dumps, covering all 1,000 queries.
+Its baseline identity run reports recall 0.9642; the same baseline binary's
+two subsequent timing runs report 0.9644. The dump controls a specific
+routing/screening boundary. It does not store a complete cross-process
+residual-code, query-rotation or score trace and therefore does not identify
+the numerical root cause downstream.
+
+Two exclusions affect the scale evidence. Initial large-baseline builds
+retained an earlier index through a closure; successful isolated reruns
+supersede those attempts, including Stella CAGRA int8. Separately,
+Stella's 999-query pool causes the full-batch harness to skip batch 1,000.
+Top-level corrected large-search records use batch 999; superseded
+skipped-search files supply no throughput points. Cold-build logs are
+used for train/add time even where their search list is empty.
+
 \section{Result-to-Figure Mapping}
-\draftnote{Map every empirical figure to its raw files, analysis script,
-configuration, metric definition, and reproduction command. Explain exactly
-what cold construction includes.}
+
+\Cref{tab:a-figures} maps the empirical figures to their measurement families.
+All Chapter 7 empirical plots and numeric tables are generated by
+\path{scripts/build_ch7.py}; \path{data/ch7/sources.csv} gives consumed
+input paths relative to \texttt{JHQ\_GPU} and their hashes. Historical
+v57 and newer budget comparisons retain separate versions and timing
+protocols. The memory decomposition combines measured totals with an
+explicit component model; its unaccounted remainder remains visible.
+
+\begin{table}[tbp]
+\centering
+\caption{Chapter 7 result-to-figure mapping. Paths below are relative to
+\texttt{JHQ\_GPU}; detailed file identities are in the hash ledger.}
+\label{tab:a-figures}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Figure & Raw source \\
+\midrule
+\ref{fig:7-frontiers} & \path{experiments/comp8800_poster_e1/RAW_RESULTS/};
+\path{analyze.py} frontier and interpolation definitions \\
+\ref{fig:7-lut} & \path{experiments/adc_v69/RAW_LUT/v71_g*.json} \\
+\ref{fig:7-packing-refinement} & \path{paper_adc2026/data/layout6.log};
+\path{experiments/warp_refine/raw/ab/} and \path{raw/summary.json} \\
+\ref{fig:7-budget-risk}, \ref{fig:7-budget-payback} &
+\path{experiments/adc_v69/RAW/budget_v69.log}; actual 500/499 query counts \\
+\ref{fig:7-batch} & \path{experiments/pipeline_campaign/exp47/raw/bench/};
+\path{experiments/pipeline_v62/raw/perf/stages_summary.json} \\
+\ref{fig:7-build} & E1 and \path{adc_v69/RAW_BIG/} cold-build logs;
+baseline index records, with int8 dataset quantization \\
+\ref{fig:7-memory} & \path{adc_v69/RAW_LUT/v71_g2_*_np128.json};
+modelled component sizes in the chapter analysis script \\
+\ref{fig:7-large} & \path{experiments/adc_v69/RAW_BIG/} corrected top-level records \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+To regenerate the report, run \texttt{make ch7-data} and then
+\texttt{make pdf}. The optional Chinese reading copy uses
+\texttt{make pdf-zh}; its table translator reuses numeric data from the
+English tables. Regeneration is an offline consistency check, not a new
+GPU measurement. The original vectors, trained states, matching GPU
+software environment and executable build would be needed for an
+independent benchmark rerun.

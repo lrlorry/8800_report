@@ -1,0 +1,100 @@
+第 5.4、5.5 节：写作与源码核对记录
+日期：2026-10-27
+范围：完成中英文两节及方法图，编入 thesis.pdf / thesis-zh.pdf。
+第 5 章其余五节仍为骨架；本轮未重跑 GPU，未修改 JHQ_GPU 实现。
+
+写作依据
+========
+6.pdf 的 5.4 / 5.5 蓝图；本地 thesis-marking-guide.txt 关于技术掌握、
+替代方案比较和批判性评价的要求。后者是通用 Honours 指导，不据此
+承诺 COMP8800 满分。蓝图中的 1,200 / 800 words 作为规划而非硬字数。
+
+交付结构
+========
+chapters/05-gpu-execution.tex 保留原 5.1--5.7 节号，分别引入：
+* chapters/05-4-global-selection.tex
+* chapters/05-5-bound-scheduling.tex
+对应中文文件位于 zh/chapters/，main-zh.tex 改用中文第 5 章入口。
+两张图为 figures/ch5/global-selection.tex 和 shared-bound.tex，使用
+TikZ，随主文档编译；图中 key 数值是示意，不是实验观察。
+
+5.4 逐项核对
+============
+1. 分组对象是按 probe 顺序拼接后的候选区间，不是平均分配列表。
+   device 端切点为 floor(total*g/G)，长列表可以跨组。
+2. key_less 使用 (primary score, physical row position)；position 不是
+   final tie-breaking 的数据库 ID。唯一性依赖查询内不重复访问同一
+   物理行；独立于划分的选择还依赖同一候选分数保持不变。
+3. 独立组保留完整 local top-c；形式证明全局优胜者包含在局部并集中，
+   并证明逐轮截断合并保持结果。不采用无证书的 c/G 局部配额。
+4. jhq_compact_topck_lex 排序 cap 个键，保留 min(count,ck)。
+   cap 为二的幂且至少 ck+BLOCK；每 chunk 至多 BLOCK 项，下一 chunk
+   容量不足时先压缩。不能将旧的每线程 K_LOCAL 配额当作默认精确实现。
+5. merge_group_topk_kernel 每查询一个 256 线程 block，逐轮 pairwise
+   merge-path；使用有效计数，只保留 min(ck,a+b)。
+6. 分数/位置 scratch 分别为 batch_cap*G*ck 和 batch_cap*(G/2)*ck，
+   每对 8 字节；计数和每查询 64-bit 界另计。不混同驻留工作区与临时
+   有效写入量，缩短输出不等于释放分配容量。
+7. 排序缓冲区的 (INF,INT_MAX) 与最终输出的 (INF,-1) 哨兵分开解释。
+   空组/短组按有效计数处理；G=1 直接输出；G=0 表示旧的单查询路径。
+8. G=0 默认精确选 score top-c，但 cutoff 的 tie policy 不同。旧有损
+   路径只能在允许的构建里显式选择；paper-faithful 构建强制精确。
+
+5.5 逐项核对
+============
+1. 上界来自 c 个完整评分且互不相同的真实候选，不足 c 不得发布。
+   关键不变量为 K_(c) <= tau；只拒绝 key > tau，等于界的见证保留。
+2. 启用共享界后，组输出可以不再是自身完整 local top-c。所需性质是
+   仍覆盖全部 global winners；不能机械照搬“每组结果精确 local top-c”。
+3. 旧的完整上界仍安全。证明要求观察到的值确实是完整已发布 key；
+   不能用“允许 stale”掩盖撕裂读取或任意错误的过低界。
+4. key64 为 float bits 放高 32 位、position 放低 32 位。顺序保持需
+   非负分数、正零表示、无 NaN 及有效非负 position。它不是通用的
+   signed-float 映射，也没有声称代码已显式验证所有非法输入。
+5. 分组 kernel 完整累加 primary score 后才比较 admission；共享界
+   节省追加、排序、中间写入与 merge，不是 partial-distance early exit。
+6. 每次搜索先 reset qkey，同一 stream 中 scan 完成后再 merge。各组
+   不等待其他组；扫描结束再按所见界裁剪有序前缀。
+7. 新发现：写端 atomicMin，读端 volatile unsigned long long load。
+   CUDA 13.0.1 文档 18.5.3.3 不保证 volatile 原子性/线程间同步。
+   因此命题明确列出完整 key 读取前提；实测 48 组通过与可移植的
+   并发证明分开。原子读取修订及 GPU 复验尚未做，已加入待补清单。
+8. v65 调度规则逐字对应 scheduled_groups：
+   fill 为满足 b*G*BLOCK <= 0.6*(SMs*max_threads_per_SM) 的最大
+   2/4/8，默认 1；CV>=0.3 时 skew=4，否则 1；取二者最大值。
+   chosen=1 映射到实现标签 G=0。skew 可以覆盖 fill 限制。
+9. 512 个 database pseudoqueries 由 benchmark harness 提供；CV 计算
+   使用 candidate count 的总体标准差/均值。无 GT；不是 Chapter 6
+   的 output-agreement calibration。阈值只在四个 pilot 配置上拟合。
+10. 调度不是 occupancy 模型，也不是时延 oracle；明确指出未建模的
+    寄存器、共享内存、compaction/merge 成本、分布变化及已测 regret。
+
+来源与版本
+==========
+当前 checkout 仅标识本次源码审阅状态，不冒充每次实验的 binary 身份。
+data/ch5/source-review.json 记录 checkout、消费文件 SHA-256、关键历史
+源码 SHA-256、源码断言和所用 Chapter 7 汇总文件身份。原始文件路径
+相对同级 JHQ_GPU；本清单不声称这些文件均已在公开 main 可取得。
+
+除当前源码外，本轮 git show 对照：
+* 862543a:jhq_v62_listgroup/search.cu：key、cap、merge 布局及 launch。
+* d425ab8:jhq_v65_schedule/search.cu：集成调度、共享界及 volatile 读取。
+* d5e1526:jhq_v69_probesel/search.cu：后续预算运行家族保留的相关机制。
+v63 独立消融的精确运行头未由当前源码猜测；继续采用附录 A 的归属边界。
+
+新增外部引用均查阅一手来源：
+* Johnson/Douze/Jegou，arXiv:1702.08734，GPU selection 的相关背景。
+  https://arxiv.org/abs/1702.08734
+* Green/McColl/Bader，GPU Merge Path，ICS 2012，331--340。
+  https://davidbader.net/publication/2012-gm-ba/2012-gm-ba.pdf
+* NVIDIA CUDA C++ Programming Guide 13.0.1，atomicMin 与 volatile。
+  https://docs.nvidia.com/cuda/archive/13.0.1/cuda-c-programming-guide/index.html
+  年份按官方 Toolkit Archive 中 13.0.1（September 2025）记录。
+
+证据边界
+========
+64/48 个选择检查、250/234,320 个集成比较与最大 regret 等沿用已审计
+的 Chapter 7 数据。本轮重新检查对应原始检查记录和历史源码契约，
+没有新增测点；1,792 probe cases 不用于证明 global primary top-c。
+旧 ADC 文稿的 K_LOCAL 默认路径说法不能覆盖历史源码的直接检查。
+局部覆盖恒等式与 Merge Path 是已有算法原理，不宣称为本项目首创。

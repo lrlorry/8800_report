@@ -1,32 +1,40 @@
 % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{Representation-Aware GPU Search Execution}
 \label{ch:gpu-execution}
-\draftnote{For each design, explain the original cost, alternatives, actual mechanism, correctness premises, resource cost, and matching controlled experiment.}
+This chapter addresses RQ2: how JHQ's compressed representation can support
+correct and efficient GPU execution. The transform, Cartesian primary
+codebook and residual hierarchy are inherited from JHQ \cite{jhq}; the
+focus here is their execution. The argument follows the query path from
+routing through primary selection to residual scoring. For each mechanism,
+it separates the mathematical target, implementation conditions and
+resource trade-offs, with the corresponding measurements in
+\Cref{ch:evaluation}. Workload-level refinement-budget selection is
+developed separately in \Cref{ch:refinement}.
 
 \section{Query Path and Four Distinct Ranking Objects}
 \label{sec:5-1}
-\draftnote{Distinguish raw-vector, primary-score, refined-score, and deterministic ranking-key orderings. State what each stage preserves.}
+\input{chapters/05-1-query-path}
 
 \section{Exact Cartesian LUT Factorisation}
 \label{sec:5-2}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/05-2-lut}
 
 \section{Packed Codes and Candidate-Parallel Memory Access}
 \label{sec:5-3}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/05-3-packed-access}
 
 \section{Exact Global Primary Top-c via Multi-Block Scanning}
 \label{sec:5-4}
-\draftnote{Describe candidate partitioning, exact local selection, coverage of global top-c by the local union, and merge correctness under the actual stable-position tie rule.}
+\input{chapters/05-4-global-selection}
 
 \section{Shared Complete-Key Thresholds and Execution Scheduling}
 \label{sec:5-5}
-\draftnote{Explain complete-score threshold publication, its safety invariant, and scheduling. Do not describe the shared bound as partial-distance early exit.}
+\input{chapters/05-5-bound-scheduling}
 
 \section{Lane-Cooperative Residual Scoring and Final Top-k}
 \label{sec:5-6}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/05-6-refinement}
 
 \section{IVF Probe Selection as an Independent Primitive}
 \label{sec:5-7}
-\draftnote{Separate selection of IVF probes from primary candidate selection. Associate each reference test with the primitive it actually checks.}
+\input{chapters/05-7-probe}

@@ -1,0 +1,147 @@
+{
+  "review_date": "2026-10-27",
+  "scope": "Offline source and archived-output review for Sections 5.4 and 5.5; no GPU execution or implementation changes.",
+  "analysis_checkout": "218fd2ed9110722a18bad841941e683fd0c1eda5",
+  "run_binary_hashes": "Not inferred from checkout; see Appendix A for recorded provenance.",
+  "source_access": "Local sibling checkout required; this record does not certify public availability.",
+  "inputs": [
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v62_listgroup/search.cu",
+      "sha256": "4d2a688820b248aaa0aadcc6b51199af37ed1e192603b1b7aa7ec521f7c79efb"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v63_sharedbound/search.cu",
+      "sha256": "edf4cf28452a3f9661396c685115d1c1ee7496a721fd48218c75994132a839d1"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v65_schedule/search.cu",
+      "sha256": "02295b1c95200c3bf7cec704650694852945ce5805b789a30c1a5eff7a6d501f"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v65_schedule/jhq_gpu_index.cu",
+      "sha256": "7b51e76159c93ed60b45b0ddca74253e14b36055cd7f4fb452ac60fef934a5b0"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "jhq_v69_probesel/search.cu",
+      "sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "examples/demo_jhq_batch_pipeline.cu",
+      "sha256": "ac13613c2f8ae7d8087fa5e7b0658a88824c1c5aa89dbc7eff8c3b01e2f52439"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_v62/PIPELINE_V62_REPORT.md",
+      "sha256": "05b846cefcfe1e7d04285dde3410dca30fe70995981d061e77fefa89e5787872"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_v62/raw/check/all_comparisons.txt",
+      "sha256": "580c1c9cf0c4adad10149a9d2b9e5cc6b2a5ceb17bd62df39dceb8c3a8e5509a"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/MASTER_REPORT.md",
+      "sha256": "a92aae9c3ed5c6483ae13c0b9f9437c33dc0b4eff48acb153d2b5d452f466439"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp2/raw/quota_study.md",
+      "sha256": "92e9d994dd44da1a0e0c14cde458c0c519c2f803078e4b85883ed61978fc346e"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp2/v63_raw/summary.md",
+      "sha256": "0cc0a490415ee68f23d4c83a30c3a7736875327c093b10fbc07f11933b287d67"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp2/v63_raw/build_env.txt",
+      "sha256": "2a6ae1a91c503b3261a11bc39bb273388ddf4eea6e927bd49d0d8de61f3b9fe3"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp47/raw/run.log",
+      "sha256": "6951a5d2f0c0e6aaf5e6039eec0106e52949adae9bd032cba4026a5a995aa7d3"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "paper_adc2026/ADC/MethodPart1_ADC.tex",
+      "sha256": "faba3cd2b321b1b7edf968f4231619a497ee9cd9b75c4088d4ca12084fb43122"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "paper_adc2026/ADC/MethodPart2_ADC.tex",
+      "sha256": "6d22a21fd2e495dfc2d4113dc80e8cf8f844e16de5bf6b6826c6d0fb415ab422"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_v62/raw/check/arxiv-768.json",
+      "sha256": "d384ad75614a503234081a80ed3238a2f3c20bb563a029f19e6e88cd6bfbc8f3"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_v62/raw/check/openai3-3072.json",
+      "sha256": "d983a4da780f53cf53fbe3e235603ca8478af067cf691010635601d550dbac2f"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_v62/raw/check/vogue-768.json",
+      "sha256": "2717721ff780f1be1f28b1e91a29a96e999660437f6c889716fe1f167b331115"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp2/v63_raw/check/arxiv-768.json",
+      "sha256": "a0c43548f865d7a79951e4b263cd051ca34bce677251b4ca57b5677137841e01"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp2/v63_raw/check/openai3-3072.json",
+      "sha256": "1c0dda1c354a42bd81e99fbc44c01bd44919ead6e8d15b2843a70e9bb643408c"
+    },
+    {
+      "path_relative_to_JHQ_GPU": "experiments/pipeline_campaign/exp2/v63_raw/check/vogue-768.json",
+      "sha256": "a73bb03a18f96fdfc79ae2fcebbc2fb57682c5f557c2139a9a5d5afe4b3894c8"
+    }
+  ],
+  "historical_source_checks": [
+    {
+      "commit": "862543adc405f45cf8e1c9dc5253c339c5de5888",
+      "path": "jhq_v62_listgroup/search.cu",
+      "sha256": "4d2a688820b248aaa0aadcc6b51199af37ed1e192603b1b7aa7ec521f7c79efb",
+      "inspected_contract": {
+        "lexicographic_score_position_key": true,
+        "buffer_capacity_at_least_ck_plus_block": true,
+        "merge_256_threads_per_query": true,
+        "volatile_bound_loads": false,
+        "atomic_min_publication": false
+      }
+    },
+    {
+      "commit": "d425ab8900bb2ad814aad904f28e632b507642e3",
+      "path": "jhq_v65_schedule/search.cu",
+      "sha256": "02295b1c95200c3bf7cec704650694852945ce5805b789a30c1a5eff7a6d501f",
+      "inspected_contract": {
+        "lexicographic_score_position_key": true,
+        "buffer_capacity_at_least_ck_plus_block": true,
+        "merge_256_threads_per_query": true,
+        "volatile_bound_loads": true,
+        "atomic_min_publication": true,
+        "schedule_constants_0_6_and_0_3": true
+      }
+    },
+    {
+      "commit": "d5e1526af70b55d5e84ba423224c172cee51b888",
+      "path": "jhq_v69_probesel/search.cu",
+      "sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d",
+      "inspected_contract": {
+        "lexicographic_score_position_key": true,
+        "buffer_capacity_at_least_ck_plus_block": true,
+        "merge_256_threads_per_query": true,
+        "volatile_bound_loads": true,
+        "atomic_min_publication": true,
+        "schedule_constants_0_6_and_0_3": true
+      }
+    }
+  ],
+  "recorded_output_checks": {
+    "v62": {
+      "comparisons": 64,
+      "query_comparisons": 60160,
+      "mismatches_under_recorded_checks": 0
+    },
+    "v63": {
+      "comparisons": 48,
+      "query_comparisons": 45120,
+      "mismatches_under_recorded_checks": 0
+    }
+  },
+  "chapter7_audit_sha256": "e75be69102050e107de2e549549765fcb28d446452fa7875542f903a74cc323e",
+  "concurrency_limit": "Archived shared-bound publications use atomicMin; polling uses volatile 64-bit loads. Portable whole-key atomic-read guarantee has not been established; implementation revision and GPU revalidation remain pending."
+}

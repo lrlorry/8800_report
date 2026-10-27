@@ -1,0 +1,37 @@
+第 5.1 节与章节引言补齐记录
+日期：2026-10-28（Australia/Sydney）
+
+第五章现已覆盖 5.1--5.7，5.1 与章节引言不再保留占位内容。
+本节依据已核对的 5.2--5.7 代码契约汇总查询路径，没有新增 GPU 测量。
+
+要点
+====
+* 四种排序对象为 centroid routing score、primary score、refined
+  ranking score、raw-space distance。确定性 tie key 是附加规则，
+  不代替 centroid score 作为第四种对象。
+* 区分三个运行时选择：选择 probe lists、保留 primary top-c、
+  在精排候选中选择最终 top-k。GT 仅用于评价，不是运行时输入。
+* 沿用 5.6 的精排分数公式，保留 query-only constant；不将其写成
+  直接原空间距离。限定固定索引和已访问候选的算法保证。
+* 给出 broad scan O(n_c M)、residual O(cd) 与 final repeated-min
+  扫描成本，连接到各方法节及第七章验证，不重复实验叙述。
+* 新图 query-path.tex 为概念流程，不含新实验数值。
+
+命题排版
+========
+Proposition 5.2 使用 amsthm 的默认 plain theorem style，因此命题
+正文是斜体，证明是直立体。该样式保留，未将斜体误作额外强调。
+中英文公式、标签和交叉引用保持对应。
+
+相关来源
+========
+源码与历史记录见 data/ch5/source-review.json、execution-review.json；
+实现说明与限制见同目录的其他两份 ch5 审核记录。旧记录的“5.1 待写”
+反映当时增量状态，以本记录及当前源码为准。
+
+编译核验
+========
+make pdf / make pdf-zh 成功。英文总稿 83 页，中文总稿 72 页，最终
+日志无缺失引用、缺字、字体或排版警告；PDF 文本解析无错误，根目录
+PDF 与对应 build 产物一致。第五章中英文均无写作占位，5.1 的公式
+和标签逐项对应。已检查新增查询路径图的版面。

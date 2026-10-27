@@ -1,0 +1,21 @@
+% Conceptual dataflow; no measured values or GPU timing claims.
+\begin{tikzpicture}[font=\small,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+  text width=3.7cm,minimum height=3cm,inner sep=5pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box,fill=ThesisNavy!5] (route) at (0,0)
+ {$q\to q'=\Pi q$\\[3pt]
+  Centroid scores $s_i$\\Select probe lists\\Visited universe $U$};
+\node[box,fill=ThesisNavy!5] (primary) at (4.9,0)
+ {Build LUTs\\Read primary codes\\[3pt]
+  Score $n_c$ candidates\\Retain primary top-$c$};
+\node[box,fill=ThesisNavy!5] (refine) at (9.8,0)
+ {Read survivor residuals\\Compute $\refineddist$\\[3pt]
+  Select final top-$k$\\Return IDs and scores};
+\draw[arr] (route) -- (primary);
+\draw[arr] (primary) -- (refine);
+\node[draw=ThesisNavy!40,rounded corners=2pt,align=center,
+ text width=12.6cm,inner sep=6pt] at (4.9,-2.7)
+ {Evaluation only: compare returned IDs with raw-space ground truth under
+  $\rawdist$\\Ground truth is outside the compressed search decisions.};
+\end{tikzpicture}

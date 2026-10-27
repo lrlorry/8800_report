@@ -2,29 +2,28 @@
 \label{ch:evaluation}
 \chaptermark{Experimental Evaluation}
 
-The evaluation asks whether the representation and execution choices in
-JHQ-GPU improve useful ANN operating points, whether parallel execution
-preserves the intended candidate selection, and whether a workload can
-reduce refinement effort without an unacceptable loss of quality. These
-questions require different evidence. A faster kernel does not establish a
-better recall--throughput frontier, agreement with a reference result does
-not establish ground-truth recall, and a resident allocation does not measure
-construction peak memory. The experiments below keep these distinctions
-explicit.
-
-The main findings are conditional but consistent. Two-group Cartesian
-tables and packed access improve screening; cooperative refinement reduces
-residual-scoring time; and candidate-parallel scanning is especially useful
-when the query batch supplies too few blocks. At batch 1,000, JHQ-GPU offers
-competitive operating regions against modern GPU baselines, with both
-low-recall and high-recall exceptions. Budget calibration often improves
-the estimated throughput of subsequent queries, but its held-out quality
-varies across workloads. The results support a system with several useful
-execution regimes rather than a single configuration that dominates all
-alternatives.
+This chapter answers the thesis's four research questions with measurements
+of construction, controlled execution changes, held-out budget selection
+and cross-system search. For \textbf{RQ1} (construction and capacity), the
+largest tested index searches 17.78 million vectors using 20.44\,GiB of
+resident device memory; its recorded cold train-plus-add time is 10.40\,s.
+For \textbf{RQ2} (correct and efficient GPU execution), two-group tables
+lead in 22/24 configurations, and scheduled scanning improves geometric-mean
+throughput by $2.727\times$ at batch 8 while preserving tested final ID sets.
+For \textbf{RQ3} (budget quality and net cost), mean selected-arm QPS beats
+fixed $\alpha=100$ in 10/12 cells and fixed $\alpha=64$ in 9/12, but up to
+40/64 calibration draws exceed the oracle-relative recall-loss threshold.
+For \textbf{RQ4} (competitive operating regions), at recall 0.97 JHQ is
+fastest in three E1 datasets and numerically close to IVF-RaBitQ on arXiv
+under the interpolated comparison; CAGRA int8 leads at lower recall.
 
 \section{Final Experiment Manifest and Comparison Families}
 \label{sec:7-1}
+
+The experiment families separate the evidence needed for RQ1--RQ4.
+Component names describe the mechanism; implementation versions identify
+its provenance. Recorded run heads, binary names and source-to-result
+mapping are given in \Cref{app:reproducibility}.
 
 \subsection{Evidence families and measurement boundaries}
 
@@ -64,17 +63,17 @@ The E1 environment records an NVIDIA GeForce RTX 5090 with 32,607\,MiB
 reported device memory, driver 595.71.05, CUDA 13.0 and cuVS 26.08.01.
 The container has a 25-CPU quota; OpenMP is limited to 16 threads.
 JHQ uses Release code compiled to compute\_80 PTX and JIT-compiled for the
-device; the baselines use the installed native cuVS libraries. This is an
-implementation comparison on one device, not an architecture-independent
-algorithm ranking.
+device; the baselines use the installed native cuVS libraries.
 
 The principal cross-system timing boundary starts with FP32 queries in
 host memory and ends after top-10 identifiers and distances return to host
 memory and the stream synchronizes. It includes transfers, query
 preprocessing and search; CAGRA int8 query quantization is inside this
 boundary. Baselines reuse resource handles and output buffers. E1 uses five
-timing rounds, normally 24 calls per round, with fewer calls recorded for
-very slow baseline points. Its reported QPS is the median of round
+timing rounds, normally 24 calls per round. The baseline harness reduces
+this count when the warm-up interval, including the first call, exceeds
+its per-call threshold; 274 points use fewer calls, including some fast
+steady-state points. Its reported QPS is the median of round
 throughputs, each computed from the total queries and total elapsed time.
 It is not the reciprocal of the median individual-call latency. Warm-up,
 index construction and any budget calibration are excluded. Device-only
@@ -106,6 +105,9 @@ ledger \path{data/ch7/sources.csv}. The script requires the sibling
 
 \section{Modern GPU ANN Recall--QPS Frontiers}
 \label{sec:7-2}
+
+This section answers RQ4 by locating common-recall operating regions,
+including regions in which competing methods are faster.
 
 \subsection{Comparison scope and frontier construction}
 
@@ -140,7 +142,8 @@ unmeasured operating region, not a proof that the method cannot reach it.
 \centering
 \includegraphics[width=\linewidth]{ch7/frontiers.pdf}
 \caption{Measured host-to-host recall--QPS frontiers on the four E1 datasets.
-The displayed recall window begins at 0.85; all baseline families,
+The displayed recall window begins at 0.90, with a vertical line at 0.97;
+all baseline families,
 including CAGRA int8, participate in frontier construction. Lines connect
 measured points; throughput uses a logarithmic axis.}
 \label{fig:7-frontiers}
@@ -198,6 +201,14 @@ than JHQ in the recorded grid. The defensible claim is therefore that
 JHQ has useful competitive regions, particularly around moderately high
 recall, rather than that it dominates modern GPU ANN methods.
 
+CAGRA int8 reaches maximum measured recalls of 0.9453, 0.9620, 0.9667 and
+0.9683 on Vogue, arXiv, OpenAI-1536 and OpenAI-3072, respectively. It
+therefore has no qualifying point at 0.97 in these grids. At targets
+0.90--0.92 it is approximately $1.20$--$1.98\times$ faster than JHQ by the
+same interpolation rule; it remains faster at 0.95 on arXiv and at 0.94
+on both OpenAI datasets. The 0.97 result concerns methods with measured
+coverage and does not extend to every target below 0.97.
+
 The two estimators can disagree substantially where the grid is sparse.
 For example, at recall 0.97 the OpenAI-1536 comparison with CAGRA fp32 is
 $1.747\times$ by interpolation but $2.294\times$ using qualifying measured
@@ -232,6 +243,10 @@ variation across independent index builds or independent machines.
 \section{Cartesian LUT, Packed Loads and Lane Refinement}
 \label{sec:7-3}
 
+For RQ2, the ablations separate representation-preserving table and load
+changes from cooperative residual scoring and measure their application
+effect as well as their kernel effect.
+
 \subsection{Exact table factorization and its throughput consequence}
 
 Cartesian factorization changes the evaluation of the represented
@@ -243,8 +258,8 @@ mathematical score is preserved; floating-point evaluation order can still
 affect the final bits. Smaller tables alone therefore do not justify
 calling the complete ANN output bit-identical.
 
-\Cref{fig:7-lut} reuses the completed table-grouping figure, checked against
-the v71 raw records. It covers six datasets, probe counts 8/32/128/512,
+\Cref{fig:7-lut} compares Cartesian table grouping on six datasets,
+probe counts 8/32/128/512,
 fixed $\alpha=100$, and $\glut\in\{1,2,4,8\}$. Each arm has five timing
 rounds; batch size is 1,000 except Stella's 999 queries. Two groups have
 the highest median throughput in 22 of 24 cells. The exceptions are
@@ -255,10 +270,10 @@ is 22/24, rather than the historical ADC paper's 23/24.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth]{ch7/fig_lutgroups_v69.pdf}
-\caption{Completed v71 Cartesian table-grouping experiment, retained from
- the existing figure set. Group counts describe $\glut$, not parallel
-scan groups. Curves use median QPS normalized to the one-group arm.}
+\includegraphics[width=\linewidth]{ch7/lutgroups.pdf}
+\caption{Cartesian table grouping at fixed $\alpha=100$ (v71).
+Group counts describe $\glut$, not parallel scan groups. Curves are medians
+of per-dataset QPS ratios to the one-group arm; shading shows their range.}
 \label{fig:7-lut}
 \end{figure}
 
@@ -327,6 +342,14 @@ of a small stage cannot remove the cost of routing, screening, final
 selection or transfers. It also motivates the subsequent scan and probe
 experiments, which target the remaining work.
 
+A quantitative Amdahl check uses the refinement kernel's baseline time
+as a fraction $f$ of host-to-host baseline latency and its kernel speedup
+$s$, giving $1/(1-f+f/s)$ if the remaining time is unchanged. The fractions
+are approximately 0.529 on arXiv and 0.168 on OpenAI-3072, producing
+estimates of $1.787\times$ and $1.175\times$, close to the measured
+$1.789\times$ and $1.171\times$. These combine separate kernel-profile
+and wall-time measurements and are explanatory estimates.
+
 Cooperative reductions alter floating-point addition order. The tested
 multi-lane variants have very small distance differences, with maximum
 reported relative error about $1.6\times10^{-6}$, and occasional changes
@@ -339,13 +362,16 @@ checks, not a proof for arbitrary inputs.
 \section{Global Top-c, Shared Bound and Probe Correctness/Ablation}
 \label{sec:7-4}
 
+This section answers the correctness part of RQ2 before examining the
+cost of grouped scanning, threshold sharing and radix probe selection.
+
 \subsection{Global primary selection before performance}
 
-The parallel scan experiment addresses a correctness requirement that
+The grouped-scan experiment addresses a correctness requirement that
 cannot be evaluated through recall alone. Dividing a query's candidates
 among blocks must preserve the global primary top-$c$; assigning each
 block only $c/\gscan$ survivors can discard a globally competitive
-candidate from a disproportionately productive group. JHQ's v62 path
+candidate from a disproportionately productive group. JHQ's grouped-scan path
 instead retains up to $c$ candidates in every group and merges the local
 lists. Selection uses the complete key $(\primarydist,\mathrm{position})$,
 where position breaks primary-distance ties deterministically.
@@ -359,7 +385,7 @@ primary scores over the visited candidates. It does not make IVF routing
 exact, turn primary scores into raw distances, or make the final ANN
 answer an exact nearest-neighbour result.
 
-The v62 checker covers four workloads, batches 8/32/256/1,000 and group
+The grouped-scan checker covers four workloads, batches 8/32/256/1,000 and group
 counts 1/2/4/8, giving 64 comparisons. It reports no non-tie primary
 selection differences from the original one-block path, zero change in
 compared primary distances, and bit-identical final top-10 identifiers
@@ -378,7 +404,7 @@ additional checks on smaller subsets and on the named scan/merge kernels.
 
 \subsection{Shared bounds preserve the selection target}
 
-Keeping a full local top-$c$ is safe but potentially expensive. In v63,
+Keeping a full local top-$c$ is safe but potentially expensive. With the shared-bound component (v63),
 groups of one query publish a shared bound using the same complete key.
 Once any group has established $c$ keys no greater than a bound, a
 candidate worse than that bound cannot enter the global top-$c$. A
@@ -395,14 +421,15 @@ distance evaluation or avoid reading every rejected primary code. This
 scope matters when interpreting an apparent scan-stage speedup. A faster
 scan stage need not mean fewer evaluated distances.
 
-The dedicated v63 checks compare shared-bound groups 2/4/8 with their
+The shared-bound checks compare shared-bound groups 2/4/8 with their
 independent-bound counterparts across the four workloads and four batch
 sizes. All 48 comparisons report identical primary top-$c$ and final
 outputs. Five-round paired throughput measurements range from about
 $0.994$ to $1.562\times$ relative to independent bounds. Thus sharing
 substantially helps some expensive cases but is not uniformly faster.
 On arXiv at $\alpha=200$, batch 1,000 and eight groups, the profiled
-merge cost falls from approximately 2,629 to 471\,$\mu$s. The result
+merge cost falls from approximately 2,629 to 471\,$\mu$s, while scan
+falls from 7,968 to 5,513\,$\mu$s in the same paired profile. The result
 supports reducing excess intermediate work rather than claiming that
 more scan groups are always beneficial.
 
@@ -418,7 +445,7 @@ policy is inferior.
 \subsection{Exact probe selection and the limits of pipeline identity}
 
 Once screening becomes faster, IVF probe selection becomes a larger
-fraction of small-batch time. The v69 probe primitive changes how the
+fraction of small-batch time. The radix probe primitive (v69) changes how the
 smallest centroid scores are selected while retaining FP32 scoring.
 Its synthetic checker covers 1,792 cases and reports zero failures.
 Checks of the real arXiv, Vogue and OpenAI-3072 workloads find identical
@@ -445,16 +472,18 @@ unmodified stages account for more of total elapsed time. These are
 within-family ratios; they should not be multiplied by the preceding
 v62 or refinement gains as if all measurements shared a single baseline.
 
-The archived Vogue comparison explicitly reports an identity failure:
-v65 recall is 0.9642 and v69 recall is 0.9644, although the recorded probe
-and primary selections match. Within v69, the scheduled and one-block
-paths return bit-identical final outputs for all 1,000 queries. The
-cross-binary observation therefore supports exact routing equivalence in
-the tested case, but does not support bitwise identity of the complete
-pipeline across versions. Later timing runs show the same Vogue recall
-for both versions, which is consistent with run-dependent effects but
-does not establish the cause of the earlier difference. The anomaly is
-retained rather than attributed to an unverified mechanism.
+Vogue isolates an important distinction between the probe primitive and
+cross-process pipeline reproducibility. The probe/primary dump is
+byte-identical across the two binaries for all 1,000 queries in the
+one-group, batch-8 test, yet final recall is 0.9642 versus 0.9644. The
+same baseline binary also changes from 0.9642 in the identity run to
+0.9644 in each of its two timing runs. Thus the observed variation does
+not require the probe change; in the dump-controlled case it arises
+after the recorded primary-selection boundary. Residual representations,
+inputs and score computation remain possible sources, whose root cause
+is unconfirmed. Within each checked process, scheduled and one-block
+outputs remain bit-identical. Appendix~\ref{app:reproducibility} records
+the dump coverage so that it is not mistaken for every timed path.
 
 Finally, the optional v70 FP16 experiment is a separate approximation.
 Its probe sets match FP32 exactly on 936/1,000 arXiv queries, 979/1,000
@@ -465,6 +494,10 @@ and from the exact-probe claim.
 
 \section{Held-out Budget Quality, Throughput and Payback}
 \label{sec:7-5}
+
+RQ3 concerns quality and amortized cost against credible fixed budgets.
+Accordingly, the comparison includes both the inherited $\alpha=100$
+and the stronger universal fixed control $\alpha=64$.
 
 \subsection{Unlabelled selection and a labelled diagnostic oracle}
 
@@ -546,27 +579,32 @@ mean every draw has zero loss.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.82\linewidth]{ch7/fig_budget_risk_v69.pdf}
-\caption{Existing v69 held-out risk figure, checked against the budget
-log. The vertical axis counts calibration draws whose held-out recall
-loss exceeds $10^{-3}$. Increasing $S$ also tightens the allowed slot
- disagreement fraction because the threshold in \cref{eq:7-agreement}
-remains one.}
+\includegraphics[width=0.82\linewidth]{ch7/budget_risk.pdf}
+\caption{Held-out risk across sample sizes. The vertical axis is the
+percentage of calibration draws losing more than $10^{-3}$ held-out recall
+relative to the best tested budget. Increasing $S$ also tightens the allowed
+slot-disagreement fraction because \cref{eq:7-agreement} keeps threshold one.}
 \label{fig:7-budget-risk}
 \end{figure}
 
 \Cref{fig:7-budget-risk} shows the effect of sample size. A larger sample
-usually makes selection more conservative, but the comparison changes
-two things at once: sample coverage increases and the normalized
-allowance $1/(10S)$ decreases. The figure cannot isolate those effects.
-Same-sample enumeration agrees with bisection in all 2,304 draws
-($12\times3\times64$), while taking approximately 1.75--2.01 times as
-long in the printed logs. Bisection therefore realizes the same sampled
-criterion more cheaply on this grid. It does not fix the criterion's
-held-out failures. Nor does empirical agreement establish universal
-monotonicity: the deployed final selector retains a bounded number of
-thread-local candidates, so the exact-selection assumptions needed for
-a general monotonicity argument are not assured.
+usually makes selection more conservative, but also tightens the
+normalized allowance $1/(10S)$. Same-sample enumeration agrees with
+bisection in all 2,304 draws ($12\times3\times64$), while taking
+1.75--2.01 times as long in the printed logs.
+
+The measured default path performs exact primary top-$c$, and final
+top-$k$ scans all $c$ refined candidates with ID-based tie breaking. The
+lossy \texttt{K\_LOCAL=4} retention path is an opt-in alternative selected
+by \texttt{JHQ\_EXACT\_TOPCK=0}; it is not the explanation for this budget
+experiment. Exact primary selection yields nested survivor sets under
+fixed scores and a common total tie order, making the sampled agreement
+criterion monotone under those conditions. The remaining qualifications
+are the distance-only cutoff ties of the one-block path and the
+batch-dependent choice between one-block and complete-key grouped scans.
+Small calibration batches and held-out batches can therefore use different
+execution paths. Enumeration agreement verifies the sampled decisions
+on this grid, not held-out recall or unconditional nesting across paths.
 
 A fixed budget is also imperfect. \Cref{tab:7-fixed-budget} evaluates all
 eight fixed choices against the diagnostic quality target. Fixed
@@ -575,15 +613,22 @@ in all twelve but can sacrifice substantial throughput. Full-pool
 calibration is not identical to the oracle either: on Vogue it selects
 100 at both probe depths while the oracle selects 64. Agreement-based
 selection and fastest quality-constrained selection solve different
-problems, even with a larger calibration sample.
+problems, even with a larger calibration sample. Full-pool calibration costs
+9.5--60.3\,ms. In these twelve cells $\alpha=200$ attains the best
+measured recall and therefore serves as a high-budget coverage control;
+its 12/12 qualification is not an independent quality guarantee.
+The grid's throughput is not strictly monotone: for example,
+OpenAI-3072 at 128 probes gives 128.7 kQPS at $\alpha=2$ and 145.0
+at $\alpha=4$. Three timed calls do not distinguish timing variation
+from a configuration-dependent execution cost, so no mechanism is
+assigned to that inversion.
 
 \begin{table}[tbp]
 \centering
-\caption{Universal fixed-budget controls over the twelve held-out cells.
-Qualifying means within $10^{-3}$ of the best tested recall, using printed
-precision. QPS penalty is the largest fractional deficit relative to the
-cell's quality-constrained oracle, irrespective of whether that fixed
-arm itself qualifies.}
+\caption{Fixed-budget controls over twelve held-out cells. Qualifying means
+within $10^{-3}$ of the best tested recall at printed precision. Worst
+recall loss uses all cells; QPS deficit uses only cells where that arm
+qualifies. A dash means no qualifying cells.}
 \label{tab:7-fixed-budget}
 \small
 \input{tables/ch7/fixed_budgets}
@@ -600,14 +645,29 @@ in ten cells, by $1.028$--$1.691\times$. On arXiv the ratios are 0.908
 and 0.917: mean recall improves, but throughput falls. Those cells have
 no throughput payback.
 
+The stronger $\alpha=64$ comparison reduces the aggregate gain:
+mean selected-arm QPS wins in 9/12 cells, with geometric-mean ratio
+$1.054\times$ and range $0.821$--$1.367\times$. It is nearly unchanged
+on Vogue and improves only 0.6\% on BGE at 512 probes; OpenAI gains
+range from $1.052$ to $1.367\times$. Both fixed 64 and fixed 100 qualify
+in 10/12 cells, failing the two arXiv cells. The useful property of
+calibration is matching heterogeneous refinement demands, rather than
+uniformly beating an already sensible fixed budget.
+
+ArXiv's threshold crossings are relative to the best tested held-out
+recall, not relative to the default configuration. Fixed 100 already
+loses 0.0012 and 0.0016 recall at probes 128 and 512, while the sampled
+mean loss is 0.0009 in both cells. Mean quality therefore improves over
+the default despite some draws exceeding the oracle-relative target.
+
 \begin{table}[tbp]
 \centering
-\caption{v69 calibration economics, $S=128$. Rates are kQPS; rule rate is
-mean selected-arm QPS. Payback uses the actual held-out pool size
-(500, or 499 for Stella). ``Never'' means estimated selected execution
-is slower than fixed $\alpha=100$, so throughput cannot repay calibration.}
+\caption{Calibration economics, $S=128$. Rates are kQPS and rule rate is
+mean selected-arm QPS. Ratios compare with fixed 100 and fixed 64.
+Payback in the last column is relative to fixed 100 using 500 queries,
+or 499 for Stella; ``Never'' denotes no throughput payback.}
 \label{tab:7-budget-cost}
-\small\setlength{\tabcolsep}{4pt}
+\footnotesize\setlength{\tabcolsep}{3pt}
 \input{tables/ch7/budget_cost}
 \end{table}
 
@@ -621,18 +681,19 @@ buffer. For an equal-sized subsequent batch, define
  \label{eq:7-payback}
 \end{equation}
 Using $T_{\rm rule}\approx n/\overline Q_{\rm rule}$ gives the estimates
-in \cref{tab:7-budget-cost}, approximately 2.4--55.4 held-out-sized
-batches for the favourable cells. The existing payback figure uses
-500-query equivalents even for Stella; the table corrects its population
-to 499. This changes Stella's estimate by approximately 0.2\%, rather
-than introducing a new experiment.
+in \cref{tab:7-budget-cost}: 2.4--55.4 subsequent held-out-sized batches
+against fixed 100 in favourable cells. Against fixed 64, the corresponding
+range is 5.7--404.3 batches in nine favourable cells; Vogue at 512 probes
+has no throughput payback. \Cref{fig:7-budget-payback} uses the actual
+held-out query counts for both controls.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=0.82\linewidth]{ch7/fig_budget_payback_v69.pdf}
-\caption{Existing v69 payback figure. Payback is an optimistic estimate
-using mean selected-arm QPS and 500-query equivalents. ArXiv has no
-throughput payback. \Cref{tab:7-budget-cost} retains actual held-out counts.}
+\includegraphics[width=\linewidth]{ch7/budget_payback.pdf}
+\caption{Estimated calibration payback relative to fixed budgets 100 and
+64. Filled circles denote 128 probes and open triangles 512 probes.
+Top-row points have no throughput payback. Estimates invert mean
+selected-arm QPS and use 500 queries, or 499 for Stella.}
 \label{fig:7-budget-payback}
 \end{figure}
 
@@ -645,14 +706,24 @@ workload can benefit; a short job or a changing query population may
 not. The present experiment measures neither drift detection nor a
 production recalibration schedule.
 
+For historical comparison, the earlier scalar-refinement implementation
+(v57) reported $1.054$--$2.773\times$ gains over fixed 100 in 10/12
+cells and 5.2--30.8\,ms calibration. The newer lane-refined pipeline's
+smaller gains are consistent with less removable refinement time.
+The runs share the budget protocol and grid, but this cross-campaign
+comparison does not isolate refinement as the sole cause of the change.
+
 \section{Batch Regimes, G Scheduling and Workload Skew}
 \label{sec:7-6}
+
+This section answers the performance-regime part of RQ2: when additional
+scan groups supply useful parallelism, and when their extra work dominates.
 
 \subsection{Parallelism versus repeated selection work}
 
 The scan experiments reveal two execution regimes. With one block per
 query, batch 8 exposes only eight blocks on a 170-SM device. Candidate
-partitioning increases the available block parallelism. In the v62
+partitioning increases the available block parallelism. In the independent-bound grouped-scan
 experiment, eight groups improve end-to-end throughput by
 $2.06$--$2.76\times$ at batch 8. Profiling supports a stage-level
 explanation: arXiv's scan falls from about 849 to 216\,$\mu$s, Vogue's
@@ -662,9 +733,12 @@ respectively. The net reduction is large even after paying for merging.
 
 At batch 1,000 there are already enough independent queries to expose
 many blocks. Additional groups repeat table staging, local-buffer
-admission and sorting, and produce extra merge traffic. The unshared
-v62 path can fall to about $0.46\times$ its one-block baseline on
-arXiv at $\alpha=200$. This opposing result is central to the design:
+admission and sorting, and produce extra merge traffic. The independent-bound
+grouped path can fall to about $0.46\times$ its one-block baseline on
+arXiv at $\alpha=200$. The full-batch profiles show scan increasing from
+2,922 to 6,079\,$\mu$s at $\alpha=100$ and from 3,530 to
+7,652\,$\mu$s at $\alpha=200$, with an additional 2,624\,$\mu$s
+merge in the latter case. This opposing result is central to the design:
 parallel decomposition solves insufficient concurrency, but incurs work
 that can dominate once concurrency is adequate. Shared bounds reduce
 that extra work but do not eliminate the regime change.
@@ -672,17 +746,18 @@ that extra work but do not eliminate the regime change.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/batch_execution.pdf}
-\caption{Batch-dependent execution. Left: integrated shared-bound fixed
- group counts and scheduled execution relative to v61 L16; the full-batch
- population has 11 cells, versus 13 at smaller batches. Right: v62
- batch-8 profiled scan time; merge time is additional. The panels separate
- application throughput from the stage evidence explaining small-batch gains.}
+\caption{Execution regimes. Left: fixed shared-bound group counts and
+scheduled execution relative to the lane-refined one-block baseline
+(13 cells at small batches, 11 at batch 1,000). Right: paired scan and
+merge profiles at batches 8 and 1,000 for arXiv budgets 100 and 200.
+Hatching denotes merge time. The right panels use the independent-bound
+scan experiment; they explain a cost, not the scheduler's entire speedup.}
 \label{fig:7-batch}
 \end{figure}
 
 \subsection{A fixed rule evaluated on further configurations}
 
-The integrated v65 scheduler chooses a scan-group count using batch size,
+The integrated batch scheduler (v65) chooses a scan-group count using batch size,
 block size and a workload-skew estimate. Its fill rule relates the
 potential resident threads to a fixed 0.6 fraction of the device's
 thread capacity. Its skew rule requires at least four groups when the
@@ -742,6 +817,9 @@ do not establish tail latency under an open-loop arrival process.
 
 \section{Cold Construction, Resident Memory and Tested Scale}
 \label{sec:7-7}
+
+RQ1 is assessed through cold construction, resident memory and completed
+large-dataset searches; the E1 memory comparison also informs RQ4.
 
 \subsection{Cold builds and the lifecycle boundary}
 
@@ -808,8 +886,8 @@ resident cost are separate deployment dimensions.
 
 \subsection{Resident allocation and where compression helps}
 
-\Cref{fig:7-memory} retains the completed memory-component figure. Its
-markers are device memory in use at the recorded resident measurement,
+\Cref{fig:7-memory} decomposes resident memory. Its markers are device
+memory in use at the recorded measurement,
 not index-only allocations. The stacked components model primary and
 residual codes, correction factors and identifiers, centroids, per-batch
 tables, candidate buffers and list-group scratch. The remaining measured
@@ -819,11 +897,11 @@ remainder to residual codes would overstate the representation cost.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth]{ch7/fig_memory_v69.pdf}
-\caption{Completed resident-memory decomposition, verified against the
-v71 two-group measurements. Component sizes are modelled, markers are
-measured used totals, and hatching retains the unattributed remainder.
-This is neither a construction-peak trace nor an index-only measurement.}
+\includegraphics[width=\linewidth]{ch7/memory.pdf}
+\caption{Resident-memory decomposition at two-group tables, 128 probes
+and $\alpha=100$. Component sizes are modelled, markers are measured used
+totals, and hatching is the unattributed remainder. The totals include
+context and workspace; construction peaks are not measured.}
 \label{fig:7-memory}
 \end{figure}
 
@@ -845,6 +923,23 @@ resident samples do not capture temporary construction peaks. The
 baseline harness also initializes some search memory pools after its
 index-memory measurement, so an after-build index delta cannot be used
 as a complete peak process-memory budget across methods.
+
+The E1 measurements provide a separate cross-system view in
+\cref{tab:7-e1-memory}. Subtracting the baseline-measured 507.2\,MiB
+context from JHQ's process total gives approximately 0.29--0.39 of
+CAGRA fp32's index allocation. JHQ's figure includes workspace, whereas
+CAGRA's is the build-time index delta. These are parameter-sweep ranges,
+not memory-matched recall points or a comparison of equal peak budgets.
+
+\begin{table}[tbp]
+\centering
+\caption{E1 allocation ranges. JHQ is process total minus a 507.2\,MiB
+context estimate, including query workspace; CAGRA fp32 is index allocation
+measured during build. Ratio ranges combine the extrema for each dataset.}
+\label{tab:7-e1-memory}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/ch7/e1_memory}
+\end{table}
 
 \subsection{Large-dataset feasibility and competitive regions}
 
@@ -868,28 +963,33 @@ endpoint is the end of the tested grid, not an intrinsic recall limit.}
 \label{fig:7-large}
 \end{figure}
 
-An earlier large-dataset baseline attempt retained a previous index
-through a closure, contaminating the apparent memory feasibility of the
-next build. Successful isolated reruns supersede that attempt. In
-particular, CAGRA int8 does fit Stella in the tested configurations;
-claiming that all graph baselines exceed the card capacity would be
-incorrect. The corrected frontier shows a different trade-off: CAGRA
-int8 is highly competitive at lower recall but reaches approximately
-0.9579 on BGE and 0.9783 on Stella in its measured sweep. JHQ reaches
-approximately 0.9663 and 0.9952, respectively. IVF-PQ reaches about
-0.9525 and 0.9896. These maxima describe coverage of the recorded grids.
+Successful isolated reruns show that CAGRA int8 fits Stella in the
+tested configurations. On BGE, int8 is approximately $1.35$--$2.96\times$
+faster at the sampled common targets 0.88/0.90/0.92/0.94/0.95. At its
+measured maximum recall 0.9579, JHQ's interpolated QPS is $1.086\times$
+int8's. Thus the advantage changes direction near the high-recall end.
+The maximum tested recalls are 0.9579/0.9783 for int8, 0.9663/0.9952
+for JHQ and 0.9525/0.9896 for PQ on BGE/Stella.
+
+On Stella, one concrete high-end comparison is 185.4 kQPS at recall
+0.978679 for JHQ versus 66.3 kQPS at 0.978278 for int8, a $2.80\times$
+rate ratio with slightly different recall. This is an explicit pair of
+measured points, not a uniform matched-recall gain: much of JHQ's
+higher-recall region has no int8 coverage, and JHQ's highest-recall
+points trade throughput for quality. Corrected-run exclusions and
+harness diagnostics are recorded in Appendix~\ref{app:reproducibility}.
 
 The result is evidence of tested scale and useful high-recall operating
 regions, rather than arbitrary-size scalability. The largest completed
 search uses 17.78 million vectors on one GPU; there is no multi-GPU
 experiment, no scaling curve holding data distribution fixed and no
-construction-peak proof near the card's capacity. Likewise, Stella's
-999-query search results come from its explicit rerun; an empty
-1,000-query search list in a cold-build log cannot supply a throughput
-point.
+construction-peak proof near the card's capacity. Stella's searches use its actual 999-query pool.
 
 \section{Numerical Robustness, Anomalies and Recall Attribution}
 \label{sec:7-8}
+
+The robustness checks qualify the RQ2 exactness claims, the RQ3 risk
+assessment and the small cross-system margins in RQ4.
 
 \subsection{Quality resolution and repeated execution}
 
@@ -909,7 +1009,11 @@ order changes at ties; it does not by itself imply changed identifier
 sets or invalid output. No such point is discarded solely for that
 flag. The raw logs retain first/last recall and set/order diagnostics.
 JHQ does not populate this same baseline flag, so its absence cannot
-be counted as a uniform cross-method determinism test.
+be counted as a uniform cross-method determinism test. The earlier E1 report's count of 401
+uses the union of these 369 repeat-call A flags and 367 B-versus-A
+mismatch flags; 32 points add only the latter. B-versus-A disagreement
+is a cross-protocol equality check, not evidence of repeated B calls
+being nondeterministic.
 
 The five-round throughput summaries retain variability within a fixed
 build. Minima and maxima are descriptive ranges, not confidence
@@ -919,6 +1023,19 @@ comparison at recall 0.97, consequently receive limited interpretive
 weight. Larger repeated gains with a matching stage-time reduction
 provide stronger evidence for an execution improvement than a small
 frontier displacement alone.
+
+Across each dataset's RaBitQ configurations, the median five-round
+range divided by median QPS is 3.79\%, 3.34\%, 2.87\% and 5.25\%
+for Vogue, arXiv, OpenAI-1536 and OpenAI-3072. These descriptive spreads
+are comparable in scale to the small Vogue advantage, rather than
+confidence intervals for its matched ratio. Raw call traces also contain
+long calls, including occasional 30--60\,ms observations in otherwise
+faster configurations. As a sensitivity check, recomputing QPS as
+$10^6/\operatorname{median}(\text{call latency in ms})$ for a
+1,000-query call reduces the influence of long calls.
+At recall 0.97, the resulting JHQ/RaBitQ ratios are 1.063, 0.995,
+1.118 and 1.100. The three favourable directions and arXiv near parity
+remain, so the result is not solely a consequence of long calls.
 
 \subsection{Exactness is attached to a particular stage}
 
@@ -931,8 +1048,10 @@ synthetic and real-input equivalence checks. None of these establishes
 exact nearest-neighbour answers in the original vector space.
 
 Lane reductions can alter rounding; primary cutoff ties can change
-which survivor is refined; approximate final selection can change a
-boundary result. The archived Vogue cross-version discrepancy shows why
+which survivor is refined. Final selection is exact over all retained
+refined scores with ID-based tie breaking; any remaining error against
+raw-space neighbours can enter before that final selection or through
+the represented scores. The archived Vogue cross-version discrepancy shows why
 a pipeline-wide identity claim requires its own check. Similarly, the
 FP16 routing experiment demonstrates that an almost unchanged mean
 recall is insufficient evidence of exact probe equivalence. The main
@@ -954,21 +1073,37 @@ and no percentages are assigned to unmeasured sources of loss.
 
 \subsection{Scope of the research findings}
 
-Taken together, the evidence supports representation-aware execution,
-exact parallel primary selection and workload-specific refinement
-budgets as useful components of GPU JHQ. It also identifies their
-boundaries: more parallel groups can increase work, smaller tables can
-require more lookups, sampled agreement can generalize poorly, and
-compressed residency retains a substantial residual-storage cost.
-These are informative negative results because they constrain the
-mechanisms offered to explain the positive results.
+\Cref{tab:7-rq-answers} closes the evidence chain for RQ1--RQ4.
+The results favour a small set of representation-aware execution modes
+and workload-specific refinement effort, with independent evidence for
+correctness, speed and quality.
 
-The claims apply to the exported squared-L2 workloads, top-10 search,
-the recorded query pools and the tested RTX 5090 environment. They do
-not establish behaviour for another GPU, a different $k$, changing
-query distributions, online updates or concurrent service arrivals.
-Within that scope, the strongest evidence combines a controlled change,
-explicit correctness checks, a repeated end-to-end gain and a measured
-reduction in the targeted stage. The following discussion can therefore
-build on verified operating regions and mechanisms without treating
-unmeasured deployment properties as established results.
+\begin{table}[tbp]
+\centering
+\caption{Answers to the four research questions, supported by this chapter.}
+\label{tab:7-rq-answers}
+\small
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+RQ & Evidence & Answer & Boundary \\
+\midrule
+RQ1 & Cold build; resident components; large searches & 17.78M vectors
+on one GPU; 20.44\,GiB; 10.40\,s train+add & One cold record; no construction peak or multi-GPU scaling \\
+RQ2 & Paired LUT, refinement, scan, bound and probe tests & Exact tested
+primary selection; scheduling $2.727\times$ at batch 8 & Ties and numerical paths;
+full-batch gains much smaller \\
+RQ3 & Disjoint query halves; fixed 64/100; oracle; enumeration & Mean QPS
+wins in 9/12 versus 64, 10/12 versus 100 & Calibration overhead; up to 40/64
+oracle-relative loss crossings; no drift test \\
+RQ4 & Six-method E1 sweeps; matched recall; memory & Three leads and
+arXiv near parity at 0.97; lower net allocation than fp32 CAGRA & Int8 wins
+at low recall; endpoint and timing uncertainty \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The claims apply to squared-L2 top-10 search, the recorded query pools
+and the tested RTX 5090 environment. Cross-device behaviour, changing
+queries, online updates and open-loop service latency remain untested.
+These boundaries accompany the results rather than replacing their
+positive findings.
