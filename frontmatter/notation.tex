@@ -1,6 +1,6 @@
 \frontchapter{Notation and Abbreviations}
-\noindent
-\begin{tabularx}{\textwidth}{@{}lX@{}}
+\begingroup\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
 \toprule
 Symbol & Meaning \\
 \midrule
@@ -16,7 +16,7 @@ $S,\epsilon$ & Calibration sample size and allowed disagreeing result slots \\
 $C_\alpha,\mathcal R_\alpha$ & Valid primary survivor set and returned ID set at budget $\alpha$ \\
 $\alpha_{\rm ref},B_{\rm reuse}$ & Reference refinement budget and number of subsequent reuse batches \\
 $\glut$ & Number of groups in a factorised lookup table \\
-$\gscan$ & Number of scan groups per query \\
+$\gscan$ & Number of scan groups per query; zero labels the one-block path \\
 $C_{\rm buf},T_{\rm blk}$ & Scan buffer capacity and threads per block \\
 $n_{\rm LUT}(\glut)$ & Number of LUT entries per primary subspace \\
 $\kappa(D,p)$ & Packed complete-key encoding for bound publication \\
@@ -25,11 +25,10 @@ $\rawdist$ & Squared distance between original vectors \\
 $\primarydist$ & Distance under the primary reconstruction \\
 $\refineddist$ & Refined ranking score: reconstructed squared distance plus a query-only constant \\
 \bottomrule
-\end{tabularx}
+\end{longtable}
 
 \bigskip
-\noindent
-\begin{tabularx}{\textwidth}{@{}lX@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
 \toprule
 Abbreviation & Meaning \\
 \midrule
@@ -41,8 +40,9 @@ LUT & Lookup table \\
 PQ & Product quantisation \\
 QPS & Queries per second \\
 GT & Ground truth \\
+FP32 & IEEE single-precision storage and arithmetic, with multiplication mode stated separately \\
+TF32 & Tensor-core multiplication format with reduced input precision and FP32 accumulation \\
+CV & Coefficient of variation of candidate counts \\
 \bottomrule
-\end{tabularx}
-\draftnote{Check every definition against the final implementation and remove
-symbols that are not used. Keep code parameter names distinct from mathematical
-notation, especially the multiple uses of G and B.}
+\end{longtable}
+\endgroup

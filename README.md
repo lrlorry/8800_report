@@ -3,7 +3,8 @@
 九章正文和摘要均有中英文总稿。本轮已把Claude于2026-10-28完成的
 `JHQ_GPU/experiments/thesis_evidence` 补证核对后纳入第3--9章、引言与摘要。
 新增TF32/FP32敏感性、重复空缓存构建与采样峰值、表示审计、完整预算决策及直接复用计时。
-核对过程仅离线分析，没有启动GPU实验，没有推送。
+补证基线已发布为 `1786e6e`。后续已补全Conclusion后的附录B/C，整理前置页，
+移除示例附录及草稿文字，并默认启用正式编译。核对过程没有启动GPU实验。
 
 - [本轮补证整合与边界](assessment/supplement-integration.txt)
 - [补证离线复算](scripts/audit_supplement.py) · [数值和输入哈希](data/supplement/audit.json)
@@ -11,7 +12,7 @@
 - [上一轮章节迭代记录](assessment/synthesis-iteration.txt)
 
 个人分工、声明签署与最终工具披露仍需作者确认，见
-[作者确认项](assessment/author-confirmation.txt)。前置页及附录 B 仍有提交前编辑项。
+[作者确认项](assessment/author-confirmation.txt)。研究来源页及附录B/C已写入正式内容；个人课程签署由作者按实际任务办理。
 
 第 3 章已按 `6.pdf` 的六节骨架完成中英文正文；统一研究对照、数据／GT／划分、
 计时与显存口径、基线前沿和证据等级。见
@@ -76,13 +77,14 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 
 ## 从哪里开始
 
-1. `config/metadata.tex`：标题、姓名、导师、月份、可选学号和草稿开关。
+1. `config/metadata.tex`：标题、姓名、导师、月份及可选学号，默认正式编译。
 2. `chapters/`：九章正文及各节源文件。修改或合并标题不会影响模板运行。
 3. `figures/`：放论文图件；优先使用矢量 PDF。用相对路径引用，避免依赖本机绝对路径。
 4. `references.bib`：项目参考文献与官方技术文档，提交前核对元数据。
-5. `appendices/d-template-examples.tex`：引用、交叉引用、表格、公式、证明、代码和 TikZ 图的可编译示例，仅在草稿模式显示。
+5. `appendices/`：来源与复现、完整参数／正确性补充、贡献及工具使用记录。
+6. `data/appendix/e1-configurations.csv`：1,590个E1点的精确参数、质量、吞吐及来源。
 
-模板中的英文 `TO WRITE` 是写作提示，不能作为论文内容提交。表格中的 `To complete` 也必须填写或删除。
+模板示例附录已移除，前置页及附录不再包含写作填空提示。
 
 ## 排版默认值
 
@@ -94,25 +96,14 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 
 修改 `config/preamble.tex` 可调整页边距、行距、标题和引用形式。上述均为模板选择，不能声称为本届课程硬性规定。
 
-## 提交模式
+## 正式编译
 
-正文写完后，在 `config/metadata.tex` 中改为：
+`config/metadata.tex` 默认使用 `\draftthesisfalse`。封面和页脚不显示草稿标识，
+示例附录已移除。未解决的写作／图件占位命令会使编译失败，避免提示被静默隐藏。
+附录A说明原始记录、补证和运行身份，附录B给出参数覆盖／正确性证据及次要结果，
+附录C说明研究角色、继承工作、AI协助及责任。
 
-```tex
-\draftthesisfalse
-```
-
-页脚只显示页码，不再显示 DRAFT／草稿角标。提交模式会去掉示例附录；任何残留的 `\draftnote` 或 `\figureplaceholder` 会使编译失败，要求先完成内容。模板不验证研究真实性、引用完整性或课程合规性。
-
-检查声明页、贡献归属、真实工具使用记录和全部占位表格；模板没有预写“所有结果已经检查”等未经确认的承诺。签名与正式声明措辞按 Canvas 的实际要求填写。
-
-可用下列命令查找提示，再人工复核 PDF：
-
-```sh
-rg -n 'draftnote|figureplaceholder|To complete' chapters frontmatter appendices
-```
-
-`appendices/d-template-examples.tex` 本身是示例，提交模式自动排除。若不需要致谢、符号表或某个附录，在 `main.tex` 中移除相应 `\input`。
+研究来源页没有伪造个人签名或独立完成承诺，实际课程声明手续由作者按任务办理。
 
 ## 字数
 

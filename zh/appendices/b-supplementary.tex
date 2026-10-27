@@ -1,0 +1,113 @@
+\chapter{补充结果与正确性检查}
+\label{app:supplementary}
+本附录记录支持第3--8章的参数覆盖、逐阶段验证及次要结果。
+各测量家族保留各自版本与计时边界，来源映射见附录\ref{app:reproducibility}。
+
+\section{完整参数记录}
+\label{sec:b-grids}
+E1比较有1,590个有效实测配置，覆盖见\cref{tab:b-e1-counts}。
+逐点完整参数JSON、recall、主机到主机QPS及源文件名保存在
+\path{data/appendix/e1-configurations.csv}。
+\path{scripts/build_appendix.py}生成该记录，输入身份见\path{data/appendix/audit.json}。
+下列集合表示观测值，不假定其笛卡尔积全部测量过。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{包含覆盖扩展的E1精确配置数。计数为参数点，不是独立索引构建。}
+\label{tab:b-e1-counts}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{zh/tables/appendix/e1-counts}
+\end{minipage}\par\medskip
+
+\paragraph{JHQ-GPU。}
+E1均用$B=B_r=8$、$M=d/8$、$k=10$和batch 1,000；Vogue为4,096个IVF列表，
+其他三个为8,192。Vogue观测探针16、32、64、96、128、192、256、384、512，
+$\alpha\in\{16,32,64,128\}$，共27个实际组合。
+arXiv再包含探针1,024，$\alpha\in\{25,50,100,200\}$，共29个组合。
+两个OpenAI均用探针32、64、128、256、512、1,024；倍率集合分别为
+$\{4,8,16,32,64,128,256,512\}$和$\{2,4,8,16,32,64,128,256\}$，共37／39个组合。
+所报调度路径在Vogue用四组，其余用单block。
+历史v69的OpenAI旋转／质心GEMM为TF32；v72 FP32敏感性另成家族
+（\cref{sec:7-precision}）。
+
+\paragraph{CAGRA fp32与int8。}
+每种表示每数据集64点：图度数32／64、中间度数128、\texttt{ivf\_pq}构建，
+\texttt{itopk\_size}为32、64、96、128、192、256、384、512，搜索宽度1、2、4、8。
+int8数据缩放记录quantile 0.99，主机搜索边界包含查询量化。
+
+\paragraph{IVF-PQ。}
+八位子码在768维使用192、384、768字节编码，OpenAI使用384、768、1,536字节。
+每种长度测试fp16／fp32 LUT及探针16、32、64、96、128、192、256、384、512，
+每数据集54点。记录的精排比例为一，列表数与JHQ相同；编码长度和显存预算不同。
+
+\paragraph{IVF-RaBitQ与暴力搜索。}
+RaBitQ包含每维4、8、9位、探针16、32、64、96、128、192、256、384、512、768、1,024。
+768维与OpenAI-1536含LUT16、LUT32、QUANT4、QUANT8，OpenAI-3072含
+LUT32、QUANT4、QUANT8；另用4,096列表OpenAI索引扩展默认8,192列表覆盖。
+精确组合见参数记录。每数据集还含一个FP32平方L2暴力搜索点。
+缺少某种模式或更高recall点不等于实测失败。
+
+\paragraph{辅助网格。}
+LUT实验固定$\alpha=100$，六数据集探针8、32、128、512，
+$\glut\in\{1,2,4,8\}$，共24单元、96计时臂。
+预算实验在相同六数据集用探针128／512、$A=(200,100,64,32,16,8,4,2)$，
+每个$S\in\{32,64,128\}$抽取64次、$\epsilon=1$；FULL另用全部500校准查询。
+留出为500条，Stella为499条。直接复用为四单元、四策略、五轮，每轮500个重复留出批次。
+边界见\cref{sec:a-budget-contract,sec:a-supplement}。
+
+\section{正确性与数值证据}
+\label{sec:b-correctness}
+\Cref{tab:b-checks}区分数值、算法与内存证据。
+第五章排序论证针对满足所列契约的计算分数；原始向量recall另行评测。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{验证覆盖及实际核对对象。}
+\label{tab:b-checks}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+边界 & 已有证据与范围 \\
+\midrule
+表示 & 四库全行offset／ID审计，原始输入采样FP64重编码、存储矩阵几何，已识别TF32偏差 \\
+Cartesian LUT & 实数因子化；96臂recall差至多$10^{-4}$；没有逐候选逐位认证 \\
+全局选择 & 64份检查；完整key排序前提下的局部缓冲及合并论证 \\
+共享界 & 48组配对；提取标量64位PTX及toolkit SASS支持完整key；未捕获驱动实际SASS \\
+调度 & 250个变体／配置及234,320次查询比较，区分ID集合与并列顺序 \\
+探针选择 & 1,792合成用例零失败；真实查询ID／offset检查，针对已计算路由分数 \\
+预算搜索 & 2,304采样曲线单调、12个FULL枚举一致；18,432网格计数可由全池子集和复现 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+较小表示审计库在按ID关联的一遍／两遍构建中主码和残差字节相同，correction差至多
+$8.94\times10^{-8}$，列表分配有1、1、40行变化；Stella验证自然两遍路径
+（\cref{sec:4-representation-audit}）。没有执行针对全部实际GPU候选分数的严格CPU参考，
+也没有执行同模型Vogue跨进程受控诊断；已有进程即使probe／primary dump一致，
+最终recall仍有0.9642／0.9644。FP64重编码及汇总决策一致不能替代这些独立检查。
+
+\section{次要结果与证据状态}
+\label{sec:b-secondary}
+\paragraph{不利运行区间。}
+调度器最大记录regret为batch 256的$1.217\times$；Vogue E1中调度／单block吞吐
+为0.895--1.175。使0.97 recall领先的偏斜规则也会在低探针单元增加开销
+（\cref{sec:7-6}），这些不利结果与有利的小batch结果一起保留。
+
+\paragraph{表示替代方案。}
+Mailman式GPU评分器为独立kernel测量，端到端替换只是乐观模型。
+面向排序的主研究为FP64离线回放；另一个median编码GPU后续实验在记录目标上，
+arXiv的batch 8为$1.402\times$、batch 1,000为$1.208\times$，
+Vogue未达严格目标，OpenAI-3072接近平手。阈值、级值和残差训练同时改变，
+不能只归因于阈值（\cref{sec:8-2}）。
+
+\paragraph{校准与精度。}
+有限池预测在查询计数稳定的条件下解释抽样风险，GT损失映射使用留出固定臂质量。
+直接复用测量四个重复池的累计成本；精度干预在同一TF32训练缓存上改变add／查询GEMM。
+完整FP32重训、未来查询漂移、跨设备排名及在线更新不属于这些实验。
+
+\section{材料获取}
+\label{sec:b-artifacts}
+报告仓库提供参数记录、派生表、图源、分析脚本，以及\path{evidence/ch5/v71/}下的
+209文件v71源码／测量包，可用\path{python3 evidence/ch5/v71/check.py}离线核对。
+更多原始记录位于同级\texttt{JHQ\_GPU}项目的清单路径，完整向量、训练状态与所有
+可执行文件没有打包在本报告仓库。离线复算需要所列输入，GPU复现还需要相应构建和环境。

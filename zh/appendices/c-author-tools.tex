@@ -1,0 +1,45 @@
+\chapter{贡献与工具使用记录}
+\label{app:author-tools}
+\section{研究角色与继承工作}
+Rui Luo为COMP8800项目报告人及论文作者，Mengxuan Zhang博士为导师。
+相关项目手稿将两人列为共同作者\cite{adc_artifact}。本论文扩展正确性论证、较新测量、
+补证审计及失败设计讨论。作者名单表示共同工作，不把每个材料都归为个人独立完成。
+
+Jiabao Han、Mengxuan Zhang和Goce Trajcevski的JHQ方法提供表示基础\cite{jhq}。
+IVF、PQ、既有GPU选择／合并技术与基线库保留所引作者归属。
+本项目GPU构建／执行系统、工作负载预算校准及综合评测的对应见
+\cref{tab:1-contributions}；源码历史、运行记录和分析清单说明材料来源。
+
+\section{生成式AI协助}
+\Cref{tab:c-tools}记录项目对话、源码及实验归档所支持的活动。
+工具按产品名标识，不依据这些记录推断具体模型版本。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{生成式AI协助及相应证据记录。}
+\label{tab:c-tools}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.18\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+工具 & 活动与保留记录 \\
+\midrule
+OpenAI Codex & 中英文写作修改、LaTeX、图及分析脚本；读取源码／日志、离线数值审计、
+PDF编译。各章证据说明及\path{scripts/}保留对应工作。 \\
+ChatGPT & 用户提供的框架与章节审阅，涉及证据、范围和实验设计。
+\path{assessment/}记录接受及纠正的建议。 \\
+Anthropic Claude & 实现／实验协助及审阅；补证包含冷构建、代码检查、行对应、
+预算轨迹、表示审计和精度敏感性，记录位于\texttt{JHQ\_GPU}的
+\path{experiments/thesis_evidence/}。 \\
+共同手稿 & 独立披露Claude／ChatGPT在实现、程序、图和写作中的协助，
+其版本化材料保留相应范围。 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+\section{核对、可追溯性与责任}
+审阅意见已对照源码和测量核查；修正包括选择器范围、预算迁移条件、OpenAI TF32算术
+及构建显存生命周期。记录区分实测、数值恒等式、有条件证明、成本模型和未执行检查。
+
+参考文献标注继承方法，材料清单标识代码与测量，审阅记录说明辅助修改。
+这些材料描述保留的工作流程，不声称导出了每次交互，也不代替个人签署。
+Rui Luo承担提交论文、来源使用及采用材料解释的责任。

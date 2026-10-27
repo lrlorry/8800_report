@@ -368,17 +368,17 @@
     {
       "repository": "8800_report",
       "path": "data/ch6/audit.json",
-      "sha256": "7ad32194b6c1379e131d3a2e507c92f2fc33f0e7ba2f6c1d99edfd14b4c792cf"
+      "sha256": "0dc515b5b08a738fa575072ca0e2727a768b657e29d24d8a57e6b3a162d100d8"
     },
     {
       "repository": "8800_report",
       "path": "data/ch3/audit.json",
-      "sha256": "c0c1f3263ae656a63217aae704a3b33b3cec2c0f930471312d74d454dfeeb55e"
+      "sha256": "cf495f0d58580ba1c881587823c5d5f15e7ac4bb26fc9a7cc0f524b7c064c316"
     },
     {
       "repository": "8800_report",
       "path": "data/ch8/audit.json",
-      "sha256": "c590e41d53fddda843401a418913929cb0bc07244084225141d230734b07967d"
+      "sha256": "df8b516074763d263014abe1facf3f3fdacc68fefab92d4415b0ce5b54215280"
     },
     {
       "repository": "8800_report",
@@ -398,27 +398,27 @@
     {
       "repository": "8800_report",
       "path": "assessment/author-confirmation.txt",
-      "sha256": "20b9d073de32750c02c8474e7d70c0838e74b27249ca4eac20cce80332a43cce"
+      "sha256": "6717e5bf245426ac1d7d81fbb53ab77d8c1dfdfe13e2326e91e28c6b0142ba7e"
     },
     {
       "repository": "8800_report",
       "path": "assessment/ch7-pending-experiments.txt",
-      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+      "sha256": "47bede51b3a64a3326f96c5ff96b329513def84434877c78a131e0834a3a6b51"
     },
     {
       "repository": "8800_report",
       "path": "appendices/c-author-tools.tex",
-      "sha256": "80fe4511887521d082e28bf1546951e8680e6a1effc76b87ff8b628b942ac872"
+      "sha256": "343ca2f9172606e99780e1c7d83af5544137f70965beeadae1740fdaf0010999"
     },
     {
       "repository": "8800_report",
       "path": "main.tex",
-      "sha256": "f0abce2340318f02fcfc1a0129f842b70fdffa8b8201366e6c9f1209e89e5f7c"
+      "sha256": "83b5cda945496682467bbfd21cb64295eec247f9c853922e04d6aea871681311"
     },
     {
       "repository": "8800_report",
       "path": "main-zh.tex",
-      "sha256": "c075bc516292f4fcbf1876697e6d87a9945ec170aa18f52bf6edb6f38afce1d8"
+      "sha256": "ce527a96be7d7863b3a9ca02d7bf901f7941aacf58afe7992ff1266c15e9c884"
     },
     {
       "repository": "8800_report",

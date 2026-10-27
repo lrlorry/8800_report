@@ -1,0 +1,18 @@
+{
+  "points": 1590,
+  "families": {
+    "JHQ-GPU v69": 132,
+    "CAGRA fp32": 256,
+    "CAGRA int8": 256,
+    "IVF-RaBitQ": 726,
+    "IVF-PQ": 216,
+    "GPU brute force": 4
+  },
+  "source": {
+    "repository": "JHQ_GPU",
+    "path": "experiments/comp8800_poster_e1/E1_points.csv",
+    "sha256": "7217dd52d1956b41e502328226e3333f883b9e29a822c5b255d919ddea6f6545"
+  },
+  "source_registry": "data/appendix/e1-configurations.csv",
+  "scope": "Exact observed parameter tuples, not a Cartesian product or a GPU rerun"
+}

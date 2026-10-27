@@ -3,7 +3,7 @@
 当前入口：JHQ_GPU/experiments/thesis_evidence/REPORT_CN.md。
 离线复算：python3 scripts/audit_supplement.py。
 机器清单：data/supplement/audit.json；写作核对：assessment/supplement-integration.txt。
-本次仅整合已完成GPU记录，没有启动新GPU任务，没有推送仓库。
+补证整合未启动新GPU任务；报告与v71局部证据包已发布至报告仓库（1786e6e）。
 
 原逐条计划完整保存在archive/ch7-pending-before-supplement-2026-10-28.txt。
 以下状态取代旧清单中的“当前没有GPU／全部待补”，旧计划不再代表完成情况。
@@ -76,7 +76,7 @@
     A3向量对应不是原entity ID的全库连接。历史binary身份仍按家族分别取证。
 [ ] 若要给CPU/GPU倍数，另做匹配nlist/编码/GT/查询池/线程数的官方CPU对照。
     旧CPU记录不能与E1拼接倍数；小batch跨系统、其他GPU、漂移／在线更新仍未测。
-[ ] 可访问证据归档：209文件v71局部包已有；补证完整原始数据仍位于JHQ_GPU，
+[~] 可访问证据归档：209文件v71局部包已随报告发布；补证完整原始数据仍位于JHQ_GPU，
     report仓库的哈希和派生图表不等于所有raw、向量、cache、binary已发布。
 
 后续研究（保持原优先级，不作为当前提交前置条件）

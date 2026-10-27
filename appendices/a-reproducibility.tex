@@ -198,7 +198,8 @@ hashes 96 timed JSON records, four gate-check JSON records, their text
 outputs and build/progress logs, together with the selected source.
 \Cref{fig:7-lut} is derived from the timed records using
 \path{scripts/build_ch7.py}. This review bundle closes the local
-source-to-result inspection path; it supplies neither measured binary
+source-to-result inspection path and is included in the report repository;
+it supplies neither measured binary
 identity nor the datasets and trained states needed for GPU reproduction.
 
 The Vogue probe comparison stores matching SHA-256 hashes for the
@@ -247,7 +248,7 @@ Figure & Raw source \\
 \path{experiments/adc_v69/RAW/budget_v69.log}; actual 500/499 query counts \\
 \ref{fig:7-batch} & \path{experiments/pipeline_campaign/exp47/raw/bench/};
 \path{experiments/pipeline_v62/raw/perf/stages_summary.json} \\
-\ref{fig:7-build} & E1 and \path{adc_v69/RAW_BIG/} cold-build logs;
+\ref{fig:7-build} & \path{experiments/thesis_evidence/RAW_A1/} normal repeats;
 baseline index records, with int8 dataset quantization \\
 \ref{fig:7-memory} & \path{adc_v69/RAW_LUT/v71_g2_*_np128.json};
 modelled component sizes in the chapter analysis script \\

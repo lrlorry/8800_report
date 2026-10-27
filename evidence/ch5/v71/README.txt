@@ -30,5 +30,6 @@ This bundle supports source review and offline checking of the archived
 LUT measurements. It is not the complete JHQ_GPU source tree, a standalone
 CUDA build kit, the vector datasets, the trained states, PTX/SASS, or an
 independent GPU rerun. It supplies no per-candidate full-table/split-table
-score-error or tie comparison. Publication requires pushing the new files;
-local preparation alone does not make them available on GitHub.
+score-error or tie comparison. The bundle is included in the report repository from commit 1786e6e;
+its availability does not imply that the separate raw campaigns or vector
+data have also been published.

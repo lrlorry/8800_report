@@ -13,6 +13,7 @@ ch7-data:
 	python3 scripts/audit_supplement.py
 	python3 scripts/build_ch7.py --source ../JHQ_GPU
 	python3 scripts/audit_ch7_round2.py
+	python3 scripts/build_appendix.py
 
 clean:
 	latexmk -c main.tex
