@@ -1,5 +1,5 @@
 COMP8800 格式要求核对记录
-核对日期：2026-10-26（Australia/Sydney）
+核对日期：2026-10-28（Australia/Sydney，公开课程页再次核对）
 
 1. 当前公开课程说明
 https://programsandcourses.anu.edu.au/2026/course/COMP4550/Second%20Semester/8720
@@ -32,7 +32,11 @@ assessment/Poster Marking Rubric2.pdf 适用于 poster，不用于 thesis 排版
 6.pdf 是用户的写作蓝图，不是学校格式要求来源。
 
 3. 模板选择（不是学校规定）
-A4 / 单面单栏 / 12pt / Latin Modern / 30mm 页边距 / 1.3 倍行距。
+A4 / 单面单栏 / 11pt / Latin Modern 正文及配套数学字体。
+左右 27mm、上下 28mm 页边距；英文 1.18 倍行距，中文 1.25 倍。
+目录单倍行距；图表目录使用短标题，完整图注留在正文。
+黑白封面、分层标题、浅灰页眉线；不套用会议双栏或装饰性封面。
+共用样式集中在 config/layout.tex，字体保持 TeX 随附字体，便于本地及 Overleaf 编译。
 前置页罗马页码、正文阿拉伯页码、附录字母编号；数字引用与 BibTeX。
 封面以课程研究论文表述，不推断学生的学位名称，也不添加官方认证标记。
 预留声明与工具使用记录，不捏造署名、核验或签署事实。

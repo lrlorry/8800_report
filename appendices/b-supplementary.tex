@@ -1,4 +1,4 @@
-\chapter{Supplementary Results and Correctness Checks}
+\chapter[Supplementary Results and Correctness Checks]{Supplementary Results\\and Correctness Checks}
 \label{app:supplementary}
 This appendix records parameter coverage, stage-specific validation and
 secondary outcomes supporting Chapters 3--8. Measurement families retain
@@ -17,20 +17,21 @@ their Cartesian products are not assumed to have been measured.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Exact E1 configuration counts, including coverage
+\captionof{table}[Exact E1 configuration counts]{Exact E1 configuration counts, including coverage
 extensions. Counts are parameter points, not independent index builds.}
 \label{tab:b-e1-counts}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \input{tables/appendix/e1-counts}
 \end{minipage}\par\medskip
 
+\begingroup\raggedright
 \paragraph{JHQ-GPU.}
 All E1 points use $B=B_r=8$, $M=d/8$, $k=10$ and batch 1,000.
 Vogue uses 4,096 IVF lists; the other three use 8,192.
-Vogue observes probes 16/32/64/96/128/192/256/384/512 and
+Vogue observes probes 16/\allowbreak{}32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512 and
 $\alpha\in\{16,32,64,128\}$ over 27 tuples. ArXiv adds probe 1,024
 and uses $\alpha\in\{25,50,100,200\}$ over 29 tuples.
-Both OpenAI grids use probes 32/64/128/256/512/1,024;
+Both OpenAI grids use probes 32/\allowbreak{}64/\allowbreak{}128/\allowbreak{}256/\allowbreak{}512/\allowbreak{}1,024;
 their observed multipliers are respectively
 $\{4,8,16,32,64,128,256,512\}$ and
 $\{2,4,8,16,32,64,128,256\}$, over 37 and 39 tuples.
@@ -39,22 +40,22 @@ elsewhere. OpenAI uses TF32 rotation/centroid GEMMs in historical v69;
 the v72 FP32 sensitivity is a separate family (\cref{sec:7-precision}).
 
 \paragraph{CAGRA fp32 and int8.}
-Each representation has 64 points per dataset: graph degrees 32/64,
+Each representation has 64 points per dataset: graph degrees 32/\allowbreak{}64,
 intermediate degree 128, \texttt{ivf\_pq} construction,
-\texttt{itopk\_size} in 32/64/96/128/192/256/384/512 and search width
-1/2/4/8. Int8 records quantile 0.99 for dataset scaling and includes
+\texttt{itopk\_size} in 32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512 and search width
+1/\allowbreak{}2/\allowbreak{}4/\allowbreak{}8. Int8 records quantile 0.99 for dataset scaling and includes
 query quantisation in the host search boundary.
 
 \paragraph{IVF-PQ.}
-Eight-bit subcodes use 192/384/768-byte codes at dimension 768,
-and 384/768/1,536-byte codes on OpenAI. Each length has fp16/fp32
-lookup tables and probes 16/32/64/96/128/192/256/384/512:
+Eight-bit subcodes use 192/\allowbreak{}384/\allowbreak{}768-byte codes at dimension 768,
+and 384/\allowbreak{}768/\allowbreak{}1,536-byte codes on OpenAI. Each length has fp16/fp32
+lookup tables and probes 16/\allowbreak{}32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512:
 54 points per dataset. The recorded refinement ratio is one and list
 counts match JHQ. Code lengths and memory budgets differ.
 
 \paragraph{IVF-RaBitQ and brute force.}
-RaBitQ records 4/8/9 bits per dimension and probes
-16/32/64/96/128/192/256/384/512/768/1,024. The 768-dimensional and
+RaBitQ records 4/\allowbreak{}8/\allowbreak{}9 bits per dimension and probes
+16/\allowbreak{}32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512/\allowbreak{}768/\allowbreak{}1,024. The 768-dimensional and
 OpenAI-1536 records contain LUT16/LUT32/QUANT4/QUANT8 modes;
 OpenAI-3072 contains LUT32/QUANT4/QUANT8. Additional 4,096-list OpenAI
 indexes extend the default 8,192-list coverage. Exact combinations are
@@ -62,15 +63,17 @@ in the registry. Each dataset also has one FP32 squared-L2 brute-force
 point. An absent mode or higher-recall point is not a measured failure.
 
 \paragraph{Auxiliary grids.}
-LUT evaluation fixes $\alpha=100$ and probes 8/32/128/512 on six
+LUT evaluation fixes $\alpha=100$ and probes 8/\allowbreak{}32/\allowbreak{}128/\allowbreak{}512 on six
 datasets with $\glut\in\{1,2,4,8\}$: 24 cells and 96 timed arms.
-Budget evaluation uses probes 128/512 and
+Budget evaluation uses probes 128/\allowbreak{}512 and
 $A=(200,100,64,32,16,8,4,2)$ on the same six datasets, with 64 draws
 at each $S\in\{32,64,128\}$ and $\epsilon=1$. FULL separately uses
 all 500 calibration queries. Held-out counts are 500, or 499 for
 Stella. Direct reuse tests four cells, four policies and five rounds
 of 500 repeated held-out batches. Boundaries are specified in
 \cref{sec:a-budget-contract,sec:a-supplement}.
+
+\par\endgroup
 
 \section{Correctness and Numerical Evidence}
 \label{sec:b-correctness}
@@ -80,7 +83,7 @@ stated contracts; raw-vector recall is evaluated separately.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Validation coverage and the object actually checked.}
+\captionof{table}[Validation coverage]{Validation coverage and the object actually checked.}
 \label{tab:b-checks}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}X@{}}
@@ -107,12 +110,12 @@ matches; 18,432 sampled grid counts reproduce full-pool subset sums \\
 
 The smaller representation-audit databases have identical primary and
 residual bytes across one-/two-pass builds when joined by ID.
-Corrections differ by at most $8.94\times10^{-8}$ and 1/1/40 rows change
+Corrections differ by at most $8.94\times10^{-8}$ and 1/\allowbreak{}1/\allowbreak{}40 rows change
 list assignment; Stella validates its natural two-pass path
 (\cref{sec:4-representation-audit}). A strict CPU reference for every
 actual GPU candidate score and the controlled same-model Vogue
 cross-process diagnosis were not performed. Archived processes with
-matching probe/primary dumps still report final recall 0.9642/0.9644.
+matching probe/primary dumps still report final recall 0.9642/\allowbreak{}0.9644.
 FP64 recoding and matching aggregate decisions do not replace those checks.
 
 \section{Secondary Results and Evidence Status}

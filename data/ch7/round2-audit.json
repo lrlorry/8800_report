@@ -1345,17 +1345,17 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "51a16c3559542e7c48a6b35867c37a8ae3ae31ec85cb58fb39ce7c1a93de0bbd"
+      "sha256": "61bb7360b81e9bcacf5956e52ec41f18a68a7e04b6139c909a7639af111f181f"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "17c1d33d41d38f2732133db4d2af419dfa6a20520fa47bf9e4a04c3e4be48f46"
+      "sha256": "81982d5d4240332bb3dd85206d5cff2ffbd1b893bed032d399b5138e9ee6df99"
     },
     {
       "repository": "8800_report",
       "path": "appendices/a-reproducibility.tex",
-      "sha256": "86103d599d86d88c1bd2023fb67c6887c7dc22efe598fcda68ecb7021bb69806"
+      "sha256": "23c780d2618332abfa60c81d4162a742d03a69f06788d2ace03f6c8249bbf442"
     },
     {
       "repository": "8800_report",

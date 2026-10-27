@@ -261,12 +261,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-2-negative.tex",
-      "sha256": "2452382afc52a5d30cf5941c45efecaf9eab9e04384554893ee18d4163e66d02"
+      "sha256": "420dcab5e495971178d1055821cc93ebc7554980662b7b72a822ceb6688a9c00"
     },
     {
       "repository": "8800_report",
       "path": "chapters/08-3-validity.tex",
-      "sha256": "eba2f7cf6845a08a65793852615698eda1547291310ef76fdf1ea539bc5e70d2"
+      "sha256": "45ab4e843cf297c2bf24bbaa361399506123a00a71d8faef5c82726bb8d44f23"
     },
     {
       "repository": "8800_report",
@@ -281,7 +281,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-discussion.tex",
-      "sha256": "4d9d0f9e4d7dff23aaa171b33720633fb669023a6f52048a0c7ff811a9496cea"
+      "sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434"
     },
     {
       "repository": "8800_report",
@@ -291,12 +291,12 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-2-negative.tex",
-      "sha256": "ebe8e5e751733ec2c14b9b73594bdb49938de869b97b731cf31fe450e289402a"
+      "sha256": "1e303e0ce3a28b2ec4a7d439147ab217fa2b403a4287def7ff131e862655de39"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-3-validity.tex",
-      "sha256": "bac2efd71ede9a62a68216c1c71596a90da61b7627b072ba6a5df48cf4b47515"
+      "sha256": "2973f2fae4a2cab05c47380f715903e1044ee5205fd8624dad5c75cc7ca6f26c"
     },
     {
       "repository": "8800_report",

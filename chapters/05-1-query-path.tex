@@ -28,7 +28,7 @@ but neither it nor the primary score is the original-vector distance.
 \begin{figure}[tbp]
 \centering
 \input{figures/ch5/query-path}
-\caption{Query execution and its separate selection boundaries. Routing
+\caption[Query stages and selection boundaries]{Query execution and its separate selection boundaries. Routing
 selects lists, primary screening selects vector candidates, and final
 selection ranks refined survivors. Raw-space ground truth is used for
 evaluation; it is not an input to these search decisions.}
@@ -69,7 +69,7 @@ treating a single unchanged recall value as proof of the whole pipeline.
 
 \begin{table}[tbp]
 \centering
-\caption{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
+\caption[Query-stage selection contracts]{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
 survivors. Exactness refers to the stated computed scores; routing and
 quantised reconstruction determine raw-space approximation.}
 \label{tab:5-selection-contracts}
@@ -92,7 +92,7 @@ Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\
 
 \begin{table}[tbp]
 \centering
-\caption{Library defaults and measured pipeline settings. Environment
+\caption[Library defaults and evaluation settings]{Library defaults and measured pipeline settings. Environment
 variables or setters can override library defaults. The policy parameter
 $-1$ requests scheduling; it does not force a grouped kernel.}
 \label{tab:5-evaluation-settings}

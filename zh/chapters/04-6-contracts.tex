@@ -8,7 +8,7 @@
 
 \begin{table}[tbp]
 \centering
-\caption{已归档 pilot 诊断。修正项误差覆盖全部索引行；返回分数误差覆盖采样查询的 GPU top-10 比较。相对分数误差为 $|s_{\rm GPU}-s_{64}|/s_{64}$，参考包含查询范数常数。}
+\caption[已归档的 pilot 诊断]{已归档 pilot 诊断。修正项误差覆盖全部索引行；返回分数误差覆盖采样查询的 GPU top-10 比较。相对分数误差为 $|s_{\rm GPU}-s_{64}|/s_{64}$，参考包含查询范数常数。}
 \label{tab:4-pilot}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}lrrr@{}}
@@ -37,7 +37,7 @@ $3.96$--$4.34\times10^{-7}$。采样范数检查使用FP64旋转而非GPU GEMM�
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{原始输入FP64重编码审计。差异数按坐标决策计数，最后一列为残差不一致
+\captionof{table}[原始输入 FP64 重编码审计]{原始输入FP64重编码审计。差异数按坐标决策计数，最后一列为残差不一致
 坐标离决策边界的最大距离。结构检查覆盖全行，重编码采用采样。}
 \label{tab:4-representation-audit}
 \scriptsize\setlength{\tabcolsep}{3pt}
@@ -55,10 +55,12 @@ Stella只验证自然两遍路径。导出器不含IVF质心，因此列表成�
 结构正确不等于已证明分配决策正确。
 
 \subsection{契约覆盖与剩余检查}
+% Keep this float after the preceding fixed-position recoding-audit table.
+\suppressfloats[t]
 
 \begin{table}[tbp]
 \centering
-\caption{纳入pilot及补证输入审计后的表示契约，区分存储几何、采样算术与行放置的覆盖。}
+\caption[表示契约与审计覆盖]{纳入pilot及补证输入审计后的表示契约，区分存储几何、采样算术与行放置的覆盖。}
 \label{tab:4-contracts}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.8cm}*{2}{>{\raggedright\arraybackslash}X}@{}}

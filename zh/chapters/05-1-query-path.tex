@@ -18,7 +18,7 @@
 \begin{figure}[tbp]
 \centering
 \input{figures/ch5/query-path}
-\caption{查询执行及其独立选择边界。路由选择列表，主码筛选选择向量候选，最终选择对精排后的保留候选排序。原空间 ground truth 用于评价，不作为这些搜索决策的输入。}
+\caption[查询阶段与选择边界]{查询执行及其独立选择边界。路由选择列表，主码筛选选择向量候选，最终选择对精排后的保留候选排序。原空间 ground truth 用于评价，不作为这些搜索决策的输入。}
 \label{fig:5-query-path}
 \end{figure}
 
@@ -33,7 +33,7 @@
 
 \begin{table}[tbp]
 \centering
-\caption{逐阶段契约。$c_v=\min(c,n_c)$ 为有效主码保留数。“精确”针对约定的计算分数；路由与量化重建决定原空间近似性。}
+\caption[查询阶段的选择契约]{逐阶段契约。$c_v=\min(c,n_c)$ 为有效主码保留数。“精确”针对约定的计算分数；路由与量化重建决定原空间近似性。}
 \label{tab:5-selection-contracts}
 \label{tab:5-query-stages}
 \footnotesize\setlength{\tabcolsep}{3pt}
@@ -54,7 +54,7 @@ LUT & $q'\to$ 表 & 主码本 & $MD_s2^{8/\glut}$ 坐标项 & 实数分解精确
 
 \begin{table}[tbp]
 \centering
-\caption{库默认值与被测流水线配置。环境变量或 setter 可以覆盖默认值。策略参数 $-1$ 请求调度，并不强制执行分组 kernel。}
+\caption[库默认值与评测设置]{库默认值与被测流水线配置。环境变量或 setter 可以覆盖默认值。策略参数 $-1$ 请求调度，并不强制执行分组 kernel。}
 \label{tab:5-evaluation-settings}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}l*{2}{>{\raggedright\arraybackslash}X}@{}}

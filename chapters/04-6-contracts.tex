@@ -27,7 +27,7 @@ re-encoding from the original input vectors.
 
 \begin{table}[tbp]
 \centering
-\caption{Archived pilot diagnostics. Correction error covers all indexed
+\caption[Archived pilot diagnostics]{Archived pilot diagnostics. Correction error covers all indexed
 rows; returned-score error covers the GPU top-10 comparison for sampled
 queries. Relative score error is $|s_{\rm GPU}-s_{64}|/s_{64}$, where the
 reference includes the query-norm constant.}
@@ -77,7 +77,7 @@ therefore measure the stored matrix's geometry.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Original-input FP64 recoding audit. Flips count coordinate
+\captionof{table}[Original-input FP64 recoding audit]{Original-input FP64 recoding audit. Flips count coordinate
 decisions; the final column is the largest residual-boundary distance
 among mismatches. Structural checks cover all rows; recoding is sampled.}
 \label{tab:4-representation-audit}
@@ -101,10 +101,12 @@ centroids are absent from the export; these structural checks do not
 prove the assignment decision itself.
 
 \subsection{Contract coverage and remaining checks}
+% Keep this float after the preceding fixed-position recoding-audit table.
+\suppressfloats[t]
 
 \begin{table}[tbp]
 \centering
-\caption{Representation contracts after the pilot and supplementary input audit.
+\caption[Representation contracts and audit coverage]{Representation contracts after the pilot and supplementary input audit.
 Coverage separates stored geometry, sampled arithmetic and row placement.}
 \label{tab:4-contracts}
 \footnotesize\setlength{\tabcolsep}{4pt}

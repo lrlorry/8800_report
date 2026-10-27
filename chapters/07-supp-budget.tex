@@ -20,7 +20,7 @@ per-query invariance on every possible subset.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Maximum held-out recall loss over the 64 draws at each sample
+\captionof{table}[Worst observed held-out recall losses]{Maximum held-out recall loss over the 64 draws at each sample
 size, relative to the best tested arm. All twelve FULL selections match
 enumeration. Maxima complement the earlier means, p95 and crossing rates.}
 \label{tab:7-budget-tails}
@@ -46,7 +46,7 @@ sampling risk without fitting a population model to held-out recall gaps.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
-\caption{Finite-pool prediction and observed arXiv loss crossings. Bars
+\caption[Finite-pool risk prediction and observation]{Finite-pool prediction and observed arXiv loss crossings. Bars
 show one estimated standard error over 64 independently drawn subsets
 conditional on the fixed pool, not uncertainty over future workloads.}
 \label{fig:7-finite-pool}
@@ -73,7 +73,7 @@ separately timed schedule calibration are outside this boundary.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Direct total milliseconds for 500 reuse batches, averaged over
+\captionof{table}[Direct costs for 500 reuse batches]{Direct total milliseconds for 500 reuse batches, averaged over
 five rounds, including budget calibration for sampled and FULL policies.
 Each batch has 500 queries. Quality is discussed with the timing results.}
 \label{tab:7-stream-cost}
@@ -107,7 +107,7 @@ match exactly in every cell.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
-\caption{Direct mean cumulative time, including budget calibration and
+\caption[Direct cumulative calibrated-reuse time]{Direct mean cumulative time, including budget calibration and
 first-batch setup. Each curve replays one fixed held-out query pool.
 Policies can have different recall; timings alone are not a quality-matched
 ranking. Dataset/probe settings match \cref{tab:7-stream-cost}.}

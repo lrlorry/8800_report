@@ -21,7 +21,7 @@
 \begin{figure}[tbp]
 \centering
 \input{figures/ch5/lane-refinement}
-\caption{十六 lane 残差精排。一个 warp 处理两个候选；候选内的 lane $a$ 读取残差 word $a,a+16,\ldots$。残差编码为八比特时，每个 32-bit word 解码四个坐标。子组归约合并部分和，再加上保留的主码分数和修正项。即使子组内 word 访问连续，候选物理位置仍可能分散。}
+\caption[十六 lane 残差精排]{十六 lane 残差精排。一个 warp 处理两个候选；候选内的 lane $a$ 读取残差 word $a,a+16,\ldots$。残差编码为八比特时，每个 32-bit word 解码四个坐标。子组归约合并部分和，再加上保留的主码分数和修正项。即使子组内 word 访问连续，候选物理位置仍可能分散。}
 \label{fig:5-lane-refinement}
 \end{figure}
 

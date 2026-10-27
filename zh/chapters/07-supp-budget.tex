@@ -13,7 +13,7 @@
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{每个样本量64次抽取中的最大留出recall损失，相对最佳被测预算。
+\captionof{table}[实测最坏留出召回率损失]{每个样本量64次抽取中的最大留出recall损失，相对最佳被测预算。
 十二个FULL选择均与枚举一致；最大值补充之前的均值、p95与越阈率。}
 \label{tab:7-budget-tails}
 \footnotesize\setlength{\tabcolsep}{4pt}
@@ -32,7 +32,7 @@ GT保证。36项比较中最大绝对差为BGE/512在$S=128$的0.144（预测0.5
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
-\caption{arXiv损失越阈的有限池预测与观测。误差条是在固定池条件下64次独立抽取
+\caption[有限池风险预测与实测]{arXiv损失越阈的有限池预测与观测。误差条是在固定池条件下64次独立抽取
 子集的一倍估计标准误，不是未来工作负载的不确定性。}
 \label{fig:7-finite-pool}
 \end{figure}
@@ -51,7 +51,7 @@ GT保证。36项比较中最大绝对差为BGE/512在$S=128$的0.144（预测0.5
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{500个复用批次的直接总毫秒数，五轮平均；采样与FULL包含预算校准，
+\captionof{table}[500 个复用批次的直接成本]{500个复用批次的直接总毫秒数，五轮平均；采样与FULL包含预算校准，
 每批500查询。质量与计时结果一起讨论。}
 \label{tab:7-stream-cost}
 \footnotesize\setlength{\tabcolsep}{4pt}
@@ -75,7 +75,7 @@ FULL恢复至0.9664，耗时5,062\,ms。arXiv的FULL为提高质量选择200，�
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
-\caption{含预算校准及首批设置的直接平均累计时间，各曲线重复同一固定留出池。
+\caption[校准后复用的直接累计时间]{含预算校准及首批设置的直接平均累计时间，各曲线重复同一固定留出池。
 不同策略recall可不同，因此不能仅按时间作质量匹配排名；配置对应\cref{tab:7-stream-cost}。}
 \label{fig:7-stream-cost}
 \end{figure}

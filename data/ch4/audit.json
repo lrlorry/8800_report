@@ -26,42 +26,42 @@
     {
       "source": "8800_report",
       "path": "chapters/04-1-boundaries.tex",
-      "sha256": "5ad833631f560183dc8516d1227ac3094173f126c64d300881453772fc20bd9f"
+      "sha256": "007d9e137bb08b4ca210266c968d478cad53297bce64772507ba71076be37ce4"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-2-training.tex",
-      "sha256": "4817e0cdd4d42c5e72b0fc1da813c5ba9d5a20bbd8fb8b43042fc79b8455bae6"
+      "sha256": "53ef597766ad8d0583b30bff9045bf07d1732e1219068c56c29d176d4b41513b"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-3-layout.tex",
-      "sha256": "9a3db869b7230f81df912abda58c5f9708df014f47283596e15219092c8f745f"
+      "sha256": "3c30bea567f39198a663b7f8613b55dc6a13d5be92fbac4732cd8f3ab1581420"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "956924c91e671ae7864fee32f16486a4edf733c66f24fea9b7f5f1e10d9110f2"
+      "sha256": "a178318e83e49d97dd91106fa1a34f896899578994d0908966c0ff99dfdc4b03"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-5-construction.tex",
-      "sha256": "c83289fa94e82a341ead33bb2f942336ecf36b6fc62512dc86cd8e07573bb0cf"
+      "sha256": "a20666edb0b701cd8c8b48c825a4e6fe894b9ce632e561f86bd369420f076740"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "1a193d948287154385a3b2df9e22f0fcb8bb49768eec71a6bee915fa67300c87"
+      "sha256": "dd22fbd31c5af85e8c6763e793505a03eaa755309c01acd4517e1b3a653d9f0c"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-architecture.tex",
-      "sha256": "4b8a354f5e4e6766221b72e7e0a23eedde2973093cbcab56cf58efefd51dd65d"
+      "sha256": "1d452fa40ad440eae66aa263c1ab1439e891f685c9cb66ffbe718c6946192498"
     },
     {
       "source": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "51a16c3559542e7c48a6b35867c37a8ae3ae31ec85cb58fb39ce7c1a93de0bbd"
+      "sha256": "61bb7360b81e9bcacf5956e52ec41f18a68a7e04b6139c909a7639af111f181f"
     },
     {
       "source": "8800_report",
@@ -126,32 +126,32 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-1-boundaries.tex",
-      "sha256": "6feb5a5768bc55fedb7786322acb26d3d086dc6dd09161d9846acbc496d8abab"
+      "sha256": "b8c806fc74b1be6c253dbdb46f2ff458704dc8074c6fa3f06b8dde5ccf751b70"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "d22b6a2aaf3e392b5c40f6a6aac616f350782702cd53982571e34e685da2660a"
+      "sha256": "93a7e6312daa3c60073d1a88779cf1554f2f704c8e653dd81a27f848905770a1"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-3-layout.tex",
-      "sha256": "00ecd0075df43d806c6e51da56cc9f457a1a5bf5b0872d255ffd4cf852f0128f"
+      "sha256": "263c43a99894db3922a031fdcc3703f00aa899113c49d593892a2927969f9a2d"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "30031baffc80ee4588b8b2e39f0267f112c38771614ef17678c23dfcc69dc8ff"
+      "sha256": "9bdccbc2cbd80996ee237ead118ea3fc97cb34fef9e3b73b00782453443fb3bc"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-5-construction.tex",
-      "sha256": "91d45574a9c507b9b936f8e0af72bda85c088769544157f1cf07a8ed4b27ad2a"
+      "sha256": "490b1f043d36fe8d1964d713154d75aa0c8091d49d0e042a897d3c6962da03a2"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "2650c19ab9baa85faa3841163331038c79ce1d27b7f18f6a8fd97c7d231553d4"
+      "sha256": "f857e9840ead942c7fb34e0947684fdf08d0d4f2a91b8fcc518b9410a211eb14"
     },
     {
       "source": "8800_report",
@@ -161,7 +161,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "17c1d33d41d38f2732133db4d2af419dfa6a20520fa47bf9e4a04c3e4be48f46"
+      "sha256": "81982d5d4240332bb3dd85206d5cff2ffbd1b893bed032d399b5138e9ee6df99"
     },
     {
       "source": "8800_report",

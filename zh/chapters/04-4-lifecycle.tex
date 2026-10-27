@@ -10,7 +10,7 @@
 
 \begin{table}[tbp]
 \centering
-\caption{每向量字节数。JHQ 含编码、ID 与修正项；SQ8 仅计向量编码；CAGRA int8 模型计向量编码及 32 个四字节邻居。均排除偏移、模型参数、工作区及其他运行时分配，不代表完整进程总量。}
+\caption[单向量存储模型]{每向量字节数。JHQ 含编码、ID 与修正项；SQ8 仅计向量编码；CAGRA int8 模型计向量编码及 32 个四字节邻居。均排除偏移、模型参数、工作区及其他运行时分配，不代表完整进程总量。}
 \label{tab:4-bytes}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}rrrrrrrr@{}}
@@ -31,7 +31,7 @@ CAGRA 比较使用图度数 $d_g=32$ 时的 $d+4d_g$ 字节，与测试程序的
 
 \begin{table}[tbp]
 \centering
-\caption{对象生命周期。大小描述具名数组，不是 CUDA 进程的全部分配；构建阶段见\cref{sec:4-5}。}
+\caption[构建与查询对象生命周期]{对象生命周期。大小描述具名数组，不是 CUDA 进程的全部分配；构建阶段见\cref{sec:4-5}。}
 \label{tab:4-lifetimes}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}

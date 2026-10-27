@@ -14,7 +14,7 @@ not evidence of a unique compression advantage over int8 alternatives.
 
 \begin{table}[tbp]
 \centering
-\caption{Per-vector bytes. JHQ includes codes, ID and correction; SQ8 is
+\caption[Per-vector storage model]{Per-vector bytes. JHQ includes codes, ID and correction; SQ8 is
 vector codes alone; CAGRA int8 models vector codes plus 32 four-byte
 neighbours. Offsets, model parameters, workspace and other runtime
 allocations are excluded. These components are not complete process totals.}
@@ -56,7 +56,7 @@ reserve about 93.8\,MiB even on the query-centric path.
 
 \begin{table}[tbp]
 \centering
-\caption{Object lifetimes. Sizes describe named arrays, rather than all
+\caption[Construction and query object lifetimes]{Object lifetimes. Sizes describe named arrays, rather than all
 allocations of a CUDA process. Construction phases are expanded in
 \cref{sec:4-5}.}
 \label{tab:4-lifetimes}

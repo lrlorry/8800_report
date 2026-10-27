@@ -1,4 +1,4 @@
-\chapter{Experimental Evaluation and Research Findings}
+\chapter[Experimental Evaluation and Research Findings]{Experimental Evaluation\\and Research Findings}
 \label{ch:evaluation}
 \chaptermark{Experimental Evaluation}
 
@@ -42,7 +42,7 @@ system speedup.
 
 \begin{table}[tbp]
 \centering
-\caption{Evidence families. Counts denote measured configurations or checks,
+\caption[Experiment and evidence families]{Evidence families. Counts denote measured configurations or checks,
 not independent index builds. All use the RTX 5090; timing protocols differ.}
 \label{tab:7-manifest}
 \small
@@ -148,7 +148,7 @@ unmeasured operating region, not a proof that the method cannot reach it.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/frontiers.pdf}
-\caption{Measured host-to-host recall--QPS frontiers on the four E1 datasets.
+\caption[E1 recall--throughput frontiers]{Measured host-to-host recall--QPS frontiers on the four E1 datasets.
 The displayed recall window begins at 0.90, with a vertical line at 0.97;
 all baseline families,
 including CAGRA int8, participate in frontier construction. Lines connect
@@ -181,7 +181,7 @@ creates a new measurement at exactly the requested recall.
 
 \begin{table}[tbp]
 \centering
-\caption{Recall 0.97 comparison. Each ratio is interpolated / measured;
+\caption[Cross-system comparison at recall 0.97]{Recall 0.97 comparison. Each ratio is interpolated / measured;
 values above one favour JHQ. JHQ kQPS is the interpolated estimate.
 The small arXiv--RaBitQ difference changes direction with the estimator.}
 \label{tab:7-matched}
@@ -208,7 +208,7 @@ the shared bound's contribution alone.
 
 \begin{table}[tbp]
 \centering
-\caption{Vogue E1 path sensitivity at batch 1,000. Both frontiers use
+\caption[Vogue E1 scan-path sensitivity]{Vogue E1 path sensitivity at batch 1,000. Both frontiers use
 the same run--budget grid and log-QPS interpolation rule against RaBitQ;
 each paired run has bit-identical final outputs.}
 \label{tab:7-e1-paths}
@@ -314,7 +314,7 @@ without treating configurations sharing an index as independent trials.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/lutgroups.pdf}
-\caption{Cartesian table grouping at fixed $\alpha=100$ (v71).
+\caption[Cartesian lookup-table grouping]{Cartesian table grouping at fixed $\alpha=100$ (v71).
 Group counts describe $\glut$, not parallel scan groups. Curves are medians
 of per-dataset QPS ratios to the one-group arm; shading shows their range.}
 \label{fig:7-lut}
@@ -356,7 +356,7 @@ $2.383\times$; it is not the gain range of the ordinary selected budgets.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/packing_refinement.pdf}
-\caption{Packing and refinement controls. Left: median packed-load QPS
+\caption[Packed access and refinement controls]{Packing and refinement controls. Left: median packed-load QPS
  gain across six datasets, with shaded minimum--maximum ranges, for each
  table grouping and probe count. Right: measured load-only and 16-lane
  end-to-end gains at 128 probes and the ordinary dataset-specific budgets.
@@ -366,7 +366,7 @@ $2.383\times$; it is not the gain range of the ordinary selected budgets.
 
 \begin{table}[tbp]
 \centering
-\caption{Refinement at 128 probes. Ratios are paired end-to-end gains over
+\caption[Refinement gains at 128 probes]{Refinement at 128 probes. Ratios are paired end-to-end gains over
  L0, except the last column, which is the profiled refinement-kernel gain.
  The kernel and application gains must not be interchanged.}
 \label{tab:7-refinement}
@@ -496,7 +496,7 @@ directly.
 
 \begin{table}[tbp]
 \centering
-\caption{v69/v65 end-to-end throughput ratios for the exact computed-score probe
+\caption[Probe-selection throughput ratios]{v69/v65 end-to-end throughput ratios for the exact computed-score probe
  change. Each workload--batch comparison has ten timing rounds per binary,
  collected in alternating runs. Values above one favour v69.}
 \label{tab:7-probe}
@@ -597,7 +597,7 @@ at $10^{-3}$ GT loss.
 
 \begin{table}[tbp]
 \centering
-\caption{Full-pool calibration ($S=500$). Loss is relative to the best
+\caption[Full-pool budget calibration]{Full-pool calibration ($S=500$). Loss is relative to the best
 measured held-out recall; rates are kQPS from the selected fixed arm.
 ``Cal.'' is one full-pool calibration call per cell, not a repeated
 stream timing. Held-out counts are 500, or 499 for Stella.}
@@ -620,7 +620,7 @@ approximate.
 
 \begin{table}[tbp]
 \centering
-\caption{Held-out quality at $S=128$. Rule $\alpha$ is the median across
+\caption[Sampled-budget held-out quality]{Held-out quality at $S=128$. Rule $\alpha$ is the median across
 64 draws; oracle $\alpha$ uses held-out labels. $\overline R_{\rm rule}$
 is reconstructed mean recall. ``Losses'' counts draws with recall loss
 $>10^{-3}$ relative to the best tested held-out recall; $L_{95}$ is the
@@ -652,7 +652,7 @@ mean every draw has zero loss.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.82\linewidth]{ch7/budget_risk.pdf}
-\caption{Held-out risk across sample sizes. The vertical axis is the
+\caption[Held-out risk across sample sizes]{Held-out risk across sample sizes. The vertical axis is the
 percentage of calibration draws losing more than $10^{-3}$ held-out recall
 relative to the best tested budget. Increasing $S$ also tightens the allowed
 slot-disagreement fraction because \cref{eq:7-agreement} keeps threshold one.}
@@ -693,7 +693,7 @@ decision, rather than a guarantee of the fastest measured arm.
 
 \begin{table}[tbp]
 \centering
-\caption{Fixed-budget controls over twelve held-out cells. Qualifying means
+\caption[Fixed-budget quality and throughput controls]{Fixed-budget controls over twelve held-out cells. Qualifying means
 within $10^{-3}$ of the best tested recall at printed precision. Worst
 recall loss uses all cells; QPS deficit uses only cells where that arm
 qualifies. A dash means no qualifying cells.}
@@ -730,7 +730,7 @@ the default despite some draws exceeding the oracle-relative target.
 
 \begin{table}[tbp]
 \centering
-\caption{Calibration economics, $S=128$. Rates are kQPS and rule rate is
+\caption[Sampled-calibration economics]{Calibration economics, $S=128$. Rates are kQPS and rule rate is
 mean selected-arm QPS. Ratios compare with fixed 100 and fixed 64.
 The ``Batches'' column gives payback relative to fixed 100 using 500
 queries, or 499 for Stella; ``Never'' denotes no throughput payback.
@@ -767,7 +767,7 @@ The short modelled horizons favour reuse on long stable jobs;
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/budget_payback.pdf}
-\caption{Estimated calibration payback relative to fixed budgets 100 and
+\caption[Estimated calibration payback]{Estimated calibration payback relative to fixed budgets 100 and
 64. Filled circles denote 128 probes and open triangles 512 probes.
 Top-row points have no throughput payback. Estimates invert mean
 selected-arm QPS and use 500 queries, or 499 for Stella.}
@@ -825,7 +825,7 @@ that extra work but do not eliminate the regime change.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/batch_execution.pdf}
-\caption{Execution regimes. Left: fixed shared-bound group counts and
+\caption[Batch-dependent execution regimes]{Execution regimes. Left: fixed shared-bound group counts and
 scheduled execution relative to the lane-refined one-block baseline
 (13 cells at small batches, 11 at batch 1,000). Right: paired scan and
 merge profiles at batches 8 and 1,000 for arXiv budgets 100 and 200.
@@ -849,7 +849,7 @@ configurations before the additional configurations were measured.
 
 \begin{table}[tbp]
 \centering
-\caption{Integrated execution gains over v61 L16. Entries are geometric
+\caption[Integrated execution and scheduling gains]{Integrated execution gains over v61 L16. Entries are geometric
  means of per-cell median paired speedups from five rounds. ``Held out''
  excludes the four configurations used to set the rule; it means held-out
  configurations, not the budget experiment's held-out query split.}
@@ -919,7 +919,7 @@ Stella's normal totals are 10.54--10.65\,s, close to the historical
 
 \begin{table}[tbp]
 \centering
-\caption{Cold JHQ construction and separately measured resident memory.
+\caption[Cold construction and resident memory]{Cold JHQ construction and separately measured resident memory.
 Train/add are component medians of three supplementary normal builds;
 Total is the median paired sum. Memory comes
 from v71's two-group, 128-probe, $\alpha=100$ runs and includes context
@@ -957,7 +957,7 @@ it does not measure time until the first usable search.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/construction.pdf}
-\caption{Recorded construction costs, with CAGRA int8 included. JHQ is
+\caption[Recorded construction costs]{Recorded construction costs, with CAGRA int8 included. JHQ is
 the median and range of three supplementary normal cold builds with warm
 input pages; other bars are medians across successful
 measured index configurations, with minimum--maximum whiskers. Int8
@@ -977,7 +977,7 @@ resident cost are separate deployment dimensions.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Supplementary empty-cache construction. Train+add and Start
+\captionof{table}[Repeated empty-cache construction]{Supplementary empty-cache construction. Train+add and Start
 give ranges over three normal warm-input runs; First read is this session's
 first-read startup observation. Start ends at add completion, before
 schedule calibration/search. Peak is the maximum 20\,ms device sample
@@ -1012,7 +1012,7 @@ remainder to residual codes would overstate the representation cost.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/memory.pdf}
-\caption{Resident-memory decomposition at two-group tables, 128 probes
+\caption[Resident-memory decomposition]{Resident-memory decomposition at two-group tables, 128 probes
 and $\alpha=100$. Component sizes are modelled, markers are measured used
 totals, and hatching is the unattributed remainder. The totals include
 context and workspace. Separate construction samples are in
@@ -1051,7 +1051,7 @@ The component model in \cref{tab:4-bytes} explains this comparison.
 
 \begin{table}[tbp]
 \centering
-\caption{E1 allocation ranges. JHQ is process total minus a 507.2\,MiB
+\caption[E1 allocation ranges]{E1 allocation ranges. JHQ is process total minus a 507.2\,MiB
 context estimate, including query workspace; both CAGRA columns are index
 allocations measured during build. Ranges cover the parameter sweep.}
 \label{tab:7-e1-memory}
@@ -1075,7 +1075,7 @@ exclusions, not observed out-of-memory errors or measured recall failures.
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/large_frontiers.pdf}
-\caption{Large-dataset host-to-host frontiers, including the successful
+\caption[Large-dataset search frontiers]{Large-dataset host-to-host frontiers, including the successful
 isolated CAGRA int8 reruns. BGE uses 1,000 queries and Stella 999. An
 endpoint is the end of the tested grid, not an intrinsic recall limit.}
 \label{fig:7-large}
@@ -1198,7 +1198,7 @@ correctness, speed and quality.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{Answers to the four research questions, supported by this chapter.}
+\captionof{table}[Answers to the research questions]{Answers to the four research questions, supported by this chapter.}
 \label{tab:7-rq-answers}
 \small
 \begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}

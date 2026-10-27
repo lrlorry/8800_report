@@ -1,6 +1,6 @@
 % Chinese reading copy: make pdf-zh (XeLaTeX).
 % Chapters 1--9 and the abstract have Chinese reading versions.
-\documentclass[a4paper,12pt,oneside,openany]{report}
+\documentclass[a4paper,11pt,oneside,openany]{report}
 
 \input{config/metadata}
 \renewcommand{\thesistitle}{JHQ-GPU：面向表示的 GPU 近似最近邻搜索与工作负载级精排预算校准}
@@ -15,9 +15,15 @@
 \input{zh/abstract}
 \input{zh/acknowledgements}
 
+\begingroup
+\setstretch{1.0}
 \tableofcontents
+\begingroup
+\renewcommand{\addvspace}[1]{}
 \listoffigures
 \listoftables
+\endgroup
+\endgroup
 \input{frontmatter/notation}
 
 \clearpage

@@ -14,10 +14,12 @@ SRC=ROOT.parent/'JHQ_GPU'
 
 def prose_count(s):
     s=re.sub(r'(?<!\\)%[^\n]*','',s)
+    s=re.sub(r'(\\(?:caption(?:of\{(?:figure|table)\})?|chapter))\[[^\]]*\]',r'\1',s)
     s=re.sub(r'\\begin\{(equation\*?|align\*?|tabularx|tabular|longtable)\}[\s\S]*?\\end\{\1\}',' ',s)
     s=re.sub(r'\$[^$]*\$',' ',s)
     s=re.sub(r'\\(?:label|input|cite|[Cc]ref|ref|path|operatorname)\*?(?:\[[^]]*\])?\{[^}]*\}',' ',s)
     s=re.sub(r'\\(?:begin|end)\{[^}]*\}(?:\{[^}]*\})?',' ',s)
+    s=s.replace(r'\\', ' ')
     s=re.sub(r'\\[A-Za-z@]+\*?',' ',s)
     return len(re.findall(r"[A-Za-z]+(?:[-'][A-Za-z]+)*",s))
 
@@ -93,6 +95,9 @@ def main():
     for rel in ['data/synthesis/primary-sources.json','assessment/synthesis-iteration.txt',
                 'assessment/author-confirmation.txt','assessment/ch7-pending-experiments.txt',
                 'appendices/c-author-tools.tex','main.tex','main-zh.tex',
+                'config/layout.tex','config/preamble.tex','zh/preamble.tex',
+                'config/metadata.tex','frontmatter/title.tex','zh/title.tex',
+                'frontmatter/notation.tex','README.md','FORMAT_NOTES.txt',
                 'scripts/audit_synthesis.py','figures/ch1/challenges.tex','figures/ch2/candidate-cascade.tex']:
         read(ROOT,rel)
     for rel in ['p1530-han.pdf','cpu/pq_codebook.cpp','paper_adc2026/ADC/mainADC.tex',

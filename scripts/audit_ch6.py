@@ -275,10 +275,12 @@ def main():
     # Mathematical environments, inline math and table bodies are excluded.
     def prose_words(s):
         s = re.sub(r'(?<!\\)%[^\n]*', '', s)
+        s = re.sub(r'(\\(?:caption(?:of\{(?:figure|table)\})?|chapter))\[[^\]]*\]', r'\1', s)
         s = re.sub(r'\\begin\{(equation\*?|align\*?|tabularx|tabular)\}[\s\S]*?\\end\{\1\}', ' ', s)
         s = re.sub(r'\$[^$]*\$', ' ', s)
         s = re.sub(r'\\(?:label|input|cite|[Cc]ref|ref|path|operatorname)\*?(?:\[[^]]*\])?\{[^}]*\}', ' ', s)
         s = re.sub(r'\\(?:begin|end)\{[^}]*\}(?:\{[^}]*\})?', ' ', s)
+        s=s.replace(r'\\', ' ')
         s = re.sub(r'\\[A-Za-z@]+\*?', ' ', s)
         return len(re.findall(r"[A-Za-z]+(?:[-'][A-Za-z]+)*", s))
     words = {str(p.relative_to(ROOT)): prose_words(p.read_text())

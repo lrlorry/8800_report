@@ -22,9 +22,8 @@
 \XeTeXlinebreakskip=0pt plus 1pt
 \setlength{\parindent}{2em}
 \usepackage{microtype}
-\usepackage[margin=30mm,headheight=20pt]{geometry}
+\usepackage{geometry}
 \usepackage{setspace}
-\setstretch{1.3}
 \usepackage{xcolor}
 \definecolor{ThesisNavy}{HTML}{18344A}
 \definecolor{DraftColour}{HTML}{8A4515}
@@ -45,29 +44,20 @@
 \usetikzlibrary{arrows.meta,positioning,decorations.pathreplacing}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\nouppercase{\leftmark}}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
-\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
-\fancypagestyle{plain}{%
-  \fancyhf{}\fancyfoot[C]{\thepage}
-  \renewcommand{\headrulewidth}{0pt}}
 \usepackage{titlesec}
-\titleformat{\chapter}[display]
-  {\normalfont\bfseries\raggedright\color{ThesisNavy}}
-  {\large 第\thechapter 章}{0.5em}{\huge}
-\titlespacing*{\chapter}{0pt}{0pt}{1.4em}
-\titleformat{\section}
-  {\normalfont\Large\bfseries\raggedright}{\thesection}{1em}{}
+\newcommand{\thesischapterlabel}{第\thechapter 章}
+\input{config/layout}
+% Chinese characters need slightly more leading than the Latin reading copy.
+\setstretch{1.25}
+\AddToHook{cmd/appendix/after}{%
+  \renewcommand{\thesischapterlabel}{附录~\thechapter}}
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{1}
 \setlength{\emergencystretch}{2em}
 \widowpenalty=10000
 \clubpenalty=10000
 \raggedbottom
-% Match the English draft's result-figure placement.
+% Match the English thesis's result-figure placement.
 \renewcommand{\topfraction}{0.90}
 \renewcommand{\bottomfraction}{0.85}
 \renewcommand{\textfraction}{0.10}
@@ -138,6 +128,10 @@
 \Crefname{proposition}{命题}{命题}
 \crefname{lemma}{引理}{引理}
 \Crefname{lemma}{引理}{引理}
+\crefname{appendix}{附录}{附录}
+\Crefname{appendix}{附录}{附录}
+\crefformat{appendix}{附录~#2#1#3}
+\Crefformat{appendix}{附录~#2#1#3}
 \crefformat{chapter}{第#2#1#3章}
 \Crefformat{chapter}{第#2#1#3章}
 \crefformat{section}{第#2#1#3节}

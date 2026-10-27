@@ -1,6 +1,6 @@
 % Compile from the repository root: latexmk -pdf main.tex
 % Overleaf: set main.tex as the main document; compiler = pdfLaTeX.
-\documentclass[a4paper,12pt,oneside,openany]{report}
+\documentclass[a4paper,11pt,oneside,openany]{report}
 
 \input{config/metadata}
 \input{config/preamble}
@@ -14,9 +14,15 @@
 \input{frontmatter/abstract}
 \input{frontmatter/acknowledgements}
 
+\begingroup
+\setstretch{1.0}
 \tableofcontents
+\begingroup
+\renewcommand{\addvspace}[1]{}
 \listoffigures
 \listoftables
+\endgroup
+\endgroup
 \input{frontmatter/notation}
 
 \clearpage

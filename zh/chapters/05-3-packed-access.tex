@@ -15,7 +15,7 @@ LUT 分解减少每查询的查找表；编码布局决定各 lane 如何取得�
 \begin{figure}[tbp]
 \centering
 \input{figures/ch5/packed-access}
-\caption{打包后的候选并行访问，图中仅画出部分 warp lane。固定字组 $j$ 时，连续候选位置访问相邻四字节 word。每个 word 包含同一候选的四个子空间编码，解包保持编码值，随后再进行 LUT 拆分。此图说明地址关系，不表示实测内存事务数量。}
+\caption[打包后的候选并行访问]{打包后的候选并行访问，图中仅画出部分 warp lane。固定字组 $j$ 时，连续候选位置访问相邻四字节 word。每个 word 包含同一候选的四个子空间编码，解包保持编码值，随后再进行 LUT 拆分。此图说明地址关系，不表示实测内存事务数量。}
 \label{fig:5-packed-access}
 \end{figure}
 

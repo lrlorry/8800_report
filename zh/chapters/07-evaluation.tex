@@ -16,7 +16,7 @@
 
 \begin{table}[tbp]
 \centering
-\caption{实验与证据分组。数量表示测量配置或检查次数，不代表独立索引构建次数。所有实验均使用 RTX 5090，但计时协议有所不同。}
+\caption[实验与证据分组]{实验与证据分组。数量表示测量配置或检查次数，不代表独立索引构建次数。所有实验均使用 RTX 5090，但计时协议有所不同。}
 \label{tab:7-manifest}
 \small
 \begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{.30\linewidth}@{}}
@@ -67,7 +67,7 @@ LUT & v71 查找表分组，$\glut\in\{1,2,4,8\}$ & 24 个单元；96 个变体 
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/frontiers.pdf}
-\caption{四个 E1 数据集上实测的主机到主机召回率—QPS 前沿。图中从召回率 0.90 开始显示，并在 0.97 处标出竖线；构造前沿时纳入了包括 CAGRA int8 在内的全部基线组。连线连接实测点，吞吐量轴为对数坐标。}
+\caption[E1 召回率与吞吐量前沿]{四个 E1 数据集上实测的主机到主机召回率—QPS 前沿。图中从召回率 0.90 开始显示，并在 0.97 处标出竖线；构造前沿时纳入了包括 CAGRA int8 在内的全部基线组。连线连接实测点，吞吐量轴为对数坐标。}
 \label{fig:7-frontiers}
 \end{figure}
 
@@ -79,7 +79,7 @@ LUT & v71 查找表分组，$\glut\in\{1,2,4,8\}$ & 24 个单元；96 个变体 
 
 \begin{table}[tbp]
 \centering
-\caption{召回率 0.97 下的比较。每组比值依次为“插值 / 实测阈值”；大于一表示 JHQ 更快。JHQ kQPS 为插值估计。arXiv 与 RaBitQ 的微小差异随估计方法而改变方向。}
+\caption[召回率 0.97 的跨系统比较]{召回率 0.97 下的比较。每组比值依次为“插值 / 实测阈值”；大于一表示 JHQ 更快。JHQ kQPS 为插值估计。arXiv 与 RaBitQ 的微小差异随估计方法而改变方向。}
 \label{tab:7-matched}
 \small\setlength{\tabcolsep}{4pt}
 \input{zh/tables/matched97}
@@ -91,7 +91,7 @@ E1 同批单线程块测量把 RQ2 与这项 RQ4 结果连接起来。以 $\gsca
 
 \begin{table}[tbp]
 \centering
-\caption{批大小 1,000 时 Vogue E1 的路径敏感性。两条前沿采用相同运行—预算网格，并按同一 log-QPS 插值规则与 RaBitQ 比较；每个配对运行的最终输出逐位一致。}
+\caption[Vogue E1 扫描路径敏感性]{批大小 1,000 时 Vogue E1 的路径敏感性。两条前沿采用相同运行—预算网格，并按同一 log-QPS 插值规则与 RaBitQ 比较；每个配对运行的最终输出逐位一致。}
 \label{tab:7-e1-paths}
 \small\setlength{\tabcolsep}{5pt}
 \input{zh/tables/e1_paths}
@@ -134,7 +134,7 @@ OpenAI对照来自Qdrant DBpedia的\texttt{text-embedding-3-large}语料族，
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/lutgroups.pdf}
-\caption{固定 $\alpha=100$ 的笛卡尔查找表分组实验（v71）。组数表示 $\glut$，不是并行扫描组数。曲线为各数据集相对单组 QPS 比值的中位数，阴影表示范围。}
+\caption[笛卡尔查找表分组]{固定 $\alpha=100$ 的笛卡尔查找表分组实验（v71）。组数表示 $\glut$，不是并行扫描组数。曲线为各数据集相对单组 QPS 比值的中位数，阴影表示范围。}
 \label{fig:7-lut}
 \end{figure}
 
@@ -149,13 +149,13 @@ OpenAI对照来自Qdrant DBpedia的\texttt{text-embedding-3-large}语料族，
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/packing_refinement.pdf}
-\caption{打包访存与精排对照。左：各查找表分组和探针数下，六个数据集打包加载 QPS 增益的中位数，阴影为最小值至最大值。右：128 探针及各数据集普通预算下，仅改变加载和使用 16 个 lane 的实测端到端收益。两个子图来自不同实验组。}
+\caption[打包访存与精排对照]{打包访存与精排对照。左：各查找表分组和探针数下，六个数据集打包加载 QPS 增益的中位数，阴影为最小值至最大值。右：128 探针及各数据集普通预算下，仅改变加载和使用 16 个 lane 的实测端到端收益。两个子图来自不同实验组。}
 \label{fig:7-packing-refinement}
 \end{figure}
 
 \begin{table}[tbp]
 \centering
-\caption{128 探针下的精排结果。除最后一列为剖析得到的精排内核加速比外，其余比值均为相对 L0 的配对端到端收益。不能将内核加速比与应用整体加速比混用。}
+\caption[128 探针下的精排收益]{128 探针下的精排结果。除最后一列为剖析得到的精排内核加速比外，其余比值均为相对 L0 的配对端到端收益。不能将内核加速比与应用整体加速比混用。}
 \label{tab:7-refinement}
 \small\setlength{\tabcolsep}{4pt}
 \input{zh/tables/refinement}
@@ -200,7 +200,7 @@ OpenAI对照来自Qdrant DBpedia的\texttt{text-embedding-3-large}语料族，
 
 \begin{table}[tbp]
 \centering
-\caption{已算分数的精确探针选择改动的 v69/v65 端到端吞吐量比。每个工作负载—批大小比较中，每个二进制程序共计时十轮，采用交替运行。大于一表示 v69 更快。}
+\caption[探针选择吞吐量比]{已算分数的精确探针选择改动的 v69/v65 端到端吞吐量比。每个工作负载—批大小比较中，每个二进制程序共计时十轮，采用交替运行。大于一表示 v69 更快。}
 \label{tab:7-probe}
 \small
 \input{zh/tables/probe}
@@ -240,7 +240,7 @@ Vogue 区分了探针原语与跨进程流水线可复现性。在一组、批�
 
 \begin{table}[tbp]
 \centering
-\caption{全池校准（$S=500$）。损失相对最佳实测留出 recall；速率为所选固定预算的 kQPS。“校准”每项仅一次全池调用，不是重复查询流计时。留出为 500 条，Stella 为 499。}
+\caption[全池预算校准]{全池校准（$S=500$）。损失相对最佳实测留出 recall；速率为所选固定预算的 kQPS。“校准”每项仅一次全池调用，不是重复查询流计时。留出为 500 条，Stella 为 499。}
 \label{tab:7-budget-full}
 \footnotesize\setlength{\tabcolsep}{3pt}
 \input{zh/tables/budget_full}
@@ -252,7 +252,7 @@ Vogue 区分了探针原语与跨进程流水线可复现性。在一组、批�
 
 \begin{table}[tbp]
 \centering
-\caption{$S=128$ 时的留出质量。规则的 $\alpha$ 是 64 次抽样的中位数，oracle 的 $\alpha$ 使用留出标签。$\overline R_{\rm rule}$ 是重构的平均召回率。“超标”统计相对最佳被测留出召回率损失 $>10^{-3}$ 的抽样次数；$L_{95}$ 是日志采用较低次序统计量得到的 95 分位损失估计。$R_{100}$ 是固定预算召回率。}
+\caption[采样预算的留出质量]{$S=128$ 时的留出质量。规则的 $\alpha$ 是 64 次抽样的中位数，oracle 的 $\alpha$ 使用留出标签。$\overline R_{\rm rule}$ 是重构的平均召回率。“超标”统计相对最佳被测留出召回率损失 $>10^{-3}$ 的抽样次数；$L_{95}$ 是日志采用较低次序统计量得到的 95 分位损失估计。$R_{100}$ 是固定预算召回率。}
 \label{tab:7-budget-quality}
 \small\setlength{\tabcolsep}{3pt}
 \input{zh/tables/budget_quality}
@@ -265,7 +265,7 @@ Vogue 区分了探针原语与跨进程流水线可复现性。在一组、批�
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=0.82\linewidth]{ch7/budget_risk.pdf}
-\caption{不同样本大小下的留出风险。纵轴为相对最佳被测预算，留出召回率损失超过 $10^{-3}$ 的校准抽样百分比。由于\cref{eq:7-agreement}始终保持阈值一，增加 $S$ 也收紧了允许的槽位不一致比例。}
+\caption[不同样本大小的留出风险]{不同样本大小下的留出风险。纵轴为相对最佳被测预算，留出召回率损失超过 $10^{-3}$ 的校准抽样百分比。由于\cref{eq:7-agreement}始终保持阈值一，增加 $S$ 也收紧了允许的槽位不一致比例。}
 \label{fig:7-budget-risk}
 \end{figure}
 
@@ -279,7 +279,7 @@ Vogue 区分了探针原语与跨进程流水线可复现性。在一组、批�
 
 \begin{table}[tbp]
 \centering
-\caption{十二个留出单元上的固定预算对照。达标表示按打印精度，距最佳被测召回率不超过 $10^{-3}$。最大召回率损失使用全部单元，QPS 差额只统计该预算达标的单元。横线表示没有达标单元。}
+\caption[固定预算的质量与吞吐量对照]{十二个留出单元上的固定预算对照。达标表示按打印精度，距最佳被测召回率不超过 $10^{-3}$。最大召回率损失使用全部单元，QPS 差额只统计该预算达标的单元。横线表示没有达标单元。}
 \label{tab:7-fixed-budget}
 \small
 \input{zh/tables/fixed_budgets}
@@ -295,7 +295,7 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置�
 
 \begin{table}[tbp]
 \centering
-\caption{校准经济性，$S=128$。速率单位为 kQPS，规则速率为所选配置平均 QPS。比值分别相对固定 100 与固定 64。“回本批数”相对固定 100，使用 500 条查询，Stella 为 499。“不回本”表示没有正吞吐节省；质量列独立标记固定 100 是否满足留出损失目标。}
+\caption[采样校准的经济性]{校准经济性，$S=128$。速率单位为 kQPS，规则速率为所选配置平均 QPS。比值分别相对固定 100 与固定 64。“回本批数”相对固定 100，使用 500 条查询，Stella 为 499。“不回本”表示没有正吞吐节省；质量列独立标记固定 100 是否满足留出损失目标。}
 \label{tab:7-budget-cost}
 \footnotesize\setlength{\tabcolsep}{3pt}
 \input{zh/tables/budget_cost}
@@ -312,7 +312,7 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置�
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/budget_payback.pdf}
-\caption{相对固定预算 100 和 64 的校准回本估计。实心圆表示 128 探针，空心三角表示 512 探针；顶行点没有吞吐量回本。估计对所选配置平均 QPS 取倒数，使用 500 条查询，Stella 为 499。}
+\caption[校准回本估计]{相对固定预算 100 和 64 的校准回本估计。实心圆表示 128 探针，空心三角表示 512 探针；顶行点没有吞吐量回本。估计对所选配置平均 QPS 取倒数，使用 500 条查询，Stella 为 499。}
 \label{fig:7-budget-payback}
 \end{figure}
 
@@ -336,7 +336,7 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置�
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/batch_execution.pdf}
-\caption{执行区间。左：共享界固定组数与调度执行，相对 lane 精排单线程块基线的吞吐量比，较小批次有 13 个单元，批大小 1,000 有 11 个。右：arXiv 预算 100 和 200 在批大小 8 与 1,000 下的配对扫描、合并剖析；斜线表示合并时间。右侧来自独立界扫描实验，用于解释一项成本，不代表调度器全部收益。}
+\caption[批大小与执行区间]{执行区间。左：共享界固定组数与调度执行，相对 lane 精排单线程块基线的吞吐量比，较小批次有 13 个单元，批大小 1,000 有 11 个。右：arXiv 预算 100 和 200 在批大小 8 与 1,000 下的配对扫描、合并剖析；斜线表示合并时间。右侧来自独立界扫描实验，用于解释一项成本，不代表调度器全部收益。}
 \label{fig:7-batch}
 \end{figure}
 
@@ -346,7 +346,7 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置�
 
 \begin{table}[tbp]
 \centering
-\caption{集成执行相对 v61 L16 的收益。每项先计算单元内五轮配对加速比的中位数，再跨单元取几何平均。“留出配置”排除了设置规则时使用的四个配置，指的是未用于设定规则的配置，不是预算实验中的留出查询划分。}
+\caption[集成执行与调度收益]{集成执行相对 v61 L16 的收益。每项先计算单元内五轮配对加速比的中位数，再跨单元取几何平均。“留出配置”排除了设置规则时使用的四个配置，指的是未用于设定规则的配置，不是预算实验中的留出查询划分。}
 \label{tab:7-scheduling}
 \small\setlength{\tabcolsep}{4pt}
 \input{zh/tables/scheduling}
@@ -374,7 +374,7 @@ Stella为10.54--10.65\,s，接近历史10.40\,s。
 
 \begin{table}[tbp]
 \centering
-\caption{JHQ 冷构建与单独测量的常驻显存。训练／添加为三次补证正常构建的分项中位数，合计为配对和的中位数。显存来自 v71 两组、128 探针、$\alpha=100$ 的运行，包含上下文与工作区。“残差占比”表示模型计算的残差码占实测已用总量的比例，而不是每次查询读取的比例。}
+\caption[冷构建与常驻显存]{JHQ 冷构建与单独测量的常驻显存。训练／添加为三次补证正常构建的分项中位数，合计为配对和的中位数。显存来自 v71 两组、128 探针、$\alpha=100$ 的运行，包含上下文与工作区。“残差占比”表示模型计算的残差码占实测已用总量的比例，而不是每次查询读取的比例。}
 \label{tab:7-build-memory}
 \small\setlength{\tabcolsep}{3pt}
 \input{zh/tables/build_memory}
@@ -387,7 +387,7 @@ Stella为10.54--10.65\,s，接近历史10.40\,s。
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/construction.pdf}
-\caption{包括 CAGRA int8 的已记录构建成本。JHQ为热输入页下三次补证正常冷构建的中位数和范围；其他柱形为成功测量的索引配置之间的中位数，误差线表示最小值至最大值。Int8 包含数据集量化；RaBitQ 不包含所需的序列化往返。大数据集缺失的柱形表示未尝试的配置，不代表实测构建失败。纵轴为对数坐标。}
+\caption[已记录的构建成本]{包括 CAGRA int8 的已记录构建成本。JHQ为热输入页下三次补证正常冷构建的中位数和范围；其他柱形为成功测量的索引配置之间的中位数，误差线表示最小值至最大值。Int8 包含数据集量化；RaBitQ 不包含所需的序列化往返。大数据集缺失的柱形表示未尝试的配置，不代表实测构建失败。纵轴为对数坐标。}
 \label{fig:7-build}
 \end{figure}
 
@@ -395,7 +395,7 @@ Stella为10.54--10.65\,s，接近历史10.40\,s。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{补证空缓存构建。训练+add和启动列为三次正常热输入页运行的范围；首次读取列
+\captionof{table}[重复空缓存构建]{补证空缓存构建。训练+add和启动列为三次正常热输入页运行的范围；首次读取列
 为本会话首次读取的启动观测。启动计时结束于add完成、调度校准／搜索之前。
 峰值为正常运行中20\,ms设备采样最大值，含上下文。召回范围来自固定128探针工作点
 五次独立构建，包含阶段诊断。}
@@ -417,7 +417,7 @@ BGE三个分配乘积缓冲区共12\,GiB，属于早期流水生命周期，不�
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/memory.pdf}
-\caption{两组查找表、128 探针、$\alpha=100$ 下的常驻显存分解。组件大小由模型计算，标记为实测已用总量，斜线区域为未归因部分。总量包含上下文与工作区，另行构建采样见\cref{tab:7-build-repeat}，这里的常驻标记不是峰值。}
+\caption[常驻显存分解]{两组查找表、128 探针、$\alpha=100$ 下的常驻显存分解。组件大小由模型计算，标记为实测已用总量，斜线区域为未归因部分。总量包含上下文与工作区，另行构建采样见\cref{tab:7-build-repeat}，这里的常驻标记不是峰值。}
 \label{fig:7-memory}
 \end{figure}
 
@@ -429,7 +429,7 @@ E1 测量提供了\cref{tab:7-e1-memory}中的独立跨系统视图。从 JHQ �
 
 \begin{table}[tbp]
 \centering
-\caption{E1 分配范围。JHQ 为进程总量减去 507.2\,MiB 上下文估计，包含查询工作区；两个 CAGRA 列均为构建时测量的索引分配。范围覆盖参数扫描。}
+\caption[E1 显存分配范围]{E1 分配范围。JHQ 为进程总量减去 507.2\,MiB 上下文估计，包含查询工作区；两个 CAGRA 列均为构建时测量的索引分配。范围覆盖参数扫描。}
 \label{tab:7-e1-memory}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \input{zh/tables/e1_memory}
@@ -442,7 +442,7 @@ BGE 含 10,091,524 个向量，Stella 含 17,776,615 个向量，均为 1,024 �
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/large_frontiers.pdf}
-\caption{大数据集上的主机到主机前沿，包含 CAGRA int8 成功的隔离重跑。BGE 使用 1,000 条查询，Stella 使用 999 条。曲线端点是已测试网格的终点，不是方法的内在召回率上限。}
+\caption[大数据集搜索前沿]{大数据集上的主机到主机前沿，包含 CAGRA int8 成功的隔离重跑。BGE 使用 1,000 条查询，Stella 使用 999 条。曲线端点是已测试网格的终点，不是方法的内在召回率上限。}
 \label{fig:7-large}
 \end{figure}
 
@@ -487,7 +487,7 @@ lane 归约会改变舍入；主码截断边界的并列可能改变被精排的
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{本章证据支持的四个研究问题答案。}
+\captionof{table}[研究问题的答案]{本章证据支持的四个研究问题答案。}
 \label{tab:7-rq-answers}
 \small
 \begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}

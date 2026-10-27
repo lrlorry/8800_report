@@ -9,7 +9,7 @@ add／查询算术，包括数据库编码及路由，而不是独立FP32训练�
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{FP32敏感性。QPS比值为相同配置下FP32/TF32的几何平均，召回差方向相同。
+\captionof{table}[匹配配置下的 FP32 敏感性]{FP32敏感性。QPS比值为相同配置下FP32/TF32的几何平均，召回差方向相同。
 最后两列在recall 0.97处比较FP32前沿与归档E1的IVF-RaBitQ及CAGRA fp32；
 基线没有重新测量。}
 \label{tab:7-precision}
@@ -26,7 +26,7 @@ CAGRA fp32的$1.679\times$／$1.629\times$。同会话v69/RaBitQ为1.118／1.114
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/precision.pdf}
-\caption{补证精度前沿。实线为同会话JHQ变体，虚线／点线为历史E1基线；
+\caption[TF32 与 FP32 精度前沿]{补证精度前沿。实线为同会话JHQ变体，虚线／点线为历史E1基线；
 均采用本章前沿及插值规则。}
 \label{fig:7-precision}
 \end{figure}

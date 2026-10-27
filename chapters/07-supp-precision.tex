@@ -15,7 +15,7 @@ It is not a comparison of independently FP32-trained models.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}{FP32 sensitivity. QPS ratio is FP32/TF32 at equal configuration
+\captionof{table}[FP32 sensitivity at matched configurations]{FP32 sensitivity. QPS ratio is FP32/TF32 at equal configuration
 (geometric mean); recall differences have the same direction. The last
 two columns compare the FP32 frontier at recall 0.97 with archived E1
 IVF-RaBitQ and CAGRA fp32 frontiers. Baselines were not remeasured.}
@@ -38,7 +38,7 @@ uncertainty. The two precision variants' complete frontiers are shown in
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/precision.pdf}
-\caption{Supplementary precision frontiers. Solid curves are same-session
+\caption[TF32 and FP32 precision frontiers]{Supplementary precision frontiers. Solid curves are same-session
 JHQ variants; dashed/dotted baselines are historical E1 measurements.
 All use the chapter's frontier and interpolation rules.}
 \label{fig:7-precision}
