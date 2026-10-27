@@ -1,0 +1,14 @@
+.DS_Store
+/build/
+/comp8800-latex-template.zip
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc

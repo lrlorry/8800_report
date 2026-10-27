@@ -1,0 +1,3481 @@
+{
+  "source_snapshot": "218fd2ed9110722a18bad841941e683fd0c1eda5",
+  "e1": {
+    "points": 1590,
+    "failures": 0,
+    "indexes": 50,
+    "nondeterministic": {
+      "CAGRA int8": 68,
+      "CAGRA fp32": 50,
+      "IVF-PQ": 80,
+      "GPU brute force": 1,
+      "IVF-RaBitQ": 170
+    },
+    "archived_matched_ratios_verified": 110
+  },
+  "matched": [
+    {
+      "dataset": "vogue-768",
+      "recall": 0.9,
+      "other": "CAGRA fp32",
+      "jhq_interp": 408221.16938245954,
+      "other_interp": 320315.1842202929,
+      "ratio_interp": 1.2744358978053016,
+      "jhq_measured": 407813.3,
+      "other_measured": 268659.6,
+      "ratio_measured": 1.5179554350561082,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.9,
+      "other": "CAGRA int8",
+      "jhq_interp": 408221.16938245954,
+      "other_interp": 807337.6,
+      "ratio_interp": 0.5056387431756673,
+      "jhq_measured": 407813.3,
+      "other_measured": 775289.0,
+      "ratio_measured": 0.5260145571522361,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.9,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 408221.16938245954,
+      "other_interp": 350831.68989655055,
+      "ratio_interp": 1.163581230369558,
+      "jhq_measured": 407813.3,
+      "other_measured": 337725.0,
+      "ratio_measured": 1.207530683248205,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.9,
+      "other": "IVF-PQ",
+      "jhq_interp": 408221.16938245954,
+      "other_interp": 32690.86502060835,
+      "ratio_interp": 12.48731623115866,
+      "jhq_measured": 407813.3,
+      "other_measured": 29922.1,
+      "ratio_measured": 13.629167070493047,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.9,
+      "other": "GPU brute force",
+      "jhq_interp": 408221.16938245954,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 407813.3,
+      "other_measured": 8864.7,
+      "ratio_measured": 46.00418513880898,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.92,
+      "other": "CAGRA fp32",
+      "jhq_interp": 407881.24991955387,
+      "other_interp": 291268.59087792964,
+      "ratio_interp": 1.40036125656438,
+      "jhq_measured": 407813.3,
+      "other_measured": 268659.6,
+      "ratio_measured": 1.5179554350561082,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.92,
+      "other": "CAGRA int8",
+      "jhq_interp": 407881.24991955387,
+      "other_interp": 580663.6999397681,
+      "ratio_interp": 0.7024397253726438,
+      "jhq_measured": 407813.3,
+      "other_measured": 568600.6,
+      "ratio_measured": 0.7172227746506071,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.92,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 407881.24991955387,
+      "other_interp": 324797.1924356541,
+      "ratio_interp": 1.2558028807479906,
+      "jhq_measured": 407813.3,
+      "other_measured": 297852.1,
+      "ratio_measured": 1.3691805429607513,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.92,
+      "other": "IVF-PQ",
+      "jhq_interp": 407881.24991955387,
+      "other_interp": 21785.290410877587,
+      "ratio_interp": 18.722782309842202,
+      "jhq_measured": 407813.3,
+      "other_measured": 17741.1,
+      "ratio_measured": 22.986923020556787,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.92,
+      "other": "GPU brute force",
+      "jhq_interp": 407881.24991955387,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 407813.3,
+      "other_measured": 8864.7,
+      "ratio_measured": 46.00418513880898,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.94,
+      "other": "CAGRA fp32",
+      "jhq_interp": 330091.2619728308,
+      "other_interp": 247888.7,
+      "ratio_interp": 1.3316107671419908,
+      "jhq_measured": 329529.3,
+      "other_measured": 247888.7,
+      "ratio_measured": 1.329343774040527,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.94,
+      "other": "CAGRA int8",
+      "jhq_interp": 330091.2619728308,
+      "other_interp": 261170.0,
+      "ratio_interp": 1.2638942526815131,
+      "jhq_measured": 329529.3,
+      "other_measured": 184977.0,
+      "ratio_measured": 1.7814609383869344,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.94,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 330091.2619728308,
+      "other_interp": 301623.7949174331,
+      "ratio_interp": 1.094380707142785,
+      "jhq_measured": 329529.3,
+      "other_measured": 297852.1,
+      "ratio_measured": 1.1063521123403193,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.94,
+      "other": "IVF-PQ",
+      "jhq_interp": 330091.2619728308,
+      "other_interp": 13426.1,
+      "ratio_interp": 24.58578902084975,
+      "jhq_measured": 329529.3,
+      "other_measured": 9047.4,
+      "ratio_measured": 36.42254128257842,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.94,
+      "other": "GPU brute force",
+      "jhq_interp": 330091.2619728308,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 329529.3,
+      "other_measured": 8864.7,
+      "ratio_measured": 37.1732038309249,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.95,
+      "other": "CAGRA fp32",
+      "jhq_interp": 327251.8458084384,
+      "other_interp": 217048.48728146372,
+      "ratio_interp": 1.5077361280296109,
+      "jhq_measured": 284210.1,
+      "other_measured": 186406.4,
+      "ratio_measured": 1.524679946611275,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.95,
+      "other": "CAGRA int8",
+      "jhq_interp": 327251.8458084384,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 284210.1,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.95,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 327251.8458084384,
+      "other_interp": 280888.06900974084,
+      "ratio_interp": 1.1650613960292122,
+      "jhq_measured": 284210.1,
+      "other_measured": 262547.1,
+      "ratio_measured": 1.0825109094711005,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.95,
+      "other": "IVF-PQ",
+      "jhq_interp": 327251.8458084384,
+      "other_interp": 9683.482242614833,
+      "ratio_interp": 33.79485164626795,
+      "jhq_measured": 284210.1,
+      "other_measured": 9047.4,
+      "ratio_measured": 31.413455799456194,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.95,
+      "other": "GPU brute force",
+      "jhq_interp": 327251.8458084384,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 284210.1,
+      "other_measured": 8864.7,
+      "ratio_measured": 32.060881924938236,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.96,
+      "other": "CAGRA fp32",
+      "jhq_interp": 291530.00125437765,
+      "other_interp": 196106.8665956515,
+      "ratio_interp": 1.486587422027792,
+      "jhq_measured": 284210.1,
+      "other_measured": 186406.4,
+      "ratio_measured": 1.524679946611275,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.96,
+      "other": "CAGRA int8",
+      "jhq_interp": 291530.00125437765,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 284210.1,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.96,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 291530.00125437765,
+      "other_interp": 233297.8051438459,
+      "ratio_interp": 1.2496045604656552,
+      "jhq_measured": 284210.1,
+      "other_measured": 212105.7,
+      "ratio_measured": 1.3399456025934238,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.96,
+      "other": "IVF-PQ",
+      "jhq_interp": 291530.00125437765,
+      "other_interp": 6341.6309966866165,
+      "ratio_interp": 45.97082381593893,
+      "jhq_measured": 284210.1,
+      "other_measured": 5064.4,
+      "ratio_measured": 56.11920464418292,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.96,
+      "other": "GPU brute force",
+      "jhq_interp": 291530.00125437765,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 284210.1,
+      "other_measured": 8864.7,
+      "ratio_measured": 32.060881924938236,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.97,
+      "other": "CAGRA fp32",
+      "jhq_interp": 230821.72722048772,
+      "other_interp": 163057.56135302398,
+      "ratio_interp": 1.4155843206850893,
+      "jhq_measured": 221928.4,
+      "other_measured": 144365.2,
+      "ratio_measured": 1.5372707550018978,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.97,
+      "other": "CAGRA int8",
+      "jhq_interp": 230821.72722048772,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 221928.4,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.97,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 230821.72722048772,
+      "other_interp": 217956.08612271483,
+      "ratio_interp": 1.0590285929915682,
+      "jhq_measured": 221928.4,
+      "other_measured": 212105.7,
+      "ratio_measured": 1.0463104008991742,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.97,
+      "other": "IVF-PQ",
+      "jhq_interp": 230821.72722048772,
+      "other_interp": 3965.3508876073706,
+      "ratio_interp": 58.20966006863566,
+      "jhq_measured": 221928.4,
+      "other_measured": 3851.0,
+      "ratio_measured": 57.62877174759802,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.97,
+      "other": "GPU brute force",
+      "jhq_interp": 230821.72722048772,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 221928.4,
+      "other_measured": 8864.7,
+      "ratio_measured": 25.035071688833234,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.98,
+      "other": "CAGRA fp32",
+      "jhq_interp": 185563.0,
+      "other_interp": 127900.20424177253,
+      "ratio_interp": 1.4508420928650452,
+      "jhq_measured": 168369.8,
+      "other_measured": 98469.4,
+      "ratio_measured": 1.7098692588763615,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.98,
+      "other": "CAGRA int8",
+      "jhq_interp": 185563.0,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 168369.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.98,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 185563.0,
+      "other_interp": 189923.42684830123,
+      "ratio_interp": 0.9770411322043802,
+      "jhq_measured": 168369.8,
+      "other_measured": 185431.8,
+      "ratio_measured": 0.907987734574113,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.98,
+      "other": "IVF-PQ",
+      "jhq_interp": 185563.0,
+      "other_interp": 2112.2981237488366,
+      "ratio_interp": 87.84886844981378,
+      "jhq_measured": 168369.8,
+      "other_measured": 2020.4,
+      "ratio_measured": 83.33488418135022,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.98,
+      "other": "GPU brute force",
+      "jhq_interp": 185563.0,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 168369.8,
+      "other_measured": 8864.7,
+      "ratio_measured": 18.993287984928987,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.985,
+      "other": "CAGRA fp32",
+      "jhq_interp": 140940.8,
+      "other_interp": 107185.19139058824,
+      "ratio_interp": 1.3149279128159095,
+      "jhq_measured": 140940.8,
+      "other_measured": 98469.4,
+      "ratio_measured": 1.4313157183856102,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.985,
+      "other": "CAGRA int8",
+      "jhq_interp": 140940.8,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 140940.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.985,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 140940.8,
+      "other_interp": 157467.55000619215,
+      "ratio_interp": 0.8950466302070346,
+      "jhq_measured": 140940.8,
+      "other_measured": 137792.7,
+      "ratio_measured": 1.0228466384648822,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.985,
+      "other": "IVF-PQ",
+      "jhq_interp": 140940.8,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 140940.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.985,
+      "other": "GPU brute force",
+      "jhq_interp": 140940.8,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 140940.8,
+      "other_measured": 8864.7,
+      "ratio_measured": 15.899105440680449,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.99,
+      "other": "CAGRA fp32",
+      "jhq_interp": 108380.5,
+      "other_interp": 76111.0,
+      "ratio_interp": 1.423979451064892,
+      "jhq_measured": 108380.5,
+      "other_measured": 76111.0,
+      "ratio_measured": 1.423979451064892,
+      "jhq_kind": "measured",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.99,
+      "other": "CAGRA int8",
+      "jhq_interp": 108380.5,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 108380.5,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.99,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 108380.5,
+      "other_interp": 121874.6358890485,
+      "ratio_interp": 0.8892785542240864,
+      "jhq_measured": 108380.5,
+      "other_measured": 117632.6,
+      "ratio_measured": 0.9213474836057352,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.99,
+      "other": "IVF-PQ",
+      "jhq_interp": 108380.5,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 108380.5,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.99,
+      "other": "GPU brute force",
+      "jhq_interp": 108380.5,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 108380.5,
+      "other_measured": 8864.7,
+      "ratio_measured": 12.22607646056832,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.995,
+      "other": "CAGRA fp32",
+      "jhq_interp": null,
+      "other_interp": 55208.7650671584,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 52516.2,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.995,
+      "other": "CAGRA int8",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.995,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": null,
+      "other_interp": 70098.7,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.995,
+      "other": "IVF-PQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "vogue-768",
+      "recall": 0.995,
+      "other": "GPU brute force",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 8864.7,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.9,
+      "other": "CAGRA fp32",
+      "jhq_interp": 599283.4566679661,
+      "other_interp": 444150.50673698937,
+      "ratio_interp": 1.3492801372009717,
+      "jhq_measured": 563087.2,
+      "other_measured": 425962.2,
+      "ratio_measured": 1.3219182359373671,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.9,
+      "other": "CAGRA int8",
+      "jhq_interp": 599283.4566679661,
+      "other_interp": 951596.9179892141,
+      "ratio_interp": 0.629766075676549,
+      "jhq_measured": 563087.2,
+      "other_measured": 788159.0,
+      "ratio_measured": 0.7144335089747119,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.9,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 599283.4566679661,
+      "other_interp": 384917.1625506992,
+      "ratio_interp": 1.556915396280964,
+      "jhq_measured": 563087.2,
+      "other_measured": 353507.6,
+      "ratio_measured": 1.5928574095719583,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.9,
+      "other": "IVF-PQ",
+      "jhq_interp": 599283.4566679661,
+      "other_interp": 59827.23417735233,
+      "ratio_interp": 10.0169005789478,
+      "jhq_measured": 563087.2,
+      "other_measured": 50684.0,
+      "ratio_measured": 11.109762449688263,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.9,
+      "other": "GPU brute force",
+      "jhq_interp": 599283.4566679661,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 563087.2,
+      "other_measured": 3667.1,
+      "ratio_measured": 153.55108941670528,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.92,
+      "other": "CAGRA fp32",
+      "jhq_interp": 475060.52482565475,
+      "other_interp": 336166.3793420227,
+      "ratio_interp": 1.4131708404495686,
+      "jhq_measured": 382225.3,
+      "other_measured": 303825.4,
+      "ratio_measured": 1.2580426126321234,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.92,
+      "other": "CAGRA int8",
+      "jhq_interp": 475060.52482565475,
+      "other_interp": 841661.758394165,
+      "ratio_interp": 0.5644316378731984,
+      "jhq_measured": 382225.3,
+      "other_measured": 788159.0,
+      "ratio_measured": 0.4849596337794785,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.92,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 475060.52482565475,
+      "other_interp": 355872.89102323586,
+      "ratio_interp": 1.3349163052564093,
+      "jhq_measured": 382225.3,
+      "other_measured": 353507.6,
+      "ratio_measured": 1.081236443007166,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.92,
+      "other": "IVF-PQ",
+      "jhq_interp": 475060.52482565475,
+      "other_interp": 44343.362172319954,
+      "ratio_interp": 10.713227449455724,
+      "jhq_measured": 382225.3,
+      "other_measured": 43725.8,
+      "ratio_measured": 8.741413536173152,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.92,
+      "other": "GPU brute force",
+      "jhq_interp": 475060.52482565475,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 382225.3,
+      "other_measured": 3667.1,
+      "ratio_measured": 104.23094543372147,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.94,
+      "other": "CAGRA fp32",
+      "jhq_interp": 349618.7173175142,
+      "other_interp": 282834.1505090526,
+      "ratio_interp": 1.2361262481502353,
+      "jhq_measured": 312791.9,
+      "other_measured": 262474.9,
+      "ratio_measured": 1.1917021398998533,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.94,
+      "other": "CAGRA int8",
+      "jhq_interp": 349618.7173175142,
+      "other_interp": 615558.4345654297,
+      "ratio_interp": 0.5679699890138571,
+      "jhq_measured": 312791.9,
+      "other_measured": 574516.5,
+      "ratio_measured": 0.5444437191969248,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.94,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 349618.7173175142,
+      "other_interp": 322005.86340034346,
+      "ratio_interp": 1.0857526432145748,
+      "jhq_measured": 312791.9,
+      "other_measured": 294961.5,
+      "ratio_measured": 1.0604499231255606,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.94,
+      "other": "IVF-PQ",
+      "jhq_interp": 349618.7173175142,
+      "other_interp": 22459.8,
+      "ratio_interp": 15.566421665264793,
+      "jhq_measured": 312791.9,
+      "other_measured": 22459.8,
+      "ratio_measured": 13.926744672704121,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.94,
+      "other": "GPU brute force",
+      "jhq_interp": 349618.7173175142,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 312791.9,
+      "other_measured": 3667.1,
+      "ratio_measured": 85.29680128712062,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.95,
+      "other": "CAGRA fp32",
+      "jhq_interp": 328766.7946789129,
+      "other_interp": 270532.7838913334,
+      "ratio_interp": 1.2152567609364888,
+      "jhq_measured": 312791.9,
+      "other_measured": 262474.9,
+      "ratio_measured": 1.1917021398998533,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.95,
+      "other": "CAGRA int8",
+      "jhq_interp": 328766.7946789129,
+      "other_interp": 480593.7,
+      "ratio_interp": 0.6840846949906186,
+      "jhq_measured": 312791.9,
+      "other_measured": 480593.7,
+      "ratio_measured": 0.6508447780318386,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.95,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 328766.7946789129,
+      "other_interp": 305994.42931565974,
+      "ratio_interp": 1.074420849471614,
+      "jhq_measured": 312791.9,
+      "other_measured": 294961.5,
+      "ratio_measured": 1.0604499231255606,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.95,
+      "other": "IVF-PQ",
+      "jhq_interp": 328766.7946789129,
+      "other_interp": 17830.65567313576,
+      "ratio_interp": 18.4382896908409,
+      "jhq_measured": 312791.9,
+      "other_measured": 17577.9,
+      "ratio_measured": 17.794611415470563,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.95,
+      "other": "GPU brute force",
+      "jhq_interp": 328766.7946789129,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 312791.9,
+      "other_measured": 3667.1,
+      "ratio_measured": 85.29680128712062,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.96,
+      "other": "CAGRA fp32",
+      "jhq_interp": 303426.91830266087,
+      "other_interp": 241308.88651762347,
+      "ratio_interp": 1.2574212358337693,
+      "jhq_measured": 258567.0,
+      "other_measured": 234520.6,
+      "ratio_measured": 1.1025342763066444,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.96,
+      "other": "CAGRA int8",
+      "jhq_interp": 303426.91830266087,
+      "other_interp": 257867.3,
+      "ratio_interp": 1.1766785408722271,
+      "jhq_measured": 258567.0,
+      "other_measured": 257867.3,
+      "ratio_measured": 1.0027134111226976,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.96,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 303426.91830266087,
+      "other_interp": 286831.85044140765,
+      "ratio_interp": 1.0578564334320437,
+      "jhq_measured": 258567.0,
+      "other_measured": 254707.1,
+      "ratio_measured": 1.0151542693548785,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.96,
+      "other": "IVF-PQ",
+      "jhq_interp": 303426.91830266087,
+      "other_interp": 10438.076232494526,
+      "ratio_interp": 29.069237620440994,
+      "jhq_measured": 258567.0,
+      "other_measured": 9756.2,
+      "ratio_measured": 26.502839220188186,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.96,
+      "other": "GPU brute force",
+      "jhq_interp": 303426.91830266087,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 258567.0,
+      "other_measured": 3667.1,
+      "ratio_measured": 70.50993973439503,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.97,
+      "other": "CAGRA fp32",
+      "jhq_interp": 258567.0,
+      "other_interp": 196365.0093858759,
+      "ratio_interp": 1.3167671817329292,
+      "jhq_measured": 258567.0,
+      "other_measured": 181770.5,
+      "ratio_measured": 1.42249154840857,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.97,
+      "other": "CAGRA int8",
+      "jhq_interp": 258567.0,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 258567.0,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.97,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 258567.0,
+      "other_interp": 259583.76251260008,
+      "ratio_interp": 0.9960831043407397,
+      "jhq_measured": 258567.0,
+      "other_measured": 254707.1,
+      "ratio_measured": 1.0151542693548785,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.97,
+      "other": "IVF-PQ",
+      "jhq_interp": 258567.0,
+      "other_interp": 6311.2060897995925,
+      "ratio_interp": 40.96950667130101,
+      "jhq_measured": 258567.0,
+      "other_measured": 5185.1,
+      "ratio_measured": 49.867312105841734,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.97,
+      "other": "GPU brute force",
+      "jhq_interp": 258567.0,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 258567.0,
+      "other_measured": 3667.1,
+      "ratio_measured": 70.50993973439503,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.98,
+      "other": "CAGRA fp32",
+      "jhq_interp": 197382.58781561966,
+      "other_interp": 155093.07257161193,
+      "ratio_interp": 1.2726718514425017,
+      "jhq_measured": 174751.4,
+      "other_measured": 142603.7,
+      "ratio_measured": 1.2254338421794104,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.98,
+      "other": "CAGRA int8",
+      "jhq_interp": 197382.58781561966,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 174751.4,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.98,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 197382.58781561966,
+      "other_interp": 230576.0,
+      "ratio_interp": 0.8560413391489993,
+      "jhq_measured": 174751.4,
+      "other_measured": 186859.6,
+      "ratio_measured": 0.9352016166148274,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.98,
+      "other": "IVF-PQ",
+      "jhq_interp": 197382.58781561966,
+      "other_interp": 3953.9,
+      "ratio_interp": 49.9209863212574,
+      "jhq_measured": 174751.4,
+      "other_measured": 2657.7,
+      "ratio_measured": 65.75286902208677,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.98,
+      "other": "GPU brute force",
+      "jhq_interp": 197382.58781561966,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 174751.4,
+      "other_measured": 3667.1,
+      "ratio_measured": 47.653840909710674,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.985,
+      "other": "CAGRA fp32",
+      "jhq_interp": 152292.35505818485,
+      "other_interp": 138201.6,
+      "ratio_interp": 1.1019579734111968,
+      "jhq_measured": 145818.3,
+      "other_measured": 130954.6,
+      "ratio_measured": 1.113502694827062,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.985,
+      "other": "CAGRA int8",
+      "jhq_interp": 152292.35505818485,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 145818.3,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.985,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 152292.35505818485,
+      "other_interp": 198910.75573316723,
+      "ratio_interp": 0.7656315743050137,
+      "jhq_measured": 145818.3,
+      "other_measured": 186859.6,
+      "ratio_measured": 0.7803629034847553,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.985,
+      "other": "IVF-PQ",
+      "jhq_interp": 152292.35505818485,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 145818.3,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.985,
+      "other": "GPU brute force",
+      "jhq_interp": 152292.35505818485,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 145818.3,
+      "other_measured": 3667.1,
+      "ratio_measured": 39.763927899430065,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.99,
+      "other": "CAGRA fp32",
+      "jhq_interp": 74676.5,
+      "other_interp": 100465.55155741482,
+      "ratio_interp": 0.7433045341648605,
+      "jhq_measured": 47736.8,
+      "other_measured": 98504.6,
+      "ratio_measured": 0.48461493168846936,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.99,
+      "other": "CAGRA int8",
+      "jhq_interp": 74676.5,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 47736.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.99,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 74676.5,
+      "other_interp": 167876.18634444207,
+      "ratio_interp": 0.4448308102900405,
+      "jhq_measured": 47736.8,
+      "other_measured": 161574.4,
+      "ratio_measured": 0.29544779370989466,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.99,
+      "other": "IVF-PQ",
+      "jhq_interp": 74676.5,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 47736.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.99,
+      "other": "GPU brute force",
+      "jhq_interp": 74676.5,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 47736.8,
+      "other_measured": 3667.1,
+      "ratio_measured": 13.017588830410952,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.995,
+      "other": "CAGRA fp32",
+      "jhq_interp": null,
+      "other_interp": 71668.4,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 52046.0,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.995,
+      "other": "CAGRA int8",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.995,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": null,
+      "other_interp": 105526.6,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 105526.6,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.995,
+      "other": "IVF-PQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "recall": 0.995,
+      "other": "GPU brute force",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 3667.1,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.9,
+      "other": "CAGRA fp32",
+      "jhq_interp": 417536.24507896806,
+      "other_interp": 206241.7,
+      "ratio_interp": 2.024499628731571,
+      "jhq_measured": 320493.9,
+      "other_measured": 171966.9,
+      "ratio_measured": 1.8636952808941722,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.9,
+      "other": "CAGRA int8",
+      "jhq_interp": 417536.24507896806,
+      "other_interp": 500417.41441653646,
+      "ratio_interp": 0.8343759290747226,
+      "jhq_measured": 320493.9,
+      "other_measured": 451161.0,
+      "ratio_measured": 0.7103758968527866,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.9,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 417536.24507896806,
+      "other_interp": 216354.0845543804,
+      "ratio_interp": 1.9298745662184194,
+      "jhq_measured": 320493.9,
+      "other_measured": 209688.1,
+      "ratio_measured": 1.5284315132809159,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.9,
+      "other": "IVF-PQ",
+      "jhq_interp": 417536.24507896806,
+      "other_interp": 11996.616397449165,
+      "ratio_interp": 34.80450080638976,
+      "jhq_measured": 320493.9,
+      "other_measured": 11081.1,
+      "ratio_measured": 28.922570863903402,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.9,
+      "other": "GPU brute force",
+      "jhq_interp": 417536.24507896806,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 320493.9,
+      "other_measured": 4139.6,
+      "ratio_measured": 77.42146584211035,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.92,
+      "other": "CAGRA fp32",
+      "jhq_interp": 348777.3887683296,
+      "other_interp": 162454.0499524323,
+      "ratio_interp": 2.1469294786461406,
+      "jhq_measured": 320493.9,
+      "other_measured": 137697.3,
+      "ratio_measured": 2.3275249405761773,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.92,
+      "other": "CAGRA int8",
+      "jhq_interp": 348777.3887683296,
+      "other_interp": 451161.0,
+      "ratio_interp": 0.7730663527395533,
+      "jhq_measured": 320493.9,
+      "other_measured": 451161.0,
+      "ratio_measured": 0.7103758968527866,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.92,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 348777.3887683296,
+      "other_interp": 209688.1,
+      "ratio_interp": 1.6633151274122355,
+      "jhq_measured": 320493.9,
+      "other_measured": 177588.2,
+      "ratio_measured": 1.8047026773175245,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.92,
+      "other": "IVF-PQ",
+      "jhq_interp": 348777.3887683296,
+      "other_interp": 7320.5641039575585,
+      "ratio_interp": 47.64351268774186,
+      "jhq_measured": 320493.9,
+      "other_measured": 5597.5,
+      "ratio_measured": 57.25661456007146,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.92,
+      "other": "GPU brute force",
+      "jhq_interp": 348777.3887683296,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 320493.9,
+      "other_measured": 4139.6,
+      "ratio_measured": 77.42146584211035,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.94,
+      "other": "CAGRA fp32",
+      "jhq_interp": 263991.0669032208,
+      "other_interp": 139294.85769274857,
+      "ratio_interp": 1.8951960702348574,
+      "jhq_measured": 208724.4,
+      "other_measured": 137697.3,
+      "ratio_measured": 1.5158205716451958,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.94,
+      "other": "CAGRA int8",
+      "jhq_interp": 263991.0669032208,
+      "other_interp": 286726.6980404414,
+      "ratio_interp": 0.9207062638652023,
+      "jhq_measured": 208724.4,
+      "other_measured": 269285.0,
+      "ratio_measured": 0.7751059286629407,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.94,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 263991.0669032208,
+      "other_interp": 175866.19174761305,
+      "ratio_interp": 1.5010904840771013,
+      "jhq_measured": 208724.4,
+      "other_measured": 160530.6,
+      "ratio_measured": 1.300215659818128,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.94,
+      "other": "IVF-PQ",
+      "jhq_interp": 263991.0669032208,
+      "other_interp": 3770.3,
+      "ratio_interp": 70.01858390664424,
+      "jhq_measured": 208724.4,
+      "other_measured": 2851.7,
+      "ratio_measured": 73.19297261282743,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.94,
+      "other": "GPU brute force",
+      "jhq_interp": 263991.0669032208,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 208724.4,
+      "other_measured": 4139.6,
+      "ratio_measured": 50.42139337134022,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.95,
+      "other": "CAGRA fp32",
+      "jhq_interp": 218096.84633308506,
+      "other_interp": 108657.51973320592,
+      "ratio_interp": 2.007195147363872,
+      "jhq_measured": 208724.4,
+      "other_measured": 96421.2,
+      "ratio_measured": 2.1647148137546517,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.95,
+      "other": "CAGRA int8",
+      "jhq_interp": 218096.84633308506,
+      "other_interp": 216979.91504964858,
+      "ratio_interp": 1.0051476252222742,
+      "jhq_measured": 208724.4,
+      "other_measured": 190161.5,
+      "ratio_measured": 1.0976164996595,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.95,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 218096.84633308506,
+      "other_interp": 160530.6,
+      "ratio_interp": 1.3585998328859734,
+      "jhq_measured": 208724.4,
+      "other_measured": 160530.6,
+      "ratio_measured": 1.300215659818128,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.95,
+      "other": "IVF-PQ",
+      "jhq_interp": 218096.84633308506,
+      "other_interp": 2350.336868733636,
+      "ratio_interp": 92.79386680029228,
+      "jhq_measured": 208724.4,
+      "other_measured": 2017.6,
+      "ratio_measured": 103.45182394924663,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.95,
+      "other": "GPU brute force",
+      "jhq_interp": 218096.84633308506,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 208724.4,
+      "other_measured": 4139.6,
+      "ratio_measured": 50.42139337134022,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.96,
+      "other": "CAGRA fp32",
+      "jhq_interp": 173097.22700197203,
+      "other_interp": 92277.5,
+      "ratio_interp": 1.8758335130662624,
+      "jhq_measured": 119423.1,
+      "other_measured": 92277.5,
+      "ratio_measured": 1.2941735525994962,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.96,
+      "other": "CAGRA int8",
+      "jhq_interp": 173097.22700197203,
+      "other_interp": 128140.38379812973,
+      "ratio_interp": 1.3508405537060555,
+      "jhq_measured": 119423.1,
+      "other_measured": 99896.9,
+      "ratio_measured": 1.1954635228921018,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.96,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 173097.22700197203,
+      "other_interp": 126810.12181457481,
+      "ratio_interp": 1.3650111247040633,
+      "jhq_measured": 119423.1,
+      "other_measured": 124891.5,
+      "ratio_measured": 0.9562147944415753,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.96,
+      "other": "IVF-PQ",
+      "jhq_interp": 173097.22700197203,
+      "other_interp": 1618.9405279731395,
+      "ratio_interp": 106.9200653211666,
+      "jhq_measured": 119423.1,
+      "other_measured": 1361.8,
+      "ratio_measured": 87.69503598178882,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.96,
+      "other": "GPU brute force",
+      "jhq_interp": 173097.22700197203,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 119423.1,
+      "other_measured": 4139.6,
+      "ratio_measured": 28.848946758140883,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.97,
+      "other": "CAGRA fp32",
+      "jhq_interp": 126714.53616911682,
+      "other_interp": 72520.1,
+      "ratio_interp": 1.7473022812863857,
+      "jhq_measured": 119423.1,
+      "other_measured": 52061.6,
+      "ratio_measured": 2.2938807105428953,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.97,
+      "other": "CAGRA int8",
+      "jhq_interp": 126714.53616911682,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 119423.1,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.97,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 126714.53616911682,
+      "other_interp": 112168.12847917993,
+      "ratio_interp": 1.129683965375574,
+      "jhq_measured": 119423.1,
+      "other_measured": 107539.2,
+      "ratio_measured": 1.1105076102481701,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.97,
+      "other": "IVF-PQ",
+      "jhq_interp": 126714.53616911682,
+      "other_interp": 1100.2107513995948,
+      "ratio_interp": 115.17296664109249,
+      "jhq_measured": 119423.1,
+      "other_measured": 1024.7,
+      "ratio_measured": 116.54445203474188,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.97,
+      "other": "GPU brute force",
+      "jhq_interp": 126714.53616911682,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 119423.1,
+      "other_measured": 4139.6,
+      "ratio_measured": 28.848946758140883,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.98,
+      "other": "CAGRA fp32",
+      "jhq_interp": 87849.46215920482,
+      "other_interp": 45285.817042320756,
+      "ratio_interp": 1.9398890844148236,
+      "jhq_measured": 62794.2,
+      "other_measured": 40721.6,
+      "ratio_measured": 1.5420366586774585,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.98,
+      "other": "CAGRA int8",
+      "jhq_interp": 87849.46215920482,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 62794.2,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.98,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 87849.46215920482,
+      "other_interp": 79806.32237043482,
+      "ratio_interp": 1.1007832405988636,
+      "jhq_measured": 62794.2,
+      "other_measured": 79127.5,
+      "ratio_measured": 0.7935825092414142,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.98,
+      "other": "IVF-PQ",
+      "jhq_interp": 87849.46215920482,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 62794.2,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.98,
+      "other": "GPU brute force",
+      "jhq_interp": 87849.46215920482,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 62794.2,
+      "other_measured": 4139.6,
+      "ratio_measured": 15.16914677746642,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.985,
+      "other": "CAGRA fp32",
+      "jhq_interp": 67010.47176416383,
+      "other_interp": 27417.5,
+      "ratio_interp": 2.444076657761059,
+      "jhq_measured": 62794.2,
+      "other_measured": 27417.5,
+      "ratio_measured": 2.290296343576183,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.985,
+      "other": "CAGRA int8",
+      "jhq_interp": 67010.47176416383,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 62794.2,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.985,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 67010.47176416383,
+      "other_interp": 69825.06706374123,
+      "ratio_interp": 0.9596907612418326,
+      "jhq_measured": 62794.2,
+      "other_measured": 64483.2,
+      "ratio_measured": 0.9738071311597439,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.985,
+      "other": "IVF-PQ",
+      "jhq_interp": 67010.47176416383,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 62794.2,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.985,
+      "other": "GPU brute force",
+      "jhq_interp": 67010.47176416383,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 62794.2,
+      "other_measured": 4139.6,
+      "ratio_measured": 15.16914677746642,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.99,
+      "other": "CAGRA fp32",
+      "jhq_interp": null,
+      "other_interp": 21174.4,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 20900.6,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.99,
+      "other": "CAGRA int8",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.99,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": null,
+      "other_interp": 51049.75610089486,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 47972.2,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.99,
+      "other": "IVF-PQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.99,
+      "other": "GPU brute force",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 4139.6,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.995,
+      "other": "CAGRA fp32",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.995,
+      "other": "CAGRA int8",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.995,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.995,
+      "other": "IVF-PQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-1536",
+      "recall": 0.995,
+      "other": "GPU brute force",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 4139.6,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.9,
+      "other": "CAGRA fp32",
+      "jhq_interp": 189535.6445751197,
+      "other_interp": 100980.21323000833,
+      "ratio_interp": 1.8769582526371147,
+      "jhq_measured": 150110.0,
+      "other_measured": 86258.4,
+      "ratio_measured": 1.7402363132170318,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.9,
+      "other": "CAGRA int8",
+      "jhq_interp": 189535.6445751197,
+      "other_interp": 241499.76629254076,
+      "ratio_interp": 0.7848274451144838,
+      "jhq_measured": 150110.0,
+      "other_measured": 217079.5,
+      "ratio_measured": 0.6914978153165084,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.9,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 189535.6445751197,
+      "other_interp": 101948.98601263195,
+      "ratio_interp": 1.8591224100221588,
+      "jhq_measured": 150110.0,
+      "other_measured": 99548.4,
+      "ratio_measured": 1.5079097202968608,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.9,
+      "other": "IVF-PQ",
+      "jhq_interp": 189535.6445751197,
+      "other_interp": 3311.9560204157824,
+      "ratio_interp": 57.22770574451209,
+      "jhq_measured": 150110.0,
+      "other_measured": 2890.8,
+      "ratio_measured": 51.926802269268016,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.9,
+      "other": "GPU brute force",
+      "jhq_interp": 189535.6445751197,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 150110.0,
+      "other_measured": 2048.7,
+      "ratio_measured": 73.27085468833896,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.92,
+      "other": "CAGRA fp32",
+      "jhq_interp": 159156.64492801102,
+      "other_interp": 81550.25766748263,
+      "ratio_interp": 1.9516387744225754,
+      "jhq_measured": 150110.0,
+      "other_measured": 68154.7,
+      "ratio_measured": 2.2024893367588736,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.92,
+      "other": "CAGRA int8",
+      "jhq_interp": 159156.64492801102,
+      "other_interp": 219573.18529026912,
+      "ratio_interp": 0.7248455439475032,
+      "jhq_measured": 150110.0,
+      "other_measured": 217079.5,
+      "ratio_measured": 0.6914978153165084,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.92,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 159156.64492801102,
+      "other_interp": 90893.36537131392,
+      "ratio_interp": 1.7510259882867214,
+      "jhq_measured": 150110.0,
+      "other_measured": 86240.0,
+      "ratio_measured": 1.7406076066790352,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.92,
+      "other": "IVF-PQ",
+      "jhq_interp": 159156.64492801102,
+      "other_interp": 2061.2482659471334,
+      "ratio_interp": 77.21371925806295,
+      "jhq_measured": 150110.0,
+      "other_measured": 1950.2,
+      "ratio_measured": 76.97159265716337,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.92,
+      "other": "GPU brute force",
+      "jhq_interp": 159156.64492801102,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 150110.0,
+      "other_measured": 2048.7,
+      "ratio_measured": 73.27085468833896,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.94,
+      "other": "CAGRA fp32",
+      "jhq_interp": 108782.56783613707,
+      "other_interp": 68795.25539271282,
+      "ratio_interp": 1.581251021093817,
+      "jhq_measured": 94301.9,
+      "other_measured": 68154.7,
+      "ratio_measured": 1.3836448550136675,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.94,
+      "other": "CAGRA int8",
+      "jhq_interp": 108782.56783613707,
+      "other_interp": 146658.8,
+      "ratio_interp": 0.7417391103441258,
+      "jhq_measured": 94301.9,
+      "other_measured": 146658.8,
+      "ratio_measured": 0.6430019882884628,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.94,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 108782.56783613707,
+      "other_interp": 76072.69819051611,
+      "ratio_interp": 1.429981720428826,
+      "jhq_measured": 94301.9,
+      "other_measured": 75449.5,
+      "ratio_measured": 1.249867792364429,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.94,
+      "other": "IVF-PQ",
+      "jhq_interp": 108782.56783613707,
+      "other_interp": 1082.0139252564518,
+      "ratio_interp": 100.53712368845359,
+      "jhq_measured": 94301.9,
+      "other_measured": 988.5,
+      "ratio_measured": 95.39898836621143,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.94,
+      "other": "GPU brute force",
+      "jhq_interp": 108782.56783613707,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 94301.9,
+      "other_measured": 2048.7,
+      "ratio_measured": 46.030116659344955,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.95,
+      "other": "CAGRA fp32",
+      "jhq_interp": 94200.13794410079,
+      "other_interp": 55155.64076839944,
+      "ratio_interp": 1.7078967197507617,
+      "jhq_measured": 94143.1,
+      "other_measured": 47544.5,
+      "ratio_measured": 1.9801049543059661,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.95,
+      "other": "CAGRA int8",
+      "jhq_interp": 94200.13794410079,
+      "other_interp": 90841.80832946127,
+      "ratio_interp": 1.036968986817828,
+      "jhq_measured": 94143.1,
+      "other_measured": 90525.0,
+      "ratio_measured": 1.039967964650649,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.95,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 94200.13794410079,
+      "other_interp": 66416.01172177057,
+      "ratio_interp": 1.4183347584724488,
+      "jhq_measured": 94143.1,
+      "other_measured": 60525.6,
+      "ratio_measured": 1.555426133735147,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.95,
+      "other": "IVF-PQ",
+      "jhq_interp": 94200.13794410079,
+      "other_interp": 789.580719187046,
+      "ratio_interp": 119.30399977482917,
+      "jhq_measured": 94143.1,
+      "other_measured": 745.1,
+      "ratio_measured": 126.34961750100658,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.95,
+      "other": "GPU brute force",
+      "jhq_interp": 94200.13794410079,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 94143.1,
+      "other_measured": 2048.7,
+      "ratio_measured": 45.95260409039879,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.96,
+      "other": "CAGRA fp32",
+      "jhq_interp": 74583.5568045781,
+      "other_interp": 43123.8,
+      "ratio_interp": 1.7295219068026957,
+      "jhq_measured": 53392.0,
+      "other_measured": 37305.9,
+      "ratio_measured": 1.4311945295516257,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.96,
+      "other": "CAGRA int8",
+      "jhq_interp": 74583.5568045781,
+      "other_interp": 58921.62226661823,
+      "ratio_interp": 1.2658096287147387,
+      "jhq_measured": 53392.0,
+      "other_measured": 49418.7,
+      "ratio_measured": 1.0804007389915153,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.96,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 74583.5568045781,
+      "other_interp": 57521.06671531102,
+      "ratio_interp": 1.2966302793672873,
+      "jhq_measured": 53392.0,
+      "other_measured": 51552.8,
+      "ratio_measured": 1.035676044754116,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.96,
+      "other": "IVF-PQ",
+      "jhq_interp": 74583.5568045781,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 53392.0,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.96,
+      "other": "GPU brute force",
+      "jhq_interp": 74583.5568045781,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 53392.0,
+      "other_measured": 2048.7,
+      "ratio_measured": 26.061404793283547,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.97,
+      "other": "CAGRA fp32",
+      "jhq_interp": 55911.2510736761,
+      "other_interp": 32003.29848744909,
+      "ratio_interp": 1.7470465144585996,
+      "jhq_measured": 53392.0,
+      "other_measured": 25573.8,
+      "ratio_measured": 2.0877616936083023,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.97,
+      "other": "CAGRA int8",
+      "jhq_interp": 55911.2510736761,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 53392.0,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.97,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 55911.2510736761,
+      "other_interp": 48306.587615062366,
+      "ratio_interp": 1.157424977297352,
+      "jhq_measured": 53392.0,
+      "other_measured": 39654.7,
+      "ratio_measured": 1.3464229965174368,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.97,
+      "other": "IVF-PQ",
+      "jhq_interp": 55911.2510736761,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 53392.0,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.97,
+      "other": "GPU brute force",
+      "jhq_interp": 55911.2510736761,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 53392.0,
+      "other_measured": 2048.7,
+      "ratio_measured": 26.061404793283547,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.98,
+      "other": "CAGRA fp32",
+      "jhq_interp": 36198.68291003354,
+      "other_interp": 19802.4,
+      "ratio_interp": 1.827994733468344,
+      "jhq_measured": 28440.8,
+      "other_measured": 19226.2,
+      "ratio_measured": 1.479273075282687,
+      "jhq_kind": "interp",
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.98,
+      "other": "CAGRA int8",
+      "jhq_interp": 36198.68291003354,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 28440.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.98,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 36198.68291003354,
+      "other_interp": 38054.95508214722,
+      "ratio_interp": 0.9512212754395151,
+      "jhq_measured": 28440.8,
+      "other_measured": 33402.6,
+      "ratio_measured": 0.8514546771808182,
+      "jhq_kind": "interp",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.98,
+      "other": "IVF-PQ",
+      "jhq_interp": 36198.68291003354,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 28440.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.98,
+      "other": "GPU brute force",
+      "jhq_interp": 36198.68291003354,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 28440.8,
+      "other_measured": 2048.7,
+      "ratio_measured": 13.882364426221507,
+      "jhq_kind": "interp",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.985,
+      "other": "CAGRA fp32",
+      "jhq_interp": 28440.8,
+      "other_interp": 14738.29759666384,
+      "ratio_interp": 1.9297208387512719,
+      "jhq_measured": 28440.8,
+      "other_measured": 13616.3,
+      "ratio_measured": 2.088731887517167,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.985,
+      "other": "CAGRA int8",
+      "jhq_interp": 28440.8,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 28440.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.985,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": 28440.8,
+      "other_interp": 31994.083589906513,
+      "ratio_interp": 0.8889393540552134,
+      "jhq_measured": 28440.8,
+      "other_measured": 26073.2,
+      "ratio_measured": 1.0908058849700075,
+      "jhq_kind": "measured",
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.985,
+      "other": "IVF-PQ",
+      "jhq_interp": 28440.8,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 28440.8,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.985,
+      "other": "GPU brute force",
+      "jhq_interp": 28440.8,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": 28440.8,
+      "other_measured": 2048.7,
+      "ratio_measured": 13.882364426221507,
+      "jhq_kind": "measured",
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.99,
+      "other": "CAGRA fp32",
+      "jhq_interp": null,
+      "other_interp": 10645.6,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 10594.3,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "measured"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.99,
+      "other": "CAGRA int8",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.99,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": null,
+      "other_interp": 26736.764535217553,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 26073.2,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": "interp"
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.99,
+      "other": "IVF-PQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.99,
+      "other": "GPU brute force",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 2048.7,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.995,
+      "other": "CAGRA fp32",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.995,
+      "other": "CAGRA int8",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.995,
+      "other": "IVF-RaBitQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.995,
+      "other": "IVF-PQ",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": null,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    },
+    {
+      "dataset": "openai3-3072",
+      "recall": 0.995,
+      "other": "GPU brute force",
+      "jhq_interp": null,
+      "other_interp": null,
+      "ratio_interp": null,
+      "jhq_measured": null,
+      "other_measured": 2048.7,
+      "ratio_measured": null,
+      "jhq_kind": null,
+      "other_kind": null
+    }
+  ],
+  "budget": [
+    {
+      "dataset": "vogue-768",
+      "nprobe": 128,
+      "reps": 64,
+      "cal_ms": 4.0,
+      "mean_loss": 0.0003,
+      "p95_loss": 0.0022,
+      "over": 0.078,
+      "alpha": 64,
+      "qps": 224405,
+      "fixed_recall": 0.968,
+      "fixed_qps": 202941,
+      "approx_selected_recall": 0.9677,
+      "oracle": {
+        "alpha": 64,
+        "tau": 0.001,
+        "ceiling": 0.968,
+        "recall": 0.9678,
+        "qps": 223413
+      },
+      "gain": 1.1057647296504896,
+      "test_n": 500,
+      "payback": 16.97390052366753,
+      "payback500": 16.97390052366753,
+      "full": {
+        "alpha": 100,
+        "recall": 0.968,
+        "qps": 202941,
+        "cal_ms": 10.1
+      }
+    },
+    {
+      "dataset": "arxiv-768",
+      "nprobe": 128,
+      "reps": 64,
+      "cal_ms": 4.2,
+      "mean_loss": 0.0009,
+      "p95_loss": 0.0024,
+      "over": 0.625,
+      "alpha": 100,
+      "qps": 188808,
+      "fixed_recall": 0.9748,
+      "fixed_qps": 207915,
+      "approx_selected_recall": 0.9751,
+      "oracle": {
+        "alpha": 200,
+        "tau": 0.001,
+        "ceiling": 0.976,
+        "recall": 0.976,
+        "qps": 151462
+      },
+      "gain": 0.9081018685520525,
+      "test_n": 500,
+      "payback": null,
+      "payback500": null,
+      "full": {
+        "alpha": 200,
+        "recall": 0.976,
+        "qps": 151462,
+        "cal_ms": 10.0
+      }
+    },
+    {
+      "dataset": "openai3-1536",
+      "nprobe": 128,
+      "reps": 64,
+      "cal_ms": 3.9,
+      "mean_loss": 0.0001,
+      "p95_loss": 0.0,
+      "over": 0.062,
+      "alpha": 8,
+      "qps": 268494,
+      "fixed_recall": 0.928,
+      "fixed_qps": 167451,
+      "approx_selected_recall": 0.9279000000000001,
+      "oracle": {
+        "alpha": 8,
+        "tau": 0.001,
+        "ceiling": 0.928,
+        "recall": 0.928,
+        "qps": 267690
+      },
+      "gain": 1.6034183134170594,
+      "test_n": 500,
+      "payback": 3.470649056275051,
+      "payback500": 3.470649056275051,
+      "full": {
+        "alpha": 8,
+        "recall": 0.928,
+        "qps": 267690,
+        "cal_ms": 9.5
+      }
+    },
+    {
+      "dataset": "openai3-3072",
+      "nprobe": 128,
+      "reps": 64,
+      "cal_ms": 5.7,
+      "mean_loss": 0.0,
+      "p95_loss": 0.0,
+      "over": 0.0,
+      "alpha": 4,
+      "qps": 144988,
+      "fixed_recall": 0.9252,
+      "fixed_qps": 85735,
+      "approx_selected_recall": 0.9252,
+      "oracle": {
+        "alpha": 4,
+        "tau": 0.001,
+        "ceiling": 0.9252,
+        "recall": 0.9252,
+        "qps": 144988
+      },
+      "gain": 1.6911179798215432,
+      "test_n": 500,
+      "payback": 2.391578931902182,
+      "payback500": 2.391578931902182,
+      "full": {
+        "alpha": 4,
+        "recall": 0.9252,
+        "qps": 144988,
+        "cal_ms": 17.1
+      }
+    },
+    {
+      "dataset": "bge-m3",
+      "nprobe": 128,
+      "reps": 64,
+      "cal_ms": 6.5,
+      "mean_loss": 0.0008,
+      "p95_loss": 0.0008,
+      "over": 0.016,
+      "alpha": 32,
+      "qps": 131223,
+      "fixed_recall": 0.9198,
+      "fixed_qps": 116168,
+      "approx_selected_recall": 0.9189999999999999,
+      "oracle": {
+        "alpha": 32,
+        "tau": 0.001,
+        "ceiling": 0.9198,
+        "recall": 0.919,
+        "qps": 134004
+      },
+      "gain": 1.1295967908546243,
+      "test_n": 500,
+      "payback": 13.16312687027566,
+      "payback500": 13.16312687027566,
+      "full": {
+        "alpha": 64,
+        "recall": 0.9192,
+        "qps": 124900,
+        "cal_ms": 17.1
+      }
+    },
+    {
+      "dataset": "stella",
+      "nprobe": 128,
+      "reps": 64,
+      "cal_ms": 7.5,
+      "mean_loss": 0.0008,
+      "p95_loss": 0.003,
+      "over": 0.094,
+      "alpha": 16,
+      "qps": 110350,
+      "fixed_recall": 0.9892,
+      "fixed_qps": 95693,
+      "approx_selected_recall": 0.9884,
+      "oracle": {
+        "alpha": 16,
+        "tau": 0.001,
+        "ceiling": 0.9892,
+        "recall": 0.9886,
+        "qps": 110352
+      },
+      "gain": 1.1531668983102212,
+      "test_n": 499,
+      "payback": 10.828495925466274,
+      "payback500": 10.806838933615342,
+      "full": {
+        "alpha": 16,
+        "recall": 0.9886,
+        "qps": 110352,
+        "cal_ms": 20.6
+      }
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 512,
+      "reps": 64,
+      "cal_ms": 7.5,
+      "mean_loss": 0.0003,
+      "p95_loss": 0.0002,
+      "over": 0.031,
+      "alpha": 64,
+      "qps": 102894,
+      "fixed_recall": 0.9916,
+      "fixed_qps": 100104,
+      "approx_selected_recall": 0.9915,
+      "oracle": {
+        "alpha": 64,
+        "tau": 0.001,
+        "ceiling": 0.9918,
+        "recall": 0.9916,
+        "qps": 103314
+      },
+      "gain": 1.027871014145289,
+      "test_n": 500,
+      "payback": 55.376886967741946,
+      "payback500": 55.376886967741946,
+      "full": {
+        "alpha": 100,
+        "recall": 0.9916,
+        "qps": 100104,
+        "cal_ms": 20.9
+      }
+    },
+    {
+      "dataset": "arxiv-768",
+      "nprobe": 512,
+      "reps": 64,
+      "cal_ms": 9.7,
+      "mean_loss": 0.0009,
+      "p95_loss": 0.0016,
+      "over": 0.5,
+      "alpha": 200,
+      "qps": 76182,
+      "fixed_recall": 0.9878,
+      "fixed_qps": 83072,
+      "approx_selected_recall": 0.9884999999999999,
+      "oracle": {
+        "alpha": 200,
+        "tau": 0.001,
+        "ceiling": 0.9894,
+        "recall": 0.9894,
+        "qps": 69011
+      },
+      "gain": 0.9170598998459168,
+      "test_n": 500,
+      "payback": null,
+      "payback500": null,
+      "full": {
+        "alpha": 200,
+        "recall": 0.9894,
+        "qps": 69011,
+        "cal_ms": 25.1
+      }
+    },
+    {
+      "dataset": "openai3-1536",
+      "nprobe": 512,
+      "reps": 64,
+      "cal_ms": 8.8,
+      "mean_loss": 0.0002,
+      "p95_loss": 0.0,
+      "over": 0.062,
+      "alpha": 8,
+      "qps": 114964,
+      "fixed_recall": 0.974,
+      "fixed_qps": 86647,
+      "approx_selected_recall": 0.9738,
+      "oracle": {
+        "alpha": 8,
+        "tau": 0.001,
+        "ceiling": 0.974,
+        "recall": 0.974,
+        "qps": 114923
+      },
+      "gain": 1.326808775837594,
+      "test_n": 500,
+      "payback": 6.191285392548644,
+      "payback500": 6.191285392548644,
+      "full": {
+        "alpha": 8,
+        "recall": 0.974,
+        "qps": 114923,
+        "cal_ms": 21.8
+      }
+    },
+    {
+      "dataset": "openai3-3072",
+      "nprobe": 512,
+      "reps": 64,
+      "cal_ms": 13.1,
+      "mean_loss": 0.0002,
+      "p95_loss": 0.0002,
+      "over": 0.0,
+      "alpha": 4,
+      "qps": 52123,
+      "fixed_recall": 0.9704,
+      "fixed_qps": 42767,
+      "approx_selected_recall": 0.9702000000000001,
+      "oracle": {
+        "alpha": 8,
+        "tau": 0.001,
+        "ceiling": 0.9704,
+        "recall": 0.9704,
+        "qps": 53361
+      },
+      "gain": 1.218766806182337,
+      "test_n": 500,
+      "payback": 6.2423665812526705,
+      "payback500": 6.2423665812526705,
+      "full": {
+        "alpha": 4,
+        "recall": 0.9702,
+        "qps": 52123,
+        "cal_ms": 40.5
+      }
+    },
+    {
+      "dataset": "bge-m3",
+      "nprobe": 512,
+      "reps": 64,
+      "cal_ms": 15.8,
+      "mean_loss": 0.0009,
+      "p95_loss": 0.0014,
+      "over": 0.375,
+      "alpha": 64,
+      "qps": 51084,
+      "fixed_recall": 0.967,
+      "fixed_qps": 49160,
+      "approx_selected_recall": 0.9661,
+      "oracle": {
+        "alpha": 64,
+        "tau": 0.001,
+        "ceiling": 0.967,
+        "recall": 0.9664,
+        "qps": 50787
+      },
+      "gain": 1.0391375101708706,
+      "test_n": 500,
+      "payback": 41.245710137214196,
+      "payback500": 41.245710137214196,
+      "full": {
+        "alpha": 64,
+        "recall": 0.9664,
+        "qps": 50787,
+        "cal_ms": 42.3
+      }
+    },
+    {
+      "dataset": "stella",
+      "nprobe": 512,
+      "reps": 64,
+      "cal_ms": 21.3,
+      "mean_loss": 0.0009,
+      "p95_loss": 0.003,
+      "over": 0.109,
+      "alpha": 16,
+      "qps": 36013,
+      "fixed_recall": 0.9954,
+      "fixed_qps": 34581,
+      "approx_selected_recall": 0.9944999999999999,
+      "oracle": {
+        "alpha": 16,
+        "tau": 0.001,
+        "ceiling": 0.9954,
+        "recall": 0.9948,
+        "qps": 36014
+      },
+      "gain": 1.0414100228449148,
+      "test_n": 499,
+      "payback": 37.122130124634644,
+      "payback500": 37.04788586438538,
+      "full": {
+        "alpha": 16,
+        "recall": 0.9948,
+        "qps": 36014,
+        "cal_ms": 60.3
+      }
+    }
+  ],
+  "fixed_budget_summary": [
+    {
+      "alpha": 2,
+      "qualified": 0,
+      "worst_loss": 0.30999999999999994,
+      "worst_qps_penalty": 0.11202306397770845
+    },
+    {
+      "alpha": 4,
+      "qualified": 2,
+      "worst_loss": 0.1773999999999999,
+      "worst_qps_penalty": 0.02320046475890636
+    },
+    {
+      "alpha": 8,
+      "qualified": 4,
+      "worst_loss": 0.09299999999999997,
+      "worst_qps_penalty": 0.0208500013794245
+    },
+    {
+      "alpha": 16,
+      "qualified": 6,
+      "worst_loss": 0.04079999999999995,
+      "worst_qps_penalty": 0.044045024415813705
+    },
+    {
+      "alpha": 32,
+      "qualified": 7,
+      "worst_loss": 0.016999999999999904,
+      "worst_qps_penalty": 0.09077992661461642
+    },
+    {
+      "alpha": 64,
+      "qualified": 10,
+      "worst_loss": 0.004999999999999893,
+      "worst_qps_penalty": 0.26600918973439425
+    },
+    {
+      "alpha": 100,
+      "qualified": 10,
+      "worst_loss": 0.0015999999999999348,
+      "worst_qps_penalty": 0.4086752007062654
+    },
+    {
+      "alpha": 200,
+      "qualified": 12,
+      "worst_loss": 0.0,
+      "worst_qps_penalty": 0.5714707310695207
+    }
+  ],
+  "enumeration": {
+    "draws": 2304,
+    "differences": 0,
+    "ratio_range": [
+      1.7500000000000002,
+      2.0114942528735633
+    ]
+  },
+  "lut": {
+    "cells": 24,
+    "wins": {
+      "1": 1,
+      "2": 22,
+      "4": 1
+    },
+    "max_recall_spread": 9.999999999998899e-05,
+    "ratio_range": [
+      0.997736840338848,
+      1.914079934691137
+    ]
+  },
+  "packing": {
+    "cells": 48,
+    "gain_range": [
+      1.0117684871560313,
+      1.6580943248191091
+    ],
+    "max_recall_diff": 9.999999999998899e-05
+  },
+  "pipeline": {
+    "summary": [
+      {
+        "batch": 8,
+        "n": 13,
+        "nheld": 9,
+        "gains": {
+          "102": 1.317799803124607,
+          "104": 2.0137355777732107,
+          "108": 2.7277185391745116,
+          "-1": 2.7267722071903377
+        },
+        "held_gain": 2.929931181638865,
+        "worst_regret": 1.0335544513888935
+      },
+      {
+        "batch": 32,
+        "n": 13,
+        "nheld": 9,
+        "gains": {
+          "102": 1.32306995253767,
+          "104": 1.969717489696851,
+          "108": 2.3373335040124945,
+          "-1": 2.3564034494127397
+        },
+        "held_gain": 2.559615382427058,
+        "worst_regret": 1.0036538311887702
+      },
+      {
+        "batch": 256,
+        "n": 13,
+        "nheld": 9,
+        "gains": {
+          "102": 0.9973577473265705,
+          "104": 1.0897795918418216,
+          "108": 1.0992916426448975,
+          "-1": 1.0571228328104716
+        },
+        "held_gain": 1.0405280543877646,
+        "worst_regret": 1.2166020057780296
+      },
+      {
+        "batch": 1000,
+        "n": 11,
+        "nheld": 7,
+        "gains": {
+          "102": 0.9591807386936078,
+          "104": 0.9467575870200178,
+          "108": 0.8859174010326651,
+          "-1": 1.0148321978693045
+        },
+        "held_gain": 1.012179512268769,
+        "worst_regret": 1.0102164514298126
+      }
+    ],
+    "comparisons": 250,
+    "query_comparisons": 234320,
+    "non_tie": 0,
+    "different_sets": 0
+  },
+  "correctness": {
+    "v62_cases": 64,
+    "bound_cases": 48,
+    "probe": {
+      "cases": 1792,
+      "failing": 0
+    },
+    "vogue_identity": "IDENTITY_FAIL"
+  },
+  "bound_gain_range": [
+    0.9935179414776372,
+    1.5615915888930254
+  ],
+  "refinement_gain_range": [
+    1.01472005764765,
+    2.3832741316555794
+  ],
+  "build": {
+    "arxiv-768": {
+      "train_ms": 586.6,
+      "add_ms": 516.4
+    },
+    "openai3-1536": {
+      "train_ms": 636.2,
+      "add_ms": 375.4
+    },
+    "openai3-3072": {
+      "train_ms": 1339.5,
+      "add_ms": 652.7
+    },
+    "vogue-768": {
+      "train_ms": 1056.0,
+      "add_ms": 271.7
+    },
+    "bge-m3": {
+      "train_ms": 3752.8,
+      "add_ms": 3671.3
+    },
+    "stella": {
+      "train_ms": 3736.4,
+      "add_ms": 6666.4
+    }
+  },
+  "memory": {
+    "vogue-768": {
+      "used_mib": 1503.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 2.6674118041992188,
+      "residual_gib": 0.6668529510498047,
+      "residual_share": 0.4542691736794838,
+      "batch": 1000
+    },
+    "arxiv-768": {
+      "used_mib": 2641.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 6.445884704589844,
+      "residual_gib": 1.611471176147461,
+      "residual_share": 0.6247714994604725,
+      "batch": 1000
+    },
+    "openai3-1536": {
+      "used_mib": 2449.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 5.7163238525390625,
+      "residual_gib": 1.4290809631347656,
+      "residual_share": 0.5974926123836355,
+      "batch": 1000
+    },
+    "openai3-3072": {
+      "used_mib": 4243.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 11.432647705078125,
+      "residual_gib": 2.8581619262695312,
+      "residual_share": 0.6897525010605204,
+      "batch": 1000
+    },
+    "bge-m3": {
+      "used_mib": 12211.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 38.49610900878906,
+      "residual_gib": 9.624027252197266,
+      "residual_share": 0.8070463104567938,
+      "batch": 1000
+    },
+    "stella": {
+      "used_mib": 20933.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 67.81240463256836,
+      "residual_gib": 16.95310115814209,
+      "residual_share": 0.8293034789682179,
+      "batch": 999
+    }
+  },
+  "large": {
+    "bge-m3": {
+      "JHQ-GPU v69": {
+        "points": 16,
+        "max_recall": 0.9663
+      },
+      "CAGRA int8": {
+        "points": 64,
+        "max_recall": 0.9579
+      },
+      "IVF-PQ": {
+        "points": 54,
+        "max_recall": 0.9525
+      }
+    },
+    "stella": {
+      "JHQ-GPU v69": {
+        "points": 16,
+        "max_recall": 0.995195
+      },
+      "CAGRA int8": {
+        "points": 64,
+        "max_recall": 0.978278
+      },
+      "IVF-PQ": {
+        "points": 54,
+        "max_recall": 0.98959
+      }
+    }
+  },
+  "construction": [
+    {
+      "dataset": "arxiv-768",
+      "method": "CAGRA int8",
+      "seconds": [
+        8.065,
+        8.767
+      ]
+    },
+    {
+      "dataset": "arxiv-768",
+      "method": "CAGRA fp32",
+      "seconds": [
+        10.185,
+        9.972
+      ]
+    },
+    {
+      "dataset": "arxiv-768",
+      "method": "IVF-PQ",
+      "seconds": [
+        11.465,
+        11.229,
+        12.934
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "method": "CAGRA int8",
+      "seconds": [
+        4.938,
+        4.944
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "method": "CAGRA fp32",
+      "seconds": [
+        5.738,
+        5.701
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "method": "IVF-PQ",
+      "seconds": [
+        9.187,
+        17.78,
+        25.128
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "method": "CAGRA int8",
+      "seconds": [
+        8.745000000000001,
+        9.443999999999999
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "method": "CAGRA fp32",
+      "seconds": [
+        10.909,
+        10.778
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "method": "IVF-PQ",
+      "seconds": [
+        14.634,
+        17.817,
+        27.846
+      ]
+    },
+    {
+      "dataset": "vogue-768",
+      "method": "CAGRA int8",
+      "seconds": [
+        3.7479999999999998,
+        3.2479999999999998
+      ]
+    },
+    {
+      "dataset": "vogue-768",
+      "method": "CAGRA fp32",
+      "seconds": [
+        3.48,
+        3.092
+      ]
+    },
+    {
+      "dataset": "vogue-768",
+      "method": "IVF-PQ",
+      "seconds": [
+        6.854,
+        8.032,
+        11.883
+      ]
+    },
+    {
+      "dataset": "arxiv-768",
+      "method": "IVF-RaBitQ",
+      "seconds": [
+        3.5499,
+        3.6875,
+        3.5849
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "method": "IVF-RaBitQ",
+      "seconds": [
+        3.2035,
+        3.2513,
+        3.224,
+        2.1012,
+        2.1415,
+        2.1348000000000003
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "method": "IVF-RaBitQ",
+      "seconds": [
+        5.2048000000000005,
+        5.2616000000000005,
+        5.2116999999999996,
+        3.4276999999999997,
+        3.4701999999999997,
+        3.3891
+      ]
+    },
+    {
+      "dataset": "vogue-768",
+      "method": "IVF-RaBitQ",
+      "seconds": [
+        1.3908,
+        1.3985999999999998,
+        1.3199
+      ]
+    },
+    {
+      "dataset": "bge-m3",
+      "method": "CAGRA int8",
+      "seconds": [
+        40.168,
+        43.665
+      ]
+    },
+    {
+      "dataset": "bge-m3",
+      "method": "IVF-PQ",
+      "seconds": [
+        50.15,
+        43.488,
+        52.217
+      ]
+    },
+    {
+      "dataset": "stella",
+      "method": "CAGRA int8",
+      "seconds": [
+        74.54700000000001,
+        82.451
+      ]
+    },
+    {
+      "dataset": "stella",
+      "method": "IVF-PQ",
+      "seconds": [
+        97.159,
+        77.598,
+        86.59
+      ]
+    },
+    {
+      "dataset": "vogue-768",
+      "method": "JHQ-GPU",
+      "seconds": [
+        1.3277
+      ]
+    },
+    {
+      "dataset": "arxiv-768",
+      "method": "JHQ-GPU",
+      "seconds": [
+        1.103
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "method": "JHQ-GPU",
+      "seconds": [
+        1.0116
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "method": "JHQ-GPU",
+      "seconds": [
+        1.9922
+      ]
+    },
+    {
+      "dataset": "bge-m3",
+      "method": "JHQ-GPU",
+      "seconds": [
+        7.4241
+      ]
+    },
+    {
+      "dataset": "stella",
+      "method": "JHQ-GPU",
+      "seconds": [
+        10.4028
+      ]
+    }
+  ],
+  "reused_figures": [
+    "fig_lutgroups_v69",
+    "fig_budget_risk_v69",
+    "fig_budget_payback_v69",
+    "fig_memory_v69",
+    "fig_build_v69"
+  ]
+}

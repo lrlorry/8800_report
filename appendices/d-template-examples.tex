@@ -1,0 +1,100 @@
+% Included only while \draftthesistrue. It is not thesis content.
+\chapter{Template Examples --- Draft Only}
+\label{app:template-examples}
+This appendix demonstrates the available formatting. It is omitted when
+\verb|\draftthesisfalse| is selected in \texttt{config/metadata.tex}.
+
+\section{Citations and Cross-References}
+Use \verb|\citet{jhq}| for a narrative citation: \citet{jhq}.
+Use \verb|\citep{pq,cagra}| for a parenthetical citation \citep{pq,cagra}.
+Examples: \cref{fig:example-pipeline,tab:example-manifest,eq:example-disagreement}.
+The bibliography entries are copied from the existing ADC source; review their
+metadata before submission.
+
+\section{A Source-Native Diagram}
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  node distance=5mm,
+  stage/.style={draw=ThesisNavy,rounded corners=2pt,fill=ThesisNavy!4,
+    minimum height=10mm,text width=26mm,align=center,font=\small},
+  link/.style={-{Latex},draw=ThesisNavy}]
+  \node[stage] (route) {IVF routing};
+  \node[stage,right=of route] (screen) {Primary screening};
+  \node[stage,right=of screen] (refine) {Residual refinement};
+  \node[stage,right=of refine] (output) {Final top-$k$};
+  \draw[link] (route) -- (screen);
+  \draw[link] (screen) -- (refine);
+  \draw[link] (refine) -- (output);
+\end{tikzpicture}
+\caption{Formatting example: a schematic query path. Replace or extend it
+with the verified execution boundaries of the implementation.}
+\label{fig:example-pipeline}
+\end{figure}
+
+% A real PDF figure can be inserted without copying any local absolute paths:
+% \begin{figure}[tbp]
+%   \centering
+%   \includegraphics[width=\linewidth]{frontier.pdf}
+%   \caption{State version, dataset, hardware, k, batch, timing boundary,
+%     varied parameters, uncertainty, and interpolation when relevant.}
+%   \label{fig:frontier}
+% \end{figure}
+
+\section{Tables}
+\begin{table}[tbp]
+\centering
+\caption{Example manifest fields. This table contains no experimental results.}
+\label{tab:example-manifest}
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Field & What to record \\
+\midrule
+Source & Immutable commit and build configuration \\
+Index & Trained-state identity and input hashes \\
+Timing & Host-to-host or device-resident boundary \\
+Quality & Metric, ground truth, and held-out split \\
+Evidence & Raw log and analysis-script path \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Equations and Proofs}
+\begin{equation}
+ D(\alpha)=\sum_{q\in Q_s}
+  \left[k-\left|R_\alpha(q)\cap R_{\max}(q)\right|\right].
+ \label{eq:example-disagreement}
+\end{equation}
+The environments \texttt{definition}, \texttt{lemma}, \texttt{proposition},
+and \texttt{proof} are available. For example:
+\begin{definition}[Strict total ranking key]
+A ranking key specifies how to order unequal scores and how to break ties.
+\end{definition}
+% \begin{proposition}[Descriptive title]
+%   State the precise premises and claim here.
+% \end{proposition}
+% \begin{proof}
+%   Give the argument, including floating-point and tie assumptions.
+% \end{proof}
+
+\section{Pseudocode and Code}
+The table below gives a package-light pseudocode layout; replace its contents
+with the actual method and keep correctness premises in the surrounding text.
+\begin{table}[tbp]
+\centering
+\caption{Pseudocode layout example.}
+\begin{tabularx}{\linewidth}{@{}rX@{}}
+\toprule
+Line & Operation \\
+\midrule
+1 & Read the input and validate the stated preconditions. \\
+2 & Compute the intermediate result. \\
+3 & Return the output and specify its semantics. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\begin{lstlisting}[language=C++,caption={Code-listing format example.}]
+// Use only short excerpts that help explain a design.
+// Keep full implementations in the reproducibility artifact.
+void search();
+\end{lstlisting}

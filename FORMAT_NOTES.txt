@@ -1,0 +1,40 @@
+COMP8800 格式要求核对记录
+核对日期：2026-10-26（Australia/Sydney）
+
+1. 当前公开课程说明
+https://programsandcourses.anu.edu.au/2026/course/COMP4550/Second%20Semester/8720
+
+该页面明确说明覆盖 24-unit Honours thesis (COMP4550) 和 Masters thesis
+(COMP8800)。Thesis 占 90%，日期为 2026-10-30。Assessment Task 1 将详细
+指导交给 Canvas，并写明典型篇幅约 50–60 页 / 25,000–30,000 words，允许
+合理浮动。这是典型篇幅指导，不是已核实的强制最低/最高字数。
+
+Online Submission 要求电子声明，并要求通过 Turnitin 提交，除非取得例外。
+实际上传入口、截止时刻、文件命名和文件格式细则仍以个人 Canvas 任务为准。
+页面还要求适当引用生成式 AI 使用。
+
+该公开页面没有列出强制字体、字号、页边距、行距、LaTeX 文档类或特定的
+参考文献样式。不能据此推断 Canvas 没有额外要求。
+
+2. 用户本地课程资料
+~/Documents/26 s1/COMP8800/canvas/2023 CECC Hons Report writing.pdf
+~/Documents/26 s1/COMP8800/canvas/Editing your work_ 2023 cecc hons.pdf
+
+这些材料强调结构、清晰表达、引用与有效图表，未找到本届强制排版参数。
+
+~/Documents/26 s1/COMP8800/canvas/Individual Computing Projects - Supervision and Marking Guide.pdf
+
+此文件标注 2022-02-16，涉及 6/12-unit 项目及不同的评估比例。其“最好不超过
+50 页”等旧建议，不作为 2026 COMP8800 的强制规定。
+
+assessment/thesis-marking-guide.txt 是质量分档指南，不是格式规范。
+assessment/Poster Marking Rubric2.pdf 适用于 poster，不用于 thesis 排版。
+6.pdf 是用户的写作蓝图，不是学校格式要求来源。
+
+3. 模板选择（不是学校规定）
+A4 / 单面单栏 / 12pt / Latin Modern / 30mm 页边距 / 1.3 倍行距。
+前置页罗马页码、正文阿拉伯页码、附录字母编号；数字引用与 BibTeX。
+封面以课程研究论文表述，不推断学生的学位名称，也不添加官方认证标记。
+预留声明与工具使用记录，不捏造署名、核验或签署事实。
+
+该模板不是 HDR/PhD thesis 提交模板，未宣称符合 HDR 装订、PDF/A 或存档要求。

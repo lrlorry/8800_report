@@ -1,0 +1,32 @@
+% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+\chapter{Representation-Aware GPU Search Execution}
+\label{ch:gpu-execution}
+\draftnote{For each design, explain the original cost, alternatives, actual mechanism, correctness premises, resource cost, and matching controlled experiment.}
+
+\section{Query Path and Four Distinct Ranking Objects}
+\label{sec:5-1}
+\draftnote{Distinguish raw-vector, primary-score, refined-score, and deterministic ranking-key orderings. State what each stage preserves.}
+
+\section{Exact Cartesian LUT Factorisation}
+\label{sec:5-2}
+\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+
+\section{Packed Codes and Candidate-Parallel Memory Access}
+\label{sec:5-3}
+\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+
+\section{Exact Global Primary Top-c via Multi-Block Scanning}
+\label{sec:5-4}
+\draftnote{Describe candidate partitioning, exact local selection, coverage of global top-c by the local union, and merge correctness under the actual stable-position tie rule.}
+
+\section{Shared Complete-Key Thresholds and Execution Scheduling}
+\label{sec:5-5}
+\draftnote{Explain complete-score threshold publication, its safety invariant, and scheduling. Do not describe the shared bound as partial-distance early exit.}
+
+\section{Lane-Cooperative Residual Scoring and Final Top-k}
+\label{sec:5-6}
+\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+
+\section{IVF Probe Selection as an Independent Primitive}
+\label{sec:5-7}
+\draftnote{Separate selection of IVF probes from primary candidate selection. Associate each reference test with the primitive it actually checks.}

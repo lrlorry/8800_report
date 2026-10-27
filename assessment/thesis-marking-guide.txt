@@ -1,0 +1,66 @@
+Honours theses: Marking guide
+
+The following rubric for grading Honours theses is taken from the Honours Handbook of the joint Science Colleges, and has been agreed by all Honours programs in Science, including the Honours Program in Computer Science.
+
+Grading Criteria
+
+The following criteria are used to assess the quality of theses and to assign grades. The examiners will ask the supervisors to comment on whether the students have demonstrated some of these characteristics; while the judgement on other characteristics will rely purely on the thesis.
+
+Honours III 50-59:
+The student:
+has demonstrated some knowledge of the relevant background literature, but with serious gaps, and limited understanding;
+applied relevant techniques and carried out research work, but needed considerable assistance and showed limited understanding of the procedures employed;
+presented their results, though in a somewhat muddled and/or incomplete way.
+
+Honours IIB 60-69:
+The student:
+has demonstrated a reasonable knowledge of the relevant background literature, with only a few gaps, albeit in a somewhat uncritical way;
+demonstrated that they had learned many of the relevant skills (which might include laboratory techniques, computer programming and statistical analysis);
+presented their results in an appropriate format, and communicated them effectively.
+
+Honours IIA 70-79:
+The student:
+has demonstrated a thorough knowledge of the relevant background literature, though still with limited critical appreciation;
+demonstrated reasonable technical mastery of all the relevant skills;
+worked hard, efficiently and carefully;
+presented their results and/or data clearly and succinctly.
+
+Honours I 80-89:
+The student:
+has critically analysed the relevant background literature rather than merely summarising it;
+produced a thesis that demonstrates a clear appreciation of how their work fits in to the larger field of research;
+demonstrated considerable technical mastery of all the relevant skills;
+showed some appreciation of the limitations of the experimental design or techniques used and have outlined future research directions that are feasible;
+put forward their own useful and valid ideas relating to the project;
+further demonstrated the ability to see, and take, the logical next step without excessive 'prodding', the ability to act independently of the supervisor's immediate direction and presence, but the maturity to know when the supervisor's help is necessary;
+demonstrated the persistence and ability to carry on under difficulty;
+picked up new concepts and skills rapidly;
+showed the ability to work effectively in the presence of others.
+
+Honours I >90:
+As above, but in addition the student:
+obtained concepts and procedures independently and at least discussed a use for them in the study;
+demonstrated impressive technical mastery of all the relevant skills;
+demonstrated a good understanding not only of the techniques they employed, but other alternative techniques and the reasons for choosing between them;
+have outlined possible future directions which are not merely feasible but which show considerable originality;
+not only put forward useful and valid ideas relating to the project, but also demonstrated the ability to critically evaluate and act upon such ideas.
+
+Note that a student whose thesis is in the top range may well be nominated for university medal, in which case the examiners' reports form part of the supporting documentation. Hence, if you are recommending a very high mark, please phrase your comments appropriately.
+
+NOTES ON MARKING HONOURS THESES
+
+In addition to the standard criteria given above, the following notes may be helpful in giving an impression of the level expected and in calibrating against external indicators.
+
+Projects vary considerably in style, in the nature of the work involved and results expected, and in degree of intrinsic difficulty. Therefore no detailed marking scheme will fit all cases. In general, there is supposed to be research content, so for instance a project consisting only of implementation without an emphasis on evaluation or creative algorithm design would not be appropriate.
+
+Students are not admitted to the Honours program unless they have a Distinction average or close to it in their recent coursework, so if they work effectively and their project goes well, they should almost all be capable of a mark of 70, and should not get below 60 unless things go seriously wrong. It is normal that about a third of the results are in each of the three classes HD, D, CR. Marks in the P range usually indicate that the student has carried out the bare minimum of acceptable work on the project or that the thesis is poorly organised and badly written. Fail grades are unusual but they do happen where a student has not significantly advanced the project or has produced a document that does not qualify as a proper report of the research.
+
+A mark in the 60s means that the student has engaged with the project and basically carried it out as instructed, but the work is typically pedestrian, does not show deep understanding of the field beyond what was provided by the supervisor, and lacks an incisive analysis of new results.
+
+Marks in the 70s indicate that the student has mastered a topic going beyond the usual undergraduate curriculum, done creative work on it and written a competent thesis. The thesis typically shows awareness of the broader context in the sense that they can relate their project to surrounding topipcs. An upper second class honours degree from the ANU is a "good degree" in the eyes of most employers, and is the minimum requirement for admission to the PhD.
+
+What characterises a first class thesis as opposed to an upper second class one (HD as opposed to D) is the extra "spark" that comes from the student. It reads like the work of a researcher at an early career stage. Typically, the student has gone beyond the "competent" level and established results which could not have been achieved without a flair for research. By way of calibration, note that a domestic applicant with first class honours degree from the ANU would fairly automatically gain a PhD scholarship if they were to apply for one.
+
+A mark over 90 indicates exceptional work, usually of a standard publishable in a good outlet. It already reads like that of a PhD student. A student with an honours grade in the 90s is almost always recommended for a university medal. We might expect one or two of these in a typical year.
+
+While the quality of the project work and scholarship, as revealed in the thesis, is the major consideration, the document is also supposed to be well written. Lower your mark if it is not constructed in an appropriate way. Although what is "appropriate" varies a bit with the nature of the project, there should be a clear account of previous work and a critical survey of the literature. This may be a separate chapter, or it may be incorporated in the introduction, but it shoud be present. Then there needs to be a description of the problem and of the work undertaken to address it, and of course a properly presented statement and analysis of results. We are not looking for great literary style, but accuracy and clarity are needed. Writing a thesis is particularly hard for students whose first language is not English, so we try to be tolerant of some infelicities of English, but obviously the quality of writing does matter - it pushes the marks up or down at the margins.

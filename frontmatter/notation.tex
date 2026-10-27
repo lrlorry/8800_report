@@ -1,0 +1,40 @@
+\frontchapter{Notation and Abbreviations}
+\noindent
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$N,d$ & Number of database vectors and original dimension \\
+$M,D_s$ & Number of primary subspaces and dimensions per subspace \\
+$k$ & Number of returned neighbours \\
+$n_c,c$ & Routed candidates and primary survivors receiving refinement \\
+$\alpha$ & Refinement multiplier, with $c=\max\{k,\lceil\alpha k\rceil\}$ \\
+$S,\epsilon$ & Calibration sample size and allowed disagreeing result slots \\
+$\glut$ & Number of groups in a factorised lookup table \\
+$\gscan$ & Number of scan groups per query \\
+$\lrefine$ & Number of cooperating lanes per refined candidate \\
+$\rawdist$ & Squared distance between original vectors \\
+$\primarydist$ & Distance under the primary reconstruction \\
+$\refineddist$ & Distance under the hierarchical reconstruction \\
+\bottomrule
+\end{tabularx}
+
+\bigskip
+\noindent
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Abbreviation & Meaning \\
+\midrule
+ANN & Approximate nearest neighbour \\
+ADC & Asymmetric distance computation (distinct from the ADC conference) \\
+IVF & Inverted file \\
+JHQ & Johnson--Lindenstrauss enhanced hierarchical quantisation \\
+LUT & Lookup table \\
+PQ & Product quantisation \\
+QPS & Queries per second \\
+GT & Ground truth \\
+\bottomrule
+\end{tabularx}
+\draftnote{Check every definition against the final implementation and remove
+symbols that are not used. Keep code parameter names distinct from mathematical
+notation, especially the multiple uses of G and B.}
