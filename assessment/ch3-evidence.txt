@@ -1,0 +1,61 @@
+Chapter 3 完成与证据说明（2026-10-28）
+====================================
+按6.pdf的六节方法章骨架撰写英文正文并同步中文。章节负责比较设计与审计，
+实际速度／recall结果保留第7章；不伪造预注册、独立训练次数或GPU新实验。
+
+骨架交付
+--------
+3.1：四个RQ的干预、对照、固定变量、指标及可能反证矩阵。
+3.2：六数据集N/d/nq/nlist/训练请求表、E1四数据集范围、GT集合口径、
+     数据准备源码的归一化／seed、预算奇偶划分；记录Stella 999/499。
+3.3：主机到主机边界图、按轮总时间定义QPS、调用与查询延迟的区分、
+     warm-up与重复、环境／功率记录、显存定义及未测峰值。
+3.4：基线调参维度、Pareto定义、实测阈值与log-QPS插值、5e-4容差、
+     覆盖与有效慢调用、隔离重跑和跳过记录的处理。
+3.5：主张到证据schema，机器registry关联各实验族audit及论文目标；
+     明示binary/index/vector fingerprint缺失，不以当前checkout替代历史运行。
+3.6：六类证据及可支持的结论；单卡／batch、有限池、共享索引和并列的范围。
+
+使用材料
+--------
+骨架：6.pdf；评分：assessment/thesis-marking-guide.txt。
+ADC稿：JHQ_GPU/paper_adc2026/ADC/Experiment_ADC.tex和reference.bib。
+注意paper_adc2026根目录Experiment.tex属于另一个filtered-ANN稿件，未混用。
+海报：~/Documents/26 s1/COMP8800/my poster/poster.pdf。
+海报用于机制关系／历史展示的对照，不直接放大其summary结论；论文保留int8基线。
+图：已有第7章frontiers/LUT/memory继续使用原始重算产物，方法章交叉引用；
+    新增可编辑TikZ计时图，双语各一份，不把示意图标成实测时间。
+源码：E1 run_e1/bench_cuvs/bench_rabitq/analyze，budget与LUT campaign，
+      common/recall、batch与budget harness、两个preparation源。
+原始记录：E1 RAW_RESULTS的JSON/JSONL及环境，v69 budget日志。
+详细配对和构建证据复用data/ch4、ch6、ch7各自audit。
+
+核对重点
+--------
+GT行宽100或20，实际评分深度10且去重，不沿用pre-v15错误口径。
+E1全部1000查询；预算500/500，Stella500/499；LUT/规模Stella使用999。
+CUDA toolkit为nvcc记录13.0；nvidia-smi显示的driver兼容版本13.2不替代toolkit。
+575W为E1环境记录的功率上限，不是持续实测功耗或锁频保证。
+归一化／seed／GT生成是准备源码检查，不声称完整历史数据字节已校验。
+FULL未纳入2304次抽样枚举；十个FULL G=0单元的理论覆盖缺口继续保留。
+现有缺失实验清单不因撰写方法章而被标成完成。
+
+离线复查入口
+------------
+python3 scripts/audit_ch3.py
+生成data/ch3/audit.json与tables/ch3/datasets.tex。
+检查12个budget cell的数据一致性、训练请求39*nlist、E1同数据GT/k/batch、
+重算有效baseline逐调用轨迹与五轮QPS摘要，并记录输入SHA-256。
+这些是历史记录／协议检查，不是新GPU测量。
+
+完成验证
+--------
+中英文各六节、五张方法表和一张可编辑计时图；第7章重复的环境／
+计时／recall定义改为引用第3章，原结果数字未改。
+离线核对：六数据集、1590个E1有效点，其中1458个baseline点的逐调用
+轨迹重算通过；机器registry含11项实验主张／机制的audit映射。
+make pdf与make pdf-zh通过；最终英文124页、中文103页（均为整篇）。
+最终日志没有未定义引用、缺字或Overfull/Underfull警告。
+抽查两版新增图表与公式；表图保留在首次引用之后，避免浮到小节标题前。
+双语label／reference／citation对应一致；未保留第3章写作占位符。
+新增输入哈希与已有第4／6／7章相关ledger已刷新，不代表缺失GPU验证已补齐。

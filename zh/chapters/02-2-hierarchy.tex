@@ -1,0 +1,41 @@
+IVF围绕粗质心分区，列表保存归属于各质心的向量。
+查询选$n_{\rm probe}$个列表，得到含$n_c$个候选的路由全集$U(q)$。
+少访问列表可以省工，却可能在精细评分前排除真近邻。
+质心用于路由，其距离选择与选择数据库向量是两个不同问题。
+
+PQ把向量分成$M$个坐标子空间，每个子空间用小型学习码本的标签表示\cite{pq}。
+若$\widehat x_m=\mathcal C_m[z_m]$，ADC保持查询不量化，计算
+\begin{equation}
+ \|q-\widehat x\|^2=\sum_{m=0}^{M-1}\|q_m-\mathcal C_m[z_m]\|^2.
+ \label{eq:2-adc}
+\end{equation}
+查询表预计算子空间距离，扫描执行code load、查表与累加。
+乘积存在于子空间之间，学习子码本\emph{内部}的质心未必还有坐标乘积。
+这决定第5章的精确内部拆表是否成立。
+
+这里的“残差”有两种含义。IVF-PQ常编码$x-\mu_{\ell(x)}$，粗质心参与重建；
+JHQ用IVF路由，却相对旋转后的primary量化重建定义残差。
+两者依赖不同；给JHQ残差重建再加IVF质心，会加入编码器未减去的量。
+原PQ/ADC框架及GPU实现也支持扩大候选后进行更精确的refinement
+\cite{johnson_gpu,faiss_refine}。
+
+在至少有$k$个有效路由候选的分析范围内，JHQ保留有效primary集合$C_\alpha(q)$，容量上限
+$c(\alpha)=\max\{k,\lceil\alpha k\rceil\}$，精排返回$\mathcal R_\alpha(q)$：
+\begin{equation}
+ \mathcal R_\alpha(q)\subseteq C_\alpha(q)\subseteq U(q)\subseteq\mathcal X.
+ \label{eq:2-cascade}
+\end{equation}
+与GT求交得到各阶段覆盖对最终recall的上界，却不能定量归因各阶段损失；
+后者需要固定候选全集的反事实评分。精排可以改善保留向量之间的次序，无法恢复被排除ID。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}{候选与精度级联。IVF选列表，primary选向量，只有survivor读残差。
+层次结构是继承的；图定义逻辑集合与评分精度，不表示实测recall损失或GPU内核边界。}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+忽略路由与选择，广泛查表评分需要$O(n_cM)$次lookup，残差精排需要$O(cd)$坐标工作。
+这一不对称推动选择性精度，却不能预测延迟，还必须考虑内存、算术、并行及候选选择。
+增加probe改变$U$，增加$\alpha$改变该全集内的survivor；把二者都称搜索深度会掩盖差异。

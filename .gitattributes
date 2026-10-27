@@ -1,0 +1,4 @@
+# Keep the hashed evidence bundle byte-for-byte, including original whitespace.
+evidence/** -text -whitespace
+# csv.writer uses CRLF in the generated numeric export.
+data/supplement/risk-prediction.csv whitespace=cr-at-eol

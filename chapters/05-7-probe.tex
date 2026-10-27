@@ -1,6 +1,6 @@
 Probe selection precedes primary scanning and selects inverted lists,
 not database-vector survivors. For IVF centroid $\mu_i$, the selector
-orders the computed FP32 routing scores
+orders the FP32-valued computed routing scores
 \begin{equation}
  s_i=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
  \qquad (s_i,i)\ \text{ordered lexicographically}.
@@ -8,14 +8,20 @@ orders the computed FP32 routing scores
 \end{equation}
 Omitting the common query norm preserves centroid ordering. In contrast
 to primary squared-distance tables, these scores can be negative. The
-required output is the first $P=\min(n_{\rm probe},n_{\rm list})$
+required output is the first $n_{\rm sel}=\min(n_{\rm probe},n_{\rm list})$
 centroid IDs in score order, using the smaller list ID at a tie, plus
 the prefix offsets of their list lengths.
 
+The dot products inherit the cuBLAS math mode: in the measured v69,
+OpenAI rotation and centroid GEMMs use TF32 inputs with FP32 accumulation.
+The selector's exactness concerns these computed scores. Its subsequent
+FP32 \texttt{fma} and deterministic key ordering do not recover rounding
+already introduced by the GEMM (\cref{sec:7-precision}).
+
 \subsection{Radix selection followed by deterministic ordering}
 
-The v65 selector repeatedly bitonic-sorted a growing candidate buffer.
-The v69 replacement keeps one block per query but finds the cutoff by
+The earlier bitonic selector repeatedly bitonic-sorted a growing candidate buffer.
+The radix replacement keeps one block per query but finds the cutoff by
 four most-significant-byte-first radix passes. Each pass counts only
 keys matching the prefix selected so far, then locates the bin containing
 the remaining order statistic. After four passes it has the cutoff key
@@ -47,7 +53,7 @@ Collection first gathers every key below the cutoff. If too many keys
 equal the cutoff, an ordered rescan uses ballots and prefix counts to
 take exactly the required number in increasing list-ID order. Atomic
 arrival order therefore does not choose the final tied subset.
-For each of the $P$ selected entries, a rank-count step counts how many
+For each of the $n_{\rm sel}$ selected entries, a rank-count step counts how many
 selected keys precede it under $(s_i,i)$ and writes it to that rank.
 This restores deterministic sorted order without sorting all centroids.
 
@@ -61,30 +67,15 @@ are assumed.
 \subsection{Costs and separate correctness contracts}
 
 The histogram passes and collection revisit the centroid-score row;
-rank counting costs $O(P^2)$ comparisons. The algorithm is consequently
+rank counting costs $O(n_{\rm sel}^2)$ comparisons. The algorithm is consequently
 not a uniformly linear-cost substitute for every probe count. Large
-$P$ increases both ranking work and selected-entry shared storage,
+$n_{\rm sel}$ increases both ranking work and selected-entry shared storage,
 while the histogram reserves space even for small centroid sets.
 Radix selection is an established selection technique; the contribution
 here is its deterministic integration and measured execution trade-off
 for this query pipeline.
 
-\begin{table}[tbp]
-\centering
-\caption{Selection stages have different objects, tie rules and reference
-checks. Evidence for one stage cannot establish another's correctness.}
-\label{tab:5-selection-contracts}
-\small\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
-\toprule
-Stage & Ordering object & Tie key & Relevant evidence \\
-\midrule
-Probe & Centroid routing score & List ID & Synthetic IDs, offsets and totals; real-input dumps \\
-Primary & Visited-candidate primary score & Physical position in grouped path & Local/merge proof; independent/shared checks \\
-Final & Refined survivor score & Database ID & Full-$c$ selection code; residual/output comparisons \\
-\bottomrule
-\end{tabularx}
-\end{table}
+
 
 The archived probe checker reports 1,792 cases with zero differences
 against the earlier selector in IDs, offsets and total candidate counts.
@@ -97,6 +88,6 @@ top-$c$ or of exact nearest neighbours.
 \Cref{sec:7-4} gives the real-query identity checks, stage timings and
 end-to-end comparison. It also retains the Vogue cross-process anomaly:
 matching probe/primary dumps do not imply identical final pipeline
-outputs. The optional v70 FP16 routing changes score precision and is
+outputs. The optional FP16 routing changes score precision and is
 a separate approximation; high probe overlap or unchanged recall does
-not make it part of the FP32 equivalence claim.
+not make it part of the computed-score equivalence claim.

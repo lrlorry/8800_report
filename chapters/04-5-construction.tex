@@ -1,0 +1,125 @@
+\subsection{Bounded input batches and two-pass construction}
+
+Rotating all $N$ raw vectors at once requires two FP32 device arrays,
+together $8Nd$ bytes. The builder instead stages bounded batches through
+pinned host memory and device raw/rotated buffers. For $n_b$ pipeline
+buffers and at most $a_b$ rows each, those two device arrays occupy
+$8n_ba_bd$ bytes. With the source defaults of three buffers and a
+128\,MiB limit per float array, this component is at most 768\,MiB.
+Assignment products and primary-encoder scratch are additional: the
+staging bound alone is not a bound on all pipeline memory.
+
+The one-pass path encodes input-order primary/residual arrays, then
+gathers them into list order. Its temporary and final compressed copies
+coexist. When the capacity rule predicts insufficient memory, two-pass
+construction first assigns lists, sorts IDs and builds offsets, then
+revisits the input to rotate, encode and scatter directly into final
+positions. This trades another input pass and rotation for fewer
+simultaneous compressed copies. In the two-pass path, default assignment
+can compare raw inputs with back-transformed centroids; orthogonality
+establishes the corresponding real-arithmetic identity.
+
+\subsection{Phase occupancy and the process peak}
+
+The source's one-pass branch estimate is
+\begin{equation}
+ H_{\rm single}=N(2b_r+3M+20)+2^{30}\quad\text{bytes}.
+ \label{eq:4-peak-heuristic}
+\end{equation}
+Its $N$-dependent term is the exact payload of ten arrays simultaneously
+live during gather/transpose: input-order primary, residual and
+correction; assignments and sort order; final IDs, residual and correction;
+and vector-major and subspace-major primary copies. These sum to
+$3NM+2Nb_r+20N$ bytes. The extra 1\,GiB is an allowance used by a
+capacity heuristic, not an exact accounting of all other allocations.
+
+In two-pass construction, the final repack simultaneously holds IDs,
+residuals, corrections and old/new primary arrays:
+\begin{equation}
+ S_{\rm repack,2}=N(b_r+2M+8).
+ \label{eq:4-two-pass-repack}
+\end{equation}
+This is exact for those arrays at that phase. Earlier phases also hold
+pipeline scratch and, during scatter, a temporary inverse permutation.
+Consequently the repack expression is not by itself the total peak of
+the two-pass builder. Model arrays, sort/allocator scratch, runtime
+context and the later workspace allocation must be included when taking
+the maximum over the whole lifecycle.
+
+\begin{table}[tbp]
+\centering
+\caption{Analytical row-array occupancy (GiB), $d=1{,}024$, $M=128$,
+$B_r=8$. BGE uses one pass; Stella uses two. The one-pass Stella column
+is counterfactual capacity analysis. Pipeline, model, offsets and runtime
+costs are excluded from these phase values.}
+\label{tab:4-phase-storage}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Dataset & Final row payload & One-pass gather & Two-pass repack \\
+\midrule
+BGE & 10.90 & 23.05 & 12.11 \\
+Stella & 19.20 & 40.59 & 21.32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:4-phase-storage} quantifies the compressed-copy saving. Stella's
+cold log selects two passes and prints 41.6\,GiB for
+\cref{eq:4-peak-heuristic}, against 30.6\,GiB available at the tail.
+The separately sampled resident process totals, including context and
+query workspace, are 11.93\,GiB for BGE and 20.44\,GiB for Stella.
+Search working sets depend on batch/probe/candidate capacity as described
+in \cref{sec:4-4}. Thus static rows, construction phases and searchable
+resident memory have explicit, different accounting boundaries. The supplementary 20\,ms device samples observe a 26.08\,GiB BGE peak
+near the start of add, and a 22.58\,GiB Stella peak during repack.
+These are sampled device totals including context; shorter-lived peaks
+can be missed.
+
+The early add phase has a previously omitted assignment-product term:
+\begin{equation}
+ S_{\rm dots}=4n_b n_{\rm list}a_b\quad\text{bytes}.
+ \label{eq:4-assignment-scratch}
+\end{equation}
+For three buffers, 32,768 lists and 32,768 rows per buffer, this is
+three 4\,GiB buffers, or 12\,GiB in total. This allocation coexists with
+other pipeline and database arrays near add entry. The 23.05\,GiB gather
+payload describes a later lifetime: adding 12\,GiB to it would not give
+the actual peak. Peak modelling must take the maximum over stage-specific
+live arrays, including pipeline scratch. Stella's smaller two-pass
+repack payload, plus model/context, explains its lower observed peak
+despite its larger database.
+
+\subsection{What the completed measurements establish}
+
+\Cref{tab:7-build-memory,tab:7-build-repeat,fig:7-build} incorporate the
+supplementary empty-cache builds: three normal runs with warm input pages,
+one first-read run and one synchronised phase diagnostic per dataset.
+Normal train+add ranges are 0.558--0.566\,s for Vogue and
+10.543--10.653\,s for Stella. Vogue's archived 1.056\,s training time
+does not reproduce; the three normal repetitions take 298--303\,ms.
+The phase diagnostic forces synchronisation and one pipeline buffer, so
+its totals are kept outside the normal timing range.
+
+Train+add starts after construction and sample preparation. Timestamped
+process-start-to-add-completion observations additionally include file
+opening, host QR and library setup: 18.2--18.6\,s for Stella with warm
+input pages, versus 129.9\,s on this session's first read. The boundary
+ends before schedule calibration and the first search. It is not a
+universal disk-cold latency. Six fixed operating points over five builds
+have recall ranges no wider than 0.0012; entire retrained frontiers were
+not repeated.
+
+Successful isolated Stella CAGRA int8 builds take 74.55 and 82.45\,s,
+including dataset quantisation, at graph degrees 32 and 64. The repeated
+JHQ construction intervals are shorter under their respective boundaries;
+complete deployment latency also depends on preparation, calibration and
+serialization requirements.
+
+The completed large searches contain 10,091,524 BGE and 17,776,615 Stella
+vectors. Their raw FP32 arrays alone require 38.50 and 67.81\,GiB.
+JHQ and successful CAGRA int8 builds both establish single-device
+feasibility for the tested Stella workload. The useful deployment
+comparison combines quality, query cost, rebuild frequency and available
+memory, as evaluated in \cref{sec:7-7}; the ability to fit is shared by
+multiple compressed designs.

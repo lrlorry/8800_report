@@ -8,7 +8,7 @@ primary code contiguously.
 \subsection{Address mapping and four-byte packing}
 
 Let $o_\ell$ be the start of inverted list $\ell$, $r$ the row within
-that list and $p=o_\ell+r$ its physical position. If $P[m,p]$ denotes
+that list and $p=o_\ell+r$ its physical position. If $Z[m,p]$ denotes
 the eight-bit code for primary subspace $m$, the byte-oriented scan copy
 stores it at byte offset $mN+p$. Candidate-major storage would instead
 use $pM+m$. When lanes visit consecutive positions within a list, the
@@ -19,12 +19,12 @@ transaction for every warp.
 The packed representation combines four subspace codes of the same
 candidate into one unsigned word:
 \begin{equation}
- W[j,p]=\sum_{t=0}^{3}2^{8t}P[4j+t,p],\qquad
- \operatorname{offset}_{\rm bytes}(W[j,p])=4(jN+p).
+ \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
  \label{eq:5-packed-layout}
 \end{equation}
 The four codes are recovered exactly by
-$(W[j,p]\gg(8t))\mathbin{\&}255$. Each recovered code then supplies the
+$(\mathsf{w}[j,p]\gg(8t))\mathbin{\&}255$. Each recovered code then supplies the
 high and low nibble indices in \cref{eq:5-lut-factorisation}. Packing
 four subspaces is distinct from Cartesian splitting of one subspace's
 eight-bit label, and from packing codes for four different candidates.

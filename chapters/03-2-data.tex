@@ -1,0 +1,62 @@
+\Cref{tab:3-data} records the six exported datasets used by the newer
+budget, LUT and scale campaigns. The poster's E1 comparison uses the first
+four. Vogue contains fashion-image embeddings; arXiv contains abstract
+embeddings; the two OpenAI datasets use Qdrant's DBpedia exports
+\cite{data_vogue,data_arxiv,data_openai1536,data_openai3072}.
+BGE uses the Italian Wikipedia configuration, and Stella uses the
+TREC24 BioGen corpus export \cite{data_bge,data_stella}. Sizes describe the
+measured exports after preparation, rather than the current upstream cards.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Data and JHQ training manifest. $n_q$ is the actual query count;
+$n_t=39n_{\rm list}$ is the requested coarse-training sample size. E1 uses
+the first four rows. All rows use squared L2 and $k=10$.}
+\label{tab:3-data}
+\small\setlength{\tabcolsep}{4pt}
+\input{tables/ch3/datasets}
+\end{minipage}\par\medskip
+
+The preparation sources specify L2 normalisation and seeded query removal
+from the database. The streamed OpenAI/BGE/Stella converter first removes
+non-finite rows, normalises vectors with norm above $10^{-12}$, and uses
+seed 42 to choose query positions without replacement. Stella queries are
+sampled from its corpus, rather than its separate 65-query benchmark split.
+Its shortened export supplies 999 queries. These are vector-neighbour
+workloads; relevance-labelled retrieval is outside the measurement.
+The two OpenAI exports use the same positional sampling rule.
+Supplementary vector checks support row alignment for all queries and a
+10,299-row base sample; original source-ID joins remain absent
+(\cref{sec:7-precision,sec:7-2}).
+
+All methods in a cell read the same query and GT files. Ground truth is
+computed by exhaustive squared-L2 search over exported FP32 vectors; the
+streamed converter maintains top-$k$ across database tiles. Evaluation uses
+stored GT order, including its floating-point tie choices. With
+$\mathcal T_k(q)$ the first $k$ GT IDs and $\mathcal R_k(q)$ the returned
+ID set,
+\begin{equation}
+\Recall@k=\frac{1}{|\mathcal Q|k}
+\sum_{q\in\mathcal Q}|\mathcal R_k(q)\cap\mathcal T_k(q)|.
+\label{eq:3-recall}
+\end{equation}
+GT rows are 100 wide for Vogue/arXiv and 20 wide for the other four;
+only ten entries are scored. Duplicate returned IDs do not earn repeated
+credit. Range, duplicate and repeat-call checks are recorded separately.
+
+JHQ uses $M=d/8$, $B=B_r=8$, eight coarse iterations and a requested
+100,000-vector residual-training sample. Search sweeps reuse the
+\texttt{arms6\_cache} trained states and re-encode the database; cold builds
+start without that state. The code requests training from database samples,
+separately from calibration queries. For budget evaluation, even query
+positions form a 500-query calibration pool and odd positions form a
+500-query held-out pool, or 499 for Stella. Seeded subsamples of sizes
+32, 64 and 128 are drawn 64 times per cell; FULL uses all 500 calibration
+queries. GT labels enter the offline oracle and held-out assessment, while
+the deployable agreement rule uses search outputs
+(\cref{sec:6-2,sec:a-budget-contract}).
+
+Preparation code and shape logs establish this protocol; complete historical
+vector-file and trained-state hashes are unavailable. The ledger preserves
+that distinction between an inspected preparation procedure and an
+immutable identity of every run's data.

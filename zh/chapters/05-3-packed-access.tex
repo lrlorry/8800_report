@@ -2,15 +2,15 @@ LUT 分解减少每查询的查找表；编码布局决定各 lane 如何取得�
 
 \subsection{地址映射与四字节打包}
 
-令 $o_\ell$ 为倒排列表 $\ell$ 的起点，$r$ 为列表内行号，$p=o_\ell+r$ 为物理位置。若 $P[m,p]$ 表示主码子空间 $m$ 的八比特编码，逐字节扫描副本将其存于字节偏移 $mN+p$，而候选优先布局使用 $pM+m$。当各 lane 访问同一列表内连续位置时，前者使固定 $m$ 的访问相邻。跨列表边界时，位置可能跳跃，因此不保证每个 warp 都对应一次连续事务。
+令 $o_\ell$ 为倒排列表 $\ell$ 的起点，$r$ 为列表内行号，$p=o_\ell+r$ 为物理位置。若 $Z[m,p]$ 表示主码子空间 $m$ 的八比特编码，逐字节扫描副本将其存于字节偏移 $mN+p$，而候选优先布局使用 $pM+m$。当各 lane 访问同一列表内连续位置时，前者使固定 $m$ 的访问相邻。跨列表边界时，位置可能跳跃，因此不保证每个 warp 都对应一次连续事务。
 
 打包表示将同一候选的四个子空间编码组成一个无符号字：
 \begin{equation}
- W[j,p]=\sum_{t=0}^{3}2^{8t}P[4j+t,p],\qquad
- \operatorname{offset}_{\rm bytes}(W[j,p])=4(jN+p).
+ \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
  \label{eq:5-packed-layout}
 \end{equation}
-通过 $(W[j,p]\gg(8t))\mathbin{\&}255$ 精确恢复四个编码。每个编码再提供\cref{eq:5-lut-factorisation}中的高、低半字节索引。打包四个子空间，与拆分一个子空间的八比特标签不同，也不等于打包四个候选的编码。
+通过 $(\mathsf{w}[j,p]\gg(8t))\mathbin{\&}255$ 精确恢复四个编码。每个编码再提供\cref{eq:5-lut-factorisation}中的高、低半字节索引。打包四个子空间，与拆分一个子空间的八比特标签不同，也不等于打包四个候选的编码。
 
 \begin{figure}[tbp]
 \centering

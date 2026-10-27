@@ -1,0 +1,30 @@
+% Audited lifecycle; no proposed storage or distributed subsystem.
+\begin{tikzpicture}[
+ font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+   text width=3.65cm,minimum height=1.9cm,inner sep=5pt},
+ gpu/.style={box,fill=ThesisNavy!7},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (host) at (0,0) {Host input vectors\\Training samples\\Database batches};
+\node[box] (model) at (4.8,0) {Host model\\QR rotation $\Pi$\\Primary codebook};
+\node[box] (cache) at (9.6,0) {Host model cache\\$\Pi$ and codebooks\\IVF centroids};
+\node[gpu] (train) at (0,-3.6) {GPU training\\Rotate samples\\Fit IVF centroids\\Fit residual model};
+\node[gpu] (add) at (4.8,-3.6) {GPU bulk build\\1 or 2 passes\\Assign / encode\\Reorder / pack\\Floats $\leq768$ MiB};
+\node[gpu] (index) at (9.6,-3.6) {GPU-resident index\\Offsets and IDs\\Primary / residual codes\\Corrections};
+\node[box] (query) at (0,-7.2) {Host query batch\\Pinned staging\\Transfer to GPU};
+\node[gpu] (search) at (4.8,-7.2) {GPU query pipeline\\Rotate; probe; scan\\Refine; final top-$k$\\Workspace / graph};
+\node[box] (result) at (9.6,-7.2) {Host query results\\IDs and scores\\Transfer from GPU};
+\draw[arr] (host) -- node[left,font=\footnotesize] {samples} (train);
+\draw[arr] (model.south west) -- (train.north east);
+\draw[arr] (train) -- node[above,font=\footnotesize] {model} (add);
+\draw[arr] (host.west) -- ++(-.5,0) |- (4.8,-5.15)
+ node[pos=.8,below,font=\footnotesize] {database batches} -- (add.south);
+\draw[arr] (model) -- (add);
+\draw[arr] (add) -- (index);
+\draw[<->,dashed,draw=ThesisNavy!80,thick]
+ (train.north east) -- node[pos=.8,above,sloped,font=\footnotesize,fill=white,inner sep=1pt]
+ {save / load model} (cache.south west);
+\draw[arr] (query) -- (search);
+\draw[arr] (search) -- (result);
+\draw[arr] (index.south) -- ++(0,-.6) -| (search.north);
+\end{tikzpicture}

@@ -1,5 +1,5 @@
 {
-  "source_snapshot": "218fd2ed9110722a18bad841941e683fd0c1eda5",
+  "source_snapshot": "ea11af758729621b376ef41d225a102e702b4742",
   "e1": {
     "points": 1590,
     "failures": 0,
@@ -32,6 +32,10 @@
           2.888671875,
           2.91015625
         ],
+        "cagra_int8_index_gib": [
+          0.888671875,
+          0.908203125
+        ],
         "ratio": [
           0.3080536912751678,
           0.3482082488167681
@@ -46,6 +50,10 @@
         "cagra_index_gib": [
           6.84375,
           6.98046875
+        ],
+        "cagra_int8_index_gib": [
+          2.0078125,
+          2.146484375
         ],
         "ratio": [
           0.2881925013989927,
@@ -62,6 +70,10 @@
           5.953125,
           5.966796875
         ],
+        "cagra_int8_index_gib": [
+          1.666015625,
+          1.677734375
+        ],
         "ratio": [
           0.3008183306055646,
           0.390748031496063
@@ -76,6 +88,10 @@
         "cagra_index_gib": [
           11.669921875,
           11.68359375
+        ],
+        "cagra_int8_index_gib": [
+          3.095703125,
+          3.107421875
         ],
         "ratio": [
           0.30341023069207623,
@@ -3364,6 +3380,174 @@
       404.31446987903144
     ]
   },
+  "full_pool": {
+    "rows": [
+      {
+        "dataset": "vogue-768",
+        "nprobe": 128,
+        "alpha": 100,
+        "loss": 0.0,
+        "qps": 202941,
+        "cal_ms": 10.1,
+        "gain100": 1.0,
+        "gain64": 0.9083670153482564,
+        "oracle_fraction": 0.9083670153482564,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "arxiv-768",
+        "nprobe": 128,
+        "alpha": 200,
+        "loss": 0.0,
+        "qps": 151462,
+        "cal_ms": 10.0,
+        "gain100": 0.7284803886203497,
+        "gain64": 0.6587767600059152,
+        "oracle_fraction": 1.0,
+        "test_n": 500,
+        "fixed100_qualifies": false
+      },
+      {
+        "dataset": "openai3-1536",
+        "nprobe": 128,
+        "alpha": 8,
+        "loss": 0.0,
+        "qps": 267690,
+        "cal_ms": 9.5,
+        "gain100": 1.5986169088270599,
+        "gain64": 1.3624148776987204,
+        "oracle_fraction": 1.0,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "openai3-3072",
+        "nprobe": 128,
+        "alpha": 4,
+        "loss": 0.0,
+        "qps": 144988,
+        "cal_ms": 17.1,
+        "gain100": 1.6911179798215432,
+        "gain64": 1.229597591485392,
+        "oracle_fraction": 1.0,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "bge-m3",
+        "nprobe": 128,
+        "alpha": 64,
+        "loss": 0.0005999999999999339,
+        "qps": 124900,
+        "cal_ms": 17.1,
+        "gain100": 1.0751669995179396,
+        "gain64": 1.0,
+        "oracle_fraction": 0.932061729500612,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "stella",
+        "nprobe": 128,
+        "alpha": 16,
+        "loss": 0.0005999999999999339,
+        "qps": 110352,
+        "cal_ms": 20.6,
+        "gain100": 1.1531877984805576,
+        "gain64": 1.086612312418764,
+        "oracle_fraction": 1.0,
+        "test_n": 499,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "vogue-768",
+        "nprobe": 512,
+        "alpha": 100,
+        "loss": 0.00019999999999997797,
+        "qps": 100104,
+        "cal_ms": 20.9,
+        "gain100": 1.0,
+        "gain64": 0.968929670712585,
+        "oracle_fraction": 0.968929670712585,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "arxiv-768",
+        "nprobe": 512,
+        "alpha": 200,
+        "loss": 0.0,
+        "qps": 69011,
+        "cal_ms": 25.1,
+        "gain100": 0.8307371918335902,
+        "gain64": 0.788057690331274,
+        "oracle_fraction": 1.0,
+        "test_n": 500,
+        "fixed100_qualifies": false
+      },
+      {
+        "dataset": "openai3-1536",
+        "nprobe": 512,
+        "alpha": 8,
+        "loss": 0.0,
+        "qps": 114923,
+        "cal_ms": 21.8,
+        "gain100": 1.32633559153808,
+        "gain64": 1.2670951950428897,
+        "oracle_fraction": 1.0,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "openai3-3072",
+        "nprobe": 512,
+        "alpha": 4,
+        "loss": 0.000200000000000089,
+        "qps": 52123,
+        "cal_ms": 40.5,
+        "gain100": 1.218766806182337,
+        "gain64": 1.0521184473466423,
+        "oracle_fraction": 0.9767995352410936,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "bge-m3",
+        "nprobe": 512,
+        "alpha": 64,
+        "loss": 0.0005999999999999339,
+        "qps": 50787,
+        "cal_ms": 42.3,
+        "gain100": 1.0330960130187143,
+        "gain64": 1.0,
+        "oracle_fraction": 1.0,
+        "test_n": 500,
+        "fixed100_qualifies": true
+      },
+      {
+        "dataset": "stella",
+        "nprobe": 512,
+        "alpha": 16,
+        "loss": 0.0005999999999999339,
+        "qps": 36014,
+        "cal_ms": 60.3,
+        "gain100": 1.0414389404586333,
+        "gain64": 1.0275915199589123,
+        "oracle_fraction": 1.0,
+        "test_n": 499,
+        "fixed100_qualifies": true
+      }
+    ],
+    "qualified": 12,
+    "max_loss": 0.0005999999999999339,
+    "gmean_vs100": 1.1107773812695607,
+    "gmean_vs100_qualified_control": 1.192790801509724,
+    "cal_ms_range": [
+      9.5,
+      60.3
+    ]
+  },
   "historical_budget": {
     "version": "v57",
     "wins": 10,
@@ -6221,45 +6405,143 @@
       "dataset": "vogue-768",
       "method": "JHQ-GPU",
       "seconds": [
-        1.3277
+        0.5662999999999999,
+        0.5589000000000001,
+        0.5582999999999999
       ]
     },
     {
       "dataset": "arxiv-768",
       "method": "JHQ-GPU",
       "seconds": [
-        1.103
+        0.9841,
+        0.9852000000000001,
+        0.987
       ]
     },
     {
       "dataset": "openai3-1536",
       "method": "JHQ-GPU",
       "seconds": [
-        1.0116
+        0.9957999999999999,
+        0.9962000000000001,
+        0.986
       ]
     },
     {
       "dataset": "openai3-3072",
       "method": "JHQ-GPU",
       "seconds": [
-        1.9922
+        1.8298,
+        1.8209000000000002,
+        1.8091000000000002
       ]
     },
     {
       "dataset": "bge-m3",
       "method": "JHQ-GPU",
       "seconds": [
-        7.4241
+        7.2031,
+        7.3406,
+        7.171799999999999
       ]
     },
     {
       "dataset": "stella",
       "method": "JHQ-GPU",
       "seconds": [
-        10.4028
+        10.652899999999999,
+        10.5519,
+        10.5432
       ]
     }
   ],
+  "repeated_builds": {
+    "vogue-768": [
+      {
+        "train_ms": 302.7,
+        "add_ms": 263.6
+      },
+      {
+        "train_ms": 298.8,
+        "add_ms": 260.1
+      },
+      {
+        "train_ms": 298.3,
+        "add_ms": 260.0
+      }
+    ],
+    "arxiv-768": [
+      {
+        "train_ms": 481.1,
+        "add_ms": 503.0
+      },
+      {
+        "train_ms": 478.9,
+        "add_ms": 506.3
+      },
+      {
+        "train_ms": 475.0,
+        "add_ms": 512.0
+      }
+    ],
+    "openai3-1536": [
+      {
+        "train_ms": 605.6,
+        "add_ms": 390.2
+      },
+      {
+        "train_ms": 613.0,
+        "add_ms": 383.2
+      },
+      {
+        "train_ms": 605.9,
+        "add_ms": 380.1
+      }
+    ],
+    "openai3-3072": [
+      {
+        "train_ms": 1161.4,
+        "add_ms": 668.4
+      },
+      {
+        "train_ms": 1162.3,
+        "add_ms": 658.6
+      },
+      {
+        "train_ms": 1136.9,
+        "add_ms": 672.2
+      }
+    ],
+    "bge-m3": [
+      {
+        "train_ms": 3557.1,
+        "add_ms": 3646.0
+      },
+      {
+        "train_ms": 3692.7,
+        "add_ms": 3647.9
+      },
+      {
+        "train_ms": 3527.6,
+        "add_ms": 3644.2
+      }
+    ],
+    "stella": [
+      {
+        "train_ms": 3543.1,
+        "add_ms": 7109.8
+      },
+      {
+        "train_ms": 3563.2,
+        "add_ms": 6988.7
+      },
+      {
+        "train_ms": 3553.8,
+        "add_ms": 6989.4
+      }
+    ]
+  },
   "archived_figure_sources": [
     "fig_lutgroups_v69",
     "fig_budget_risk_v69",

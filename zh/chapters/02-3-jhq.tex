@@ -1,0 +1,56 @@
+\subsection{继承部分}
+JHQ结合正交变换、解析Cartesian主码和较高精度残差层\cite{jhq}。
+本文变换为平方矩阵：$\Pi\in\mathbb R^{d\times d}$，$\Pi^\top\Pi=I$，
+$y=\Pi x$、$q'=\Pi q$，因此
+\begin{equation}
+ \|q-x\|^2=\|\Pi(q-x)\|^2.
+ \label{eq:2-isometry}
+\end{equation}
+原工作称其为orthogonal JL变换，但此配置不降维；实数距离精确保留，
+后续量化引入近似。实际FP32正交残差与GEMM误差需要独立检查。
+
+把$y$分成$M$个$D_s=d/M$维子空间。每子空间$B$ bit，共$K=2^B$标签，
+由$L=2^{B/D_s}$个标量电平组合；实现要求Cartesian参数使$L$为整数。
+令$\Phi$为标准高斯CDF，构造器使用
+\begin{equation}
+ a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
+ i=1,\ldots,L,\qquad
+ \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
+ \label{eq:2-cartesian}
+\end{equation}
+所测$B=D_s=8$时$L=2$，$\mathcal C_m=\{-a,+a\}^8$，
+$a\simeq0.67449\sigma$，每字节记录8个坐标符号。
+实现从向量能量估计$\sigma$；单位归一化输入对应$1/\sqrt d$尺度。
+该表示来自前作，不是GPU执行层的发明。
+
+设$\widehat p$拼接primary码字，残差$r=y-\widehat p$，量化后为$\widehat r$，
+层次重建$\widehat y=\widehat p+\widehat r$。
+所测残差层每坐标8 bit，因此主码／残差分别占每向量$d/8$与$d$字节，元数据另计。
+选择性精排改变读多少残差行，不改变存多少行；第4--5章把继承的层次搜索实现为常驻GPU流水线。
+
+\subsection{模型假设与分数语义}
+随机旋转可以分散坐标能量，为共享高斯启发标量模型提供动机，却不能强制一份
+实际数据库具有独立零均值高斯坐标。固定旋转下，经验均值$\mu$变为$\Pi\mu$，
+且$\|\Pi\mu\|=\|\mu\|$。对随机旋转取期望不等于把固定语料居中。
+即使球面均匀点，各坐标也受固定范数约束而相关。
+因此等距性是代数保证，分布近似是模型假设；第8章的居中编码pilot研究其实践后果。
+
+标量最优性的术语也需精确。实现primary电平是高斯中分位点；
+恰好高斯、零阈值的一比特量化器，平方误差最优重建电平应为条件均值
+$\pm\sigma\sqrt{2/\pi}\simeq\pm0.79788\sigma$。
+因此继承的分位点构造本身不证明MSE最优。固定符号及正常数尺度时，$a$不改变primary排序：
+\begin{equation}
+ \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
+ \qquad s\in\{-1,+1\}^d.
+ \label{eq:2-sign-order}
+\end{equation}
+它仍影响残差重建。本文依赖可分码本与实测质量，不依赖普遍高斯或最优量化器主张。
+
+最后区分三种距离：$\rawdist$使用原始向量，$\primarydist=\|q'-\widehat p\|^2$
+使用primary重建；实现的精排分数满足
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+query常数不改变排序，但改变返回数值。对计算分数精确选择仍保留表示与路由误差，
+不等于原始向量精确重排。

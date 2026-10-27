@@ -1,0 +1,21 @@
+{
+  "access_date": "2026-10-28",
+  "sources": [
+    {
+      "url": "https://huggingface.co/datasets/Qdrant/dbpedia-entities-openai3-text-embedding-3-large-1536-1M",
+      "claim": "First 1M BeIR DBpedia entities; title plus text; text-embedding-3-large, 1536 dimensions, February 2024."
+    },
+    {
+      "url": "https://huggingface.co/datasets/Qdrant/dbpedia-entities-openai3-text-embedding-3-large-3072-1M/blob/main/README.md",
+      "claim": "Same source-corpus family and model, 3072 dimensions; does not establish exported query-ID pairing."
+    },
+    {
+      "url": "https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signtest.htm",
+      "claim": "Binary paired signs, exclusion of ties, and one-sided versus two-sided alternatives; four-arm win counts are different."
+    },
+    {
+      "url": "https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/cuda-platform.html",
+      "claim": "compute_80 PTX can be JIT compiled to later native SM code, with driver compiler improvements and caching; no guaranteed performance disadvantage."
+    }
+  ]
+}

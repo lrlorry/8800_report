@@ -1,0 +1,28 @@
+\Cref{tab:3-evidence}明确各证据类别能够支持的推断。
+精确primary选择针对实际算出的primary分数，原始向量recall还受路由和重建影响。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{证据类别及可支持的结论。}
+\label{tab:3-evidence}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}p{.24\linewidth}X@{}}
+\toprule
+类别 & 支持的推断与范围 \\
+\midrule
+形式证明 & 在明确分数、排序、嵌套和内存前提下的选择或覆盖性质 \\
+参考正确性 & 测试样例及指定键上的一致；区分并列、ID集合相同与逐位相同 \\
+配对benchmark & 固定状态／工作负载内的吞吐效果；微架构归因需要额外测量 \\
+端到端测量 & 所测设备、batch和调参网格内的实际工作区间 \\
+模型估计 & 在明确核算及复用假设下的字节分解或校准回本 \\
+未验证主张 & 解释候选或待补测量；提供研究方向而非实证结果 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+主要威胁包括共享索引依赖、有限查询池、网格选择效应、接口不对称和单设备范围。
+相应控制采用配对输入、留出标签、两种同recall估计、明确计时边界及保留不利结果。
+E1测试batch 1,000，小batch调度属于内部比较。
+量化参考一致性只给出样本内陈述，推广到总体需要额外假设（\cref{sec:6-2}）。
+仅按距离处理的primary并列仍限制一般预算嵌套结论，涉及10个FULL单元；
+十二个FULL有限网格枚举均已一致（\cref{sec:6-3}）。这些条件界定第7章证据的支持范围，以及第8章进一步解释的边界。

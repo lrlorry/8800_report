@@ -1,23 +1,68 @@
 \chapter{Contributions and Tool-Use Record}
 \label{app:author-tools}
-\draftnote{Use the form of disclosure required by Canvas. The tables below
-are a record template, not an attestation that any particular verification
-was performed. Replace all entries with a truthful account.}
+This record distinguishes documented project provenance from a personal
+authorship attestation. The signed declaration and detailed allocation of
+individual research tasks require the author's confirmation in the course's
+required form. Repository authorship and manuscript author order alone do
+not establish who independently performed every design or verification.
+
 \section{Contribution Record}
-\begin{longtable}{@{}p{0.22\textwidth}p{0.34\textwidth}p{0.34\textwidth}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.20\linewidth}>{\raggedright\arraybackslash}p{.35\linewidth}>{\raggedright\arraybackslash}p{.37\linewidth}@{}}
 \toprule
-Work component & Contributor and role & Supporting record \\
+Work component & Documented attribution & Supporting record / confirmation status \\
 \midrule
 \endhead
-\textit{To complete} & \textit{To complete} & \textit{To complete} \\
+Inherited method & JHQ by Jiabao Han, Mengxuan Zhang and Goce Trajcevski;
+square rotation, analytical primary representation and residual hierarchy
+& Original JHQ paper \cite{jhq}; not claimed as this project's invention \\
+Project and supervision & Rui Luo is the COMP8800 project presenter and
+thesis author; Dr Mengxuan Zhang is the named supervisor
+& Project poster and thesis metadata establish these roles \\
+Shared manuscript & Rui Luo and Mengxuan Zhang are named coauthors of the
+ADC project manuscript & Local manuscript source \cite{adc_artifact};
+publication/acceptance status is not inferred \\
+GPU design, implementation, experiments and analysis & Technical project
+scope is identified in \cref{tab:1-contributions}; personal allocation among
+researchers and assisted work remains to be confirmed by the author
+& Source, experiment and analysis ledgers establish artifact provenance;
+they are not a substitute for a personal contribution statement \\
 \bottomrule
 \end{longtable}
+
 \section{Generative-AI Assistance}
-\begin{longtable}{@{}p{0.19\textwidth}p{0.34\textwidth}p{0.37\textwidth}@{}}
+The thesis preparation used generative-AI assistance. These entries record
+activities evidenced in the writing conversation and repository artifacts;
+they do not assert that a human has approved every generated passage or
+independently repeated each experiment.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.20\linewidth}>{\raggedright\arraybackslash}p{.35\linewidth}>{\raggedright\arraybackslash}p{.37\linewidth}@{}}
 \toprule
-Tool and date & Purpose and scope & Prompt record and human review \\
+Tool / record & Purpose and scope & Review evidence and remaining responsibility \\
 \midrule
 \endhead
-\textit{To complete} & \textit{To complete} & \textit{To complete} \\
+OpenAI Codex; thesis revision, October 2026 & Drafting and revising English
+and Chinese chapters, mathematical explanations, LaTeX diagrams and analysis
+scripts; reading source/archives and compiling PDFs
+& Chapter audit files record automated source/numeric checks. The current
+synthesis added no GPU run. Final human review and adoption remain the
+author's responsibility \\
+User-supplied GPT and Claude review comments & Suggested corrections,
+scope checks and additional experiments during chapter revision
+& Retained responses in \path{assessment/} explain which suggestions were
+accepted, corrected or left pending; comments were checked against source
+and records rather than accepted as measurements \\
+ADC manuscript's own disclosure & The joint manuscript contains a separate
+disclosure concerning Claude and ChatGPT assistance with implementation,
+harness, figures and drafting & That manuscript statement identifies its own
+scope; it does not automatically certify the thesis's personal task allocation
+or human verification \\
 \bottomrule
 \end{longtable}
+
+The retained writing conversation and chapter evidence notes identify the
+requests and review process. A complete export of prompts, any additional
+tools used by the author, and the final course-specific disclosure should
+be reconciled before submission. The thesis author is responsible for
+understanding the methods, checking adopted material and confirming the
+final declaration. No signature or claim of sole unaided authorship is
+generated here.

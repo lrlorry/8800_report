@@ -1,28 +1,40 @@
-% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{Introduction}
 \label{ch:introduction}
-\draftnote{Establish the research problem, testable questions, scope, and personal contributions. Keep results consistent with the final evidence manifest.}
+Searching a large embedding database requires decisions about both
+information and work: how compactly to represent each vector, which vectors
+to inspect, and how much precision to spend on them. A GPU makes many
+operations parallel, but it does not make these decisions free. This thesis
+studies their interaction in JHQ-GPU, a GPU implementation and experimental
+analysis of JHQ's primary/residual quantisation hierarchy.
 
 \section{Context and Practical Objectives}
 \label{sec:1-1}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/01-1-context}
 
 \section{Problem Definition and Scope}
 \label{sec:1-2}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/01-2-scope}
 
 \section{Three Linked Technical Challenges}
 \label{sec:1-3}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/01-3-challenges}
 
 \section{Research Questions and Falsifiable Claims}
 \label{sec:1-4}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/01-4-questions}
 
 \section{Contributions and Research Ownership}
 \label{sec:1-5}
-\draftnote{Identify personal work, collaborator roles, inherited algorithms and code, the ADC manuscript relationship, and actual tool assistance.}
+\input{chapters/01-5-contributions}
 
 \section{Thesis Roadmap}
 \label{sec:1-6}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+Chapters 2 and 3 establish the representation, alternatives and measurement
+design. Chapter 4 follows training and physical index construction;
+Chapter 5 develops GPU scoring and selection contracts. Chapter 6 analyses
+workload-level refinement calibration. Chapter 7 evaluates construction,
+execution, budget quality and competitive operating regions. Chapter 8
+interprets those findings through negative results, validity limits and
+testable extensions. Chapter 9 answers the research questions and states
+the resulting systems principle. Appendix A maps claims to implementation
+and measurement artifacts.

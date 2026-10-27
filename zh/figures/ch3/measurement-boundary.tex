@@ -1,0 +1,20 @@
+\begin{tikzpicture}[
+ font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+ text width=2.55cm,minimum height=1.55cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (host) at (0,0) {主机FP32查询\\Pinned staging};
+\node[box,fill=ThesisNavy!7] (upload) at (3.5,0) {H2D传输\\查询预处理};
+\node[box,fill=ThesisNavy!7] (gpu) at (7,0) {GPU搜索\\选择／精排};
+\node[box] (result) at (10.5,0) {D2H ID与分数\\等待流完成};
+\draw[arr] (host) -- (upload);
+\draw[arr] (upload) -- (gpu);
+\draw[arr] (gpu) -- (result);
+\draw[ThesisNavy,thick] (-1.4,1.15) -- (-1.4,1.45) -- (11.9,1.45) -- (11.9,1.15);
+\node[fill=white,inner sep=3pt] at (5.25,1.45) {主口径：主机到主机计时区间};
+\node[box,text width=5.7cm,minimum height=1.3cm] at (1.65,-2.35)
+ {搜索计时之外\\加载数据／训练或加载模型／add／预热};
+\node[box,text width=5.7cm,minimum height=1.3cm] at (8.65,-2.35)
+ {独立策略成本\\预算校准；基于模型的复用回本};
+\draw[densely dashed,ThesisNavy!60] (-1.4,-1.1) -- (11.9,-1.1);
+\end{tikzpicture}

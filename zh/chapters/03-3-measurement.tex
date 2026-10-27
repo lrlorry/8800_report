@@ -1,0 +1,51 @@
+主比较从主机内存中的FP32查询开始，到流完成后top-10 ID与分数回到主机为止
+（\cref{fig:3-boundary}）。区间包含pinned staging、H2D、查询预处理、搜索和D2H。
+CAGRA int8查询量化计入其中，量化器训练和索引构建在区间外。
+资源句柄与输出缓冲复用。JHQ回传到pageable数组，基线回传到pinned数组；
+CAGRA/PQ经Python API，JHQ/RaBitQ经C++。解释微小差距时保留这些接口差异。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{zh/figures/ch3/measurement-boundary}}
+\captionof{figure}{计时边界。主机区间包含传输和查询相关计算；设备阶段profile解释其组成。
+单独profile与同步可能改变执行，因此阶段时间之和不能替代端到端延迟。}
+\label{fig:3-boundary}
+\end{minipage}\par\medskip
+
+第$r$轮有$m_r$次计时调用，每次回答$b$条查询：
+\begin{equation}
+Q_r=\frac{m_rb}{\sum_{i=1}^{m_r}t_{ri}},\qquad
+Q=\operatorname{median}_r Q_r,
+\label{eq:3-throughput}
+\end{equation}
+其中$t$以秒计。E1采用$b=1{,}000$和5轮测量。
+JHQ每个变体每轮先做1次不计时调用，再通常计时24次；基线先做3次初始预热，
+每轮通常计时24次，对判定较慢的点减少次数，并保留实际次数。
+预热使JIT和graph capture不进入稳态计时。batch调用的中位／p95延迟描述重复
+batch调用，不是逐查询或并发请求的延迟分布。
+
+各轮吞吐的中位数与单次调用延迟中位数的倒数不同。在可得时同时保留二者、
+各轮最小／最大值及基线逐调用轨迹。有效慢调用保留在主估计中。
+各轮共享训练索引，预算抽样共享查询池：其次数衡量计时波动或抽样敏感性，
+不等于独立训练重复数。微小配对差异结合离散度和一致性解释，
+不对扫描单元附加依赖独立性假设的显著性主张。
+
+主环境为RTX 5090，可报告显存32,607\,MiB，驱动595.71.05，
+CUDA toolkit 13.0和cuVS 26.08.01。运行获取协作GPU锁并保存环境快照；
+25核容器配额内使用16个OpenMP线程。E1记录功率上限575\,W，
+快照并不证明锁频或恒定宿主负载。JHQ Release的compute\_80 PTX由驱动JIT\cite{cuda_platform}，
+库基线使用安装的构建。辅助设备常驻计时与阶段profile分别标注，
+因为JHQ主API接受主机查询。
+
+显存核算区分持久编码数组、模型／IVF元数据、查询工作区和运行时／context。
+进程used样本包含索引以外的分配；构建前后差值不包含之后创建的内存池。
+E1中减context后的JHQ总量与CAGRA索引差值保留各自定义。
+组件模型解释常驻总量并显示未归因余量（\cref{sec:4-4,sec:7-7}），
+不能代替等显存性能比较；补证以20\,ms设备采样另测构建峰值。冷train/add计时同样不含输入加载、
+此前的对象构造与主机模型设置。
+
+\paragraph{补证的测量边界。}
+10月28日实验保留归档E1／预算记录，新增空缓存重复构建、提取PTX及toolkit反汇编、
+OpenAI向量行对应、完整预算轨迹和配对精度干预。GPU型号及报告驱动／toolkit版本
+一致，但属于另一计时会话。v69的OpenAI GEMM使用TF32；v72敏感性在相同训练缓存上
+改变add／查询算术。跨会话基线保留历史标记，补证来源及具体边界见\cref{sec:a-supplement}。

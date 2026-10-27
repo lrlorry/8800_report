@@ -1,0 +1,34 @@
+\subsection{Risk-controlled agreement with a reuse-aware objective}
+
+A next policy could minimise calibration plus expected reuse time while
+certifying a query-level \emph{reference-agreement} loss, using valid
+selection-aware confidence bounds. The inputs would be matched-regime
+per-query disagreement curves and a fixed reference; variables would include
+sample size and survivor budget. An absolute GT target additionally needs
+independent labelled validation or assumptions linking the reference to GT.
+Stationarity, query-level sampling and a common score/order contract must
+be explicit; a drift trigger would invalidate and renew the certificate.
+
+The first experiment should compare the existing fixed-sample rules,
+rank-curve reuse and a cost-aware policy on held-out pools, recording total
+time and tail agreement loss. The archived sequential controller already
+failed to beat fixed sampling in an older four-cell replay because extra
+search launches consumed sample savings. Repeating sequential testing alone
+is therefore insufficient. The new question is whether reusable intermediate
+information and a quality certificate jointly improve \emph{total} cost.
+Failure means violating the stated risk limit or saving no time against the
+quality-matched fixed-sample control.
+
+\subsection{Capacity-aware residual placement}
+
+The resident residual array dominates large-index storage. A complementary
+study could keep primary codes resident and cache residual blocks under an
+explicit device-memory cap, using host memory for misses. Holding codes,
+routing, survivor sets and refined arithmetic fixed would isolate placement
+from representation quality. The minimum experiment measures cache hits,
+transfer bytes, overlap, tail latency and throughput while varying memory
+cap, batch and query locality. A result is useful only if it expands feasible
+capacity with an acceptable total-time frontier; a slower cache at an already
+feasible resident size is not sufficient. This is an unimplemented storage
+extension, distinct from the existing residual-bound pilot and from lowering
+$\alpha$, which leaves the full array allocated.

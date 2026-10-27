@@ -1,6 +1,6 @@
 Full local top-$c$ retention establishes correctness, but can produce
-$Gc$ intermediate survivors for only $c$ global outputs. The shared-bound
-component (v63) reduces this excess selection work. The scheduler (v65)
+$\gscan c$ intermediate survivors for only $c$ global outputs. The shared-bound
+component reduces this excess selection work. The scheduler
 then chooses how much scan parallelism to expose. Both operate at a fixed
 refinement budget; choosing that budget is the separate problem in
 \Cref{ch:refinement}.
@@ -9,11 +9,11 @@ refinement budget; choosing that budget is the separate problem in
 
 Let $K_{(c)}$ be the global $c$th key when $|U|\geq c$. If a group holds
 $c$ distinct, fully scored candidates, the largest key among those
-witnesses, $\tau_g$, satisfies $K_{(c)}\preceq\tau_g$. There are already
-$c$ candidates no later than $\tau_g$ in the global universe. The shared
+witnesses, $\tau_j$, satisfies $K_{(c)}\preceq\tau_j$. There are already
+$c$ candidates no later than $\tau_j$ in the global universe. The shared
 bound is initialised to a top sentinel and updated by
 \begin{equation}
- \tau\leftarrow\min_{\prec}(\tau,\tau_g).
+ \tau\leftarrow\min_{\prec}(\tau,\tau_j).
  \label{eq:5-shared-update}
 \end{equation}
 No bound is published from fewer than $c$ valid candidates. If the entire
@@ -45,12 +45,12 @@ merge argument of \Cref{prop:5-local-coverage} then applies to that union.
 Candidates equal to the shared bound remain eligible, including the
 witness that established it. The implemented admission condition is
 \begin{equation}
- K_q(x)\prec\lambda_g
+ K_q(x)\prec\lambda_j
  \quad\text{and}\quad
  K_q(x)\preceq\tau_{\rm seen},
  \label{eq:5-admission}
 \end{equation}
-where $\lambda_g$ is the local compaction threshold and
+where $\lambda_j$ is the local compaction threshold and
 $\tau_{\rm seen}$ is the group's last observed shared bound.
 
 \subsection{Publication, filtering and implementation limits}
@@ -58,7 +58,7 @@ $\tau_{\rm seen}$ is the group's last observed shared bound.
 For nonnegative FP32 scores generated as sums of squares, the code packs
 the distance bits and nonnegative position into an unsigned 64-bit key:
 \begin{equation}
- E(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
+ \kappa(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
  \label{eq:5-packed-key}
 \end{equation}
 Unsigned integer comparison then agrees with the lexicographic order.
@@ -91,14 +91,16 @@ group's output, which the exact merge safely removes. Bounds are reset
 before every search in the same stream, and the merge runs after the
 scan kernel finishes.
 
-The read premise deserves a separate qualification. The archived code
-publishes atomically but polls through \texttt{volatile} 64-bit loads.
-CUDA does not guarantee atomicity or inter-thread synchronisation for
-\texttt{volatile} accesses \cite{cuda_programming_guide}. Portable
-realisation of the proposition requires device-scope atomic reads as
-well. The recorded 48 paired checks in \Cref{sec:7-4} support observed
-agreement for the tested build, not a language-level concurrency proof.
-An atomic-read revision and its GPU revalidation have not been performed.
+The archived binary's extracted PTX contains scalar
+\path{ld.volatile.global.u64} and \path{atom.global.min.u64}.
+PTX gives compatible, equally sized strong accesses single-copy atomicity
+\cite{ptx_isa}; these aligned 64-bit operations therefore supply the
+whole-key premise at PTX level. Reassembling that PTX with CUDA 13.0
+\texttt{ptxas} for \texttt{sm\_120} produces one 64-bit strong system load
+and one GPU-scope atomic-min reduction, recorded in
+\cref{sec:a-supplement}. The toolkit disassembly corroborates the contract;
+the driver JIT's actual SASS was not captured. CUDA C++ \texttt{volatile}
+alone is not the basis of the argument \cite{cuda_programming_guide}.
 
 \Cref{fig:5-shared-bound} also identifies what this optimisation saves.
 Every scanned candidate still loads its primary code and computes its
@@ -111,7 +113,7 @@ range includes a slight slowdown, as reported in \Cref{sec:7-4}.
 
 \subsection{Choosing parallelism without changing the budget}
 
-For batch size $b$, grouped scanning launches $bG$ blocks instead of $b$.
+For batch size $b$, grouped scanning launches $b\gscan$ blocks instead of $b$.
 This can expose otherwise unavailable parallelism, but duplicates table
 staging and local selection and introduces a merge. The fixed-group
 design therefore cannot be uniformly preferable. Smaller static quotas
@@ -120,19 +122,19 @@ to preserve coverage; the pilot's concentrated survivor distribution
 motivated using witnessed thresholds instead (\Cref{sec:7-4}).
 
 The implemented scheduler uses a fill proxy and a workload-skew
-statistic. Let $T$ be scan threads per block, $H$ the number of SMs times
+statistic. Let $T_{\rm blk}$ be scan threads per block, $H$ the number of SMs times
 the maximum resident threads per SM, and
 $v=\operatorname{sd}(n_c)/\operatorname{mean}(n_c)$ the candidate-count
 coefficient of variation. Its rule is
 \begin{align}
- G_{\rm fill}
+ g_{\rm fill}
  &=\max\!\left(\{1\}\cup
-       \{g\in\{2,4,8\}:bgT\leq0.6H\}\right),
+       \{h\in\{2,4,8\}:bhT_{\rm blk}\leq0.6H\}\right),
        \label{eq:5-fill-rule}\\
- G_{\rm skew}&=
+ g_{\rm skew}&=
    \begin{cases}4,&v\geq0.3,\\1,&v<0.3,\end{cases}
  \qquad
- G_{\rm chosen}=\max(G_{\rm fill},G_{\rm skew}).
+ g_{\rm chosen}=\max(g_{\rm fill},g_{\rm skew}).
  \label{eq:5-skew-rule}
 \end{align}
 The skew rule may override the fill limit. In the evaluation harness,
@@ -142,22 +144,58 @@ distinct from Chapter 6's sampled output-agreement calibration. Once
 calibrated, scheduling uses the batch size and stored statistic without
 an additional per-search host readback. The constants were fitted on
 four pilot configurations and then evaluated on further configurations.
+The one-time pseudoquery calibration is excluded from
+the reported steady-state search times. Supplementary timing separates
+host gathering (0.81--7.04\,ms), the first calibration call
+(6.00--27.77\,ms) and repeat medians (2.72--18.13\,ms). This startup
+cost is separate from refinement-budget calibration (\cref{sec:a-supplement}).
 
-When $G_{\rm chosen}=1$, the implementation selects the faster
-query-centric path, labelled $G=0$. It leaves the index, probe count
+When $g_{\rm chosen}=1$, the implementation selects the faster
+query-centric path, labelled $\gscan=0$. It leaves the index, probe count
 and refinement budget unchanged, but inherits that path's distance-only
 cutoff ties. The common-total-order premise must therefore be checked
 before claiming identical survivor sets across all scheduler choices.
 \Cref{sec:7-6} reports the separate integrated-output checks and the
 scheduler's measured gains and regret.
 
+\subsection{Observed execution paths}
+
+For the 170-SM RTX 5090, the published 48-warps-per-SM limit gives
+$0.6H=156{,}672$ threads \cite{blackwell_tuning}. At batch 1,000 with
+$T_{\rm blk}=512$, even two groups require a fill proxy of 1,024,000.
+The fill rule therefore selects one group; only sufficient skew forces
+four groups in this case.
+
+The main throughput campaign exercises both implementations, rather than
+uniformly using grouped scanning. Across 38 E1 run records, nine have
+$v\geq0.3$, all Vogue (approximately 0.338--0.622). Their 132
+run--budget cells contain 27 Vogue cells scheduled to four groups and
+105 arXiv/OpenAI cells scheduled to the query-centric path. Thus the
+non-Vogue large-batch QPS results do not exercise grouped retention,
+shared-bound filtering or merging. They still include the LUT, packed
+access, lane-refinement and probe components.
+
+For Vogue, scheduled-versus-query-centric checks report 3--15 queries
+with tie-only primary differences per 1,000, zero non-tie differences,
+and bit-identical final outputs in every recorded cell. The narrower
+7--11 range applies only to $n_{\rm probe}=128$.
+
+The budget campaign makes the calibration/evaluation distinction
+concrete: 10 of 12 held-out configurations use the query-centric scan
+(batch 500, or Stella's 499); the two Vogue configurations use four
+groups. At calibration size $S=128$, eight use two groups, two use four,
+and two remain query-centric. Execution paths therefore differ in
+8/12 configurations. Grouped selection principally serves smaller
+batches and skewed workloads; there is no universal batch-256 boundary.
+The offline recount and input hashes are recorded in
+\path{data/ch5/review-audit.json}.
+
 The rule is a heuristic rather than an occupancy calculation or a
 latency oracle: it omits register pressure, shared-memory residency,
 budget-dependent compaction cost and merge cost. A frozen pseudoquery
 statistic can also misrepresent future queries. In the recorded campaign
 the largest regret occurs at batch 256, where a fixed-group alternative
-is about $1.217\times$ faster. Thus the design contribution is a tested
-combination of parallel candidate scanning, witnessed filtering and
-workload-dependent execution, not a new universal top-$c$ identity or a
-guarantee of optimal scheduling. Refinement and final top-$k$ consume
+is about $1.217\times$ faster. The design combines parallel candidate scanning, witnessed filtering
+and workload-dependent execution, with its gains and regret measured
+under a fixed refinement budget. Refinement and final top-$k$ consume
 the resulting valid survivors as described in \Cref{sec:5-6}.

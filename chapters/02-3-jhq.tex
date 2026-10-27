@@ -1,0 +1,80 @@
+\subsection{What is inherited}
+
+JHQ combines an orthogonal transformation, an analytical Cartesian primary
+code and a higher-precision residual layer \cite{jhq}. Here the transform
+is square: $\Pi\in\mathbb R^{d\times d}$, $\Pi^\top\Pi=I$,
+$y=\Pi x$ and $q'=\Pi q$. Therefore
+\begin{equation}
+ \|q-x\|^2=\|\Pi(q-x)\|^2.
+ \label{eq:2-isometry}
+\end{equation}
+Although the prior work calls this an orthogonal JL transformation, this
+configuration does not reduce dimension. It preserves real-arithmetic
+distance exactly; quantisation subsequently introduces approximation.
+Actual FP32 orthogonality and GEMM error are separate implementation checks.
+
+Partition $y$ into $M$ subspaces of dimension $D_s=d/M$. With $B$ bits per
+primary subspace, $K=2^B$ labels are formed from $L=2^{B/D_s}$ scalar levels,
+requiring the implemented Cartesian parameters to make $L$ an integer.
+Writing $\Phi$ for the standard normal CDF, the constructor uses
+\begin{equation}
+ a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
+ i=1,\ldots,L,\qquad
+ \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
+ \label{eq:2-cartesian}
+\end{equation}
+At the evaluated $B=D_s=8$, $L=2$ and $\mathcal C_m=\{-a,+a\}^8$,
+with $a\simeq0.67449\sigma$. Each byte records eight coordinate signs.
+The implementation estimates $\sigma$ from vector energy; unit-normalised
+inputs motivate the scale $1/\sqrt d$. This representation is prior art,
+not an invention of the GPU execution layer.
+
+If $\widehat p$ concatenates primary codewords, the residual is
+$r=y-\widehat p$. Quantising it gives $\widehat r$ and hierarchical
+reconstruction $\widehat y=\widehat p+\widehat r$. The tested residual layer
+uses eight bits per coordinate; primary and residual payloads consequently
+occupy $d/8$ and $d$ bytes per vector, before metadata. Selective refinement
+changes how many residual rows are read, rather than how many are stored.
+The inherited coarse-to-fine search is implemented as a resident GPU pipeline
+in Chapters 4 and 5.
+
+\subsection{Model assumptions and score semantics}
+
+Random rotation can spread coordinate energy, motivating a shared
+Gaussian-inspired scalar model. It does not force an arbitrary realised
+database to have independent, zero-mean Gaussian coordinates. For a fixed
+rotation and empirical database mean $\mu$, the transformed mean is
+$\Pi\mu$ and $\|\Pi\mu\|=\|\mu\|$. Averaging over random rotations is
+different from centring one fixed corpus. Even a uniformly random point on
+a sphere has dependent coordinates through its fixed norm. Consequently,
+isometry is an algebraic guarantee; the distributional approximation is a
+modelling assumption. Chapter 8's centred-coding pilot examines one practical
+consequence of that distinction.
+
+Terminology also matters for scalar optimality. The implemented primary
+levels are Gaussian mid-quantiles. For a zero-threshold one-bit quantiser
+under an exactly Gaussian model, squared-error-optimal reconstruction levels
+are instead conditional means,
+$\pm\sigma\sqrt{2/\pi}\simeq\pm0.79788\sigma$. Thus the inherited
+quantile construction is not, by itself, a proof of MSE-optimal levels.
+For fixed signs and a positive common scale, the choice of $a$ cancels
+from primary ordering:
+\begin{equation}
+ \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
+ \qquad s\in\{-1,+1\}^d.
+ \label{eq:2-sign-order}
+\end{equation}
+It still affects residual reconstruction. This thesis relies on the
+codebook's separability and measured quality, rather than a universal
+Gaussian or quantiser-optimality claim.
+
+Finally, the three distance notions remain distinct. $\rawdist$ uses original
+vectors; $\primarydist=\|q'-\widehat p\|^2$ uses the primary reconstruction.
+The implemented refined score satisfies
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+Its query-only constant preserves ranking but changes reported distance
+values. Exact selection under either computed score leaves representation
+and routing error intact. It is not raw-vector exact reranking.

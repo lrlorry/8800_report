@@ -1,0 +1,46 @@
+\subsection{从数据库 ID 到列表顺序位置}
+
+输入行 ID 为 $i\in\{0,\ldots,N-1\}$。粗分配根据计算所得中心分数，将变换后的向量放入某个列表。数学分配目标是
+\begin{equation}
+ a(i)=\operatorname*{arg\,min}_{0\leq\ell<n_{\rm list}}
+       \|\Pi x_i-\mu_\ell\|_2^2.
+ \label{eq:4-assignment}
+\end{equation}
+具体实现使用选定的数值分配路径。主码与残差表示编码不减去 $\mu_{a(i)}$；列表成员关系独立于重建，限制之后的搜索集合。
+
+构建器将分配结果与输入 ID 序列共同排序。令 $\rho(p)$ 为排序后物理位置 $p$ 对应的输入 ID，$o_\ell$ 为列表 $\ell$ 的起点。完成后的数组满足
+\begin{equation}
+ 0=o_0\leq o_1\leq\cdots\leq o_{n_{\rm list}}=N,
+ \qquad p\in[o_\ell,o_{\ell+1})\Longrightarrow a(\rho(p))=\ell.
+ \label{eq:4-offsets}
+\end{equation}
+偏移通过已排序分配值上的 lower-bound 查找获得。相邻偏移相等表示空列表。按分配结果排序不保证不同独立构建中，同一列表内的行具有稳定顺序。位置在完成后的快照中稳定，其含义是全部关联数组共同描述的行 $\rho(p)$。
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch4/physical-layout}
+\caption{同一物理位置连接 ID、打包主码 word、残差行与修正项。示意的八行索引偏移为 $[0,3,3,8]$，其中有一个空列表。主码 word 打包同一向量的四个子空间。数值与列表大小均为示意。}
+\label{fig:4-layout}
+\end{figure}
+
+常驻 ID 数组实现 $p\mapsto\rho(p)$。逆映射 $\rho^{-1}(i)$ 在数学上存在，但搜索无需再常驻一份逆数组。两遍构建器临时构造逆映射，将输入批次散写到最终位置。查询结果把物理位置翻译回输入 ID；第五章在主码并列时使用位置，在最终并列时使用数据库 ID。
+
+\subsection{精确地址与表示宽度}
+
+令 $Z[m,p]$ 表示物理位置 $p$ 在子空间 $m$ 的主码字节。中间的 subspace-major 副本使用字节偏移 $mN+p$。最终打包为
+\begin{equation}
+ \mathsf w[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{addr}_{\rm byte}(\mathsf w[j,p])=4(jN+p).
+ \label{eq:4-primary-address}
+\end{equation}
+这里 $j=0,\ldots,M/4-1$。word 布局要求 $M\bmod4=0$，启用该布局的构建对其他值抛出异常；另行编译的字节布局保留原表示。每份打包数组占 $NM$ 字节，但打包期间新旧副本同时存活，占 $2NM$。一遍构建器临时 gather 成 vector-major 的 $[N,M]$ 主码数组，再转置和打包，每份旧副本用完后释放。两遍构建器直接 scatter 到 subspace-major 数组，然后执行相同的最终打包。搜索时的 lane 映射见\Cref{sec:5-3}。
+
+残差码保持 row-major，每向量占 $b_r=\lceil dB_r/8\rceil$ 字节。八比特配置中，行 $p$ 的坐标 $t$ 位于字节偏移 $pb_r+t$。四比特路径中，它位于 $pb_r+\lfloor t/2\rfloor$，偶数坐标在低 nibble，奇数坐标在高 nibble。每物理行另存一个四字节修正项：
+\begin{equation}
+ \gamma[ p ]=2\langle\widehat p(x_{\rho(p)}),
+                              \widehat r(x_{\rho(p)})\rangle.
+ \label{eq:4-correction}
+\end{equation}
+gather 或 scatter 时，其值必须与对应行的编码共同移动。因此，即使两个编码数组采用不同布局，残差访问仍重建主码筛选识别的同一对象。
+
+这一分离适应工作负载的两种访问模式：主码在列表顺序中广泛扫描，完整残差行仅在选定位置读取。设备保留原始 FP32 向量可提供精确重排，但要额外占用 $4Nd$ 字节，并改变所报告的搜索设计。这里精排压缩重建，质量影响由第七章评估。

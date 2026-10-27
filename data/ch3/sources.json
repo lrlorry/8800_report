@@ -1,0 +1,12 @@
+{
+  "checked_on": "2026-10-28",
+  "scope": "Dataset attribution only; benchmark dimensions and splits derive from archived local records.",
+  "sources": [
+    {"key": "data_vogue", "url": "https://huggingface.co/datasets/tonyassi/vogue933k-embeddings", "status": "Local preparation and ADC bibliography attribution; web fetch inaccessible this session"},
+    {"key": "data_arxiv", "url": "https://huggingface.co/datasets/macrocosm/arxiv_abstracts", "status": "Primary corpus card checked; embedding preparation is project-specific"},
+    {"key": "data_openai1536", "url": "https://huggingface.co/datasets/Qdrant/dbpedia-entities-openai3-text-embedding-3-large-1536-1M", "status": "Primary card checked"},
+    {"key": "data_openai3072", "url": "https://huggingface.co/datasets/Qdrant/dbpedia-entities-openai3-text-embedding-3-large-3072-1M", "status": "Primary card checked"},
+    {"key": "data_bge", "url": "https://huggingface.co/datasets/Upstash/wikipedia-2024-06-bge-m3", "status": "Primary card checked; Italian selection from project preparation source"},
+    {"key": "data_stella", "url": "https://huggingface.co/datasets/ielabgroup/stella_trec24_biogen_embedding", "status": "Primary card checked; corpus and 65-query test_query are distinct"}
+  ]
+}

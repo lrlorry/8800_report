@@ -1,0 +1,683 @@
+{
+  "date": "2026-10-28",
+  "scope": "Offline source/record audit, incorporating the archived representation pilot; no new GPU run or implementation edit.",
+  "analysis_checkout": "218fd2ed9110722a18bad841941e683fd0c1eda5",
+  "inputs": [
+    {
+      "source": "8800_report",
+      "path": "6.pdf",
+      "sha256": "3f637e9b8ddbfc8f1b0321c61972bc453ca10a959a928bd435102bf60a01a037"
+    },
+    {
+      "source": "8800_report",
+      "path": "assessment/ch4-review-response.txt",
+      "sha256": "0cff7e5d86d0f77a5c09bc7f70b87d0a381d22e26bd08e5a149caae2c68d4acf"
+    },
+    {
+      "source": "8800_report",
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+    },
+    {
+      "source": "8800_report",
+      "path": "assessment/thesis-marking-guide.txt",
+      "sha256": "ad6676136be5892d0db85943d0b3b9c365bb34088ea9a45ee5e3eb6b1e89f1a1"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-1-boundaries.tex",
+      "sha256": "5ad833631f560183dc8516d1227ac3094173f126c64d300881453772fc20bd9f"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-2-training.tex",
+      "sha256": "4817e0cdd4d42c5e72b0fc1da813c5ba9d5a20bbd8fb8b43042fc79b8455bae6"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-3-layout.tex",
+      "sha256": "9a3db869b7230f81df912abda58c5f9708df014f47283596e15219092c8f745f"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-4-lifecycle.tex",
+      "sha256": "956924c91e671ae7864fee32f16486a4edf733c66f24fea9b7f5f1e10d9110f2"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-5-construction.tex",
+      "sha256": "c83289fa94e82a341ead33bb2f942336ecf36b6fc62512dc86cd8e07573bb0cf"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-6-contracts.tex",
+      "sha256": "1a193d948287154385a3b2df9e22f0fcb8bb49768eec71a6bee915fa67300c87"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/04-architecture.tex",
+      "sha256": "4b8a354f5e4e6766221b72e7e0a23eedde2973093cbcab56cf58efefd51dd65d"
+    },
+    {
+      "source": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "51a16c3559542e7c48a6b35867c37a8ae3ae31ec85cb58fb39ce7c1a93de0bbd"
+    },
+    {
+      "source": "8800_report",
+      "path": "data/ch4/review-audit.json",
+      "sha256": "ae306c58590db0b0314f7dc7b4f7539830fc11f986ec8114fbdac130e5068919"
+    },
+    {
+      "source": "8800_report",
+      "path": "data/ch7/audit.json",
+      "sha256": "cf9cd5124efce4d51956805955391edf1ddd78c3632ff2c8768d26ba5f1c0680"
+    },
+    {
+      "source": "8800_report",
+      "path": "figures/ch4/architecture.tex",
+      "sha256": "6c14988e0da407777f603d8895dacef77e1fa94b5128965e99a98bb14699e443"
+    },
+    {
+      "source": "8800_report",
+      "path": "figures/ch4/physical-layout.tex",
+      "sha256": "2923cb51cc4bc024d3533855f6a7ad3d736228cbcf3a05178175e3df4d27996d"
+    },
+    {
+      "source": "8800_report",
+      "path": "figures/ch7/construction.pdf",
+      "sha256": "bb25ad09679a0e7a458a1c245fba66507c96e838f6c1294f5469bf11a3e7ac1d"
+    },
+    {
+      "source": "8800_report",
+      "path": "figures/ch7/large_frontiers.pdf",
+      "sha256": "22415b8969ea623d7cb001bb81842bef0f8ead2a10e5b7c7c86412fc1a47c4cd"
+    },
+    {
+      "source": "8800_report",
+      "path": "figures/ch7/memory.pdf",
+      "sha256": "6be0feb34556a6d62a821cfdc020ac7bb2528112976370c2f703000dfffc16f1"
+    },
+    {
+      "source": "8800_report",
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    },
+    {
+      "source": "8800_report",
+      "path": "scripts/audit_ch4_review.py",
+      "sha256": "06ee408b21793ad65400ee940f4d056ee814e279cb1871e860620d64be9b31a9"
+    },
+    {
+      "source": "8800_report",
+      "path": "scripts/build_ch7.py",
+      "sha256": "2896eb5b2cea681247c12bc14b58d49d419e80968f9b736c24b0a10f1ba5d49a"
+    },
+    {
+      "source": "8800_report",
+      "path": "scripts/build_zh_tables.py",
+      "sha256": "314e7b7dd17a33e46de850ef5d4170cdaf45e787c9e41751a2f7e396dc915e17"
+    },
+    {
+      "source": "8800_report",
+      "path": "tables/ch7/e1_memory.tex",
+      "sha256": "af7c61ac85faab10d5d4a2dcef4904119df1521d91af92e118e1c77e08b53d4d"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-1-boundaries.tex",
+      "sha256": "6feb5a5768bc55fedb7786322acb26d3d086dc6dd09161d9846acbc496d8abab"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-2-training.tex",
+      "sha256": "d22b6a2aaf3e392b5c40f6a6aac616f350782702cd53982571e34e685da2660a"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-3-layout.tex",
+      "sha256": "00ecd0075df43d806c6e51da56cc9f457a1a5bf5b0872d255ffd4cf852f0128f"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "sha256": "30031baffc80ee4588b8b2e39f0267f112c38771614ef17678c23dfcc69dc8ff"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-5-construction.tex",
+      "sha256": "91d45574a9c507b9b936f8e0af72bda85c088769544157f1cf07a8ed4b27ad2a"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-6-contracts.tex",
+      "sha256": "2650c19ab9baa85faa3841163331038c79ce1d27b7f18f6a8fd97c7d231553d4"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/04-architecture.tex",
+      "sha256": "604003d787125af8fbe3284f6d6e1268d3afc2fb5dec80078eefa27ac30328f0"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "17c1d33d41d38f2732133db4d2af419dfa6a20520fa47bf9e4a04c3e4be48f46"
+    },
+    {
+      "source": "8800_report",
+      "path": "zh/tables/e1_memory.tex",
+      "sha256": "68239cb349946c03b3775f87f8a2d062f700ee05250495cfa515f5a4e5eaa7b7"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "CMakeLists.txt",
+      "sha256": "34ec37f075d778f20aeafe386f83d515f50df2a8fe55505743c7055784462069"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "cpu/jl_transform.cpp",
+      "sha256": "83a5331e8cf70c8ca95ca1d126a46b10530a890ef00ec02ed7aa5c50aa276b5b"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "cpu/jl_transform.h",
+      "sha256": "f23be8ca0ae61ddb460fff5195ef5158dce51b5184d506a0bd75d408fb3bbc5b"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "cpu/pq_codebook.cpp",
+      "sha256": "a44aca621585ce8757f5078f8bfcdf9962bcb9729939602090634c518eb702c4"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "examples/demo_jhq_batch_pipeline.cu",
+      "sha256": "ac13613c2f8ae7d8087fa5e7b0658a88824c1c5aa89dbc7eff8c3b01e2f52439"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "examples/demo_jhq_v66_bound_pilot.cu",
+      "sha256": "4148343afbf8f6c422f0a368399c22333e68e58148348d9fd3313872318e9a70"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_BIG/cuvs_stella_cagra-int8.jsonl",
+      "sha256": "91261b87a03a7a12f0c1c79720d1645280690031c97d790629ed85a06696c5b1"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_BIG/cuvs_stella_cagra-int8_gd64.jsonl",
+      "sha256": "823b93dfbd16922121373988ead3e9302c96f3e22e271b6efcb07c6c2fa4570c"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_BIG/jhqcold_bge-m3.txt",
+      "sha256": "c2afb8127bd7acee45cdd14b1a305c7e87830c46789bd39a637b44f2c1056101"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_BIG/jhqcold_stella.txt",
+      "sha256": "e481d0902fe9b62926316f9bf7051f4f12834d7960f4501bbcd4909add01e125"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np128.json",
+      "sha256": "1ecba8098fe1645e18873c7330e0ce90f9a09d4bd1a2750131ad624798b300a9"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np128.json",
+      "sha256": "dcbeafb327519cb3c67497a2832321706ffe15f1fb606ad417c74767959ea524"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np128.json",
+      "sha256": "82003375b7116ea98d2a3446e06f987300425de250240dba7970c1c4b974d6c4"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np128.json",
+      "sha256": "4fa6840fa8f853a5d3f5e4dd7ed5228dbe9bcef46444c1cc21acfc92522016c6"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np128.json",
+      "sha256": "476f976999f03734e814214365ca4a3559eddc44c9e550953497f8c4d0ee8253"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np128.json",
+      "sha256": "3e029d75a37098ce6f7a8e406e6de253c70c7e0d40e268209154271fe26f152b"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/queue_adc_v69.sh",
+      "sha256": "efe50c6ff16aa8694f53b125da2213a44347b83a81f5b9944f5da370f058597b"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/adc_v69/run_lutgroups_v71.sh",
+      "sha256": "4066083a1dc8d86216087b5597b2f2b35e58b2b6fce40c5e48e34ed8a13ba982"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_arxiv-768.txt",
+      "sha256": "8dd9262c59e0a918fe8702509f6cb5a1329d4a66881e45bc735d42f020614738"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_openai3-1536.txt",
+      "sha256": "3004057086e17a6801e4127ecf6656136388b7fc3c9d1393ee113124b2a70080"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_openai3-3072.txt",
+      "sha256": "b36396d087f71d453e9d68fcf7fdd64c6c60f1970efb250245faf2ee8a9436e9"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_vogue-768.txt",
+      "sha256": "f4d44f6faaad4055e60e5393bfce6fc3bd6ba5587151037d0150a9a5eef88e40"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/bench_cuvs.py",
+      "sha256": "12f8049fcc02ba048c4105ecf649414b10b8539fbf220e6adcf3208d7a691d13"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/run_e1.sh",
+      "sha256": "1a2c6071c3c14e397c43a9cf78a0a7c2e236593d31ba0659c86e41862f927db2"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/arxiv-768_memcheck.txt",
+      "sha256": "881a3364e528d79f915b9b032f8c82f82654dd0f1c2fdcd9766e7f7cf3e760bc"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/openai3-3072_memcheck.txt",
+      "sha256": "03a910ca93feac01f9c65daee7a76d6dcfabbd621d72a03005724da6392cc51e"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/openai3-3072_racecheck.txt",
+      "sha256": "7036e22bbc4e234f9e6bddad64f6b65c8cb25e46243caba87ec59cd976c80a4c"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/openai3-3072_synccheck.txt",
+      "sha256": "7ad4b5d80b5dfd12351d4b9299349a2075d5e2cd8f0e897b236865be3ae5580b"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/vogue-768_memcheck.txt",
+      "sha256": "0763ea1dbb0d96831bc05bfe0dd9dbd2db99d85c9df7f15f0a1f52318b3b2ab5"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/vogue-768_racecheck.txt",
+      "sha256": "4ffae5c3e1983acd50324599a612c736bda647a7e2616fc46b12585afa82a700"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/sanitizer/vogue-768_synccheck.txt",
+      "sha256": "694c72b496e9192151dc17a32c591697128956c884b91ae5ba9a17776dce05d6"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/BOUND_VALIDATION.json",
+      "sha256": "e81124a6ef45706636163fb4d702d7cfaec7243c233392b4a27439f9a0e081fa"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/RESIDUAL_BOUND_PILOT_REPORT.md",
+      "sha256": "0b87d1f7f71a50a4488aca90c49fae5377581efa869886641ab4543926d943fe"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/arxiv-768_np128_a100_summary.json",
+      "sha256": "be963947e9b95443b89fc67e518ea926b8e0a3928edcbc7ed9f06b6c76c31963"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/arxiv-768_np128_a200_summary.json",
+      "sha256": "0a15652edfac589e4dc5e7e45474e7e507c854fe9edd98d6347169f53b875a3e"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/arxiv-768_np512_a100_summary.json",
+      "sha256": "5e94142746f7c14dadf91aca06e227d8de55b55389e6360d9774c0c39dd97b96"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/openai3-3072_np128_a4_summary.json",
+      "sha256": "faed025424f3980ef443b7c2f04ca5cb81031935e5941dc1e821fc39d4f6b01f"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/openai3-3072_np512_a4_summary.json",
+      "sha256": "95133e4934d56316e3a364f628b210d6c3736da5813dc99ee598de6b0350bd35"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/vogue-768_np128_a64_summary.json",
+      "sha256": "2b995d3d1ec9d9c20ea77819a54557adca7f697dd2a272615c95321097b0a816"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/raw/vogue-768_np512_a64_summary.json",
+      "sha256": "39854b2ddaf50a866dbff8d16c882e50d1ad2afdc0d5f7e8090f3740f9fd9ec9"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/run_pilot.sh",
+      "sha256": "eceee9704507ed48de2393c34b50ba430fdb20c0ec7ebdd9f80cde41e238ccf0"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v66_boundpilot/encode.cu",
+      "sha256": "0383c43abab3580f6d4843cdcebe2473aad44974f9d4c951b16e078a7a35bf39"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v66_boundpilot/jhq_gpu_index.cu",
+      "sha256": "a2946c53a762803582c67be0bbc3ba31acb37fb9c68ceb1e8a625abb861f7e39"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v66_boundpilot/train_pq_gpu.cu",
+      "sha256": "ddafadb77b91d338bcbd40476216db4b095f79ed5b3a8034738b860dd18c80cb"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v66_boundpilot/train_res_gpu.cu",
+      "sha256": "091b9b3a9484325bf7a808cef1ce7833bc83e85e54984e9b4c2683b9547236f5"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/encode.cu",
+      "sha256": "b4fc992a3ca2671dccef20d98bbb3e14a50aeca6fe088294f0f2a6ae1428c1f7"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/jhq_gpu_index.cu",
+      "sha256": "504f631427cbfa644c87d5cc4e6535ee2b1b53e90fffd67e1f2c5725c39797c1"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/jhq_gpu_index.cuh",
+      "sha256": "7d575257498e700ed846a9446af6bf835f2d477306bc9d58aa8e7f69d27a6f5d"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/search.cu",
+      "sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/search.cuh",
+      "sha256": "6cc63c57c69c16e17c9ec53cc2967f6a2d60155d6a1697e126f9587cf2890faf"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/train_pq_gpu.cu",
+      "sha256": "fcb7a8fd42acde0afce4d09c106e25ed83d39ad02889972af050834519892715"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v69_probesel/train_res_gpu.cu",
+      "sha256": "1cf4585b876c6b874244f8518b02ea2712f35cd8988adf3ec328006a561e3cd3"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/jhq_gpu_index.cu",
+      "sha256": "f938265fb787cfc0ebfcfee752d156612374c6302b39a90af8997e1222ccbfe3"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/MethodPart1_ADC.tex",
+      "sha256": "faba3cd2b321b1b7edf968f4231619a497ee9cd9b75c4088d4ca12084fb43122"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/Preliminary_ADC.tex",
+      "sha256": "4f95cd4ddebd0ba8e497537cb1d93a1a782de21e3738660f8b9661dc986d53c5"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "paper_adc2026/figures/fig_layout.py",
+      "sha256": "8967106cdff408af45d06bc0b2b5eaeaab5def0dd0aa6283f1163baa93b6284d"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "paper_adc2026/figures/fig_pipeline.py",
+      "sha256": "23f6579f794c6f0e190ad6ee814e121c65de226e0bb010b58cefa01d1b98ab76"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/frontier_v39/WHY_RECALL_MOVED.md",
+      "sha256": "546fae1c90dbd9a22616e46a832125d18b59a7677c2fdf866c26d9587774ddef"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/ivf_assign_bound/README.md",
+      "sha256": "66ccbb684289bece34ad72fcb8d5257a73838bc47aea945042d638e672e577a1"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/sensitivity/residual_training/REPORT.md",
+      "sha256": "7f0b54bce5d5d50985048728f9fd1d480cdf2b08f7b15b394a4aa8e9e0a10190"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/sensitivity/residual_training/sweep_table.txt",
+      "sha256": "f46719c7a1fd5802a6ed4000c9e61a683cffdf4ecfd83d780fc5c2756ce67173"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/v34_lloyd_iterations/README.md",
+      "sha256": "1b845b320183c667718a0cc487ff4c86a71d16ff52dad6f63620c900cb932a96"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/v34_lloyd_iterations/v34.log",
+      "sha256": "c3bec8c0a8393a9e47e234a1eb31b05bcb7994f288598de5ac649277fbfb167c"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/v34_lloyd_iterations/v34cap.log",
+      "sha256": "bdbb7f2e318bb1ec6ae7e9c870721c8f0da29b0e7bbe77519650af5f78a48853"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/v46_sigma/README.md",
+      "sha256": "1656b17feba3495fb8dae4ae3f8bc4bc3c9b00be5af23389bc27b6a86a97477a"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/v46_sigma/v46.log",
+      "sha256": "3cd854dddcdc26bb04d6f92f00fa6ecd56a65181ce4c87de1238388add0172c1"
+    },
+    {
+      "source": "JHQ_GPU",
+      "path": "results/v46_sigma/v46_cached.log",
+      "sha256": "bbd374822207ac87e88ebf37a306b08dad382de3a5ccd10912d6b985c1ac078b"
+    },
+    {
+      "source": "user_local_poster",
+      "path": "my poster/poster.pdf",
+      "sha256": "786f67e418c8707294da12f42efc671e961ff8446d34a2bda962fd2d2ef98636"
+    }
+  ],
+  "payload_by_dimension": [
+    {
+      "dimension": 768,
+      "primary_bytes": 96,
+      "residual_bytes": 768,
+      "id_and_correction_bytes": 8,
+      "row_bytes": 872,
+      "raw_fp32_bytes": 3072,
+      "sq8_vector_bytes": 768,
+      "cagra_int8_vector_graph32_bytes": 896
+    },
+    {
+      "dimension": 1024,
+      "primary_bytes": 128,
+      "residual_bytes": 1024,
+      "id_and_correction_bytes": 8,
+      "row_bytes": 1160,
+      "raw_fp32_bytes": 4096,
+      "sq8_vector_bytes": 1024,
+      "cagra_int8_vector_graph32_bytes": 1152
+    },
+    {
+      "dimension": 1536,
+      "primary_bytes": 192,
+      "residual_bytes": 1536,
+      "id_and_correction_bytes": 8,
+      "row_bytes": 1736,
+      "raw_fp32_bytes": 6144,
+      "sq8_vector_bytes": 1536,
+      "cagra_int8_vector_graph32_bytes": 1664
+    },
+    {
+      "dimension": 3072,
+      "primary_bytes": 384,
+      "residual_bytes": 3072,
+      "id_and_correction_bytes": 8,
+      "row_bytes": 3464,
+      "raw_fp32_bytes": 12288,
+      "sq8_vector_bytes": 3072,
+      "cagra_int8_vector_graph32_bytes": 3200
+    }
+  ],
+  "cold_train_add_records": {
+    "arxiv-768": {
+      "train_ms": 586.6,
+      "add_ms": 516.4
+    },
+    "openai3-1536": {
+      "train_ms": 636.2,
+      "add_ms": 375.4
+    },
+    "openai3-3072": {
+      "train_ms": 1339.5,
+      "add_ms": 652.7
+    },
+    "vogue-768": {
+      "train_ms": 1056.0,
+      "add_ms": 271.7
+    },
+    "bge-m3": {
+      "train_ms": 3752.8,
+      "add_ms": 3671.3
+    },
+    "stella": {
+      "train_ms": 3736.4,
+      "add_ms": 6666.4
+    }
+  },
+  "resident_samples": {
+    "vogue-768": {
+      "used_mib": 1503.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 2.6674118041992188,
+      "residual_gib": 0.6668529510498047,
+      "residual_share": 0.4542691736794838,
+      "batch": 1000
+    },
+    "arxiv-768": {
+      "used_mib": 2641.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 6.445884704589844,
+      "residual_gib": 1.611471176147461,
+      "residual_share": 0.6247714994604725,
+      "batch": 1000
+    },
+    "openai3-1536": {
+      "used_mib": 2449.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 5.7163238525390625,
+      "residual_gib": 1.4290809631347656,
+      "residual_share": 0.5974926123836355,
+      "batch": 1000
+    },
+    "openai3-3072": {
+      "used_mib": 4243.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 11.432647705078125,
+      "residual_gib": 2.8581619262695312,
+      "residual_share": 0.6897525010605204,
+      "batch": 1000
+    },
+    "bge-m3": {
+      "used_mib": 12211.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 38.49610900878906,
+      "residual_gib": 9.624027252197266,
+      "residual_share": 0.8070463104567938,
+      "batch": 1000
+    },
+    "stella": {
+      "used_mib": 20933.2,
+      "scratch_mib": 93.78,
+      "raw_gib": 67.81240463256836,
+      "residual_gib": 16.95310115814209,
+      "residual_share": 0.8293034789682179,
+      "batch": 999
+    }
+  },
+  "stella_two_pass": {
+    "log": "experiments/adc_v69/RAW_BIG/jhqcold_stella.txt",
+    "source_estimate_bytes": 44662001804,
+    "reported_estimate_GiB": 41.6,
+    "reported_free_at_tail_GiB": 30.6,
+    "actual_peak_measured": false
+  },
+  "timing_boundary": {
+    "harness": "examples/demo_jhq_batch_pipeline.cu",
+    "index_constructor_before_timer": true,
+    "excluded": [
+      "host QR in JLTransform constructor",
+      "cuBLAS constructor warm-up",
+      "sample preparation",
+      "original-file loading",
+      "later schedule calibration"
+    ],
+    "included": "the separately timed train() and add() API calls"
+  },
+  "representation_reference": {
+    "C0_FP64_geometry": "stored-matrix FP64 orthogonality and sampled norms checked on four datasets; actual GPU rotation-error dump not measured",
+    "C1_codebook_and_all_row_correction": "archived pilot completed on three databases; see review-audit.json",
+    "C1_original_input_reencoding": "sampled raw-input FP64 recoding on four datasets; TF32 discrepancies quantified; see data/supplement/audit.json",
+    "C1_independent_full_permutation_audit": "four all-row offsets/ID audits and three ID-joined build comparisons; centroid membership not exported"
+  },
+  "reused_figures": [
+    "fig:7-build",
+    "fig:7-memory",
+    "fig:7-large"
+  ],
+  "new_figures": [
+    "fig:4-architecture",
+    "fig:4-layout"
+  ],
+  "numerical_training_scope": "Current source defaults to int8-assisted assignments under dimensional conditions; archived cold logs do not identify an executed assignment-precision trace.",
+  "review_audit": "data/ch4/review-audit.json",
+  "phase_arrays": {
+    "bge-m3": {
+      "N": 10091524,
+      "row_payload_gib": 10.902218371629715,
+      "one_pass_ten_arrays_gib": 23.045034006237984,
+      "two_pass_repack_arrays_gib": 12.105221778154373,
+      "actual_process_peak": "unmeasured; pipeline/model/allocator costs excluded"
+    },
+    "stella": {
+      "N": 17776615,
+      "row_payload_gib": 19.204684905707836,
+      "one_pass_ten_arrays_gib": 40.594730507582426,
+      "two_pass_repack_arrays_gib": 21.323822550475597,
+      "actual_process_peak": "unmeasured; pipeline/model/allocator costs excluded"
+    }
+  },
+  "supplementary_evidence": "data/supplement/audit.json"
+}

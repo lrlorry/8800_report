@@ -1,0 +1,123 @@
+本文件保留首次第6章实现记录。后续审稿修订以
+assessment/ch6-review-response.txt和当前data/ch6/audit.json为准：新增
+分组路径推论、样本内相对recall界、统计解释、全池工作点及相关工作。
+旧文件中的来源数、页数和“待核对”描述仅指首次实现时点。
+
+第 6 章实现与证据核对
+日期：2026-10-28
+范围：按6.pdf六节骨架撰写中英文第6章，核对代码、ADC方法原稿、已有
+预算实验。未运行新GPU实验，未修改JHQ_GPU，未推送GitHub。
+
+文件
+====
+英文：chapters/06-refinement.tex，06-1-motivation至06-6-scope.tex。
+中文：zh/chapters/06-*；main-zh.tex接入中文第6章。
+新示意图：figures/ch6/calibration-flow.tex、nesting-example.tex。
+表6.1预算对照，表6.2适用条件；实测风险和回本图沿用第7章引用，不
+重复绘图、不改测点。新图中的集合是构造例子，不能当GPU运行记录。
+核对脚本：scripts/audit_ch6.py，输出data/ch6/audit.json。
+
+6.1 预算与成本
+==============
+alpha只决定c=max(k,ceil(alpha*k))，不等于nprobe。有效候选集合应扣除
+哨兵；定理假设至少k个有效且唯一结果ID。降低alpha减少读取的残差，
+不释放数据库残差数组；realloc_ck_buffers只扩容，保留较大容量。
+每个校准预算仍执行整条query流水线，不缓存所有中间结果。成本模型
+包含primary select、refine与final select；不预设alpha越小越快。
+原128-probe o3072固定预算记录确有alpha4比2快；不为该反转编造机制。
+
+6.2 一致性与协议
+================
+A=(200,100,64,32,16,8,4,2)，reference=200，epsilon=1。
+统计Sk-|R_alpha交R_ref|总和为缺失参考槽位数；不是每query容忍1个，
+也不是对称差或有序列表比较。假定结果有效、唯一、长度k；原harness
+使用嵌套ID循环，并未自动替无效ID和重复ID修复这一前提。
+epsilon/(Sk)随S32/64/128分别为0.003125/0.0015625/0.00078125，
+full pool500为0.0002。样本量比较同时改变覆盖与有效严格度。
+偶数500条校准、奇数500条留出，Stella留出499；每draw内部无放回，
+64draws/size，固定srand(12345)并用rand交换，未宣称跨库同seed可复原
+完全相同抽样，也未给独立未来查询置信区间。
+注意实际程序先全查询warm-up，再构造奇偶子池；固定arms/GT oracle
+也先评测，随后run_rule。但是run_rule不读取GT、Arec、Aqps或oracle
+选择，决策仅使用ID一致性。不能按旧注释声称所有搜索之前已分池。
+扫描调度的512个database伪查询校准与本章预算校准不同。
+
+6.3 二分／证明
+==============
+下标0作参考回退，上取中点(lo+hi+1)/2，在降序grid找最大可接纳下标。
+参考+最多3次候选搜索；枚举重做参考+7次测试，统一计时口径。
+run_rule返回grid index，并未自动持久应用选中alpha；尤其枚举之后
+idx停留于最后测试值。调用方执行未来batch前必须set_alpha(A[index])。
+不能把这个benchmark helper写成已有在线部署、自动复用服务。
+采样收集在timer前，search内必要设置、host ID比较计入。set_calibrating
+控制ws.no_graph，校准阶段不反复graph capture。
+Prop6.1要求路由固定、候选嵌套、精排分数固定、共同确定tie全序、最终
+精确top-k。证明参考成员只要存在于较小集合就不会被淘汰；是对参考
+成员单调，不是GT recall或QPS单调。非嵌套示意给出overlap=1,0,1，
+对应降序accepted mask=true,false,true可使二分错过最小被接纳预算。
+复算脚本枚举四对象的全部精排全序与嵌套三级候选池，检查该集合恒等式；
+它检查数学例子，不验证GPU分数、实际C_alpha或实现嵌套。
+原运行头d5e1526的budget harness与当前源码逐字节相同，exact_topck()
+默认开启。ADC MethodPart2仍有K_LOCAL=4旧描述，本章不沿用。
+G>=1用(score,position)；G=0 cutoff ties可任取。S128有8/12两组，
+held-out有10/12单block，8/12换路；同一模型不自动保证跨路径的共同
+浮点分数和tie规则。2304次二分/枚举选中alpha一致是有限决策证据，
+日志未保存全部D_S曲线，不能直接宣称逐点单调。
+
+6.4 对照与GT oracle
+==================
+区分固定100、强固定64及其他小预算、采样二分、同样本枚举、全池
+二分、held-out GT oracle。Oracle用GT下的最佳网格recall减delta=1e-3
+筛选，再按实测QPS最快选；delta与epsilon不同，不可当可部署无标签
+算法。三个timed calls不足以给接近QPS排名严格置信保证。
+固定64/100均10/12达标，两个arXiv失败；200达到12/12 best measured，
+是本实验定义下的高预算control，不是独立质量保证。full pool既改变
+样本覆盖也收紧normalized threshold；不等于oracle或完整枚举。
+
+6.5 风险与经济性
+================
+S128相对固定100的10/12更快区间1.028--1.691倍；相对64为9/12，
+全单元gmean1.054倍。均为mean selected-arm QPS，不是median alpha
+对应QPS，也不是已测自适应stream总吞吐；arXiv平均质量改善但更慢。
+风险相对best tested held-out recall；arXiv越阈40/64、32/64，Stella
+p95=0.0030。记录使用sorted index floor(.95*(64-1))=59；汇总中没有
+全部逐次picks、rawloss、maximum selected loss，不捏造最坏值。
+Tpolicy=Tcal+B_reuse*Tchosen，Tfaster时Bstar=Tcal/(Tf-Tchosen)，
+严格超过才正收益，无时间节省则无吞吐回本。批数使用B_reuse以区别
+前文主码bits B；n=500或499，QPS换ms为1000*n/Q。
+已有cal3.9--21.3ms含参考、测试预算和host agreement；排除样本gather、
+独立schedule calibration。以1/meanQ近似mean1/Q通常乐观；原逐次
+选择未保存，不能从汇总均值恢复精确平均时延或真实回本。
+首次部署graph/capacity设置、样本收集和端到端stream计时仍需新增
+实测，与第4章初始add中已有alloc_workspace不混淆。
+
+6.6 范围与待办
+==============
+已明确reference本身漏召、小样本遗漏、非嵌套ties/换路径、计时噪声、
+短作业不回本、query/index/route改变，以及无效/不足结果风险。
+条件表是解释和部署前核验条件，不冒充已实现自动保护。当前没有
+漂移检测或自动重校准；Tcal/H是拟议周期成本，不是已实现功能。
+缺失测量沿用assessment/ch7-pending-experiments.txt，补充每draw保存
+D_S/选择/评价损失/计时及实际嵌套检查。无GPU，先完成正文。
+
+复算与编译入口
+==============
+python3 scripts/audit_ch6.py
+make pdf
+make pdf-zh
+数据源哈希见data/ch6/audit.json。分析checkout、原记录head和binary
+身份分开；没有补造原binary及trained-state哈希。
+现已完成第4、5、6、7章；第1、2、3、8、9章仍是原骨架，非整篇终稿。
+
+本轮验证结果
+============
+离线脚本从12个原始预算单元复算96个fixed arms、36个RULE汇总和
+36个ENUM汇总，并核对第7章S128数值对应。2304次决策对照差异0；
+路径分布与8/12换路一致。四对象集合例子的6144项有限检查通过；
+这不是新增GPU实验或实际候选嵌套的证明。
+中英文label、citation、交叉引用与displayed equations对应，无写作占位。
+make pdf / make pdf-zh通过，最终日志无未定义引用、Warning、Overfull
+或Underfull。根目录PDF与build副本一致，文本无替换字符。
+已目视检查新流程图、嵌套示例、对照／条件表及完整命题证明的分页。
+当前整稿英文108页、中文92页；其他未写章节仍为骨架。git diff
+--check通过；来源哈希已刷新以涵盖本轮第7章交叉引用和原待补清单。

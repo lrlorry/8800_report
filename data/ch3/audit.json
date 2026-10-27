@@ -1,0 +1,985 @@
+{
+  "scope": "Offline source and archived measurement audit; no new GPU experiment.",
+  "datasets": [
+    {
+      "dataset": "vogue-768",
+      "display": "Vogue",
+      "E1": true,
+      "N": 932328,
+      "d": 768,
+      "nq": 1000,
+      "gt_width": 100,
+      "M": 96,
+      "nlist": 4096,
+      "n_train_requested": 159744,
+      "calibration_n": 500,
+      "held_out_n": 500
+    },
+    {
+      "dataset": "arxiv-768",
+      "display": "arXiv",
+      "E1": true,
+      "N": 2253000,
+      "d": 768,
+      "nq": 1000,
+      "gt_width": 100,
+      "M": 96,
+      "nlist": 8192,
+      "n_train_requested": 319488,
+      "calibration_n": 500,
+      "held_out_n": 500
+    },
+    {
+      "dataset": "openai3-1536",
+      "display": "OpenAI-1536",
+      "E1": true,
+      "N": 999000,
+      "d": 1536,
+      "nq": 1000,
+      "gt_width": 20,
+      "M": 192,
+      "nlist": 8192,
+      "n_train_requested": 319488,
+      "calibration_n": 500,
+      "held_out_n": 500
+    },
+    {
+      "dataset": "openai3-3072",
+      "display": "OpenAI-3072",
+      "E1": true,
+      "N": 999000,
+      "d": 3072,
+      "nq": 1000,
+      "gt_width": 20,
+      "M": 384,
+      "nlist": 8192,
+      "n_train_requested": 319488,
+      "calibration_n": 500,
+      "held_out_n": 500
+    },
+    {
+      "dataset": "bge-m3",
+      "display": "BGE-M3",
+      "E1": false,
+      "N": 10091524,
+      "d": 1024,
+      "nq": 1000,
+      "gt_width": 20,
+      "M": 128,
+      "nlist": 32768,
+      "n_train_requested": 1277952,
+      "calibration_n": 500,
+      "held_out_n": 500
+    },
+    {
+      "dataset": "stella",
+      "display": "Stella",
+      "E1": false,
+      "N": 17776615,
+      "d": 1024,
+      "nq": 999,
+      "gt_width": 20,
+      "M": 128,
+      "nlist": 32768,
+      "n_train_requested": 1277952,
+      "calibration_n": 500,
+      "held_out_n": 499
+    }
+  ],
+  "E1": {
+    "valid_points": 1590,
+    "failures": 0,
+    "reconstructed_call_trace_points": 1458,
+    "batch": 1000,
+    "rounds": 5,
+    "point_counts": [
+      {
+        "dataset": "arxiv-768",
+        "family": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "arxiv-768",
+        "family": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "arxiv-768",
+        "family": "GPU brute force",
+        "points": 1
+      },
+      {
+        "dataset": "arxiv-768",
+        "family": "IVF-PQ",
+        "points": 54
+      },
+      {
+        "dataset": "arxiv-768",
+        "family": "IVF-RaBitQ",
+        "points": 132
+      },
+      {
+        "dataset": "arxiv-768",
+        "family": "JHQ-GPU v69",
+        "points": 29
+      },
+      {
+        "dataset": "openai3-1536",
+        "family": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-1536",
+        "family": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-1536",
+        "family": "GPU brute force",
+        "points": 1
+      },
+      {
+        "dataset": "openai3-1536",
+        "family": "IVF-PQ",
+        "points": 54
+      },
+      {
+        "dataset": "openai3-1536",
+        "family": "IVF-RaBitQ",
+        "points": 264
+      },
+      {
+        "dataset": "openai3-1536",
+        "family": "JHQ-GPU v69",
+        "points": 37
+      },
+      {
+        "dataset": "openai3-3072",
+        "family": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-3072",
+        "family": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-3072",
+        "family": "GPU brute force",
+        "points": 1
+      },
+      {
+        "dataset": "openai3-3072",
+        "family": "IVF-PQ",
+        "points": 54
+      },
+      {
+        "dataset": "openai3-3072",
+        "family": "IVF-RaBitQ",
+        "points": 198
+      },
+      {
+        "dataset": "openai3-3072",
+        "family": "JHQ-GPU v69",
+        "points": 39
+      },
+      {
+        "dataset": "vogue-768",
+        "family": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "vogue-768",
+        "family": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "vogue-768",
+        "family": "GPU brute force",
+        "points": 1
+      },
+      {
+        "dataset": "vogue-768",
+        "family": "IVF-PQ",
+        "points": 54
+      },
+      {
+        "dataset": "vogue-768",
+        "family": "IVF-RaBitQ",
+        "points": 132
+      },
+      {
+        "dataset": "vogue-768",
+        "family": "JHQ-GPU v69",
+        "points": 27
+      }
+    ]
+  },
+  "comparison_registry": [
+    {
+      "claim_id": "E1",
+      "RQ": "RQ4",
+      "evidence_class": "end-to-end measurement",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "e1",
+      "thesis_target": "fig:7-frontiers",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "LUT",
+      "RQ": "RQ2",
+      "evidence_class": "paired benchmark",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "lut",
+      "thesis_target": "fig:7-lut",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "PACK",
+      "RQ": "RQ2",
+      "evidence_class": "paired benchmark",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "packing",
+      "thesis_target": "sec:7-3",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "REFINE",
+      "RQ": "RQ2",
+      "evidence_class": "paired benchmark",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "refinement_gain_range",
+      "thesis_target": "sec:7-3",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "SCAN",
+      "RQ": "RQ2",
+      "evidence_class": "reference correctness",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "correctness",
+      "thesis_target": "sec:7-4",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "BOUND",
+      "RQ": "RQ2",
+      "evidence_class": "reference correctness and paired benchmark",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "bound_gain_range",
+      "thesis_target": "sec:7-4",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "PIPE",
+      "RQ": "RQ2",
+      "evidence_class": "paired benchmark",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "pipeline",
+      "thesis_target": "sec:7-6",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "PROBE",
+      "RQ": "RQ2",
+      "evidence_class": "reference correctness",
+      "detailed_audit": "data/ch7/audit.json",
+      "detailed_field": "correctness",
+      "thesis_target": "sec:5-7",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/build_ch7.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "BUDGET",
+      "RQ": "RQ3",
+      "evidence_class": "held-out assessment and model estimate",
+      "detailed_audit": "data/ch6/audit.json",
+      "detailed_field": "cells",
+      "thesis_target": "sec:7-5",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/audit_ch6.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "BUILD",
+      "RQ": "RQ1",
+      "evidence_class": "end-to-end measurement",
+      "detailed_audit": "data/ch4/audit.json",
+      "detailed_field": "cold_train_add_records",
+      "thesis_target": "sec:7-7",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/audit_ch4_review.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    },
+    {
+      "claim_id": "MEMORY",
+      "RQ": "RQ1",
+      "evidence_class": "resident measurement and component model",
+      "detailed_audit": "data/ch4/audit.json",
+      "detailed_field": "resident_samples",
+      "thesis_target": "fig:7-memory",
+      "provenance": "family-specific source and raw input ledger; see Appendix A",
+      "raw_identity_join": "inputs[] in the detailed audit, or data/ch7/sources.csv",
+      "analysis_script": "scripts/audit_ch4_review.py",
+      "execution_identity_table": "tab:a-components",
+      "timing_and_metric_contract": "sec:3-2 / sec:3-3; family-specific protocol in Appendix A",
+      "executable_sha256": null,
+      "complete_index_fingerprint": null,
+      "complete_vector_file_fingerprint": null
+    }
+  ],
+  "timing_source": "actual CUDA toolkit from nvcc; driver-reported compatibility is not toolkit identity",
+  "preparation_scope": "inspected preparation source and archived dimensions; not byte-level data lineage",
+  "missing": [
+    "complete historical binary, index and exported-vector hashes",
+    "complete retrained frontiers and baseline-training distribution (fixed-point repeats now available)",
+    "arbitrary-subset per-query invariance beyond traced aggregate checks",
+    "new-traffic calibrated-stream timing beyond four replayed fixed pools",
+    "matched cross-system small-batch experiments"
+  ],
+  "prose_word_estimate": {
+    "total": 1909,
+    "per_file": {
+      "chapters/03-1-comparisons.tex": 242,
+      "chapters/03-2-data.tex": 406,
+      "chapters/03-3-measurement.tex": 538,
+      "chapters/03-4-frontiers.tex": 277,
+      "chapters/03-5-ledger.tex": 211,
+      "chapters/03-6-validity.tex": 132,
+      "chapters/03-methodology.tex": 103
+    },
+    "method": "prose/captions, excluding math/table bodies/labels/macros; not official course count"
+  },
+  "inputs": [
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW/budget_v69.log",
+      "sha256": "ea95e51f8d01b5537df93e38da5b6ca411fd7512c7b7b4b56697de817a0d25a0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_bruteforce.jsonl",
+      "sha256": "3528b6fd0e90d59365f069f382845eeef25ae93f8f1ab835136dc420872f63d3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_cagra-int8.jsonl",
+      "sha256": "42aa04654c4345bc2b40640c7444e7262b04cbf076104117c18799fc4b16fe5b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_cagra.jsonl",
+      "sha256": "f2cd9ec1f0a4ce28be213c8a09eec7160a267b19ef83575b354faa41acb0c6fa"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_ivfpq.jsonl",
+      "sha256": "7710f729a9b5323cce5fcf31ad0f3f5a08aa70b180e04e6286f22c172c8b1b11"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_bruteforce.jsonl",
+      "sha256": "ff4967a067c3328f103da498c8c0f50c692ff7092ef039795d7b704104f617f9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_cagra-int8.jsonl",
+      "sha256": "5eea842902cb938b386fe4f8c7194b80e47ccf6049a8f34cf1cfcebd1947e65a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_cagra.jsonl",
+      "sha256": "9302602bd7ce1fe0a5b7b53f8e7255044db5d80d228fb7865c3146d4e1d5a4cc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_ivfpq.jsonl",
+      "sha256": "b593694e874803e35434ba74a53e00d5fcd29842c4e67cd424f71d66b59462bb"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_bruteforce.jsonl",
+      "sha256": "e1b90b9f508f1eda63b5a5c0b004a2659639666eca1c138371319489e5b636d0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_cagra-int8.jsonl",
+      "sha256": "62f94e717083ed5e8b0df873f3d4b260f9cbdb43f9ac6d9fafed51dd7eecb5c3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_cagra.jsonl",
+      "sha256": "ac0ec0a33e0e1d4524501ff796c639f110beb72c9b546363866964fd44761ccc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_ivfpq.jsonl",
+      "sha256": "b5ea67a368fb0f06b935293943ef936b1bd36589ff85a039546685f138a11fef"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_bruteforce.jsonl",
+      "sha256": "69b8d7d3da4cbb6747d583e6660e676f07da2d7d7b1c2c6d51743abe9d1c101b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_cagra-int8.jsonl",
+      "sha256": "4d84ac285614b4fd85ba47d23e2561450162988f4b5d8b310a950709cd2d7e94"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_cagra.jsonl",
+      "sha256": "870a18d5482dc87600b01a25b48bb75ced0a2e35aa7ffbc04854bb409524fc6e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_ivfpq.jsonl",
+      "sha256": "47ca5600a42375576c5faa2c175eaa7f7073c62f840efcffc346b0f6f6d3ad50"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/env_20261014T122843Z.txt",
+      "sha256": "d99fc0e4df937d1684753d6b8ba10c4a03bd0de49a0eeadb42bb2622654f7368"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/env_20261014T130637Z.txt",
+      "sha256": "f8be61398acfcc2aa956b5823b70c3cf5836f6d2338842e10fb2cd7ae059ff51"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np1024_134509.json",
+      "sha256": "dbcd0d8cc9bfc02fb5c4759397cdd9e8e6c7fa2f48a9be7a06e50120c0d31056"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np128_130711.json",
+      "sha256": "241f3cd4005d8cf1e5422167e36f1083c23bbd426d978515fdfb1b9d6a3c748f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np16_143638.json",
+      "sha256": "ff896e447ca9a569d64031bcac144b89898f053d3759a3409e0d8d3062f2e8a6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np192_134433.json",
+      "sha256": "f30561e03aebb474201d0397489637471d078ec75e5c972e4f4badfb940710fc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np256_130719.json",
+      "sha256": "fbbbdfc374c551a0e6b7f7d806ef50d4b2d22669717276dea4b3b607dc248111"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np32_143644.json",
+      "sha256": "4eed8bc3301b87a7f39b1599805f8748dd78d725d0be2926ae3c0f14063ef28f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np384_134443.json",
+      "sha256": "90e32acf7f348bd74bfcc1f902387a1d6f64856cf7de39066e83910c30bbc47f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np512_134455.json",
+      "sha256": "29cdf3193e3e96864914f143dbeeb32949ef063dacc2f12fe1b52deefaa1bea2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np64_130657.json",
+      "sha256": "9bddae03d938894ae8ed1abbf3eae7b1add74dcd26a57ca64f07c544aa693e95"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np96_134426.json",
+      "sha256": "68a3b6eda3b4d1fd2512c0a0c88db4b26e8e62a4acced2d95524f47470b755ce"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np1024_153706.json",
+      "sha256": "704b2f2fdf4ad0f42674ad78e8f72815e08f7ab0202c03af71d24d27338bf6db"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np1024_153736.json",
+      "sha256": "2f5ddce396a657638f82faa6e1d58a7c4ffa2dad6f61bd7600b312a3d0a3b4ff"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np128_143740.json",
+      "sha256": "e117ddf903bca4ed043b46bfde8be3d002c46c0cdd4514ed04134ac5c14f4163"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np256_143749.json",
+      "sha256": "ba281003a609771b64348e1bc66a64648707398525ad2132c3fb73ebda5c64f5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np256_153624.json",
+      "sha256": "ea584e4553cec2fdb824933c7fea5aa5f370eea797861bc3d5a35a101d0def6a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np32_151219.json",
+      "sha256": "6c8a110d694eb261fd36a39c103c212a28cbb9a57a2ccb810f38eaa788ff5d38"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np512_143801.json",
+      "sha256": "c97404be879d250e5bd1082258c20cd0e8f7fa43022682752196ebdd095aabd6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np512_153643.json",
+      "sha256": "ba64934aea0b158cc3eba5e4e5b14499c7c5465911c2df9f603975f85c6aa3ed"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np64_143727.json",
+      "sha256": "b47c6ae01c543ea0fe622ac276818752a085f1ca19ad52767fd222dce0d0d334"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np1024_143515.json",
+      "sha256": "e7f0424a13b3b80c69c4c63e10bce07ed7aa2c993bd531bb2117d842fffa92ac"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np1024_143555.json",
+      "sha256": "0ef00a154ec7cc97be36f046c13a59f2dddfa2f46b69ee0ae98d9f4264d8b74c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np128_134545.json",
+      "sha256": "0fa8b11cbde2e6eeb6ffa3ef28293b1b667d653adb18e2714c0caa5359b972f8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np128_143408.json",
+      "sha256": "7e52b2b37129d2f3a53281348f7a056e92874660596b0e71be466b1c5398a3cd"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np256_134601.json",
+      "sha256": "58cb3f8f7fa39f02817842cc7c3ba6d903481523e50ca639ce1c7838508aed8c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np256_143426.json",
+      "sha256": "7263bbd461f10e9e4a2c30fd5f0b2cf4e0a3ce0974f4dc6c43910d3263ed0c25"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np32_143651.json",
+      "sha256": "ed051bbc2af745ff07926d5503cfb5222f9b399b6f6493d4a12d843c9e1fefe6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np512_134622.json",
+      "sha256": "8199f0adb0a01f13c442480bfa4ef4b40bc619c39a6d520267a843517465c731"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np512_143448.json",
+      "sha256": "c2b1c2ba4a09b28af4f2accedafa005e7be965b299bf3b12e1a8268509c6aaba"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np64_134524.json",
+      "sha256": "37f756d08ce03d20813bc704fd7968c6a1fc8962b2b143d4c44e612d4e9c3459"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np128_130643.json",
+      "sha256": "6eba6c3f597d5e24fa7873218adddb48b9c0ae393a233da42e598fdab10a13b7"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np16_143630.json",
+      "sha256": "b2758edd98b9d6da842896a6887732ff27e1ff53113817967240a3af9de3ba7d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np192_134358.json",
+      "sha256": "803d12dae15d5a997677a52ee05a8c287f3d16db07ebe6c95b63a86733a29de3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np256_130649.json",
+      "sha256": "2f76b911f1b93c16d4535e689f3f5e69e5d1ab69f2edbf0aa2e1eaa022459d77"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np32_143634.json",
+      "sha256": "7f9c802258f57772967d70635520627c7d6e10bb352400cac34b8ab6a6d1c6e6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np384_134406.json",
+      "sha256": "e4291f03c21be8a978acc4dc43266b758abe994a27f7422fb376914387a5331b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np512_134415.json",
+      "sha256": "60009dadc3a728bf1ca55e18f14aa6b66354c1adaf21b32951258a857b96ceb2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np64_130637.json",
+      "sha256": "cc7cf09182312c8c06984796e3dd719e6c931fc46eb480824560ebcf0fb69260"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np96_134352.json",
+      "sha256": "0c6360ad2c6bd4874be85867d70e9bb12ba248b319b4b31a3dd908fd1e2aadad"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_arxiv-768.json",
+      "sha256": "7e47cfe197aa95281ebf92da4cad88adbd277e933eba25408797eeca3e6affa0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_openai3-1536.json",
+      "sha256": "72e93edb46873d29af1da9820ca1d45d91adcdae66c225e02fadddb3d988092f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_openai3-3072.json",
+      "sha256": "2fed174c44de851f3409d9419fda3fbd22b72435e3870da47b1b76b2cd27c0b3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_vogue-768.json",
+      "sha256": "29b4360eb71be453848efb2d982b32f6a638c87252abe8053b2e880c6386d842"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_arxiv-768.jsonl",
+      "sha256": "b55ec5df2211573a9574d26155d13468e74fb916050bcc9bf1821ca4115f1422"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_openai3-1536.jsonl",
+      "sha256": "2b7896e95fd7b3f1176ef988fd5dbb8dd1a1f8b57b21f81bf2897e823bf67510"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_openai3-3072.jsonl",
+      "sha256": "2a5439053d708e97a7ccc5f4fb779e6ac5f04300639cd44ef0356ce050148317"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_vogue-768.jsonl",
+      "sha256": "c5b82676c036c71223f42a41904e0d9c3ef756edcdf3b4a9dbe068455d50d81e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/run_e1.sh",
+      "sha256": "1a2c6071c3c14e397c43a9cf78a0a7c2e236593d31ba0659c86e41862f927db2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/analyze.py",
+      "sha256": "b74c51fee0544347d952483fc08be9ec42d7f9d18d1c57dfff74ff11b69feca9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/bench_cuvs.py",
+      "sha256": "12f8049fcc02ba048c4105ecf649414b10b8539fbf220e6adcf3208d7a691d13"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/bench_rabitq_sweep.cu",
+      "sha256": "318b6f548cea9853ab1ced3d686f027a29ffb625a735d94f1c6889f5e55207ec"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/FAIRNESS_AUDIT.md",
+      "sha256": "eadc3e5be401a201a9ab4fa2085718a2ae03f7d61038f181f27e3ff863a3c50d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/run_budget_v69.sh",
+      "sha256": "fc08ef4fc5f57a67e728f4e3b691dbbe9d76b21e32a67ec755e4d28c67512261"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/run_lutgroups_v71.sh",
+      "sha256": "4066083a1dc8d86216087b5597b2f2b35e58b2b6fce40c5e48e34ed8a13ba982"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_budget_arms_v69.cu",
+      "sha256": "6994879be3f86dd4fc27995ae76cf0a4e4509ef6fb02577c5ff303e1b3641903"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_batch_pipeline.cu",
+      "sha256": "ac13613c2f8ae7d8087fa5e7b0658a88824c1c5aa89dbc7eff8c3b01e2f52439"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "common/recall.cuh",
+      "sha256": "d89829f782c4f530269844e7564c30edc1c66260bf03f479e42d091aba535687"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "scripts/preprocess.py",
+      "sha256": "63cb9e412782127e526e37ee3c36288947d1b8e35dbbafa33d6adc30115630f5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "scripts/download_jhq_datasets.py",
+      "sha256": "2628ebf56c6a92995a93adae6d6af3643ce6c5e6d885c8a3e19a8f8a53719484"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/Experiment_ADC.tex",
+      "sha256": "69c300671bc2229c3052e0f959228be884c8789bd8a533524f9f40bb8ee765ae"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/reference.bib",
+      "sha256": "deb49d0328a1f4b98c6b252a425459d7bed511cdb2679d5dce7e25429e7f7b15"
+    },
+    {
+      "repository": "user_local_poster",
+      "path": "Documents/26 s1/COMP8800/my poster/poster.pdf",
+      "sha256": "786f67e418c8707294da12f42efc671e961ff8446d34a2bda962fd2d2ef98636"
+    },
+    {
+      "repository": "8800_report",
+      "path": "6.pdf",
+      "sha256": "3f637e9b8ddbfc8f1b0321c61972bc453ca10a959a928bd435102bf60a01a037"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/thesis-marking-guide.txt",
+      "sha256": "ad6676136be5892d0db85943d0b3b9c365bb34088ea9a45ee5e3eb6b1e89f1a1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch3-evidence.txt",
+      "sha256": "67ad33c1dbcda8b02f65188c6e863ab51cc0031ba73041bed6f99e810fee8a68"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "92cb71a868c31bd0b538cc4baf76f2ba8e8f2ce1d421ff6a2178164da6e2b348"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "51a16c3559542e7c48a6b35867c37a8ae3ae31ec85cb58fb39ce7c1a93de0bbd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "17c1d33d41d38f2732133db4d2af419dfa6a20520fa47bf9e4a04c3e4be48f46"
+    },
+    {
+      "repository": "8800_report",
+      "path": "main-zh.tex",
+      "sha256": "c075bc516292f4fcbf1876697e6d87a9945ec170aa18f52bf6edb6f38afce1d8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_ch3.py",
+      "sha256": "e01320094767e744f300d5c28c3f2c342be2242041a881633d39bb2ec10106a3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch3/datasets.tex",
+      "sha256": "6c1d82243c399ae1f3a0146d05ed8d5a8dc8232ae451fae0f572af3e05188797"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/ch3-datasets.tex",
+      "sha256": "6aa6eae048a6eaccfedbbdb8256ace12f50fe99c564de8379ae7742f256dab48"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch7/audit.json",
+      "sha256": "cf9cd5124efce4d51956805955391edf1ddd78c3632ff2c8768d26ba5f1c0680"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch4/audit.json",
+      "sha256": "f6ae13b42d1473186155e173914f955c338f0ec7f269d228ec006bc063266cab"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch6/audit.json",
+      "sha256": "7ad32194b6c1379e131d3a2e507c92f2fc33f0e7ba2f6c1d99edfd14b4c792cf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch7/round2-audit.json",
+      "sha256": "ed3a869b12cbc9179ac5068a5306d0894d8be9e6e4d2fc2e9782bc412c5128a2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch3/sources.json",
+      "sha256": "8e13d8dd816644c0c65843cb7811dd534297615acf749339a45ff59747908ffa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-1-comparisons.tex",
+      "sha256": "1e17e15b6a248594ad7fbd21ede6e654e1eb4036ac5280dac418019c94ae7b93"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-2-data.tex",
+      "sha256": "05be4a4b1e9d888a4e42e68e331db156d7c251082e2df163a94fdccfbc380b3c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-3-measurement.tex",
+      "sha256": "d532c1735d6b59bf13fa694db10d2830baee6c6bcb6d0358144552d238c1c6d5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-4-frontiers.tex",
+      "sha256": "0895c5358e8a5860e7ac92c1a4d5c364a10e70ad0640dbbc78015c2cf4927eb6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-5-ledger.tex",
+      "sha256": "52eeb1144febc1010962935408a4481886c9c73b794df81afe1afb7baefdf265"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-6-validity.tex",
+      "sha256": "a08866e562ff6a95737bf69aad8f068d2e778093b2cfaacc20714c3dc670a429"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-methodology.tex",
+      "sha256": "5cf4f485986d056648715d237e278d3be8c7ada98dbf6f971b85825a8b655d9c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-1-comparisons.tex",
+      "sha256": "d708f1572ea38b2201422e0bb70576336501feef284d3a1718d81222c57c26ea"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-2-data.tex",
+      "sha256": "eb25f114345bd382dfed6752ab03b8a358b4565b35c48682d94a5b5bbd2f9485"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-3-measurement.tex",
+      "sha256": "5912e5925e5f585d37e8a43d31fe192be27b124788ac7b6c822de087ce871beb"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-4-frontiers.tex",
+      "sha256": "6e1d89e0d9f0619b7f59164ce96c102eb73e8f6a15b78fa380dafad98630b39f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-5-ledger.tex",
+      "sha256": "037ae5f3e934cc37ad0e6247e2dc7adc4dfe8e242b8908294b2487cc24ce62ca"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-6-validity.tex",
+      "sha256": "f140735052985b6ac451ec4f40509b5bb1e16bc6104c0cdd309937bb459e7d22"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-methodology.tex",
+      "sha256": "dbae06970aa2d8808911fb4f301b2bc5bc0a3ed01d6a2535682cdca1cb63bd4a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch3/measurement-boundary.tex",
+      "sha256": "5ed7ed9097899ef462d051f9082b6d48838aa4d94eff3b5888bdae21a4205d83"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/figures/ch3/measurement-boundary.tex",
+      "sha256": "8812b6e2213595e0c68e3af15187fe4e879d63188f713ef4558d998b34be18cb"
+    }
+  ]
+}

@@ -1,32 +1,37 @@
-% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{Background and Critical Related Work}
 \label{ch:background}
-\draftnote{Explain only background used by the thesis. Compare alternatives critically and distinguish inherited JHQ properties from this work.}
+\chaptermark{Background and Related Work}
+An ANN system combines a candidate-access strategy, a representation and a
+selection procedure. Their costs interact: a compact code can require an
+expensive scorer, and an accurate scorer cannot recover a vector excluded
+earlier. This chapter establishes the technical vocabulary for those
+interactions, identifies what is inherited from JHQ, and compares the
+alternatives that motivate the GPU execution and budget questions.
 
-\section{Formal ANN Objective and Metrics}
+\section{ANN Objective and Metrics}
 \label{sec:2-1}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/02-1-objective}
 
-\section{IVF, PQ, ADC and Residual Refinement}
+\section{IVF, PQ, ADC and Refinement}
 \label{sec:2-2}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/02-2-hierarchy}
 
-\section{Inherited JHQ: Rotation, Cartesian Codes and Assumptions}
+\section{JHQ Representation and Assumptions}
 \label{sec:2-3}
-\draftnote{State that the orthogonal transform is square. Define the primary codebook using its actual formula, residual relative to primary reconstruction, and valid parameters.}
+\input{chapters/02-3-jhq}
 
-\section{GPU Execution Concepts Used Here}
+\section{GPU Execution Concepts}
 \label{sec:2-4}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/02-4-gpu}
 
-\section{GPU Graph Search: SONG, CAGRA and BANG}
+\section{Graph Search on GPUs}
 \label{sec:2-5}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/02-5-graphs}
 
-\section{Quantised ANN, Fast Tables and Modern Alternatives}
+\section{Quantised Search and Fast Tables}
 \label{sec:2-6}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/02-6-quantised}
 
-\section{Critical Synthesis and Precise Research Gap}
+\section{Research Gap and Design Choices}
 \label{sec:2-7}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/02-7-gap}

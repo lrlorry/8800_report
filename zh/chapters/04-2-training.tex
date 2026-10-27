@@ -1,0 +1,97 @@
+\subsection{变换与采样}
+
+实现在主机生成带 seed 的高斯矩阵，通过 LAPACK QR 构造方形正交矩阵 $\Pi$。对行优先训练数据 $X_t$，设备矩阵乘法计算
+\begin{equation}
+ Y_t=X_t\Pi^{\mathsf T},\qquad y=\Pi x,\qquad
+ \|\Pi(q-x)\|_2^2=\|q-x\|_2^2
+ \quad\text{when }\Pi^{\mathsf T}\Pi=I.
+ \label{eq:4-transform}
+\end{equation}
+输出保留维数 $d$。这是正交坐标变换；QR 构造及设备乘法存在有限精度误差，其测量属于\cref{sec:4-6}的 C0。
+
+测试程序按固定步长选择数据库行。主码／IVF样本为Vogue 159,744行，arXiv及两个
+OpenAI各319,488行，BGE与Stella各1,277,952行，均为$39n_{\rm list}$。
+这与FAISS默认的每质心39训练点警告阈值一致\cite{faiss_clustering}，是采样规则，
+不是八轮IVF拟合的统计保证。残差训练另用100,000行等距样本，成本不随较大粗训练样本增长。
+
+历史受控扫描固定主模型和 IVF 中心，仅改变 Vogue 与 OpenAI-3072 的残差训练样本量，覆盖 $B_r\in\{4,8\}$ 和 32/128/256 探针。12 个配置中，100K 相对全量的召回率差值最大为 $0.0018$：11 项较低、1 项相等。增加到中间样本量没有带来单调提升，残差码本身也发生较大变化。这支持有界训练成本的取舍，同时保留可测量的质量损失。该扫描使用 25 轮残差 Lloyd，不能替代之后六个数据集的评测。历史诊断及输入哈希见 \path{data/ch4/review-audit.json}。
+
+\subsection{为何保留解析主码模型}
+
+主码构造器由样本估计共同尺度：
+\begin{equation}
+ \sigma^2=\frac{1}{n_t d}\sum_{i=0}^{n_t-1}\|x_i\|_2^2,
+ \qquad D_s=d/M,\qquad K=2^B.
+ \label{eq:4-scale}
+\end{equation}
+在 $B=D_s=8$ 时，笛卡尔码本使用 $\{-a,+a\}$ 两级，$a=0.674\sigma$；每字节表示八个符号位。这保留 JHQ 的解析构造\cite{jhq}，支持逐坐标 $O(d)$ 编码，以及\cref{sec:5-2}的小 LUT 精确因子化。对每子空间 256 个码字自由执行 Lloyd 优化，通常会破坏这种可分离性。
+
+固定符号重建 $\widehat p=a s$，$s_j\in\{-1,+1\}$ 时，
+\begin{equation}
+ \|q'-a s\|^2=\|q'\|^2+da^2-2a\langle q',s\rangle.
+ \label{eq:4-sign-ranking}
+\end{equation}
+当 $a>0$，这些固定符号码的实数算术主码排序与尺度无关。这一代数性质无需高斯坐标假设。但尺度仍改变残差 $r=\Pi x-\widehat p$、拟合残差码本和精排顺序；$a=0$ 是退化情况，浮点并列仍须处理。
+
+早期前沿诊断说明了取舍。在 Vogue、$M=96$、$B_r=4$、128 探针下，早期构建与解析主码构建的 primary-only recall 分别为 0.6618 和 0.6342，而完整系统为 0.9452 和 0.9409。残差精排缩小了观测差距。这是包含残差训练变化的历史跨版本比较，不能作为仅替换主码码本的单因素因果估计。本设计选择的是 GPU 执行成本较低的结构化表示；第七章评价其完整质量与成本前沿。
+
+\subsection{粗分配的过滤与精算}
+
+IVF 中心从变换样本的等距行初始化，执行配置的八轮更新。分配按 $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$ 排序。源码提供 FP32 与加速分配路径；满足通常的维数约束时，默认用 int8 乘积过滤，再用 FP32 重算有歧义的选择。
+
+\begin{lemma}[具有认证分数区间的分配]
+\label{lem:4-assignment-bound}
+令 $\widetilde y,\widetilde\mu_\ell$ 为反量化近似，$e=y-\widetilde y$，$f_\ell=\mu_\ell-\widetilde\mu_\ell$。保持中心范数精确时，近似分数
+$\widetilde s_\ell=\|\mu_\ell\|^2-2\langle\widetilde y,\widetilde\mu_\ell\rangle$
+的实数算术误差满足
+\begin{equation}
+ E_\ell=2\bigl(\|y\|\|f_\ell\|+\|e\|\|\widetilde\mu_\ell\|\bigr).
+ \label{eq:4-assignment-bound}
+\end{equation}
+若每个目标分数均处于有效区间 $[L_\ell,U_\ell]$，仅丢弃 $L_\ell>\min_j U_j$ 的中心，并精确处理剩余分数，则保留最小值及约定的并列规则。
+\end{lemma}
+\begin{proof}
+将内积误差展开为 $\langle y,f_\ell\rangle+\langle e,\widetilde\mu_\ell\rangle$，应用 Cauchy--Schwarz。被丢弃分数大于某个保留分数的上界，因此不能取得最小值；保留区间相等情形则不会丢失可能的并列者。
+\end{proof}
+
+实现用保守范数界与 FP32 余量常数实现这一过滤与精算模式。引理说明有效界为何允许精确排除；若要求与每种 FP32 累加顺序逐位一致，还需要覆盖相应算术误差的界。已归档诊断对比 FP16 路径，在 Vogue、BGE、Stella 尾批次分别记录 0/14,838、6/31,748、3/16,359 个分配差异。这是有限实现证据，不是完整 FP32 参考认证；冷建日志也未追踪实际执行的分配精度。
+
+\subsection{残差拟合与迭代预算}
+
+IVF 拟合先于残差拟合。后者用固定主模型编码样本，形成 $r=\Pi x-\widehat p(x)$，独立于分配的 IVF 中心。每个子空间拟合一个含 $K_r=2^{B_r}$ 项的有序标量码本，由其 $D_s$ 个坐标共享。GPU 估计器排序残差值，再执行一维 Lloyd 更新；评测配置的上限为 2,000 轮。
+
+\begin{table}[tbp]
+\centering
+\caption{历史残差迭代诊断（100K 样本）。Recall@10 从 25 到 2,000 轮明显提升，此后变化较小且不单调；这些不是第七章最终基准点。}
+\label{tab:4-lloyd}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+数据集 & 上限 25 & 上限 2,000 & 上限 5,000 & 上限 40,000 \\
+\midrule
+Vogue & 0.9770 & 0.9846 & 0.9843 & 0.9845 \\
+BGE & 0.9514 & 0.9585 & 0.9592 & 0.9586 \\
+Stella & 0.9852 & 0.9915 & 0.9921 & 0.9916 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:4-lloyd}支持质量收益递减下的固定预算选择：2,000 相对 25 轮提升 $0.0063$--$0.0076$ recall。后续变化可能超过 BGE 与 Stella 已报告的两次运行波动，因此该诊断未确立统计上严格的平台。诊断还观察到稀疏尾部 bin 持续变化；这是对所实现浮点更新的观察，不是精确 Lloyd 下降定理失效。包括 Stella 在内的冷日志达到上限，因此将训练描述为有预算的迭代拟合。早期协议在上限 20,000 时，Stella 全量与 100K 样本的结果分别为 0.9921 和 0.9920。
+
+\subsection{构建工作量与观测不均衡}
+
+稠密 QR 一次成本为 $O(d^3)$，旋转为 $O(n_t d^2)$。直接粗分配每轮为 $O(n_t n_{\rm list}d)$。解析主码构造写入 $O(MKD_s)$ 个值；残差提取访问 $O(n_r d)$ 个坐标，再执行排序与标量更新。这些描述工作量，而非预测延迟。
+补证正常运行的Vogue训练为298--303\,ms，归档1.06\,s不能代表这些重复。
+同步阶段诊断中，BGE／Stella训练约83\%在IVF k-means（约2.97\,s）。
+诊断强制同步且add仅用一个缓冲区，其阶段合计须与正常重叠构建分开
+（\cref{sec:4-5}）。
+
+最终列表不均衡直接影响扫描调度：第五章使用实测候选数 CV，Vogue 已归档的 0.34--0.62 触发分组。八轮 IVF、等距种子和有限采样描述建库策略，但各自对不均衡的因果贡献尚未单独隔离。
+
+\paragraph{被测实现的算术精度。}
+评测实现v69使用FP32矩阵存储，但在$d\geq1{,}536$时启用cuBLAS TF32 tensor-core
+算术：编译期faithful分支将覆盖值置空，随后落入按维度选择的默认分支。
+这影响两个OpenAI数据集在训练、add、查询时的旋转及质心GEMM，环境变量无法覆盖
+该编译分支。因此FP32存储不代表完整FP32乘法。FP32变体v72修正了这一开关；
+敏感性实验复用同一TF32训练缓存，只改变add／查询算术，没有以FP32重新训练模型
+（\cref{sec:7-precision}）。

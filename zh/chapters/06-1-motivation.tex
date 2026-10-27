@@ -1,0 +1,33 @@
+JHQ 先用主码筛选路由候选，再为较小的保留集合读取残差\cite{jhq}。对查询 $q$，令 $U(q)$ 为选定 IVF 列表中的候选。精排乘数决定
+\begin{equation}
+ c(\alpha)=\max\{k,\lceil\alpha k\rceil\},\qquad
+ C_\alpha(q)=\operatorname{Top}^{\rm primary}_{\min\{c(\alpha),|U(q)|\}}U(q).
+ \label{eq:6-budget}
+\end{equation}
+这里 $C_\alpha$ 指有效保留候选。实现预留 $c(\alpha)$ 个槽位，候选不足时可用哨兵填充。分析假定至少有 $k$ 个有效候选。增大 $\alpha$ 扩展已访问列表内的精排容量；增大 $n_{\rm probe}$ 改变访问的候选全集。两者均不能自动恢复另一阶段丢失的信息。
+
+较大的固定 $\alpha$ 可能反复精排不改变最终 top-$k$ 的候选；较小值则可能在残差评分前丢弃有用近邻。取舍依赖查询群体、主码重建、列表覆盖及精排分数顺序，因此一个全局默认值未必适合所有数据集—探针数组合。评测网格在 $k=10$ 时覆盖 $c=20$ 至 $2{,}000$。切换预算复用同一训练索引和常驻残差。降低乘数减少访问的残差行，不释放常驻残差表示。候选缓冲区在容量不足时扩展，之后保留该容量，因此较小预算不代表分配显存按比例下降。
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch6/budget-scope}
+\caption{精排预算改变主码评分之后的工作。固定查询、索引与探针数时，路由候选全集不变。着色阶段依赖保留容量；这是逻辑工作量分解，不是实测阶段耗时。扫描内核还执行随预算变化的接纳和压缩。候选少于 $c$ 时需要填充。}
+\label{fig:6-budget-scope}
+\end{figure}
+
+解释性的延迟分解为
+\begin{equation}
+ T(\alpha)=T_{\rm base}+T_{\rm select}(c(\alpha))+
+ T_{\rm refine}(c(\alpha))+T_{\rm final}(c(\alpha)).
+ \label{eq:6-cost-model}
+\end{equation}
+固定批次和路由时，$T_{\rm base}$ 包含传输、旋转、路由和主码分数生成；选择、残差评分及最终选择依赖候选容量（\cref{fig:6-budget-scope}）。这是工作量模型，不是拟合的延迟预测器。缓冲容量、launch occupancy 与资源阈值可阶梯变化。小预算时固定成本形成吞吐平台。OpenAI-3072在128探针的十轮交替重测中，
+$\alpha=4/2$为142.3／142.7 kQPS，未复现归档145.0／128.7 kQPS的反转
+（\cref{sec:7-budget-trace}）。策略最小化接纳预算，不优化有噪声的计时排名。
+
+每个校准试验仍先执行旋转、探针选择和主码评分，再精排。复用索引避免重建或重训练，但不跨预算试验缓存全部查询中间结果。因此，校准成本要计算完整搜索，不能只计两个残差评分工作量之差。
+
+策略为索引、路由配置、$k$ 和查询工作负载选择一个预算，既不训练逐查询预测器，也不为每条到达查询在线决策。扫描分组仍是\cref{sec:5-5}的独立机制；解释预算校准时仍须考虑它实际选择的执行路径。
+
+\paragraph{在自适应 ANN 方法中的定位。}
+该乘数与 FAISS 的 \texttt{IndexRefine::k\_factor}、cuVS 精排比例承担相同的候选池规模角色\cite{faiss_refine,cuvs_refinement}。FAISS auto-tuning 用 GT 评价准则探索速度—精度工作点\cite{faiss_autotune}。Li 等从搜索特征学习逐查询终止条件\cite{li_termination}；DARTH 在执行期间预测 recall，在请求目标处早停\cite{darth}。本方法通过参考输出覆盖率，为无标签工作负载校准一个可复用预算，未训练 recall 预测器。最终评分仍基于压缩重建，而 cuVS 的精排示例重排原始来源向量。这些区别分别定位工作量参数、其选择机制与评分表示。

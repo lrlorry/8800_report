@@ -1,0 +1,21 @@
+% Protocol diagram, not a measured stage-time plot.
+\begin{tikzpicture}[
+ font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+ text width=2.55cm,minimum height=1.55cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (host) at (0,0) {Host FP32 queries\\Pinned staging};
+\node[box,fill=ThesisNavy!7] (upload) at (3.5,0) {H2D transfer\\Query preprocessing};
+\node[box,fill=ThesisNavy!7] (gpu) at (7,0) {GPU search\\Selection / refinement};
+\node[box] (result) at (10.5,0) {D2H IDs and scores\\Stream completion};
+\draw[arr] (host) -- (upload);
+\draw[arr] (upload) -- (gpu);
+\draw[arr] (gpu) -- (result);
+\draw[ThesisNavy,thick] (-1.4,1.15) -- (-1.4,1.45) -- (11.9,1.45) -- (11.9,1.15);
+\node[fill=white,inner sep=3pt] at (5.25,1.45) {Primary host-to-host timed interval};
+\node[box,text width=5.7cm,minimum height=1.3cm] (setup) at (1.65,-2.35)
+ {Outside search timing\\Load data / train or load model / add / warm-up};
+\node[box,text width=5.7cm,minimum height=1.3cm] (cal) at (8.65,-2.35)
+ {Separate policy cost\\Calibration; reuse cost model};
+\draw[densely dashed,ThesisNavy!60] (-1.4,-1.1) -- (11.9,-1.1);
+\end{tikzpicture}

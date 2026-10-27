@@ -1,0 +1,33 @@
+Graph ANN replaces list scanning with navigation through promising
+neighbourhoods. Its benefit is to avoid scoring most database vectors;
+its GPU difficulty is the dependency between discovering a neighbour and
+deciding which neighbourhood to expand. SONG separates graph search into
+stages to expose distance parallelism and controls dynamic memory overhead
+\cite{song}. This is an alternative access strategy, rather than a different
+implementation of JHQ's fixed routed candidate universe.
+
+CAGRA designs graph construction and search for GPU parallelism, including
+small- and large-batch queries \cite{cagra}. Its graph connectivity and
+search width expose a different tuning surface from IVF probes. Storing
+edges and vectors creates a capacity trade-off; quantised-vector CAGRA is
+also relevant, so fp32 CAGRA alone is an incomplete compressed-index
+comparison. The thesis measures both in E1. Their different operating
+regions are reported under the common boundary rather than inferred from
+cross-paper speedup numbers.
+
+BANG targets a different capacity regime: it keeps compressed vectors on
+the GPU and accesses the host-resident graph through CPU/GPU cooperation
+\cite{bang}. Capacity is obtained by distributing the working structures,
+with transfer and coordination becoming part of the design. Its billion-scale
+results demonstrate an alternative to complete device residency, not
+capacity evidence for this thesis. The present JHQ implementation retains
+its compressed search index on one device and has no comparable host-graph
+execution path.
+
+The comparison therefore turns on access regularity, representation and
+residency, not a general graph-versus-quantisation hierarchy. Graph navigation
+can be attractive for a small number of queries; list scans expose regular
+code access and abundant batch work. Either can be bottlenecked by selection
+or movement. Which wins at a target recall is an empirical question for a
+specified device, memory budget and workload. E1 tests that question at batch
+1,000; internal small-batch JHQ gains do not answer it for graph competitors.

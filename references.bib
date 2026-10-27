@@ -1,6 +1,126 @@
 % Starter bibliography copied from JHQ_GPU/paper_adc2026/ADC/reference.bib.
 % Review publication metadata against the primary sources before submission.
 
+@misc{adc_artifact,
+  author = {Luo, Rui and Zhang, Mengxuan},
+  title = {{JHQ-GPU}: Representation-Driven {GPU} Execution and Workload-Adaptive Hierarchical Refinement},
+  year = {2026},
+  note = {Project manuscript artifact; its historical measurement versions are distinguished in this thesis}
+}
+
+@article{mailman,
+  author = {Liberty, Edo and Zucker, Steven W.},
+  title = {The {Mailman} algorithm: A note on matrix--vector multiplication},
+  journal = {Information Processing Letters},
+  volume = {109}, number = {3}, pages = {179--182}, year = {2009},
+  doi = {10.1016/j.ipl.2008.09.028},
+  url = {https://www.cs.yale.edu/publications/techreports/tr1402.pdf}
+}
+
+@inproceedings{song,
+  author = {Zhao, Weijie and Tan, Shulong and Li, Ping},
+  title = {{SONG}: Approximate Nearest Neighbor Search on {GPU}},
+  booktitle = {IEEE ICDE}, year = {2020}, pages = {1033--1044},
+  doi = {10.1109/ICDE48307.2020.00094},
+  url = {https://www.cs.rit.edu/~wjz/papers/conference/2020-icde-song.pdf}
+}
+@misc{bang,
+  author = {{Karthik V.} and Khan, Saim and Singh, Somesh and
+            Simhadri, Harsha Vardhan and Vedurada, Jyothi},
+  title = {{BANG}: Billion-Scale Approximate Nearest Neighbor Search using a Single {GPU}},
+  year = {2025}, eprint = {2401.11324}, archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2401.11324v4}, note = {Version 4}
+}
+@inproceedings{gpu_topk,
+  author = {Zhang, Jingrong and Naruse, Akira and Li, Xipeng and Wang, Yong},
+  title = {Parallel Top-K Algorithms on {GPU}: A Comprehensive Study and New Methods},
+  booktitle = {SC '23}, year = {2023}, doi = {10.1145/3581784.3607062},
+  url = {https://sc23.supercomputing.org/proceedings/tech_paper/tech_paper_pages/pap294.html}
+}
+@inproceedings{opq,
+  author = {Ge, Tiezheng and He, Kaiming and Ke, Qifa and Sun, Jian},
+  title = {Optimized Product Quantization for Approximate Nearest Neighbor Search},
+  booktitle = {IEEE CVPR}, year = {2013}, pages = {2946--2953},
+  doi = {10.1109/CVPR.2013.379},
+  url = {https://openaccess.thecvf.com/content_cvpr_2013/html/Ge_Optimized_Product_Quantization_2013_CVPR_paper.html}
+}
+@misc{rabitq,
+  author = {Gao, Jianyang and Long, Cheng},
+  title = {{RaBitQ}: Quantizing High-Dimensional Vectors with a Theoretical Error Bound for Approximate Nearest Neighbor Search},
+  year = {2024}, eprint = {2405.12497}, archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2405.12497}, note = {SIGMOD 2024 paper}
+}
+@misc{rabitq_multi,
+  author = {Gao, Jianyang and Gou, Yutong and Xu, Yuexuan and Yang, Yongyi and
+            Long, Cheng and Wong, Raymond Chi-Wing},
+  title = {Practical and Asymptotically Optimal Quantization of High-Dimensional Vectors in Euclidean Space for Approximate Nearest Neighbor Search},
+  year = {2024}, eprint = {2409.09913}, archivePrefix = {arXiv},
+  url = {https://arxiv.org/abs/2409.09913}
+}
+@inproceedings{scann,
+  author = {Guo, Ruiqi and Sun, Philip and Lindgren, Erik and Geng, Quan and
+            Simcha, David and Chern, Felix and Kumar, Sanjiv},
+  title = {Accelerating Large-Scale Inference with Anisotropic Vector Quantization},
+  booktitle = {Proceedings of the 37th International Conference on Machine Learning},
+  series = {Proceedings of Machine Learning Research}, volume = {119},
+  pages = {3887--3896}, year = {2020},
+  url = {https://proceedings.mlr.press/v119/guo20h.html}
+}
+
+@misc{data_vogue,
+  author = {Assi, Tony},
+  title = {Vogue933k embeddings},
+  howpublished = {Hugging Face Datasets},
+  year = {n.d.},
+  url = {https://huggingface.co/datasets/tonyassi/vogue933k-embeddings},
+  note = {Upstream attribution recorded in the project data preparation source}
+}
+
+@misc{data_arxiv,
+  author = {{The Alexandria Index}},
+  title = {{arXiv} abstracts dataset},
+  howpublished = {Hugging Face Datasets},
+  year = {n.d.},
+  url = {https://huggingface.co/datasets/macrocosm/arxiv_abstracts},
+  note = {Accessed 28 October 2026; exported embedding preparation is project-specific}
+}
+
+@misc{data_openai1536,
+  author = {{Qdrant}},
+  title = {{DBpedia} entities: {OpenAI} text-embedding-3-large, 1536 dimensions, 1M},
+  howpublished = {Hugging Face Datasets},
+  year = {n.d.},
+  url = {https://huggingface.co/datasets/Qdrant/dbpedia-entities-openai3-text-embedding-3-large-1536-1M},
+  note = {Accessed 28 October 2026}
+}
+
+@misc{data_openai3072,
+  author = {{Qdrant}},
+  title = {{DBpedia} entities: {OpenAI} text-embedding-3-large, 3072 dimensions, 1M},
+  howpublished = {Hugging Face Datasets},
+  year = {n.d.},
+  url = {https://huggingface.co/datasets/Qdrant/dbpedia-entities-openai3-text-embedding-3-large-3072-1M},
+  note = {Accessed 28 October 2026}
+}
+
+@misc{data_bge,
+  author = {{Upstash}},
+  title = {Wikipedia 2024-06 {BGE-M3}},
+  howpublished = {Hugging Face Datasets},
+  year = {n.d.},
+  url = {https://huggingface.co/datasets/Upstash/wikipedia-2024-06-bge-m3},
+  note = {Italian configuration; accessed 28 October 2026}
+}
+
+@misc{data_stella,
+  author = {{The Information Engineering Lab}},
+  title = {Stella {TREC24 BioGen} embedding},
+  howpublished = {Hugging Face Datasets},
+  year = {n.d.},
+  url = {https://huggingface.co/datasets/ielabgroup/stella_trec24_biogen_embedding},
+  note = {Corpus split; accessed 28 October 2026}
+}
+
 @inproceedings{gpu_merge_path,
   author    = {Green, Oded and McColl, Robert and Bader, David A.},
   title     = {{GPU Merge Path}: A {GPU} Merging Algorithm},
@@ -31,7 +151,7 @@
 }
 
 @article{jhq,
-  author  = {Han, Jiaxin and Zhang, Mengxuan and Trajcevski, Goce},
+  author  = {Han, Jiabao and Zhang, Mengxuan and Trajcevski, Goce},
   title   = {{JHQ}: {Johnson-Lindenstrauss} enhanced hierarchical quantization
              for high-dimensional approximate nearest neighbor search},
   journal = {Proc. VLDB Endow.},
@@ -64,7 +184,7 @@
 }
 
 @article{fastscan,
-  author  = {Andr\'e, Fabien and Kermarrec, Anne-Marie and Scouarnec, Nicolas Le},
+  author  = {Andr\'e, Fabien and Kermarrec, Anne-Marie and Le Scouarnec, Nicolas},
   title   = {Cache locality is not enough: High-performance nearest neighbor
              search with product quantization fast scan},
   journal = {Proc. VLDB Endow.},
@@ -76,7 +196,7 @@
 }
 
 @article{quickeradc,
-  author  = {Andr\'e, Fabien and Kermarrec, Anne-Marie and Scouarnec, Nicolas Le},
+  author  = {Andr\'e, Fabien and Kermarrec, Anne-Marie and Le Scouarnec, Nicolas},
   title   = {Quicker {ADC}: Unlocking the hidden potential of product
              quantization with {SIMD}},
   journal = {IEEE Trans. Pattern Anal. Mach. Intell.},
@@ -88,8 +208,8 @@
 }
 
 @article{ivfrabitq,
-  author  = {Shi, Jianyang and Gao, Jianyang and Xia, Jiaxin and
-             Feh{\'e}r, Tam{\'a}s B. and Long, Cheng},
+  author  = {Shi, Jifan and Gao, Jianyang and Xia, James and
+             Feh{\'e}r, Tam{\'a}s B{\'e}la and Long, Cheng},
   title   = {{GPU}-native approximate nearest neighbor search with
              {IVF-RaBitQ}: Fast index build and search},
   journal = {Proc. VLDB Endow.},
@@ -98,4 +218,103 @@
   pages   = {3454--3467},
   year    = {2026},
   doi     = {10.14778/3836663.3836701}
+}
+
+@manual{ptx_isa,
+  author = {{NVIDIA}},
+  title = {{PTX ISA}, Version 9.0},
+  year = {2025},
+  url = {https://docs.nvidia.com/cuda/archive/13.0.1/parallel-thread-execution/index.html},
+  note = {Sections 8.1, 8.4.2, 8.7 and 8.10.3; accessed 28 October 2026}
+}
+@manual{blackwell_tuning,
+  author = {{NVIDIA}},
+  title = {{NVIDIA Blackwell Tuning Guide}},
+  year = {2025},
+  url = {https://docs.nvidia.com/cuda/archive/13.0.1/blackwell-tuning-guide/index.html},
+  note = {Section 1.4.1.1; accessed 28 October 2026}
+}
+
+@misc{faiss_clustering,
+  author = {{FAISS contributors}},
+  title = {{FAISS} Clustering Parameters, version 1.9.0},
+  year = {2024},
+  howpublished = {\url{https://github.com/facebookresearch/faiss/blob/v1.9.0/faiss/Clustering.h}},
+  note = {Default minimum-points warning threshold; accessed 28 October 2026}
+}
+
+@manual{faiss_refine,
+  author = {{FAISS contributors}},
+  year = {n.d.},
+  title = {{IndexRefine}: Candidate Expansion and Refinement},
+  url = {https://faiss.ai/cpp_api/file/IndexRefine_8h.html},
+  note = {C++ API documentation; accessed 28 October 2026}
+}
+@manual{faiss_autotune,
+  author = {{FAISS contributors}},
+  year = {n.d.},
+  title = {Index {I/O}, Cloning and Hyper-parameter Tuning},
+  url = {https://github.com/facebookresearch/faiss/wiki/Index-IO,-cloning-and-hyper-parameter-tuning},
+  note = {Auto-tuning the runtime parameters; accessed 28 October 2026}
+}
+@misc{cuvs_refinement,
+  author = {Chirkin, Artem and Naruse, Akira and Feh{\'e}r, Tam{\'a}s and Wang, Yong and Nolet, Corey},
+  title = {Accelerating Vector Search: {NVIDIA cuVS IVF-PQ} Part 2, Performance Tuning},
+  year = {2024},
+  url = {https://developer.nvidia.com/blog/accelerating-vector-search-nvidia-cuvs-ivf-pq-performance-tuning-part-2/},
+  note = {18 July; accessed 28 October 2026}
+}
+@inproceedings{li_termination,
+  author = {Li, Conglong and Zhang, Minjia and Andersen, David G. and He, Yuxiong},
+  title = {Improving Approximate Nearest Neighbor Search through Learned Adaptive Early Termination},
+  booktitle = {Proceedings of the 2020 ACM SIGMOD International Conference on Management of Data},
+  year = {2020},
+  doi = {10.1145/3318464.3380600},
+  url = {https://www.pdl.cmu.edu/PDL-FTP/BigLearning/mod0246-liA.pdf}
+}
+@article{darth,
+  author = {Chatzakis, Manos and Papakonstantinou, Yannis and Palpanas, Themis},
+  title = {{DARTH}: Declarative Recall Through Early Termination for Approximate Nearest Neighbor Search},
+  journal = {Proc. ACM Manag. Data},
+  volume = {3}, number = {4}, pages = {242:1--242:26},
+  year = {2025}, doi = {10.1145/3749160},
+  url = {https://arxiv.org/abs/2505.19001}
+}
+@misc{learn_then_test,
+  author = {Angelopoulos, Anastasios N. and Bates, Stephen and Cand{\`e}s, Emmanuel J. and Jordan, Michael I. and Lei, Lihua},
+  title = {Learn then Test: Calibrating Predictive Algorithms to Achieve Risk Control},
+  year = {2022}, eprint = {2110.01052}, archivePrefix = {arXiv},
+  doi = {10.48550/arXiv.2110.01052},
+  note = {Version 5; Section 2.3.1},
+  url = {https://arxiv.org/abs/2110.01052v5}
+}
+@manual{nist_binomial,
+  author = {{National Institute of Standards and Technology}},
+  year = {n.d.},
+  title = {{Dataplot}: Exact Binomial Confidence Limits},
+  url = {https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm},
+  note = {One-sided exact binomial limits; accessed 28 October 2026}
+}
+
+@manual{cuda_platform,
+  author = {{NVIDIA}},
+  title = {{CUDA Programming Guide}: The {CUDA} Platform},
+  year = {2026},
+  url = {https://docs.nvidia.com/cuda/cuda-programming-guide/01-introduction/cuda-platform.html},
+  note = {PTX compatibility and just-in-time compilation; accessed 28 October 2026}
+}
+@manual{nist_signtest,
+  author = {{National Institute of Standards and Technology}},
+  title = {{Dataplot}: Sign Test},
+  year = {2023},
+  url = {https://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/signtest.htm},
+  note = {Updated 11 December 2023; accessed 28 October 2026}
+}
+
+@manual{nist_hypergeometric,
+  author = {{National Institute of Standards and Technology}},
+  title = {{Dataplot}: Hypergeometric Probability Density Function},
+  year = {n.d.},
+  url = {https://www.itl.nist.gov/div898/software/dataplot/refman2/ch8/hyppdf.pdf},
+  note = {Sampling without replacement; accessed 28 October 2026}
 }

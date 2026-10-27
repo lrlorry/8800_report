@@ -1,0 +1,36 @@
+\paragraph{RQ1: Construction and capacity.}
+How can JHQ's hierarchy be trained, encoded and arranged as a searchable
+GPU-resident index, and what construction cost and tested capacity result?
+The evidence is the physical layout, train/add records and resident-memory
+account (\cref{sec:7-7}). An unsuccessful build or an allocation beyond the
+device budget would limit the capacity claim; a resident sample alone does
+not establish construction peak.
+
+\paragraph{RQ2: Correct and efficient execution.}
+Which representation-aware scoring, retention and scheduling choices
+improve GPU search while respecting the specified score and tie semantics?
+Paired LUT, packed-load, refinement and scan experiments connect to reference
+checks and batch sensitivity (\cref{sec:7-3,sec:7-4,sec:7-6}). A non-tie
+selection error would challenge the correctness contract; consistent
+slowdowns would challenge the proposed execution choice.
+
+\paragraph{RQ3: Budget quality and total cost.}
+Can unlabelled workload agreement choose a useful survivor budget, and under
+what sampling and reuse conditions is calibration worthwhile? Disjoint query
+evaluation compares fixed budgets, sampled/FULL rules, enumeration and a
+GT-labelled oracle (\cref{sec:7-5}). Loss crossings challenge reliability;
+no positive saving after calibration challenges the net-cost benefit.
+The oracle is an evaluation control, not deployable label-free logic.
+
+\paragraph{RQ4: Competitive operating regions.}
+At which measured recall targets does the complete system compete with
+modern GPU ANN alternatives under a common host-to-host boundary?
+The answer uses independently tuned E1 frontiers and explicit memory
+definitions (\cref{sec:7-2}). Int8 graph competitors, high-recall reversals
+and absent coverage are part of the answer. The question does not seek a
+universal ranking across hardware, memory budgets or request sizes.
+
+Chapter 3 turns these questions into controlled comparisons. Together they
+separate what was built, whether its execution is correct, what effort a
+workload requires, and whether the resulting system has useful operating
+regions.

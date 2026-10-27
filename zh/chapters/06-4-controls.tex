@@ -1,0 +1,33 @@
+\Cref{tab:6-controls}区分预算选择与评价。固定预算共享索引、路由和留出查询；调用与计时细节见\cref{sec:a-budget-contract}。
+
+\begin{table}[tbp]
+\centering
+\caption{预算对照及其回答的问题。所有结果均用留出 GT 评价，但只有诊断性 oracle 用它选择预算。一致性策略的参考固定为 200。}
+\label{tab:6-controls}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.7cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+对照 & 选择信息 & 回答的问题 \\
+\midrule
+固定 100 & 无校准 & 相对沿用默认值收益多少？ \\
+固定 64 及更小网格预算 & 无校准 & 简单固定选择能否消除校准需要？ \\
+采样二分 & $S$ 条无标签查询、槽位一致性 & 低成本样本能否选好可复用预算？ \\
+同样本枚举 & 相同 $S$、参考和阈值，遍历网格 & 二分是否错过最小被接纳网格预算？ \\
+全校准池 & 全部 500 校准查询，同一二分规则 & 更广覆盖、更严归一化容忍度会如何？ \\
+留出 oracle & 全网格 GT recall 和实测 QPS & 哪个测量预算在诊断质量约束下最快？ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+令 $\widehat r(\alpha)$、$\widehat Q(\alpha)$ 为实测留出 recall 和 QPS，$\widehat r^*=\max_{\alpha\in A}\widehat r(\alpha)$。Oracle 为
+\begin{equation}
+ \alpha_{\rm oracle}\in\operatorname*{arg\,max}_{\alpha\in A}
+ \left\{\widehat Q(\alpha):
+ \widehat r(\alpha)\geq\widehat r^*-\delta\right\},\qquad\delta=10^{-3}.
+ \label{eq:6-oracle}
+\end{equation}
+recall 容差 $\delta$ 不同于槽位容忍度 $\epsilon$。Oracle 消耗留出标签与计时，是有限网格诊断，不是可部署的无标签决策规则。
+
+全池校准仍无标签，使用二分，不是按 GT 约束遍历全部预算；较大样本还收紧 $\epsilon/(Sk)$。同样本枚举则固定样本覆盖和阈值，隔离搜索过程。Oracle 在质量约束下最大化速度，而一致性规则最小化被接纳乘数。因此，即使二分精确、校准池全部覆盖，也不一定选中 oracle。
+
+固定 64 检查较小的统一默认值是否已能获得收益；固定 200 提供高预算对照。观测质量和所选预算结果见\cref{tab:7-fixed-budget,tab:7-budget-quality}。

@@ -1,0 +1,41 @@
+\Cref{tab:3-evidence} states the inference attached to each evidence class.
+In particular, exact primary selection concerns the computed primary score,
+whereas raw-vector recall also depends on routing and reconstruction.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Evidence classes and the conclusions they support.}
+\label{tab:3-evidence}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Class & Supported inference and scope \\
+\midrule
+Formal proof & Selection or coverage property under explicit score,
+ordering, nestedness and memory assumptions \\
+Reference correctness & Agreement on tested cases and comparison keys;
+ties and ID-set versus bitwise equality remain distinct \\
+Paired benchmark & Throughput effect within a fixed state/workload;
+microarchitectural attribution needs additional measurements \\
+End-to-end measurement & Observed operating region on the measured
+device, batch and tuning grids \\
+Model estimate & Byte decomposition or calibration payback under stated
+accounting and reuse assumptions \\
+Unverified claim & A proposed explanation or pending measurement;
+supplies a research direction rather than an empirical result \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The principal threats are shared-index dependence, finite query pools,
+grid-selection effects, interface asymmetry and one-device coverage.
+Controls address them through paired inputs, held-out labels, both
+matched-recall estimators, explicit timing boundaries and retained adverse
+results. E1 tests batch 1,000; small-batch scheduling is an internal
+comparison. Quantised-reference agreement gives a sample-local statement,
+with population interpretations requiring additional assumptions
+(\cref{sec:6-2}). Distance-only primary ties also limit the budget
+general nestedness result, including ten FULL cells; finite-grid
+enumeration now agrees in all twelve FULL cases (\cref{sec:6-3}). These
+conditions delimit the claims that Chapter 7 can support and the broader
+interpretations left for Chapter 8.

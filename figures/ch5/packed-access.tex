@@ -5,13 +5,13 @@
  arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
 \foreach \a in {0,1,2,3} {
  \node[box,fill=ThesisNavy!5] (w\a) at (3.3*\a,0)
-  {lane $\a$\\$W[j,p+\a]$};
+  {lane $\a$\\$\mathsf{w}[j,p+\a]$};
 }
 \node[align=center] at (4.95,1.05)
  {Fixed $j$: adjacent 32-bit words across candidate positions};
 \node[box,text width=11.5cm,minimum height=1.6cm] (decode) at (4.95,-2.5)
  {Unpack each lane's word independently at its position $p_a$\\
-  $P[4j,p_a]\;|\;P[4j+1,p_a]\;|\;P[4j+2,p_a]\;|\;P[4j+3,p_a]$\\
+  $Z[4j,p_a]\;|\;Z[4j+1,p_a]\;|\;Z[4j+2,p_a]\;|\;Z[4j+3,p_a]$\\
   Four code bytes $\longrightarrow$ shifts and masks $\longrightarrow$ LUT indices};
 \draw[arr] (w0.south) -- (decode.north west);
 \draw[arr] (w1.south) -- (decode.north);

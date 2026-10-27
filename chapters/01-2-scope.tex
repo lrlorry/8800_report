@@ -1,0 +1,26 @@
+For a database $\mathcal X\subset\mathbb R^d$ and query $q$, the target is
+the top-$k$ set under raw squared L2. The implemented system routes through
+IVF, ranks the visited vectors by a primary reconstructed score
+$\primarydist$, retains up to $c=\max\{k,\lceil\alpha k\rceil\}$ candidates,
+and selects results using a residual-refined score $\refineddist$.
+Both scores differ from raw-vector distance. The refined value additionally
+contains a query-only constant, as defined in \cref{sec:2-3}.
+Exactness of a selection procedure therefore concerns its computed score
+and tie contract; final ANN quality remains an empirical question against GT.
+
+The representation follows JHQ: a square orthogonal rotation, Cartesian
+primary codes and residuals relative to primary reconstruction. This thesis
+studies GPU training/encoding, physical placement, query execution and one
+workload-level refinement multiplier. The multiplier is selected from
+unlabelled query outputs against a larger-budget reference, then is intended
+to be reused under a stable workload. It is not a per-query learned controller
+or an absolute-recall certificate.
+
+The main cross-system experiments use one RTX 5090, squared-L2 top-10 and
+batches of 1,000 queries on four datasets. Six datasets support component
+and budget studies, with separate large-index measurements. Small-batch
+results concern internal JHQ comparisons. The implemented compressed index
+resides on one GPU; CPU model preparation and host-query transfers remain
+part of its actual architecture. Multi-GPU distribution, online updates,
+host-backed residual paging and billion-scale deployment are outside the
+tested system.

@@ -1,0 +1,78 @@
+Ch8 -> Ch2 -> Ch1 -> Ch9 -> Abstract 分轮迭代记录
+日期：2026-10-28
+范围：用户授权的五部分，中文同步，必要证据／披露附录和实验待办衔接。
+本轮不运行GPU、不改JHQ_GPU实现、不推送远端。
+
+第一轮：证据与文献定位
+----------------------
+读取6.pdf骨架、评分表、当前Ch3--7、原JHQ论文p1530-han.pdf、
+ADC/正确目录的稿件、终版poster及原始数据。未使用根目录另一个filtered-ANN稿。
+重新解析Mailman真实评分计时、rank-optimal最终400-query测试与后续median GPU记录。
+核对主流相关工作的原作者／出版社／会议／官方文档源，保留primary-sources.json。
+修正现有IVF-RaBitQ条目的Jifan Shi、James Xia姓名；不转抄错误元数据。
+
+第二轮：按指定顺序写作
+----------------------
+Ch8：三条跨层认识；Mailman与rank/median两项深入案例；有效性；
+     两个可检验未来方向与条件建议。图8.1左为实测评分比，右为FP64候选数，
+     不把Mailman模型减速或离线减少称为端到端实测。
+Ch2：七节批判性相关工作；三分数语义、两种residual、平方旋转、实际主码公式；
+     将内部Cartesian结构与普通PQ、CPU SIMD小表、RaBitQ估计器区分。
+Ch1：六节动机／范围／挑战／RQ／贡献／路线，四RQ与Ch3/7统一。
+Ch9：四RQ有条件回答及一个短展望，不增加测量。
+Abstract：最后回填，250--350词规划范围内；中文同步。
+
+第三轮：反向质询与校对
+----------------------
+1. 同一查询的D_H包含query-only常数，不能沿用ADC简化公式当返回距离。
+2. 随机旋转保持均值范数，不产生数据库零均值或独立高斯保证。
+3. +-0.67449 sigma是mid-quantile，非零阈值Gaussian MSE最优条件均值；
+   其主符号排序尺度不变，但残差仍受影响。原始码本与实现不改。
+4. 22/24是四臂最优计数，不追加不适用的独立符号显著性结论。
+5. FULL的12/12是被选臂留出观察，10个G=0缺完整键推论和枚举；
+   2304次抽样不包含FULL，摘要和结论不改称总体GT保证。
+6. median已有GPU后续，不能说整条线从未实现；其阈值、电平与残差同改，
+   也不能称threshold-only因果实验。旧seq controller已有失败记录，未来需以其为对照。
+7. capacity为压缩常驻值，cold为一次train/add，非全冷启动／构建峰值。
+8. E1的0.97三领先+arXiv近并列，保留低recall int8和高recall对手区间。
+9. 个人分工／签署／AI最终采纳不由作者顺序或工具假造；附录C记录已知事实，
+   待作者确认项独立保存。不把coauthored manuscript推定为已录用论文。
+10. 图表和结果指向原family，不相乘异版本收益；新实验合并原待补文件。
+11. 合并Qdrant同一数据卡的重复BibTeX条目，Ch3/7使用相同引用；
+    修正Le Scouarnec姓氏解析，实验数值不受文献键合并影响。
+
+第四轮：结构、编译与版面检查
+--------------------------
+使用scripts/audit_ch8.py重算负结果，scripts/audit_synthesis.py核对双语
+label/ref/cite、对应公式、主要数值、篇幅规划与主文引用。
+重新编译中英文，检查最终log、PDF图表／摘要及DRAFT角标。
+实际最终验证状态以data/synthesis/audit.json和本轮完成回复为准。
+
+最终核对结果
+------------
+make pdf、make pdf-zh均通过；英文总稿145页，中文118页。
+最终main/main-zh的log及BibTeX日志无Warning、未定义引用、缺字或
+Overfull/Underfull；根目录PDF与对应build产物逐字节一致。
+检查全部PDF右下角，未发现DRAFT角标。
+已查看两版摘要、新增图表及英文结论；修正图1.1断词、图2.1框下文字
+重叠，表格留在相应首次引用后，不把离线图标成GPU端到端结果。
+21份新章节英文文件与中文对应的label/ref/cite及显示公式核对通过。
+英文正文／图注估算：Ch1 1411、Ch2 2419、Ch8 1996、Ch9 416、
+Abstract 282词；排除表主体、公式和宏，非课程官方字数。
+该范围加表格后接近骨架建议预算，没有为凑字数重复Ch7结果。
+本轮完成的是指定章节与摘要及其证据衔接，非自动签署的可提交声明。
+frontmatter/declaration、可选致谢／notation提示和附录B仍有提交前编辑项，
+README与assessment/author-confirmation.txt明确剩余作者确认范围。
+
+仍需的实验／取证
+----------------
+全部记在assessment/ch7-pending-experiments.txt，不另建分散清单。
+现有补证优先级保留；新增S1预算×精排因果、S2调度输入、S3median归因；
+F1有效风险证书与复用、F2残差分层放置为低优先级未来研究。
+
+
+2026-10-28 补证状态更新
+---------------------
+以上是补证前的迭代记录，缺口状态以ch7-pending-experiments.txt为准。
+已完成A1/A2/A3/B/C1/D并整合，具体范围和审核修正见supplement-integration.txt；
+C2/C3仍未做。所有主张区分原E1、同会话精度敏感性及新直接成本记录。

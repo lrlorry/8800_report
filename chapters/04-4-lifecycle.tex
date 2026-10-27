@@ -1,0 +1,103 @@
+\subsection{Stored bytes and allocated bytes}
+
+The eight-bit-residual configuration has an int8-scale resident
+representation. For one-byte primary subspace codes, its row payload is
+\begin{equation}
+ S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
+ \qquad S_{\rm offsets}=4(n_{\rm list}+1).
+ \label{eq:4-row-storage}
+\end{equation}
+The extra eight bytes store a four-byte ID and FP32 correction. At
+$M=d/8$, $B_r=8$, codes occupy $9d/8$ bytes: 12.5\% more than an SQ8
+vector's $d$ bytes. A graph-free hierarchy is therefore a design choice,
+not evidence of a unique compression advantage over int8 alternatives.
+
+\begin{table}[tbp]
+\centering
+\caption{Per-vector bytes. JHQ includes codes, ID and correction; SQ8 is
+vector codes alone; CAGRA int8 models vector codes plus 32 four-byte
+neighbours. Offsets, model parameters, workspace and other runtime
+allocations are excluded. These components are not complete process totals.}
+\label{tab:4-bytes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrrrrrrr@{}}
+\toprule
+$d$ & Primary & Residual & ID + corr. & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP32 \\
+\midrule
+768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\
+1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\
+1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\
+3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The CAGRA comparison uses $d+4d_g$ bytes at graph degree $d_g=32$,
+consistent with the harness's 32-bit neighbour IDs. On Stella, JHQ's row
+payload is 19.20\,GiB, while a successful degree-32 CAGRA int8 record
+reports 19,656\,MiB (19.20\,GiB) of index allocation. The near equality is
+useful context despite their different accounting boundaries. Chapter 7
+reports both int8 and fp32 allocations alongside search quality and cost.
+JHQ's distinctions are graph-free construction and a query-adjustable
+residual-access budget; lowering $\alpha$ leaves resident residual codes
+intact.
+
+The basic FP32 model arrays require $4d^2$ bytes for the transform,
+$4MKD_s$ for the materialised primary codebook, $4MK_r$ for residual
+codebooks and $4n_{\rm list}(d+1)$ for coarse centroids and norms.
+Derived centroid copies and encoder levels add allocations in the
+selected path. Query workspace includes two FP32 query matrices
+$[b_{\rm cap},d]$, centroid scores $[b_{\rm cap},n_{\rm list}]$, LUTs,
+probes and survivor buffers. The optional residual LUT would add
+$4b_{\rm cap}dK_r$ bytes; default refinement computes residual scores
+directly. Group scratch follows \cref{eq:5-group-workspace} and can retain
+a larger capacity than the current scan uses: recorded 128-probe samples
+reserve about 93.8\,MiB even on the query-centric path.
+
+\begin{table}[tbp]
+\centering
+\caption{Object lifetimes. Sizes describe named arrays, rather than all
+allocations of a CUDA process. Construction phases are expanded in
+\cref{sec:4-5}.}
+\label{tab:4-lifetimes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Object & Producer & Location & Lifetime & Bytes / scale \\
+\midrule
+Input / samples & Loader / harness & Host & Build input; external ownership & $4Nd$ raw; sampled subsets \\
+Transform / models & QR / training & Host, GPU & Model and index lifetime & $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ basic GPU arrays \\
+Trained cache & Training & Host file & Across processes; rebuild still needed & Serialised model state \\
+Input staging & Add pipeline & Pinned host, GPU & During add & $4n_ba_bd$ host; $8n_ba_bd$ GPU floats, plus scratch \\
+IDs / offsets & Sort / lower bound & GPU & Completed snapshot & $4N+4(n_{\rm list}+1)$ \\
+Codes / correction & Encode / reorder & GPU & Completed snapshot & $N(M+b_r+4)$ \\
+Order / inverse & Sort / inversion & GPU & Construction only & $4N$ per array; phase dependent \\
+Query workspace / graph & Search / capture & GPU, host & Allocations reused; batch contents replaced & Capacity dependent; graph references resident arrays \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Reuse, recovery and invalidation}
+
+The cache saves the rotation, codebooks and centroids. Its key mixes model
+parameters and a strided checksum of the training sample, but omits the
+code version and a checksum of every database byte. Reproducing a build
+therefore requires model provenance and explicit cache invalidation when
+implementation or training data change. The search experiments reuse
+trained states; cold-build records construct separate instances. A close
+recall result across those instances cannot establish byte-identical
+models.
+
+A cache hit still executes constructor QR and library warm-up before the
+training call checks the cache, then loads/uploads the model, encodes
+rows and builds lists. Stella's 6.67\,s add record is one component of that
+recovery path, not a measured process-restart time. The add call includes its initial workspace allocation; schedule
+calibration and search warm-up lie outside that isolated add number.
+
+At fixed $k$, changing $\alpha$ changes the survivor budget without
+retraining or adding vectors. Search grows insufficient workspace before
+capture, and recaptures when the actual batch size, survivor count,
+probe count, refinement lanes, scan groups or shared-bound setting
+changes. Calibration can bypass capture while trying budgets. Releasing
+the index destroys its graph and device allocations; buffers are
+index-owned and reused across the sequential calls evaluated here.

@@ -1,5 +1,5 @@
 % Chinese reading copy: make pdf-zh (XeLaTeX).
-% Chapters 5 and 7 are translated; other unfinished text remains a skeleton.
+% Chapters 1--9 and the abstract have Chinese reading versions.
 \documentclass[a4paper,12pt,oneside,openany]{report}
 
 \input{config/metadata}
@@ -12,7 +12,7 @@
 \pagenumbering{roman}
 \hypersetup{pageanchor=true}
 \input{frontmatter/declaration}
-\input{frontmatter/abstract}
+\input{zh/abstract}
 \input{frontmatter/acknowledgements}
 
 \tableofcontents
@@ -22,15 +22,15 @@
 
 \clearpage
 \pagenumbering{arabic}
-\input{chapters/01-introduction}
-\input{chapters/02-background}
-\input{chapters/03-methodology}
-\input{chapters/04-architecture}
+\input{zh/chapters/01-introduction}
+\input{zh/chapters/02-background}
+\input{zh/chapters/03-methodology}
+\input{zh/chapters/04-architecture}
 \input{zh/chapters/05-gpu-execution}
-\input{chapters/06-refinement}
+\input{zh/chapters/06-refinement}
 \input{zh/chapters/07-evaluation}
-\input{chapters/08-discussion}
-\input{chapters/09-conclusion}
+\input{zh/chapters/08-discussion}
+\input{zh/chapters/09-conclusion}
 
 \clearpage
 \phantomsection

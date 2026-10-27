@@ -1,0 +1,53 @@
+Every main empirical claim is associated with an experiment family, a
+metric and consumed records. The machine-readable registry is
+\path{data/ch3/audit.json}; detailed numeric reconstruction is in the
+Chapter 4--7 audit files. \Cref{tab:3-ledger} specifies how identities and
+missing fields are interpreted. A file hash verifies the input consumed by
+analysis; it cannot recover an executable or trained state that was never
+archived.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Claim-to-evidence record and available provenance. Appendix A
+maps implementation names, executable names and result-to-figure paths.}
+\label{tab:3-ledger}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Field group & Recorded identity / condition & Interpretation \\
+\midrule
+Claim and intervention & RQ, mechanism, control, metric, result location
+and figure/table & Scope identifies what the comparison tests \\
+Execution & Run-head or report version, harness, compiler flags,
+GPU/driver/toolkit & Current analysis checkout is separate from run source;
+complete executable hashes are missing \\
+Index and queries & Shape, metric, training request, cache path,
+split/seed, $k$, probes, $\alpha$, batch & Cache names and dimensions
+are recorded; complete historical data/state fingerprints are missing \\
+Measurement & Timing scope, warm-up, round/call counts,
+reference semantics and diagnostics & Family-specific protocols remain
+attached to their records \\
+Analysis & Raw relative path and SHA-256, parser, generated output,
+validity status & Supports offline regeneration of reported quantities \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The E1 system frontier, newer table sweep, budget campaign and large-data
+extensions remain separate from the ADC paper's older measurements.
+Historical packing and refinement records answer their original paired
+questions. The poster links these mechanisms visually, but does not replace
+run metadata or extend a comparison's coverage. Version names therefore
+describe provenance; mechanism names describe the scientific intervention.
+
+\path{scripts/build_ch7.py} reads archived measurements and regenerates
+the empirical plots and principal numeric tables, including
+\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}.
+The source ledger and family audits retain original paths and hashes;
+\path{scripts/audit_ch3.py} checks the common protocol against them.
+Source inspection and offline reconstruction establish correspondence
+between archived records and reported quantities. Repeating GPU measurements
+additionally requires the relevant binaries, datasets and trained states;
+missing diagnostic coverage is identified with each result. Appendix A
+supplies implementation and artifact details and specifies which reproduction
+inputs are available.

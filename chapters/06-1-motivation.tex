@@ -1,0 +1,81 @@
+JHQ screens routed candidates with primary codes before reading residuals
+for a smaller survivor set \cite{jhq}. For a query $q$, let $U(q)$ be
+the candidates in its selected IVF lists. The refinement multiplier sets
+\begin{equation}
+ c(\alpha)=\max\{k,\lceil\alpha k\rceil\},\qquad
+ C_\alpha(q)=\operatorname{Top}^{\rm primary}_{\min\{c(\alpha),|U(q)|\}}U(q).
+ \label{eq:6-budget}
+\end{equation}
+Here $C_\alpha$ denotes valid survivors. The implementation reserves
+$c(\alpha)$ slots and can pad an underfull pool with sentinels. The
+analysis assumes at least $k$ valid candidates. Raising $\alpha$ expands
+refinement capacity within the visited lists; raising $n_{\rm probe}$
+changes the visited universe. Neither operation recovers information
+lost by the other automatically.
+
+A large fixed $\alpha$ may repeatedly refine candidates that do not
+change the final top-$k$. A small value can exclude a useful neighbour
+before residual scoring. Which tradeoff is worthwhile depends on the
+query population, primary reconstruction, list coverage and refined-score
+ordering. One global default therefore need not suit every dataset--probe
+configuration. The evaluated grid spans $c=20$ to $2{,}000$ at $k=10$.
+Changing it reuses the same trained index and stored residuals.
+Lowering the multiplier reduces residual rows accessed, rather than
+releasing the resident residual representation. Survivor buffers grow
+when capacity is insufficient and retain that capacity afterward, so a
+smaller budget is not a proportional reduction in allocated memory.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch6/budget-scope}
+\caption{The refinement budget changes work after primary-score
+production. With a fixed query, index and probe count, it leaves the
+routed candidate universe unchanged. The highlighted stages depend on
+survivor capacity; this is a logical work decomposition, not a measured
+latency breakdown. The scan kernel also performs budget-dependent
+admission and compaction. Padding applies when fewer than $c$ candidates exist.}
+\label{fig:6-budget-scope}
+\end{figure}
+
+An explanatory latency decomposition is
+\begin{equation}
+ T(\alpha)=T_{\rm base}+T_{\rm select}(c(\alpha))+
+ T_{\rm refine}(c(\alpha))+T_{\rm final}(c(\alpha)).
+ \label{eq:6-cost-model}
+\end{equation}
+For a fixed batch and route, $T_{\rm base}$ includes transfer, rotation,
+routing and primary-score production; selection, residual scoring and
+final selection depend on the survivor capacity
+(\cref{fig:6-budget-scope}). This is a work model,
+not a fitted latency predictor. Buffer capacities, launch occupancy and
+resource thresholds can change in steps. At small budgets, fixed work can produce a throughput plateau.
+Ten alternating remeasurements of OpenAI-3072 at 128 probes give
+142.3/142.7 kQPS for $\alpha=4/2$, reversing the archived noisy
+145.0/128.7 kQPS contrast (\cref{sec:7-budget-trace}). The policy
+minimises accepted budget rather than optimising a noisy timing rank.
+
+Each calibration trial still runs rotation, probing and primary scoring
+before refinement. Reusing the index avoids rebuilding or retraining;
+it does not cache every intermediate query result across budget trials.
+The cost of calibration must therefore count full searches, not merely
+the difference between two residual-scoring workloads.
+
+The policy selects one budget for an index, routing configuration, $k$
+and query workload. It uses neither a trained per-query predictor nor
+an online choice for each arriving query. Scan-group scheduling remains
+the separate mechanism of \cref{sec:5-5}; its execution path must still
+be considered when interpreting budget calibration.
+
+\paragraph{Position among adaptive ANN methods.}
+The multiplier has the same candidate-pool role as FAISS
+\texttt{IndexRefine::k\_factor} and cuVS's refinement ratio
+\cite{faiss_refine,cuvs_refinement}. FAISS auto-tuning explores
+speed--accuracy operating points using a ground-truth criterion
+\cite{faiss_autotune}. Li et al. learn per-query termination conditions
+from search features \cite{li_termination}; DARTH predicts recall during
+execution to stop at a requested target \cite{darth}.
+Here the decision calibrates one unlabelled workload budget for reuse,
+using reference-output coverage rather than a trained recall predictor.
+The final scorer remains a compressed reconstruction, whereas the cuVS
+refinement example reranks source vectors. These distinctions separate
+the work parameter, its selection mechanism and the scored representation.

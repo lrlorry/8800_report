@@ -1,0 +1,28 @@
+% Logical work boundary, not a measured latency or pruning diagram.
+\begin{tikzpicture}[
+ font=\footnotesize\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+ text width=2.15cm,minimum height=1.5cm,inner sep=3pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (route) at (0,0) {Probe IVF lists\\Fixed $n_{\rm probe}$};
+\node[box] (primary) at (3,0) {Score $U(q)$\\Primary codes};
+\node[box,fill=ThesisNavy!7] (select) at (6,0)
+ {Primary top-$c$\\Keep $C_\alpha(q)$};
+\node[box,fill=ThesisNavy!7] (refine) at (9,0)
+ {Refine $c(\alpha)$ slots\\Residual rows};
+\node[box,fill=ThesisNavy!7] (final) at (12,0)
+ {Final top-$k$\\Return $k$ IDs};
+\draw[arr] (route) -- (primary);
+\draw[arr] (primary) -- (select);
+\draw[arr] (select) -- (refine);
+\draw[arr] (refine) -- (final);
+\node[align=center,text width=5.1cm] at (1.5,1.4)
+ {Fixed routed universe and number of primary scores};
+\node[align=center,text width=7.6cm] at (9,1.4)
+ {Budget-dependent selection, residual scoring and final selection};
+\draw[densely dashed,ThesisNavy!45] (4.5,-0.9) -- (4.5,1.1);
+\node[align=center,text width=13.8cm] at (6,-1.45)
+ {$c(\alpha)=\max\{k,\lceil\alpha k\rceil\}$ slots;
+ valid survivors are capped by $|U(q)|$.\\
+ The stored model and residual codes are reused across budgets.};
+\end{tikzpicture}

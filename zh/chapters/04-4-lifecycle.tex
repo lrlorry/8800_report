@@ -1,0 +1,59 @@
+\subsection{存储字节与分配字节}
+
+八比特残差配置具有 int8 量级的常驻表示。主码每子空间一字节时，行载荷为
+\begin{equation}
+ S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
+ \qquad S_{\rm offsets}=4(n_{\rm list}+1).
+ \label{eq:4-row-storage}
+\end{equation}
+额外八字节保存四字节 ID 与 FP32 修正项。在 $M=d/8$、$B_r=8$ 时，编码占 $9d/8$ 字节，比 SQ8 向量的 $d$ 字节多 12.5\%。因此，无图层次结构是一种设计选择，不能据此声称独有的 int8 压缩优势。
+
+\begin{table}[tbp]
+\centering
+\caption{每向量字节数。JHQ 含编码、ID 与修正项；SQ8 仅计向量编码；CAGRA int8 模型计向量编码及 32 个四字节邻居。均排除偏移、模型参数、工作区及其他运行时分配，不代表完整进程总量。}
+\label{tab:4-bytes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrrrrrrr@{}}
+\toprule
+$d$ & 主码 & 残差 & ID + 修正 & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP32 \\
+\midrule
+768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\
+1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\
+1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\
+3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+CAGRA 比较使用图度数 $d_g=32$ 时的 $d+4d_g$ 字节，与测试程序的 32-bit 邻居 ID 一致。在 Stella 上，JHQ 行载荷为 19.20\,GiB，成功的度数 32 CAGRA int8 记录报告索引分配 19,656\,MiB（19.20\,GiB）。尽管计量边界不同，两者接近仍是必要背景。第七章同时报告 int8、fp32 分配与搜索质量及成本。JHQ 的特点是无图构建和查询可调的残差访问预算；降低 $\alpha$ 不释放常驻残差码。
+
+基本 FP32 模型数组中，变换占 $4d^2$ 字节，物化主码码本占 $4MKD_s$，残差码本占 $4MK_r$，IVF 中心与范数占 $4n_{\rm list}(d+1)$。选定路径还分配派生中心副本和编码级值。查询工作区包括两个 $[b_{\rm cap},d]$ FP32 查询矩阵、$[b_{\rm cap},n_{\rm list}]$ 中心分数、LUT、探针及候选缓冲区。可选残差 LUT 另占 $4b_{\rm cap}dK_r$ 字节；默认精排直接计算残差分数。分组工作区遵循\cref{eq:5-group-workspace}，其容量可大于当前扫描所需：已记录的 128 探针样本即使走 query-centric 路径，也保留约 93.8\,MiB。
+
+\begin{table}[tbp]
+\centering
+\caption{对象生命周期。大小描述具名数组，不是 CUDA 进程的全部分配；构建阶段见\cref{sec:4-5}。}
+\label{tab:4-lifetimes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+对象 & 生产者 & 位置 & 生命周期 & 字节／规模 \\
+\midrule
+输入／样本 & 加载器／测试程序 & 主机 & 构建输入；外部持有 & 原始 $4Nd$；采样子集 \\
+变换／模型 & QR／训练 & 主机、GPU & 模型及索引寿命 & 基本 GPU 数组 $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ \\
+训练缓存 & 训练 & 主机文件 & 跨进程；仍需建库 & 序列化模型状态 \\
+输入暂存 & 添加流水线 & Pinned 主机、GPU & add 期间 & 主机 $4n_ba_bd$；GPU 浮点数组 $8n_ba_bd$，另加 scratch \\
+ID／偏移 & 排序／lower bound & GPU & 完成后的快照 & $4N+4(n_{\rm list}+1)$ \\
+编码／修正项 & 编码／重排 & GPU & 完成后的快照 & $N(M+b_r+4)$ \\
+顺序／逆映射 & 排序／求逆 & GPU & 仅构建期间 & 每数组 $4N$，依阶段而定 \\
+查询工作区／graph & 搜索／捕获 & GPU、主机 & 复用分配，逐批替换内容 & 依容量而定；graph 引用常驻数组 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{复用、恢复与失效}
+
+缓存保存旋转、码本和中心。key 混合模型参数及训练样本的等距校验，但不含代码版本，也不覆盖全部数据库字节。因此，复现需要模型来源，并在实现或训练数据变化时显式使缓存失效。搜索实验复用训练状态，冷建记录则构造独立实例；实例间 recall 接近不能证明模型逐字节一致。
+
+缓存命中仍先执行构造器 QR 与库预热，之后训练调用才检查缓存；再加载／上传模型、编码数据并构建列表。Stella 的 6.67\,s add 记录只是该恢复路径的一个组件，不是实测进程重启时间。add 调用包括初始工作区分配；调度校准与搜索预热在这一孤立 add 数字之外。
+
+固定 $k$ 时，改变 $\alpha$ 会改变候选预算，无需重新训练或添加向量。搜索在捕获前扩展不足的工作区，并在实际批大小、候选数、探针数、精排 lane 数、扫描组数或共享界设置变化时重新捕获。校准尝试预算时可绕过捕获。释放索引会销毁 graph 和设备分配；缓冲区由索引持有，在本文评测的顺序调用之间复用。

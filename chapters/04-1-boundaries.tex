@@ -1,0 +1,59 @@
+The index has three lifecycle stages: training produces reusable model
+state, adding encodes and physically arranges database rows, and searching
+uses the completed arrays. This separation matters experimentally. A
+trained-state cache avoids learning the model again, but still requires
+database encoding and list construction. A cold train-plus-add run and a
+search over a reused state measure different operations.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch4/architecture}
+\caption{Implemented build and query boundaries. Host work includes
+sampling, orthogonal-matrix construction and analytical primary-codebook
+generation; the evaluated configuration fits IVF and residual models on
+the GPU. The cache stores trained state, whereas the completed database
+representation resides on the device. Dashed arrows denote trained-state
+reuse. The staging label bounds only raw/rotated float buffers at source
+defaults; other pipeline scratch is additional.}
+\label{fig:4-architecture}
+\end{figure}
+
+The host owns the input vectors and supplies training samples. It constructs
+the square transform and analytical primary codebook. GPU matrix products
+apply the transform; the device training path fits coarse IVF centroids
+and scalar residual codebooks. Adding then transfers bounded batches,
+encodes both levels, determines IVF membership, and writes a common
+list-ordered representation. Host orchestration and device computation
+therefore coexist within a GPU-resident search system.
+
+The model state consists of the transform, primary codebook, residual
+codebooks and IVF centroids. The database state adds list offsets, original
+row identifiers, primary codes, residual codes and correction factors.
+Search workspace has a shorter logical lifetime: rotated queries, centroid
+scores, probe offsets, LUTs and survivor buffers are overwritten on the
+next batch, although their allocations are retained. A captured CUDA graph
+belongs to this execution state and references the existing arrays.
+
+The audited API builds a fixed snapshot with one successful \texttt{add}
+call; it rejects a subsequent add. Physical positions remain fixed while
+searching that snapshot. Changes are handled by building a replacement snapshot. This gives a
+simple bulk-rebuild lifecycle; mutable insert/delete operations and
+transactional publication would require additional index management.
+
+Search accepts host queries and returns host IDs and computed ranking
+scores. The returned $D_H$ equals the reconstructed squared distance plus
+the query constant $\|q'\|^2$ (\cref{eq:5-refined-constant}). This preserves
+within-query ordering. Range thresholds or comparisons across queries
+must first remove that constant and still account for reconstruction error.
+It stages input through pinned memory, transfers each batch, executes the
+device query pipeline and returns its results. The principal throughput
+measurements use this host-to-host boundary. The exact call/repetition
+protocol and warm-up treatment are stated in Chapter 7. Original-file
+loading, training, adding and schedule calibration are outside steady-state
+search QPS. These boundaries make the same index usable across query
+budgets without attributing model construction to every search call.
+
+This design streams construction inputs from host memory while retaining
+the compressed database on the GPU. It supplies neither a disk-backed
+search path nor a claim that an arbitrarily large compressed index fits
+one device.

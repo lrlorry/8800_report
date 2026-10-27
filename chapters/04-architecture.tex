@@ -1,28 +1,35 @@
 % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{System Architecture and GPU Index Construction}
 \label{ch:architecture}
-\draftnote{Describe build-time dataflow, CPU/GPU responsibilities, physical storage, temporary memory, and representation invariants.}
+This chapter addresses RQ1: how to construct a searchable, GPU-resident
+JHQ index from high-dimensional vectors. JHQ supplies the transform and
+primary/residual representation \cite{jhq}. The systems problem is to
+train that representation, encode a database larger than its available
+full-precision device storage, and expose consistent list-ordered arrays
+to the query path. The discussion follows training, placement, allocation and validation. Detailed query
+kernels follow in \Cref{ch:gpu-execution}; measured comparisons are in
+\Cref{sec:7-7}.
 
 \section{End-to-End Build and Search Boundaries}
 \label{sec:4-1}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/04-1-boundaries}
 
 \section{Training, Rotation and Codebook Generation}
 \label{sec:4-2}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/04-2-training}
 
 \section{IVF Assignment, IDs and Physical Memory Layout}
 \label{sec:4-3}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/04-3-layout}
 
 \section{Resident Storage, Workspace and Index Lifecycle}
 \label{sec:4-4}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/04-4-lifecycle}
 
 \section{Construction Cost and Tested Scale}
 \label{sec:4-5}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/04-5-construction}
 
 \section{Index Representation and Safety Contracts}
 \label{sec:4-6}
-\draftnote{Distinguish representation checks, algorithmic selection correctness, numerical agreement, and memory-safety checks; do not use recall equality as proof.}
+\input{chapters/04-6-contracts}

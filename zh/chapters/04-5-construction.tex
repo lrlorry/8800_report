@@ -1,0 +1,69 @@
+\subsection{有界输入批次与两遍构建}
+
+一次旋转全部 $N$ 个原始向量需要两个 FP32 设备数组，共 $8Nd$ 字节。构建器改用 pinned 主机内存和设备原始／旋转缓冲区分批暂存。若有 $n_b$ 个流水缓冲区，每个最多 $a_b$ 行，则两个设备数组共占 $8n_ba_bd$ 字节。源码默认三个缓冲区、每个浮点数组上限 128\,MiB，这一组件至多占 768\,MiB。分配乘积及主码编码 scratch 还需额外空间；暂存界不是整个流水线的内存上界。
+
+一遍路径先编码输入顺序的主码／残差数组，再 gather 成列表顺序，临时与最终压缩副本共存。容量规则预测内存不足时，两遍构建先分配列表、排序 ID、构建偏移，再次读取输入，旋转、编码并直接 scatter 到最终位置。它用额外一次输入扫描和旋转换取较少的同时存活压缩副本。两遍路径的默认分配可在原始输入与反变换中心之间比较；正交性给出相应的实数算术恒等式。
+
+\subsection{阶段占用与进程峰值}
+
+源码的一遍路径分支估计为
+\begin{equation}
+ H_{\rm single}=N(2b_r+3M+20)+2^{30}\quad\text{bytes}.
+ \label{eq:4-peak-heuristic}
+\end{equation}
+其中依赖 $N$ 的项，是 gather／transpose 时同时存活的十个数组的精确载荷：输入顺序的主码、残差和修正项；分配结果及排序顺序；最终 ID、残差和修正项；vector-major 与 subspace-major 主码副本。共计 $3NM+2Nb_r+20N$ 字节。额外 1\,GiB 是容量启发式的预留，不是其他全部分配的精确核算。
+
+两遍构建在最终 repack 时，同时保留 ID、残差、修正项和新旧主码数组：
+\begin{equation}
+ S_{\rm repack,2}=N(b_r+2M+8).
+ \label{eq:4-two-pass-repack}
+\end{equation}
+这一表达式对该阶段的这些数组精确成立。更早阶段还保留流水线 scratch，scatter 时另有临时逆置换。因此，repack 表达式本身不是两遍构建的整体峰值。取整个生命周期最大值时，还需计入模型、排序／分配器 scratch、运行时上下文及之后的工作区分配。
+
+\begin{table}[tbp]
+\centering
+\caption{行数组的解析占用（GiB），$d=1{,}024$、$M=128$、$B_r=8$。BGE 使用一遍，Stella 使用两遍；Stella 一遍列为反事实容量分析。这些阶段值不含流水线、模型、偏移和运行时成本。}
+\label{tab:4-phase-storage}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+数据集 & 最终行载荷 & 一遍 gather & 两遍 repack \\
+\midrule
+BGE & 10.90 & 23.05 & 12.11 \\
+Stella & 19.20 & 40.59 & 21.32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:4-phase-storage}量化了压缩副本的节省。Stella 冷日志选择两遍，报告\cref{eq:4-peak-heuristic}为 41.6\,GiB，尾部可用为 30.6\,GiB。另行采样的常驻进程总量包括上下文及查询工作区，BGE 为 11.93\,GiB，Stella 为 20.44\,GiB。搜索工作集依批／探针／候选容量而变，见\cref{sec:4-4}。静态行、构建阶段与常驻显存有不同核算边界。
+补证以20\,ms间隔采样，BGE在add开头观测26.08\,GiB，Stella在repack阶段
+观测22.58\,GiB。这是含上下文的设备采样最大值，可能漏掉更短暂分配。
+
+add早期还有此前遗漏的分配乘积项：
+\begin{equation}
+ S_{\rm dots}=4n_b n_{\rm list}a_b\quad\text{bytes}.
+ \label{eq:4-assignment-scratch}
+\end{equation}
+三个缓冲区、32,768个列表、每缓冲区32,768行时，为三个各4\,GiB的数组，
+总计12\,GiB；它们在add入口附近与其他流水及数据库数组共存。
+23.05\,GiB的gather载荷属于后续阶段，不能直接再加12\,GiB作为真实峰值。
+峰值模型应对各阶段实际存活数组（含流水scratch）取最大值。
+Stella两遍repack的较小载荷加模型／上下文，解释了其数据库更大却观测峰值更低。
+
+\subsection{现有测量确立的范围}
+
+\Cref{tab:7-build-memory,tab:7-build-repeat,fig:7-build}纳入补证空缓存构建：
+每个数据集三次输入页已热的正常运行、一次本会话首次读取及一次同步阶段诊断。
+正常train+add范围为Vogue 0.558--0.566\,s、Stella 10.543--10.653\,s。
+Vogue归档的1.056\,s训练未复现，三次正常重复为298--303\,ms。
+阶段诊断强制同步且只用一个流水缓冲区，其合计不混入正常计时范围。
+
+train+add从构造和样本准备后开始。进程启动到add结束的时间戳还覆盖文件打开、
+主机QR与库初始化：Stella热输入页时18.2--18.6\,s，本会话首次读取为129.9\,s。
+这一边界结束于调度校准和首次查询之前，并非通用disk-cold延迟。
+六个固定工作点的五次构建召回范围均不超过0.0012；未重复整条重新训练前沿。
+
+成功的隔离Stella CAGRA int8构建在图度数32／64时，含数据量化为74.55／82.45\,s。
+JHQ重复构建区间在各自计时边界下更短；完整部署延迟还依赖准备、校准及序列化。
+
+完成的大规模搜索包含 BGE 10,091,524 和 Stella 17,776,615 个向量。仅原始 FP32 数组就分别需要 38.50 和 67.81\,GiB。JHQ 与成功的 CAGRA int8 构建都确立了该 Stella 工作负载的单设备可运行性。部署比较应综合质量、查询成本、重建频率和可用内存，见\cref{sec:7-7}；多种压缩设计均具备放得下的能力。

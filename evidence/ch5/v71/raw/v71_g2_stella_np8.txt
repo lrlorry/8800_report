@@ -1,0 +1,15 @@
+  [mmap loader] reusing cached /root/autodl-tmp/stella-trec24/base.fvecs.raw_f32
+train 123.4 ms
+  [add] two-pass build: single-pass peak 41.6 GB, 30.6 GB free at the tail
+add 6760.7 ms
+schedule: per-query candidate count CV 0.197 on 512 pseudo-queries
+
+=== alpha=100 ck=1000  b=999: 1 batches x 24 reps = 23976 queries per measurement ===
+  scheduled G for b=999: 0
+  G=-1 vs G=0: probes 999/999  primary top-ck same 997, tie-only 2, NON-TIE 0, max |dprimary| 0.00e+00  final order/set/bits 999/999/999  max rel 0.00e+00
+  G      recall    lat med    lat p95     QPS med     QPS min     QPS max  used MiB
+  0      0.9028    4.091 ms    4.110 ms      244161      240959      245041     20837
+  -1     0.9028    4.090 ms    4.125 ms      243900      243184      244743     20933
+
+wrote /root/autodl-tmp/jhq_pipeline_wt/experiments/adc_v69/RAW_LUT/v71_g2_stella_np8.json
+=== BP_OK ===

@@ -1,0 +1,61 @@
+IVF partitions the database around coarse centroids and stores a list of
+vectors assigned to each centroid. A query chooses $n_{\rm probe}$ lists,
+producing a routed universe $U(q)$ of $n_c$ candidates. Visiting fewer lists
+reduces access work but can exclude a true neighbour before any fine scoring.
+The centroids are a routing device; their distance ordering is a different
+selection problem from choosing database vectors.
+
+Product quantisation divides a vector into $M$ coordinate subspaces and
+represents each with a label into a small learned codebook \cite{pq}.
+If $\widehat x_m=\mathcal C_m[z_m]$, asymmetric distance computation (ADC)
+keeps the query unquantised and scores
+\begin{equation}
+ \|q-\widehat x\|^2=\sum_{m=0}^{M-1}\|q_m-\mathcal C_m[z_m]\|^2.
+ \label{eq:2-adc}
+\end{equation}
+A query-specific table precomputes each subspace distance. Scanning then
+uses code loads, table lookups and accumulation. The product is between
+subspaces; the centroids \emph{within} a learned subcodebook need not have a
+further coordinate product. This distinction determines whether Chapter 5's
+exact internal table factorisation is valid.
+
+``Residual'' has two meanings in this setting. IVF-PQ commonly encodes
+$x-\mu_{\ell(x)}$, making the coarse centroid part of reconstruction.
+JHQ instead routes vectors through IVF while defining its residual relative
+to the primary quantised reconstruction in rotated coordinates. These choices
+have different codebook dependencies; adding an IVF centroid to JHQ's
+residual reconstruction would count a term that its encoder did not subtract.
+The original PQ/ADC framework and GPU implementations also permit candidate
+expansion followed by a more accurate refinement stage
+\cite{johnson_gpu,faiss_refine}.
+
+In the analysed regime with at least $k$ valid routed candidates, JHQ's
+primary selection retains valid survivors $C_\alpha(q)$, capped by
+$c(\alpha)=\max\{k,\lceil\alpha k\rceil\}$, and refined selection returns
+$\mathcal R_\alpha(q)$. The set inclusion is
+\begin{equation}
+ \mathcal R_\alpha(q)\subseteq C_\alpha(q)\subseteq U(q)\subseteq\mathcal X.
+ \label{eq:2-cascade}
+\end{equation}
+Intersecting with GT gives stage-wise coverage upper bounds on final recall.
+These inclusions do not quantify how much loss each stage causes; that
+requires fixed-universe counterfactual scoring. Refinement can improve
+ordering among retained vectors, but cannot restore excluded IDs.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}{Candidate and precision cascade. IVF selects lists;
+primary scoring selects vectors; only survivors read residuals. The hierarchy
+is inherited. This diagram defines logical sets and score fidelity,
+not measured recall losses or GPU kernel boundaries.}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+Ignoring routing and selection, table-based broad scoring costs
+$O(n_cM)$ lookups and residual scoring costs $O(cd)$ coordinate work.
+This asymmetry motivates selective precision, but does not predict latency:
+memory placement, arithmetic, parallel work and candidate selection also
+matter. Increasing probes changes $U$; increasing $\alpha$ changes survivors
+within that universe. Treating these as one generic search-depth parameter
+hides their different quality and cost effects.

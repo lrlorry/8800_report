@@ -1,28 +1,35 @@
-% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+% Six-section design follows 6.pdf; records audited offline in data/ch3/audit.json.
 \chapter{Research Design and Measurement Methodology}
 \label{ch:methodology}
-\draftnote{Define comparison protocols once. Separate exploratory findings from questions specified before measurement; identify the actual evidence for each claim.}
+\chaptermark{Research Design and Measurement}
+The evaluation connects a systems intervention to an observable cost or
+quality change. It combines paired execution ablations, held-out budget
+selection and independently tuned system frontiers. These comparisons answer
+different questions: a faster kernel, a useful calibration policy and a
+competitive search system require different controls. This chapter defines
+those controls and the evidence needed to interpret them. Chapters 4--6
+describe the mechanisms; Chapter 7 presents their measured outcomes.
 
-\section{Research Questions as Controlled Comparisons}
+\section{Research Questions and Comparisons}
 \label{sec:3-1}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/03-1-comparisons}
 
 \section{Datasets, Queries, Ground Truth and Splits}
 \label{sec:3-2}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/03-2-data}
 
-\section{Measurement Boundary, Variance and Memory Accounting}
+\section{Timing, Variance and Memory Accounting}
 \label{sec:3-3}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/03-3-measurement}
 
-\section{Baselines, Tuning Grids and Frontier Construction}
+\section{Baselines and Frontier Construction}
 \label{sec:3-4}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/03-4-frontiers}
 
 \section{Versioned Claim-to-Evidence Ledger}
 \label{sec:3-5}
-\draftnote{Record commit, binary, compiler options, index/cache identity, query split, raw result, metric, and figure-generation script for every main claim.}
+\input{chapters/03-5-ledger}
 
 \section{Evidence Strength and Threat Controls}
 \label{sec:3-6}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/03-6-validity}

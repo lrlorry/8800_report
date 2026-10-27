@@ -3,7 +3,7 @@ distance computation: the query remains FP32 while a stored code selects
 reconstructed coordinates \cite{pq,jhq}. For transformed query $q'$, the
 ordinary table for primary subspace $m$ is
 \begin{equation}
- T_m[z]=\|q'_m-C_m[z]\|_2^2,\qquad
+ T_m[z]=\|q'_m-\mathcal C_m[z]\|_2^2,\qquad
  \primarydist(q,x)=\sum_{m=0}^{M-1}T_m[z_m(x)].
  \label{eq:5-primary-lut}
 \end{equation}
@@ -11,11 +11,30 @@ With an eight-bit code, this requires 256 entries per subspace. The
 opportunity here comes from the codebook's internal Cartesian structure,
 not just the fact that the vector is partitioned into PQ subspaces.
 
+The analytical builder uses two scalar levels per coordinate when
+$K=256$ and $D_s=8$:
+\begin{equation}
+ \begin{aligned}
+ a&=\sigma\Phi^{-1}(3/4)\simeq0.67449\sigma,\qquad
+ \mathcal C_m=\{-a,+a\}^{8},\\
+ \primarydist(q,x)&=\|q'\|_2^2+da^2
+       -2a\sum_{j=0}^{d-1}s_j(x)q'_j.
+ \end{aligned}
+ \label{eq:5-sign-codebook}
+\end{equation}
+Here $\Phi$ is the standard normal CDF and $s_j(x)\in\{-1,+1\}$.
+Each byte encodes eight coordinate signs, with higher bits representing
+earlier coordinates. For $a>0$, primary ranking is equivalent to an
+inner-product ranking with that sign vector. The two-level Cartesian
+product also explains why four- and eight-way coordinate splits remain
+algebraically exact. This describes the analytical construction; a
+learned, non-Cartesian replacement requires a new compatibility check.
+
 \subsection{Factorisation without changing the quantiser}
 
 For the tested $D_s=8$ Cartesian codebook, the high nibble $h$ selects
 the first four reconstructed coordinates and the low nibble $l$ selects
-the remaining four. Thus $C_m[16h+l]=(A_m[h],B_m[l])$, with no
+the remaining four. Thus $\mathcal C_m[16h+l]=(A_m[h],B_m[l])$, with no
 cross-dependence between the two coordinate groups. Define
 \begin{equation}
  T_m^{\rm hi}[h]=\|q'_{m,\rm hi}-A_m[h]\|_2^2,\qquad
@@ -42,24 +61,23 @@ An arbitrary learned 256-centroid PQ subcodebook need not satisfy this
 condition: dividing its code labels into nibbles does not factor its
 centroid coordinates.
 
-The mathematical identity does not promise bitwise FP32 equality. A
-full eight-coordinate accumulation and two four-coordinate sums followed
-by an addition associate the operations differently. The implementations
-therefore retain FP32 tables and separately check numerical and ranking
-effects. Replacing table entries with FP16 would introduce another
-rounding operation and is a different design choice.
+FP32 accumulation order changes between the full and split tables.
+The archived grouping sweep checks end-to-end recall, whose observed
+spread is at most $10^{-4}$; it supplies no full-table versus split-table
+per-candidate score-error or cutoff-tie comparison. Those stronger
+numerical checks remain pending. All compared tables use FP32.
 
 \subsection{Grouping, construction work and resource cost}
 
-The v71 ablation generalises the split to $g=\glut\in\{1,2,4,8\}$
+The table-grouping ablation generalises the split to $\glut\in\{1,2,4,8\}$
 contiguous coordinate groups whose bit fields match the Cartesian
-digits. For eight bits and $D_s=8$, each group has $2^{8/g}$ entries;
+digits. For eight bits and $D_s=8$, each group has $2^{8/\glut}$ entries;
 the total entries and FP32 storage per query are
 \begin{equation}
- E(g)=g2^{8/g},\qquad W_{\rm LUT}(g)=4ME(g)\ \text{bytes}.
+ n_{\rm LUT}(\glut)=\glut 2^{8/\glut},\qquad S_{\rm LUT}(\glut)=4Mn_{\rm LUT}(\glut)\ \text{bytes}.
  \label{eq:5-lut-cost}
 \end{equation}
-Independent entry construction evaluates $D_s2^{8/g}$ coordinate
+Independent entry construction evaluates $D_s2^{8/\glut}$ coordinate
 contributions per subspace. Two groups therefore reduce table storage
 eightfold and coordinate work sixteenfold relative to independently
 constructing every full-table entry. These are table-level cost ratios,
@@ -85,26 +103,42 @@ $\glut$ & Entries & FP32 bytes & Lookups & Combining adds & Build terms \\
 \end{tabular}
 \end{table}
 
-The table is first built in global workspace. A scan block stages it
-cooperatively in shared memory when the table and that kernel's candidate
-buffer fit the device's configured limit; a block barrier completes
-staging before lookup. Otherwise it reads the global table. The shared
-footprint must include selection scratch: $W_{\rm LUT}$ alone does not
-determine residency. Grouped scan blocks may each stage the same query's
-table, coupling this design to \Cref{sec:5-5}.
+The table is built in global workspace and staged cooperatively when
+its complete shared-memory footprint fits the queried per-block opt-in
+limit $S_{\max}$. For candidate-buffer capacity $C_{\rm buf}$, the
+ordinary exact scan and the grouped scan respectively require
+\begin{equation}
+ S_0=8C_{\rm buf}+8+S_{\rm LUT}(\glut),\qquad
+ S_{\rm grp}=8C_{\rm buf}+24+S_{\rm LUT}(\glut)
+ \quad\text{bytes}.
+ \label{eq:5-shared-footprint}
+\end{equation}
+These formulas concern the evaluated scan without optional fused
+refinement or early-exit scratch. The code selects shared lookup exactly
+when the corresponding footprint is at most $S_{\max}$.
 
-At $M=96$ and 384, full FP32 tables require 96 and 384\,KiB per query;
-two-group tables require 12 and 48\,KiB. The smaller footprint creates
-placement opportunities, but four and eight groups make more lookups and
-combine more values even though both store only 16 entries per subspace.
-Index extraction, dependent lookups, synchronisation and residency all
-contribute to the resulting trade-off. Table size alone cannot identify
-the fastest design or establish a unique cache/bank-conflict explanation.
+In the table sweep, $c=1{,}000$, block sizes are 512 or 1,024, and
+$C_{\rm buf}=2{,}048$. Full tables span 96--384\,KiB, versus
+12--48\,KiB for two groups. NVIDIA specifies a 99\,KiB per-block limit
+for compute capability 12.0 \cite{blackwell_tuning}. With this limit,
+the full-table footprint exceeds capacity even at $M=96$
+($114{,}696$ bytes in the query-centric path), whereas the largest
+two-group footprint is $65{,}560$ bytes in the grouped path.
+Thus the source-level placement rule sends full tables to global memory
+and two-group tables to shared memory in these configurations. This is
+a deduction from the launch rule and published limit; a device-attribute
+printout was not retained in the reviewed records.
 
-Small-table execution has substantial precedent in PQ Fast Scan and
-Quicker ADC \cite{fastscan,quickeradc}. This implementation applies exact
-coordinate factorisation to JHQ's existing Cartesian codebook and measures
-the GPU grouping trade-off; it does not claim to invent small LUTs.
-\Cref{sec:7-3} reports the controlled v71 sweep: two groups lead in
-22/24 cells, with the other two differences below 1\%. That result supports
-the selected operating point rather than a universal optimum.
+Four and eight groups both store 16 entries per subspace but perform
+more lookups and combinations. Extraction, lookup dependencies, staging,
+synchronisation and residency jointly determine the measured trade-off.
+Multiple scan groups may stage the same table independently.
+
+The $16+16$ representation is a nibble LUT for an eight-bit sign code.
+Related small-table execution appears in PQ Fast Scan, Quicker ADC and
+IVF-RaBitQ \cite{fastscan,quickeradc,ivfrabitq}. This algebraic connection
+does not identify JHQ's two-level score with RaBitQ's distance estimator.
+The contribution here is GPU execution of JHQ's primary/residual
+structure, including its scan, selection and refinement, with a measured
+table-grouping choice. \Cref{sec:7-3} reports that two groups lead in
+22/24 cells, with the remaining margins below 1\%.

@@ -1,0 +1,67 @@
+令 $\mathcal R_\alpha(q)$ 为固定索引在预算 $\alpha$ 下返回的 $k$ 个有效且唯一数据库 ID 的集合，定义参考 $\mathcal R_{\rm ref}(q)=\mathcal R_{\alpha_{\rm ref}}(q)$。降序网格为
+\begin{equation}
+ A=(200,100,64,32,16,8,4,2),\qquad \alpha_{\rm ref}=A[0]=200.
+ \label{eq:6-grid}
+\end{equation}
+对 $S$ 个校准查询 $\mathcal Q_S$，定义
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+ \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right),
+ \qquad D_S(\alpha)\leq\epsilon.
+ \label{eq:6-agreement}
+\end{equation}
+评测中的 $\epsilon=1$ 允许整个样本共缺失一个参考 ID。它忽略结果顺序和距离差异；替换一个 ID 计一次，尽管对称差包含两个 ID。有限网格目标为
+\begin{equation}
+ \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
+ \label{eq:6-selection-objective}
+\end{equation}
+参考预算提供非空回退。目标最小化被接纳的乘数；\cref{sec:6-3}说明二分精确求解的条件。
+
+在 $k=10$ 时，归一化容忍度 $\epsilon/(Sk)$ 对 $S=32,64,128$ 分别为 0.003125、0.0015625、0.00078125，$S=500$ 时为 0.0002。因此，增大 $S$ 同时改变覆盖和有效严格度。校准与留出评测使用互斥查询；子样本复用同一有限校准池（\cref{sec:7-5}）。
+
+\begin{figure}[htbp]
+\centering
+\input{figures/ch6/calibration-flow}
+\caption{工作负载级校准及其评测。预算决策使用参考 ID，GT 评价留出质量；所选预算结果从已计时的固定预算中查取。实现边界见\cref{sec:a-budget-contract}。}
+\label{fig:6-calibration}
+\end{figure}
+
+\subsection{一致性控制什么}
+
+在\Cref{prop:6-monotonicity}的条件下，不一致数就是主码筛选排除的参考答案数：
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+       |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
+ \label{eq:6-reference-coverage}
+\end{equation}
+对有效定长输出集合，令 $r_{\mathcal Q_S}$ 为同一批查询的 GT recall。每个缺失参考 ID 至多损失一个 GT 命中，因此
+\begin{equation}
+ r_{\mathcal Q_S}(\alpha)\geq r_{\mathcal Q_S}({\rm ref})
+                         -\frac{D_S(\alpha)}{Sk}.
+ \label{eq:6-relative-recall}
+\end{equation}
+该界仅在样本内、相对参考成立。一致性控制相对参考的额外损失；参考自身质量仍需 GT 评价。\Cref{sec:7-recall-attribution}用重建 pilot 量化这一区别。
+
+\subsection{抽样分辨率与有序检验}
+
+令 $H_S$ 为至少缺失一个参考 ID 的查询数。由于 $H_S\leq D_S$，接受意味着 $H_S\leq1$。对预先指定预算及 i.i.d. 查询，观察到一次事件时的单侧 95\% 精确二项上限满足\cite{nist_binomial}
+\begin{equation}
+ (1-u)^S+Su(1-u)^{S-1}=0.05.
+ \label{eq:6-binomial-limit}
+\end{equation}
+按查询计，$S=128$ 和 500 的上限分别为 0.03652、0.009452。将全部 $Sk$ 个结果位看作同参数独立 Bernoulli 是更强假设；相应上限为 0.003701、0.0009484，近似 $4.74/(Sk)$。仅有查询 i.i.d. 不能将查询事件上限再除以 $k$；两种模型均未为固定池的重复子样本建立置信保证。
+
+当不一致数单调且网格顺序固定时，二分选择被接受的前缀。若逐预算决策是有效水平检验，首个不安全预算的论证可给出无需 Bonferroni 因子的 fixed-sequence 错误控制\cite{learn_then_test}。当前一个槽位规则是稳定性阈值；GT 风险保证还需要对目标有效的检验。
+
+\paragraph{有限池扩展。}
+假设每条查询在目标样本大小的执行制度下具有固定不一致数 $X_q(\alpha)$，且不随子集成员或位置变化。令池大小为 $N_{\rm cal}$，$n_j$ 为 $X_q=j$ 的查询数。均匀无放回抽样下，$D_S\leq1$ 只可能抽到全零查询，或恰好一个计数为一的查询\cite{nist_hypergeometric}：
+\begin{equation}
+ \Pr\{D_S(\alpha)\leq1\}
+ =\frac{\binom{n_0}{S}+n_1\binom{n_0}{S-1}}{\binom{N_{\rm cal}}{S}}.
+ \label{eq:6-finite-pool}
+\end{equation}
+越界组合数按零计。这是有条件的接纳模型；预测选择风险还需网格接纳结构与
+选中预算的质量映射。补证用全池记录的$X_q$按实际样本ID求和，18,432个网格计数
+与所有抽取曲线一致，包括换执行路径的情形（\cref{sec:7-budget-trace}）。
+这验证了已测抽取的汇总计数，任意子集预测仍假设逐查询计数稳定。
+接纳不使用标签；预测GT损失越阈还要使用固定预算的留出质量映射。

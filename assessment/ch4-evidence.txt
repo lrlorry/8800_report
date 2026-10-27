@@ -1,0 +1,98 @@
+本文件保留首次第 4 章实现记录。2026-10-28 后续审稿修订已更新正文；
+当前逐项结论以 assessment/ch4-review-response.txt 为准，复算结果见
+ data/ch4/review-audit.json。特别修正旧记录：已有 pilot 完成了码本及
+全行 correction 子契约，并非 C1 全部待做；阶段数组模型已明确，
+全进程构建峰值、原始输入重编码及独立置换／正交性参考仍待测。
+以下首次记录中的来源数量与构建状态仅描述该时点。
+
+第 4 章：系统架构与 GPU 索引构建核对记录
+日期：2026-10-28
+交付：按 6.pdf 的六节骨架完成中英文正文、两张方法图，编入论文总稿。
+本轮只做源码／日志与已有图表核对；未改 JHQ_GPU，未运行 GPU 实验。
+
+1. 骨架与研究定位
+----------------
+4.1 生命周期与 CPU/GPU 责任；4.2 训练依赖与工作量；4.3 ID／物理布局；
+4.4 存储／工作区／缓存与 graph 生命周期；4.5 有界批次、两遍建库及
+已测规模；4.6 C0/C1 表示契约与当前验证状态。
+表示继承自 JHQ；本章解释 GPU 上的训练、建库与物理组织，不将原理
+继承写成首创。细粒度查询加载、选择、精排等继续由第 5 章展开。
+英文源码粗计数约 3,300 words（包含 LaTeX 标记，不是官方统计口径）。
+
+2. 逐项核对
+------------
+4.1：train / add / search 三阶段分开；缓存仅保存训练模型，不是完整
+可搜索数据库；一次成功 add 后再次 add 被拒绝。查询使用 host-to-host
+边界，工作区与 CUDA graph 属于执行状态。
+
+4.2：CPU Gaussian -> LAPACK QR 生成方形 Pi；GPU GEMM 应用旋转，维度
+不变。主码解析构造在 CPU，IVF／残差拟合可走 GPU，不笼统称全 GPU。
+sigma^2 为样本平方范数均值除以维度，不称为任意数据的精确正态性。
+主码／IVF 样本大小依运行脚本；残差为独立的 100000 行步长样本。
+固定步长与固定随机种子不是 IID 采样保证。主码先编码，IVF 拟合在
+残差码本拟合之前；残差相对主码重建，不是 IVF 中心。
+源码有 int8／FP16 辅助分配及 FP32 重算；不能因中心存成 FP32 就声称
+所有训练 arithmetic 均为 FP32。归档冷日志未提供实际分配精度轨迹。
+冷日志包括 Stella 的 residual CAP at 2000，不宣称精确收敛。
+
+4.3：按 assignment 和输入行号 sort_by_key；lower_bound 形成 offsets。
+rho 是最终位置到原 ID 的置换；同列表排序不保证跨构建稳定。两遍
+建库的逆映射为临时数组，不虚构常驻双向映射。
+主码中间字节为 m*N+p，最终 word 为 4*(j*N+p)，四字节对应同一向量
+四个子空间。残差保持 [N,b_r]；四比特偶数维在低 nibble。ID、主码、
+残差、correction 必须共同重排，correction 为 2<primary,residual>。
+
+4.4：每向量 M+ceil(d*Br/8)+8 字节，不含模型、offsets、workspace、
+context。d=768/1024/1536/3072 时为 872/1160/1736/3464 字节；仅编码
+9d/8，不将它当作完整实测 device usage。可选残差 LUT 单独列出。
+调小 alpha 不释放整库残差，scratch 也可能保留历史容量。graph 复用
+仅在相应配置保持有效时成立，正文限定固定 k，未声称任意可变 k API
+都已做完 graph-key 审计。
+缓存 key 是参数与步长抽样 FNV，不是全库加密哈希。构造器先创建 Pi，
+再进入 train 检查缓存，因此 cache hit 也不等于没有初始化成本。
+
+4.5：分批 H2D + 旋转控制 float staging，压缩索引仍需全库常驻。
+一遍保存输入顺序码后 gather；两遍先分配／排序，再重读输入、旋转／
+编码并 scatter 到最终位置，以额外遍历换取较低临时压缩存储。
+Stella 的原始冷日志确实选择 two-pass；打印 41.6 GB，源码按 2^30
+换算，正文规范为 GiB。该值来自 N*(2*b_r+3*M+20)+2^30 的启发式，
+不是 measured peak；30.6 GiB 为该日志的尾部可用值，不是峰值余量。
+大规模成功记录为 BGE 10091524、Stella 17776615，均 d=1024。
+沿用第 7 章的 1.01--10.40 s train+add 和 11.93/20.44 GiB 常驻样本。
+尊重成功 CAGRA int8 复验，不从更早失败尝试推断它放不下。
+
+4.6：区分 source-derived 不变量、实际表示检查、独立 FP64／CPU 参考、
+算法选择和 sanitizer。代码有尺寸、码本可分离性和排序等前提检查；
+尚未找到足以宣称完整 C0/C1 独立编码／置换验证已完成的记录，正文
+和原待补实验文件均明确记缺口，不用 recall 或查询 sanitizer 替代。
+
+3. 本轮新增的计时边界澄清
+------------------------
+demo_jhq_batch_pipeline.cu 先构造 idx、准备样本，再启动 train() 计时。
+JLTransform 在 idx 的初始化列表里做 QR；构造器还建立 cuBLAS 并预热。
+因此原 train+add 数字排除对象构造、主机 QR、构造器库预热和样本准备，
+也排除原始文件读取及后续调度校准。数字保持原样，在第 4、7 章及
+附录同步说明，待补清单加入这些分项与整体冷启动计时。
+不把 source/harness 时序核对冒充 measured binary 的完整身份认证。
+
+4. 图表与来源
+--------------
+新图：figures/ch4/architecture.tex；figures/ch4/physical-layout.tex。
+示意图采用自绘 TikZ，数值为说明用例，不是测量点。结构参考现有
+海报的建库／query 分工和 ADC pipeline/layout 图源码，再按当前代码
+修正缓存、临时逆映射、packed view 等细节。
+已有实验图通过 fig:7-build / fig:7-memory / fig:7-large 引用，不重复
+绘图、不手改测点。内存组件保持 model 与 measured total 分开。
+来源：data/ch4/audit.json，记录 44 项代码、日志、图表和本地海报哈希。
+分析 checkout 标识源码审阅状态，不代替各次实验的源码／binary 身份。
+原 JHQ 论文题名、作者由 VLDB 原文核对；修正 bibliography 中 Han 的
+名为 Jiabao，原条目误写为 Jiaxin。原文：
+https://www.vldb.org/pvldb/vol19/p1530-han.pdf
+
+5. 验证范围
+------------
+已完成：中英文公式块、label 与 citation 一致；两版编译通过，最终
+LaTeX／BibTeX 日志无警告、未定义引用或排版溢出；PDF 已抽页目视检查；
+根目录 PDF 与构建产物哈希一致，44 项来源哈希核对通过。
+独立编码／置换审计、浮点等距误差和实测构建峰值仍待 GPU，不记已完成。
+第 1、2、3、6、8、9 章仍保留其现有骨架，不将整篇论文称为完成终稿。

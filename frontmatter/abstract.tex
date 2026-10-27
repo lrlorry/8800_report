@@ -1,6 +1,38 @@
 \frontchapter{Abstract}
-\draftnote{Write this after the results and conclusion. A useful planning
-length is 250--350 words, subject to Canvas instructions. Cover the problem,
-your own methods, the strongest verified results, and the principal quality
-or deployment limitation. Keep experimental versions consistent. Do not
-describe this template or the writing blueprint in the final abstract.}
+Compact vector representations reduce storage, but efficient GPU approximate
+nearest-neighbour search also depends on how scores are computed, candidates
+are selected and refinement effort is allocated. This thesis presents
+JHQ-GPU, a GPU implementation and evaluation of JHQ's inherited Cartesian
+primary/residual hierarchy for high-dimensional squared-L2 search.
+
+The system combines GPU training and batched index construction with
+representation-aware query execution. Cartesian structure decomposes each
+256-entry primary distance table into two 16-entry tables without changing
+the real-arithmetic represented distance. Packed access, lane-cooperative
+refinement and workload-dependent grouped scanning complement this design.
+Selection and shared-bound arguments state the ordering and memory conditions
+needed for correct primary retention. A workload-level policy selects a
+refinement multiplier through unlabelled output agreement with a larger
+reference budget; its analysis separates sampled agreement from GT recall.
+
+Archived measurements on an RTX 5090 cover six embedding datasets. The
+largest tested index searches 17.78 million vectors at 20.44\,GiB resident
+device memory. Two-group tables lead in 22/24 configurations. Integrated
+scheduling improves geometric-mean throughput by $2.727\times$ at batch 8
+against the lane-refinement reference, with much smaller full-batch gains.
+At recall 0.97, interpolated host-to-host comparisons place JHQ first in
+three of four historical E1 datasets and near parity with IVF-RaBitQ on
+arXiv. Those OpenAI runs use TF32 GEMMs; a separate FP32 sensitivity
+retains 7.9--8.6\% leads over archived IVF-RaBitQ at that target.
+Competitors lead in other recall regions.
+
+Full-pool calibration meets a $10^{-3}$ held-out recall-loss target relative
+to the best tested budget in all twelve cells, with maximum observed loss
+0.0006. Smaller $S=128$ samples have up to 40/64 threshold crossings.
+These are fixed-pool observations, not population recall guarantees;
+complete traces confirm all sampled and full-pool finite-grid decisions.
+Direct calibrated-reuse measurements support net savings on suitable
+workloads; distance-only ties retain conditional theoretical coverage. Negative designs further show
+that arithmetic reuse and lower reconstruction error need not improve the
+end-to-end frontier. The findings support joint evaluation of representation,
+execution and effort under explicit quality, timing and capacity conditions.

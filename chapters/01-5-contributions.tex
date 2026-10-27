@@ -1,0 +1,54 @@
+\Cref{tab:1-contributions} states three linked project contributions and
+their inherited foundations. The core contribution is the adaptation and
+evaluation of a particular representation--execution--budget combination.
+JHQ, Cartesian quantisation, IVF, bitonic/radix selection, merging and CUDA
+Graph execution retain their prior-art status.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Technical contributions and their evidence boundaries.}
+\label{tab:1-contributions}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+ & Inherited foundation & Project contribution & Evidence \\
+\midrule
+C1 & JHQ rotation, codebooks and hierarchy & GPU training/encoding,
+bounded batch construction and list-ordered packed representation
+& Search of 17.78M vectors at 20.44\,GiB resident; repeated train+add
+10.54--10.65\,s; sampled construction peak 22.58\,GiB \\
+C2 & Cartesian additivity and established GPU primitives & Integrated
+factorised scoring, complete-key grouped retention/bounds, lane refinement
+and execution scheduling & Two-group LUTs lead in 22/24 cells;
+scheduled execution $2.727\times$ at batch 8; explicit correctness scope \\
+C3 & Candidate expansion and output-agreement ideas & Workload-level
+budget rule, conditional selection analysis, held-out controls and cost/risk
+evaluation & FULL meets the relative-loss target in 12/12 cells;
+smaller samples expose risk; four cells directly measure calibrated reuse \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The results make the claims concrete without making them universal. On
+the full-batch E1 grid near recall 0.97, JHQ leads in three datasets and is
+near parity with RaBitQ on arXiv under the interpolated comparison. Other
+recall regions favour competitors. FULL's maximum observed held-out loss is
+0.0006 relative to the best tested arm, while $S=128$ reaches 40/64 loss
+crossings in one cell. These are empirical quality results; ten FULL cells
+retain conditional nestedness coverage, while all twelve FULL
+finite-grid choices now match enumeration (\cref{sec:7-budget-trace}).
+The OpenAI E1 results use TF32 GEMMs; a separate FP32 sensitivity
+retains smaller favourable margins (\cref{sec:7-precision}).
+
+This COMP8800 project is presented by Rui Luo under Dr Mengxuan Zhang's
+supervision. The coauthored ADC manuscript names Rui Luo and Mengxuan Zhang
+and shares the JHQ-GPU implementation and measurement artifacts
+\cite{adc_artifact}. The thesis
+expands the correctness contracts, newer experiment analysis and treatment
+of failed designs; historical manuscript numbers retain their own versions.
+Technical contribution labels identify the project scope rather than assigning
+sole ownership of collaborative work. Personal contribution allocation and
+AI assistance are documented separately in the declaration and contribution
+record. AI-assisted implementation, analysis and writing require explicit
+disclosure and author review; a source ledger does not substitute for that
+responsibility.

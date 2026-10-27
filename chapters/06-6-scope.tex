@@ -1,0 +1,48 @@
+Reuse is justified only for a sufficiently stable index, $k$, routing
+configuration and query population. Changing the index or routing changes
+the calibration target; a different batch regime may also change ties and
+arithmetic through scheduling. The checks in \cref{tab:6-scope} define
+applicability conditions, not automatic safeguards already supplied by
+the harness.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Conditions to check before interpreting or reusing a calibrated
+budget. Measured net cost and representation checks have stated finite coverage;
+future drift handling remains separate work.}
+\label{tab:6-scope}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Failure mode & Evidence or condition needed \\
+\midrule
+Reference misses true neighbours & Held-out GT quality alongside agreement \\
+Sample misses difficult queries & Crossing frequency and tail loss over the stated pool \\
+Non-nested ties or changed paths & Common ordering, or matched finite-grid enumeration \\
+Noisy arm timing or short job & Repeated timing and direct total cost including calibration \\
+Changed index, route or query mix & Fresh validation before reusing the chosen multiplier \\
+Underfull or invalid outputs & Valid-ID counts and uniqueness before applying set agreement \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+For the observed workload family, the resulting choice is full-pool
+calibration when quality takes priority, with $S=128$ as the cheaper
+variant whose crossing risk is measured separately. A caller must install
+the selected $\alpha$ explicitly and reuse it with the same index, route
+and $k$. The contribution is a label-free finite-grid decision, a
+conditional exact search for that decision and a cost model for reuse.
+Chapter 7 tests its quality and speed against fixed budgets and the
+diagnostic oracle, and directly measures calibrated reuse on four cells.
+
+The supplementary archive now contains every draw's sample IDs, selected
+$\alpha$, full $D_S$ curve and loss, full-pool enumeration, pool-level
+$X_q$ records and 500-batch traces. Remaining work concerns arbitrary-subset
+per-query invariance, a strict CPU reference for actual primary scores,
+the Vogue cross-process discrepancy and future workload changes. Their
+status is maintained in \path{assessment/ch7-pending-experiments.txt}.
+
+The reported budget campaign and its trace rerun use v69 arithmetic,
+including TF32 on the OpenAI datasets. The separate FP32 sensitivity
+measures a search frontier; it does not recalibrate or validate these
+budget choices under FP32.

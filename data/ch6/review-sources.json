@@ -1,0 +1,46 @@
+{
+  "access_date": "2026-10-28",
+  "sources": [
+    {
+      "bibkey": "faiss_refine",
+      "url": "https://faiss.ai/cpp_api/file/IndexRefine_8h.html",
+      "checked_claim": "k_factor expands base candidates per requested result"
+    },
+    {
+      "bibkey": "faiss_autotune",
+      "url": "https://github.com/facebookresearch/faiss/wiki/Index-IO,-cloning-and-hyper-parameter-tuning",
+      "checked_claim": "AutoTuneCriterion uses ground truth; explores speed/accuracy operating points"
+    },
+    {
+      "bibkey": "cuvs_refinement",
+      "url": "https://developer.nvidia.com/blog/accelerating-vector-search-nvidia-cuvs-ivf-pq-performance-tuning-part-2/",
+      "checked_claim": "18 July 2024; refine_ratio; source-vector reranking example"
+    },
+    {
+      "bibkey": "li_termination",
+      "url": "https://www.pdl.cmu.edu/PDL-FTP/BigLearning/mod0246-liA.pdf",
+      "checked_claim": "Li, Zhang, Andersen, He; SIGMOD 2020; DOI 10.1145/3318464.3380600; per-query learned termination"
+    },
+    {
+      "bibkey": "darth",
+      "url": "https://arxiv.org/pdf/2505.19001",
+      "checked_claim": "Chatzakis, Papakonstantinou, Palpanas; PACMMOD 3(4), article242, September2025; DOI10.1145/3749160"
+    },
+    {
+      "bibkey": "learn_then_test",
+      "url": "https://arxiv.org/pdf/2110.01052",
+      "checked_claim": "Version5, 2022; Section2.3.1; fixed order and valid tests; multiplicity and first-null argument"
+    },
+    {
+      "bibkey": "nist_binomial",
+      "url": "https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm",
+      "checked_claim": "Exact binomial confidence inversion; one-sided limits"
+    },
+    {
+      "bibkey": "nist_hypergeometric",
+      "url": "https://www.itl.nist.gov/div898/software/dataplot/refman2/ch8/hyppdf.pdf",
+      "checked_claim": "Sampling without replacement and hypergeometric counting; the epsilon=1 multitype expression is derived by counting admissible subsets."
+    }
+  ],
+  "scope": "Primary sources inspected; binomial constants are independently recomputed, not experimental confidence certificates."
+}

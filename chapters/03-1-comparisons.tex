@@ -1,0 +1,56 @@
+\Cref{tab:3-design} defines the comparison unit and what would challenge
+each research claim. A \emph{cell} fixes a dataset, index configuration and
+workload setting; arms are alternative implementations or budgets within
+that cell. For paired execution measurements, the index state, queries,
+probe count, refinement budget and scoring representation are held fixed
+unless the named treatment changes them. The recorded paired ratio is
+$Q_{\rm treatment}/Q_{\rm control}$. Geometric means summarise multiplicative
+ratios over the stated cells, giving each cell equal weight.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Research questions as testable comparisons. A capacity observation
+has a different control from a paired execution intervention.}
+\label{tab:3-design}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.11\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Question & Intervention / comparison & Held fixed or accounted for & Measure and counter-evidence \\
+\midrule
+RQ1: build and capacity & GPU construction; cached versus cold lifecycle;
+compressed versus raw storage & $N,d$, representation, routing and timed
+construction boundary & Train/add time and resident bytes; failed builds
+or model--allocation gaps delimit feasibility \\
+RQ2: execution & LUT grouping, word access, refinement lanes, grouped scan,
+shared bound and probe selection & Paired state, workload and score;
+reference output semantics & Wall QPS, stage time and output checks;
+slowdowns or non-tie mismatches challenge the mechanism \\
+RQ3: budget & Sampled / full-pool rule versus fixed 64, 100, 200,
+enumeration and GT oracle & One index and route; disjoint calibration
+and held-out query positions & Held-out recall loss, selected-arm QPS
+and calibration cost; threshold crossings challenge reliability \\
+RQ4: operating region & Independently tuned JHQ, CAGRA, IVF-PQ and
+IVF-RaBitQ & Exported vectors, GT, $k$, device and host-to-host boundary;
+memory reported separately & Matched-recall QPS and coverage; stronger
+competitors at other recall targets challenge broad superiority \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The design distinguishes a mechanism's implementation from its explanation.
+A paired word-access ablation can establish the throughput effect of that
+access path in the measured pipeline. Attributing the effect to cache misses
+or occupancy would additionally require hardware-counter evidence. Likewise,
+a cross-system frontier compares complete choices of representation,
+algorithm and implementation; it cannot isolate one kernel's contribution.
+\Cref{sec:7-6} provides an integrated scheduling comparison so that component
+ratios need not be multiplied across incompatible baselines.
+
+The research questions organise an iterative development record. They are
+not a preregistered test plan: the E1 grid was extended after observing
+incomplete recall coverage, and the interpretation of workload-dependent
+refinement emerged from budget sweeps. Low-recall losses, high-recall
+reversals and unsuccessful alternatives remain part of the evaluation.
+Output agreement with a quantised reference and recall against raw-vector
+GT are separate quantities by definition. The budget rule uses the former;
+the held-out evaluation assesses the latter.

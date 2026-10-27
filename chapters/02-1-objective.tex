@@ -1,0 +1,33 @@
+Let $\mathcal X=\{x_i\}_{i=0}^{N-1}\subset\mathbb R^d$ be a database
+with stable identifiers. For query $q$, the exact task selects the $k$
+smallest raw-vector distances
+\begin{equation}
+ \rawdist(q,x)=\|q-x\|_2^2.
+ \label{eq:2-raw}
+\end{equation}
+Ties require a specified ordering or a set of equally valid answers.
+This thesis evaluates the stored GT top-10 set, with its fixed tie choices.
+ANN reduces the cost of accessing and scoring vectors while permitting
+missed members of that set. The primary quality measure is Recall@10
+(\cref{eq:3-recall}); it is an empirical set-recovery measure. A high measured
+recall does not establish a worst-case multiplicative distance guarantee.
+
+There are four relevant cost axes. Query throughput counts queries completed
+per second at a stated batch and timing boundary. Batch latency counts
+elapsed time for that call; throughput alone supplies no concurrent-service
+tail guarantee. Construction cost includes the specified training and
+encoding stages. Storage distinguishes persistent bytes per vector from
+model, workspace, context and temporary allocation. Chapter 3 defines the
+actual measurement boundaries. A method may improve one axis while worsening
+another; equal recall, equal memory and equal construction effort are
+different comparisons.
+
+Tuning produces a finite set of operating points. Its Pareto frontier keeps
+points whose recall and throughput are not simultaneously improved by
+another measured configuration. At a target recall, the fastest qualifying
+point is an available configuration, while interpolation estimates between
+neighbouring points. An uncovered region supplies no evidence of either
+dominance or impossibility. These distinctions are especially relevant when
+the compared systems use different code precisions and graph/index sizes.
+The detailed frontier estimators and their endpoint tolerance are fixed in
+\cref{sec:3-4}.

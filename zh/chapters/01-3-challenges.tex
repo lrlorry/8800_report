@@ -1,0 +1,24 @@
+\Cref{fig:1-challenges}把三个挑战连接到机制与证据。
+
+首先，直接GPU移植可能忽略primary码本的数学结构。
+每8-bit子空间索引256个距离，其Cartesian坐标允许精确16+16分解，
+但进一步拆分会增加lookup和算术。挑战是利用可分性，同时不假定最小表最快。
+候选并行word访问与残差lane合作也需要不同映射。
+
+第二，primary优胜者可能集中在路由全集任何位置。并行组不能安全地各保留
+全局需求的一小部分。精确局部保留、全局合并与共享完整分数界提供可靠路线，
+却增加缓冲、staging和同步。大batch可能已有足够block，不均衡工作负载仍可能
+受益于分组，因而正确性与执行决策耦合。IVF列表选择又是独立于向量保留的原语。
+
+第三，固定倍率可能反复精排无关向量，小倍率则可能过早删除真近邻。
+大预算参考一致性无需GT，却不能修复参考自身错误或保证未来查询recall。
+样本与预算选择也耗时，必须联合评估质量、校准成本及复用。
+这些问题组织迭代项目记录，不把观察收益包装成预注册预测。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch1/challenges}}
+\captionof{figure}{问题、机制与证据。箭头组织研究问题，不意味着独立测量的提速比
+可以相乘，也不意味着无标签一致性保证GT recall。}
+\label{fig:1-challenges}
+\end{minipage}\par\medskip

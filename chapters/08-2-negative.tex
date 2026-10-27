@@ -1,0 +1,79 @@
+\subsection{Mailman-style shared sums: arithmetic reuse meets scatter cost}
+\label{sec:8-mailman}
+
+The sign-code form of primary distance suggests reusing sums across
+candidates that share bit patterns. The Mailman algorithm supplies the
+general finite-alphabet matrix--vector idea \cite{mailman}.
+The archived pilot tests GPU implementations on frozen Vogue, arXiv and
+OpenAI-3072 candidate streams, at 128 probes and batches 8/1,000. Its
+baseline reproduces the packed two-table scoring loop. Atomic bucket
+accumulation, private histograms and group widths 4/6/8 are alternatives
+within the experiment; the mathematical score and input codes remain fixed.
+
+The fastest alternative in each of the six cells achieves only
+0.187--0.581 of baseline scoring throughput (\cref{fig:8-negative}).
+The phase profiles place most instrumented cycles in bucket accumulation.
+Biased list-local patterns create repeated bucket destinations; private
+histograms avoid atomics at the cost of larger state and shared-memory
+read--modify--write work. Reducing group width and avoiding dominant buckets
+improves particular variants, but none reaches the baseline. This supports
+a stopping decision for these implementations and inputs. It does not
+establish that all finite-alphabet reuse is ineffective: the winning
+two-table baseline already reuses coordinate sums in a different direction.
+
+The pilot writes primary scores rather than returning final neighbours.
+Its FP32/FP64 comparisons expose near-cutoff numerical differences, not
+final-pipeline equivalence. With measured scorer speed ratio $s$ and an
+estimated replaceable latency fraction $f$, the optimistic replacement
+model is $1/[(1-f)+f/s]$. Its predicted slowdown is a model, since integration
+was stopped before an end-to-end run. An auxiliary lossless dictionary
+study also stopped at structural statistics: its limited byte/work savings
+did not justify a GPU implementation. Neither route contributes a measured
+system point to the main frontiers.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\includegraphics[width=\linewidth]{ch8/negative-evidence.pdf}
+\captionof{figure}{Two distinct evidence boundaries. Left: best measured
+Mailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,
+arXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below
+one. Right: minimum survivor
+counts meeting the original JHQ recall target on arXiv's 400-query FP64
+offline test split. The candidate reduction is not a GPU speedup. Both
+panels are regenerated from archived records by the thesis audit script.}
+\label{fig:8-negative}
+\end{minipage}\par\medskip
+
+\subsection{Rank-oriented coding: a local gain is not a general replacement}
+\label{sec:8-rank}
+
+The rank-oriented study asks whether changing one-bit thresholds or scoring
+can retain useful neighbours with fewer survivors at the same nominal code
+budget. Its main comparisons replay exported candidates in FP64, with
+400 calibration, 200 validation and 400 final-test queries. It examines
+likelihood weighting, median thresholds, learned ranking losses,
+linear-MMSE decoding and list-dependent thresholds. Different objectives
+expose different failure modes: reducing reconstruction or inner-product
+MSE can worsen the order of the few nearest candidates; changing primary
+levels also changes the residual reference point.
+
+On arXiv's test split, median thresholds reduce the minimum tested survivor
+count meeting the original target from 875 to 375. That success does not
+generalise to the other two workloads under the same strict criterion.
+The shared-rotation Gaussian intuition also leaves real corpus bias intact:
+rotating a mean vector preserves its norm. Centered coding can address some
+of this mismatch, but its reconstructed-score ceiling must be evaluated
+alongside primary ranking. The stopped study therefore supports a
+workload-specific representation improvement, rather than a new generally
+rank-optimal quantiser.
+
+The later median-only GPU follow-up is separate evidence. It imports the
+changed thresholds, levels and retrained residuals into the same search
+pipeline, then compares independently swept budgets at measured recall
+thresholds. At arXiv's original $\alpha=100$ target it yields ratios of
+approximately 1.40 at batch 8 and 1.21 at batch 1,000. Vogue's tested median
+frontier stops at 0.9630, below the original 0.9644 working point;
+OpenAI-3072 is essentially tied. These results revise a blanket ``never
+GPU-tested'' description, while preserving the decision against a universal
+replacement. The follow-up uses its own index states, query pool and
+three-round protocol; its rates are not inserted into E1.

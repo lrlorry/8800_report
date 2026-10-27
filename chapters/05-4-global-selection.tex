@@ -2,8 +2,7 @@ Primary screening must expose enough GPU work without losing a candidate
 that should reach residual refinement. A query-centric scan launches one
 block per query; a small batch therefore offers few blocks even when each
 query visits many vectors. GPU selection is a substantial design problem
-in its own right \cite{johnson_gpu}. The grouped-scan component, introduced
-in v62, partitions the visited candidates across blocks and combines their
+in its own right \cite{johnson_gpu}. The grouped-scan component partitions the visited candidates across blocks and combines their
 survivors. Its contract is exact selection under the computed primary
 scores. IVF routing and the quantised representation remain approximate.
 
@@ -12,11 +11,11 @@ scores. IVF routing and the quantised representation remain approximate.
 For a fixed query, concatenate the selected inverted lists in probe order
 to obtain $n_c$ candidate occurrences. Assume that each visited database
 row occurs once and that the index stays fixed during search. For
-$G=\gscan\in\{1,2,4,8\}$, block $(q,g)$ owns the interval
+$\gscan\in\{1,2,4,8\}$, block $(q,j)$ owns the interval
 \begin{equation}
- U_g=\left[\left\lfloor\frac{g n_c}{G}\right\rfloor,
-              \left\lfloor\frac{(g+1)n_c}{G}\right\rfloor\right),
- \qquad g=0,\ldots,G-1.
+ U_j=\left[\left\lfloor\frac{j n_c}{\gscan}\right\rfloor,
+              \left\lfloor\frac{(j+1)n_c}{\gscan}\right\rfloor\right),
+ \qquad j=0,\ldots,\gscan-1.
  \label{eq:5-partition}
 \end{equation}
 Here an interval denotes the corresponding candidates, rather than their
@@ -47,28 +46,63 @@ the ordering rule alone cannot remove floating-point scoring differences.
 
 Write $\operatorname{Top}_c(V)$ for the first $\min(c,|V|)$ candidates of
 $V$ sorted by $K_q$, with $c=\max\{k,\lceil\alpha k\rceil\}$. Each
-independent group retains its full local top-$c$, not a share $c/G$.
+independent group retains its full local top-$c$, not a share $c/\gscan$.
 This distinction is necessary: with $c=4$ and two groups, all four
 global winners may belong to one group. Retaining only two from each
 group loses winners even though the combined capacity is four.
 
-\begin{proposition}[Local coverage and truncated merging]
-\label{prop:5-local-coverage}
-For disjoint groups $U_0,\ldots,U_{G-1}$, fixed candidate scores and a
-common total order,
+\begin{lemma}[Local-buffer retention]
+\label{lem:5-buffer}
+Let $V_t$ be the candidates scored by a block through chunk $t$, and
+$B_t$ its valid buffer after any compaction or filtering at that point.
+Assume fixed complete keys, sufficient append capacity and exact
+top-$c$ compaction. Let $\beta_t$ be the minimum of the complete shared
+bounds observed so far, including the initial top sentinel. Then
 \begin{equation}
- \operatorname{Top}_c\!\left(\bigcup_g U_g\right)
- =\operatorname{Top}_c\!\left(\bigcup_g
-                    \operatorname{Top}_c(U_g)\right).
+ \operatorname{Top}_c(V_t)\cap\{x:K_q(x)\preceq\beta_t\}
+ \subseteq B_t.
+ \label{eq:5-buffer-invariant}
+\end{equation}
+With sharing disabled, the bound is the sentinel and the buffer contains
+the whole prefix top-$c$.
+\end{lemma}
+\begin{proof}
+The empty prefix satisfies the invariant. A new candidate can fail the
+local admission threshold only if $c$ previously retained keys precede
+it; those keys remain predecessors in every later prefix. Rejection by
+an observed shared bound excludes only keys above $\beta_t$. An old
+candidate outside a prefix top-$c$ cannot improve its rank when the
+prefix grows. Thus every eligible new prefix winner is either retained
+already or admitted. Exact compaction preserves it: fewer than $c$
+members of the whole prefix, and hence of the buffer, precede it.
+Filtering removes only keys above an observed bound. Induction over
+appends, compactions and filtering proves the claim. The running minimum
+is essential if reads may return different stale published values.
+\end{proof}
+
+\begin{proposition}[Coverage and truncated merging]
+\label{prop:5-local-coverage}
+For fixed keys under a common total order, let $U$ be the visited
+universe and $V$ any retained subset. If
+$\operatorname{Top}_c(U)\subseteq V\subseteq U$, then
+$\operatorname{Top}_c(V)=\operatorname{Top}_c(U)$.
+Pairwise sorted merging with truncation to $c$ preserves this result.
+In particular, for disjoint groups,
+\begin{equation}
+ \operatorname{Top}_c\!\left(\bigcup_j U_j\right)
+ =\operatorname{Top}_c\!\left(\bigcup_j
+                    \operatorname{Top}_c(U_j)\right).
  \label{eq:5-topc-union}
 \end{equation}
-Pairwise sorted merging with truncation to $c$ after every merge preserves
-this result, including when fewer than $c$ candidates exist.
+The statement includes universes smaller than $c$.
 \end{proposition}
 \begin{proof}
-Let $x$ belong to the global top-$c$ and to group $U_g$. Fewer than $c$
-candidates precede $x$ globally, so fewer than $c$ precede it within $U_g$.
-Consequently $x\in\operatorname{Top}_c(U_g)$, and the local union contains
+Every global winner is in $V$, and every other member of $V$ follows
+the global winners. Selection from $V$ therefore recovers them.
+For the independent-group special case, let $x$ belong to the global
+top-$c$ and to group $U_j$. Fewer than $c$
+candidates precede $x$ globally, so fewer than $c$ precede it within $U_j$.
+Consequently $x\in\operatorname{Top}_c(U_j)$, and the local union contains
 every global winner. Selecting its first $c$ therefore recovers precisely
 the global winners in the same order. If the whole universe has fewer
 than $c$ members, every member is retained.
@@ -83,16 +117,16 @@ Induction over the merge tree establishes the claim.
 \centering
 \input{figures/ch5/global-selection}
 \caption{Local coverage and truncated pairwise merging, illustrated with
-$c=3$ and $G=4$. Entries are $(\primarydist,p)$ keys, not measured data.
+$c=3$ and $\gscan=4$. Entries are $(\primarydist,p)$ keys, not measured data.
 Bold entries are the final global winners. A short group contributes its
 valid prefix; an empty group contributes no entries. Every merge uses the
 same key order and retains at most $c$ entries.}
 \label{fig:5-global-selection}
 \end{figure}
 
-The CUDA implementation maintains a shared-memory buffer of $C$ key
-pairs, where $C$ is a power of two and $C\geq c+T$ for a scan block of
-$T$ threads. A compaction sorts this buffer with a bitonic network,
+The CUDA implementation maintains a shared-memory buffer of $C_{\rm buf}$ key
+pairs, where $C_{\rm buf}$ is a power of two and $C_{\rm buf}\geq c+T_{\rm blk}$ for a scan block of
+$T_{\rm blk}$ threads. A compaction sorts this buffer with a bitonic network,
 retains at most $c$ valid entries and records the last retained key as
 the local threshold when $c$ entries exist. Before that point the
 threshold is a sentinel above every valid key. Between compactions,
@@ -100,49 +134,54 @@ only candidates preceding the threshold are appended. Its $c$ witness
 candidates make the threshold a safe upper bound for the best $c$ of
 the scanned prefix, even as further candidates arrive.
 
-Each chunk contributes at most $T$ appends. After a chunk, the block
+Each chunk contributes at most $T_{\rm blk}$ appends. After a chunk, the block
 compacts whenever the next chunk would exceed capacity. Following
-compaction at most $c$ entries remain, so $C\geq c+T$ provides space
+compaction at most $c$ entries remain, so $C_{\rm buf}\geq c+T_{\rm blk}$ provides space
 for the next chunk; otherwise the explicit capacity check provides it.
 This invariant prevents overflow without restricting how many competitive
 candidates one thread may encounter. A per-thread fixed-size retention
 buffer does not provide the same coverage guarantee.
+Together with exact bitonic compaction, this capacity argument discharges
+the implementation premises of \Cref{lem:5-buffer}. With sharing, every
+observed bound is above the global $c$th key by
+\Cref{prop:5-shared-bound}; the lemma therefore retains every global
+winner belonging to this block, even when its full local top-$c$ is
+filtered. The general coverage proposition then justifies the merge.
 
 An alternative is to materialise all $n_c$ score/position pairs and then
 invoke a separate selector. That preserves the target but adds an
 $O(n_c)$ intermediate array and its writes. Here packed-code scoring
 feeds a bounded local buffer directly, exchanging repeated local sorting
-for $O(Gc)$ intermediate output. Register-based selection is another
+for $O(\gscan c)$ intermediate output. Register-based selection is another
 established GPU design \cite{johnson_gpu}; this campaign evaluates the
-chosen scan variants rather than demonstrating superiority over every
-library selector.
+chosen scan variants against the archived reference.
 
 \subsection{Merge implementation, storage and boundary cases}
 
-For $G>1$, one 256-thread block per query performs $\log_2 G$ rounds of
+For $\gscan>1$, one 256-thread block per query performs $\log_2 \gscan$ rounds of
 pairwise merging. A pair with valid lengths $a,b$ emits
 $\min(c,a+b)$ keys. Merge Path partitions this output into contiguous
 thread slices: a binary search finds the input offsets for each slice,
 then the thread merges its slice sequentially \cite{gpu_merge_path}.
 All comparisons use \cref{eq:5-primary-key}; block barriers separate
 rounds. \Cref{fig:5-global-selection} illustrates the truncation invariant.
-The tree emits at most $c(G-1)$ key pairs across its internal nodes,
+The tree emits at most $c(\gscan-1)$ key pairs across its internal nodes,
 in addition to the partition searches and synchronisation work.
 
 The two global score/position workspaces have capacities
-$[b_{\rm cap},G,c]$ and $[b_{\rm cap},G/2,c]$ and alternate between
+$[b_{\rm cap},\gscan,c]$ and $[b_{\rm cap},\gscan/2,c]$ and alternate between
 rounds. With four-byte scores and positions, their combined payload is
 \begin{equation}
- W_{\rm pairs}=8b_{\rm cap}c\left(G+\frac{G}{2}\right)
- \quad\text{bytes},\qquad G>1.
+ S_{\rm pairs}=8b_{\rm cap}c\left(\gscan+\frac{\gscan}{2}\right)
+ \quad\text{bytes},\qquad \gscan>1.
  \label{eq:5-group-workspace}
 \end{equation}
-Group counts require another $4b_{\rm cap}G$ bytes; shared bounds add
+Group counts require another $4b_{\rm cap}\gscan$ bytes; shared bounds add
 $8b_{\rm cap}$ when provisioned. These are additional to final survivor
 arrays and other search workspace. Allocation grows before graph capture
-and is retained for reuse, so choosing a smaller $G$ later does not
+and is retained for reuse, so choosing a smaller $\gscan$ later does not
 necessarily release the reserved memory. The merge keeps only list
-lengths in shared memory rather than all $Gc$ keys.
+lengths in shared memory rather than all $\gscan c$ keys.
 
 Counts, rather than sentinel scores alone, delimit local valid prefixes.
 Compaction pads its sorting buffer with $(+\infty,\mathrm{INT\_MAX})$;
@@ -150,18 +189,29 @@ valid positions must be below that reserved position. Empty groups have
 count zero. The final survivor array pads unused slots with
 $(+\infty,-1)$, and refinement skips negative positions. These two
 sentinels serve different purposes: the negative padding position must
-not participate as a valid key in a merge. $G=1$ writes directly to the
+not participate as a valid key in a merge. $\gscan=1$ writes directly to the
 survivor arrays and omits the merge.
 
 The older query-centric path is selected by the implementation label
-$G=0$, meaning one block per query, not zero blocks. Its default primary
+$\gscan=0$, meaning one block per query, not zero blocks. Its default primary
 selection is exact by score, but its distance-only cutoff can retain a
 different member of a tie from the complete-key path. The lossy
 \texttt{K\_LOCAL=4} alternative requires
 \texttt{JHQ\_EXACT\_TOPCK=0} in a build that permits it; paper-faithful
 builds force exact selection. It is not the measured default.
+For this distance-only path, the buffer argument uses a total preorder:
+after final compaction it retains all candidates strictly below the
+prefix's $c$th distance and enough candidates at that distance to fill
+$\min(c,|V_t|)$ slots. A rejected distance has $c$ retained witnesses
+with no larger distance; exact distance sorting preserves this rank
+property at each compaction. Tied identities need not be unique.
 \Cref{sec:7-4} reports 64 grouped-scan comparisons with no non-tie primary
 differences and identical final outputs on the used queries. Those checks
-support the implementation within their coverage. The proposition
+compare GPU implementations, rather than independently sorting every
+visited candidate on the CPU. An existing host checker accepts cutoff-tie
+substitutions and compares primary sets, so it does not certify the
+complete-key order. Strict CPU sorting of the same recorded score/position
+pairs remains a separate validation target; its exporter must first match
+the measured packed layout and LUT grouping. The proposition
 establishes a conditional selection property, not raw-space exact kNN or
 unconditional equivalence to every legacy tie policy.

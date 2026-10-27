@@ -1,0 +1,46 @@
+\Cref{tab:3-data}列出新版预算、LUT与规模实验使用的六份数据导出；
+海报E1比较使用前四行。Vogue是时尚图片嵌入，arXiv是摘要嵌入；
+两个OpenAI数据集来自Qdrant的DBpedia导出
+\cite{data_vogue,data_arxiv,data_openai1536,data_openai3072}。
+BGE使用意大利语Wikipedia配置，Stella使用TREC24 BioGen语料导出
+\cite{data_bge,data_stella}。规模来自准备后的实测文件，而不是当前上游数据卡。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{数据与JHQ训练清单。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
+粗聚类训练样本数。E1使用前四行；全部使用平方L2及$k=10$。}
+\label{tab:3-data}
+\small\setlength{\tabcolsep}{4pt}
+\input{zh/tables/ch3-datasets}
+\end{minipage}\par\medskip
+
+准备源码规定L2归一化，以及带种子的查询抽取与数据库移除。
+流式OpenAI/BGE/Stella转换器先删除非有限行，对范数大于$10^{-12}$的向量
+归一化，并用seed 42无放回选择查询位置。Stella查询来自corpus抽样，
+没有使用单独的65条官方benchmark查询；较短的实际导出得到999条查询。
+这些实验评估向量近邻，不评估带相关性标签的检索。
+两个OpenAI导出采用相同位置抽样规则；补证向量核对支持全部查询及10,299行base
+样本的按行对应，但未归档原始source-ID连接（\cref{sec:7-precision,sec:7-2}）。
+
+同一单元的所有方法读取同一查询和GT文件。GT通过对导出FP32向量进行
+穷举平方L2搜索得到；流式转换器在数据库分块之间维护top-$k$。
+评估沿用存储的GT顺序及其浮点并列选择。
+设$\mathcal T_k(q)$为GT前$k$个ID，$\mathcal R_k(q)$为返回ID集合：
+\begin{equation}
+\Recall@k=\frac{1}{|\mathcal Q|k}
+\sum_{q\in\mathcal Q}|\mathcal R_k(q)\cap\mathcal T_k(q)|.
+\label{eq:3-recall}
+\end{equation}
+Vogue/arXiv的GT行宽为100，其余四份为20，评分只比较前10项。
+返回重复ID不会重复得分；越界、重复和跨调用变化分别记录。
+
+JHQ采用$M=d/8$、$B=B_r=8$、8次粗聚类迭代，并请求100,000条残差训练样本。
+搜索扫描复用\texttt{arms6\_cache}训练状态，重新编码数据库；
+冷构建从没有该状态开始。源码从数据库抽取训练样本，与校准查询分开。
+预算实验以偶数查询位置构成500条校准池，奇数位置构成500条留出池，
+Stella留出499条。每个单元在$S=32,64,128$下各抽64次，FULL使用全部500条。
+GT只参与离线oracle和留出质量评估，可部署的一致性规则使用搜索输出
+（\cref{sec:6-2,sec:a-budget-contract}）。
+
+准备源码和形状日志支持上述协议，但历史向量文件与训练状态的完整哈希缺失。
+证据登记区分已检查的准备流程与每次运行数据的不可变身份。

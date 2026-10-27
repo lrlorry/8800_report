@@ -1,0 +1,13 @@
+{
+  "checked_date": "2026-10-28",
+  "path_relative_to_home": "Documents/26 s1/COMP8800/my poster/poster.pdf",
+  "desktop_copy": "Desktop/my poster/poster.pdf",
+  "sha256": "786f67e418c8707294da12f42efc671e961ff8446d34a2bda962fd2d2ef98636",
+  "checked_content": [
+    "Sampled adaptive alpha is separate from multi-block scan scheduling.",
+    "The displayed disagreement criterion compares returned ID sets with a larger-budget reference.",
+    "The poster explicitly describes unlabelled output stability rather than a recall guarantee.",
+    "Its risk and calibration-economics panels motivate the separate quality/cost analyses in Sections 6.5 and 7.5."
+  ],
+  "role": "User-authored presentation cross-check; measurements are recomputed from the original budget log, not read off the poster curves."
+}

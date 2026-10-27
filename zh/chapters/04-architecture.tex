@@ -1,0 +1,27 @@
+\chapter{系统架构与 GPU 索引构建}
+\label{ch:architecture}
+本章回答 RQ1：如何从高维向量构造可搜索的 GPU 常驻 JHQ 索引。变换与主码／残差表示继承自 JHQ\cite{jhq}。系统问题在于训练这一表示、编码完整 FP32 数据超出可用设备空间的数据库，并为查询路径提供一致的列表顺序数组。本章依次讨论训练、放置、分配与验证；查询 kernel 细节见\Cref{ch:gpu-execution}，实测比较见\Cref{sec:7-7}。
+
+\section{端到端建库与搜索边界}
+\label{sec:4-1}
+\input{zh/chapters/04-1-boundaries}
+
+\section{训练、旋转与码本生成}
+\label{sec:4-2}
+\input{zh/chapters/04-2-training}
+
+\section{IVF 分配、ID 与物理内存布局}
+\label{sec:4-3}
+\input{zh/chapters/04-3-layout}
+
+\section{常驻存储、工作区与索引生命周期}
+\label{sec:4-4}
+\input{zh/chapters/04-4-lifecycle}
+
+\section{构建成本与已测试规模}
+\label{sec:4-5}
+\input{zh/chapters/04-5-construction}
+
+\section{索引表示与安全契约}
+\label{sec:4-6}
+\input{zh/chapters/04-6-contracts}

@@ -1,0 +1,37 @@
+\Cref{fig:1-challenges} connects three challenges to the mechanisms and
+evidence used to address them.
+
+First, the primary codebook has useful mathematical structure that a direct
+GPU port can overlook. Each eight-bit subspace code indexes 256 distances.
+Its Cartesian coordinates permit an exact 16+16 factorisation, but more
+aggressive splitting adds lookups and arithmetic. The challenge is to exploit
+separability without assuming that the smallest table gives the fastest
+scan. Candidate-parallel word access and residual lane cooperation also need
+different data mappings.
+
+Second, a query's primary winners can be concentrated in any part of its
+routed pool. Parallel groups cannot safely retain only a fraction of the
+required global survivors. Exact local retention, a global merge and a
+shared complete-score bound provide a principled route, but add buffers,
+staging and synchronisation. A large batch can already supply enough blocks;
+an imbalanced workload can still benefit from more groups. The challenge
+couples correctness with a workload-dependent execution decision. Selecting
+IVF lists remains a separate primitive from retaining database candidates.
+
+Third, a fixed survivor multiplier can repeatedly refine irrelevant vectors,
+while a small multiplier can remove a true neighbour too early. Agreement
+with a large-budget reference is available without GT, but agreement does
+not repair the reference's own errors or guarantee future-query recall.
+Choosing a sample and budget also consumes time. The challenge is to evaluate
+selection quality, calibration cost and reuse together. These are questions
+organised around an iterative project record; observed benefits are not
+presented as preregistered predictions.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch1/challenges}}
+\captionof{figure}{Problem, mechanism and evidence. The arrows organise
+research questions; they do not imply that independently measured speedups
+multiply or that an unlabelled agreement rule guarantees GT recall.}
+\label{fig:1-challenges}
+\end{minipage}\par\medskip

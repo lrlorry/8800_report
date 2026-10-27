@@ -1,0 +1,82 @@
+表示契约同时保护数值几何和编码字段之间的对应。一个历史大样本故障说明其实际意义：32-bit 的 $n_t d$ 乘积在 $2^{31}$ 处溢出，导致主码尺度为零、码本坍缩。之后一次运行又因 cache key 不含代码版本，先加载了旧缓存中的错误模型。粗路由正确并不能发现损坏的主表示。修正后的实现分块计算范数并用 double 累积。因此，需要分别检查模型、编码行与放置关系。
+
+\subsection{已完成的表示证据}
+
+10 月 13 日的残差下界 pilot 导出训练状态和编码数据库数组，包括实际 $\Pi$、主码／残差码本、ID、偏移与修正项。导出器将打包 word 解码为逻辑 vector-major 编码。pilot 报告复用 arms6 训练缓存，没有重新训练。三个完整数据库分别为 Vogue（932,328 行）、arXiv（2,253,000 行）和 OpenAI-3072（999,000 行）。
+
+码本检查发现可分离性不匹配、标量级值不匹配、残差码本无序对均为零。独立解码导出的主码／残差后，FP64 循环遍历每一行，核对 $\gamma=2\langle\widehat p,\widehat r\rangle$。\Cref{tab:4-pilot}报告各数据集工作负载中的最坏记录误差。这些是导出表示的检查，不是从原始输入向量重新编码。
+
+\begin{table}[tbp]
+\centering
+\caption{已归档 pilot 诊断。修正项误差覆盖全部索引行；返回分数误差覆盖采样查询的 GPU top-10 比较。相对分数误差为 $|s_{\rm GPU}-s_{64}|/s_{64}$，参考包含查询范数常数。}
+\label{tab:4-pilot}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+数据集 & 索引行数 & \shortstack{最大修正项\\绝对误差} & \shortstack{最大返回分数\\相对误差} \\
+\midrule
+Vogue & 932,328 & $1.28\times10^{-7}$ & $2.66\times10^{-7}$ \\
+arXiv & 2,253,000 & $1.35\times10^{-7}$ & $2.38\times10^{-7}$ \\
+OpenAI-3072 & 999,000 & $2.77\times10^{-7}$ & $4.85\times10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+在七个工作负载、896 个查询实例中，pilot 还对 72,800,590 个路由候选实例，将所提残差下界与 FP64 重建距离比较，未报告违反。该候选集合也支持 FP64 组合分数恒等式检查；它与 GPU 返回分数比较不同，后者仅考察 top-10 槽位。历史程序会跳过路由候选映射中不存在的返回 ID，因此仅看最大误差并不是完整的输出成员关系认证。
+
+离线比较发现，pilot 与评测实现的编码、主码训练、残差训练和索引构建编译单元，在规范化命名空间并去掉 pilot 专用导出方法后完全一致。这支持将 pilot 检查用于共同表示路径，但不能证明之后每个进程采用逐字节一致的训练状态，也未验证大数据集两遍路径：已审计数据库规模较小。逐工作负载数值、原始汇总核对与源码对应可用 \texttt{scripts/audit\_ch4\_review.py} 复算。
+
+\subsection{独立输入与放置审计}
+\label{sec:4-representation-audit}
+
+补证导出器在Vogue、arXiv、OpenAI-3072与Stella上使用共同构建路径。
+四者全行偏移均单调、端点为0和$N$，ID均构成数据库行的置换。
+对存储旋转矩阵做FP64乘法，$\|\Pi\Pi^{\mathsf T}-I\|$最大逐项误差为
+$3.96$--$4.34\times10^{-7}$。采样范数检查使用FP64旋转而非GPU GEMM，
+因此验证的是存储矩阵的几何性质。\Cref{tab:4-representation-audit}汇总采样重编码。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{原始输入FP64重编码审计。差异数按坐标决策计数，最后一列为残差不一致
+坐标离决策边界的最大距离。结构检查覆盖全行，重编码采用采样。}
+\label{tab:4-representation-audit}
+\scriptsize\setlength{\tabcolsep}{3pt}
+\input{zh/tables/supplement/representation}
+\end{minipage}\par\medskip
+
+768／1,024维上的差异均在决策边界$1.12\times10^{-7}$内。
+OpenAI-3072则明显不同：残差不一致占所查坐标的2.68\%，最远离边界
+$2.67\times10^{-5}$，与TF32旋转一致，因此不能将所有数据集称为FP32等价。
+残差比较以已存主码位为条件，避免重复计入主码翻转。
+
+三个较小数据库在同一模型下强制一遍／两遍构建，按ID关联的主码和残差字节完全
+相同，correction差至多$8.94\times10^{-8}$；列表分配分别有1、1、40行不同。
+Stella只验证自然两遍路径。导出器不含IVF质心，因此列表成员决策本身仍未独立验证，
+结构正确不等于已证明分配决策正确。
+
+\subsection{契约覆盖与剩余检查}
+
+\begin{table}[tbp]
+\centering
+\caption{纳入pilot及补证输入审计后的表示契约，区分存储几何、采样算术与行放置的覆盖。}
+\label{tab:4-contracts}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.8cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+边界 & 所需性质 & 证据／剩余检查 \\
+\midrule
+C0：几何 & 共同变换，浮点等距误差有界 & 四数据集已查存储矩阵正交性；区分TF32 GPU算术 \\
+C1：码本／修正 & 笛卡尔级值、有序残差码本，修正项匹配解码编码 & 三个数据库 pilot 已完成；全行修正误差见\cref{tab:4-pilot} \\
+C1：输入编码 & 存储编码对应预期原始输入行 & 四份原始输入采样已做FP64重编码；量化边界与TF32差异已量化 \\
+C1：放置 & 偏移覆盖行，ID 为置换，字段遵循同一置换 & 全行偏移／ID核对及三份按ID关联的路径比较；质心成员决策未验证 \\
+执行 & 索引、同步和分数顺序契约有效 & 已有查询与 sanitizer 检查，有限覆盖见\cref{sec:7-4} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+构造器要求 $M$ 整除 $d$、$D_s$ 整除 $B$；word 打包要求 $M\bmod4=0$。查询侧 LUT 验证器依据实际码字切片检查因子化。位置和 ID 使用 signed 32-bit，较大计数与字节地址乘积需要更宽算术。输入契约假定向量有限、计数可表示，并保留无效哨兵位置。
+
+审计使用导出的旋转与码本，而非凭seed重新生成矩阵。剩余工作收窄为：
+导出IVF质心独立验证成员关系、构造空列表与对抗尾批次，以及针对实际GPU主码分数的
+严格CPU参考。最后一项不同于FP64重编码，仍在共享实验清单中。
+第五章以所得对象为前提论证选择，第七章评测质量与成本。

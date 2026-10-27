@@ -1,0 +1,123 @@
+2026-10-15T22:00:53Z === head=d5e1526 ADC figures on v69: scripts for the frontier, build time, memory, budget and table-grouping figures
+2026-10-15T22:02:02Z build rc=0
+2026-10-15T22:02:12Z v71 table groups 1 vogue-768 np=128 rc=0 1 ok, recall 0.9646
+2026-10-15T22:02:16Z v71 table groups 2 vogue-768 np=128 rc=0 1 ok, recall 0.9645
+2026-10-15T22:02:19Z v71 table groups 4 vogue-768 np=128 rc=0 1 ok, recall 0.9645
+2026-10-15T22:02:22Z v71 table groups 8 vogue-768 np=128 rc=0 1 ok, recall 0.9646
+2026-10-15T22:02:22Z gate: recall spread across table groups on vogue np128 = 0.0001 0.9646 0.9645 0.9645 0.9646
+2026-10-15T22:02:25Z v71 table groups 1 vogue-768 np=8 rc=0 1 ok, recall 0.6608
+2026-10-15T22:02:35Z v71 table groups 1 arxiv-768 np=8 rc=0 1 ok, recall 0.7901
+2026-10-15T22:02:45Z v71 table groups 1 openai3-1536 np=8 rc=0 1 ok, recall 0.7295
+2026-10-15T22:03:05Z v71 table groups 1 openai3-3072 np=8 rc=0 1 ok, recall 0.7277
+2026-10-15T22:03:24Z v71 table groups 1 bge-m3 np=8 rc=0 1 ok, recall 0.6980
+2026-10-15T22:03:42Z v71 table groups 1 stella np=8 rc=0 1 ok, recall 
+2026-10-15T22:03:46Z v71 table groups 2 vogue-768 np=8 rc=0 1 ok, recall 0.6608
+2026-10-15T22:03:50Z v71 table groups 2 arxiv-768 np=8 rc=0 1 ok, recall 0.7901
+2026-10-15T22:03:55Z v71 table groups 2 openai3-1536 np=8 rc=0 1 ok, recall 0.7295
+2026-10-15T22:04:04Z v71 table groups 2 openai3-3072 np=8 rc=0 1 ok, recall 0.7277
+2026-10-15T22:04:21Z v71 table groups 2 bge-m3 np=8 rc=0 1 ok, recall 0.6980
+2026-10-15T22:04:38Z v71 table groups 2 stella np=8 rc=0 1 ok, recall 
+2026-10-15T22:04:42Z v71 table groups 4 vogue-768 np=8 rc=0 1 ok, recall 0.6608
+2026-10-15T22:04:46Z v71 table groups 4 arxiv-768 np=8 rc=0 1 ok, recall 0.7901
+2026-10-15T22:04:51Z v71 table groups 4 openai3-1536 np=8 rc=0 1 ok, recall 0.7295
+2026-10-15T22:05:03Z v71 table groups 4 openai3-3072 np=8 rc=0 1 ok, recall 0.7277
+2026-10-15T22:05:16Z v71 table groups 4 bge-m3 np=8 rc=0 1 ok, recall 0.6980
+2026-10-15T22:05:32Z v71 table groups 4 stella np=8 rc=0 1 ok, recall 
+2026-10-15T22:05:35Z v71 table groups 8 vogue-768 np=8 rc=0 1 ok, recall 0.6608
+2026-10-15T22:05:39Z v71 table groups 8 arxiv-768 np=8 rc=0 1 ok, recall 0.7901
+2026-10-15T22:05:45Z v71 table groups 8 openai3-1536 np=8 rc=0 1 ok, recall 0.7295
+2026-10-15T22:05:54Z v71 table groups 8 openai3-3072 np=8 rc=0 1 ok, recall 0.7277
+2026-10-15T22:06:10Z v71 table groups 8 bge-m3 np=8 rc=0 1 ok, recall 0.6980
+2026-10-15T22:06:27Z v71 table groups 8 stella np=8 rc=0 1 ok, recall 
+2026-10-15T22:06:30Z v71 table groups 1 vogue-768 np=32 rc=0 1 ok, recall 0.8621
+2026-10-15T22:06:34Z v71 table groups 1 arxiv-768 np=32 rc=0 1 ok, recall 0.9255
+2026-10-15T22:06:40Z v71 table groups 1 openai3-1536 np=32 rc=0 1 ok, recall 0.8468
+2026-10-15T22:06:50Z v71 table groups 1 openai3-3072 np=32 rc=0 1 ok, recall 0.8456
+2026-10-15T22:07:05Z v71 table groups 1 bge-m3 np=32 rc=0 1 ok, recall 0.8280
+2026-10-15T22:07:22Z v71 table groups 1 stella np=32 rc=0 1 ok, recall 
+2026-10-15T22:07:25Z v71 table groups 2 vogue-768 np=32 rc=0 1 ok, recall 0.8621
+2026-10-15T22:07:29Z v71 table groups 2 arxiv-768 np=32 rc=0 1 ok, recall 0.9255
+2026-10-15T22:07:35Z v71 table groups 2 openai3-1536 np=32 rc=0 1 ok, recall 0.8468
+2026-10-15T22:07:44Z v71 table groups 2 openai3-3072 np=32 rc=0 1 ok, recall 0.8456
+2026-10-15T22:07:58Z v71 table groups 2 bge-m3 np=32 rc=0 1 ok, recall 0.8280
+2026-10-15T22:08:15Z v71 table groups 2 stella np=32 rc=0 1 ok, recall 
+2026-10-15T22:08:19Z v71 table groups 4 vogue-768 np=32 rc=0 1 ok, recall 0.8621
+2026-10-15T22:08:23Z v71 table groups 4 arxiv-768 np=32 rc=0 1 ok, recall 0.9255
+2026-10-15T22:08:29Z v71 table groups 4 openai3-1536 np=32 rc=0 1 ok, recall 0.8468
+2026-10-15T22:08:42Z v71 table groups 4 openai3-3072 np=32 rc=0 1 ok, recall 0.8456
+2026-10-15T22:09:00Z v71 table groups 4 bge-m3 np=32 rc=0 1 ok, recall 0.8280
+2026-10-15T22:09:16Z v71 table groups 4 stella np=32 rc=0 1 ok, recall 
+2026-10-15T22:09:20Z v71 table groups 8 vogue-768 np=32 rc=0 1 ok, recall 0.8621
+2026-10-15T22:09:24Z v71 table groups 8 arxiv-768 np=32 rc=0 1 ok, recall 0.9255
+2026-10-15T22:09:30Z v71 table groups 8 openai3-1536 np=32 rc=0 1 ok, recall 0.8468
+2026-10-15T22:09:40Z v71 table groups 8 openai3-3072 np=32 rc=0 1 ok, recall 0.8456
+2026-10-15T22:09:55Z v71 table groups 8 bge-m3 np=32 rc=0 1 ok, recall 0.8280
+2026-10-15T22:10:11Z v71 table groups 8 stella np=32 rc=0 1 ok, recall 
+2026-10-15T22:10:15Z v71 table groups 1 vogue-768 np=128 rc=0 1 ok, recall 0.9646
+2026-10-15T22:10:19Z v71 table groups 1 arxiv-768 np=128 rc=0 1 ok, recall 0.9766
+2026-10-15T22:10:26Z v71 table groups 1 openai3-1536 np=128 rc=0 1 ok, recall 0.9312
+2026-10-15T22:10:37Z v71 table groups 1 openai3-3072 np=128 rc=0 1 ok, recall 0.9267
+2026-10-15T22:10:52Z v71 table groups 1 bge-m3 np=128 rc=0 1 ok, recall 0.9181
+2026-10-15T22:11:09Z v71 table groups 1 stella np=128 rc=0 1 ok, recall 
+2026-10-15T22:11:12Z v71 table groups 2 vogue-768 np=128 rc=0 1 ok, recall 0.9646
+2026-10-15T22:11:17Z v71 table groups 2 arxiv-768 np=128 rc=0 1 ok, recall 0.9766
+2026-10-15T22:11:24Z v71 table groups 2 openai3-1536 np=128 rc=0 1 ok, recall 0.9312
+2026-10-15T22:11:35Z v71 table groups 2 openai3-3072 np=128 rc=0 1 ok, recall 0.9267
+2026-10-15T22:11:50Z v71 table groups 2 bge-m3 np=128 rc=0 1 ok, recall 0.9181
+2026-10-15T22:12:06Z v71 table groups 2 stella np=128 rc=0 1 ok, recall 
+2026-10-15T22:12:10Z v71 table groups 4 vogue-768 np=128 rc=0 1 ok, recall 0.9646
+2026-10-15T22:12:15Z v71 table groups 4 arxiv-768 np=128 rc=0 1 ok, recall 0.9766
+2026-10-15T22:12:22Z v71 table groups 4 openai3-1536 np=128 rc=0 1 ok, recall 0.9312
+2026-10-15T22:12:34Z v71 table groups 4 openai3-3072 np=128 rc=0 1 ok, recall 0.9267
+2026-10-15T22:12:50Z v71 table groups 4 bge-m3 np=128 rc=0 1 ok, recall 0.9181
+2026-10-15T22:13:05Z v71 table groups 4 stella np=128 rc=0 1 ok, recall 
+2026-10-15T22:13:11Z v71 table groups 8 vogue-768 np=128 rc=0 1 ok, recall 0.9645
+2026-10-15T22:13:17Z v71 table groups 8 arxiv-768 np=128 rc=0 1 ok, recall 0.9766
+2026-10-15T22:13:24Z v71 table groups 8 openai3-1536 np=128 rc=0 1 ok, recall 0.9312
+2026-10-15T22:13:36Z v71 table groups 8 openai3-3072 np=128 rc=0 1 ok, recall 0.9267
+2026-10-15T22:13:54Z v71 table groups 8 bge-m3 np=128 rc=0 1 ok, recall 0.9181
+2026-10-15T22:14:12Z v71 table groups 8 stella np=128 rc=0 1 ok, recall 
+2026-10-15T22:14:18Z v71 table groups 1 vogue-768 np=512 rc=0 1 ok, recall 0.9906
+2026-10-15T22:14:25Z v71 table groups 1 arxiv-768 np=512 rc=0 1 ok, recall 0.9885
+2026-10-15T22:14:34Z v71 table groups 1 openai3-1536 np=512 rc=0 1 ok, recall 0.9746
+2026-10-15T22:14:50Z v71 table groups 1 openai3-3072 np=512 rc=0 1 ok, recall 0.9717
+2026-10-15T22:15:12Z v71 table groups 1 bge-m3 np=512 rc=0 1 ok, recall 0.9663
+2026-10-15T22:15:29Z v71 table groups 1 stella np=512 rc=0 1 ok, recall 
+2026-10-15T22:15:34Z v71 table groups 2 vogue-768 np=512 rc=0 1 ok, recall 0.9907
+2026-10-15T22:15:41Z v71 table groups 2 arxiv-768 np=512 rc=0 1 ok, recall 0.9885
+2026-10-15T22:15:49Z v71 table groups 2 openai3-1536 np=512 rc=0 1 ok, recall 0.9746
+2026-10-15T22:16:02Z v71 table groups 2 openai3-3072 np=512 rc=0 1 ok, recall 0.9717
+2026-10-15T22:16:20Z v71 table groups 2 bge-m3 np=512 rc=0 1 ok, recall 0.9663
+2026-10-15T22:16:40Z v71 table groups 2 stella np=512 rc=0 1 ok, recall 
+2026-10-15T22:16:47Z v71 table groups 4 vogue-768 np=512 rc=0 1 ok, recall 0.9907
+2026-10-15T22:16:56Z v71 table groups 4 arxiv-768 np=512 rc=0 1 ok, recall 0.9885
+2026-10-15T22:17:06Z v71 table groups 4 openai3-1536 np=512 rc=0 1 ok, recall 0.9746
+2026-10-15T22:17:22Z v71 table groups 4 openai3-3072 np=512 rc=0 1 ok, recall 0.9717
+2026-10-15T22:17:43Z v71 table groups 4 bge-m3 np=512 rc=0 1 ok, recall 0.9663
+2026-10-15T22:18:00Z v71 table groups 4 stella np=512 rc=0 1 ok, recall 
+2026-10-15T22:18:10Z v71 table groups 8 vogue-768 np=512 rc=0 1 ok, recall 0.9906
+2026-10-15T22:18:22Z v71 table groups 8 arxiv-768 np=512 rc=0 1 ok, recall 0.9885
+2026-10-15T22:18:33Z v71 table groups 8 openai3-1536 np=512 rc=0 1 ok, recall 0.9746
+2026-10-15T22:18:55Z v71 table groups 8 openai3-3072 np=512 rc=0 1 ok, recall 0.9717
+2026-10-15T22:19:21Z v71 table groups 8 bge-m3 np=512 rc=0 1 ok, recall 0.9663
+2026-10-15T22:19:37Z v71 table groups 8 stella np=512 rc=0 1 ok, recall 
+2026-10-15T22:19:37Z === LUT_V71_DONE
+2026-10-16T01:20:25Z === head=4e66b0e stella holds 999 queries: run JHQ at batch 999 there; re-run the twenty cells that measured nothing
+2026-10-16T01:20:26Z build rc=0
+2026-10-16T01:20:44Z v71 table groups 1 stella np=8 rc=0 1 ok, recall 0.9028
+2026-10-16T01:21:02Z v71 table groups 2 stella np=8 rc=0 1 ok, recall 0.9028
+2026-10-16T01:21:21Z v71 table groups 4 stella np=8 rc=0 1 ok, recall 0.9028
+2026-10-16T01:21:39Z v71 table groups 8 stella np=8 rc=0 1 ok, recall 0.9028
+2026-10-16T01:21:57Z v71 table groups 1 stella np=32 rc=0 1 ok, recall 0.9689
+2026-10-16T01:22:15Z v71 table groups 2 stella np=32 rc=0 1 ok, recall 0.9689
+2026-10-16T01:22:35Z v71 table groups 4 stella np=32 rc=0 1 ok, recall 0.9689
+2026-10-16T01:22:53Z v71 table groups 8 stella np=32 rc=0 1 ok, recall 0.9689
+2026-10-16T01:23:12Z v71 table groups 1 stella np=128 rc=0 1 ok, recall 0.9895
+2026-10-16T01:23:32Z v71 table groups 2 stella np=128 rc=0 1 ok, recall 0.9895
+2026-10-16T01:23:52Z v71 table groups 4 stella np=128 rc=0 1 ok, recall 0.9895
+2026-10-16T01:24:18Z v71 table groups 8 stella np=128 rc=0 1 ok, recall 0.9895
+2026-10-16T01:24:47Z v71 table groups 1 stella np=512 rc=0 1 ok, recall 0.9952
+2026-10-16T01:25:12Z v71 table groups 2 stella np=512 rc=0 1 ok, recall 0.9952
+2026-10-16T01:25:40Z v71 table groups 4 stella np=512 rc=0 1 ok, recall 0.9952
+2026-10-16T01:26:16Z v71 table groups 8 stella np=512 rc=0 1 ok, recall 0.9952
+2026-10-16T01:26:16Z === LUT_V71_DONE

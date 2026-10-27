@@ -1,0 +1,2433 @@
+{
+  "scope": "Original campaign/source audit plus separately identified supplementary traces; no GPU run.",
+  "supplementary_checks": {
+    "sampled_curves": 2304,
+    "sampled_nonmonotone": 0,
+    "full_enum_agree": 12,
+    "full_subset_curve_mismatches": 0,
+    "compared_grid_counts": 18432
+  },
+  "recorded_run_head": "d5e1526",
+  "historical_harness_matches_current": true,
+  "historical_harness_sha256": "6994879be3f86dd4fc27995ae76cf0a4e4509ef6fb02577c5ff303e1b3641903",
+  "historical_search_sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d",
+  "binary_identity": "not archived; source correspondence is not executable identity",
+  "grid": [
+    200,
+    100,
+    64,
+    32,
+    16,
+    8,
+    4,
+    2
+  ],
+  "epsilon_slots": 1,
+  "application": "helper returns grid index; caller must set selected alpha before future searches",
+  "normalized_allowance": {
+    "32": 0.003125,
+    "64": 0.0015625,
+    "128": 0.00078125,
+    "500": 0.0002
+  },
+  "enumeration": {
+    "draws": 2304,
+    "mismatches": 0
+  },
+  "full_pool_coverage": {
+    "calls": 12,
+    "grouped_configurations": 2,
+    "distance_only_configurations": 10,
+    "original_campaign_enumeration_checks": 0,
+    "enumeration_checks": 12,
+    "scope": "Supplementary FULL enumeration agrees in twelve cells; general common-cutoff ordering remains conditional for G=0"
+  },
+  "historical_tie_diagnostics": {
+    "max_marked_queries_per1000": {
+      "arxiv-768": 9,
+      "vogue-768": 7,
+      "openai3-3072": 0
+    },
+    "scope": "v62 path comparisons; not FULL budget-decision differences"
+  },
+  "paths": {
+    "evaluation": {
+      "4": 2,
+      "0": 10
+    },
+    "calibration_128": {
+      "4": 2,
+      "2": 8,
+      "0": 2
+    },
+    "changed": 8
+  },
+  "S128": {
+    "wins_vs100": 10,
+    "wins_vs64": 9,
+    "gmean_vs64": 1.054459869301959,
+    "calibration_ms_range": [
+      3.9,
+      21.3
+    ]
+  },
+  "review": {
+    "grouped_configuration_draws": 2176,
+    "group_counts": {
+      "32": {
+        "8": 10,
+        "4": 2
+      },
+      "64": {
+        "4": 10,
+        "2": 2
+      },
+      "128": {
+        "4": 2,
+        "2": 8,
+        "0": 2
+      },
+      "500": {
+        "4": 2,
+        "0": 10
+      }
+    },
+    "resolution": {
+      "32": {
+        "query_event_upper95": 0.13984946027422604,
+        "iid_slot_upper95": 0.014738137809420961
+      },
+      "64": {
+        "query_event_upper95": 0.07198975489470943,
+        "iid_slot_upper95": 0.007390643422219346
+      },
+      "128": {
+        "query_event_upper95": 0.0365238250535484,
+        "iid_slot_upper95": 0.003700728526864816
+      },
+      "500": {
+        "query_event_upper95": 0.009452282208075204,
+        "iid_slot_upper95": 0.0009484177700043729
+      }
+    },
+    "full_pool": [
+      {
+        "dataset": "vogue-768",
+        "nprobe": 128,
+        "alpha": 100,
+        "loss": 0.0,
+        "oracle_fraction": 0.9083670153482564,
+        "gain100": 1.0,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "arxiv-768",
+        "nprobe": 128,
+        "alpha": 200,
+        "loss": 0.0,
+        "oracle_fraction": 1.0,
+        "gain100": 0.7284803886203497,
+        "control100_qualifies": false
+      },
+      {
+        "dataset": "openai3-1536",
+        "nprobe": 128,
+        "alpha": 8,
+        "loss": 0.0,
+        "oracle_fraction": 1.0,
+        "gain100": 1.5986169088270599,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "openai3-3072",
+        "nprobe": 128,
+        "alpha": 4,
+        "loss": 0.0,
+        "oracle_fraction": 1.0,
+        "gain100": 1.6911179798215432,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "bge-m3",
+        "nprobe": 128,
+        "alpha": 64,
+        "loss": 0.0005999999999999339,
+        "oracle_fraction": 0.932061729500612,
+        "gain100": 1.0751669995179396,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "stella",
+        "nprobe": 128,
+        "alpha": 16,
+        "loss": 0.0005999999999999339,
+        "oracle_fraction": 1.0,
+        "gain100": 1.1531877984805576,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "vogue-768",
+        "nprobe": 512,
+        "alpha": 100,
+        "loss": 0.00019999999999997797,
+        "oracle_fraction": 0.968929670712585,
+        "gain100": 1.0,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "arxiv-768",
+        "nprobe": 512,
+        "alpha": 200,
+        "loss": 0.0,
+        "oracle_fraction": 1.0,
+        "gain100": 0.8307371918335902,
+        "control100_qualifies": false
+      },
+      {
+        "dataset": "openai3-1536",
+        "nprobe": 512,
+        "alpha": 8,
+        "loss": 0.0,
+        "oracle_fraction": 1.0,
+        "gain100": 1.32633559153808,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "openai3-3072",
+        "nprobe": 512,
+        "alpha": 4,
+        "loss": 0.000200000000000089,
+        "oracle_fraction": 0.9767995352410936,
+        "gain100": 1.218766806182337,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "bge-m3",
+        "nprobe": 512,
+        "alpha": 64,
+        "loss": 0.0005999999999999339,
+        "oracle_fraction": 1.0,
+        "gain100": 1.0330960130187143,
+        "control100_qualifies": true
+      },
+      {
+        "dataset": "stella",
+        "nprobe": 512,
+        "alpha": 16,
+        "loss": 0.0005999999999999339,
+        "oracle_fraction": 1.0,
+        "gain100": 1.0414389404586333,
+        "control100_qualifies": true
+      }
+    ],
+    "economics": {
+      "S128": [
+        {
+          "dataset": "vogue-768",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 16.97390052366753,
+          "queries": 8486.950261833765,
+          "baseline_seconds": 0.041819791278419664
+        },
+        {
+          "dataset": "vogue-768",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 404.31446987903144,
+          "queries": 202157.2349395157,
+          "baseline_seconds": 0.9048588709677401
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 128,
+          "control": 100,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 128,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 3.470649056275051,
+          "queries": 1735.3245281375255,
+          "baseline_seconds": 0.010363178052908166
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 5.714090113347774,
+          "queries": 2857.0450566738873,
+          "baseline_seconds": 0.01454100149975004
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 2.391578931902182,
+          "queries": 1195.789465951091,
+          "baseline_seconds": 0.013947506455369347
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 7.198957050493111,
+          "queries": 3599.4785252465554,
+          "baseline_seconds": 0.030526044398478187
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 13.16312687027566,
+          "queries": 6581.563435137829,
+          "baseline_seconds": 0.0566555629359017
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 33.69710344773055,
+          "queries": 16848.551723865276,
+          "baseline_seconds": 0.13489633085560668
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 10.828495925466274,
+          "queries": 5403.419466807671,
+          "baseline_seconds": 0.056466193627618226
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 19.153677949485505,
+          "queries": 9557.685296793266,
+          "baseline_seconds": 0.09411246304298383
+        },
+        {
+          "dataset": "vogue-768",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 55.376886967741946,
+          "queries": 27688.44348387097,
+          "baseline_seconds": 0.27659677419354844
+        },
+        {
+          "dataset": "vogue-768",
+          "nprobe": 512,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 512,
+          "control": 100,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 512,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 6.191285392548644,
+          "queries": 3095.642696274322,
+          "baseline_seconds": 0.03572706148250167
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 7.562650859111514,
+          "queries": 3781.325429555757,
+          "baseline_seconds": 0.04169138712601995
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 6.2423665812526705,
+          "queries": 3121.1832906263353,
+          "baseline_seconds": 0.07298111372381358
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 26.202288623779992,
+          "queries": 13101.144311889997,
+          "baseline_seconds": 0.2644505422153367
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 41.245710137214196,
+          "queries": 20622.8550686071,
+          "baseline_seconds": 0.41950478170478234
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 276.037502399997,
+          "queries": 138018.75119999849,
+          "baseline_seconds": 2.7175999999999703
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 37.122130124634644,
+          "queries": 18523.942932192687,
+          "baseline_seconds": 0.5356682262569817
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 55.77146863976384,
+          "queries": 27829.962851242155,
+          "baseline_seconds": 0.794075465838507
+        }
+      ],
+      "full": [
+        {
+          "dataset": "vogue-768",
+          "nprobe": 128,
+          "control": 100,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "vogue-768",
+          "nprobe": 128,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 128,
+          "control": 100,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 128,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 8.49643557507557,
+          "queries": 4248.217787537785,
+          "baseline_seconds": 0.025369915900996617
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 14.033943728513647,
+          "queries": 7016.971864256823,
+          "baseline_seconds": 0.03571305190428041
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 7.174736795706546,
+          "queries": 3587.368397853273,
+          "baseline_seconds": 0.04184251936610804
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 21.596871151479334,
+          "queries": 10798.435575739668,
+          "baseline_seconds": 0.09157813319543458
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 56.82786365551993,
+          "queries": 28413.931827759963,
+          "baseline_seconds": 0.24459344938158498
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 128,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 128,
+          "control": 100,
+          "batches": 29.738749903326703,
+          "queries": 14839.636201760024,
+          "baseline_seconds": 0.15507546217340895
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 128,
+          "control": 64,
+          "batches": 52.597760064740704,
+          "queries": 26246.282272305612,
+          "baseline_seconds": 0.2584414733969988
+        },
+        {
+          "dataset": "vogue-768",
+          "nprobe": 512,
+          "control": 100,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "vogue-768",
+          "nprobe": 512,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 512,
+          "control": 100,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "arxiv-768",
+          "nprobe": 512,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 15.35426392317159,
+          "queries": 7677.131961585796,
+          "baseline_seconds": 0.08860239779318148
+        },
+        {
+          "dataset": "openai3-1536",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 18.759763908127965,
+          "queries": 9379.881954063983,
+          "baseline_seconds": 0.10341884004127967
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 19.298919583262073,
+          "queries": 9649.459791631036,
+          "baseline_seconds": 0.22562863403163738
+        },
+        {
+          "dataset": "openai3-3072",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 81.0070755162664,
+          "queries": 40503.5377581332,
+          "baseline_seconds": 0.8175761037955067
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 129.82168569883265,
+          "queries": 64910.84284941632,
+          "baseline_seconds": 1.3203995697602995
+        },
+        {
+          "dataset": "bge-m3",
+          "nprobe": 512,
+          "control": 64,
+          "batches": null,
+          "queries": null,
+          "baseline_seconds": null
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 512,
+          "control": 100,
+          "batches": 105.02180646037357,
+          "queries": 52405.88142372641,
+          "baseline_seconds": 1.515453035589671
+        },
+        {
+          "dataset": "stella",
+          "nprobe": 512,
+          "control": 64,
+          "batches": 157.72934551087698,
+          "queries": 78706.94340992761,
+          "baseline_seconds": 2.2457540847983455
+        }
+      ]
+    },
+    "pilot": {
+      "arxiv-768_np128_a100": {
+        "queries": 128,
+        "recall_gpu": 0.9734375,
+        "recall_full_ivf": 0.975,
+        "identical_sets": 126,
+        "mean_reference_survivor_coverage": 0.9984375
+      },
+      "arxiv-768_np128_a200": {
+        "queries": 128,
+        "recall_gpu": 0.975,
+        "recall_full_ivf": 0.975,
+        "identical_sets": 128,
+        "mean_reference_survivor_coverage": 1.0
+      },
+      "arxiv-768_np512_a100": {
+        "queries": 128,
+        "recall_gpu": 0.9859375,
+        "recall_full_ivf": 0.98828125,
+        "identical_sets": 125,
+        "mean_reference_survivor_coverage": 0.99765625
+      },
+      "openai3-3072_np128_a4": {
+        "queries": 128,
+        "recall_gpu": 0.93671875,
+        "recall_full_ivf": 0.9375,
+        "identical_sets": 127,
+        "mean_reference_survivor_coverage": 1.0
+      },
+      "openai3-3072_np512_a4": {
+        "queries": 128,
+        "recall_gpu": 0.9734375,
+        "recall_full_ivf": 0.97421875,
+        "identical_sets": 126,
+        "mean_reference_survivor_coverage": 1.0
+      },
+      "vogue-768_np128_a64": {
+        "queries": 128,
+        "recall_gpu": 0.9625,
+        "recall_full_ivf": 0.96328125,
+        "identical_sets": 127,
+        "mean_reference_survivor_coverage": 0.99921875
+      },
+      "vogue-768_np512_a64": {
+        "queries": 128,
+        "recall_gpu": 0.9875,
+        "recall_full_ivf": 0.98828125,
+        "identical_sets": 127,
+        "mean_reference_survivor_coverage": 0.99921875
+      }
+    },
+    "qps_inversions": [
+      {
+        "dataset": "openai3-3072",
+        "nprobe": 128,
+        "smaller": 2,
+        "larger": 4,
+        "larger_over_smaller": 1.1261553757009926
+      },
+      {
+        "dataset": "bge-m3",
+        "nprobe": 128,
+        "smaller": 2,
+        "larger": 4,
+        "larger_over_smaller": 1.0261278088285617
+      },
+      {
+        "dataset": "stella",
+        "nprobe": 128,
+        "smaller": 8,
+        "larger": 16,
+        "larger_over_smaller": 1.0001631410082115
+      },
+      {
+        "dataset": "vogue-768",
+        "nprobe": 512,
+        "smaller": 4,
+        "larger": 8,
+        "larger_over_smaller": 1.005662327285991
+      },
+      {
+        "dataset": "arxiv-768",
+        "nprobe": 512,
+        "smaller": 8,
+        "larger": 16,
+        "larger_over_smaller": 1.0042001561314582
+      },
+      {
+        "dataset": "openai3-3072",
+        "nprobe": 512,
+        "smaller": 4,
+        "larger": 8,
+        "larger_over_smaller": 1.0237515108493371
+      },
+      {
+        "dataset": "bge-m3",
+        "nprobe": 512,
+        "smaller": 4,
+        "larger": 8,
+        "larger_over_smaller": 1.0069274421606027
+      },
+      {
+        "dataset": "stella",
+        "nprobe": 512,
+        "smaller": 8,
+        "larger": 16,
+        "larger_over_smaller": 1.0003055300947143
+      }
+    ],
+    "statistical_scope": "query-iid and iid-slot binomial models are distinct; no fitted arXiv crossing prediction"
+  },
+  "worked_reuse": {
+    "dataset": "openai3-1536",
+    "nprobe": 128,
+    "batch": 500,
+    "fixed_alpha": 100,
+    "chosen_alpha": 8,
+    "requested_survivors": [
+      1000,
+      80
+    ],
+    "reduction_fraction": 0.92,
+    "fixed_qps": 167451,
+    "chosen_qps": 267690,
+    "recall": 0.928,
+    "cal_ms": 9.5,
+    "fixed_batch_ms": 2.9859481281091185,
+    "chosen_batch_ms": 1.867832193955695,
+    "break_even_batches": 8.49643557507557,
+    "first_positive_batches": 9,
+    "status": "Derived from archived arm rates; not directly timed calibrated-stream cost"
+  },
+  "poster": {
+    "record": {
+      "checked_date": "2026-10-28",
+      "path_relative_to_home": "Documents/26 s1/COMP8800/my poster/poster.pdf",
+      "desktop_copy": "Desktop/my poster/poster.pdf",
+      "sha256": "786f67e418c8707294da12f42efc671e961ff8446d34a2bda962fd2d2ef98636",
+      "checked_content": [
+        "Sampled adaptive alpha is separate from multi-block scan scheduling.",
+        "The displayed disagreement criterion compares returned ID sets with a larger-budget reference.",
+        "The poster explicitly describes unlabelled output stability rather than a recall guarantee.",
+        "Its risk and calibration-economics panels motivate the separate quality/cost analyses in Sections 6.5 and 7.5."
+      ],
+      "role": "User-authored presentation cross-check; measurements are recomputed from the original budget log, not read off the poster curves."
+    },
+    "local_check": "PDF hash verified; poster content inspected in the completion review"
+  },
+  "synthetic_sets": {
+    "objects": 4,
+    "total_order_and_nested_pool_checks": 6144,
+    "non_nested_overlap": [
+      1,
+      0,
+      1
+    ],
+    "reference_outside_cutoff_ties_counterexample": [
+      1,
+      0,
+      1
+    ],
+    "GPU_validation": false
+  },
+  "finite_pool": {
+    "admissible_subset_checks": 7107,
+    "epsilon": 1,
+    "observed_query_curves_available": true,
+    "scope": "Synthetic identity checked; supplement predicts fixed-pool crossings using per-query counts and held-out arm quality, with all traced subset sums verified"
+  },
+  "prose_word_estimate": {
+    "per_file": {
+      "chapters/06-1-motivation.tex": 521,
+      "chapters/06-2-agreement.tex": 457,
+      "chapters/06-3-search.tex": 650,
+      "chapters/06-4-controls.tex": 179,
+      "chapters/06-5-economics.tex": 307,
+      "chapters/06-6-scope.tex": 246,
+      "chapters/06-refinement.tex": 104
+    },
+    "total": 2464,
+    "method": "prose/captions only; table bodies, math, labels, citations and macro names excluded; not an official count"
+  },
+  "limitations": [
+    "arbitrary-subset per-query invariance unproved despite all traced subset sums matching",
+    "direct calibrated reuse covers four repeated held-out pools, not new traffic",
+    "no drift detection experiment"
+  ],
+  "cells": [
+    {
+      "dataset": "vogue-768",
+      "nprobe": 128,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 4,
+      "calibration_128_groups": 4,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 4,
+        "500": 4
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.968,
+          "qps": 150152
+        },
+        "100": {
+          "recall": 0.968,
+          "qps": 202941
+        },
+        "64": {
+          "recall": 0.9678,
+          "qps": 223413
+        },
+        "32": {
+          "recall": 0.9658,
+          "qps": 256585
+        },
+        "16": {
+          "recall": 0.9576,
+          "qps": 264086
+        },
+        "8": {
+          "recall": 0.9356,
+          "qps": 272441
+        },
+        "4": {
+          "recall": 0.8876,
+          "qps": 279341
+        },
+        "2": {
+          "recall": 0.799,
+          "qps": 280031
+        }
+      },
+      "full": {
+        "alpha": 100,
+        "recall": 0.968,
+        "qps": 202941,
+        "cal_ms": 10.1
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 2.1,
+          "mean_loss": 0.0032,
+          "p95_loss": 0.0104,
+          "crossing_fraction": 0.688,
+          "crossings": 44,
+          "median_alpha": 32,
+          "mean_qps": 247742
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 3.0,
+          "mean_loss": 0.0014,
+          "p95_loss": 0.0022,
+          "crossing_fraction": 0.453,
+          "crossings": 29,
+          "median_alpha": 64,
+          "mean_qps": 238039
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 4.0,
+          "mean_loss": 0.0003,
+          "p95_loss": 0.0022,
+          "crossing_fraction": 0.078,
+          "crossings": 5,
+          "median_alpha": 64,
+          "mean_qps": 224405
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 3.7,
+          "bisect_ms": 2.1
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 5.5,
+          "bisect_ms": 3.0
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 7.4,
+          "bisect_ms": 4.0
+        }
+      ]
+    },
+    {
+      "dataset": "arxiv-768",
+      "nprobe": 128,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.976,
+          "qps": 151462
+        },
+        "100": {
+          "recall": 0.9748,
+          "qps": 207915
+        },
+        "64": {
+          "recall": 0.9736,
+          "qps": 229914
+        },
+        "32": {
+          "recall": 0.9626,
+          "qps": 249672
+        },
+        "16": {
+          "recall": 0.9412,
+          "qps": 263300
+        },
+        "8": {
+          "recall": 0.894,
+          "qps": 266558
+        },
+        "4": {
+          "recall": 0.8084,
+          "qps": 271985
+        },
+        "2": {
+          "recall": 0.678,
+          "qps": 277681
+        }
+      },
+      "full": {
+        "alpha": 200,
+        "recall": 0.976,
+        "qps": 151462,
+        "cal_ms": 10.0
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 2.0,
+          "mean_loss": 0.0024,
+          "p95_loss": 0.0024,
+          "crossing_fraction": 0.984,
+          "crossings": 63,
+          "median_alpha": 64,
+          "mean_qps": 227278
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 2.8,
+          "mean_loss": 0.0016,
+          "p95_loss": 0.0024,
+          "crossing_fraction": 0.875,
+          "crossings": 56,
+          "median_alpha": 100,
+          "mean_qps": 210827
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 4.2,
+          "mean_loss": 0.0009,
+          "p95_loss": 0.0024,
+          "crossing_fraction": 0.625,
+          "crossings": 40,
+          "median_alpha": 100,
+          "mean_qps": 188808
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 3.6,
+          "bisect_ms": 2.0
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 4.9,
+          "bisect_ms": 2.8
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 7.6,
+          "bisect_ms": 4.2
+        }
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "nprobe": 128,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.928,
+          "qps": 114713
+        },
+        "100": {
+          "recall": 0.928,
+          "qps": 167451
+        },
+        "64": {
+          "recall": 0.928,
+          "qps": 196482
+        },
+        "32": {
+          "recall": 0.928,
+          "qps": 258446
+        },
+        "16": {
+          "recall": 0.928,
+          "qps": 265635
+        },
+        "8": {
+          "recall": 0.928,
+          "qps": 267690
+        },
+        "4": {
+          "recall": 0.9262,
+          "qps": 280547
+        },
+        "2": {
+          "recall": 0.9056,
+          "qps": 307950
+        }
+      },
+      "full": {
+        "alpha": 8,
+        "recall": 0.928,
+        "qps": 267690,
+        "cal_ms": 9.5
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 2.0,
+          "mean_loss": 0.0012,
+          "p95_loss": 0.0018,
+          "crossing_fraction": 0.656,
+          "crossings": 42,
+          "median_alpha": 4,
+          "mean_qps": 276128
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 2.7,
+          "mean_loss": 0.0006,
+          "p95_loss": 0.0018,
+          "crossing_fraction": 0.359,
+          "crossings": 23,
+          "median_alpha": 8,
+          "mean_qps": 272311
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 3.9,
+          "mean_loss": 0.0001,
+          "p95_loss": 0.0,
+          "crossing_fraction": 0.062,
+          "crossings": 4,
+          "median_alpha": 8,
+          "mean_qps": 268494
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 4.0,
+          "bisect_ms": 2.0
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 5.1,
+          "bisect_ms": 2.7
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 7.4,
+          "bisect_ms": 3.9
+        }
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "nprobe": 128,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 0,
+      "source_derived_groups": {
+        "32": 4,
+        "64": 2,
+        "128": 0,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9252,
+          "qps": 77096
+        },
+        "100": {
+          "recall": 0.9252,
+          "qps": 85735
+        },
+        "64": {
+          "recall": 0.9252,
+          "qps": 117915
+        },
+        "32": {
+          "recall": 0.9252,
+          "qps": 131826
+        },
+        "16": {
+          "recall": 0.9252,
+          "qps": 138602
+        },
+        "8": {
+          "recall": 0.9252,
+          "qps": 141965
+        },
+        "4": {
+          "recall": 0.9252,
+          "qps": 144988
+        },
+        "2": {
+          "recall": 0.9206,
+          "qps": 128746
+        }
+      },
+      "full": {
+        "alpha": 4,
+        "recall": 0.9252,
+        "qps": 144988,
+        "cal_ms": 17.1
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 3.0,
+          "mean_loss": 0.0012,
+          "p95_loss": 0.0046,
+          "crossing_fraction": 0.266,
+          "crossings": 17,
+          "median_alpha": 4,
+          "mean_qps": 140674
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 4.2,
+          "mean_loss": 0.0001,
+          "p95_loss": 0.0,
+          "crossing_fraction": 0.016,
+          "crossings": 1,
+          "median_alpha": 4,
+          "mean_qps": 144734
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 5.7,
+          "mean_loss": 0.0,
+          "p95_loss": 0.0,
+          "crossing_fraction": 0.0,
+          "crossings": 0,
+          "median_alpha": 4,
+          "mean_qps": 144988
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 5.9,
+          "bisect_ms": 3.0
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 8.2,
+          "bisect_ms": 4.2
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 11.4,
+          "bisect_ms": 5.7
+        }
+      ]
+    },
+    {
+      "dataset": "bge-m3",
+      "nprobe": 128,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9198,
+          "qps": 84813
+        },
+        "100": {
+          "recall": 0.9198,
+          "qps": 116168
+        },
+        "64": {
+          "recall": 0.9192,
+          "qps": 124900
+        },
+        "32": {
+          "recall": 0.919,
+          "qps": 134004
+        },
+        "16": {
+          "recall": 0.916,
+          "qps": 138046
+        },
+        "8": {
+          "recall": 0.9098,
+          "qps": 141902
+        },
+        "4": {
+          "recall": 0.8948,
+          "qps": 143937
+        },
+        "2": {
+          "recall": 0.8386,
+          "qps": 140272
+        }
+      },
+      "full": {
+        "alpha": 64,
+        "recall": 0.9192,
+        "qps": 124900,
+        "cal_ms": 17.1
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 3.0,
+          "mean_loss": 0.003,
+          "p95_loss": 0.01,
+          "crossing_fraction": 0.516,
+          "crossings": 33,
+          "median_alpha": 16,
+          "mean_qps": 136510
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 4.2,
+          "mean_loss": 0.0013,
+          "p95_loss": 0.0038,
+          "crossing_fraction": 0.188,
+          "crossings": 12,
+          "median_alpha": 32,
+          "mean_qps": 133482
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 6.5,
+          "mean_loss": 0.0008,
+          "p95_loss": 0.0008,
+          "crossing_fraction": 0.016,
+          "crossings": 1,
+          "median_alpha": 32,
+          "mean_qps": 131223
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 5.7,
+          "bisect_ms": 3.0
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 7.9,
+          "bisect_ms": 4.2
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 12.5,
+          "bisect_ms": 6.5
+        }
+      ]
+    },
+    {
+      "dataset": "stella",
+      "nprobe": 128,
+      "calibration_n": 500,
+      "held_out_n": 499,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9892,
+          "qps": 72896
+        },
+        "100": {
+          "recall": 0.9892,
+          "qps": 95693
+        },
+        "64": {
+          "recall": 0.9892,
+          "qps": 101556
+        },
+        "32": {
+          "recall": 0.9892,
+          "qps": 107562
+        },
+        "16": {
+          "recall": 0.9886,
+          "qps": 110352
+        },
+        "8": {
+          "recall": 0.9862,
+          "qps": 110334
+        },
+        "4": {
+          "recall": 0.9717,
+          "qps": 112085
+        },
+        "2": {
+          "recall": 0.9166,
+          "qps": 112734
+        }
+      },
+      "full": {
+        "alpha": 16,
+        "recall": 0.9886,
+        "qps": 110352,
+        "cal_ms": 20.6
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 3.2,
+          "mean_loss": 0.0033,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.766,
+          "crossings": 49,
+          "median_alpha": 8,
+          "mean_qps": 110447
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 4.6,
+          "mean_loss": 0.0015,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.391,
+          "crossings": 25,
+          "median_alpha": 16,
+          "mean_qps": 110345
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 7.5,
+          "mean_loss": 0.0008,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.094,
+          "crossings": 6,
+          "median_alpha": 16,
+          "mean_qps": 110350
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 6.3,
+          "bisect_ms": 3.2
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 9.0,
+          "bisect_ms": 4.6
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 14.9,
+          "bisect_ms": 7.5
+        }
+      ]
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 512,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 4,
+      "calibration_128_groups": 4,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 4,
+        "500": 4
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9918,
+          "qps": 83603
+        },
+        "100": {
+          "recall": 0.9916,
+          "qps": 100104
+        },
+        "64": {
+          "recall": 0.9916,
+          "qps": 103314
+        },
+        "32": {
+          "recall": 0.9888,
+          "qps": 110756
+        },
+        "16": {
+          "recall": 0.9806,
+          "qps": 114843
+        },
+        "8": {
+          "recall": 0.9558,
+          "qps": 115799
+        },
+        "4": {
+          "recall": 0.9034,
+          "qps": 115147
+        },
+        "2": {
+          "recall": 0.8134,
+          "qps": 115615
+        }
+      },
+      "full": {
+        "alpha": 100,
+        "recall": 0.9916,
+        "qps": 100104,
+        "cal_ms": 20.9
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 3.3,
+          "mean_loss": 0.0029,
+          "p95_loss": 0.0112,
+          "crossing_fraction": 0.594,
+          "crossings": 38,
+          "median_alpha": 32,
+          "mean_qps": 108143
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 5.2,
+          "mean_loss": 0.0012,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.359,
+          "crossings": 23,
+          "median_alpha": 64,
+          "mean_qps": 105788
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 7.5,
+          "mean_loss": 0.0003,
+          "p95_loss": 0.0002,
+          "crossing_fraction": 0.031,
+          "crossings": 2,
+          "median_alpha": 64,
+          "mean_qps": 102894
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 6.1,
+          "bisect_ms": 3.3
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 10.0,
+          "bisect_ms": 5.2
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 14.2,
+          "bisect_ms": 7.5
+        }
+      ]
+    },
+    {
+      "dataset": "arxiv-768",
+      "nprobe": 512,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9894,
+          "qps": 69011
+        },
+        "100": {
+          "recall": 0.9878,
+          "qps": 83072
+        },
+        "64": {
+          "recall": 0.9844,
+          "qps": 87571
+        },
+        "32": {
+          "recall": 0.9724,
+          "qps": 89700
+        },
+        "16": {
+          "recall": 0.9486,
+          "qps": 91331
+        },
+        "8": {
+          "recall": 0.8964,
+          "qps": 90949
+        },
+        "4": {
+          "recall": 0.812,
+          "qps": 92194
+        },
+        "2": {
+          "recall": 0.6794,
+          "qps": 92604
+        }
+      },
+      "full": {
+        "alpha": 200,
+        "recall": 0.9894,
+        "qps": 69011,
+        "cal_ms": 25.1
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 3.5,
+          "mean_loss": 0.0043,
+          "p95_loss": 0.005,
+          "crossing_fraction": 0.984,
+          "crossings": 63,
+          "median_alpha": 64,
+          "mean_qps": 86260
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 5.6,
+          "mean_loss": 0.0027,
+          "p95_loss": 0.005,
+          "crossing_fraction": 0.906,
+          "crossings": 58,
+          "median_alpha": 100,
+          "mean_qps": 83370
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 9.7,
+          "mean_loss": 0.0009,
+          "p95_loss": 0.0016,
+          "crossing_fraction": 0.5,
+          "crossings": 32,
+          "median_alpha": 200,
+          "mean_qps": 76182
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 6.6,
+          "bisect_ms": 3.5
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 10.6,
+          "bisect_ms": 5.6
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 18.6,
+          "bisect_ms": 9.7
+        }
+      ]
+    },
+    {
+      "dataset": "openai3-1536",
+      "nprobe": 512,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.974,
+          "qps": 60778
+        },
+        "100": {
+          "recall": 0.974,
+          "qps": 86647
+        },
+        "64": {
+          "recall": 0.974,
+          "qps": 90698
+        },
+        "32": {
+          "recall": 0.974,
+          "qps": 104689
+        },
+        "16": {
+          "recall": 0.974,
+          "qps": 113546
+        },
+        "8": {
+          "recall": 0.974,
+          "qps": 114923
+        },
+        "4": {
+          "recall": 0.9714,
+          "qps": 115576
+        },
+        "2": {
+          "recall": 0.9468,
+          "qps": 116131
+        }
+      },
+      "full": {
+        "alpha": 8,
+        "recall": 0.974,
+        "qps": 114923,
+        "cal_ms": 21.8
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 3.4,
+          "mean_loss": 0.0022,
+          "p95_loss": 0.0026,
+          "crossing_fraction": 0.703,
+          "crossings": 45,
+          "median_alpha": 4,
+          "mean_qps": 115391
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 5.2,
+          "mean_loss": 0.0009,
+          "p95_loss": 0.0026,
+          "crossing_fraction": 0.328,
+          "crossings": 21,
+          "median_alpha": 8,
+          "mean_qps": 115137
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 8.8,
+          "mean_loss": 0.0002,
+          "p95_loss": 0.0,
+          "crossing_fraction": 0.062,
+          "crossings": 4,
+          "median_alpha": 8,
+          "mean_qps": 114964
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 6.4,
+          "bisect_ms": 3.4
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 9.8,
+          "bisect_ms": 5.2
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 16.5,
+          "bisect_ms": 8.8
+        }
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "nprobe": 512,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 0,
+      "source_derived_groups": {
+        "32": 4,
+        "64": 2,
+        "128": 0,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9704,
+          "qps": 42012
+        },
+        "100": {
+          "recall": 0.9704,
+          "qps": 42767
+        },
+        "64": {
+          "recall": 0.9704,
+          "qps": 49541
+        },
+        "32": {
+          "recall": 0.9704,
+          "qps": 51475
+        },
+        "16": {
+          "recall": 0.9704,
+          "qps": 52320
+        },
+        "8": {
+          "recall": 0.9704,
+          "qps": 53361
+        },
+        "4": {
+          "recall": 0.9702,
+          "qps": 52123
+        },
+        "2": {
+          "recall": 0.9632,
+          "qps": 53723
+        }
+      },
+      "full": {
+        "alpha": 4,
+        "recall": 0.9702,
+        "qps": 52123,
+        "cal_ms": 40.5
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 5.4,
+          "mean_loss": 0.0022,
+          "p95_loss": 0.0072,
+          "crossing_fraction": 0.281,
+          "crossings": 18,
+          "median_alpha": 4,
+          "mean_qps": 52573
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 8.7,
+          "mean_loss": 0.0003,
+          "p95_loss": 0.0002,
+          "crossing_fraction": 0.016,
+          "crossings": 1,
+          "median_alpha": 4,
+          "mean_qps": 52148
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 13.1,
+          "mean_loss": 0.0002,
+          "p95_loss": 0.0002,
+          "crossing_fraction": 0.0,
+          "crossings": 0,
+          "median_alpha": 4,
+          "mean_qps": 52123
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 10.8,
+          "bisect_ms": 5.4
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 17.5,
+          "bisect_ms": 8.7
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 26.3,
+          "bisect_ms": 13.1
+        }
+      ]
+    },
+    {
+      "dataset": "bge-m3",
+      "nprobe": 512,
+      "calibration_n": 500,
+      "held_out_n": 500,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.967,
+          "qps": 38140
+        },
+        "100": {
+          "recall": 0.967,
+          "qps": 49160
+        },
+        "64": {
+          "recall": 0.9664,
+          "qps": 50787
+        },
+        "32": {
+          "recall": 0.9656,
+          "qps": 51532
+        },
+        "16": {
+          "recall": 0.9624,
+          "qps": 52662
+        },
+        "8": {
+          "recall": 0.9554,
+          "qps": 53054
+        },
+        "4": {
+          "recall": 0.9376,
+          "qps": 52689
+        },
+        "2": {
+          "recall": 0.8766,
+          "qps": 53156
+        }
+      },
+      "full": {
+        "alpha": 64,
+        "recall": 0.9664,
+        "qps": 50787,
+        "cal_ms": 42.3
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 5.4,
+          "mean_loss": 0.0043,
+          "p95_loss": 0.0116,
+          "crossing_fraction": 0.938,
+          "crossings": 60,
+          "median_alpha": 16,
+          "mean_qps": 52135
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 8.9,
+          "mean_loss": 0.0017,
+          "p95_loss": 0.0046,
+          "crossing_fraction": 0.766,
+          "crossings": 49,
+          "median_alpha": 32,
+          "mean_qps": 51516
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 15.8,
+          "mean_loss": 0.0009,
+          "p95_loss": 0.0014,
+          "crossing_fraction": 0.375,
+          "crossings": 24,
+          "median_alpha": 64,
+          "mean_qps": 51084
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 10.4,
+          "bisect_ms": 5.4
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 17.2,
+          "bisect_ms": 8.9
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 31.1,
+          "bisect_ms": 15.8
+        }
+      ]
+    },
+    {
+      "dataset": "stella",
+      "nprobe": 512,
+      "calibration_n": 500,
+      "held_out_n": 499,
+      "evaluation_groups": 0,
+      "calibration_128_groups": 2,
+      "source_derived_groups": {
+        "32": 8,
+        "64": 4,
+        "128": 2,
+        "500": 0
+      },
+      "fixed": {
+        "200": {
+          "recall": 0.9954,
+          "qps": 27926
+        },
+        "100": {
+          "recall": 0.9954,
+          "qps": 34581
+        },
+        "64": {
+          "recall": 0.9954,
+          "qps": 35047
+        },
+        "32": {
+          "recall": 0.9954,
+          "qps": 35669
+        },
+        "16": {
+          "recall": 0.9948,
+          "qps": 36014
+        },
+        "8": {
+          "recall": 0.9924,
+          "qps": 36003
+        },
+        "4": {
+          "recall": 0.9772,
+          "qps": 36078
+        },
+        "2": {
+          "recall": 0.92,
+          "qps": 36146
+        }
+      },
+      "full": {
+        "alpha": 16,
+        "recall": 0.9948,
+        "qps": 36014,
+        "cal_ms": 60.3
+      },
+      "draws": {
+        "32": {
+          "reps": 64,
+          "cal_ms": 6.6,
+          "mean_loss": 0.0031,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.75,
+          "crossings": 48,
+          "median_alpha": 8,
+          "mean_qps": 36010
+        },
+        "64": {
+          "reps": 64,
+          "cal_ms": 11.5,
+          "mean_loss": 0.0014,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.344,
+          "crossings": 22,
+          "median_alpha": 16,
+          "mean_qps": 36010
+        },
+        "128": {
+          "reps": 64,
+          "cal_ms": 21.3,
+          "mean_loss": 0.0009,
+          "p95_loss": 0.003,
+          "crossing_fraction": 0.109,
+          "crossings": 7,
+          "median_alpha": 16,
+          "mean_qps": 36013
+        }
+      },
+      "enumeration": [
+        {
+          "S": 32,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 13.2,
+          "bisect_ms": 6.6
+        },
+        {
+          "S": 64,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 22.8,
+          "bisect_ms": 11.5
+        },
+        {
+          "S": 128,
+          "reps": 64,
+          "different": 0,
+          "denominator": 64,
+          "enum_ms": 42.4,
+          "bisect_ms": 21.3
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW/budget_v69.log",
+      "sha256": "ea95e51f8d01b5537df93e38da5b6ca411fd7512c7b7b4b56697de817a0d25a0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/run_budget_v69.sh",
+      "sha256": "fc08ef4fc5f57a67e728f4e3b691dbbe9d76b21e32a67ec755e4d28c67512261"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_budget_arms_v69.cu",
+      "sha256": "6994879be3f86dd4fc27995ae76cf0a4e4509ef6fb02577c5ff303e1b3641903"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v69_probesel/search.cu",
+      "sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v69_probesel/jhq_gpu_index.cuh",
+      "sha256": "7d575257498e700ed846a9446af6bf835f2d477306bc9d58aa8e7f69d27a6f5d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v69_probesel/jhq_gpu_index.cu",
+      "sha256": "504f631427cbfa644c87d5cc4e6535ee2b1b53e90fffd67e1f2c5725c39797c1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "CMakeLists.txt",
+      "sha256": "34ec37f075d778f20aeafe386f83d515f50df2a8fe55505743c7055784462069"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/MethodPart2_ADC.tex",
+      "sha256": "6d22a21fd2e495dfc2d4113dc80e8cf8f844e16de5bf6b6826c6d0fb415ab422"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch7/audit.json",
+      "sha256": "cf9cd5124efce4d51956805955391edf1ddd78c3632ff2c8768d26ba5f1c0680"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/check/arxiv-768.json",
+      "sha256": "d384ad75614a503234081a80ed3238a2f3c20bb563a029f19e6e88cd6bfbc8f3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/check/vogue-768.json",
+      "sha256": "2717721ff780f1be1f28b1e91a29a96e999660437f6c889716fe1f167b331115"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/pipeline_v62/raw/check/openai3-3072.json",
+      "sha256": "d983a4da780f53cf53fbe3e235603ca8478af067cf691010635601d550dbac2f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch6/poster-link.json",
+      "sha256": "93265c67c2742b9b0752b0537a0c4314347bdb2c3a0bda3797ae75beb17080e5"
+    },
+    {
+      "repository": "user_local_poster",
+      "path": "Documents/26 s1/COMP8800/my poster/poster.pdf",
+      "sha256": "786f67e418c8707294da12f42efc671e961ff8446d34a2bda962fd2d2ef98636"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/analyze.py",
+      "sha256": "b530f20ecc57d113e01b38838bc4d4e29ed6e5d5e674fadcfc4ee2a8f4e83158"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_v66_bound_pilot.cu",
+      "sha256": "4148343afbf8f6c422f0a368399c22333e68e58148348d9fd3313872318e9a70"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/RECALL_COMPARISON.csv",
+      "sha256": "9dbc7923068550c7f271574d1510f2c1ae035c60d0a915ab274c8eb42ecf4c3e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "6.pdf",
+      "sha256": "3f637e9b8ddbfc8f1b0321c61972bc453ca10a959a928bd435102bf60a01a037"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/thesis-marking-guide.txt",
+      "sha256": "ad6676136be5892d0db85943d0b3b9c365bb34088ea9a45ee5e3eb6b1e89f1a1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "51a16c3559542e7c48a6b35867c37a8ae3ae31ec85cb58fb39ce7c1a93de0bbd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "17c1d33d41d38f2732133db4d2af419dfa6a20520fa47bf9e4a04c3e4be48f46"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch6-evidence.txt",
+      "sha256": "da9591258c9922ddedf5773f36b4e88a5b70fecc63bdadaaded4a27706658a88"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch6-review-response.txt",
+      "sha256": "dd28ebdabfa586a0410a0cf92a22f1399bf15746244c61966ed61117fa5e3e1e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch6-completion.txt",
+      "sha256": "357b3bf02c7c3af9f35c592fc9ad69224fb3f0a0f5291f721d7c6d118a95caca"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch6-round2-response.txt",
+      "sha256": "cbe9f51540fe45d849c895e53e569cd0cf3acce94fb9d59a7e4c87d6dc32a2ee"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch6/review-sources.json",
+      "sha256": "4c580589ded0187feb435dc760b89ccf8fa3e340e37ee5ef4940827f017d2cec"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_ch6.py",
+      "sha256": "f9b3e8a1dd2d578600e459613b2bc7eb872513a0e14134eb9632a3e8008b3eb2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "main-zh.tex",
+      "sha256": "c075bc516292f4fcbf1876697e6d87a9945ec170aa18f52bf6edb6f38afce1d8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "config/preamble.tex",
+      "sha256": "e7dd6e03a6606e31d2a99d1f2d4bdf42587b2ab78b9473ab8fce690e16552c4a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/preamble.tex",
+      "sha256": "540c7458e772b95f5916dc36956856e639b08aec7171a2ae8e169d9532bc0625"
+    },
+    {
+      "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "92cb71a868c31bd0b538cc4baf76f2ba8e8f2ce1d421ff6a2178164da6e2b348"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_full.tex",
+      "sha256": "959620129869a4651b79e9c62c6b21085024a2678489f4158bcc2ced2416f563"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_full.tex",
+      "sha256": "d12d02a31a5db97ccd72e082a9f76d7ee81cd5ad3e6bb6d8e8f37e26972e1841"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_cost.tex",
+      "sha256": "0311e0ab42b2962a3a865c264270ea13044833d4ea8d640bdf030945dbfd005b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_cost.tex",
+      "sha256": "067ae5f8f1c6b3dab363ab00a6387ce75e42ca1aca7c23eb20d11b4df3f6b889"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_risk.pdf",
+      "sha256": "63e31459af38dc5a2d54b2b3879c438a0e3d1a5a06cc053b2d7d6fdc2f7e5b6f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_payback.pdf",
+      "sha256": "4403a378f9eac9775fd29f4bcba3c1e93f7d8924f6e7d7e8bcfd9895f9f11474"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-1-motivation.tex",
+      "sha256": "675cbee498c2a1dbdbccfb40c6815c929a2538e0f3bf1248cf97ed17daa412d8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-2-agreement.tex",
+      "sha256": "203887c260b26323e90dce4dab694a6c674c7d1cdde29a56523acb309404d6ca"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-3-search.tex",
+      "sha256": "fa3c538fbb346de724512431be5d2326fab2997dcdc83adc88d77f7943c0b607"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-4-controls.tex",
+      "sha256": "a4786d9b3c363a3a0ab286b2dd38fa996e59d87af847a2637ec94c98781b3d77"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-5-economics.tex",
+      "sha256": "deb493d4c80db33d7b057e2d3741098386fd1e82d9491e28aece99b0cad9a4e8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-6-scope.tex",
+      "sha256": "149a7bb57cf5b99d0ca0ce383546c83e2896639c431483efdfacb8cdfbaa9853"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-refinement.tex",
+      "sha256": "0afa7767a944449194e75070fef7a6a3e2800b967dba52026d89f06562100d90"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-1-motivation.tex",
+      "sha256": "570d11b1c99f1cf284507bbe53a3dd15daf007e84a4c7248bf345742eab49a4a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-2-agreement.tex",
+      "sha256": "a85531a22e93b4ff7db8d689a91cc946308b64209620d543722bfdf22360c635"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-3-search.tex",
+      "sha256": "a64bdd3ee48edfa6667e77a4c14d1e110ab52b0dd3b9d7fb3f6d136228efa431"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-4-controls.tex",
+      "sha256": "b48f536d456b50271b6889e167d7ce8d2c9637db6315d88e3a94d81c7147012e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-5-economics.tex",
+      "sha256": "efdd822179a183969fccfa60af9074e4c7dea3cbf0eb6504660a3e3f010f6736"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-6-scope.tex",
+      "sha256": "45e0cb9219cb36b342e0fcf1e3247036aff98a1cde55484951397cdfb1fe2301"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-refinement.tex",
+      "sha256": "1e781a970986ac6064146f10733bc36c0f5cb9cc83e9a96ef535953711b7e67c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/budget-scope.tex",
+      "sha256": "1bb200fa2cd38f601a3f4692a4de58b53fa0dd4705a76285b44489e18c756b45"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/calibration-flow.tex",
+      "sha256": "8099f8ee93ab306c45ac34bd88f657b48da7a4fbedc451af47f90f879118de11"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/nesting-example.tex",
+      "sha256": "4e3b7a2f3cf8fabc47808c4c8105d01030590717e638fb05d8f4f51e4d7315d5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/supplement/audit.json",
+      "sha256": "1f341cf0458d8a0eeced6325470d45f484cda5fa4233b8402fced6a351a1a1f5"
+    }
+  ]
+}

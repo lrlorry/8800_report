@@ -34,8 +34,8 @@ correction and primary score are added afterwards.
 
 For $\lrefine=L\in\{1,8,16,32\}$, a scan-independent refinement block
 assigns $L$ adjacent lanes to a candidate. A 32-bit residual word holds
-$R=32/B_R$ coordinate codes, where $B_R$ is the residual bit width.
-The tested eight-bit path has $R=4$; the four-bit path has $R=8$.
+$d_{\rm word}=32/B_R$ coordinate codes, where $B_R$ is the residual bit width.
+The tested eight-bit path has $d_{\rm word}=4$; the four-bit path has $d_{\rm word}=8$.
 Lane $a$ reads word indices $a,a+L,a+2L,\ldots$, decodes their
 coordinates and accumulates a partial sum. A butterfly shuffle reduction
 combines the $L$ partials, and lane zero writes the refined score.
@@ -54,7 +54,7 @@ access is contiguous.}
 \end{figure}
 
 The launch requires a word-aligned residual row and $D_s$ divisible by
-$R$, so a word never crosses a subspace's codebook boundary. All lanes
+$d_{\rm word}$, so a word never crosses a subspace's codebook boundary. All lanes
 execute the shuffle sequence, including lanes assigned to invalid or
 out-of-range survivor slots; these contribute zero before the output
 is marked infinite. This avoids making warp participation depend on
@@ -78,8 +78,12 @@ $(\refineddist,\mathrm{database\ ID})$. One block per query loads the
 $c$ scores and repeatedly reduces the minimum, emits its ID and score,
 and removes that score before the next round. All $c$ slots are scanned
 at each round; there is no fixed per-thread candidate quota. This
-correctness statement does not establish the final-output contract for
-degenerate pools with fewer than $k$ finite valid candidates.
+contract requires $k$ finite valid entries. In a degenerate pool,
+selection sets the winning score to infinity but leaves its position
+valid: after finite entries are exhausted, the smallest valid ID can
+repeat with an infinite score. An entirely invalid pool returns invalid
+IDs and infinity. These cases lie outside the finite-pool contract used
+for the reported evaluation.
 
 The final ID tie rule differs from the physical-position rule used for
 primary retention. An exact final selector cannot recover candidates

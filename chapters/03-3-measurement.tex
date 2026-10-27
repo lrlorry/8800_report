@@ -1,0 +1,72 @@
+The principal comparison starts with FP32 queries in host memory and ends
+when top-10 IDs and scores are available in host memory after stream
+completion (\cref{fig:3-boundary}). It includes pinned staging, H2D,
+query preprocessing, search and D2H. CAGRA int8 query quantisation is inside
+this boundary; quantiser training and index construction are outside it.
+Resource handles and output buffers are reused. JHQ returns to pageable
+host arrays and the baselines to pinned arrays; CAGRA/PQ use Python APIs,
+whereas JHQ/RaBitQ use C++. These interface differences remain visible when
+interpreting small margins.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
+\captionof{figure}{Timing boundaries. The host interval includes transfers and
+query-specific computation. Device-stage profiles explain parts of that
+interval; separate profiling and synchronisation can change execution, so
+their sum is not an interchangeable end-to-end latency.}
+\label{fig:3-boundary}
+\end{minipage}\par\medskip
+
+For round $r$ with $m_r$ timed calls, each answering a batch of $b$ queries,
+\begin{equation}
+Q_r=\frac{m_rb}{\sum_{i=1}^{m_r}t_{ri}},\qquad
+Q=\operatorname{median}_r Q_r,
+\label{eq:3-throughput}
+\end{equation}
+with $t$ in seconds. E1 uses $b=1{,}000$ and five rounds. JHQ performs
+one untimed call per variant per round, then normally 24 timed calls.
+Baselines perform three initial warm-up calls and normally 24 calls per
+round, reducing that count for points classified as slow. Actual counts
+are retained. Warm-up excludes JIT and graph capture from steady-state
+timing. A batch's median or p95 latency describes repeated batch calls,
+not the latency distribution of individual queries or concurrent requests.
+
+The median of round throughputs is distinct from the reciprocal of median
+call latency. Both summaries are retained where available, together with
+round minima/maxima and baseline call traces. Slow valid calls remain in
+the primary estimate. Rounds share a trained index, and budget draws share
+a query pool: their counts measure timing variation or sample sensitivity,
+rather than independent training replications. Small paired differences
+are reported with their spread and consistency; no independence-based
+significance claim is attached to the sweep cells.
+
+The principal environment is an RTX 5090 with 32,607\,MiB reported memory,
+driver 595.71.05, CUDA toolkit 13.0 and cuVS 26.08.01. Runs acquire a
+cooperative GPU lock and record environment snapshots; OpenMP uses 16
+threads within a 25-CPU container quota. E1 records a 575\,W power limit.
+These snapshots do not establish locked clocks or constant host load.
+JHQ's Release compute\_80 PTX is JIT-compiled \cite{cuda_platform}; library baselines use their
+installed builds. Auxiliary device-only timing and stage profiles are
+labelled separately, since JHQ's main API accepts host queries.
+
+Memory accounting separates persistent encoded arrays, model/IVF metadata,
+query workspace and runtime/context allocations. A process used-memory
+sample includes more than the index; a build-time allocation delta excludes
+memory pools created later. E1's context-subtracted JHQ totals and CAGRA's
+index deltas retain these different definitions. Component models explain
+resident totals and expose an unattributed remainder
+(\cref{sec:4-4,sec:7-7}); they do not supply an equal-memory performance comparison.
+Supplementary 20\,ms device samples separately measure construction peaks. Cold train/add timers likewise
+exclude input loading and preceding object/host-model setup.
+
+\paragraph{Supplementary evidence boundary.}
+The 28 October campaign retains the archived E1/budget records and adds
+repeated empty-cache builds, extracted PTX and toolkit disassembly,
+OpenAI vector-row correspondence, complete budget traces and a paired
+precision intervention. The hardware class and reported driver/toolkit
+versions match, but timing is a separate session. In particular, v69
+uses TF32 OpenAI GEMMs; the v72 sensitivity changes add/query arithmetic
+on the same trained cache. Cross-session baselines remain labelled as
+historical. The supplementary ledger and exact timing boundaries are
+in \cref{sec:a-supplement}.

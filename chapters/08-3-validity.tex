@@ -1,0 +1,44 @@
+Internal validity is strongest for same-process paired interventions and
+weakest where versions, trained states or interfaces change together.
+\Cref{tab:8-threats} identifies the possible reversal for each main
+interpretation. The main safeguards are the shared inputs, explicit score
+contracts, retained timing arrays and versioned ledgers of Chapter 3.
+Repeated calls estimate conditional timing variation; they do not estimate
+the distribution over independently retrained indexes. Five supplementary builds now quantify recall variation at fixed operating
+points, not the distribution of entire retrained frontiers. Precision
+sensitivity also changes add/query arithmetic under a common cached model.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{Threats that can reverse or narrow a conclusion.}
+\label{tab:8-threats}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Claim at risk & Alternative or reversal & Control and remaining test \\
+\midrule
+Execution gain & Changed scores, ties or index state explain an apparent
+speedup & Paired state and output checks; independent complete-score
+reference and arithmetic diagnostics remain pending \\
+Budget quality & Finite-pool sampling or drift hides damaging queries
+& Disjoint GT evaluation, full traces, subset-sum checks and FULL
+enumeration; future-query and arbitrary-subset invariance remain untested \\
+Competitive margin & Grid density, call tails or API overhead changes
+the ordering & Both recall estimators, retained slow calls and int8
+baseline; TF32/FP32 sensitivity; small-batch and cross-device comparisons unmeasured \\
+Capacity/build claim & Transient allocations exceed a resident sample
+& Phase bytes, repeated empty-cache builds and 20\,ms device peaks;
+sub-interval allocations and full retrained frontiers remain unmeasured \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+External validity is limited by one GPU, squared-L2 top-10 search, six
+prepared embedding datasets and E1's full-batch comparison. Query removal
+by position does not certify the absence of near-duplicate embeddings.
+The exports are not a relevance-labelled retrieval benchmark. Database
+updates, concurrent traffic, deployment latency objectives and changing
+query populations are untested. The index is resident in compressed form;
+the result supplies no billion-scale or multi-device capacity evidence.
+These limitations identify the experiments needed before transferring an
+observed operating region to a deployment.

@@ -1,0 +1,28 @@
+\chapter{工作负载级精排预算校准}
+\label{ch:refinement}
+
+第四、五章确立压缩索引及其 GPU 执行。本章回答 RQ3：一个工作负载需要多少精排工作，选择该预算能否收回校准成本。策略将无标签查询输出与较大预算参考比较，并跨批复用选定的乘数。本章分析接纳规则、有条件的选择定理、实验对照和摊销模型；第七章报告实测结果。
+
+\section{固定精排预算为何可能浪费}
+\label{sec:6-1}
+\input{zh/chapters/06-1-motivation}
+
+\section{无需 GT 的采样输出一致性}
+\label{sec:6-2}
+\input{zh/chapters/06-2-agreement}
+
+\section{预算搜索、嵌套性与并列安全}
+\label{sec:6-3}
+\input{zh/chapters/06-3-search}
+
+\section{预算基线及其回答的问题}
+\label{sec:6-4}
+\input{zh/chapters/06-4-controls}
+
+\section{留出风险、校准成本与回本}
+\label{sec:6-5}
+\input{zh/chapters/06-5-economics}
+
+\section{策略失效模式与适用范围}
+\label{sec:6-6}
+\input{zh/chapters/06-6-scope}

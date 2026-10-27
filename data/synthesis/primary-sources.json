@@ -1,0 +1,25 @@
+{
+  "checked_on": "2026-10-28",
+  "scope": "Primary-source metadata and the specific mechanism descriptions used in Chapters 1, 2 and 8; not a claim to have reproduced these systems.",
+  "sources": [
+    {"key":"jhq","local":"JHQ_GPU/p1530-han.pdf","claim":"Square orthogonal rotation; Cartesian Gaussian mid-quantile levels; primary-relative residual hierarchy"},
+    {"key":"adc_artifact","local":"JHQ_GPU/paper_adc2026/ADC/mainADC.tex","claim":"Title, named coauthors and shared artifacts; publication status not inferred"},
+    {"key":"mailman","url":"https://www.sciencedirect.com/science/article/pii/S0020019008002949","primary_pdf":"https://www.cs.yale.edu/publications/techreports/tr1402.pdf","claim":"Finite-alphabet matrix-vector reuse; author/year/DOI"},
+    {"key":"song","url":"https://www.cs.rit.edu/~wjz/papers/conference/2020-icde-song.pdf","claim":"Staged graph search to expose distance parallelism; authors and title"},
+    {"key":"cagra","url":"https://arxiv.org/abs/2308.15136","claim":"GPU graph construction and search; small/large batches; named authors"},
+    {"key":"bang","url":"https://arxiv.org/abs/2401.11324v4","claim":"GPU compressed vectors and host-resident graph; version 4"},
+    {"key":"gpu_topk","url":"https://sc23.supercomputing.org/proceedings/tech_paper/tech_paper_pages/pap294.html","claim":"AIR top-k and GridSelect; on-the-fly selection; author names"},
+    {"key":"opq","url":"https://openaccess.thecvf.com/content_cvpr_2013/html/Ge_Optimized_Product_Quantization_2013_CVPR_paper.html","claim":"Optimised decomposition/codebooks; CVPR 2013 metadata"},
+    {"key":"scann","url":"https://proceedings.mlr.press/v119/guo20h.html","claim":"Anisotropic loss for MIPS rather than plain reconstruction MSE; ICML 2020 metadata"},
+    {"key":"rabitq","url":"https://arxiv.org/abs/2405.12497","claim":"Randomised one-bit quantisation and estimator-specific error bound"},
+    {"key":"rabitq_multi","url":"https://arxiv.org/abs/2409.09913","claim":"Multi-bit accuracy/space extension; six named authors"},
+    {"key":"ivfrabitq","url":"https://www.vldb.org/pvldb/vol19/p3454-shi.pdf","claim":"GPU code construction and fused search; corrected Jifan Shi / James Xia names against page 1"},
+    {"key":"fastscan","url":"https://www.vldb.org/pvldb/vol9/p288-andre.pdf","claim":"Small CPU SIMD-register lookup tables"},
+    {"key":"quickeradc","url":"https://arxiv.org/abs/1812.09162","claim":"Irregular quantisers and split tables; CPU SIMD execution setting"}
+  ],
+  "mathematical_clarifications": [
+    "A fixed orthogonal rotation preserves empirical mean norm and does not imply Gaussian coordinate independence.",
+    "The source's Gaussian mid-quantile levels +/-0.67449 sigma differ from zero-threshold MSE-optimal conditional means +/-sqrt(2/pi) sigma.",
+    "The implementation's refined ranking score includes a query-only norm constant; this is checked against Chapter 5 and code, not copied from the simplified manuscript score."
+  ]
+}

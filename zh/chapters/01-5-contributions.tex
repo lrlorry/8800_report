@@ -1,0 +1,35 @@
+\Cref{tab:1-contributions}列出三项关联项目贡献及继承基础。
+核心是具体表示--执行--预算组合的适配与评价。
+JHQ、Cartesian量化、IVF、bitonic／radix、merge与CUDA Graph仍属于前人工作。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{技术贡献与证据边界。}
+\label{tab:1-contributions}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+ & 继承基础 & 项目贡献 & 证据 \\
+\midrule
+C1 & JHQ旋转、码本与层次 & GPU训练／编码、有界batch构建及列表有序packed表示
+& 17.78M向量搜索、常驻20.44\,GiB、重复train+add 10.54--10.65\,s、采样构建峰值22.58\,GiB \\
+C2 & Cartesian可加性与既有GPU原语 & 融合拆表评分、完整键分组保留／界、lane精排与调度
+& 两组LUT在22/24单元领先；batch 8调度$2.727\times$；明确正确性范围 \\
+C3 & 候选扩张和输出一致性思路 & 工作负载预算规则、有条件选择分析、留出对照与成本／风险评估
+& FULL的12/12单元相对损失达标；小样本揭示风险；四个单元直接测量校准复用 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+结果使主张具体，但不使之普遍。E1大batch的0.97附近插值比较中，JHQ在三个数据集
+领先，arXiv与RaBitQ接近平手，其他recall区间有对手领先。
+FULL最大实测留出损失相对最佳被测臂为0.0006，$S=128$一个单元有40/64次越阈。
+这些是经验质量结果；10个FULL单元一般嵌套仍有条件，但十二个FULL有限网格选择均与枚举一致（\cref{sec:7-budget-trace}）。
+OpenAI E1使用TF32 GEMM；独立FP32敏感性仍保留较小领先（\cref{sec:7-precision}）。
+
+本COMP8800项目由Rui Luo在Dr Mengxuan Zhang指导下呈现。
+ADC合著稿列Rui Luo与Mengxuan Zhang，复用JHQ-GPU实现及测量产物\cite{adc_artifact}。
+论文扩展正确性契约、新版实验分析与失败方案讨论，历史稿数字保留各自版本。
+技术贡献标签界定项目范围，不将合作研究归为单人独有。
+个人分工和AI帮助单列于声明及贡献记录。AI辅助实现、分析和写作需要明确披露并由
+作者复核，source ledger不能替代这一责任。

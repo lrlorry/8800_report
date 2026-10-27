@@ -1,12 +1,63 @@
-% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{Conclusion}
 \label{ch:conclusion}
-\draftnote{Answer the research questions using only results already established. Do not introduce new measurements or contributions.}
+JHQ-GPU demonstrates how a structured quantised hierarchy can be translated
+into a useful GPU search pipeline, and why its execution and refinement
+effort must be evaluated together. The four research questions now have
+concrete, bounded answers.
 
 \section{Answers to the Four Research Questions}
 \label{sec:9-1}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\paragraph{RQ1: Construction and capacity.}
+GPU training, batched encoding, IVF placement and packed arrays produce a
+searchable resident hierarchy. The largest tested database contains
+17.78 million vectors at 20.44\,GiB resident device memory; the corresponding
+supplementary train-plus-add range is 10.54--10.65\,s
+(\cref{sec:7-7}). Its sampled construction peak is 22.58\,GiB, while
+BGE reaches 26.08\,GiB at add entry. Repeated independent builds and
+startup intervals establish the measured capacity boundary more fully.
+
+\paragraph{RQ2: Correct and efficient execution.}
+The inherited Cartesian code admits exact real-arithmetic table
+factorisation, and complete-key retention/merge and shared-bound arguments
+explain the grouped path's selection conditions. Two-group tables lead in
+22/24 measured cells. Integrated scheduling achieves $2.727\times$
+geometric-mean throughput at batch 8 but only $1.015\times$ at batch 1,000
+against the lane-refinement reference (\cref{sec:7-3,sec:7-6}). Thus useful
+parallelism depends on batch and work distribution. Finite output checks
+complement the proofs; arithmetic, tie and memory assumptions remain explicit.
+
+\paragraph{RQ3: Refinement budget and quality.}
+Unlabelled reference agreement selects workload-level survivor effort
+without a learned predictor. FULL calibration meets the tested relative
+recall-loss target in 12/12 cells, with maximum observed loss 0.0006.
+At $S=128$, one cell instead has 40/64 threshold crossings
+(\cref{sec:7-5}). The reference-based analysis explains conditional budget
+search, not a population GT guarantee. Ten FULL cells still lack a
+general complete-key nestedness guarantee; nevertheless all twelve FULL
+finite-grid choices match enumeration. Direct calibration-plus-reuse
+measurements on four cells support savings on suitable workloads and
+retain the quality/time tradeoff on difficult ones.
+
+\paragraph{RQ4: Competitive operating regions.}
+At recall 0.97, the interpolated full-batch E1 comparison places JHQ first
+in three datasets and near parity with IVF-RaBitQ on arXiv
+(\cref{sec:7-2}). Vogue's lead depends on the grouped path. The OpenAI E1 runs use TF32;
+a same-session FP32 sensitivity still exceeds archived RaBitQ by
+7.9--8.6\% and CAGRA fp32 by $1.63$--$1.68\times$ at that target. CAGRA int8
+wins in lower-recall regions, and IVF-RaBitQ wins at some higher targets.
+The result supports a useful operating region on the measured device and
+grid, alongside separately reported memory use. It supplies no cross-system
+small-batch or cross-device ranking.
 
 \section{Closing Principle and Outlook}
 \label{sec:9-2}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+The resulting principle is to co-evaluate representation, execution and
+effort under a stated quality objective. A smaller table can add work;
+more groups can duplicate it; less refinement can sacrifice the neighbours
+that matter. The negative designs show why mathematical reuse and lower
+reconstruction error need not improve the search frontier. The next step
+is to test whether reusable calibration information can support valid risk
+control at lower total cost, and whether explicit residual placement can
+extend capacity without unacceptable tail latency (\cref{sec:8-4}). These
+are hypotheses grounded in the measured limits, rather than capabilities
+already supplied by the present system.

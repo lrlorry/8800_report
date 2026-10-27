@@ -29,3 +29,44 @@
 残差评分只对有效保留候选读取残差码，进行 $O(cd)$ 坐标工作，并向最终选择器提供 $\refineddist$（\Cref{sec:5-6}）。这一路径使用压缩重建替代搜索时的原始向量读取。实现中的最终 repeated-minimum 选择器为每个输出扫描 $c$ 个槽位，共输出 $k$ 个，另有 block 归约工作。
 
 确定性排序 key 为各类分数附加并列规则：中心选择使用列表 ID，完整 key 主码选择使用物理行位置，最终选择使用数据库 ID。旧的查询级主码路径具有不同的截断并列规则，见\Cref{sec:5-4,sec:5-5}的限定。因此，分数保持、保留集合一致、有序输出相等及原空间 recall 是不同主张。第七章在各自边界上检查它们，而不把单个 recall 不变当作整条流水线的证明。
+
+
+\begin{table}[tbp]
+\centering
+\caption{逐阶段契约。$c_v=\min(c,n_c)$ 为有效主码保留数。“精确”针对约定的计算分数；路由与量化重建决定原空间近似性。}
+\label{tab:5-selection-contracts}
+\label{tab:5-query-stages}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.1cm}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+阶段 & 输入 $\to$ 输出 & 读取数据 & 主要工作 & 排序／精确性 \\
+\midrule
+变换 & $q\to q'$ & 查询；变换 & 应用 $\Pi$ & 变换（精度见\cref{sec:7-precision}） \\
+探针 & $n_{\rm list}\to n_{\rm probe}$ 个列表 & FP32 中心；列表长度 & 评分；radix；名次计数 & $(s_i,i)$；精确探针选择 \\
+LUT & $q'\to$ 表 & 主码本 & $MD_s2^{8/\glut}$ 坐标项 & 实数分解精确；存在 FP32 舍入 \\
+主码，$\gscan=0$ & $n_c\to c_v$ & 打包主码；LUT & $O(n_cM)$ 评分；压缩 & 仅按距离；分数选择精确，截断并列任取 \\
+主码，$\gscan\geq1$ & $n_c\to c_v$ & 相同主码表示 & 评分；压缩；合并 & $(\primarydist,p)$；在明确前提下精确 \\
+精排 & $c_v\to c_v$ 个分数 & 残差码；修正项 & $O(c_vd)$ & 计算所得 $\refineddist$；FP32 结合顺序依 lane 而变 \\
+最终选择 & $c_v\to k$ & 精排分数；ID & $O(kc)$ 槽位扫描 & $(\refineddist,\mathrm{ID})$；有 $k$ 个有限有效候选时精确 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{库默认值与被测流水线配置。环境变量或 setter 可以覆盖默认值。策略参数 $-1$ 请求调度，并不强制执行分组 kernel。}
+\label{tab:5-evaluation-settings}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+控制项 & 未配置的库 & E1／预算流水线 \\
+\midrule
+精排 lane & 0：标量逐字节路径 & 16：协作 word 路径 \\
+扫描策略 & 0：查询级 & $-1$：调度器选择 0/2/4/8 \\
+共享界 & 开启，$\gscan=0$ 时不使用 & 开启，仅在 $\gscan>1$ 时使用 \\
+调度统计 & 不自动校准 & 512 个数据库伪查询 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\Cref{tab:5-query-stages,tab:5-evaluation-settings}明确阶段边界和被测配置。预算 harness 显式设置 16 lane、调度扫描及共享界；仅链接新版本库仍会保留标量／查询级默认值。组件消融会按各自协议覆盖相应开关。原始元数据和\Cref{tab:a-components}中的机制／版本对应表标识这些变体。

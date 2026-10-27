@@ -65,3 +65,54 @@ primary path has a different cutoff-tie rule, qualified in
 agreement, ordered-output equality and raw-space recall are separate
 claims. Chapter 7 tests them at their respective boundaries rather than
 treating a single unchanged recall value as proof of the whole pipeline.
+
+
+\begin{table}[tbp]
+\centering
+\caption{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
+survivors. Exactness refers to the stated computed scores; routing and
+quantised reconstruction determine raw-space approximation.}
+\label{tab:5-selection-contracts}
+\label{tab:5-query-stages}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.1cm}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Stage & Input $\to$ output & Data read & Main work & Order / exactness \\
+\midrule
+Transform & $q\to q'$ & Query; transform & Apply $\Pi$ & Transform (precision in \cref{sec:7-precision}) \\
+Probe & $n_{\rm list}\to n_{\rm probe}$ lists & FP32 centroids; list lengths & Score; radix; rank count & $(s_i,i)$; exact probe selection \\
+LUT & $q'\to$ tables & Primary codebook & $MD_s2^{8/\glut}$ terms & Real-arithmetic factorisation; FP32 rounding \\
+Primary, $\gscan=0$ & $n_c\to c_v$ & Packed primary codes; LUT & $O(n_cM)$ scoring; compaction & Exact distance-order selection; arbitrary cutoff ties \\
+Primary, $\gscan\geq1$ & $n_c\to c_v$ & Same primary representation & Score; compact; merge & $(\primarydist,p)$; exact under stated premises \\
+Refine & $c_v\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed $\refineddist$; lane-dependent FP32 association \\
+Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\mathrm{ID})$; exact with $k$ finite valid entries \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering
+\caption{Library defaults and measured pipeline settings. Environment
+variables or setters can override library defaults. The policy parameter
+$-1$ requests scheduling; it does not force a grouped kernel.}
+\label{tab:5-evaluation-settings}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Control & Unconfigured library & E1 / budget pipeline \\
+\midrule
+Refinement lanes & 0: scalar byte path & 16: cooperative word path \\
+Scan policy & 0: query-centric & $-1$: scheduler chooses 0/2/4/8 \\
+Shared bound & Enabled, inactive at $\gscan=0$ & Enabled, used only when $\gscan>1$ \\
+Schedule statistic & Not calibrated automatically & 512 database pseudoqueries \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\Cref{tab:5-query-stages,tab:5-evaluation-settings} specify the stage
+boundaries and measured configuration. In particular, the budget harness
+explicitly sets 16 lanes, scheduled scans and bound sharing; merely
+linking the newest library retains the scalar/query-centric defaults.
+Component ablations override the controls stated in their protocols.
+Raw run metadata and the mechanism-to-version map in
+\Cref{tab:a-components} identify those variants.

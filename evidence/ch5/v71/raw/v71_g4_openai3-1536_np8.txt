@@ -1,0 +1,14 @@
+  [mmap loader] reusing cached /root/autodl-tmp/openai3-1536/base.fvecs.raw_f32
+train 73.4 ms
+add 457.2 ms
+schedule: per-query candidate count CV 0.207 on 512 pseudo-queries
+
+=== alpha=100 ck=1000  b=1000: 1 batches x 24 reps = 24000 queries per measurement ===
+  scheduled G for b=1000: 0
+  G=-1 vs G=0: probes 1000/1000  primary top-ck same 1000, tie-only 0, NON-TIE 0, max |dprimary| 0.00e+00  final order/set/bits 1000/1000/1000  max rel 0.00e+00
+  G      recall    lat med    lat p95     QPS med     QPS min     QPS max  used MiB
+  0      0.7295    3.355 ms    3.388 ms      297882      292973      298649      2341
+  -1     0.7295    3.350 ms    3.382 ms      296890      293147      298760      2437
+
+wrote /root/autodl-tmp/jhq_pipeline_wt/experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np8.json
+=== BP_OK ===

@@ -8,7 +8,7 @@
 \node[box] (score) at (0,0) {Read primary code; compute full $\primarydist$\\
   Form $K=(\primarydist,p)$};
 \node[box,fill=ThesisNavy!5] (admit) at (0,-1.8)
-  {Admission: $K\prec\lambda_g$ and $K\preceq\tau_{\rm seen}$};
+  {Admission: $K\prec\lambda_j$ and $K\preceq\tau_{\rm seen}$};
 \node[box] (compact) at (0,-3.8) {Append admitted keys\\
   Compact when necessary\\Keep at most $c$};
 \node[box] (trim) at (0,-5.9) {Final compaction and prefix trim\\
@@ -16,13 +16,15 @@
 \node[side] (shared) at (6.3,-.1) {Per-query shared word $Q$\\
   Encodes bound $\tau$\\Initially all ones\\$\tau\succeq K_{(c)}$};
 \node[side] (publish) at (6.3,-3.8) {Only with $c$ valid witnesses:\\
-  $\operatorname{atomicMin}(Q,E(\tau_g))$};
+  $\operatorname{atomicMin}(Q,\kappa(\tau_j))$};
 \draw[arr] (score) -- (admit);
 \draw[arr] (admit) -- node[right,font=\footnotesize] {yes} (compact);
 \draw[arr] (compact) -- (trim);
 \draw[arr] (compact.east) -- (publish.west);
 \draw[arr] (publish.north) -- (shared.south);
 \draw[arr,dashed] (shared.west) -- ++(-.35,0) |- (admit.east);
-\node[align=center,font=\footnotesize,text width=4.2cm] at (6.3,-5.8)
-  {Rejected keys skip admission,\\not primary scoring.};
+\node[side,minimum height=1.1cm] (discard) at (6.3,-6)
+  {Discard candidate\\Scoring complete};
+\draw[arr] (admit.west) -- node[above,font=\footnotesize] {no} ++(-.5,0) |- ([yshift=-.9cm]trim.south)
+  -| (discard.south);
 \end{tikzpicture}

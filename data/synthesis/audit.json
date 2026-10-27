@@ -1,0 +1,479 @@
+{
+  "scope": "Requested Ch8/Ch2/Ch1/Ch9/Abstract: offline synthesis, source review and compilation; no GPU run.",
+  "checked_chapter_files": [
+    "chapters/01-1-context.tex",
+    "chapters/01-2-scope.tex",
+    "chapters/01-3-challenges.tex",
+    "chapters/01-4-questions.tex",
+    "chapters/01-5-contributions.tex",
+    "chapters/01-introduction.tex",
+    "chapters/02-1-objective.tex",
+    "chapters/02-2-hierarchy.tex",
+    "chapters/02-3-jhq.tex",
+    "chapters/02-4-gpu.tex",
+    "chapters/02-5-graphs.tex",
+    "chapters/02-6-quantised.tex",
+    "chapters/02-7-gap.tex",
+    "chapters/02-background.tex",
+    "chapters/08-1-insights.tex",
+    "chapters/08-2-negative.tex",
+    "chapters/08-3-validity.tex",
+    "chapters/08-4-directions.tex",
+    "chapters/08-5-deployment.tex",
+    "chapters/08-discussion.tex",
+    "chapters/09-conclusion.tex"
+  ],
+  "prose_words": {
+    "01": 1430,
+    "02": 2419,
+    "08": 2023,
+    "09": 458,
+    "abstract": 311
+  },
+  "word_count_scope": "prose and captions; math/table bodies excluded; not official course count",
+  "quoted_results": {
+    "capacity_vectors": 17776615,
+    "resident_gib": 20.442578125,
+    "original_cold_train_add_s": 10.4028,
+    "repeated_train_add_s": [
+      10.652899999999999,
+      10.5519,
+      10.5432
+    ],
+    "sampled_build_peak_gib": 22.580078125,
+    "supplementary_checks": {
+      "sampled_curves": 2304,
+      "sampled_nonmonotone": 0,
+      "full_enum_agree": 12,
+      "full_subset_curve_mismatches": 0,
+      "compared_grid_counts": 18432
+    },
+    "fp32_sensitivity": {
+      "openai3-1536": {
+        "configurations": 37,
+        "geo_ratio": 0.9528610146353474,
+        "ratio_range": [
+          0.8924370362131714,
+          0.991421577126055
+        ],
+        "recall_gain": [
+          0.00029999999999996696,
+          0.000500000000000056
+        ],
+        "at_097": {
+          "v69": 125449.64238709422,
+          "v72": 121779.73920826655
+        },
+        "fp32_over_rabitq": 1.0856893206600187,
+        "fp32_over_cagra": 1.6792549818362983
+      },
+      "openai3-3072": {
+        "configurations": 39,
+        "geo_ratio": 0.950995795678623,
+        "ratio_range": [
+          0.8878860180110839,
+          0.9859556006668005
+        ],
+        "recall_gain": [
+          0.0,
+          0.00029999999999996696
+        ],
+        "at_097": {
+          "v69": 53800.08930260706,
+          "v72": 52130.192878126676
+        },
+        "fp32_over_rabitq": 1.0791528744181482,
+        "fp32_over_cagra": 1.6289006240582002
+      }
+    },
+    "lut_wins": 22,
+    "lut_cells": 24,
+    "batch8_gain": 2.7267722071903377,
+    "batch1000_gain": 1.0148321978693045,
+    "full_quality_passes": 12,
+    "full_max_loss": 0.0005999999999999339,
+    "worst_S128_crossings": 40,
+    "full_distance_only_cells": 10
+  },
+  "gaussian_level_check": {
+    "quantile_level": 0.6744897501960817,
+    "conditional_mean_level": 0.7978845608028654,
+    "quantile_mse": 0.3786065069171025,
+    "optimal_zero_threshold_mse": 0.3633802276324186,
+    "scope": "analytic standard-normal model, not a dataset or GPU measurement"
+  },
+  "cited_keys": [
+    "adc_artifact",
+    "bang",
+    "cagra",
+    "cuda_programming_guide",
+    "cuvs_refinement",
+    "darth",
+    "faiss_autotune",
+    "faiss_refine",
+    "fastscan",
+    "gpu_topk",
+    "ivfrabitq",
+    "jhq",
+    "johnson_gpu",
+    "li_termination",
+    "mailman",
+    "opq",
+    "pq",
+    "quickeradc",
+    "rabitq",
+    "rabitq_multi",
+    "scann",
+    "song"
+  ],
+  "bilingual_structure_and_equations": true,
+  "author_attestation": "personal task allocation, signed declaration and final human adoption remain to be confirmed",
+  "negative_evidence_scope": [
+    "Mailman end-to-end replacement is modelled only",
+    "Rank-optimal main study is offline; median follow-up alone has GPU search timing",
+    "Median codes, levels and residuals change together; not a threshold-only ablation",
+    "Old sequential replay is not the v69 six-dataset protocol"
+  ],
+  "inputs": [
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-1-context.tex",
+      "sha256": "239b02d7b0060c904b3a9194bb0c94af54430af48eb35d2ba6c42fc61aeedaf4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-1-context.tex",
+      "sha256": "1fad6266421bf437fb071002407d99191396900b4fa6d6b1c44833924f5b75d1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-2-scope.tex",
+      "sha256": "27d6a7ebeb10324d7ef0121775b750e93c6c3b265d8bf68a84f22dae9f7adf8c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-2-scope.tex",
+      "sha256": "65f97e02d3927145ab38d954ff5ba6b704a0470349da017c57c83813b369a143"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-3-challenges.tex",
+      "sha256": "cefd2380ab2e57c077669bb8d690ae8ec3ccc817a78c718b16831b15d1d294aa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-3-challenges.tex",
+      "sha256": "13820db5d4a6e36a45d2592c751d90259243dd0a7457c773c5f31a84573ddbd4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-4-questions.tex",
+      "sha256": "a043d2f4f43cd0f7a29f28ab12d763785d3d0fef6916180ee7d56e73a2491f25"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-4-questions.tex",
+      "sha256": "d2069a961c0f17dc815110ae6a2356223b7d1ae7914e135ff6f768c96df1e509"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-5-contributions.tex",
+      "sha256": "c4252190e746d347438927f049e01366244b93911f73291befabd09ffc49c520"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-5-contributions.tex",
+      "sha256": "951bc3a56ebd20c5a25789ca326b8048baa58537b793386bc3c08a4fc6bd78ac"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-introduction.tex",
+      "sha256": "9553e77c7d077f8c528adea4413fae8d31bf61f777a7f78ea2c83aebe9da738c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-introduction.tex",
+      "sha256": "21422d078cebaaf34a344f872b2bd2c61ca30a3f65a438dfeed06b6e89098d39"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-1-objective.tex",
+      "sha256": "d74393329775084ec0256911f47d6d63bcc4ae7ab6559f5a1bd80b9fc20a73bd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-1-objective.tex",
+      "sha256": "1f50afadfb38aa9d5219dad5578226485d69da6cd0d6cc30dc51b30b61615805"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-2-hierarchy.tex",
+      "sha256": "a8b714f642241f6d85005b326f8dca464c720021868a6a1cc5714fc98d61ce7a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-2-hierarchy.tex",
+      "sha256": "fe7d90f6df3d3da36614d895f6d3bfe2eca04bc59ef853c2e474f7ddf784a727"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-3-jhq.tex",
+      "sha256": "70487af553f0f1c8bda00c13e0f2db44f4f405a5da98b064bf7dfff77144ab68"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-3-jhq.tex",
+      "sha256": "3adf63742bcf0c14b6d8e9a91a06e8c5f835f46adde899a60bf78c314ccca00e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-4-gpu.tex",
+      "sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-4-gpu.tex",
+      "sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-5-graphs.tex",
+      "sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-5-graphs.tex",
+      "sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-6-quantised.tex",
+      "sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-6-quantised.tex",
+      "sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-7-gap.tex",
+      "sha256": "55c7832abfaa91726ec5a66ee345153fc4a17ec28c12feae9eb9a8d03d454a37"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-7-gap.tex",
+      "sha256": "ada8ed456e72271a4900e379c8636370d4edd4b7eddc1cc3c714833e79390379"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-background.tex",
+      "sha256": "1565808b5066866b1a73236e883d8436860eac9df4419d44d5e353cce63f96d0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-background.tex",
+      "sha256": "97f2e13b1581824537fd2198684060d86973ba1355207f354dcd7c00fccf9188"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-1-insights.tex",
+      "sha256": "d2ae0d95426df91504f302727e7d1568b0d491aa83f34cd318cf6c7176fcfae6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-1-insights.tex",
+      "sha256": "75a679b5e0c763a840bcc9c7f74f54e70eaeff859f63fcf4e4c6436c3f3103dc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "2452382afc52a5d30cf5941c45efecaf9eab9e04384554893ee18d4163e66d02"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "ebe8e5e751733ec2c14b9b73594bdb49938de869b97b731cf31fe450e289402a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "eba2f7cf6845a08a65793852615698eda1547291310ef76fdf1ea539bc5e70d2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "bac2efd71ede9a62a68216c1c71596a90da61b7627b072ba6a5df48cf4b47515"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-4-directions.tex",
+      "sha256": "bde5ca43042620cbb9cbb6e966f814606d4d3b2cf4ea6152f5516d549b96d97f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-4-directions.tex",
+      "sha256": "83106d1dc10c37db4cd4be8558ab0479382f15eaead3547e5d1c53c598d8e833"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "7682ab83ab993e64a9d6365aeedad3ddc4dc9d0b66a032f7a3e835d26e630e28"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "8d6b332a827f8731057b61bbb5c323d9ac99a4fd046d66aa05305f17ae5ed716"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-discussion.tex",
+      "sha256": "4d9d0f9e4d7dff23aaa171b33720633fb669023a6f52048a0c7ff811a9496cea"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-discussion.tex",
+      "sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/09-conclusion.tex",
+      "sha256": "e5211b88227072c000023e73c2a7fc026b62409f1568e474beacf74b3a8c1133"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/09-conclusion.tex",
+      "sha256": "d3913b17c59e607ef9518867b259e036a66caad8307bc49296c96236c1e68c2a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/abstract.tex",
+      "sha256": "72daa4f7e774289fca9f0c428ad15ccc768229ec5dcd28bb7ce8feafb959ed07"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/abstract.tex",
+      "sha256": "319642f22abac3bdbaf416446e445bdca569c0e9b5646d96bc64de8706ea93dc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch7/audit.json",
+      "sha256": "cf9cd5124efce4d51956805955391edf1ddd78c3632ff2c8768d26ba5f1c0680"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch6/audit.json",
+      "sha256": "7ad32194b6c1379e131d3a2e507c92f2fc33f0e7ba2f6c1d99edfd14b4c792cf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch3/audit.json",
+      "sha256": "c0c1f3263ae656a63217aae704a3b33b3cec2c0f930471312d74d454dfeeb55e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch8/audit.json",
+      "sha256": "c590e41d53fddda843401a418913929cb0bc07244084225141d230734b07967d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/supplement/audit.json",
+      "sha256": "1f341cf0458d8a0eeced6325470d45f484cda5fa4233b8402fced6a351a1a1f5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/synthesis/primary-sources.json",
+      "sha256": "ca2c69d9bd6bad275fe2e58cc5ad58d1a966d1242503980d099e3d41eaad2f72"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/synthesis-iteration.txt",
+      "sha256": "baa41edf9826856f036a93d94d2160dea2a19c0e816401795c0e59fa7652407b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/author-confirmation.txt",
+      "sha256": "20b9d073de32750c02c8474e7d70c0838e74b27249ca4eac20cce80332a43cce"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/c-author-tools.tex",
+      "sha256": "80fe4511887521d082e28bf1546951e8680e6a1effc76b87ff8b628b942ac872"
+    },
+    {
+      "repository": "8800_report",
+      "path": "main.tex",
+      "sha256": "f0abce2340318f02fcfc1a0129f842b70fdffa8b8201366e6c9f1209e89e5f7c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "main-zh.tex",
+      "sha256": "c075bc516292f4fcbf1876697e6d87a9945ec170aa18f52bf6edb6f38afce1d8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_synthesis.py",
+      "sha256": "b897ab371116e6e79fcd2e83d64840d7c7ca38797d2b6e9ef8a34a6f4249409f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch1/challenges.tex",
+      "sha256": "e88609d836bf21986c4dae7fe8296323134b10d84d685a71b7f9dc426efe7144"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch2/candidate-cascade.tex",
+      "sha256": "48526c21c9b8c37a1bbebdd38316cc5faf2909b70f75e3e2c7bb7324f1a2ae81"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "p1530-han.pdf",
+      "sha256": "5157fdf55d861ceb84747bc06aeb3342929935d351488a14e4951f0299d46782"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "cpu/pq_codebook.cpp",
+      "sha256": "a44aca621585ce8757f5078f8bfcdf9962bcb9729939602090634c518eb702c4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/mainADC.tex",
+      "sha256": "77bccb0f6c822365f29e30094a19455ac5f9e18396de0928705f9124ac9c429a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/Preliminary_ADC.tex",
+      "sha256": "4f95cd4ddebd0ba8e497537cb1d93a1a782de21e3738660f8b9661dc986d53c5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/MethodPart1_ADC.tex",
+      "sha256": "faba3cd2b321b1b7edf968f4231619a497ee9cd9b75c4088d4ca12084fb43122"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/MethodPart2_ADC.tex",
+      "sha256": "6d22a21fd2e495dfc2d4113dc80e8cf8f844e16de5bf6b6826c6d0fb415ab422"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "paper_adc2026/ADC/Experiment_ADC.tex",
+      "sha256": "69c300671bc2229c3052e0f959228be884c8789bd8a533524f9f40bb8ee765ae"
+    },
+    {
+      "repository": "user_local_poster",
+      "path": "Documents/26 s1/COMP8800/my poster/poster.pdf",
+      "sha256": "786f67e418c8707294da12f42efc671e961ff8446d34a2bda962fd2d2ef98636"
+    }
+  ]
+}

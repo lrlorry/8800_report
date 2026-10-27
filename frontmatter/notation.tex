@@ -6,12 +6,20 @@ Symbol & Meaning \\
 \midrule
 $N,d$ & Number of database vectors and original dimension \\
 $M,D_s$ & Number of primary subspaces and dimensions per subspace \\
+$\Pi$ & Square orthogonal transform; $q'=\Pi q$ \\
+$B,B_r$ & Primary bits per subspace and residual bits per coordinate \\
+$\rho(p),o_\ell$ & Input ID at physical position $p$, and start of IVF list $\ell$ \\
 $k$ & Number of returned neighbours \\
 $n_c,c$ & Routed candidates and primary survivors receiving refinement \\
 $\alpha$ & Refinement multiplier, with $c=\max\{k,\lceil\alpha k\rceil\}$ \\
 $S,\epsilon$ & Calibration sample size and allowed disagreeing result slots \\
+$C_\alpha,\mathcal R_\alpha$ & Valid primary survivor set and returned ID set at budget $\alpha$ \\
+$\alpha_{\rm ref},B_{\rm reuse}$ & Reference refinement budget and number of subsequent reuse batches \\
 $\glut$ & Number of groups in a factorised lookup table \\
 $\gscan$ & Number of scan groups per query \\
+$C_{\rm buf},T_{\rm blk}$ & Scan buffer capacity and threads per block \\
+$n_{\rm LUT}(\glut)$ & Number of LUT entries per primary subspace \\
+$\kappa(D,p)$ & Packed complete-key encoding for bound publication \\
 $\lrefine$ & Number of cooperating lanes per refined candidate \\
 $\rawdist$ & Squared distance between original vectors \\
 $\primarydist$ & Distance under the primary reconstruction \\

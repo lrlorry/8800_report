@@ -1,0 +1,42 @@
+\Cref{tab:3-design}明确比较单位，以及哪些观察会挑战各项研究主张。
+一个\emph{实验单元（cell）}固定数据集、索引配置和工作负载设置；
+各实验臂是在该单元内替换的实现或预算。配对执行测量固定索引状态、查询、
+probe数、精排预算和打分表示，除非这些正是指定的干预变量。
+配对比值为$Q_{\rm treatment}/Q_{\rm control}$；几何平均对指定单元的
+乘性比值作汇总，各单元等权。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{把研究问题转化为可检验的比较。容量观察与配对执行干预需要不同对照。}
+\label{tab:3-design}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}p{.11\linewidth}XXX@{}}
+\toprule
+问题 & 干预／比较 & 固定或单独核算的条件 & 指标与反证 \\
+\midrule
+RQ1：构建与容量 & GPU构建；缓存与冷构建生命周期；压缩与原始存储
+& $N,d$、表示、路由、构建计时边界
+& train/add时间与常驻字节；构建失败或模型与分配差额限定可行性 \\
+RQ2：执行 & LUT分组、word访问、精排lane、分组扫描、共享界与probe选择
+& 配对状态、工作负载、分数及参考输出语义
+& 墙钟QPS、阶段时间和输出检查；变慢或非并列差异挑战机制 \\
+RQ3：预算 & 抽样／全池规则，对照固定64、100、200、枚举与GT oracle
+& 同一索引与路由；校准和留出查询位置互斥
+& 留出recall损失、选中臂QPS与校准成本；越阈挑战可靠性 \\
+RQ4：工作区间 & 独立调优的JHQ、CAGRA、IVF-PQ和IVF-RaBitQ
+& 导出向量、GT、$k$、设备和主机到主机边界；显存另报
+& 同recall QPS与覆盖；其他recall处更强的竞争者挑战宽泛优势 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+研究设计区分机制的实现效果与其原因解释。配对word访问消融可以确定该访问
+路径在所测流水线内的吞吐变化；把变化归因于cache miss或occupancy，
+还需要硬件计数器。跨系统前沿则比较表示、算法与实现的整体选择，无法单独
+识别某个内核的贡献。\Cref{sec:7-6}提供集成调度比较，避免把不同基线上的
+组件提速比直接相乘。
+
+这些研究问题组织的是迭代开发记录，并非预注册方案：E1发现recall覆盖不足后
+扩展了网格，工作负载精排需求的解释也来自预算扫描。低recall失利、高recall
+反转和失败方案同样进入评估。与量化参考的输出一致性、相对原始向量GT的recall，
+按定义就是不同的量；预算规则使用前者，留出评估检验后者。

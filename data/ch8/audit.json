@@ -1,0 +1,337 @@
+{
+  "scope": "Archived GPU scorer, offline representation and separate GPU median follow-up; no new GPU run.",
+  "mailman": [
+    {
+      "dataset": "vogue-768",
+      "batch": 8,
+      "best": "H2_r6",
+      "baseline_us": 23.52,
+      "alternative_us": 51.232,
+      "speed_ratio": 0.4590880699562773,
+      "optimistic_model": 0.7959186025885437,
+      "end_to_end_measured": false
+    },
+    {
+      "dataset": "vogue-768",
+      "batch": 1000,
+      "best": "H2_r4",
+      "baseline_us": 2187.968,
+      "alternative_us": 5116.128,
+      "speed_ratio": 0.4276609185696683,
+      "optimistic_model": 0.5746649055620486,
+      "end_to_end_measured": false
+    },
+    {
+      "dataset": "arxiv-768",
+      "batch": 8,
+      "best": "H2_r4",
+      "baseline_us": 22.56,
+      "alternative_us": 38.816,
+      "speed_ratio": 0.5812036273701565,
+      "optimistic_model": 0.9244671311472829,
+      "end_to_end_measured": false
+    },
+    {
+      "dataset": "arxiv-768",
+      "batch": 1000,
+      "best": "H2_r4",
+      "baseline_us": 2033.024,
+      "alternative_us": 4233.536,
+      "speed_ratio": 0.48021889975661003,
+      "optimistic_model": 0.6561393241907921,
+      "end_to_end_measured": false
+    },
+    {
+      "dataset": "openai3-3072",
+      "batch": 8,
+      "best": "H2_r4",
+      "baseline_us": 27.744,
+      "alternative_us": 148.16,
+      "speed_ratio": 0.18725701943844492,
+      "optimistic_model": 0.5412272980160566,
+      "end_to_end_measured": false
+    },
+    {
+      "dataset": "openai3-3072",
+      "batch": 1000,
+      "best": "H2_r4",
+      "baseline_us": 3703.392,
+      "alternative_us": 7130.624,
+      "speed_ratio": 0.5193643641846772,
+      "optimistic_model": 0.6485819899277421,
+      "end_to_end_measured": false
+    }
+  ],
+  "rank_offline": [
+    {
+      "dataset": "vogue-768",
+      "n_test": 400,
+      "target": 0.97375,
+      "original_T": 640,
+      "median_T": null
+    },
+    {
+      "dataset": "arxiv-768",
+      "n_test": 400,
+      "target": 0.97775,
+      "original_T": 875,
+      "median_T": 375
+    },
+    {
+      "dataset": "openai3-3072",
+      "n_test": 400,
+      "target": 0.93525,
+      "original_T": 35,
+      "median_T": null
+    }
+  ],
+  "median_gpu_followup": [
+    {
+      "dataset": "vogue-768",
+      "batch": 8,
+      "target": 0.9644,
+      "control_qps": 19232.8,
+      "alternative_qps": null,
+      "ratio": null,
+      "alternative_max_recall": 0.963
+    },
+    {
+      "dataset": "vogue-768",
+      "batch": 1000,
+      "target": 0.9644,
+      "control_qps": 238912.5,
+      "alternative_qps": null,
+      "ratio": null,
+      "alternative_max_recall": 0.963
+    },
+    {
+      "dataset": "arxiv-768",
+      "batch": 8,
+      "target": 0.9766,
+      "control_qps": 16690.3,
+      "alternative_qps": 23398.5,
+      "ratio": 1.4019220744983614,
+      "alternative_max_recall": 0.9799
+    },
+    {
+      "dataset": "arxiv-768",
+      "batch": 1000,
+      "target": 0.9766,
+      "control_qps": 222054.9,
+      "alternative_qps": 268160.7,
+      "ratio": 1.2076324368433213,
+      "alternative_max_recall": 0.9799
+    },
+    {
+      "dataset": "openai3-3072",
+      "batch": 8,
+      "target": 0.9267,
+      "control_qps": 18462.1,
+      "alternative_qps": 18456.2,
+      "ratio": 0.9996804263870308,
+      "alternative_max_recall": 0.9268
+    },
+    {
+      "dataset": "openai3-3072",
+      "batch": 1000,
+      "target": 0.9267,
+      "control_qps": 144827.6,
+      "alternative_qps": 144816.2,
+      "ratio": 0.9999212857217824,
+      "alternative_max_recall": 0.9268
+    }
+  ],
+  "caveats": [
+    "Mailman end-to-end replacement is modelled only",
+    "Rank-optimal main study is offline; median follow-up alone has GPU search timing",
+    "Median codes, levels and residuals change together; not a threshold-only ablation",
+    "Old sequential replay is not the v69 six-dataset protocol"
+  ],
+  "inputs": [
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/summary.json",
+      "sha256": "4320f1e728258c37ccd052fdb144da5f831cd2d7bdd6e8c7529b607dd4cae9a1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/rank_optimal_quantization/eval_final_test.json",
+      "sha256": "4151c927822eaef2a709d8387b6d92cda0e62ee7b8bdf1a265c41af0e1c1cc6b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/rank_optimal_quantization/perquery_final_test.json",
+      "sha256": "54833e609f38ce6b2b070ec04615a37185e1a453b67c5ff08707c256a3dfab45"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/bench_vogue-768_np128_a64.json",
+      "sha256": "821cae04195a1aa044e43d7ff2dd7ca23c37417f7d43933328e83a93d283a3bb"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/bench_vogue-768_np128_a64_profile.json",
+      "sha256": "9cfb65f020521253725f469f994e6d45b957c41c78a7990d0821e19a5266e94c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/practical_opt/median_results/vogue-768_np128.json",
+      "sha256": "66963c0adb76414adeb34214250d6db594ae151dcca479868793ddd1e4422615"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/bench_arxiv-768_np128_a100.json",
+      "sha256": "09e7a49050f85ca5d98fec54a7ad4ee14ced22971608c02786b128aad230a49a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/bench_arxiv-768_np128_a100_profile.json",
+      "sha256": "00af56b4e67570e64801e785d89c6a4a895047bbba58827be75207b8ea0da27d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/practical_opt/median_results/arxiv-768_np128.json",
+      "sha256": "da141344808671fea95baa90ad96f8f7a53cc37769e58744a13299cdfbb408d9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/bench_openai3-3072_np128_a4.json",
+      "sha256": "fd6274d83fcffda2c7be20b783ded4e4d11b82b7b765992224b28c8d9df44550"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/results/bench_openai3-3072_np128_a4_profile.json",
+      "sha256": "cba4263978a85e047bc2594852846415c1b512273594a166690d146eca476246"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/practical_opt/median_results/openai3-3072_np128.json",
+      "sha256": "5bd2dab0308c3e05fe520da59ba5e48480f65d36658cea3e4a00504efcc0ba7f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/FINAL_REPORT_CN.md",
+      "sha256": "0b0e03799eea43f82cc0f3f43e78eeef16bc6c301503b99982049e32ecdb7391"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/mailman_bench.cu",
+      "sha256": "b3dc2c0e255fa7957a5cf382f2043f800d4cdc00e7ccc14f99680c22edaf4eac"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/mailman_primary/analyze.py",
+      "sha256": "d59ebbe6d74021677dc358d7892887ba94349d0e45ba16c74ec6ce4ba5b03412"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/rank_optimal_quantization/FINAL_REPORT_CN.md",
+      "sha256": "abd3f701d3ef4a28567f2250c154a19df4126c9e2ddb047bac533a63c8f2695f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/rank_optimal_quantization/THEORY.md",
+      "sha256": "8632e6f93a36ef80f7bfe0b39c8e7914a12b8e6909fbe91f545e9c66d3d0c333"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/practical_opt/median_gpu.sh",
+      "sha256": "cba91e5e3780154fef402462e586356061205bd8737095836107e0388866d2d0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/practical_opt/analyze_median.py",
+      "sha256": "8137324ab7dc425185c3dffb2081ec90803cbf5165ab764d7b194a158ad045c9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/seq_calibration/SEQUENTIAL_CALIBRATION_REPORT.md",
+      "sha256": "21eb0b267e027de9cf1a1f6d04d1dbc877574a662f55fa1bed72807649f48e6b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/RESIDUAL_BOUND_PILOT_REPORT.md",
+      "sha256": "0b87d1f7f71a50a4488aca90c49fae5377581efa869886641ab4543926d943fe"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-1-insights.tex",
+      "sha256": "d2ae0d95426df91504f302727e7d1568b0d491aa83f34cd318cf6c7176fcfae6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "2452382afc52a5d30cf5941c45efecaf9eab9e04384554893ee18d4163e66d02"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "eba2f7cf6845a08a65793852615698eda1547291310ef76fdf1ea539bc5e70d2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-4-directions.tex",
+      "sha256": "bde5ca43042620cbb9cbb6e966f814606d4d3b2cf4ea6152f5516d549b96d97f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "7682ab83ab993e64a9d6365aeedad3ddc4dc9d0b66a032f7a3e835d26e630e28"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-discussion.tex",
+      "sha256": "4d9d0f9e4d7dff23aaa171b33720633fb669023a6f52048a0c7ff811a9496cea"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-1-insights.tex",
+      "sha256": "75a679b5e0c763a840bcc9c7f74f54e70eaeff859f63fcf4e4c6436c3f3103dc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "ebe8e5e751733ec2c14b9b73594bdb49938de869b97b731cf31fe450e289402a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "bac2efd71ede9a62a68216c1c71596a90da61b7627b072ba6a5df48cf4b47515"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-4-directions.tex",
+      "sha256": "83106d1dc10c37db4cd4be8558ab0479382f15eaead3547e5d1c53c598d8e833"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "8d6b332a827f8731057b61bbb5c323d9ac99a4fd046d66aa05305f17ae5ed716"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-discussion.tex",
+      "sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch8/negative-evidence.pdf",
+      "sha256": "7bc3158ead5654f9a1a40b94cd25df60cd2c65328f264d997b41e56ff42fb1de"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_ch8.py",
+      "sha256": "56995732427489ef928e0426d3ceed6aab6db72bc1e16ef64e9e4ca6f916f68c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    }
+  ]
+}

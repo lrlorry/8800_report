@@ -1,0 +1,12 @@
+[  0%] Built target jhq_cpu
+[  0%] Built target jhq_v71_g1
+[100%] Built target demo_jhq_v71_g1_batch
+[  0%] Built target jhq_cpu
+[100%] Built target jhq_v71_g2
+[100%] Built target demo_jhq_v71_g2_batch
+Built target jhq_cpu
+Built target jhq_v71_g4
+Built target demo_jhq_v71_g4_batch
+Built target jhq_cpu
+Built target jhq_v71_g8
+Built target demo_jhq_v71_g8_batch

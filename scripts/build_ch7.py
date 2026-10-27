@@ -137,7 +137,11 @@ def main():
         assert contexts=={507.2}
         jm=[(p['mem_used_mib']-507.2)/1024 for p in jp]
         cm=[p['index_mib']/1024 for p in cp]
+        ci=[p['index_mib']/1024 for p in indexes
+            if p['dataset']==ds and p['method']=='cagra-int8']
+        assert ci
         e1_memory[ds]=dict(jhq_gib=[min(jm),max(jm)],cagra_index_gib=[min(cm),max(cm)],
+                           cagra_int8_index_gib=[min(ci),max(ci)],
                            ratio=[min(jm)/max(cm),max(jm)/min(cm)],context_mib=507.2)
         ceilings[ds]={m:max(p['recall'] for p in families[ds,m]) for m in METHODS}
         rp=families[ds,'IVF-RaBitQ']
@@ -149,9 +153,10 @@ def main():
             sensitivity.append(dict(dataset=ds,recall=target,ratio=a/b if a and b else None))
     def interval(xs,dp=2):
         return f'{min(xs):.{dp}f}--{max(xs):.{dp}f}'
-    table('e1_memory','lrrr',['Dataset','JHQ net process GiB','CAGRA fp32 index GiB','Ratio range'],
+    table('e1_memory','lrrr',['Dataset',r'\shortstack{JHQ net\\process GiB}',
+          r'\shortstack{CAGRA fp32\\index GiB}',r'\shortstack{CAGRA int8\\index GiB}'],
           [[NAME[d],interval(e1_memory[d]['jhq_gib']),interval(e1_memory[d]['cagra_index_gib']),
-            interval(e1_memory[d]['ratio'])] for d in DS[:4]])
+            interval(e1_memory[d]['cagra_int8_index_gib'])] for d in DS[:4]])
 
     # Six-dataset held-out budget protocol, parsed from printed measurements.
     cells={};cur=None
@@ -198,9 +203,27 @@ def main():
             f"{x['approx_selected_recall']:.4f}",f"{round(r['over']*r['reps'])}/{r['reps']}",f"{r['p95_loss']:.4f}"])
         economics.append([NAME[ds],np,f"{base['qps']/1000:.1f}",f"{r['qps']/1000:.1f}",f"{x['gain']:.3f}",
             f"{x['gain64']:.3f}",
-            f"{r['cal_ms']:.1f}",f"{payback:.1f}" if payback else 'Never'])
+            f"{r['cal_ms']:.1f}",f"{payback:.1f}" if payback else 'Never',
+            'Pass' if c['oracle']['ceiling']-base['recall']<=.001+1e-9 else 'Fail'])
     table('budget_quality','lrrrrrr',['Dataset','Probe',r'$\alpha$: rule/oracle',r'$R_{100}$',r'$\overline{R}_{\rm rule}$','Losses',r'$L_{95}$'],quality)
-    table('budget_cost','lrrrrrrr',['Dataset','Probe',r'$Q_{100}$',r'$\overline Q_{\rm rule}$',r'vs 100',r'vs 64','Cal. ms','Batches'],economics)
+    table('budget_cost','lrrrrrrrr',['Dataset','Probe',r'$Q_{100}$',r'$\overline Q_{\rm rule}$',r'vs 100',r'vs 64','Cal. ms','Batches',r'\shortstack{Fixed 100\\quality}'],economics)
+    full_rows=[];full_audit=[]
+    for (ds,np),c in cells.items():
+        f=c['full'];loss=c['oracle']['ceiling']-f['recall']
+        x=dict(dataset=ds,nprobe=np,alpha=f['alpha'],loss=loss,qps=f['qps'],cal_ms=f['cal_ms'],
+               gain100=f['qps']/c['fixed'][100]['qps'],gain64=f['qps']/c['fixed'][64]['qps'],
+               oracle_fraction=f['qps']/c['oracle']['qps'],test_n=c['test_n'],
+               fixed100_qualifies=c['oracle']['ceiling']-c['fixed'][100]['recall']<=.001+1e-9)
+        full_audit.append(x)
+        full_rows.append([NAME[ds],np,f['alpha'],f"{loss:.4f}",f"{f['qps']/1000:.1f}",
+                          f"{x['gain100']:.3f}",f"{x['oracle_fraction']:.3f}",f"{f['cal_ms']:.1f}"])
+    table('budget_full','lrrrrrrr',['Dataset','Probe',r'$\alpha_{\rm full}$','Loss',r'$Q_{\rm full}$','vs 100','vs oracle','Cal. ms'],full_rows)
+    full_summary=dict(rows=full_audit,qualified=sum(x['loss']<=.001+1e-9 for x in full_audit),
+                      max_loss=max(x['loss'] for x in full_audit),
+                      gmean_vs100=gmean(x['gain100'] for x in full_audit),
+                      gmean_vs100_qualified_control=gmean(x['gain100'] for x in full_audit if x['fixed100_qualifies']),
+                      cal_ms_range=[min(x['cal_ms'] for x in full_audit),max(x['cal_ms'] for x in full_audit)])
+    assert full_summary['qualified']==12 and full_summary['max_loss']<.00061
     budget64=dict(gmean=gmean(x['gain64'] for x in budgets),wins=sum(x['gain64']>1 for x in budgets),
                   range=[min(x['gain64'] for x in budgets),max(x['gain64'] for x in budgets)],
                   payback_range=[min(x['payback64'] for x in budgets if x['payback64']),
@@ -363,9 +386,18 @@ def main():
         memory[ds]=dict(used_mib=v['used_mib'],scratch_mib=v['group_scratch_mib'],
             raw_gib=n*d*4/1024**3,residual_gib=n*d/1024**3,
             residual_share=n*d/(v['used_mib']*1024**2),batch=j['runs'][0]['batch'])
+    # Keep the original single observations in `build` for provenance. Current
+    # construction tables/plots use the three normal supplementary repetitions.
+    repeated_builds={ds:[] for ds in DS}
+    for ds in DS:
+        for i in (1,2,3):
+            text=track(src/f'experiments/thesis_evidence/RAW_A1/{ds}_warm{i}.txt').read_text()
+            repeated_builds[ds].append({key+'_ms':float(re.search(
+                rf'^\S+ {key} ([\d.]+) ms',text,re.M)[1]) for key in ('train','add')})
     table('build_memory','lrrrrrr',['Dataset','Train s','Add s','Total s','Used GiB','Raw GiB','Residual'],
-          [[NAME[ds],f"{build[ds]['train_ms']/1000:.2f}",f"{build[ds]['add_ms']/1000:.2f}",
-            f"{(build[ds]['train_ms']+build[ds]['add_ms'])/1000:.2f}",f"{memory[ds]['used_mib']/1024:.2f}",
+          [[NAME[ds],f"{st.median(x['train_ms'] for x in repeated_builds[ds])/1000:.2f}",
+            f"{st.median(x['add_ms'] for x in repeated_builds[ds])/1000:.2f}",
+            f"{st.median(x['train_ms']+x['add_ms'] for x in repeated_builds[ds])/1000:.2f}",f"{memory[ds]['used_mib']/1024:.2f}",
             f"{memory[ds]['raw_gib']:.2f}",f"{100*memory[ds]['residual_share']:.1f}\\%"] for ds in DS])
     bigraw=src/'experiments/adc_v69/RAW_BIG'
     for p in sorted(bigraw.glob('jhq_*.json')):
@@ -408,7 +440,7 @@ def main():
         seconds=x['build_ms']/1000 if method=='IVF-RaBitQ' else x['build_s']+x.get('quantise_dataset_s',0)
         construction.setdefault((x['dataset'],method),[]).append(seconds)
     for ds in DS:
-        construction[ds,'JHQ-GPU']=[(build[ds]['train_ms']+build[ds]['add_ms'])/1000]
+        construction[ds,'JHQ-GPU']=[(x['train_ms']+x['add_ms'])/1000 for x in repeated_builds[ds]]
 
     # Reuse vector figures whose sources and plotting code are available.
     copied=[]
@@ -620,7 +652,7 @@ def main():
     audit=dict(source_snapshot=git,e1=dict(points=len(points),failures=len(failures),indexes=len(indexes),
         nondeterministic=dict(nondet),diagnostics=e1_diagnostics,memory=e1_memory,ceilings=ceilings,
         latency_sensitivity=sensitivity,rabitq_round_spread=round_spread,archived_matched_ratios_verified=verified),matched=matched,
-        budget=budgets,budget_vs64=budget64,historical_budget=historical_budget,
+        budget=budgets,budget_vs64=budget64,full_pool=full_summary,historical_budget=historical_budget,
         fixed_budget_summary=fixed_summary,enumeration=dict(draws=enum_total,differences=0,ratio_range=[min(enum_ratios),max(enum_ratios)]),
         lut=dict(cells=len(lut),wins=dict(wins),max_recall_spread=lut_spread,ratio_range=[min(lut_ratios),max(lut_ratios)]),
         packing=dict(cells=len(packing),gain_range=[min(r['gain'] for r in packing),max(r['gain'] for r in packing)],max_recall_diff=max(abs(r['recall_difference']) for r in packing)),
@@ -633,6 +665,7 @@ def main():
         refinement_gain_range=[min(warp_ratios),max(warp_ratios)],amdahl=amdahl,
         scan_stage_profiles=stages,build=build,memory=memory,large=large_summary,large_comparisons=large_comparisons,
         construction=[dict(dataset=ds,method=m,seconds=v) for (ds,m),v in construction.items()],
+        repeated_builds=repeated_builds,
         archived_figure_sources=copied,
         generated_figures=['frontiers','lutgroups','packing_refinement','budget_risk',
             'budget_payback','batch_execution','construction','memory','large_frontiers'])

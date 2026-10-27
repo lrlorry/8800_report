@@ -24,7 +24,7 @@
   columns=fullflexible,keepspaces=true,showstringspaces=false,
   frame=single,rulecolor=\color{black!20},tabsize=2}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning}
+\usetikzlibrary{arrows.meta,positioning,decorations.pathreplacing}
 \usepackage[numbers,sort&compress]{natbib}
 \renewcommand{\bibfont}{\raggedright}
 \usepackage{fancyhdr}
@@ -32,14 +32,10 @@
 \fancyhf{}
 \fancyhead[L]{\small\nouppercase{\leftmark}}
 \fancyfoot[C]{\thepage}
-\ifdraftthesis
-  \fancyfoot[R]{\scriptsize DRAFT}
-\fi
 \renewcommand{\headrulewidth}{0.3pt}
 \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
 \fancypagestyle{plain}{%
   \fancyhf{}\fancyfoot[C]{\thepage}
-  \ifdraftthesis\fancyfoot[R]{\scriptsize DRAFT}\fi
   \renewcommand{\headrulewidth}{0pt}}
 \usepackage{titlesec}
 \titleformat{\chapter}[display]
@@ -62,13 +58,17 @@
 \makeatletter
 \setlength{\@fptop}{0pt}
 \makeatother
+\usepackage[hyphens]{url}
 \usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
 \hypersetup{pdftitle={\thesistitle},pdfauthor={\thesisauthor},
   pdfsubject={COMP8800 research thesis},bookmarksnumbered=true}
 \usepackage[nameinlink,noabbrev]{cleveref}
 
 \newtheorem{proposition}{Proposition}[chapter]
-\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{corollary}[proposition]{Corollary}
+\crefname{corollary}{corollary}{corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
 \theoremstyle{definition}
 \newtheorem{definition}[proposition]{Definition}
 

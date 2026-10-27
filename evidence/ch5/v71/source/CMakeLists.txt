@@ -1,0 +1,2301 @@
+cmake_minimum_required(VERSION 3.18)
+project(JHQ_GPU LANGUAGES CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CUDA_STANDARD 17)
+# Avoid CMake/NVCC combinations that translate "native" into unsupported
+# "compute_native". Override with -DCMAKE_CUDA_ARCHITECTURES=<capability>
+# for the exact server GPU, e.g. 75, 80, 86, 89.
+if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
+    set(CMAKE_CUDA_ARCHITECTURES 70 CACHE STRING "CUDA architectures")
+endif()
+
+find_package(CUDAToolkit REQUIRED)
+find_package(BLAS REQUIRED)
+find_package(LAPACK REQUIRED)
+
+# ── Shared CPU library ────────────────────────────────────────────────────────
+# All versions link this. Never duplicated.
+# Codebook training is a loop over independent subspaces and was the whole of
+# the index build's 27 s. Optional so a toolchain without it still builds.
+find_package(OpenMP)
+add_library(jhq_cpu STATIC
+    cpu/codebook.cpp
+    cpu/pq_codebook.cpp
+    cpu/jl_transform.cpp
+)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(jhq_cpu PUBLIC OpenMP::OpenMP_CXX)
+endif()
+
+target_include_directories(jhq_cpu PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_cpu PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+target_compile_options(jhq_cpu PRIVATE -O3 -march=native)
+
+# ── Helper macro: add one GPU version + its demo ─────────────────────────────
+# Usage: add_jhq_version(jhq_v1_plain)
+#        add_jhq_version(v2_batched_query)
+#        ...
+# Expects files: <ver>/encode.cu  <ver>/search.cu  <ver>/jhq_gpu_index.cu
+#                examples/demo_<ver>.cu
+macro(add_jhq_version VER)
+    add_library(jhq_${VER} STATIC
+        ${VER}/encode.cu
+        ${VER}/search.cu
+        ${VER}/jhq_gpu_index.cu
+    )
+    target_include_directories(jhq_${VER} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(jhq_${VER} PUBLIC
+        jhq_cpu
+        CUDA::cublas
+        CUDA::cudart
+    )
+    target_compile_options(jhq_${VER} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+
+    add_executable(demo_${VER} examples/demo_${VER}.cu)
+    target_link_libraries(demo_${VER} PRIVATE jhq_${VER})
+endmacro()
+
+# ── Register versions here ────────────────────────────────────────────────────
+add_jhq_version(jhq_v1_plain)
+add_jhq_version(jhq_v2_topk)
+add_jhq_version(jhq_v3_ivf)
+add_jhq_version(jhq_v4_batched_query)
+add_jhq_version(jhq_v5_cuda_graph)
+add_jhq_version(jhq_v6_async_h2d)
+add_jhq_version(jhq_v7_spin_sync)
+add_jhq_version(jhq_v8_timing)
+add_jhq_version(jhq_v9_step_timing)
+add_jhq_version(jhq_v10_bytelut)
+add_jhq_version(jhq_v11_outerlut)
+add_jhq_version(jhq_v12_transposed)
+add_jhq_version(jhq_v13_step_timing)
+add_jhq_version(jhq_v14_streaming_add)
+add_jhq_version(jhq_v15_eval_fix)
+add_jhq_version(jhq_v16_pq_primary)
+add_jhq_version(jhq_v17_parallel_scan)
+add_jhq_version(jhq_v18_shared_lut)
+add_jhq_version(jhq_v19_tiled_scan)
+add_jhq_version(hblock_v1)
+add_jhq_version(hblock_v2)
+add_jhq_version(hblock_v3)
+add_jhq_version(hblock_v4)
+add_jhq_version(hblock_v5)
+add_jhq_version(hblock_v6)
+add_jhq_version(hblock_v7)
+add_jhq_version(hblock_v8)
+add_jhq_version(hblock_v9)
+add_jhq_version(hblock_v10)
+add_jhq_version(hblock_v11)
+add_jhq_version(hblock_v12)
+add_jhq_version(hblock_v13)
+add_jhq_version(hblock_v14)
+add_jhq_version(hblock_v15)
+add_jhq_version(hblock_v16)
+add_jhq_version(hblock_v17)
+
+# v18: JL coarse scan — no encode.cu, added manually
+add_library(jhq_hblock_v18 STATIC
+    hblock_v18/search.cu
+    hblock_v18/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v18 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v18 PUBLIC
+    jhq_hblock_v17   # reuses encode.cu kernels
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v18 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_hblock_v18 examples/demo_hblock_v18.cu)
+target_link_libraries(demo_hblock_v18 PRIVATE jhq_hblock_v18)
+
+# v19: split d_proj_route/d_proj_scan + empty-centroid fix + K_MAX=192
+add_library(jhq_hblock_v19 STATIC
+    hblock_v19/search.cu
+    hblock_v19/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v19 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v19 PUBLIC
+    jhq_hblock_v17   # reuses encode.cu kernels
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v19 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_hblock_v19 examples/demo_hblock_v19.cu)
+target_link_libraries(demo_hblock_v19 PRIVATE jhq_hblock_v19)
+
+# v20: v17 + d_proj=128 routing + empty-centroid norm=1e30f fix
+add_library(jhq_hblock_v20 STATIC
+    hblock_v20/search.cu
+    hblock_v20/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v20 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v20 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v20 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_hblock_v20 examples/demo_hblock_v20.cu)
+target_link_libraries(demo_hblock_v20 PRIVATE jhq_hblock_v20)
+
+# v21: v17 + sparse subtree bitmask routing (valid_c2/valid_c3 per parent)
+add_library(jhq_hblock_v21 STATIC
+    hblock_v21/search.cu
+    hblock_v21/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v21 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v21 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v21 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_hblock_v21 examples/demo_hblock_v21.cu)
+target_link_libraries(demo_hblock_v21 PRIVATE jhq_hblock_v21)
+
+# v30: v29 + fix visited-before-insert bug (check bmax before atomicOr, unblocks graph paths)
+add_library(jhq_hblock_v30 STATIC
+    hblock_v30/search.cu
+    hblock_v30/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v30 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v30 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v30 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v30 examples/demo_hblock_v30.cu)
+target_link_libraries(demo_hblock_v30 PRIVATE jhq_hblock_v30)
+
+# v31 diagnostic: missed-GT classification (routing/connectivity/depth) via BFS
+add_executable(demo_hblock_v31_diag examples/demo_hblock_v31_diag.cu)
+target_link_libraries(demo_hblock_v31_diag PRIVATE jhq_hblock_v30)
+
+# v32: single ef parameter; v30 semantics internally (ef→depth=ef,beam=min(ef,128))
+add_library(jhq_hblock_v32 STATIC
+    hblock_v32/search.cu
+    hblock_v32/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v32 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v32 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v32 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v32 examples/demo_hblock_v32.cu)
+target_link_libraries(demo_hblock_v32 PRIVATE jhq_hblock_v32)
+
+# v33: W=4 batched beam expansion + HNSW early termination, beam=ef (no cap)
+add_library(jhq_hblock_v33 STATIC
+    hblock_v33/search.cu
+    hblock_v33/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v33 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v33 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v33 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v33 examples/demo_hblock_v33.cu)
+target_link_libraries(demo_hblock_v33 PRIVATE jhq_hblock_v33)
+
+# v34: W=4 batched expansion + HNSW early termination, beam=min(ef,128), expanded-block output
+add_library(jhq_hblock_v34 STATIC
+    hblock_v34/search.cu
+    hblock_v34/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v34 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v34 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v34 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v34 examples/demo_hblock_v34.cu)
+target_link_libraries(demo_hblock_v34 PRIVATE jhq_hblock_v34)
+
+# v35: ceiling test — beam=ef (no cap), no early termination, expanded-block output
+add_library(jhq_hblock_v35 STATIC
+    hblock_v35/search.cu
+    hblock_v35/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v35 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v35 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v35 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v35 examples/demo_hblock_v35.cu)
+target_link_libraries(demo_hblock_v35 PRIVATE jhq_hblock_v35)
+
+# v36: v35 + replace CPU stable_sort → GPU CUB radix sort during build
+add_library(jhq_hblock_v36 STATIC
+    hblock_v36/search.cu
+    hblock_v36/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v36 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v36 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v36 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v36 examples/demo_hblock_v36.cu)
+target_link_libraries(demo_hblock_v36 PRIVATE jhq_hblock_v36)
+
+# v37_prr: v36 + certified PQ racing (PRR) — corrected PQ + L2/U2 epsilon bounds + pruned exact rerank
+add_library(jhq_hblock_v37_prr STATIC
+    hblock_v37_prr/search.cu
+    hblock_v37_prr/diag.cu
+    hblock_v37_prr/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v37_prr PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v37_prr PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v37_prr PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v37_prr examples/demo_hblock_v37_prr.cu)
+target_link_libraries(demo_hblock_v37_prr PRIVATE jhq_hblock_v37_prr)
+
+# v37_prr seed diagnostic: exact-seed threshold go/no-go (additive; see
+# HBLOCK_V37_PRR_EXACT_SEED_DIAGNOSTIC_PROMPT.md). Same library, separate demo.
+add_executable(demo_hblock_v37_prr_seed_diag examples/demo_hblock_v37_prr_seed_diag.cu)
+target_link_libraries(demo_hblock_v37_prr_seed_diag PRIVATE jhq_hblock_v37_prr)
+
+# v38: plain SPACEV int8, fully GPU-resident, no region partitioning. Exists
+# as the controlled comparison baseline for v39/v42/v43's region work --
+# same data/encoding/routing, no region_id -> pool-slot indirection.
+add_library(jhq_hblock_v38 STATIC
+    hblock_v38/search.cu
+    hblock_v38/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v38 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v38 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v38 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v38 examples/demo_hblock_v38.cu)
+target_link_libraries(demo_hblock_v38 PRIVATE jhq_hblock_v38)
+
+# v36_1: hblock_v38 with add()'s balanced-kmeans reclustering GPU-
+# accelerated (cuBLAS GEMM + existing kmeans kernels) instead of pure
+# single-threaded CPU -- see hblock_v36_1/jhq_gpu_index.cuh class comment.
+add_library(jhq_hblock_v36_1 STATIC
+    hblock_v36_1/search.cu
+    hblock_v36_1/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v36_1 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v36_1 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v36_1 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v36_1 examples/demo_hblock_v36_1.cu)
+target_link_libraries(demo_hblock_v36_1 PRIVATE jhq_hblock_v36_1)
+
+# v36_2: straight fork of v36_1, no algorithm change -- diagnose_missed_gt()
+# (routing/graph miss classification: A=routing miss, B=graph unreachable,
+# C=depth miss) ported in from hblock_v36 and wired into the demo, purely so
+# it can be run on a clean, dedicated version to get a real A/B/C breakdown
+# before deciding which recall lever (routing breadth, graph connectivity,
+# beam cap, or a structural block-graph redesign) to pull next.
+add_library(jhq_hblock_v36_2 STATIC
+    hblock_v36_2/search.cu
+    hblock_v36_2/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v36_2 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v36_2 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v36_2 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v36_2 examples/demo_hblock_v36_2.cu)
+target_link_libraries(demo_hblock_v36_2 PRIVATE jhq_hblock_v36_2)
+
+# v39: SPACEV int8 streamed add() + logical region partitioning and a
+# bounded GPU region pool (leaf kernel resolves PQ codes/ids and raw
+# vectors through region_id -> pool-slot indirection instead of flat
+# resident arrays; fetch planning stages only the regions a batch touches).
+add_library(jhq_hblock_v39 STATIC
+    hblock_v39/search.cu
+    hblock_v39/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v39 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v39 PUBLIC
+    jhq_hblock_v27   # for gpu_build_block_adj_v27 and encode kernels
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v39 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v39 examples/demo_hblock_v39.cu)
+target_link_libraries(demo_hblock_v39 PRIVATE jhq_hblock_v39)
+
+# Same jhq_hblock_v39 library, SIFT100M .bvecs entry point (add(BVecsReader&,
+# int) overload) -- for direct comparison against hblock_v40 on the same data.
+add_executable(demo_hblock_v39_sift100m examples/demo_hblock_v39_sift100m.cu)
+target_link_libraries(demo_hblock_v39_sift100m PRIVATE jhq_hblock_v39)
+
+# v42: v39's region pool, backed by real mmap'd region files on disk
+# instead of an in-process host RAM buffer (see hblock_v42/jhq_gpu_index.cuh
+# class comment). Kernel-level logic is unchanged from v39.
+add_library(jhq_hblock_v42 STATIC
+    hblock_v42/search.cu
+    hblock_v42/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v42 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v42 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v42 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v42 examples/demo_hblock_v42.cu)
+target_link_libraries(demo_hblock_v42 PRIVATE jhq_hblock_v42)
+
+# v43: v42 + graph-aware region packing (BFS over the block adjacency graph
+# instead of physical/cell-lexicographic block order) -- see
+# hblock_v43/jhq_gpu_index.cuh class comment.
+add_library(jhq_hblock_v43 STATIC
+    hblock_v43/search.cu
+    hblock_v43/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v43 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v43 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v43 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v43 examples/demo_hblock_v43.cu)
+target_link_libraries(demo_hblock_v43 PRIVATE jhq_hblock_v43)
+
+# v40: SIFT bvecs baseline with split PQ selection and exact int8 rerank.
+# The explicit candidate-ID hand-off is the boundary used by later region I/O.
+add_library(jhq_hblock_v40 STATIC
+    hblock_v40/search.cu
+    hblock_v40/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v40 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v40 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v40 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v40 examples/demo_hblock_v40.cu)
+target_link_libraries(demo_hblock_v40 PRIVATE jhq_hblock_v40)
+
+# v41: v38 fused leaf semantics with complete block records in host-resident
+# logical regions and a bounded GPU staging pool.
+add_library(jhq_hblock_v41 STATIC
+    hblock_v41/search.cu
+    hblock_v41/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v41 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v41 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v41 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>)
+add_executable(demo_hblock_v41_sift100m examples/demo_hblock_v41_sift100m.cu)
+target_link_libraries(demo_hblock_v41_sift100m PRIVATE jhq_hblock_v41)
+add_executable(demo_hblock_v41_spacev examples/demo_hblock_v41_spacev.cu)
+target_link_libraries(demo_hblock_v41_spacev PRIVATE jhq_hblock_v41)
+
+# v29: v28 + balanced k-means (each cluster ≤ 128 → cluster = block, clean centroid)
+add_library(jhq_hblock_v29 STATIC
+    hblock_v29/search.cu
+    hblock_v29/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v29 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v29 PUBLIC
+    jhq_hblock_v27
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v29 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v29 examples/demo_hblock_v29.cu)
+target_link_libraries(demo_hblock_v29 PRIVATE jhq_hblock_v29)
+
+# v28: per-block exact rerank (PQ filter → exact L2 within block → merge)
+add_library(jhq_hblock_v28 STATIC
+    hblock_v28/search.cu
+    hblock_v28/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v28 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v28 PUBLIC
+    jhq_hblock_v27   # for gpu_build_block_adj_v27 and encode kernels
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v28 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v28 examples/demo_hblock_v28.cu)
+target_link_libraries(demo_hblock_v28 PRIVATE jhq_hblock_v28)
+
+# v27: v26 + bitonic warp sort in leaf_flat → top-32 per block (restore QPS, keep quality)
+add_library(jhq_hblock_v27 STATIC
+    hblock_v27/search.cu
+    hblock_v27/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v27 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v27 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v27 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v27 examples/demo_hblock_v27.cu)
+target_link_libraries(demo_hblock_v27 PRIVATE jhq_hblock_v27)
+
+# v26: v25 + template beam (32/64/128 slots) + global top-rerank_r (no per-block top_p)
+add_library(jhq_hblock_v26 STATIC
+    hblock_v26/search.cu
+    hblock_v26/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v26 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v26 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v26 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v26 examples/demo_hblock_v26.cu)
+target_link_libraries(demo_hblock_v26 PRIVATE jhq_hblock_v26)
+
+# v25: v24 + semantic block construction via mini k-means within each L3 cell
+add_library(jhq_hblock_v25 STATIC
+    hblock_v25/search.cu
+    hblock_v25/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v25 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v25 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v25 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v25 examples/demo_hblock_v25.cu)
+target_link_libraries(demo_hblock_v25 PRIVATE jhq_hblock_v25)
+
+# v24: v23 + oracle diagnostic + TOP_P/beam_size runtime sweep + no route D2H
+add_library(jhq_hblock_v24 STATIC
+    hblock_v24/search.cu
+    hblock_v24/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v24 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v24 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v24 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v24 examples/demo_hblock_v24.cu)
+target_link_libraries(demo_hblock_v24 PRIVATE jhq_hblock_v24)
+
+# v23: block-level graph with true block centroids + hierarchical candidate cells
+add_library(jhq_hblock_v23 STATIC
+    hblock_v23/search.cu
+    hblock_v23/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v23 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v23 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v23 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --expt-extended-lambda --use_fast_math>
+)
+add_executable(demo_hblock_v23 examples/demo_hblock_v23.cu)
+target_link_libraries(demo_hblock_v23 PRIVATE jhq_hblock_v23)
+
+# v22: L1+L2 GPU beam + L3 CPU graph traversal over leaf cells
+add_library(jhq_hblock_v22 STATIC
+    hblock_v22/search.cu
+    hblock_v22/jhq_gpu_index.cu
+)
+target_include_directories(jhq_hblock_v22 PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_hblock_v22 PUBLIC
+    jhq_hblock_v17
+    jhq_cpu
+    CUDA::cublas
+    CUDA::cudart
+)
+target_compile_options(jhq_hblock_v22 PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_hblock_v22 examples/demo_hblock_v22.cu)
+target_link_libraries(demo_hblock_v22 PRIVATE jhq_hblock_v22)
+
+# ── Step-timed build of v18 ───────────────────────────────────────────────────
+# ncu cannot read performance counters in this container (ERR_NVGPUCTRPERM), so
+# stage attribution comes from CUDA events compiled into the search path. The
+# timed build skips the graph capture, since events cannot be read back from
+# inside one.
+add_library(jhq_v18_timed STATIC
+    jhq_v18_shared_lut/encode.cu
+    jhq_v18_shared_lut/search.cu
+    jhq_v18_shared_lut/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v18_timed PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v18_timed PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v18_timed PRIVATE JHQ_STEP_TIMING=1)
+target_compile_options(jhq_v18_timed PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v18_timed examples/demo_jhq_v18_shared_lut.cu)
+target_link_libraries(demo_jhq_v18_timed PRIVATE jhq_v18_timed)
+
+# ── In-scan top-k ablation (timed) ────────────────────────────────────────────
+# Prices the ck-round block reduction inside scan_ivf. Produces wrong results
+# by design; it exists only to measure what that selection costs.
+add_library(jhq_v18_notopk STATIC
+    jhq_v18_shared_lut/encode.cu
+    jhq_v18_shared_lut/search.cu
+    jhq_v18_shared_lut/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v18_notopk PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v18_notopk PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v18_notopk PRIVATE JHQ_STEP_TIMING=1 JHQ_ABLATE_INSCAN_TOPK=1)
+target_compile_options(jhq_v18_notopk PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v18_notopk examples/demo_jhq_v18_shared_lut.cu)
+target_link_libraries(demo_jhq_v18_notopk PRIVATE jhq_v18_notopk)
+
+# ── Inner-loop ablations (timed, results invalid by design) ───────────────────
+add_library(jhq_v18_ab_lut STATIC
+    jhq_v18_shared_lut/encode.cu
+    jhq_v18_shared_lut/search.cu
+    jhq_v18_shared_lut/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v18_ab_lut PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v18_ab_lut PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v18_ab_lut PRIVATE JHQ_STEP_TIMING=1 JHQ_ABLATE_LUT=1)
+target_compile_options(jhq_v18_ab_lut PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v18_ab_lut examples/demo_jhq_v18_shared_lut.cu)
+target_link_libraries(demo_jhq_v18_ab_lut PRIVATE jhq_v18_ab_lut)
+
+add_library(jhq_v18_ab_acc STATIC
+    jhq_v18_shared_lut/encode.cu
+    jhq_v18_shared_lut/search.cu
+    jhq_v18_shared_lut/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v18_ab_acc PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v18_ab_acc PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v18_ab_acc PRIVATE JHQ_STEP_TIMING=1 JHQ_ABLATE_ACC=1)
+target_compile_options(jhq_v18_ab_acc PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v18_ab_acc examples/demo_jhq_v18_shared_lut.cu)
+target_link_libraries(demo_jhq_v18_ab_acc PRIVATE jhq_v18_ab_acc)
+
+add_library(jhq_v18_ab_insert STATIC
+    jhq_v18_shared_lut/encode.cu
+    jhq_v18_shared_lut/search.cu
+    jhq_v18_shared_lut/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v18_ab_insert PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v18_ab_insert PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v18_ab_insert PRIVATE JHQ_STEP_TIMING=1 JHQ_ABLATE_INSERT=1)
+target_compile_options(jhq_v18_ab_insert PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v18_ab_insert examples/demo_jhq_v18_shared_lut.cu)
+target_link_libraries(demo_jhq_v18_ab_insert PRIVATE jhq_v18_ab_insert)
+
+add_library(jhq_v18_ab_f32lut STATIC
+    jhq_v18_shared_lut/encode.cu
+    jhq_v18_shared_lut/search.cu
+    jhq_v18_shared_lut/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v18_ab_f32lut PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v18_ab_f32lut PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v18_ab_f32lut PRIVATE JHQ_STEP_TIMING=1 JHQ_SMEM_LUT_FLOAT=1)
+target_compile_options(jhq_v18_ab_f32lut PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v18_ab_f32lut examples/demo_jhq_v18_shared_lut.cu)
+target_link_libraries(demo_jhq_v18_ab_f32lut PRIVATE jhq_v18_ab_f32lut)
+
+add_library(jhq_v19_timed STATIC
+    jhq_v19_tiled_scan/encode.cu
+    jhq_v19_tiled_scan/search.cu
+    jhq_v19_tiled_scan/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v19_timed PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v19_timed PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v19_timed PRIVATE JHQ_STEP_TIMING=1)
+target_compile_options(jhq_v19_timed PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v19_timed examples/demo_jhq_v19_tiled_scan.cu)
+target_link_libraries(demo_jhq_v19_timed PRIVATE jhq_v19_timed)
+
+# ── v20: tile-shape sweep ────────────────────────────────────────────────────
+# v19 fixed TILE_C=4, TILE_M=8 and took scan_ivf 16.56 -> 11.48 ms at nprobe=8.
+# TILE_C is the number of independent accumulate chains a thread runs, TILE_M
+# how many subspaces it sweeps before moving to the next candidate. Which of
+# the two bought the 30% was never separated, so build the grid and measure.
+function(add_jhq_tile_variant TC TM)
+    set(tgt jhq_v20_c${TC}m${TM})
+    add_library(${tgt} STATIC
+        jhq_v19_tiled_scan/encode.cu
+        jhq_v19_tiled_scan/search.cu
+        jhq_v19_tiled_scan/jhq_gpu_index.cu
+    )
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE
+        JHQ_STEP_TIMING=1 JHQ_TILE_C=${TC} JHQ_TILE_M=${TM})
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_${tgt} examples/demo_jhq_v19_tiled_scan.cu)
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+foreach(TC 1 2 4 8 16)
+    foreach(TM 4 8 16 32 96)
+        add_jhq_tile_variant(${TC} ${TM})
+    endforeach()
+endforeach()
+
+# ── v21: cascaded scan ───────────────────────────────────────────────────────
+# Pass 1 ranks every candidate on a NUM/DEN prefix of the subspaces, pass 2
+# completes only the best KEEP per thread. NUM==DEN is v19 with extra copies,
+# which is the control the sweep needs.
+function(add_jhq_cascade_variant NUM DEN KEEP)
+    set(tgt jhq_v21_k${KEEP})
+    add_library(${tgt} STATIC
+        jhq_v21_cascade/encode.cu
+        jhq_v21_cascade/search.cu
+        jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+    )
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE
+        JHQ_STEP_TIMING=1
+        JHQ_PREFIX_NUM=${NUM} JHQ_PREFIX_DEN=${DEN} JHQ_PREFIX_KEEP=${KEEP})
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_${tgt} examples/demo_jhq_v21_cascade.cu)
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+foreach(KEEP 4 8 16 32)
+    add_jhq_cascade_variant(1 4 ${KEEP})
+endforeach()
+
+# Same kernel with the step timers off. JHQ_STEP_TIMING inserts a cudaEvent
+# between every kernel and so suppresses CUDA Graph capture: at batch 1024 the
+# timed v20 build spent 45.7 ms outside the scan against 18.8 ms at batch 256,
+# and lost throughput (10197 QPS) even though its scan got faster (75.5 -> 52.4
+# ms). v16 is untimed and doubled over the same change, 10550 -> 20154. Any
+# number compared against v16 has to come from a build in the same mode.
+function(add_jhq_cascade_fast KEEP)
+    set(tgt jhq_v21_fast_k${KEEP})
+    add_library(${tgt} STATIC
+        jhq_v21_cascade/encode.cu
+        jhq_v21_cascade/search.cu
+        jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+    )
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE
+        JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 JHQ_PREFIX_KEEP=${KEEP})
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_${tgt} examples/demo_jhq_v21_cascade.cu)
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+foreach(KEEP 4 8 16 32)
+    add_jhq_cascade_fast(${KEEP})
+endforeach()
+
+# In-scan top-ck ablation at the matched point. ck = ceil(alpha*k), so alpha=100
+# with k=10 makes it 1000, and the selection is 1000 sequential passes of a
+# whole-block min-reduction: 10 barriers each at BLOCK=1024, so 10000 barriers
+# per block, none of which scale with nprobe. The earlier ablation that found
+# this free was run at alpha=4 (ck=40) and BLOCK=256, 25x fewer passes, so it
+# says nothing about this regime.
+add_library(jhq_v21_noselect STATIC
+    jhq_v21_cascade/encode.cu
+    jhq_v21_cascade/search.cu
+    jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+)
+target_include_directories(jhq_v21_noselect PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v21_noselect PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v21_noselect PRIVATE
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 JHQ_PREFIX_KEEP=8 JHQ_ABLATE_INSCAN_TOPK=1)
+target_compile_options(jhq_v21_noselect PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v21_noselect examples/demo_jhq_v21_cascade.cu)
+target_link_libraries(demo_jhq_v21_noselect PRIVATE jhq_v21_noselect)
+
+# Same kernel with the ck-pass selection replaced by one bitonic sort.
+function(add_jhq_bitonic KEEP)
+    set(tgt jhq_v21_bito_k${KEEP})
+    add_library(${tgt} STATIC
+        jhq_v21_cascade/encode.cu
+        jhq_v21_cascade/search.cu
+        jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+    )
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE
+        JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 JHQ_PREFIX_KEEP=${KEEP} JHQ_BITONIC_SELECT=1)
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_${tgt} examples/demo_jhq_v21_cascade.cu)
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+foreach(KEEP 8 16 32)
+    add_jhq_bitonic(${KEEP})
+endforeach()
+
+# Strided candidate assignment, with and without the bitonic selection. TILE_C
+# chains without TILE_C's recall cost: the v20 grid lost 0.7328 -> 0.6933 going
+# to TILE_C=16 because contiguous tiles concentrate adjacent candidates, and
+# striding by BLOCK undoes exactly that. KEEP stays at 8; 16 needs more than
+# the 64 registers a thread gets when 1024 are resident.
+function(add_jhq_strided TC BITO)
+    set(tgt jhq_v22_s${TC}b${BITO})
+    add_library(${tgt} STATIC
+        jhq_v21_cascade/encode.cu
+        jhq_v21_cascade/search.cu
+        jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+    )
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE
+        JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 JHQ_PREFIX_KEEP=8
+        JHQ_TILE_C=${TC} JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=${BITO})
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_${tgt} examples/demo_jhq_v21_cascade.cu)
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+foreach(TC 2 4 8)
+    add_jhq_strided(${TC} 0)
+    add_jhq_strided(${TC} 1)
+endforeach()
+
+# ── Step-timed build of the current cascade ──────────────────────────────────
+# The v18 timed target below predates the cascade, so it cannot say where time
+# goes in the code that is actually measured. This one compiles the same
+# sources as demo_jhq_v22_s2b1 with the event instrumentation on. Graph capture
+# is skipped in this build -- events cannot be read from inside a graph -- so
+# the totals run slower than the real path; the split between stages is what
+# it is for.
+add_library(jhq_v22_timed STATIC
+    jhq_v21_cascade/encode.cu
+    jhq_v21_cascade/search.cu
+    jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+)
+target_include_directories(jhq_v22_timed PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v22_timed PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v22_timed PRIVATE JHQ_STEP_TIMING=1)
+target_compile_options(jhq_v22_timed PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v22_timed examples/demo_jhq_v21_cascade.cu)
+target_link_libraries(demo_jhq_v22_timed PRIVATE jhq_v22_timed)
+
+# ── v22: the residual level without materialised lookup tables ───────────────
+# v21 with residual_refine_fused_kernel in place of build_residual_lut plus
+# residual_refine. Same values by Lemma 5; what changes is that B*d*Kr floats
+# are never written. JHQ_RESID_LUT=1 restores v21's path inside this build, so
+# the two are diffable without swapping binaries.
+function(add_jhq_dir TAG DIR)
+    set(tgt jhq_${TAG})
+    add_library(${tgt} STATIC
+        ${DIR}/encode.cu ${DIR}/search.cu ${DIR}/jhq_gpu_index.cu
+        ${DIR}/train_pq_gpu.cu ${DIR}/train_res_gpu.cu)
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE ${ARGN})
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+    add_executable(demo_${tgt} examples/demo_jhq_v21_cascade.cu)
+    # The caller must see the same header the library was built from.
+    target_compile_definitions(demo_${tgt} PRIVATE
+        JHQ_INDEX_HEADER="${DIR}/jhq_gpu_index.cuh" ${ARGN})
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+set(V22 jhq_v22_fused_residual)
+set(V23 jhq_v23_faithful)
+set(TUNED JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=8 JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+add_jhq_dir(v22_tuned ${V22} JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 ${TUNED})
+
+# ── v23: Algorithm 1 as written, and Equation 6 without the rounding ─────────
+# Two departures from the paper are separated here so each can be priced.
+#   *_exact  PM = M, so every candidate gets its full primary distance, which
+#            is what Algorithm 1 step 3 asks for. The prefix cascade ranks on a
+#            partial sum and discards, so it cannot be inside a faithful build.
+#   *_lut32  the primary table in float. Half rounds each per-subspace distance
+#            to eleven mantissa bits before Equation 6 sums it.
+# Retention depth stays at 4: recall is flat from depth 4 to 32, so 4 is
+# already deep enough for the parallel top-k to equal the global top-alpha*k.
+add_jhq_dir(v23_exact       ${V23} JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 ${TUNED})
+add_jhq_dir(v23_exact_lut32 ${V23} JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_LUT32=1 ${TUNED})
+add_jhq_dir(v23_casc        ${V23} JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 ${TUNED})
+add_jhq_dir(v23_casc_lut32  ${V23} JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=4 JHQ_LUT32=1 ${TUNED})
+
+# ── The paper-faithful target ────────────────────────────────────────────────
+# jhq_v23_faithful_exact is the only build referred to as JHQ-GPU in the paper.
+# Every property the fidelity tests verified is compiled in rather than
+# defaulted, and the environment variables that could undo one are refused with
+# a message instead of silently ignored:
+#
+#   JHQ_PAPER_FAITHFUL=1  locks the semantics and installs the guard
+#   JHQ_PREFIX_NUM/DEN=1  PM = M; the exact scan takes no prefix arguments
+#   JHQ_LUT32=1           fp32 primary table, Equation 6 summed without
+#                         rounding each term to eleven bits first
+#   JHQ_EXACT_TOPCK       not read; exact_topck() returns true unconditionally
+#   JHQ_TF32              not read; the rotation stays fp32
+#
+# K_LOCAL and PREFIX_KEEP are still passed because the legacy kernel is still
+# compiled, but this target never launches it -- exact_topck() is true, so the
+# threshold-compaction selector runs.
+#
+# Approximate variants keep their own names and must not be reported as
+# JHQ-GPU: demo_jhq_v23_cascade below, and the v22/v24 targets.
+add_jhq_dir(v23_faithful_exact ${V23}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# The cascade, named so it cannot be mistaken for the faithful result.
+add_jhq_dir(v23_cascade ${V23}
+    JHQ_LUT32=1 JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=2
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=8
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# ── v25: the residual level trained without holding the set rotated ──────────
+# v23 frozen as paper-faithful-v1 rotates the residual training set whole, so
+# all of Y needed 38.5 GB (bge-m3) and 67.8 GB (stella) of VRAM on a 31.4 GB
+# card and could not run. v25 walks subspace groups: a group's rotation is a
+# d-by-(G*Ds) row slice of Pi, so the device holds one batch and the host holds
+# O(N*G*Ds) rather than O(N*d) -- 4.2 GB at G=8 against 67.8.
+#
+# Same arithmetic (N*d*(G*Ds) flops over M/G groups is N*d*d), same exact
+# sorted 1-D k-means per subspace. What multiplies is reading the base, M/G
+# times. Search semantics are v23's, unchanged.
+# v26: the residual subtraction on the device. v25 copied y, the codes and the
+# codebook back and subtracted in a host loop -- 4.1 billion subtractions
+# single-threaded at n_res=4M, 388 s of a 388 s training phase -- for data that
+# was already on the GPU. Same values, same estimator, same grouping.
+# v27: the trained-state cache key carries the residual training size. Without
+# it a 100K run and an ALL run hash to the same key and the second loads the
+# first's residual codebook, so a sweep over that parameter compares a result
+# against itself.
+# v28: one gather buffer instead of one per subspace, and the group size chosen
+# from a memory budget rather than fixed at 8. The base is re-read once per
+# group, so G decides the pass count: 8 meant sixteen passes over 67.8 GB at
+# stella, which dominated the cost. Freeing the duplicate gather leaves room for
+# a much larger group -- at 40 GB the whole of M fits in one or two passes.
+# v29: histogram buckets raised from 2048 to 8192, which the opt-in shared
+# memory allows. The bucket count bounds this estimator's error -- at most
+# Kr-1 buckets straddle a cell boundary, each carrying 1/nbuckets of the mass,
+# so 12% of buckets straddle at 2048 against 256 cells and 3% at 8192.
+# v30: one pass over the base, residuals spilled to disk, and the device
+# estimator on them. launch_residual_codebook already sorts once, prefix-sums
+# once and runs Lloyd in O(Kr log n) an iteration -- 5120 operations against
+# 6.4 million, identically -- but derived its segments from the rotated set,
+# which has to be resident. Taking the residuals directly frees that, and
+# spilling them (67.8 GB at stella, against 265 GB free on autodl-tmp) means
+# one pass over the base instead of one per subspace chunk.
+set(V30 jhq_v30_disk_stage)
+add_jhq_dir(v30_exp ${V30}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v31: Lloyd's own arbitrariness, made measurable.
+#
+# v30 settled that training the residual codebook on all of Y rather than a
+# 100K sample moves recall by +2e-4, +8e-4 and -3e-4 -- but +/-2e-4 is what
+# build nondeterminism alone produces, so those numbers only say "small", not
+# "smaller than what". The reference they need is how far exact Lloyd moves
+# when the two things the paper does not specify are changed: where the Kr
+# seeds start (JHQ_RES_SEED, 0 = the quantile placement every version so far
+# used, anything else draws positions at random) and how many iterations run
+# (JHQ_RES_ITER, default 25). Defaults reproduce v30 bit for bit.
+#
+# The histogram estimator is gone from this directory; it was measured at 2048
+# and 8192 buckets and keeps jhq_v29_hist_wide.
+set(V31 jhq_v31_init_spread)
+add_jhq_dir(v31_exp ${V31}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v32: Lloyd runs to its fixed point.
+#
+# v31 measured 25 iterations against 800 and found recall still climbing:
+# 25 -> 200 gains 4.8e-3, 4.4e-3 and 3.8e-3 on vogue, bge-m3 and stella, and
+# train time does not move, because the segmented sort is 16M operations and an
+# iteration is 5120. A Lloyd-Max quantizer is the fixed point of the Lloyd
+# conditions, so a fixed count was the departure and stopping when the
+# partition stops moving is the repair.
+#
+# The test is exact and has no tolerance to pick: with the values sorted, the
+# partition is the Kr-1 boundaries, so boundaries that hold mean the update
+# writes back the centroids it read. JHQ_RES_MAX_ITER is the cap, reported in
+# the run when it is hit; JHQ_RES_ITER is gone, since a count is no longer what
+# decides how long the loop runs.
+set(V32 jhq_v32_lloyd_converge)
+add_jhq_dir(v32_exp ${V32}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v33: the convergence test v32 needed.
+#
+# v32 tested the fixed point exactly, on the bin boundaries, and hit its cap of
+# 1000 on all three datasets. At 96 * 257 boundaries over 800k sorted values a
+# subspace, one boundary flipping between two values a float apart never stops,
+# while the codebook it describes has stood still for hundreds of iterations.
+# v33 tests the centroids instead, relative: converged when no centroid moves by
+# more than JHQ_RES_TOL (1e-6) of the largest, which is below float32's own
+# resolution. The still-moving boundary count is reported so the distinction is
+# in the run record rather than in this comment.
+set(V33 jhq_v33_lloyd_tol)
+add_jhq_dir(v33_exp ${V33}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v34: an empty cell holds, and Lloyd converges.
+#
+# v33 relaxed the fixed-point test to a relative tolerance and still hit its cap
+# at 20,000 iterations with max |dc| at 2.5e-5 of the largest centroid -- 250x
+# what float32 can jitter by. The cause was in the update, not the test: a cell
+# that drew nothing was reseeded to the quantile position sorted[(i+0.5)/Kr*n],
+# a dense part of the data, so it took points from a neighbour, emptied another
+# cell, and was thrown back again forever. It also put c out of order, which
+# made the bitonic sort permute it and the position-wise test read a permutation
+# as motion.
+#
+# Holding the cell keeps c ordered and distortion non-increasing, which is the
+# standard Lloyd-Max convention and the only one under which "run to
+# convergence" means anything. The empty-cell count is reported, since a held
+# cell is a wasted codeword.
+set(V34 jhq_v34_empty_hold)
+add_jhq_dir(v34_exp ${V34}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v35: 2000 residual iterations, which is where recall plateaus.
+#
+# v32 and v33 both tried to stop on convergence and both ran to their caps;
+# v34 showed why the obvious cause was not the cause. Exact convergence is not
+# reachable, so the count is the protocol, and results/v34_lloyd_iterations/
+# puts it at 2000: +7.6e-3, +7.1e-3 and +6.3e-3 over the 25 used through v31,
+# for +22, +30 and +20 ms of residual training. RESIDUAL_TRAINING.md in the
+# directory is the frozen protocol.
+set(V35 jhq_v35_iters_2000)
+add_jhq_dir(v35_exp ${V35}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v36: equation 5 as written -- all of Y -- plus the two things that has to fix.
+#
+# The reference implementation (github.com/jiabhan/JHQ, IndexJHQ.h) samples
+# 20,000 scalar values a subspace for the residual codebook and runs 5 Lloyd
+# iterations. The paper says "∀y ∈ Y" and O(n·K_r). Since v30 showed all of Y
+# is reachable at every scale, all of Y is what this builds, and the sampling
+# path stays only because results/v30_disk_stage/ measured what it costs.
+#
+# Two consequences. First, the chunk count is derived from a device budget
+# rather than fixed at 8: a chunk is C*n*Ds*20 bytes and Ds = d/M, so stella at
+# M=64 -- inside the paper's own 1024-d sweep -- wanted 33.9 GiB of a 31.4 GiB
+# card and overran cub's 32-bit segment offsets. Smaller chunks cost launches
+# and not I/O, since each reads its own contiguous slice of the spill file.
+# Second, JHQ_RES_MAX_ITER, JHQ_RES_SEED and JHQ_RES_TOL join the index cache
+# key: a sweep over the iteration cap moves recall by 7e-3, and with a cache
+# directory set it would have loaded the first cap's codebook ten times.
+#
+# It carries its own demo, since the shared one defaults the residual set to
+# the primary training sample and jhq_v23_faithful is frozen against that.
+set(V36 jhq_v36_all_default)
+add_library(jhq_v36_exp STATIC
+    ${V36}/encode.cu ${V36}/search.cu ${V36}/jhq_gpu_index.cu
+    ${V36}/train_pq_gpu.cu ${V36}/train_res_gpu.cu)
+target_include_directories(jhq_v36_exp PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v36_exp PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+set(V36_DEFS JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+target_compile_definitions(jhq_v36_exp PRIVATE ${V36_DEFS})
+target_compile_options(jhq_v36_exp PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+add_executable(demo_jhq_v36_exp examples/demo_jhq_v36.cu)
+target_compile_definitions(demo_jhq_v36_exp PRIVATE
+    JHQ_INDEX_HEADER="${V36}/jhq_gpu_index.cuh" ${V36_DEFS})
+target_link_libraries(demo_jhq_v36_exp PRIVATE jhq_v36_exp)
+
+# v37: the residuals stop going to disk, and the transpose stops being a host
+# loop.
+#
+# v36 measured 172 s for stella's equation-5 pass, of which the GPU did 10.
+# The rest was host-side and single-threaded: a pageable D2H, a transpose done
+# as nb*M memcpys of Ds floats (25.6 million 32-byte copies), and a write and a
+# read of a 67.8 GiB spill file, 128 fseek+fwrite pairs a batch.
+#
+# The kernel now stores subspace-major, so the transpose is free and the copy
+# out lands in pinned memory. The residuals stay in host memory up to three
+# quarters of the cgroup limit and only the tail spills, so the traffic falls
+# from 203 GiB to roughly one base read. A smaller machine spills more rather
+# than failing.
+set(V37 jhq_v37_host_resid)
+add_library(jhq_v37_exp STATIC
+    ${V37}/encode.cu ${V37}/search.cu ${V37}/jhq_gpu_index.cu
+    ${V37}/train_pq_gpu.cu ${V37}/train_res_gpu.cu)
+target_include_directories(jhq_v37_exp PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v37_exp PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v37_exp PRIVATE ${V36_DEFS})
+target_compile_options(jhq_v37_exp PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+add_executable(demo_jhq_v37_exp examples/demo_jhq_v36.cu)
+target_compile_definitions(demo_jhq_v37_exp PRIVATE
+    JHQ_INDEX_HEADER="${V37}/jhq_gpu_index.cuh" ${V36_DEFS})
+target_link_libraries(demo_jhq_v37_exp PRIVATE jhq_v37_exp)
+
+# Step 1 of sizing the refine stage: the same v37, with the residual term
+# compiled out. d_res goes unused so the whole per-candidate loop and the
+# list_res reads fold away, and the QPS difference against demo_jhq_v37_exp is
+# the entire cost of residual refinement. Its recall is meaningless by
+# construction -- it is the primary level alone -- and is not to be reported.
+add_library(jhq_v37_nores STATIC
+    ${V37}/encode.cu ${V37}/search.cu ${V37}/jhq_gpu_index.cu
+    ${V37}/train_pq_gpu.cu ${V37}/train_res_gpu.cu)
+target_include_directories(jhq_v37_nores PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v37_nores PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v37_nores PRIVATE ${V36_DEFS} JHQ_NO_RESIDUAL=1)
+target_compile_options(jhq_v37_nores PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+add_executable(demo_jhq_v37_nores examples/demo_jhq_v36.cu)
+target_compile_definitions(demo_jhq_v37_nores PRIVATE
+    JHQ_INDEX_HEADER="${V37}/jhq_gpu_index.cuh" ${V36_DEFS} JHQ_NO_RESIDUAL=1)
+target_link_libraries(demo_jhq_v37_nores PRIVATE jhq_v37_nores)
+
+# v38: three ways to stop the residual codebook being evicted from L1, one
+# directory, one target each, all four measured against each other in a single
+# run. Written before step 1 said whether the stage is worth optimising; not
+# built until it does.
+#
+#   base  the control, identical to v37
+#   ldcs  __ldcs on the residual-code loads: they are read once and never
+#         reused, so marking them evict-first leaves L1 to the codebook
+#   smem  opt in to 101,376 bytes of shared and put the codebook there. Fits
+#         vogue exactly (3072 + 98304) and not M=128 (135,168). One block per
+#         SM afterwards, so the occupancy that hides L2 latency is the price
+#   l1    the opposite carveout: smallest shared partition, largest L1
+set(V38 jhq_v38_refine_cache)
+foreach(variant base ldcs smem l1)
+  set(vdefs "")
+  if(NOT variant STREQUAL base)
+    string(TOUPPER ${variant} VUP)
+    set(vdefs JHQ_REFINE_${VUP}=1)
+  endif()
+  add_library(jhq_v38_${variant} STATIC
+      ${V38}/encode.cu ${V38}/search.cu ${V38}/jhq_gpu_index.cu
+      ${V38}/train_pq_gpu.cu ${V38}/train_res_gpu.cu)
+  target_include_directories(jhq_v38_${variant} PUBLIC ${CMAKE_SOURCE_DIR})
+  target_link_libraries(jhq_v38_${variant} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+  target_compile_definitions(jhq_v38_${variant} PRIVATE ${V36_DEFS} ${vdefs})
+  target_compile_options(jhq_v38_${variant} PRIVATE
+      $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+  add_executable(demo_jhq_v38_${variant} examples/demo_jhq_v36.cu)
+  target_compile_definitions(demo_jhq_v38_${variant} PRIVATE
+      JHQ_INDEX_HEADER="${V38}/jhq_gpu_index.cuh" ${V36_DEFS} ${vdefs})
+  target_link_libraries(demo_jhq_v38_${variant} PRIVATE jhq_v38_${variant})
+endforeach()
+
+# v39: the one of v38's three that won, with no flag left behind.
+#
+# Measured three times on three datasets, against v38_base:
+#   __ldcs on list_res   +14.4% / +8.8% / +14.6%   worse, and instructively so
+#   codebook to shared    -3.1% /  0    /  0       only where it fits
+#   carveout toward L1    -2.3% / -2.2% / -2.2%    everywhere
+#
+# So v39 puts the codebook in opt-in shared when it fits -- 3072 + 98304 is
+# exactly this card's 101,376 at M=96 -- and otherwise asks for the smallest
+# shared partition so the unified block stays L1. Refinement is 7% of search,
+# and this is about a third of it.
+set(V39 jhq_v39_refine_l1)
+add_library(jhq_v39_exp STATIC
+    ${V39}/encode.cu ${V39}/search.cu ${V39}/jhq_gpu_index.cu
+    ${V39}/train_pq_gpu.cu ${V39}/train_res_gpu.cu)
+target_include_directories(jhq_v39_exp PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v39_exp PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v39_exp PRIVATE ${V36_DEFS})
+target_compile_options(jhq_v39_exp PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+add_executable(demo_jhq_v39_exp examples/demo_jhq_v36.cu)
+target_compile_definitions(demo_jhq_v39_exp PRIVATE
+    JHQ_INDEX_HEADER="${V39}/jhq_gpu_index.cuh" ${V36_DEFS})
+target_link_libraries(demo_jhq_v39_exp PRIVATE jhq_v39_exp)
+
+# The scan kernel is 91% of search, and with a float lut_t its M*256 table is
+# 131,072 B against 101,376 of opt-in shared, so ex_lut is false on every
+# dataset and every one of stella's 1.11e9 lookups a repeat comes from global
+# memory. A __half table is 65,536 and fits everywhere. That comparison was
+# made once before and retracted, because the run that produced it had d_lut_r
+# sized for halves and filled with floats; this is it made properly, and the
+# recall column is half the answer since __half carries ~11 mantissa bits and
+# M=128 of them are summed.
+#
+# v40 is the other half: when the table cannot be in shared, take the same L1
+# carveout that won for the refine kernel.
+set(V39_NOLUT32 JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+set(V40 jhq_v40_scan_l1)
+
+# Spelled out rather than looped: a foreach over "tag:dir:defs" triples breaks
+# the moment defs is a CMake list, because the semicolons in it are the same
+# separator the triple is split on.
+function(add_jhq_variant tgt dir)
+  add_library(jhq_${tgt} STATIC
+      ${dir}/encode.cu ${dir}/search.cu ${dir}/jhq_gpu_index.cu
+      ${dir}/train_pq_gpu.cu ${dir}/train_res_gpu.cu)
+  target_include_directories(jhq_${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+  target_link_libraries(jhq_${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+  target_compile_definitions(jhq_${tgt} PRIVATE ${ARGN})
+  target_compile_options(jhq_${tgt} PRIVATE
+      $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>)
+  add_executable(demo_jhq_${tgt} examples/demo_jhq_v36.cu)
+  target_compile_definitions(demo_jhq_${tgt} PRIVATE
+      JHQ_INDEX_HEADER="${dir}/jhq_gpu_index.cuh" ${ARGN})
+  target_link_libraries(demo_jhq_${tgt} PRIVATE jhq_${tgt})
+endfunction()
+
+add_jhq_variant(v39_lut16 ${V39} ${V39_NOLUT32})
+add_jhq_variant(v40_exp   ${V40} ${V36_DEFS})
+add_jhq_variant(v40_lut16 ${V40} ${V39_NOLUT32})
+
+# v41: the scan kernel split into gather, lookup and compaction, by removing
+# them rather than by counting them. ncu is unusable on this box --
+# RmProfilingAdminOnly=1 comes from a driver the container cannot reload, so
+# every counter returns ERR_NVGPUCTRPERM -- and compile-out already agreed with
+# nsys to a point and a half on the refine stage.
+#
+# Four builds, two switches: lookup = full - nolut = nocompact - neither, and
+# compaction = full - nocompact = nolut - neither. Both halves of each equality
+# are measured, so a mismatch says the removal changed something else.
+set(V41 jhq_v41_scan_split)
+add_jhq_variant(v41_full     ${V41} ${V36_DEFS})
+add_jhq_variant(v41_nolut    ${V41} ${V36_DEFS} JHQ_SCAN_NO_LUT=1)
+add_jhq_variant(v41_nocomp   ${V41} ${V36_DEFS} JHQ_SCAN_NO_COMPACT=1)
+add_jhq_variant(v41_neither  ${V41} ${V36_DEFS} JHQ_SCAN_NO_LUT=1 JHQ_SCAN_NO_COMPACT=1)
+
+# JHQ-GPU-Cascade, priced on today's code rather than on v22's. Same v39
+# sources; what comes off is JHQ_PAPER_FAITHFUL, which pins the prefix at 1/1
+# and refuses to start if JHQ_PFX_NUM is set. KEEP goes back to 8, the value
+# the published rows used.
+#
+# Two approximations live in this kernel, not one. The prefix cascade discards
+# a candidate before its full primary distance exists; the per-thread retention
+# keeps only KEEP of them per thread whatever the prefix is, so 1/1 here is
+# still not the exact path. The ladder separates them: v39_exp is exact,
+# v39_casc at 1/1 adds retention alone, and 1/2, 1/4, 1/8 add the cascade.
+add_jhq_variant(v39_casc ${V39}
+    JHQ_LUT32=1 JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=2
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=8
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# The same with the bitonic selection off, which is the only place
+# JHQ_BITONIC_SELECT reaches: it is read inside scan_ivf_coalesced_kernel and
+# nowhere else, so the faithful path never sees it. The technique is in that
+# path regardless -- jhq_compact_topck is a bitonic sort and the exact scan
+# calls it unconditionally -- and results/v42_scan_split/ already prices that
+# at 44% of vogue's search time. This target prices the flag itself, on the
+# variant it actually governs.
+add_jhq_variant(v39_casc_nobito ${V39}
+    JHQ_LUT32=1 JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=2
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=8
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=0)
+
+# v42: the two cells of v41's 2x2 that mean anything, with its two faults out.
+#
+# The (nolut, compact) cell measured nothing -- replacing the lookup changes
+# every distance, which changes how often the compaction fires, and the variant
+# came out 16-41% slower than the full kernel. So the lookup is removed only
+# where the compaction is already gone. And v41's no-compact path summed
+# candidate positions into the output, which overflowed into the refine stage
+# and faulted; v42 emits a scattered in-range position so every variant leaves
+# the same work behind it.
+#
+#   lookup     = nocompact - neither
+#   compaction = full - nocompact
+set(V42 jhq_v42_scan_split_fixed)
+add_jhq_variant(v42_full    ${V42} ${V36_DEFS})
+add_jhq_variant(v42_nocomp  ${V42} ${V36_DEFS} JHQ_SCAN_NO_COMPACT=1)
+add_jhq_variant(v42_neither ${V42} ${V36_DEFS} JHQ_SCAN_NO_LUT=1 JHQ_SCAN_NO_COMPACT=1)
+
+# v43: the two numbers every table in results/ has been estimating.
+#
+# `cand` has always been reported as N*nprobe/nlist, which assumes equal list
+# lengths. select_probes_kernel already sums the exact figure to bound its own
+# loop, so measuring it costs one copy. `ivf_recall` -- the share of the true
+# top-k that coarse routing opened a list for -- splits a low recall into
+# "never routed in" and "routed in and then lost", which nprobe fixes and does
+# not fix respectively. Both are behind JHQ_DIAG=1 because the readbacks are
+# inside the timed region.
+set(V43 jhq_v43_diag)
+add_jhq_variant(v43_exp ${V43} ${V36_DEFS} JHQ_HAS_DIAG=1)
+
+# v44: select_probes without the nlist-sized shared buffer.
+#
+# v10's kernel held all nlist scores resident and ran nprobe full argmin
+# passes. 4*nlist bytes stopped it at 16384 lists on this card -- 32768 wants
+# 139,264 B against 101,376 -- so nlist above that could not be measured at
+# all, and the empty rows were twice blamed on the training set before the
+# exception text was read. Streaming the centroids against a running threshold
+# is the same exact selection in cap*8 + 8 bytes, independent of nlist, and
+# O(nlist) instead of O(nprobe * nlist).
+#
+# v44_diag carries JHQ_HAS_DIAG so cand_mean and ivf_recall can be compared
+# against v43 on the same configuration: the probe set is what both measure,
+# so an identical cand_mean is a direct check that the rewrite selects the
+# same lists.
+set(V44 jhq_v44_probe_stream)
+add_jhq_variant(v44_exp  ${V44} ${V36_DEFS})
+add_jhq_variant(v44_diag ${V44} ${V36_DEFS} JHQ_HAS_DIAG=1)
+
+# v45: compact when the buffer is full, not when it passes the target.
+#
+# Both selection buffers -- select_probes' top-nprobe and the scan's top-ck --
+# fired their bitonic sort as soon as the count passed the target. cap is the
+# power of two at or above target + BLOCK, so after each compaction the count
+# sits at the target and the very next chunk pushes it past again: a full
+# cap-element sort per chunk, to absorb however few candidates beat a threshold
+# that is by then quite tight. The buffer only needs cnt + BLOCK <= cap.
+#
+# The selection stays exact either way -- a looser threshold admits more, never
+# fewer -- so this is a pure scheduling change and the results must be
+# identical. results/block_sweep/ put the scan's compaction at 19-31% and
+# growing with the block size, which is the shape this predicts.
+set(V45 jhq_v45_compact_full)
+add_jhq_variant(v45_exp  ${V45} ${V36_DEFS})
+add_jhq_variant(v45_diag ${V45} ${V36_DEFS} JHQ_HAS_DIAG=1)
+
+# v46: sigma stops being zero above 2.1M training rows.
+#
+# rotate_on_gpu passed n * d_ to cublasSdot as an int. At d=1024 that wraps
+# negative above 2,097,152 rows, BLAS returns without writing the result, and
+# sigma comes out 0 -- so equation 4 places every primary centroid at the
+# origin and the ADC ranks every candidate identically. Nothing errors. The
+# nlist sweep read it as an nlist problem: at JHQ_N_TRAIN=2,600,000 recall was
+# 0.64-0.73 with ivf_recall at 0.99, which is exactly "routing fine,
+# everything after it broken", and routing does not use sigma.
+set(V46 jhq_v46_sigma_i64)
+add_jhq_variant(v46_exp  ${V46} ${V36_DEFS})
+add_jhq_variant(v46_diag ${V46} ${V36_DEFS} JHQ_HAS_DIAG=1)
+
+# v47: the primary LUT factorised along equation 4's Cartesian product.
+#
+# T_m[c] = Thi_m[c>>4] + Tlo_m[c&15] exactly, whenever K=256 and Ds is even.
+# 32 entries a subspace instead of 256: 8x less table, 16x less work to build
+# it, and a bank pattern with no conflicts where the 256-entry table took up to
+# 8-way. It also ends the __half question -- 32 floats a subspace fit in shared
+# at every M this project runs, so there is nothing left to buy by giving up
+# mantissa, and JHQ_LUT32 is gone with the second table type.
+#
+# The identity is verified against the centroids at train time, not inferred
+# from which construction was requested: a Lloyd-refined product quantiser
+# does not have the property and the check is what stops it being used.
+set(V47 jhq_v47_split_lut)
+add_jhq_variant(v47_exp  ${V47} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_variant(v47_diag ${V47} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_HAS_DIAG=1)
+
+# v48: stop a candidate as soon as it provably cannot make the top-ck.
+#
+# Every table entry is a squared distance, so a partial sum over the first few
+# subspaces is a lower bound on the complete one. Once it exceeds the ck-th
+# best seen so far, the candidate is out, and the subspaces left need be
+# neither gathered nor looked up. That attacks the gather as well as the
+# lookup: results/block_sweep/ measured "gather + rest" at 53-66% of the scan
+# at BLOCK=1024, and JHQ_SCAN_NO_LUT keeps the byte read, so the gather is
+# inside that figure.
+#
+# It is exact -- the same argument the compaction already makes, applied one
+# subspace at a time -- and it is not the discarded prefix cascade, which
+# guessed from an incomplete score which candidates were worth keeping.
+#
+# The exit granularity is the one free parameter, so three are built and
+# measured. JHQ_EXIT_EVERY >= M disables the exit and must reproduce v47 bit
+# for bit, which is the control.
+set(V48 jhq_v48_early_exit)
+add_jhq_variant(v48_e8   ${V48} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_EVERY=8)
+add_jhq_variant(v48_e16  ${V48} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_EVERY=16)
+add_jhq_variant(v48_e32  ${V48} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_EVERY=32)
+add_jhq_variant(v48_off  ${V48} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_EVERY=4096)
+
+# v49: three separable changes, so the refine stage's 9% can be attributed.
+#
+#   refine width   residual_refine_fused_kernel launched at a hard-coded 256
+#                  while every other search kernel took JHQ_BLOCK. Its loop is
+#                  `for (c = tid; c < ck; c += blockDim.x)` over ck=1000, so
+#                  256 threads make four passes where 1024 make one -- which is
+#                  why its share rose from 5-6% to 9% when the rest went to
+#                  1024. JHQ_REFINE_BLOCK=0 keeps 256 for the A/B.
+#   Br template    the nibble unpack was a runtime ternary on a kernel argument
+#                  in the innermost loop, executed d*ck times a query.
+#   exit bound     v48 bounded the unvisited subspaces by zero and lost 1-3%,
+#                  because the warp-wide exit needs all 32 lanes done and the
+#                  maximum over 32 lanes is far above the mean. Bounding them
+#                  by their smallest table entry is strictly tighter and still
+#                  exact, and the factorised table makes the minimum cost 32
+#                  reads a subspace instead of 256.
+set(V49 jhq_v49_refine)
+add_jhq_variant(v49_base ${V49} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_variant(v49_e8   ${V49} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_BOUND=1 JHQ_EXIT_EVERY=8)
+add_jhq_variant(v49_e16  ${V49} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_BOUND=1 JHQ_EXIT_EVERY=16)
+add_jhq_variant(v49_e32  ${V49} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_EXIT_BOUND=1 JHQ_EXIT_EVERY=32)
+
+# v50: two ways to spend less on the refinement, both exact.
+#
+#   JHQ_REGROUP      sorts the surviving ck on their position in the inverted
+#                    lists before their residual codes are read. The top-ck
+#                    arrives ordered by distance, so the positions are
+#                    scattered and the refinement makes ck reads of bpv bytes
+#                    at random offsets -- 1000 scattered 1 KB reads a query at
+#                    d=1024. In position order they run forward.
+#   JHQ_FUSE_REFINE  moves the refinement into the scan kernel. Unfused, the
+#                    scan writes ck positions and ck primary distances to
+#                    global and the next kernel reads them straight back:
+#                    16 KB a query at ck=1000, plus a launch.
+#
+# Neither changes which candidates survive or what any distance is -- each
+# composite distance is computed from one candidate alone, so not even the
+# summation order moves, and the final top-k re-sorts on it regardless.
+# Algorithm 1 fixes the set and the arithmetic and says nothing about the
+# order they are visited in.
+#
+# They target costs 64x apart in size, so all four combinations are built.
+set(V50 jhq_v50_fuse)
+add_jhq_variant(v50_base  ${V50} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_variant(v50_group ${V50} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_REGROUP=1)
+add_jhq_variant(v50_fuse  ${V50} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_FUSE_REFINE=1)
+add_jhq_variant(v50_both  ${V50} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_REGROUP=1 JHQ_FUSE_REFINE=1)
+
+# v51: the probe cursor, which never worked.
+#
+# scan_ivf_exact_kernel keeps `p`, a per-thread register holding how far into
+# the probe list the scan has reached, and its comment says the search "is
+# carried across chunks instead of restarting at 0 for every candidate". Only
+# the thread holding a chunk's last candidate ever wrote to it, so the other
+# 1023 kept p = 0 and re-walked the boundaries from zero every chunk: about
+# nprobe/2 tests per candidate instead of nprobe over the whole scan. On
+# stella at nprobe=128 that is 14,308 boundary tests a thread against 128,
+# roughly 30% of the inner loop's instructions.
+#
+# Each thread owns lt = chunk + tid, which grows by BLOCK a chunk, so its probe
+# index is monotone and a private cursor is exact -- same candidates, same
+# distances, same order.
+set(V51 jhq_v51_cursor)
+add_jhq_variant(v51_off ${V51} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_variant(v51_on  ${V51} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_PROBE_CURSOR=1)
+
+# v52: read the primary code a word at a time.
+#
+# The scan reads list_primary_t[m * N + pos], one byte a thread, and that is
+# already coalesced: since Pascal a global access is served in 32-byte
+# sectors, so a warp's 32 consecutive bytes are exactly one sector with
+# nothing discarded. v13's transpose is what fixed the coalescing; there is no
+# second coalescing win left to take here.
+#
+# What is left is instruction count. results/block_sweep/ puts the gather at
+# 53-66% of the scan while a roofline against this card's 1792 GB/s puts it at
+# 47-50% of peak -- a loop that is issuing far more than its arithmetic needs,
+# which is the same thing v54 later confirmed from the other side when a
+# table-free distance moved less memory and still lost.
+#
+# Ds=8 and B=8 make the primary code 1 bit a dimension, so four subspaces are
+# 32 dimensions and fit one uint32. One load replaces four, with one address
+# computation and a quarter of the loop iterations. Same bytes, same codes,
+# same distances. The repack runs once after add(), so neither encoder has to
+# know.
+#
+# v51's probe cursor is on by default from here; it was +2.5 to +148.5% at
+# identical recall.
+set(V52 jhq_v52_word)
+add_jhq_variant(v52_byte ${V52} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_variant(v52_word ${V52} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_WORD_LAYOUT=1)
+
+# v53: give the selection buffer room, so it is sorted less often.
+#
+# cap is the power of two at or above ck + BLOCK and v45 compacts when the
+# buffer cannot take another chunk. At ck=1000, BLOCK=1024 that is cap=2048
+# firing at cnt > 1024, and a compaction leaves cnt at 1000 -- twenty-five
+# survivors later it fires again. Doubling cap moves the trigger to 3072,
+# which takes 2,072 survivors: eighty times fewer sorts of twice the length.
+#
+# Shared memory has the room. 4096*8 is 32,768 B and the largest table here,
+# M=384, is 49,152: 81,920 of the 101,376 this card allows. The multiplier
+# stops as soon as the next doubling would not fit.
+#
+# Carries the v51 probe cursor and the v52 word layout, both on by default.
+set(V53 jhq_v53_cap)
+add_jhq_variant(v53_x1 ${V53} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_jhq_variant(v53_x2 ${V53} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=2)
+add_jhq_variant(v53_x4 ${V53} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=4)
+
+# The bounded selector's deviation, as returned ids rather than as a comment.
+#
+# Section 4's caveat says raising K_LOCAL from 4 to 8 changes 11 of 10,000
+# returned id positions on vogue at nprobe=128 and BLOCK=512.  That number has
+# lived in a source comment (jhq_v53_cap/search.cu) and in the paper, and
+# nowhere else: the ablation that exists, results/.../abl_klocal.csv, is at
+# nprobe=256 and carries only recall and QPS.  A claim about which ids come
+# back needs the ids.
+#
+# v53_x1 is the K_LOCAL=4 arm -- it is the head for search and already built --
+# so only its twin is new.  Nothing in jhq_v53_cap/ is touched; K_LOCAL is a
+# compile-time macro, which is why this is a second target and not a flag.
+add_jhq_variant(v53_kl8 ${V53} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=8 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+
+# v54: the primary distance as an inner product, with no table at all.
+#
+# Equation 4 builds the K codewords as a Cartesian product of equation 3's
+# per-dimension levels, and L = 2^(B/Ds). Every configuration here runs at
+# Ds = B = 8, so L = 2 and the two levels are +/- sigma*sqrt(2)*erfinv(0.5) --
+# symmetric, because equation 3 puts them at the quantiles of a zero-mean
+# Gaussian. Then
+#
+#     D_P(q,y) = ||q'||^2 + d*a^2 - 2a<q', s_y>,   s_y in {-1,+1}^d
+#
+# is an identity: same candidates, same distances, a different summation
+# order. What changes is what has to be resident per query -- the table's
+# M*32 floats become the query's M*8. At M=384 that is 49,152 B against
+# 12,288, and results/front6/NEGATIVES.md prices the difference at 17-26%
+# wherever occupancy is not already pinned at one block. openai3-3072 is
+# where it is pinned, by that very table, and so is where this is aimed.
+#
+# The cost is instructions: 32 predicated adds a word against the table's 8
+# loads and 8 adds. results/block_sweep/ puts the scan at about 7% of this
+# card's arithmetic throughput, so there is headroom on paper; the two builds
+# are what say whether there is headroom in practice.
+#
+# verify_sign_levels() checks the centroids really are +/-a and reads the
+# encoder's bit order off them, refusing to run if either fails -- the same
+# treatment v47 gives the factorised table.
+set(V54 jhq_v54_sign_ip)
+add_jhq_variant(v54_lut  ${V54} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_jhq_variant(v54_sign ${V54} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1
+    JHQ_SIGN_IP=1)
+
+# v55: choose alpha by sampling instead of by sweeping it in advance.
+#
+# alpha fixes the refinement budget ck = alpha*k and the paper does not say how
+# to set it. results/front6/alpha_ds.log measures what that costs: the point
+# where ranking loss stops improving spans 25x across datasets, so one constant
+# is either wasteful or lossy and which it is cannot be known without a sweep.
+#
+# The rule needs no sweep and no labels: answer S of the batch's queries once
+# at a generous alpha_max, then again at smaller alpha, and keep the smallest
+# whose top-k still agrees with the reference. It asks "would a smaller budget
+# change what I return", which the system can see, rather than "would it change
+# recall", which needs ground truth it does not have.
+#
+# The only source change is a set_alpha() setter -- alpha sizes ck per search
+# call and nothing trained depends on it, and the captured graph is already
+# keyed on ck, so one index answers at several budgets. Rebuilding per alpha
+# would take minutes and fold training noise into the result.
+set(V55 jhq_v55_alpha_sample)
+add_jhq_variant(v55_exp ${V55} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_executable(demo_jhq_alpha_sample examples/demo_jhq_alpha_sample.cu)
+target_compile_definitions(demo_jhq_alpha_sample PRIVATE
+    JHQ_INDEX_HEADER="${V55}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_alpha_sample PRIVATE jhq_v55_exp)
+
+# v56: the alpha rule with the three costs v55 measured taken out.
+#
+#  1. cal_ms was flat at ~99 ms from S=8 to S=128 and scaled with grid steps
+#     instead, ~15 ms each against ~0.8 ms of searching: ck moves with alpha,
+#     the CUDA graph is keyed on ck, and every step re-captured it. A
+#     calibration flag runs the kernels straight on the stream.
+#  2. The grid was walked linearly, up to 7 searches; bisection needs 3.
+#  3. eps was a fraction, and 0.001 of S*k = 320 slots allowed 0.32 of a slot
+#     -- exact equality by accident, which is why two cells picked a larger
+#     alpha than the sweep. It is a slot count now.
+#
+# JHQ_AS_LINEAR=1 keeps the linear walk so the two can be compared.
+set(V56 jhq_v56_alpha_fast)
+add_jhq_variant(v56_exp ${V56} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_executable(demo_jhq_alpha_fast examples/demo_jhq_alpha_fast.cu)
+target_compile_definitions(demo_jhq_alpha_fast PRIVATE
+    JHQ_INDEX_HEADER="${V56}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_alpha_fast PRIVATE jhq_v56_exp)
+
+# v57: size the launch to the queries present, not to the workspace.
+#
+# Every search ran batch_cap blocks and zero-padded the rest, so a 32-query
+# calibration pass did 1024 queries' work with 992 of them zeros.
+# results/front6/alpha_fast.log is the evidence: cal_ms was flat from S=8 to
+# S=128, scaled with grid steps instead, and did not move when the graph
+# capture was removed -- the cost was never the capture, it was the kernels
+# running at full width.
+#
+# The graph is fixed-width, so B joins ck and nprobe in its key: a run of equal
+# batches captures once as before, a remainder captures a second graph and
+# reuses it. A 999-query batch against a 1024 workspace also stops computing
+# 25 queries of zeros.
+set(V57 jhq_v57_launch_nq)
+add_jhq_variant(v57_exp ${V57} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_executable(demo_jhq_alpha_v57 examples/demo_jhq_alpha_fast.cu)
+target_compile_definitions(demo_jhq_alpha_v57 PRIVATE
+    JHQ_INDEX_HEADER="${V57}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_alpha_v57 PRIVATE jhq_v57_exp)
+
+# The same binary with calibration and reporting on disjoint query halves.
+# demo_jhq_alpha_v57 strides its calibration sample out of the query set it
+# then scores on -- 32 of 1,000 on the frontier -- so the budget is chosen
+# knowing part of what it is measured against.  JHQ_AS_HOLDOUT=0 restores the
+# pooled behaviour, so one run reports both and the gap is measured.
+add_executable(demo_jhq_alpha_holdout examples/demo_jhq_alpha_holdout.cu)
+target_compile_definitions(demo_jhq_alpha_holdout PRIVATE
+    JHQ_INDEX_HEADER="${V57}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_alpha_holdout PRIVATE jhq_v57_exp)
+
+# Every budget arm on one index: fixed alphas, the sampled rule, the same
+# criterion on all queries, and a ground-truth oracle. v57 so the numbers sit
+# on the same build as the reported frontier.
+add_executable(demo_jhq_budget_arms examples/demo_jhq_budget_arms.cu)
+target_compile_definitions(demo_jhq_budget_arms PRIVATE
+    JHQ_INDEX_HEADER="${V57}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_budget_arms PRIVATE jhq_v57_exp)
+
+# Review harness adds per-draw costs; the frozen search library is unchanged.
+add_executable(demo_jhq_budget_review examples/demo_jhq_budget_review.cu)
+target_compile_definitions(demo_jhq_budget_review PRIVATE
+    JHQ_INDEX_HEADER="${V57}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_budget_review PRIVATE jhq_v57_exp)
+# The plain front demo too, since sizing the launch changes every search, not
+# only calibration -- a 999-query batch on a 1024 workspace included 25
+# queries of zeros in every number this project has reported.
+add_executable(demo_jhq_v57 examples/demo_jhq_v36.cu)
+target_compile_definitions(demo_jhq_v57 PRIVATE
+    JHQ_INDEX_HEADER="${V57}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_v57 PRIVATE jhq_v57_exp)
+
+# v58: export the trained coarse quantiser, so the CPU reference can search the
+# same partitioning.
+#
+# JHQ_official reads its IVF centroids and assignments from files rather than
+# training its own, which is what makes a fair CPU-versus-GPU comparison
+# possible: hand both the same routing and the only difference left is the
+# quantisation and the search. Without it the comparison measures training --
+# JHQ_repro trains its IVF on 65,536 points with 20 iterations and its residual
+# codebook with 25, against this port's million-plus and 2000.
+#
+# The only source change from v57 is a centroids() accessor.
+set(V58 jhq_v58_export)
+add_jhq_variant(v58_exp ${V58} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_executable(export_ivf_for_cpu examples/export_ivf_for_cpu.cu)
+target_compile_definitions(export_ivf_for_cpu PRIVATE
+    JHQ_INDEX_HEADER="${V58}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(export_ivf_for_cpu PRIVATE jhq_v58_exp)
+
+# The hierarchy ablation, on the build everything else is measured on.
+#
+# JHQ_NO_RESIDUAL drops the second level: primary codes only, no selective
+# refinement. results/pre_freeze_v22_s2b1/ has this, but on v21 -- before the
+# factorised table, the probe cursor, the word layout, the launch fix and the
+# alpha rule -- so its numbers cannot sit in the same table as the rest of
+# Section 6.
+#
+# It is the ablation Section 3 rests on: selective refinement, the alpha
+# budget and the two-level scan all presuppose that the second level earns its
+# place. Without this the motivation is asserted rather than measured.
+add_jhq_variant(v58_jq ${V58} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1
+    JHQ_NO_RESIDUAL=1)
+
+# A probe of the cluster-centric premise, before writing the kernel for it.
+#
+# Sharing one list's codes across the queries that probe it only pays if those
+# repeated reads reach DRAM. This card has 96 MB of L2 and stella's whole
+# primary code is 128 MB, so they might not. demo_jhq_qdup duplicates queries
+# instead of changing a kernel: same block count, same work, D times the list
+# overlap. Flat QPS in D means L2 already has it and the rewrite is worthless.
+#
+# It links jhq_v53_x1 -- v51's cursor and v52's word layout, the current
+# default -- so the answer is about the code that would actually be rewritten.
+add_executable(demo_jhq_qdup examples/demo_jhq_qdup.cu)
+target_compile_definitions(demo_jhq_qdup PRIVATE
+    JHQ_INDEX_HEADER="${V53}/jhq_gpu_index.cuh" JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+target_link_libraries(demo_jhq_qdup PRIVATE jhq_v53_x1)
+
+set(V29 jhq_v29_hist_wide)
+add_jhq_dir(v29_exp ${V29}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+set(V28 jhq_v28_single_pass)
+add_jhq_dir(v28_exp ${V28}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+set(V27 jhq_v27_cache_key)
+add_jhq_dir(v27_exp ${V27}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+set(V26 jhq_v26_gpu_residual)
+add_jhq_dir(v26_exp ${V26}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+set(V25 jhq_v25_streamed_residual)
+add_jhq_dir(v25_exp ${V25}
+    JHQ_PAPER_FAITHFUL=1 JHQ_LUT32=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+set(V24 jhq_v24_paper_default)
+
+# Depth of the per-thread candidate buffer. The scan keeps K_LOCAL candidates
+# per thread and merges them; that equals the global top-alpha*k only if no
+# thread ever holds more than K_LOCAL of it. With ck=1000 over BLOCK=1024
+# threads the expected load is about one per thread, so 4 is four times the
+# mean -- but expectation is not proof, and recall being flat across depths is
+# not proof either, since two different result sets can share a recall. These
+# targets exist to diff the returned ids themselves, at a fixed BLOCK: BLOCK
+# changes which candidates land on which thread, so it has to be held still.
+add_jhq_dir(v24_kl4  ${V24} JHQ_LUT32=1 JHQ_K_LOCAL=4  JHQ_PREFIX_KEEP=4  JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_dir(v24_kl8  ${V24} JHQ_LUT32=1 JHQ_K_LOCAL=8  JHQ_PREFIX_KEEP=8  JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+add_jhq_dir(v24_kl16 ${V24} JHQ_LUT32=1 JHQ_K_LOCAL=16 JHQ_PREFIX_KEEP=16 JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1 JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1)
+
+# v24 defaults: float table, PM = M. The cascade variant opts back in.
+add_jhq_dir(v24        ${V24} JHQ_LUT32=1 ${TUNED})
+add_jhq_dir(v24_casc   ${V24} JHQ_LUT32=1 JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=2 ${TUNED})
+# The half table, to re-price it now that both files agree on its size.
+add_jhq_dir(v24_half   ${V24} JHQ_LUT32=0 ${TUNED})
+
+# JQ-GPU: identical primary quantiser, IVF, cascade, occupancy and selection,
+# with the residual level switched off. Everything that differs between this
+# and demo_jhq_v22_s2b1 is the hierarchy itself.
+add_library(jhq_v22_jq STATIC
+    jhq_v21_cascade/encode.cu
+    jhq_v21_cascade/search.cu
+    jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+)
+target_include_directories(jhq_v22_jq PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v22_jq PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v22_jq PRIVATE
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=2 JHQ_PREFIX_KEEP=8
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_NO_RESIDUAL=1)
+target_compile_options(jhq_v22_jq PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v22_jq examples/demo_jhq_v21_cascade.cu)
+target_link_libraries(demo_jhq_v22_jq PRIVATE jhq_v22_jq)
+
+# Recall-ceiling diagnostics. Recall saturates near 0.95 and three independent
+# causes are consistent with that: IVF pruning (nprobe=128 of nlist=1024),
+# per-thread truncation (K_LOCAL=4 keeps 4096 of 116541 candidates at
+# BLOCK=1024), and the 96 B code itself. K_LOCAL sizes the shared scratch --
+# (2*K_LOCAL*BLOCK + 2*BLOCK) floats -- so 8 needs 73 KB beside the 48 KB
+# table and only fits at BLOCK <= 512.
+function(add_jhq_klocal KL)
+    set(tgt jhq_v22_kl${KL})
+    add_library(${tgt} STATIC
+        jhq_v21_cascade/encode.cu
+        jhq_v21_cascade/search.cu
+        jhq_v21_cascade/jhq_gpu_index.cu
+    jhq_v21_cascade/train_pq_gpu.cu
+    jhq_v21_cascade/train_res_gpu.cu
+    )
+    target_include_directories(${tgt} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(${tgt} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(${tgt} PRIVATE
+        JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=2 JHQ_PREFIX_KEEP=8 JHQ_K_LOCAL=${KL})
+    target_compile_options(${tgt} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_${tgt} examples/demo_jhq_v21_cascade.cu)
+    target_link_libraries(demo_${tgt} PRIVATE ${tgt})
+endfunction()
+
+foreach(KL 2 4 8 16)
+    add_jhq_klocal(${KL})
+endforeach()
+
+# ── Residual-codebook layout ablation ────────────────────────────────────────
+# Same sources as jhq_v16_pq_primary with the residual codebook forced global
+# (v15's layout) instead of per-subspace (the official layout). Only the
+# codebook contents differ -- see JHQ_GLOBAL_RESIDUAL_CB in jhq_gpu_index.cu.
+add_library(jhq_v16_globalres STATIC
+    jhq_v16_pq_primary/encode.cu
+    jhq_v16_pq_primary/search.cu
+    jhq_v16_pq_primary/jhq_gpu_index.cu
+)
+target_include_directories(jhq_v16_globalres PUBLIC ${CMAKE_SOURCE_DIR})
+target_link_libraries(jhq_v16_globalres PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+target_compile_definitions(jhq_v16_globalres PRIVATE JHQ_GLOBAL_RESIDUAL_CB=1)
+target_compile_options(jhq_v16_globalres PRIVATE
+    $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+)
+add_executable(demo_jhq_v16_globalres examples/demo_jhq_v16_pq_primary.cu)
+target_link_libraries(demo_jhq_v16_globalres PRIVATE jhq_v16_globalres)
+
+# ── K_LOCAL ablation variants ────────────────────────────────────────────────
+# Same sources as jhq_v15_eval_fix; only JHQ_K_LOCAL differs.
+# scan_ivf_coalesced_kernel keeps K_LOCAL candidates per thread and drops the
+# rest before the block-wide selection, so this measures what that truncation
+# costs in recall. 32 would need the shared-memory opt-in (66KB > 48KB default)
+# -- search.cu checks and throws rather than failing silently.
+foreach(KL 8 16)
+    add_library(jhq_v15_kl${KL} STATIC
+        jhq_v15_eval_fix/encode.cu
+        jhq_v15_eval_fix/search.cu
+        jhq_v15_eval_fix/jhq_gpu_index.cu
+    )
+    target_include_directories(jhq_v15_kl${KL} PUBLIC ${CMAKE_SOURCE_DIR})
+    target_link_libraries(jhq_v15_kl${KL} PUBLIC jhq_cpu CUDA::cublas CUDA::cudart)
+    target_compile_definitions(jhq_v15_kl${KL} PRIVATE JHQ_K_LOCAL=${KL})
+    target_compile_options(jhq_v15_kl${KL} PRIVATE
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3 --expt-relaxed-constexpr --use_fast_math -Xcompiler=-fopenmp>
+    )
+    add_executable(demo_jhq_v15_kl${KL} examples/demo_jhq_v15_eval_fix.cu)
+    target_link_libraries(demo_jhq_v15_kl${KL} PRIVATE jhq_v15_kl${KL})
+endforeach()
+
+# v59: the factorised table at four granularities.
+#
+# The half-split is one partition of the primary code's eight base-2 digits
+# out of several. Splitting into G groups of 8/G bits each gives G tables of
+# 2^(8/G) entries:
+#
+#   G=1   1 x 256 = 256 entries a subspace, 1 load a candidate a subspace
+#   G=2   2 x  16 =  32                     2                              <- shipped
+#   G=4   4 x   4 =  16                     4
+#   G=8   8 x   2 =  16                     8
+#
+# G=8 is dominated by construction -- the same table as G=4 for twice the work
+# -- and is built anyway, because a table that predicts a dominated point and
+# then measures it is worth more than one that assumes it.
+#
+# The question is G=2 against G=4. G=4 halves the shared-memory footprint
+# again: M*16*4 bytes is 6 KiB at M=96 and 24 KiB at M=384, against 12 and 48
+# KiB at G=2, and 48 KiB is where occupancy starts to bind on this card. It
+# pays for that with twice the loads and adds on the innermost line of the
+# scan. So the prediction is that G=2 wins at small M and G=4 at large M, and
+# if the crossover is real then the granularity is a design parameter of the
+# representation rather than a constant someone picked.
+#
+# G is compile-time. A runtime G would put a loop and a branch in the scan's
+# innermost line and measure those instead, which is why there are four
+# binaries rather than one with a flag.
+#
+# All four compute identical primary distances -- the identity is exact for
+# every partition -- so recall must agree to the tie-break floor across them,
+# and verify_split_lut() checks the Cartesian precondition per group at train
+# time rather than trusting the flag.
+set(V59 jhq_v59_lutgroups)
+foreach(G 1 2 4 8)
+  add_jhq_variant(v59_g${G} ${V59} JHQ_PAPER_FAITHFUL=1
+      JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+      JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+      JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1
+      JHQ_LUT_GROUPS=${G})
+endforeach()
+
+# The 2x2 the paper needs and did not have.
+#
+# Section 3 claims the admissible codebook pays twice -- once in the table,
+# where the Cartesian construction makes an exact factorisation possible, and
+# once in the code word, where one bit a dimension lets four subspaces share a
+# 32-bit load. Until now the two were measured in different version
+# directories (v47 for the table, v52 for the word), which is enough to say
+# each is worth something and not enough to say whether they are additive or
+# overlapping. The "pays twice" framing assumes additive without evidence.
+#
+# These two targets complete the square on one build: G=1 is the full
+# 256-entry table and G=2 the factorised one, and JHQ_WORD_LAYOUT=0 reads the
+# codes a byte at a time instead of a word. With the four v59_g* targets above
+# (which are all word layout) that gives
+#
+#            full table      factorised
+#   byte     v59_b_g1        v59_b_g2
+#   word     v59_g1          v59_g2
+#
+# all from one source tree at one commit, so the interaction term is a
+# measurement rather than an inference across versions.
+foreach(G 1 2)
+  add_jhq_variant(v59_b_g${G} ${V59} JHQ_PAPER_FAITHFUL=1
+      JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+      JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+      JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1
+      JHQ_LUT_GROUPS=${G} JHQ_WORD_LAYOUT=0)
+endforeach()
+
+# The step timers on the build everything else is measured on.
+#
+# JHQ_STEP_TIMING attributes each batch to gemm_rotate, gemm_centroid,
+# select_probes, build_byte_lut, scan_ivf, build_lut_r, residual_refine and
+# topk_final. It cannot share a run with the headline QPS: events cannot be
+# read back from inside a captured graph, so the timers bypass the graph and
+# the run loses its launch-overhead saving. The shares are still right --
+# every stage pays the same tax -- but the totals are not comparable with
+# paper_fronts.log, exactly as alpha6.log's rank_lost is usable while its QPS
+# is not. Any table mixing the two has to say which build each number is from.
+#
+# What it is for: as alpha falls, refinement work falls while the primary scan
+# does not, so the scan's *share* rises. That is the experimental link between
+# Section 3 and Section 4, and it is currently asserted rather than measured.
+# Note it is a share that moves, not a scan that gets cheaper -- at fixed
+# nprobe a smaller alpha keeps fewer survivors, it does not scan fewer
+# candidates.
+add_jhq_variant(v58_timed ${V58} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1
+    JHQ_STEP_TIMING=1)
+
+# v60: two probes of the residual refinement, both off by default, so the
+# default binary is v58 and shares its trained-state cache (training is
+# untouched; the arms6 cache directories give the index the paper measured).
+#
+#   JHQ_REFINE_LANES=1|8|16|32  residual_refine_group_kernel: L lanes per
+#       candidate reading 32-bit words, against the thread-per-candidate
+#       fused kernel. L=1 must reproduce the fused kernel's distances exactly.
+#   JHQ_DUMP_REFINE=<path>      raw residual-stage inputs for the first 100
+#       queries, for experiments/refine_probe/analyze_refine_dump.py to measure
+#       how many survivors a partial residual sum can rule out.
+#
+# Driven by experiments/refine_probe/run_refine_probe.sh.
+set(V60 jhq_v60_refine_probe)
+add_jhq_variant(v60_exp ${V60} JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+
+# v61: v58 with the refinement kernel selectable between v58's
+# thread-per-candidate byte kernel (lanes 0, the default -- so the default
+# binary searches exactly as v58) and residual_refine_group_kernel (lanes 1:
+# 32-bit loads only; 8/16/32: lanes per candidate), ported from v60 where it
+# was measured. jhq_gpu::set_refine_lanes() switches it between searches;
+# JHQ_REFINE_LANES sets the start. No dump path, no other change.
+#
+# demo_jhq_v61_ab builds one index and measures every kernel on it: per-query
+# ids and distances against lanes 0, and rotated, paired timing. Driven by
+# experiments/warp_refine/run_warp_refine.sh.
+set(V61 jhq_v61_warp_refine)
+set(V61_DEFS JHQ_PAPER_FAITHFUL=1
+    JHQ_PREFIX_NUM=1 JHQ_PREFIX_DEN=1
+    JHQ_K_LOCAL=4 JHQ_PREFIX_KEEP=4
+    JHQ_TILE_C=2 JHQ_TILE_STRIDED=1 JHQ_BITONIC_SELECT=1 JHQ_CAP_MULT=1)
+add_jhq_variant(v61_exp ${V61} ${V61_DEFS})
+add_executable(demo_jhq_v61_ab examples/demo_jhq_v61_refine_ab.cu)
+target_compile_definitions(demo_jhq_v61_ab PRIVATE
+    JHQ_INDEX_HEADER="${V61}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_link_libraries(demo_jhq_v61_ab PRIVATE jhq_v61_exp)
+
+# Batch-size sweep of the v61 pipeline (refinement lanes 16), with NVTX ranges
+# for nsys: the Phase 0 baseline of experiments/pipeline_v62. A new harness on
+# the existing library; v61's sources are not touched.
+add_executable(demo_jhq_v61_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v61_batch PRIVATE
+    JHQ_INDEX_HEADER="${V61}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_link_libraries(demo_jhq_v61_batch PRIVATE jhq_v61_exp)
+
+# v62: v61 with the primary screening selectable between v61's query-centric
+# scan (G = 0, the default -- the default binary searches exactly as v61) and
+# list-group screening: G = 1, 2, 4, 8 blocks per query, each keeping its
+# share's exact local top-ck, merged on the GPU into the query's exact global
+# top-ck (scan_ivf_group_kernel, merge_group_topk_kernel). jhq_gpu::
+# set_primary_groups() switches it between searches; JHQ_PRIMARY_GROUPS sets
+# the start. Refinement is v61's, unchanged. demo_jhq_v62_batch measures every
+# G on one index and checks each against G = 0 query by query; driven by
+# experiments/pipeline_v62/run_v62.sh.
+set(V62 jhq_v62_listgroup)
+add_jhq_variant(v62_exp ${V62} ${V61_DEFS})
+add_executable(demo_jhq_v62_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v62_batch PRIVATE
+    JHQ_INDEX_HEADER="${V62}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v62_batch PRIVATE jhq_v62_exp)
+
+# v63: v62 with a shared bound between a query's groups (G > 1): each group
+# publishes its ck-th (distance, position) key with atomicMin after every
+# compaction, admits only candidates at or before the query's bound, and
+# writes only the prefix of its sorted result at or before it. Any group's
+# ck-th key bounds the query's global ck-th key, so the result is v62's
+# exactly; what changes is how much each group keeps and the merge reads.
+# jhq_gpu::set_shared_bound() / JHQ_SHARED_BOUND (default on); off is v62.
+# demo_jhq_v63_batch measures both on one index (variant g >= 100 = shared);
+# driven by experiments/pipeline_campaign/exp2_v63.sh.
+set(V63 jhq_v63_sharedbound)
+add_jhq_variant(v63_exp ${V63} ${V61_DEFS})
+add_executable(demo_jhq_v63_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v63_batch PRIVATE
+    JHQ_INDEX_HEADER="${V63}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 JHQ_PIPELINE_V63=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v63_batch PRIVATE jhq_v63_exp)
+
+# v65: v63 with the primary execution scheduled per batch (set_primary_groups
+# (-1) / JHQ_PRIMARY_GROUPS=-1): G from the batch size and one per-index
+# statistic (the per-query candidate count's CV, measured once by
+# calibrate_schedule on pseudo-queries), on the host, with no device read per
+# search; one group runs v61's scan. Fixed G and the shared bound remain
+# selectable so one binary measures the schedule against every fixed choice.
+# demo_jhq_v65_batch: experiments/pipeline_campaign/exp47_bench.sh.
+set(V65 jhq_v65_schedule)
+add_jhq_variant(v65_exp ${V65} ${V61_DEFS})
+add_executable(demo_jhq_v65_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v65_batch PRIVATE
+    JHQ_INDEX_HEADER="${V65}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 JHQ_PIPELINE_V63=1 JHQ_PIPELINE_V65=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v65_batch PRIVATE jhq_v65_exp)
+
+# v66 (bound pilot): v65 plus a read-only host export of the representation
+# (export_host_state); search is v65's. demo_jhq_v66_bound_pilot runs the
+# offline FP64 study of experiments/residual_aware_bound -- not a search system.
+set(V66 jhq_v66_boundpilot)
+add_jhq_variant(v66_exp ${V66} ${V61_DEFS})
+add_executable(demo_jhq_v66_bound_pilot examples/demo_jhq_v66_bound_pilot.cu)
+target_compile_definitions(demo_jhq_v66_bound_pilot PRIVATE
+    JHQ_INDEX_HEADER="${V66}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_compile_options(demo_jhq_v66_bound_pilot PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-O3 -Xcompiler=-fopenmp>)
+target_link_libraries(demo_jhq_v66_bound_pilot PRIVATE jhq_v66_exp)
+# The bound-aware residual quantization pilot (experiments/bound_aware_quant):
+# residual-prefix and coarse-code bounds, offline, on the same export.
+add_executable(demo_jhq_v66_bound_aware_quant examples/demo_jhq_v66_bound_aware_quant.cu)
+target_compile_definitions(demo_jhq_v66_bound_aware_quant PRIVATE
+    JHQ_INDEX_HEADER="${V66}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_compile_options(demo_jhq_v66_bound_aware_quant PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-O3 -Xcompiler=-fopenmp>)
+target_link_libraries(demo_jhq_v66_bound_aware_quant PRIVATE jhq_v66_exp)
+# The progressive primary screening pilot (experiments/progressive_primary):
+# the primary codes, list offsets and rotated queries, for an offline study.
+add_executable(demo_jhq_v66_export_primary examples/demo_jhq_v66_export_primary.cu)
+target_compile_definitions(demo_jhq_v66_export_primary PRIVATE
+    JHQ_INDEX_HEADER="${V66}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_compile_options(demo_jhq_v66_export_primary PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-O3 -Xcompiler=-fopenmp>)
+target_link_libraries(demo_jhq_v66_export_primary PRIVATE jhq_v66_exp)
+# The rank-optimal quantization study (experiments/rank_optimal_quantization):
+# the rotation, residual codebooks and codes, for an offline re-encoding.
+add_executable(demo_jhq_v66_export_quant examples/demo_jhq_v66_export_quant.cu)
+target_compile_definitions(demo_jhq_v66_export_quant PRIVATE
+    JHQ_INDEX_HEADER="${V66}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_compile_options(demo_jhq_v66_export_quant PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-O3 -Xcompiler=-fopenmp>)
+target_link_libraries(demo_jhq_v66_export_quant PRIVATE jhq_v66_exp)
+
+# v67 (rank-optimal quantization study): v66 plus import_state, which replaces the primary and residual
+# representation with one built offline on the same rotation, lists and positions; search is v65's.
+# demo_jhq_v67_repr_bench measures v65's search on the paper index and on the imported representation
+# side by side (experiments/rank_optimal_quantization).
+set(V67 jhq_v67_import)
+add_jhq_variant(v67_exp ${V67} ${V61_DEFS})
+add_executable(demo_jhq_v67_repr_bench examples/demo_jhq_v67_repr_bench.cu)
+target_compile_definitions(demo_jhq_v67_repr_bench PRIVATE
+    JHQ_INDEX_HEADER="${V67}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_compile_options(demo_jhq_v67_repr_bench PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-O3 -Xcompiler=-fopenmp>)
+target_link_libraries(demo_jhq_v67_repr_bench PRIVATE jhq_v67_exp)
+
+# v68 (math-ablation study, V1 E8-JHQ): v67 with the full 256-entry primary table instead of v47's factorised
+# 16+16 one (an E8 codebook is not a Cartesian product), and import_state taking any 256-word codebook per
+# subspace. demo_jhq_v68_e8_bench measures the paper index and the imported E8 representation through it side
+# by side (experiments/math_ablation/v1_e8).
+set(V68 jhq_v68_e8)
+add_jhq_variant(v68_exp ${V68} ${V61_DEFS})
+add_executable(demo_jhq_v68_e8_bench examples/demo_jhq_v68_e8_bench.cu)
+target_compile_definitions(demo_jhq_v68_e8_bench PRIVATE
+    JHQ_INDEX_HEADER="${V68}/jhq_gpu_index.cuh" ${V61_DEFS})
+target_compile_options(demo_jhq_v68_e8_bench PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-O3 -Xcompiler=-fopenmp>)
+target_link_libraries(demo_jhq_v68_e8_bench PRIVATE jhq_v68_exp)
+
+# v69 (experiments/practical_opt, item 2): v65 with the probe selection by radix select instead of
+# repeated bitonic compaction -- the same probes in the same order, bit for bit; search is otherwise v65's.
+# demo_jhq_v69_batch is demo_jhq_v65_batch's harness on it.
+set(V69 jhq_v69_probesel)
+add_jhq_variant(v69_exp ${V69} ${V61_DEFS})
+add_executable(demo_jhq_v69_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v69_batch PRIVATE
+    JHQ_INDEX_HEADER="${V69}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 JHQ_PIPELINE_V63=1 JHQ_PIPELINE_V65=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v69_batch PRIVATE jhq_v69_exp)
+
+# demo_jhq_v69_budget_arms: the paper's five-arm budget comparison (demo_jhq_budget_arms, v57) re-run
+# on v69's pipeline -- 16 refinement lanes, scheduled list groups, the schedule calibrated -- so the
+# adaptive-budget numbers describe the version the frontier reports. experiments/adc_v69.
+add_executable(demo_jhq_v69_budget_arms examples/demo_jhq_budget_arms_v69.cu)
+target_compile_definitions(demo_jhq_v69_budget_arms PRIVATE
+    JHQ_INDEX_HEADER="${V69}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 JHQ_PIPELINE_V63=1 JHQ_PIPELINE_V65=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v69_budget_arms PRIVATE jhq_v69_exp)
+
+# v71 (experiments/adc_v69, the paper's RQ3): v69 with v59's table granularity as a compile-time
+# choice, so the table-grouping ablation is measured on the pipeline the frontier reports. One binary
+# per JHQ_LUT_GROUPS, as in v59: 1 is the full 256-entry table, 2 is v69's 16 + 16 table bit for bit,
+# 4 and 8 split further. All four compute the same primary distances up to the order of a few float
+# additions, so recall must agree across them; run_lutgroups_v71.sh checks that before it times anything.
+set(V71 jhq_v71_lutgroups)
+foreach(G 1 2 4 8)
+  add_jhq_variant(v71_g${G} ${V71} ${V61_DEFS} JHQ_LUT_GROUPS=${G})
+  add_executable(demo_jhq_v71_g${G}_batch examples/demo_jhq_batch_pipeline.cu)
+  target_compile_definitions(demo_jhq_v71_g${G}_batch PRIVATE
+      JHQ_INDEX_HEADER="${V71}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 JHQ_PIPELINE_V63=1 JHQ_PIPELINE_V65=1
+      ${V61_DEFS} JHQ_LUT_GROUPS=${G})
+  target_link_libraries(demo_jhq_v71_g${G}_batch PRIVATE jhq_v71_g${G})
+endforeach()
+
+# v70 (experiments/practical_opt, item 2, the optional part): v69 with the IVF centroid scoring on fp16
+# inputs (tensor cores, fp32 accumulation) against a copy of the centroids made at the first search; not
+# exact, measured against v69. demo_jhq_v70_batch is the same harness on it.
+set(V70 jhq_v70_c16route)
+add_jhq_variant(v70_exp ${V70} ${V61_DEFS})
+add_executable(demo_jhq_v70_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v70_batch PRIVATE
+    JHQ_INDEX_HEADER="${V70}/jhq_gpu_index.cuh" JHQ_PIPELINE_V62=1 JHQ_PIPELINE_V63=1 JHQ_PIPELINE_V65=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v70_batch PRIVATE jhq_v70_exp)
+
+# v64: v61 with the IVF centroid scoring selectable (jhq_gpu::set_route_mode,
+# JHQ_ROUTE_MODE): 0 = v61's, rotate then score against c; 1 = score the query
+# as given against Pi^T c (precomputed once per index -- the same products,
+# <Pi q, c> = <q, Pi^T c>), still serial; 2 = as 1 with the graph forked, the
+# routing branch (centroid GEMM, probe selection) on a second stream beside
+# the rotation and table. Everything else is v61's. demo_jhq_v64_batch measures
+# the three on one index and checks 1 and 2 against 0 query by query; driven by
+# experiments/pipeline_campaign/exp3_v64.sh.
+set(V64 jhq_v64_orthoroute)
+add_jhq_variant(v64_exp ${V64} ${V61_DEFS})
+add_executable(demo_jhq_v64_batch examples/demo_jhq_batch_pipeline.cu)
+target_compile_definitions(demo_jhq_v64_batch PRIVATE
+    JHQ_INDEX_HEADER="${V64}/jhq_gpu_index.cuh" JHQ_PIPELINE_V64=1 ${V61_DEFS})
+target_link_libraries(demo_jhq_v64_batch PRIVATE jhq_v64_exp)
+
+# ── Tests ─────────────────────────────────────────────────────────────────────
+# Pure C++ (common/recall.cuh has no CUDA in it), so no CUDA toolchain needed
+# to run these.  ctest, or: ./build/test_recall
+enable_testing()
+add_executable(test_recall tests/test_recall.cpp)
+target_include_directories(test_recall PRIVATE ${CMAKE_SOURCE_DIR})
+target_compile_options(test_recall PRIVATE -O2)
+add_test(NAME recall COMMAND test_recall)

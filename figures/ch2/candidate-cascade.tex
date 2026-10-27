@@ -1,0 +1,17 @@
+\begin{tikzpicture}[
+ font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+ text width=2.65cm,minimum height=1.8cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (x) at (0,0) {Database $\mathcal X$\\$N$ vectors};
+\node[box] (u) at (3.6,0) {IVF lists\\$U(q)$: $n_c$ vectors};
+\node[box,fill=ThesisNavy!7] (c) at (7.2,0) {Primary top-$c$\\$C_\alpha(q)$\\up to $c$ vectors};
+\node[box,fill=ThesisNavy!7] (r) at (10.8,0) {Refined top-$k$\\$\mathcal R_\alpha(q)$};
+\draw[arr] (x) -- node[above,font=\footnotesize] {IVF} (u);
+\draw[arr] (u) -- node[above,font=\footnotesize] {$D_{\rm P}$} (c);
+\draw[arr] (c) -- node[above,font=\footnotesize] {$D_{\rm H}$} (r);
+\node[align=center,text width=6.4cm] at (2.6,-2.0)
+ {Query $q'=\Pi q$ stays FP32.\\Primary codes score the broad scan.};
+\node[align=center,text width=5.8cm] at (9.7,-2.0)
+ {Residual $r=\Pi x-\widehat p$.\\Survivors decode $\widehat p+\widehat r$.};
+\end{tikzpicture}

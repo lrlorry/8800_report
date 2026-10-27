@@ -1,0 +1,51 @@
+竞争方法涵盖图遍历（CAGRA fp32/int8）、乘积量化IVF与GPU IVF-RaBitQ
+\cite{cagra,pq,ivfrabitq}，FP32 GPU暴力搜索提供穷举参考。
+各方法扫描自己的实现参数（\cref{tab:3-grids}），索引配置的存储量和重建精度
+可以不同。因此主前沿衡量这些网格内指定质量下的可达速度，另行报告显存。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{E1主要调参维度。逐点参数和覆盖扩展保留在原始记录中；
+各方法使用不同的有限网格。}
+\label{tab:3-grids}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}p{.22\linewidth}X@{}}
+\toprule
+方法 & 记录的扫描维度 \\
+\midrule
+JHQ & probe与$\alpha$；初始probe为64/128/256，预算为工作负载基准的
+$0.5/1/2$倍；覆盖扩展最高至probe 1,024，并增加更大／更小预算 \\
+CAGRA fp32/int8 & 图度32/64；search width为1/2/4/8；
+中间top-$k$容量32--512 \\
+IVF-PQ & 8-bit子码；$d=768$时码长192/384/768字节，
+更高维度时384/768/1,536；fp16/fp32查表设置；probe 16--512 \\
+IVF-RaBitQ & 每维4/8/9 bit、支持的搜索模式、probe 16--1,024；
+OpenAI另有4,096-list索引 \\
+GPU暴力搜索 & 穷举FP32平方L2，采用相同主机计时边界 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+前沿保留recall与QPS上不被支配的点：若$R_a\geq R_b$且$Q_a\geq Q_b$，
+至少一项严格更好，则$a$支配$b$。包络可以由不同索引配置组成。
+对目标recall $r$，实测估计为
+\begin{equation}
+Q_{\rm meas}(r)=\max\{Q_i:R_i\geq r\}.
+\label{eq:3-measured-frontier}
+\end{equation}
+没有合格样点时无定义。插值估计使用相邻前沿点$(R_a,Q_a)$与$(R_b,Q_b)$：
+\begin{equation}
+\log Q_{\rm int}(r)=(1-\lambda)\log Q_a+\lambda\log Q_b,
+\qquad \lambda=\frac{r-R_a}{R_b-R_a}.
+\label{eq:3-interpolated-frontier}
+\end{equation}
+归档parser先把与目标相差不超过$5\times10^{-4}$的前沿点视为直接匹配，
+包括接近端点的情形；否则只在实测范围内部插值，不对线段外推。
+差距接近时报告两种估计：前者选实际达到阈值的配置，后者降低网格间距不等
+的影响；二者都不构成等存储比较。
+
+parser把失败与非法输出诊断保留在有效点前沿之外。仅有跨调用ID变化不会导致
+删点，原始记录区分集合变化与顺序变化。隔离后的大型基线重跑替代受污染构建，
+Stella因batch 1,000被跳过的运行不贡献搜索点，决策见\cref{sec:a-e1-protocol}。
+论文从全部明确列出的基线族重新构造前沿，包含CAGRA int8及不利工作区间
+（\cref{fig:7-frontiers}）。历史ADC与海报图保留各自版本及测量边界。

@@ -1,0 +1,38 @@
+\Cref{tab:2-position}按所解决约束比较替代方案。已有文献提供GPU图搜索、压缩距离、
+寄存器查找、快速选择和自适应工作量。因此贡献必须明确表示契约、集成决策及证据，
+仅说“GPU版本”不足以定位贡献。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}{设计替代及本文较窄的研究缺口。表比较机制，实测排名见第7章。}
+\label{tab:2-position}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.20\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+替代 & 可利用结构 & 主要取舍 & JHQ-GPU问题 \\
+\midrule
+IVF-PQ／OPQ & 学习子空间编码与ADC & 失真、训练及子码本坐标耦合
+& 内部Cartesian主码支持什么GPU评分？ \\
+Fast Scan／Quicker ADC & 小表与SIMD & 表精度、形状、ISA约束
+& 精确拆分能否抵消额外GPU查找？ \\
+SONG／CAGRA & 选择性图导航 & 依赖访问、边存储与建图
+& 常驻层次扫描在哪些区间竞争？ \\
+BANG & GPU压缩评分与主机图 & 容量与通信
+& 完整压缩常驻能达到什么范围？ \\
+IVF-RaBitQ & GPU编码与融合搜索 & bit预算、估计器与probe
+& 哪些recall区间值得残差层次？ \\
+自适应工作量 & 精排倍率、autotuning、学习／声明式早停
+& 标签、参考质量、预测或校准成本
+& 无标签工作负载一致性能否以可接受风险和总成本选工作量？ \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+第一项缺口是具体层次的执行契约：可分表与packed访问如何配合精确primary保留、
+并发界发布及残差评分。第二项是跨batch和偏斜的执行模式选择，因为拆分工作可能
+加的比省的更多。第三项是工作负载精排选择的质量与成本核算，明确区分参考一致性与
+GT recall、选中臂吞吐与净节省。
+
+这些问题推动固定继承表示、改变执行与工作量。更强学习编码和图导航仍是有意义的
+替代，但同时改动它们会掩盖组件问题。本文以数学契约、配对实验和竞争前沿评估
+该受约束设计，并保留分布、并列和校准假设，使结论具体而可检验。

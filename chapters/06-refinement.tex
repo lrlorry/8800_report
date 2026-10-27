@@ -1,28 +1,35 @@
-% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+% Structure follows 6.pdf; all six sections use audited implementation/evidence.
 \chapter{Workload-Level Refinement-Budget Calibration}
 \label{ch:refinement}
-\draftnote{Define the policy, its reference outputs and assumptions, then separate sampled agreement, held-out quality, and calibration economics.}
+
+Chapters 4 and 5 establish a compressed index and its GPU execution.
+This chapter addresses RQ3: how much refinement work a workload needs,
+and whether selecting that budget repays its calibration cost. The
+policy compares unlabelled query outputs with a larger-budget reference
+and reuses one selected multiplier across batches. The method is analysed
+through its acceptance rule, conditional selection theorem, experimental
+controls and amortisation model. Chapter 7 reports the measured outcomes.
 
 \section{Why Fixed Refinement Budgets Can Be Wasteful}
 \label{sec:6-1}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/06-1-motivation}
 
 \section{GT-Free Sampled Output Agreement}
 \label{sec:6-2}
-\draftnote{Define the disagreement-slot sum and distinguish it from a per-query rate. Explain how fixed epsilon changes strictness as the sample size changes.}
+\input{chapters/06-2-agreement}
 
 \section{Budget Search, Nestedness and Tie Safety}
 \label{sec:6-3}
-\draftnote{Check nested survivor sets, fixed refined scores, exact-selection configuration, deterministic ties, and the executed path before invoking monotonicity.}
+\input{chapters/06-3-search}
 
 \section{Budget Baselines and Their Questions}
 \label{sec:6-4}
-\draftnote{Explain the distinct questions answered by fixed budgets, same-sample enumeration, full-pool calibration, and the ground-truth oracle.}
+\input{chapters/06-4-controls}
 
 \section{Hold-out Risk, Calibration Cost and Payback}
 \label{sec:6-5}
-\draftnote{Separate selected-arm throughput from total cost. State held-out quality loss, sampling variability, calibration overhead, and reuse assumptions.}
+\input{chapters/06-5-economics}
 
 \section{Policy Failure Modes and Applicability}
 \label{sec:6-6}
-\draftnote{Write this section using the verified methods and evidence. State the relevant conditions and connect the argument to its research question.}
+\input{chapters/06-6-scope}

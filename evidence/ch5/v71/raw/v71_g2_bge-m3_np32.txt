@@ -1,0 +1,14 @@
+  [mmap loader] reusing cached /root/autodl-tmp/bge-m3/base.fvecs.raw_f32
+train 137.6 ms
+add 3638.8 ms
+schedule: per-query candidate count CV 0.182 on 512 pseudo-queries
+
+=== alpha=100 ck=1000  b=1000: 1 batches x 24 reps = 24000 queries per measurement ===
+  scheduled G for b=1000: 0
+  G=-1 vs G=0: probes 1000/1000  primary top-ck same 1000, tie-only 0, NON-TIE 0, max |dprimary| 0.00e+00  final order/set/bits 1000/1000/1000  max rel 0.00e+00
+  G      recall    lat med    lat p95     QPS med     QPS min     QPS max  used MiB
+  0      0.8280    5.003 ms    5.315 ms      198849      197906      199551     12113
+  -1     0.8280    4.993 ms    5.286 ms      198752      197501      198900     12209
+
+wrote /root/autodl-tmp/jhq_pipeline_wt/experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np32.json
+=== BP_OK ===

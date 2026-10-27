@@ -1,0 +1,14 @@
+  [mmap loader] reusing cached /root/data/vogue-768_base.fvecs.raw_f32
+train 15.3 ms
+add 286.2 ms
+schedule: per-query candidate count CV 0.599 on 512 pseudo-queries
+
+=== alpha=100 ck=1000  b=1000: 1 batches x 24 reps = 24000 queries per measurement ===
+  scheduled G for b=1000: 4
+  G=-1 vs G=0: probes 1000/1000  primary top-ck same 991, tie-only 9, NON-TIE 0, max |dprimary| 0.00e+00  final order/set/bits 1000/1000/1000  max rel 0.00e+00
+  G      recall    lat med    lat p95     QPS med     QPS min     QPS max  used MiB
+  0      0.8621    2.783 ms    2.917 ms      357536      352626      359180      1489
+  -1     0.8621    2.937 ms    3.005 ms      336961      332135      342020      1585
+
+wrote /root/autodl-tmp/jhq_pipeline_wt/experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np32.json
+=== BP_OK ===

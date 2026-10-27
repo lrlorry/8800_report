@@ -1,0 +1,1261 @@
+{
+  "purpose": "Source and raw records for review of the v71 LUT sweep, not a standalone rebuild kit or GPU reproduction.",
+  "recorded_run_head": "d5e1526af70b55d5e84ba423224c172cee51b888",
+  "source_origin": "lrlorry/JHQ_GPU; tracked files extracted with git show at the recorded run head",
+  "files": [
+    {
+      "bundle_path": "source/jhq_v71_lutgroups/search.cu",
+      "original_path": "jhq_v71_lutgroups/search.cu",
+      "kind": "source",
+      "sha256": "cc6a81db23cf7045590084e13f7201ba89231fa72b6d69d939808cdb60fc1ff7"
+    },
+    {
+      "bundle_path": "source/jhq_v71_lutgroups/search.cuh",
+      "original_path": "jhq_v71_lutgroups/search.cuh",
+      "kind": "source",
+      "sha256": "5193a3af4d360bf7ba3668b10c233235a3034b834396128a198daf089b50174f"
+    },
+    {
+      "bundle_path": "source/jhq_v71_lutgroups/jhq_gpu_index.cu",
+      "original_path": "jhq_v71_lutgroups/jhq_gpu_index.cu",
+      "kind": "source",
+      "sha256": "f938265fb787cfc0ebfcfee752d156612374c6302b39a90af8997e1222ccbfe3"
+    },
+    {
+      "bundle_path": "source/cpu/pq_codebook.cpp",
+      "original_path": "cpu/pq_codebook.cpp",
+      "kind": "source",
+      "sha256": "a44aca621585ce8757f5078f8bfcdf9962bcb9729939602090634c518eb702c4"
+    },
+    {
+      "bundle_path": "source/CMakeLists.txt",
+      "original_path": "CMakeLists.txt",
+      "kind": "source",
+      "sha256": "acb26e86c098a9d04c5831f47ae065473695ef7fe68c1d3ab2e6193beee7ef95"
+    },
+    {
+      "bundle_path": "source/examples/demo_jhq_batch_pipeline.cu",
+      "original_path": "examples/demo_jhq_batch_pipeline.cu",
+      "kind": "source",
+      "sha256": "ac13613c2f8ae7d8087fa5e7b0658a88824c1c5aa89dbc7eff8c3b01e2f52439"
+    },
+    {
+      "bundle_path": "source/experiments/adc_v69/run_lutgroups_v71.sh",
+      "original_path": "experiments/adc_v69/run_lutgroups_v71.sh",
+      "kind": "source",
+      "sha256": "b18137ff53570ba15973a37349e24a6bb8ded02a067fbf09bd32eb50db55aabd"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "46b47b737ed03fecb9a0412350e1efe7f97dc84dc25a0d65210cbc9e5d389675"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "5a3200c8b84c4bfbc8a2955185881407cc48970caca3bd732bee82494d3e0ba4"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "985662d32bfaf4b625533a7aade445621aaadc015f6ced108faa7ab57fe61763"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "56e6ba5da4c10e2bec35aa55635f9b0fc26c98863b1a28e6555d08b87dcf48dc"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np128.json",
+      "kind": "measurement_record",
+      "sha256": "89a8efbc68c9286279670ac67156517192632be052a2c45a832f27bab03342bb"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np32.json",
+      "kind": "measurement_record",
+      "sha256": "e13e79fd6a4866b89e5c7bfcd21e59ea09e7aa0c1997c4280ef0363302c448a4"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np512.json",
+      "kind": "measurement_record",
+      "sha256": "1519fe08c133fda22dac7dbeabf727096fa7294e8da9a5c6f1ae8ae35d529256"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np8.json",
+      "kind": "measurement_record",
+      "sha256": "af12a8831a58aa815fb43209743f6c4ca26ed8a5fc265b5eabe6e80df11faa07"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np128.json",
+      "kind": "measurement_record",
+      "sha256": "be5df72db522d70396ceb37e472953f75665d993c96f6e30f70f814d93420374"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np32.json",
+      "kind": "measurement_record",
+      "sha256": "5926fb42e5583ea226b7b8fa22375afbdf5784dda50d346c23e04a8807cb6567"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np512.json",
+      "kind": "measurement_record",
+      "sha256": "af47cc021cdfd756a20e0a525ca18a9ac14fecdf2cd363976eb0ad7706c5b0cb"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np8.json",
+      "kind": "measurement_record",
+      "sha256": "358a9fc907e6b4b0e374b871b26ee7573b4a68a305f5e54f90f689f14dd18a37"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np128.json",
+      "kind": "measurement_record",
+      "sha256": "473d83e8dfc5a1338c337a080c9867a4165acbdbc855e531b4043cf58b2b047b"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np32.json",
+      "kind": "measurement_record",
+      "sha256": "69108dbc6331d2368ff1a6ee9143ce073072345ac02d6d614654d17ec0b5b2aa"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np512.json",
+      "kind": "measurement_record",
+      "sha256": "fcb19cf806c3b9673791ec2942335ef5ea4676892dfa85bda1c496cc29f7e1b8"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np8.json",
+      "kind": "measurement_record",
+      "sha256": "114b5665faed3eb20c89a6f9432323a91341ac51594aed9c1c82f4a698e6e28e"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np128.json",
+      "kind": "measurement_record",
+      "sha256": "f03f5436279a6efd053baea7bc920857bc909a6f9128c1bf730def6d594853c1"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np32.json",
+      "kind": "measurement_record",
+      "sha256": "064afb3e3298526ea0e519c65ea1a0dc7e30728b041e9845c3c00c671e8189e7"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np512.json",
+      "kind": "measurement_record",
+      "sha256": "5420774b42bd522cd1dcc75e166ad22923863f9ef1b83879fa8497651ce994f6"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np8.json",
+      "kind": "measurement_record",
+      "sha256": "025263833d21de5069ea5f5b2a982a3e914d21856be026aeb30ca2cc22e49e11"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "09b31924eccd1184b2efe96cbc3dbd8c4ee26725bb1b5823756d102b819ba039"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np128_check.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np128_check.json",
+      "kind": "measurement_record",
+      "sha256": "0bb94a8bec393b5529a7299fb4bc4b6ed748a3908138afcfe91d78a6c1af9a65"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "1731434f0b77db0df9cb617127c9fd9b18eb8e2be661368850bb0fa1bda305ae"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "00f7922a2c85aa7f75447e6c46d87d2a29b0d4925646a8fd20ad17ddca1ca82c"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "d2b7763ffe56b43533fed239af8572a694b449edb58504a0a4e0b01b990e1c49"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "1ecba8098fe1645e18873c7330e0ce90f9a09d4bd1a2750131ad624798b300a9"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "40588d6b5bbda5afd85bcc088942ea5b40f7233f89fe1f21c820342e18968a91"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "cee02a96ef80088bfd0b57b34952424e0513db52ffdfe93ab599dc5100d330df"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "97ff877814bfd5338492bf85771ee52ea897bdd9c55d1e852183cd2db78efd16"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np128.json",
+      "kind": "measurement_record",
+      "sha256": "dcbeafb327519cb3c67497a2832321706ffe15f1fb606ad417c74767959ea524"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np32.json",
+      "kind": "measurement_record",
+      "sha256": "097c9a8904b234f7e0c34964096bf9426829adcd0d62327a1a554e08c9b134e3"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np512.json",
+      "kind": "measurement_record",
+      "sha256": "c3ad43582ac0985b53d794598d90824a152bfa7c8575e112f800fc82082dac0d"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np8.json",
+      "kind": "measurement_record",
+      "sha256": "b363fff04e064e7cd6c102e9b903cbb8f0b5e5b4abad206e8fb9aa51dafea5de"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np128.json",
+      "kind": "measurement_record",
+      "sha256": "82003375b7116ea98d2a3446e06f987300425de250240dba7970c1c4b974d6c4"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np32.json",
+      "kind": "measurement_record",
+      "sha256": "a3fcdf4a99c5ff4a5eb8b4ac8553849e07544a1afc738627767e701b28038221"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np512.json",
+      "kind": "measurement_record",
+      "sha256": "f3e96c6f9d8b7d1f5963838f42fde0422429c254c94991a092f21682ec8cd863"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np8.json",
+      "kind": "measurement_record",
+      "sha256": "41b809b70078db9ca842db1eac1b88dd50b5aa194617e5cdba05bf61bde55087"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np128.json",
+      "kind": "measurement_record",
+      "sha256": "4fa6840fa8f853a5d3f5e4dd7ed5228dbe9bcef46444c1cc21acfc92522016c6"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np32.json",
+      "kind": "measurement_record",
+      "sha256": "bbe5d8a9604f5f03f95e6e5598dadd19f87df31be05dfc7abb36f8b4bbd8a22b"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np512.json",
+      "kind": "measurement_record",
+      "sha256": "b0a56dd05b329b684842f5063ca289afade9030adaa3984998588d0d7d354cab"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np8.json",
+      "kind": "measurement_record",
+      "sha256": "99e492afa64625aec13025b9b10e27a8841fc35306ca02d7997e74594ddd7bcc"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np128.json",
+      "kind": "measurement_record",
+      "sha256": "476f976999f03734e814214365ca4a3559eddc44c9e550953497f8c4d0ee8253"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np32.json",
+      "kind": "measurement_record",
+      "sha256": "fa425c6bc22d12526628e062bf763018399a7b0683acfd0c09c5b7767348e781"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np512.json",
+      "kind": "measurement_record",
+      "sha256": "e38bf21349ac0b7d7b9f514e4ed79732fe076613a04bfd834f86e3910900af87"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np8.json",
+      "kind": "measurement_record",
+      "sha256": "3dc56d47a3eb46d29c3bf5b3f132c4931023d29a12adbad3a7b8e3838b83f860"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "3e029d75a37098ce6f7a8e406e6de253c70c7e0d40e268209154271fe26f152b"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np128_check.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np128_check.json",
+      "kind": "measurement_record",
+      "sha256": "f27acdc890384d94414ad96be7d68ac912cc9c4ab60a6edfe71c461b67120477"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "eed38ac6c41b3faf40419fc8a7fa1d42ca185aa37537365ad1043ec6c37c6e66"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "3e7598d4d8c052f39c5c0767af74bd7599d7718bed64d2bf83078ce8cda6af55"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "fdb74fb371f81bf0babf19c70d8f00434fc7521efa3ffb5b1451669f3b1aef82"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "c21299554c26f82c8df18d12a3d2abca5e37bb64d354c18af3f806076807c5d7"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "139a72c8db71f19366800e7bed9b1692f1f589cdb214d051d07ab20d7ecd66f5"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "5feca98afd70f8603946fb4a17e53d2084690b1ce778e0291cdbc26d4b5d8a5a"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "4ffd6074ab7e5c878f4d07d721d918cbd986dec4c1ad428e904f067a0bcbf0a6"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np128.json",
+      "kind": "measurement_record",
+      "sha256": "db390ccb222c9ce4ba436c60605cd2e63a08b3b0d8a5a5f5894ce32c7a2a6886"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np32.json",
+      "kind": "measurement_record",
+      "sha256": "8d56b6ae9ce9e13e299497b405caac664d0c107b6b2fb08a96ab78a31ba9247f"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np512.json",
+      "kind": "measurement_record",
+      "sha256": "dafe15f6828e14dbdd7ccdbc9549ec2d9501f91df50d8c85698023cbc91ec1cf"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np8.json",
+      "kind": "measurement_record",
+      "sha256": "74b6c680f61a1b9115074f6acc714672a4e2bfb0c2b5624b53637324d54ecf58"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np128.json",
+      "kind": "measurement_record",
+      "sha256": "270b1a804e2760424b531b3c6d649437ab4d9b5c5e942b21a97901fd82ff0ed0"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np32.json",
+      "kind": "measurement_record",
+      "sha256": "d9bd83e9573b232846e821ba72cda0f16d81c5f73e1f904ebf1621c14f93a6db"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np512.json",
+      "kind": "measurement_record",
+      "sha256": "2d1f2c6a9345705f31695da2f2294ec610a0bcbfbe174baec305c79fa91c0988"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np8.json",
+      "kind": "measurement_record",
+      "sha256": "2cd504afb0e8676c4311bef9ff91121ab5ed1edf7decb1e8912a69ec4dab6b8c"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np128.json",
+      "kind": "measurement_record",
+      "sha256": "dd68f5032e2aa6852d63b8f3ee196dd112de3d8f164d3c39ba0ca03e40f181de"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np32.json",
+      "kind": "measurement_record",
+      "sha256": "7af32855b69904d48963be64df6fc2e02d53ff4dcc432e99dd394e4ab5c617b8"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np512.json",
+      "kind": "measurement_record",
+      "sha256": "165bb8bbaaaee63ea8eb80e87dd371b1324d94a688854e5740cfa1a0654f3f1b"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np8.json",
+      "kind": "measurement_record",
+      "sha256": "5248e25f685fcc098d85b308fbffc357e581cdbb4d5c17e8f148a403126fb91b"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np128.json",
+      "kind": "measurement_record",
+      "sha256": "40d9cb43689e534ec9c7f3452f24007c15ffc380ff5ca66cb1ad8daf315c692f"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np32.json",
+      "kind": "measurement_record",
+      "sha256": "7212699288d92bae8b9c348e9941ba11eec4ec447c7e0568ab1008de81b89953"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np512.json",
+      "kind": "measurement_record",
+      "sha256": "44ebdf6d58105a70cd589bfb9d36fe5cf0d08df04749ddc86e893db859f0394e"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np8.json",
+      "kind": "measurement_record",
+      "sha256": "df547344c49562b093f802e674a25f359865e370163de7f837ef7fb3a0c696cf"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "afb4eb084793af2ef1104c67698c7094f19a40c6f83abf62f8aed7b4eb85bd88"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np128_check.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np128_check.json",
+      "kind": "measurement_record",
+      "sha256": "764057169529593d2944f2618d58b5c80f9109528eab14e51ddc9289993930f3"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "c324a0e488f74adb6a0dbc6abbb6ba40fb9601c4f2dd5241e0f3eb7136d0f261"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "151d61fc64137eac96e9a00934c437d83456f790b698da87d381884c63a12184"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "73e25456e31657df1a4a7df0692bb37e6c42745983e525aa47f5b5dbbdb6652b"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "cc868529fae974106f45d0f081c062b4738fdacdb69054112c3fc4c14820cab8"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "ce0fd89a7d249f4a117019bb6d2b263219c9e4f38a282e644f6d1d71d077d5f0"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "2a9e304d40edfbef0d1b8ffaef7979185bcc7a029f054d6a6ebe6e1bba3a9047"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "896bc7e0a335b42e8d6200b4b9dc329a9260eaa224a9078f5e2f36c642761816"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np128.json",
+      "kind": "measurement_record",
+      "sha256": "991d1b34e885eed5b83acb14316ca7d71b2ac66c270b5e775550ea458daac51d"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np32.json",
+      "kind": "measurement_record",
+      "sha256": "1b7098eb6705aadb89264b9de00a8c5b09a2b90bfed636c2cb91e9a136ab4820"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np512.json",
+      "kind": "measurement_record",
+      "sha256": "a2f74291c064b17a24c2df5a159a273050156ffdd06f413c1d769a8f8717d1c4"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np8.json",
+      "kind": "measurement_record",
+      "sha256": "82535dd8d4aa8227cd4fe905176a041de3db0101257cfc683e0dd1c274a44af0"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np128.json",
+      "kind": "measurement_record",
+      "sha256": "81dc4bc9c375b04cbd0706fa4a573d9f9d8a94362098b3011e13f6aaf40b4564"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np32.json",
+      "kind": "measurement_record",
+      "sha256": "cde8eb02465a9809a73edbfd3653d631b6e106de854b08f87501dea18568e31f"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np512.json",
+      "kind": "measurement_record",
+      "sha256": "f2fc07cb96984b3778d884a652f931aafc57f49f157a5d0135117f435b10e7bf"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np8.json",
+      "kind": "measurement_record",
+      "sha256": "237277af3bdaf5beff24d8919f1ba0449cbbbe882a3349c12888ae54713c4f8a"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np128.json",
+      "kind": "measurement_record",
+      "sha256": "caffd4ca9c8141d43e014803725749afea10e8131c125cf86be0846f99eb2d05"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np32.json",
+      "kind": "measurement_record",
+      "sha256": "886197c1e0274868bce8c9d95233b6ba305985ac12131dadff41cd7b55c4a826"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np512.json",
+      "kind": "measurement_record",
+      "sha256": "072baa8cc19290420d40e6d714db5fccc2961a11a1e3e00dd64677c2d1430fa1"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np8.json",
+      "kind": "measurement_record",
+      "sha256": "f595f6dca6109d3b18b8387b1a33e9b1e8f647d3f176b63bc97aae7ca0d82d1e"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np128.json",
+      "kind": "measurement_record",
+      "sha256": "191c9fc5ca836e7930c8e005c50ea4d14a0e9c6e2a09bd443fad70484bc2a2ff"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np32.json",
+      "kind": "measurement_record",
+      "sha256": "c0bbde2f34a013ac1c7763bb5a9b083560028ba3d7abe22cb2ebe02289e4f4cd"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np512.json",
+      "kind": "measurement_record",
+      "sha256": "802add36b9092f8ff1b3e24304abec26032dc9f5397e97790f29cf4d82ae905b"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np8.json",
+      "kind": "measurement_record",
+      "sha256": "ca018044bf8b9092037d8f214b87df9abe585cefc9655b5f5af2b3bd9a419251"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np128.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np128.json",
+      "kind": "measurement_record",
+      "sha256": "1aaa4d52a3346f0a445bbebed89c0fe2b525d31c88a7d42e7a9a9c5338ce0419"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np128_check.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np128_check.json",
+      "kind": "measurement_record",
+      "sha256": "ec6eb09ae94ba2bbebb29587059afa0a4ba4f49ed6c5c6c2309ee9454d8d5fea"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np32.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np32.json",
+      "kind": "measurement_record",
+      "sha256": "fa50b43a4dc00107af19012fabda1b1d99a18427c69c05fc188655408598f59c"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np512.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np512.json",
+      "kind": "measurement_record",
+      "sha256": "aee9aeb7eacf6e59e7ce0c8ae9a61c360bc24774461b8dd22e06632309a9084d"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np8.json",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np8.json",
+      "kind": "measurement_record",
+      "sha256": "c9de8cc8cf148f5922f46e0d347b9e6836816ad5f5499b40ef05e82447399a53"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "6b57bc131068d6ee7673284f537723227454824260829832c0219e2c684c2a11"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "cbeb99e1e5f08e8139b4abb1c8dea19c599b85eed78a5e47c501629ceaaa366a"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "81f0e948224b7ab85f6db2adc2014870a77148ad2508438b02a45a435134d58f"
+    },
+    {
+      "bundle_path": "raw/v71_g1_arxiv-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "30aade0def66046945e5e54e95a4e2e64e13ccbbd758975c875e8fa02303de13"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "67c3b23146e1ba33fd1ffa570184cdb65fec411bcdbf80a36a601e7b8155bdc0"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "2104f94934b0f0286a015e68edbd7cb8672b45e681efc677173d2be50ab1a9e4"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "1aefc83e0818a2dc80ae640e8d71e708eff528409f254d94ac5dea93b36087e3"
+    },
+    {
+      "bundle_path": "raw/v71_g1_bge-m3_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "90c6cfe176da17af7bd7cdf5926b141f969adf2bf3883fce460c52edca444efc"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "72f61eb6a1cdcd66c26474658e19606eefe1d58cd8fee061084c1bb347b32f02"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "d457ed2cf7fb60c46b4c6d3159827fd61cad27ef0fcdd4a45e72c4f45e40cf5e"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "4a924f4545da3071955657ef03841e2d2cd1f99436a47822e0ee6dfc3543cf53"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-1536_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "66679d8a861f16535967ae13af18dec456eb4cda56140c16b7c6cc20324faf7d"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "0e9c181a3b9a02fb2585127ca9e7dd4243392ca80a260258a65a8fe323b2654e"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "4a9137c29ebcd109392a45b442abcea122b913606331161fdd7c3cdfb957184b"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "7478d38f03479ab3103203f0bba2c82d471d563f441daa89df3021d63761cbe3"
+    },
+    {
+      "bundle_path": "raw/v71_g1_openai3-3072_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "cab6547d63be12b5861de7bb03f2e2ef262e23d117b3d636e4b927b450b2a9b4"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "b61d7bef7cdc02ce4db30599949b2aef9663a8c62a43d6e9bac19fb89e3db0f7"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "fe274249afefa9f6dd46b7a935b3435558fb60b59d94e14509240c04366d445a"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "6d04acf672442ebd773145f4ab704c7b8bba80d0910db210156ff734b7108f25"
+    },
+    {
+      "bundle_path": "raw/v71_g1_stella_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "622ccd323787ee6e18e0da1c28cd06e8df2ed7af9d484b1432c9f23e3aebd2b1"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "8e41e668952e494beccdb6996ffe0ba9d3b70cf7787bda388bdbbeb666411619"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np128_check.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np128_check.txt",
+      "kind": "measurement_record",
+      "sha256": "8d05c7b37443400be1b328fc937f0120dfc7461e010e1f1216fab6f410930bd7"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "9307b70f01b9bf1b6c8166749d377a8f7333686809c134e807548c49e310dac6"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "775cf2d4e32093215ffed5c43a1b4fc5babc951ff1ad8f43e6aac6ffdc711ee9"
+    },
+    {
+      "bundle_path": "raw/v71_g1_vogue-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "ae029bf264934596cfd404307d2392000aa8951a780d5c55ce6a5ae1bbc85ab3"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "48f0262dafeafd5a4e9881e63934578b7c00ecdcf1c2e08c7efd9af1dfd28b03"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "c2a1803cd03e5b256db84fb9583957359d939f26e5cee3cd9e85cffbe37e49af"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "629daf3163fb90365e10664c8a7d35a857383d81aba3558476e3e320a4e61877"
+    },
+    {
+      "bundle_path": "raw/v71_g2_arxiv-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "b47eb4fc4ca7eb77e34e16c0adce51f07521743d484715ef719425c5163b75b0"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "5d1c66d7657967a5e142b76ba46a9c76fd4d609bd3b6f02e455b69cf9dc16906"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "8143fa46158d75c0fb937762041e96df56bb8a8fd364f42d460624164022b35c"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "5217f2a040e432e98cc51bcc3c9c35ddd98c5aba70e015794fb44f879d362edf"
+    },
+    {
+      "bundle_path": "raw/v71_g2_bge-m3_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "76dc8ba8722f48f875cf8e1fc0cd46d18390b6b801b331a324586719ea421ddd"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "35978dd598e4e73599708e784e605ddca3acba6810c07fc3b4ae91e57f235c87"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "e53343bc85e90c6fb36ba460ebfbf9b3917446ff2ba6004d39710ac9459ae619"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "1e1aee778728e914b652eee362fa004558508c19ba187156b8833dc0748b3832"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-1536_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "e1e5cf484ce199c2c1b1841af92c61227a7afbce80f2143115cf64a93c2e6b59"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "dd893f183887f1fbde3af8279673b6213710bfd233bf0bcf5e0a9d2da7452b01"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "366bafa9fb5e978ccf1486b301d6dfd91d1de8d58504a45867dca40e43995c31"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "0d14fc732db99250ace3fb14358b043b45b46deb8fb0833c5aa9be697d87c93d"
+    },
+    {
+      "bundle_path": "raw/v71_g2_openai3-3072_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "0c20768372ed00da7219447d93c430c80d7dfab268825235d2ed967f03db2923"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "7365d0bf5ef9bb2de1c593b0c038075ffdbb44a00c693d3a8cd0658d91dd436e"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "17273d65b6d71829d8cfe06748f7b1f071b075d03140474cbeb3c6ae2075b2fb"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "e7f2ec1f259c8fccb9c0d719817b473d8bf2a779169c3872bc9866d333453669"
+    },
+    {
+      "bundle_path": "raw/v71_g2_stella_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "4767a6cd302db632f3bf15e533fc0154919c268ebbb8b1b809c3f8b62985c518"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "48f323ed0dcf2867410ac130571e11639075443c3c321f598319988341fa6dc7"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np128_check.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np128_check.txt",
+      "kind": "measurement_record",
+      "sha256": "a7d38c979dbfb9d9cf086d56e3ff1d63dbe7ab8f69fa947838e04a49c68bb456"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "a1406b6cef79f43c4f20c99b557cfacee7617eb55b053e383f3a4af39c1dc7ef"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "ff6aaaa516e25a1670aceec84cee73537684083a8ccd2a174468dde30b92becc"
+    },
+    {
+      "bundle_path": "raw/v71_g2_vogue-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "7407c8e6dc970682ff1a4071adb12f282a9f7fd02489f4490349cf0dda836476"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "5a0590ccd7f3a593c1616f7c5a0c6b3d65ee9ab7b0eff4c718e794371954bcdd"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "46a77c392fd09bb889702acb4694644a8b28b016dd1ef913033aa61d122d49ad"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "b7743393213cbc8885a3db418b634b8a9f8fd2c1971cf0dca076d5076b7768dd"
+    },
+    {
+      "bundle_path": "raw/v71_g4_arxiv-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "e93e9d68b3d667e3fc776f43a9a75d116a1d4bfbc0c7481b4425769d6c208c5e"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "f984a13f9c4b9063d9644401ca172598eeb5d54941138687dc7abf6d06944eb8"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "3789396125c3a79ca2b675101b266fb8910aaee4fb4997aebd623ebf6713c9da"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "b58eff5176ef08363acb98d83a20d8f1c09585b9c88852113ed1cb299c1d8e17"
+    },
+    {
+      "bundle_path": "raw/v71_g4_bge-m3_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "8c3498de760997a0e6788b4fb548a224b1137bdedf21b8e46fdf3b6bc8e25643"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "e1048508c45350a8471bc3ee20ca9088a6889a20406cfb9a7a732f9260fcecd7"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "14e1cc1f3041d0918bca847116312f25e3dbcd52d1dd054da9a09030b732400b"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "3a7530ba71ad331324ddb7a4a2fe8d476467769f1a509e4065cbee98f3ea4b6f"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-1536_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "13c5c7181a85a87403dee405cef1476fb07cbd9b392ec724f245f6cad188ddce"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "9d29caf19988348123db23100696664ac76f43e73c7267469d8bed03616a4564"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "f989ddfc07afc95a15fa126fcf704dad57e0cc61b5d227bccb25c584c1b70f52"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "6f87d180119b418d3381b1c93765126f455dc939803def9b80a3ed8ccd9d148b"
+    },
+    {
+      "bundle_path": "raw/v71_g4_openai3-3072_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "d8848ae2a97964cd779478ac9eba07450f2ad6ab1ada7f18dc4be311c1faedc4"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "4bb7df1647fef81409e3f7f3aa2c25f4a597fa4caaca52d96586687255240893"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "759da0d05e2ccb159fd4a3d1fab794da4803b78d9e050e416fc24f8bcf9b4f42"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "850396c1266fb1ca5dddb5a7958428b330a6499f4d10b4cd859387dd96e7ea99"
+    },
+    {
+      "bundle_path": "raw/v71_g4_stella_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "71bf1896d22927aaa21117132f136b2b27d024d184ba5c66c6b8cf7c7fafb6d2"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "d5ce3c016b1a737fc9486d66e3e604e10708e4dc23031e468c0998b2a7f9e92e"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np128_check.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np128_check.txt",
+      "kind": "measurement_record",
+      "sha256": "85453309bd9a5dc7923067ee4b4fdd9cfa9edf90c473707357617a7fd06c0d5f"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "ab52d87d12102d7f40ebafc7225a55e855ee0fe9ca2ef48b93e214b0619aca99"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "69f2c93279b37236469ba3de706ea5fa6351f08407f189864c346cc2679e28ce"
+    },
+    {
+      "bundle_path": "raw/v71_g4_vogue-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "45bf1e9e1eca6abd09645b8a681b8705db38aec1eb6f6175008bd1d4b5aa8c13"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "09c84199636b4066964393789636eeb962d70da1ed1e4484104082aaf935b034"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "1c9b437e428f4c0d85fb8da6f19b4590cec6458b79eb9b7b5e08068770b14e1c"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "e8847cab2e60a51d4159e3c75361fdbb8592a2ec7faf9760841bbe96a93a414d"
+    },
+    {
+      "bundle_path": "raw/v71_g8_arxiv-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "47a84001bb2200a6c1a6afc67a27da10256159be5a3fcdd527ba21198576dfee"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "93dd1058452b0303c03486dd698ff24cd165bb667b5abc7eaca3dc1faaea2075"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "e57ea67a43df60c194185c72dff70f0421f15f5a13f88e044a1884a2a08e432a"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "c5247c1a40b4664b8c3e74735ebb825af73bccc2e1ea0e35108791737c0abc85"
+    },
+    {
+      "bundle_path": "raw/v71_g8_bge-m3_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "6f1ae7c4c14ab8bac67fa90647afd759e764c0d6bf4c91b048ceedc7ed3b3f09"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "510bc751cc4fe4a7fb824c295aa37a1816adf27e5f3fdaa0dd5d056ca74624e3"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "9b7dd4c654fc4274d03ac9d4e36992b2ddb6975e37ac7f1f4ac20da0bd9514e7"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "013aa0de7c6f0e79567542338bda0d408b66341aa18ed2dd115ea77836f9c8c1"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-1536_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "bfa52d9edd0d86f15210ce7371c6df262944c00024a950926c8f693a1017b984"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "035752f28c2cd03ce3662f9f7f159ba5f834acc47e037536235821c28e3f73db"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "d1ebb5f816198dabe7e58c9eee023e9a1601c39d57ae1f0edfeab71a29aec718"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "42335222185eab59a23b528e1c2fb36f9b1945096e33775fbffd37e59383c005"
+    },
+    {
+      "bundle_path": "raw/v71_g8_openai3-3072_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "d20f3b1c5b9330df964e225baf7cf76f2bf0e0048b4e611c659e588cfdcd8466"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "573f284ec2f6252b3ad4c081d5839be3c9e42847f20e0367d15e8a6030d5e01c"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "70a967002ea87565bd5241b6e5c4d15f1e80d6f073d39de2439b87306062d60e"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "470d2a60c9b918f0505892c151e80a6d93d888eb9ca651113019a35b02f0d502"
+    },
+    {
+      "bundle_path": "raw/v71_g8_stella_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "4f14798be6c3ce5648f62be0440d89facb47a7c724994c42ca81f13c7290d003"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np128.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np128.txt",
+      "kind": "measurement_record",
+      "sha256": "f13bd1b436897cd62c93458dd7ae5de04df4ceaa175ab0536c996660c4c8fd56"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np128_check.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np128_check.txt",
+      "kind": "measurement_record",
+      "sha256": "cb607c30875d160197607b8818ffe178775cff125229ec11ae5013f15b09c9d5"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np32.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np32.txt",
+      "kind": "measurement_record",
+      "sha256": "1256ef98f253c1932ce87d46dca0f53fd765fca7455ef602c5e9e6ce13f472ac"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np512.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np512.txt",
+      "kind": "measurement_record",
+      "sha256": "aaf2112bc6b0b2410a888a2ab5b92e38c0a1f6e5048a3716e6acb123ae3d316c"
+    },
+    {
+      "bundle_path": "raw/v71_g8_vogue-768_np8.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np8.txt",
+      "kind": "measurement_record",
+      "sha256": "0868286a014e191b8bcd16c067c28dc14b58bf928c4c28a06ad02d84441aad5f"
+    },
+    {
+      "bundle_path": "raw/PROGRESS.log.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/PROGRESS.log",
+      "kind": "measurement_record",
+      "sha256": "097c5c716d036b45d11f3840c9bf8866bb79a9928a97e70f12a71438e88a8b2e"
+    },
+    {
+      "bundle_path": "raw/build.log.txt",
+      "original_path": "experiments/adc_v69/RAW_LUT/build.log",
+      "kind": "measurement_record",
+      "sha256": "4c6b47da6fd8dd6d8b0fbe6c078e2e2d414c41f83eb35352d18d504b7896421b"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+CUDA SIMT把线程组织成block与32线程warp，寄存器、block共享内存及global memory
+服务不同复用范围\cite{cuda_programming_guide}。
+Coalescing把邻lane访问组织成合适事务，不要求逻辑码位更少。
+primary扫描把lane分给相邻向量，精排则让多个lane合作处理一个survivor的坐标；
+两者利用不同并行度，一个映射不必同时适合两阶段。
+
+寄存器、共享状态和block几何限制occupancy。更多驻留线程能隐藏延迟，
+更多单查询block也会重复表与局部缓冲。数据复用足以抵消加载与同步时，共享内存才有价值。
+这些概念推动第5章拆表、packed访问与batch调度，吞吐消融测其组合效果。
+带宽饱和或具体cache瓶颈还需计数器及一致的物理字节模型。
+
+选择本身也是重要计算。Faiss GPU工作把高效距离与warp选择结合\cite{johnson_gpu}。
+bitonic、radix和merge都是已有构件，对$k$、长度和状态成本有不同取舍。
+AIR top-$k$和GridSelect进一步展示全局选择如何取决于工作负载及分数是否流式产生
+\cite{gpu_topk}。本文把这些思路适配到JHQ的probe与survivor保留，不把原语称为新发明。
+
+CUDA Graph回放降低重复launch设置；capture、工作区分配与图形状变化属于生命周期，
+不是数学打分规则。共享阈值发布同样需要排序和内存访问契约；
+标量分数正确并不足以证明并发准入安全。第5章把正确性条件与性能测量分开，
+第3章区分设备profile和主机可见搜索区间。

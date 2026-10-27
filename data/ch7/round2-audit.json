@@ -1,0 +1,1376 @@
+{
+  "date": "2026-10-28",
+  "scope": "Offline second-review audit; no CUDA or implementation change",
+  "paths": [
+    {
+      "dataset": "arxiv-768",
+      "groups": 0,
+      "cells": 29
+    },
+    {
+      "dataset": "openai3-1536",
+      "groups": 0,
+      "cells": 37
+    },
+    {
+      "dataset": "openai3-3072",
+      "groups": 0,
+      "cells": 39
+    },
+    {
+      "dataset": "vogue-768",
+      "groups": 4,
+      "cells": 27
+    }
+  ],
+  "cv": {
+    "arxiv-768": [
+      0.05691,
+      0.16603
+    ],
+    "openai3-1536": [
+      0.02959,
+      0.13887
+    ],
+    "openai3-3072": [
+      0.03142,
+      0.14078
+    ],
+    "vogue-768": [
+      0.33816,
+      0.62248
+    ]
+  },
+  "vogue_matched": [
+    {
+      "recall": 0.96,
+      "scheduled": 1.2496045604656552,
+      "one_block": 1.0722107765046083,
+      "scheduled_qps": 291530.00125437765,
+      "g0_qps": 250144.42081010382,
+      "rabitq_qps": 233297.8051438459
+    },
+    {
+      "recall": 0.97,
+      "scheduled": 1.0590285929915682,
+      "one_block": 0.9332514521133998,
+      "scheduled_qps": 230821.72722048772,
+      "g0_qps": 203407.83387097684,
+      "rabitq_qps": 217956.08612271483
+    }
+  ],
+  "vogue_cells": [
+    {
+      "dataset": "vogue-768",
+      "nprobe": 128,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.9622,
+      "scheduled_qps": 284210.1,
+      "g0_qps": 247875.1,
+      "ratio": 1.146585921700082
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 128,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.9644,
+      "scheduled_qps": 244218.5,
+      "g0_qps": 223168.3,
+      "ratio": 1.0943243283208235
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 128,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.9646,
+      "scheduled_qps": 195768.4,
+      "g0_qps": 184974.0,
+      "ratio": 1.058356309535394
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 16,
+      "alpha": 16,
+      "groups": 4,
+      "recall": 0.7714,
+      "scheduled_qps": 702866.6,
+      "g0_qps": 736225.3,
+      "ratio": 0.9546895495169753
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 16,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.7743,
+      "scheduled_qps": 642310.8,
+      "g0_qps": 639292.7,
+      "ratio": 1.00472099869121
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 16,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.7747,
+      "scheduled_qps": 479927.6,
+      "g0_qps": 536032.5,
+      "ratio": 0.8953330255161767
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 192,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.9739,
+      "scheduled_qps": 221928.4,
+      "g0_qps": 190689.2,
+      "ratio": 1.1638225971895628
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 192,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.9767,
+      "scheduled_qps": 196581.3,
+      "g0_qps": 177742.7,
+      "ratio": 1.1059880377647013
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 192,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.977,
+      "scheduled_qps": 160525.8,
+      "g0_qps": 150365.5,
+      "ratio": 1.0675706860948821
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 256,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.9796,
+      "scheduled_qps": 185563.0,
+      "g0_qps": 157920.3,
+      "ratio": 1.175042094018312
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 256,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.9827,
+      "scheduled_qps": 168369.8,
+      "g0_qps": 150714.3,
+      "ratio": 1.1171454865264943
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 256,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.983,
+      "scheduled_qps": 140200.2,
+      "g0_qps": 129795.6,
+      "ratio": 1.0801614230374528
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 32,
+      "alpha": 16,
+      "groups": 4,
+      "recall": 0.8565,
+      "scheduled_qps": 573861.5,
+      "g0_qps": 554908.5,
+      "ratio": 1.0341551805387734
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 32,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.861,
+      "scheduled_qps": 533956.8,
+      "g0_qps": 503921.8,
+      "ratio": 1.0596025018167503
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 32,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.8619,
+      "scheduled_qps": 408869.5,
+      "g0_qps": 428204.3,
+      "ratio": 0.9548467869192346
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 384,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.9853,
+      "scheduled_qps": 140940.8,
+      "g0_qps": 120004.6,
+      "ratio": 1.174461645636917
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 384,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.9884,
+      "scheduled_qps": 128802.8,
+      "g0_qps": 115921.9,
+      "ratio": 1.1111170538095045
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 384,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.9887,
+      "scheduled_qps": 110707.8,
+      "g0_qps": 103320.4,
+      "ratio": 1.0714999167637758
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 512,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.9873,
+      "scheduled_qps": 116185.3,
+      "g0_qps": 102306.4,
+      "ratio": 1.1356601346543325
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 512,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.9904,
+      "scheduled_qps": 108380.5,
+      "g0_qps": 99468.4,
+      "ratio": 1.0895972992427747
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 512,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.9907,
+      "scheduled_qps": 95185.6,
+      "g0_qps": 88899.7,
+      "ratio": 1.0707077751668455
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 64,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.924,
+      "scheduled_qps": 407813.3,
+      "g0_qps": 362482.1,
+      "ratio": 1.1250577614729114
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 64,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.9257,
+      "scheduled_qps": 330948.0,
+      "g0_qps": 325624.7,
+      "ratio": 1.0163479613186592
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 64,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.9259,
+      "scheduled_qps": 257922.8,
+      "g0_qps": 242604.2,
+      "ratio": 1.0631423528529182
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 96,
+      "alpha": 32,
+      "groups": 4,
+      "recall": 0.9494,
+      "scheduled_qps": 329529.3,
+      "g0_qps": 285981.2,
+      "ratio": 1.1522760936732903
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 96,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.951,
+      "scheduled_qps": 277153.1,
+      "g0_qps": 259646.4,
+      "ratio": 1.0674251597557292
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 96,
+      "alpha": 128,
+      "groups": 4,
+      "recall": 0.9512,
+      "scheduled_qps": 218562.8,
+      "g0_qps": 205801.0,
+      "ratio": 1.0620103886764398
+    }
+  ],
+  "vogue_slow_cells": [
+    {
+      "dataset": "vogue-768",
+      "nprobe": 16,
+      "alpha": 16,
+      "groups": 4,
+      "recall": 0.7714,
+      "scheduled_qps": 702866.6,
+      "g0_qps": 736225.3,
+      "ratio": 0.9546895495169753
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 16,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.7747,
+      "scheduled_qps": 479927.6,
+      "g0_qps": 536032.5,
+      "ratio": 0.8953330255161767
+    },
+    {
+      "dataset": "vogue-768",
+      "nprobe": 32,
+      "alpha": 64,
+      "groups": 4,
+      "recall": 0.8619,
+      "scheduled_qps": 408869.5,
+      "g0_qps": 428204.3,
+      "ratio": 0.9548467869192346
+    }
+  ],
+  "frontier_local_slopes": [
+    {
+      "dataset": "vogue-768",
+      "lower_recall": 0.9644,
+      "upper_recall": 0.9739,
+      "log_slope": 10.07457990049681,
+      "fractional_change_per_1e3": 0.01012549933422692,
+      "fractional_change_per_2e_minus4": 0.00201694728737818
+    },
+    {
+      "dataset": "arxiv-768",
+      "lower_recall": 0.9581,
+      "upper_recall": 0.97,
+      "log_slope": 15.99859371505385,
+      "fractional_change_per_1e3": 0.016127256440625952,
+      "fractional_change_per_2e_minus4": 0.003204843307291709
+    },
+    {
+      "dataset": "arxiv-768",
+      "lower_recall": 0.97,
+      "upper_recall": 0.9766,
+      "log_slope": 20.673680971480717,
+      "fractional_change_per_1e3": 0.02088886181578192,
+      "fractional_change_per_2e_minus4": 0.004143296009454113
+    },
+    {
+      "dataset": "openai3-1536",
+      "lower_recall": 0.9545,
+      "upper_recall": 0.9719,
+      "log_slope": 31.191663263917707,
+      "fractional_change_per_1e3": 0.031683220711802185,
+      "fractional_change_per_2e_minus4": 0.006257831575762043
+    },
+    {
+      "dataset": "openai3-3072",
+      "lower_recall": 0.9524,
+      "upper_recall": 0.9716,
+      "log_slope": 28.815443339297165,
+      "fractional_change_per_1e3": 0.02923462484014907,
+      "fractional_change_per_2e_minus4": 0.005779727211133209
+    }
+  ],
+  "vogue_single_cold_cache_recall_delta": 0.00019999999999997797,
+  "training_scope": "one paired observation is not a bound on independent retraining or vertical QPS changes",
+  "lut": {
+    "four_arm_wins": 22,
+    "paired_g2_vs_g1_wins": 23,
+    "dataset_gmean_g2_over_g1": {
+      "arxiv-768": 1.0209973561703014,
+      "bge-m3": 1.2785812734869313,
+      "openai3-1536": 1.317656189401918,
+      "openai3-3072": 1.2606035897179564,
+      "stella": 1.260678722250331,
+      "vogue-768": 1.1172353203639758
+    },
+    "hypothetical_iid_22_of_24_one_sided": 1.7940998077392578e-05,
+    "hypothetical_iid_22_of_24_two_sided": 3.5881996154785156e-05,
+    "inferential_status": "not adopted: four-arm winner count and reused dataset/index across probes"
+  },
+  "pilot": [
+    {
+      "workload": "arxiv-768_np128_a100",
+      "queries": 128,
+      "recall_selected": 0.9734375,
+      "recall_full_ivf": 0.975,
+      "recall_gain": 0.0015625000000000222,
+      "identical_queries": 126
+    },
+    {
+      "workload": "arxiv-768_np128_a200",
+      "queries": 128,
+      "recall_selected": 0.975,
+      "recall_full_ivf": 0.975,
+      "recall_gain": 0.0,
+      "identical_queries": 128
+    },
+    {
+      "workload": "arxiv-768_np512_a100",
+      "queries": 128,
+      "recall_selected": 0.9859375,
+      "recall_full_ivf": 0.98828125,
+      "recall_gain": 0.002343749999999978,
+      "identical_queries": 125
+    },
+    {
+      "workload": "openai3-3072_np128_a4",
+      "queries": 128,
+      "recall_selected": 0.93671875,
+      "recall_full_ivf": 0.9375,
+      "recall_gain": 0.0007812499999999556,
+      "identical_queries": 127
+    },
+    {
+      "workload": "openai3-3072_np512_a4",
+      "queries": 128,
+      "recall_selected": 0.9734375,
+      "recall_full_ivf": 0.97421875,
+      "recall_gain": 0.0007812500000000666,
+      "identical_queries": 126
+    },
+    {
+      "workload": "vogue-768_np128_a64",
+      "queries": 128,
+      "recall_selected": 0.9625,
+      "recall_full_ivf": 0.96328125,
+      "recall_gain": 0.0007812499999999556,
+      "identical_queries": 127
+    },
+    {
+      "workload": "vogue-768_np512_a64",
+      "queries": 128,
+      "recall_selected": 0.9875,
+      "recall_full_ivf": 0.98828125,
+      "recall_gain": 0.0007812499999999556,
+      "identical_queries": 127
+    }
+  ],
+  "openai_pairing": "supplement checks all query vectors and 10299 strided base rows; strong vector-row correspondence, original entity IDs not exported",
+  "inputs": [
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/analyze.py",
+      "sha256": "b74c51fee0544347d952483fc08be9ec42d7f9d18d1c57dfff74ff11b69feca9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np1024_134509.json",
+      "sha256": "dbcd0d8cc9bfc02fb5c4759397cdd9e8e6c7fa2f48a9be7a06e50120c0d31056"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np128_130711.json",
+      "sha256": "241f3cd4005d8cf1e5422167e36f1083c23bbd426d978515fdfb1b9d6a3c748f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np16_143638.json",
+      "sha256": "ff896e447ca9a569d64031bcac144b89898f053d3759a3409e0d8d3062f2e8a6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np192_134433.json",
+      "sha256": "f30561e03aebb474201d0397489637471d078ec75e5c972e4f4badfb940710fc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np256_130719.json",
+      "sha256": "fbbbdfc374c551a0e6b7f7d806ef50d4b2d22669717276dea4b3b607dc248111"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np32_143644.json",
+      "sha256": "4eed8bc3301b87a7f39b1599805f8748dd78d725d0be2926ae3c0f14063ef28f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np384_134443.json",
+      "sha256": "90e32acf7f348bd74bfcc1f902387a1d6f64856cf7de39066e83910c30bbc47f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np512_134455.json",
+      "sha256": "29cdf3193e3e96864914f143dbeeb32949ef063dacc2f12fe1b52deefaa1bea2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np64_130657.json",
+      "sha256": "9bddae03d938894ae8ed1abbf3eae7b1add74dcd26a57ca64f07c544aa693e95"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_arxiv-768_np96_134426.json",
+      "sha256": "68a3b6eda3b4d1fd2512c0a0c88db4b26e8e62a4acced2d95524f47470b755ce"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np1024_153706.json",
+      "sha256": "704b2f2fdf4ad0f42674ad78e8f72815e08f7ab0202c03af71d24d27338bf6db"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np1024_153736.json",
+      "sha256": "2f5ddce396a657638f82faa6e1d58a7c4ffa2dad6f61bd7600b312a3d0a3b4ff"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np128_143740.json",
+      "sha256": "e117ddf903bca4ed043b46bfde8be3d002c46c0cdd4514ed04134ac5c14f4163"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np256_143749.json",
+      "sha256": "ba281003a609771b64348e1bc66a64648707398525ad2132c3fb73ebda5c64f5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np256_153624.json",
+      "sha256": "ea584e4553cec2fdb824933c7fea5aa5f370eea797861bc3d5a35a101d0def6a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np32_151219.json",
+      "sha256": "6c8a110d694eb261fd36a39c103c212a28cbb9a57a2ccb810f38eaa788ff5d38"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np512_143801.json",
+      "sha256": "c97404be879d250e5bd1082258c20cd0e8f7fa43022682752196ebdd095aabd6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np512_153643.json",
+      "sha256": "ba64934aea0b158cc3eba5e4e5b14499c7c5465911c2df9f603975f85c6aa3ed"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-1536_np64_143727.json",
+      "sha256": "b47c6ae01c543ea0fe622ac276818752a085f1ca19ad52767fd222dce0d0d334"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np1024_143515.json",
+      "sha256": "e7f0424a13b3b80c69c4c63e10bce07ed7aa2c993bd531bb2117d842fffa92ac"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np1024_143555.json",
+      "sha256": "0ef00a154ec7cc97be36f046c13a59f2dddfa2f46b69ee0ae98d9f4264d8b74c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np128_134545.json",
+      "sha256": "0fa8b11cbde2e6eeb6ffa3ef28293b1b667d653adb18e2714c0caa5359b972f8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np128_143408.json",
+      "sha256": "7e52b2b37129d2f3a53281348f7a056e92874660596b0e71be466b1c5398a3cd"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np256_134601.json",
+      "sha256": "58cb3f8f7fa39f02817842cc7c3ba6d903481523e50ca639ce1c7838508aed8c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np256_143426.json",
+      "sha256": "7263bbd461f10e9e4a2c30fd5f0b2cf4e0a3ce0974f4dc6c43910d3263ed0c25"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np32_143651.json",
+      "sha256": "ed051bbc2af745ff07926d5503cfb5222f9b399b6f6493d4a12d843c9e1fefe6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np512_134622.json",
+      "sha256": "8199f0adb0a01f13c442480bfa4ef4b40bc619c39a6d520267a843517465c731"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np512_143448.json",
+      "sha256": "c2b1c2ba4a09b28af4f2accedafa005e7be965b299bf3b12e1a8268509c6aaba"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_openai3-3072_np64_134524.json",
+      "sha256": "37f756d08ce03d20813bc704fd7968c6a1fc8962b2b143d4c44e612d4e9c3459"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np128_130643.json",
+      "sha256": "6eba6c3f597d5e24fa7873218adddb48b9c0ae393a233da42e598fdab10a13b7"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np16_143630.json",
+      "sha256": "b2758edd98b9d6da842896a6887732ff27e1ff53113817967240a3af9de3ba7d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np192_134358.json",
+      "sha256": "803d12dae15d5a997677a52ee05a8c287f3d16db07ebe6c95b63a86733a29de3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np256_130649.json",
+      "sha256": "2f76b911f1b93c16d4535e689f3f5e69e5d1ab69f2edbf0aa2e1eaa022459d77"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np32_143634.json",
+      "sha256": "7f9c802258f57772967d70635520627c7d6e10bb352400cac34b8ab6a6d1c6e6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np384_134406.json",
+      "sha256": "e4291f03c21be8a978acc4dc43266b758abe994a27f7422fb376914387a5331b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np512_134415.json",
+      "sha256": "60009dadc3a728bf1ca55e18f14aa6b66354c1adaf21b32951258a857b96ceb2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np64_130637.json",
+      "sha256": "cc7cf09182312c8c06984796e3dd719e6c931fc46eb480824560ebcf0fb69260"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhq_vogue-768_np96_134352.json",
+      "sha256": "0c6360ad2c6bd4874be85867d70e9bb12ba248b319b4b31a3dd908fd1e2aadad"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_bruteforce.jsonl",
+      "sha256": "3528b6fd0e90d59365f069f382845eeef25ae93f8f1ab835136dc420872f63d3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_cagra-int8.jsonl",
+      "sha256": "42aa04654c4345bc2b40640c7444e7262b04cbf076104117c18799fc4b16fe5b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_cagra.jsonl",
+      "sha256": "f2cd9ec1f0a4ce28be213c8a09eec7160a267b19ef83575b354faa41acb0c6fa"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_arxiv-768_ivfpq.jsonl",
+      "sha256": "7710f729a9b5323cce5fcf31ad0f3f5a08aa70b180e04e6286f22c172c8b1b11"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_bruteforce.jsonl",
+      "sha256": "ff4967a067c3328f103da498c8c0f50c692ff7092ef039795d7b704104f617f9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_cagra-int8.jsonl",
+      "sha256": "5eea842902cb938b386fe4f8c7194b80e47ccf6049a8f34cf1cfcebd1947e65a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_cagra.jsonl",
+      "sha256": "9302602bd7ce1fe0a5b7b53f8e7255044db5d80d228fb7865c3146d4e1d5a4cc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-1536_ivfpq.jsonl",
+      "sha256": "b593694e874803e35434ba74a53e00d5fcd29842c4e67cd424f71d66b59462bb"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_bruteforce.jsonl",
+      "sha256": "e1b90b9f508f1eda63b5a5c0b004a2659639666eca1c138371319489e5b636d0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_cagra-int8.jsonl",
+      "sha256": "62f94e717083ed5e8b0df873f3d4b260f9cbdb43f9ac6d9fafed51dd7eecb5c3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_cagra.jsonl",
+      "sha256": "ac0ec0a33e0e1d4524501ff796c639f110beb72c9b546363866964fd44761ccc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_openai3-3072_ivfpq.jsonl",
+      "sha256": "b5ea67a368fb0f06b935293943ef936b1bd36589ff85a039546685f138a11fef"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_bruteforce.jsonl",
+      "sha256": "69b8d7d3da4cbb6747d583e6660e676f07da2d7d7b1c2c6d51743abe9d1c101b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_cagra-int8.jsonl",
+      "sha256": "4d84ac285614b4fd85ba47d23e2561450162988f4b5d8b310a950709cd2d7e94"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_cagra.jsonl",
+      "sha256": "870a18d5482dc87600b01a25b48bb75ced0a2e35aa7ffbc04854bb409524fc6e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/cuvs_vogue-768_ivfpq.jsonl",
+      "sha256": "47ca5600a42375576c5faa2c175eaa7f7073c62f840efcffc346b0f6f6d3ad50"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_arxiv-768.jsonl",
+      "sha256": "b55ec5df2211573a9574d26155d13468e74fb916050bcc9bf1821ca4115f1422"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_openai3-1536.jsonl",
+      "sha256": "2b7896e95fd7b3f1176ef988fd5dbb8dd1a1f8b57b21f81bf2897e823bf67510"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_openai3-3072.jsonl",
+      "sha256": "2a5439053d708e97a7ccc5f4fb779e6ac5f04300639cd44ef0356ce050148317"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/rabitq_vogue-768.jsonl",
+      "sha256": "c5b82676c036c71223f42a41904e0d9c3ef756edcdf3b4a9dbe068455d50d81e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/RAW_RESULTS/jhqcold_vogue-768.json",
+      "sha256": "29b4360eb71be453848efb2d982b32f6a638c87252abe8053b2e880c6386d842"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np128.json",
+      "sha256": "46b47b737ed03fecb9a0412350e1efe7f97dc84dc25a0d65210cbc9e5d389675"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np32.json",
+      "sha256": "5a3200c8b84c4bfbc8a2955185881407cc48970caca3bd732bee82494d3e0ba4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np512.json",
+      "sha256": "985662d32bfaf4b625533a7aade445621aaadc015f6ced108faa7ab57fe61763"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np8.json",
+      "sha256": "56e6ba5da4c10e2bec35aa55635f9b0fc26c98863b1a28e6555d08b87dcf48dc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np128.json",
+      "sha256": "89a8efbc68c9286279670ac67156517192632be052a2c45a832f27bab03342bb"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np32.json",
+      "sha256": "e13e79fd6a4866b89e5c7bfcd21e59ea09e7aa0c1997c4280ef0363302c448a4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np512.json",
+      "sha256": "1519fe08c133fda22dac7dbeabf727096fa7294e8da9a5c6f1ae8ae35d529256"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_bge-m3_np8.json",
+      "sha256": "af12a8831a58aa815fb43209743f6c4ca26ed8a5fc265b5eabe6e80df11faa07"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np128.json",
+      "sha256": "be5df72db522d70396ceb37e472953f75665d993c96f6e30f70f814d93420374"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np32.json",
+      "sha256": "5926fb42e5583ea226b7b8fa22375afbdf5784dda50d346c23e04a8807cb6567"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np512.json",
+      "sha256": "af47cc021cdfd756a20e0a525ca18a9ac14fecdf2cd363976eb0ad7706c5b0cb"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-1536_np8.json",
+      "sha256": "358a9fc907e6b4b0e374b871b26ee7573b4a68a305f5e54f90f689f14dd18a37"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np128.json",
+      "sha256": "473d83e8dfc5a1338c337a080c9867a4165acbdbc855e531b4043cf58b2b047b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np32.json",
+      "sha256": "69108dbc6331d2368ff1a6ee9143ce073072345ac02d6d614654d17ec0b5b2aa"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np512.json",
+      "sha256": "fcb19cf806c3b9673791ec2942335ef5ea4676892dfa85bda1c496cc29f7e1b8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_openai3-3072_np8.json",
+      "sha256": "114b5665faed3eb20c89a6f9432323a91341ac51594aed9c1c82f4a698e6e28e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np128.json",
+      "sha256": "f03f5436279a6efd053baea7bc920857bc909a6f9128c1bf730def6d594853c1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np32.json",
+      "sha256": "064afb3e3298526ea0e519c65ea1a0dc7e30728b041e9845c3c00c671e8189e7"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np512.json",
+      "sha256": "5420774b42bd522cd1dcc75e166ad22923863f9ef1b83879fa8497651ce994f6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_stella_np8.json",
+      "sha256": "025263833d21de5069ea5f5b2a982a3e914d21856be026aeb30ca2cc22e49e11"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np128.json",
+      "sha256": "09b31924eccd1184b2efe96cbc3dbd8c4ee26725bb1b5823756d102b819ba039"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np32.json",
+      "sha256": "1731434f0b77db0df9cb617127c9fd9b18eb8e2be661368850bb0fa1bda305ae"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np512.json",
+      "sha256": "00f7922a2c85aa7f75447e6c46d87d2a29b0d4925646a8fd20ad17ddca1ca82c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g1_vogue-768_np8.json",
+      "sha256": "d2b7763ffe56b43533fed239af8572a694b449edb58504a0a4e0b01b990e1c49"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np128.json",
+      "sha256": "1ecba8098fe1645e18873c7330e0ce90f9a09d4bd1a2750131ad624798b300a9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np32.json",
+      "sha256": "40588d6b5bbda5afd85bcc088942ea5b40f7233f89fe1f21c820342e18968a91"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np512.json",
+      "sha256": "cee02a96ef80088bfd0b57b34952424e0513db52ffdfe93ab599dc5100d330df"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_arxiv-768_np8.json",
+      "sha256": "97ff877814bfd5338492bf85771ee52ea897bdd9c55d1e852183cd2db78efd16"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np128.json",
+      "sha256": "dcbeafb327519cb3c67497a2832321706ffe15f1fb606ad417c74767959ea524"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np32.json",
+      "sha256": "097c9a8904b234f7e0c34964096bf9426829adcd0d62327a1a554e08c9b134e3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np512.json",
+      "sha256": "c3ad43582ac0985b53d794598d90824a152bfa7c8575e112f800fc82082dac0d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_bge-m3_np8.json",
+      "sha256": "b363fff04e064e7cd6c102e9b903cbb8f0b5e5b4abad206e8fb9aa51dafea5de"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np128.json",
+      "sha256": "82003375b7116ea98d2a3446e06f987300425de250240dba7970c1c4b974d6c4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np32.json",
+      "sha256": "a3fcdf4a99c5ff4a5eb8b4ac8553849e07544a1afc738627767e701b28038221"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np512.json",
+      "sha256": "f3e96c6f9d8b7d1f5963838f42fde0422429c254c94991a092f21682ec8cd863"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-1536_np8.json",
+      "sha256": "41b809b70078db9ca842db1eac1b88dd50b5aa194617e5cdba05bf61bde55087"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np128.json",
+      "sha256": "4fa6840fa8f853a5d3f5e4dd7ed5228dbe9bcef46444c1cc21acfc92522016c6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np32.json",
+      "sha256": "bbe5d8a9604f5f03f95e6e5598dadd19f87df31be05dfc7abb36f8b4bbd8a22b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np512.json",
+      "sha256": "b0a56dd05b329b684842f5063ca289afade9030adaa3984998588d0d7d354cab"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_openai3-3072_np8.json",
+      "sha256": "99e492afa64625aec13025b9b10e27a8841fc35306ca02d7997e74594ddd7bcc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np128.json",
+      "sha256": "476f976999f03734e814214365ca4a3559eddc44c9e550953497f8c4d0ee8253"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np32.json",
+      "sha256": "fa425c6bc22d12526628e062bf763018399a7b0683acfd0c09c5b7767348e781"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np512.json",
+      "sha256": "e38bf21349ac0b7d7b9f514e4ed79732fe076613a04bfd834f86e3910900af87"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_stella_np8.json",
+      "sha256": "3dc56d47a3eb46d29c3bf5b3f132c4931023d29a12adbad3a7b8e3838b83f860"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np128.json",
+      "sha256": "3e029d75a37098ce6f7a8e406e6de253c70c7e0d40e268209154271fe26f152b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np32.json",
+      "sha256": "eed38ac6c41b3faf40419fc8a7fa1d42ca185aa37537365ad1043ec6c37c6e66"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np512.json",
+      "sha256": "3e7598d4d8c052f39c5c0767af74bd7599d7718bed64d2bf83078ce8cda6af55"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g2_vogue-768_np8.json",
+      "sha256": "fdb74fb371f81bf0babf19c70d8f00434fc7521efa3ffb5b1451669f3b1aef82"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np128.json",
+      "sha256": "c21299554c26f82c8df18d12a3d2abca5e37bb64d354c18af3f806076807c5d7"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np32.json",
+      "sha256": "139a72c8db71f19366800e7bed9b1692f1f589cdb214d051d07ab20d7ecd66f5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np512.json",
+      "sha256": "5feca98afd70f8603946fb4a17e53d2084690b1ce778e0291cdbc26d4b5d8a5a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_arxiv-768_np8.json",
+      "sha256": "4ffd6074ab7e5c878f4d07d721d918cbd986dec4c1ad428e904f067a0bcbf0a6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np128.json",
+      "sha256": "db390ccb222c9ce4ba436c60605cd2e63a08b3b0d8a5a5f5894ce32c7a2a6886"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np32.json",
+      "sha256": "8d56b6ae9ce9e13e299497b405caac664d0c107b6b2fb08a96ab78a31ba9247f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np512.json",
+      "sha256": "dafe15f6828e14dbdd7ccdbc9549ec2d9501f91df50d8c85698023cbc91ec1cf"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_bge-m3_np8.json",
+      "sha256": "74b6c680f61a1b9115074f6acc714672a4e2bfb0c2b5624b53637324d54ecf58"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np128.json",
+      "sha256": "270b1a804e2760424b531b3c6d649437ab4d9b5c5e942b21a97901fd82ff0ed0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np32.json",
+      "sha256": "d9bd83e9573b232846e821ba72cda0f16d81c5f73e1f904ebf1621c14f93a6db"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np512.json",
+      "sha256": "2d1f2c6a9345705f31695da2f2294ec610a0bcbfbe174baec305c79fa91c0988"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-1536_np8.json",
+      "sha256": "2cd504afb0e8676c4311bef9ff91121ab5ed1edf7decb1e8912a69ec4dab6b8c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np128.json",
+      "sha256": "dd68f5032e2aa6852d63b8f3ee196dd112de3d8f164d3c39ba0ca03e40f181de"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np32.json",
+      "sha256": "7af32855b69904d48963be64df6fc2e02d53ff4dcc432e99dd394e4ab5c617b8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np512.json",
+      "sha256": "165bb8bbaaaee63ea8eb80e87dd371b1324d94a688854e5740cfa1a0654f3f1b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_openai3-3072_np8.json",
+      "sha256": "5248e25f685fcc098d85b308fbffc357e581cdbb4d5c17e8f148a403126fb91b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np128.json",
+      "sha256": "40d9cb43689e534ec9c7f3452f24007c15ffc380ff5ca66cb1ad8daf315c692f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np32.json",
+      "sha256": "7212699288d92bae8b9c348e9941ba11eec4ec447c7e0568ab1008de81b89953"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np512.json",
+      "sha256": "44ebdf6d58105a70cd589bfb9d36fe5cf0d08df04749ddc86e893db859f0394e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_stella_np8.json",
+      "sha256": "df547344c49562b093f802e674a25f359865e370163de7f837ef7fb3a0c696cf"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np128.json",
+      "sha256": "afb4eb084793af2ef1104c67698c7094f19a40c6f83abf62f8aed7b4eb85bd88"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np32.json",
+      "sha256": "c324a0e488f74adb6a0dbc6abbb6ba40fb9601c4f2dd5241e0f3eb7136d0f261"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np512.json",
+      "sha256": "151d61fc64137eac96e9a00934c437d83456f790b698da87d381884c63a12184"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g4_vogue-768_np8.json",
+      "sha256": "73e25456e31657df1a4a7df0692bb37e6c42745983e525aa47f5b5dbbdb6652b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np128.json",
+      "sha256": "cc868529fae974106f45d0f081c062b4738fdacdb69054112c3fc4c14820cab8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np32.json",
+      "sha256": "ce0fd89a7d249f4a117019bb6d2b263219c9e4f38a282e644f6d1d71d077d5f0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np512.json",
+      "sha256": "2a9e304d40edfbef0d1b8ffaef7979185bcc7a029f054d6a6ebe6e1bba3a9047"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_arxiv-768_np8.json",
+      "sha256": "896bc7e0a335b42e8d6200b4b9dc329a9260eaa224a9078f5e2f36c642761816"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np128.json",
+      "sha256": "991d1b34e885eed5b83acb14316ca7d71b2ac66c270b5e775550ea458daac51d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np32.json",
+      "sha256": "1b7098eb6705aadb89264b9de00a8c5b09a2b90bfed636c2cb91e9a136ab4820"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np512.json",
+      "sha256": "a2f74291c064b17a24c2df5a159a273050156ffdd06f413c1d769a8f8717d1c4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_bge-m3_np8.json",
+      "sha256": "82535dd8d4aa8227cd4fe905176a041de3db0101257cfc683e0dd1c274a44af0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np128.json",
+      "sha256": "81dc4bc9c375b04cbd0706fa4a573d9f9d8a94362098b3011e13f6aaf40b4564"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np32.json",
+      "sha256": "cde8eb02465a9809a73edbfd3653d631b6e106de854b08f87501dea18568e31f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np512.json",
+      "sha256": "f2fc07cb96984b3778d884a652f931aafc57f49f157a5d0135117f435b10e7bf"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-1536_np8.json",
+      "sha256": "237277af3bdaf5beff24d8919f1ba0449cbbbe882a3349c12888ae54713c4f8a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np128.json",
+      "sha256": "caffd4ca9c8141d43e014803725749afea10e8131c125cf86be0846f99eb2d05"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np32.json",
+      "sha256": "886197c1e0274868bce8c9d95233b6ba305985ac12131dadff41cd7b55c4a826"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np512.json",
+      "sha256": "072baa8cc19290420d40e6d714db5fccc2961a11a1e3e00dd64677c2d1430fa1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_openai3-3072_np8.json",
+      "sha256": "f595f6dca6109d3b18b8387b1a33e9b1e8f647d3f176b63bc97aae7ca0d82d1e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np128.json",
+      "sha256": "191c9fc5ca836e7930c8e005c50ea4d14a0e9c6e2a09bd443fad70484bc2a2ff"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np32.json",
+      "sha256": "c0bbde2f34a013ac1c7763bb5a9b083560028ba3d7abe22cb2ebe02289e4f4cd"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np512.json",
+      "sha256": "802add36b9092f8ff1b3e24304abec26032dc9f5397e97790f29cf4d82ae905b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_stella_np8.json",
+      "sha256": "ca018044bf8b9092037d8f214b87df9abe585cefc9655b5f5af2b3bd9a419251"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np128.json",
+      "sha256": "1aaa4d52a3346f0a445bbebed89c0fe2b525d31c88a7d42e7a9a9c5338ce0419"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np32.json",
+      "sha256": "fa50b43a4dc00107af19012fabda1b1d99a18427c69c05fc188655408598f59c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np512.json",
+      "sha256": "aee9aeb7eacf6e59e7ce0c8ae9a61c360bc24774461b8dd22e06632309a9084d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/adc_v69/RAW_LUT/v71_g8_vogue-768_np8.json",
+      "sha256": "c9de8cc8cf148f5922f46e0d347b9e6836816ad5f5499b40ef05e82447399a53"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/RECALL_COMPARISON.csv",
+      "sha256": "9dbc7923068550c7f271574d1510f2c1ae035c60d0a915ab274c8eb42ecf4c3e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/residual_aware_bound/analyze.py",
+      "sha256": "b530f20ecc57d113e01b38838bc4d4e29ed6e5d5e674fadcfc4ee2a8f4e83158"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_v66_bound_pilot.cu",
+      "sha256": "4148343afbf8f6c422f0a368399c22333e68e58148348d9fd3313872318e9a70"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "scripts/download_jhq_datasets.py",
+      "sha256": "2628ebf56c6a92995a93adae6d6af3643ce6c5e6d885c8a3e19a8f8a53719484"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "scripts/preprocess.py",
+      "sha256": "63cb9e412782127e526e37ee3c36288947d1b8e35dbbafa33d6adc30115630f5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/comp8800_poster_e1/run_e1.sh",
+      "sha256": "1a2c6071c3c14e397c43a9cf78a0a7c2e236593d31ba0659c86e41862f927db2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/jhq_cpu_grouped_refine/REPORT_CN.md",
+      "sha256": "f4786764dcf7df53c8fb3f96204110121b37324c1742f2344a9ebd5195dbebd5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/jhq_cpu_grouped_refine/README.md",
+      "sha256": "702772c659008bd9e456009f5a9fa8873218959ff038a40fc152114e40c3130c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "results/cpu_baseline/README.md",
+      "sha256": "8fcd9e1815661a50ff91e1c505d69395102e41f3645ef6791d8a847f82e41c5e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "results/jhq_cpu_ivf_vogue-768.csv",
+      "sha256": "f82dd7d7346e69429656ed0d08be863e056dc8029a77f4f6885aff069f7ecfbc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_ch7_round2.py",
+      "sha256": "f5811370c9284e00ddf2f9409bb900ada92fc822e660d7012176b35814ef1e13"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/ch7/round2-sources.json",
+      "sha256": "29af1a3ca91759fefb5925122911cf38e5e03a2976ee78704515e43102dc096d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "Makefile",
+      "sha256": "3c975216775aa8b3c41569e6f8524ce104ff278f64085abf38edadc6879fdbf0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/build_zh_tables.py",
+      "sha256": "314e7b7dd17a33e46de850ef5d4170cdaf45e787c9e41751a2f7e396dc915e17"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/e1_paths.tex",
+      "sha256": "4ce33f2364b7a22bf83b349724109abc982e1b872c22d455b63d637f538b0265"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/e1_paths.tex",
+      "sha256": "28cf9a998d2c3e5343e3f0f1c8ecbaa2dd361d7c40a38546326c457c4ce5d4a3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "51a16c3559542e7c48a6b35867c37a8ae3ae31ec85cb58fb39ce7c1a93de0bbd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "17c1d33d41d38f2732133db4d2af419dfa6a20520fa47bf9e4a04c3e4be48f46"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "92cb71a868c31bd0b538cc4baf76f2ba8e8f2ce1d421ff6a2178164da6e2b348"
+    },
+    {
+      "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch7-round2-response.txt",
+      "sha256": "f7bd9907fe3e36ca1f72186e2cc8d26bf67312c3881293f9c145a650161dc1da"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "700383421caa23ef3524a579d4acc6fe5aed097e9b71859cb7404f17e8fdeacf"
+    }
+  ]
+}
