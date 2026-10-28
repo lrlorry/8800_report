@@ -31,12 +31,30 @@ assessment/thesis-marking-guide.txt 是质量分档指南，不是格式规范�
 assessment/Poster Marking Rubric2.pdf 适用于 poster，不用于 thesis 排版。
 6.pdf 是用户的写作蓝图，不是学校格式要求来源。
 
-3. 模板选择（不是学校规定）
-A4 / 单面单栏 / 11pt / Latin Modern 正文及配套数学字体。
-左右 27mm、上下 28mm 页边距；英文 1.18 倍行距，中文 1.25 倍。
-目录单倍行距；图表目录使用短标题，完整图注留在正文。
-黑白封面、分层标题、浅灰页眉线；不套用会议双栏或装饰性封面。
-共用样式集中在 config/layout.tex，字体保持 TeX 随附字体，便于本地及 Overleaf 编译。
+3. 学院提供的模板与本稿采用方式（2026-10-28补充核查）
+此前仅核对课程页的强制参数，模板检索不完整。现已找到：
+https://bercher.net/phd-students/thesiswriting
+https://gitlab.anu.edu.au/u1092535/latex-templates/-/tree/master/project-report
+Pascal Bercher的原作者说明称其为School of Computing的官方论文／项目报告模板。
+已通过ANU GitLab公开API读取原始文件，固定版本：
+677d6cb4af756f08be7c086d9f4a4cbfe42d6d52（2026-09-19；模板1.2.2）。
+main-long.tex建议Honours及24-unit项目采用scrbook长论文结构；4-setup.tex明确允许
+自由调整模板，并不要求严格遵守它。不能把“学校提供模板”说成“本届课程强制使用”。
+ANU的Overleaf机构页还列出标为Official的Honours模板：
+https://www.overleaf.com/edu/anu
+https://www.overleaf.com/latex/templates/anu-honours-thesis-template/tfvndzkjrptm
+
+本稿采用学院长论文模板的KOMA-Script框架：A4 / scrbook / 11pt / 半行段间距，
+正文、章节及页眉使用KOMA原生命令；Latin Modern及配套数学字体保持不变。
+英文恢复模板的正常单倍leading；parskip=half-保留半行段间距，允许固定宽度图表占满末行。
+中文阅读稿仍保留1.25倍行距及原两字缩进、无额外段间空白的阅读方式。
+保留原来的左右27mm、上下28mm页边距，不通过缩字号或缩版心空白来取得去重收益。
+电子提交使用oneside/openany，避免双面装订才需要的空白页；使用黑色超链接及数字引用。
+学院模板允许这些调整。配置是用KOMA公开接口独立实现的适配，并非逐字复制模板源码。
+原模板声明仅供个人使用、不分享源码；原件只在本机临时目录核查，不收入公开仓库。
+来源、版本、原件哈希和具体适配见assessment/template-sources.json。
+
+共用样式集中在config/layout.tex，字体仍为TeX随附字体，便于本地及Overleaf编译。
 前置页罗马页码、正文阿拉伯页码、附录字母编号；数字引用与 BibTeX。
 封面以课程研究论文表述，不推断学生的学位名称，也不添加官方认证标记。
 预留声明与工具使用记录，不捏造署名、核验或签署事实。

@@ -157,18 +157,16 @@ Direct coarse assignment costs $O(n_t n_{\rm list}d)$ per iteration.
 Analytical primary construction writes $O(MKD_s)$ values; residual
 extraction touches $O(n_r d)$ coordinates, followed by sorting and scalar
 updates. These describe work, rather than predict latency.
-Supplementary normal runs put Vogue training at 298--303\,ms; its
-archived 1.06\,s value is not representative of those repeats.
 Synchronised phase diagnostics place about 83\% of BGE/Stella training
 in IVF k-means (about 2.97\,s). They use one add buffer and forced
-synchronisation, so phase sums remain separate from normal overlapped
-construction (\cref{sec:4-5}).
+synchronisation, separately from the normal overlapped timings in
+\cref{sec:7-7}.
 
-The resulting list-size imbalance directly affects scan scheduling:
-Chapter 5 uses measured candidate-count CV, with Vogue's archived
-0.34--0.62 values triggering grouped execution. Eight IVF iterations,
-spaced seeds and finite sampling describe the build policy; their
-individual causal contributions to that imbalance were not isolated.
+
+List-size imbalance enters the scan rule in \cref{sec:5-5}. The
+individual contributions of eight IVF iterations, spaced seeds and
+finite sampling to that imbalance were not isolated.
+
 
 \paragraph{Arithmetic used in the measured implementation.}
 The evaluated implementation (v69) stores FP32 matrices but enables cuBLAS

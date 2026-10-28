@@ -66,11 +66,5 @@ packed layout and its load/unpack path, not the isolated contribution
 of transposing candidate-major storage. It also cannot uniquely separate
 instruction count, addressing and cache effects.
 
-\Cref{sec:7-3} reports 48 matched byte/word configurations with throughput
-ratios $1.012$--$1.658\times$. Each arm has one aggregate rate, so these
-records provide weaker variability evidence than the newer repeated
-LUT sweep. The integer representation identity is exact, while the
-observed recall spread of at most $10^{-4}$ belongs to the complete
-measured execution. The method claim is preservation of code values
-with fewer load/address operations, qualified by the experiment's
-measurement scope.
+\Cref{sec:7-3} evaluates the packed path's throughput, recall and
+variability against the byte path.

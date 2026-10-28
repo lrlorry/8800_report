@@ -350,7 +350,7 @@
     {
       "repository": "8800_report",
       "path": "data/t4-t5/audit.json",
-      "sha256": "c92d563637a2cf80c0cbcae3889869d793f819cc012ce78663345681e7857888"
+      "sha256": "dbde559b869268e04ac511a359fb0150ea8c545044c6f3e108dae3bdfc4290cb"
     },
     {
       "repository": "8800_report",
@@ -380,7 +380,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-5-construction.tex",
-      "sha256": "cceb234886b55eafab3101fa3e2a6c7c19ad76618a5c9a9d91cba8875f1c61e2"
+      "sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72"
     },
     {
       "repository": "8800_report",
@@ -390,7 +390,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-5-construction.tex",
-      "sha256": "1c967d64dfeb9239413966c2cc874d2682804207ef5a82f954d9f22849fee0bc"
+      "sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60"
     },
     {
       "repository": "8800_report",

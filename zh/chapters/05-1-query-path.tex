@@ -22,13 +22,14 @@
 \label{fig:5-query-path}
 \end{figure}
 
-路由计算中心分数并选择 $n_{\rm probe}$ 个列表（\Cref{sec:5-7}）。拼接这些列表得到大小为 $n_c$ 的已访问集合 $U$。精确探针原语只是按已计算路由分数选择所需中心，不证明 $U$ 包含全部原空间近邻。前缀偏移还给出扫描与调度所需的实际候选数。
+路由定义含$n_c$个候选实例的已访问集合$U$，主码筛选保留至多
+$c=\max\{k,\lceil\alpha k\rceil\}$个候选进行残差评分。
+\Cref{tab:5-query-stages}列出各阶段的输入、读取对象与成本，
+\cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}展开实现。
 
-主码筛选构造每查询 LUT，读取已访问向量的主码，再按 $\primarydist$ 保留至多 $c=\max\{k,\lceil\alpha k\rceil\}$ 个候选。固定表分组时，分数计算成本为 $O(n_cM)$，此外还有局部选择和合并。\Cref{sec:5-2,sec:5-3}讨论表与编码访问，\Cref{sec:5-4,sec:5-5}建立选择不变量，并分析增加并行度的成本。
+\Cref{tab:5-query-stages}的顺序与精确性列将各声明对应到评分和并列规则。
+第7章分别检查保留集合、有序输出及原始空间召回率。
 
-残差评分只对有效保留候选读取残差码，进行 $O(cd)$ 坐标工作，并向最终选择器提供 $\refineddist$（\Cref{sec:5-6}）。这一路径使用压缩重建替代搜索时的原始向量读取。实现中的最终 repeated-minimum 选择器为每个输出扫描 $c$ 个槽位，共输出 $k$ 个，另有 block 归约工作。
-
-确定性排序 key 为各类分数附加并列规则：中心选择使用列表 ID，完整 key 主码选择使用物理行位置，最终选择使用数据库 ID。旧的查询级主码路径具有不同的截断并列规则，见\Cref{sec:5-4,sec:5-5}的限定。因此，分数保持、保留集合一致、有序输出相等及原空间 recall 是不同主张。第七章在各自边界上检查它们，而不把单个 recall 不变当作整条流水线的证明。
 
 
 \begin{table}[tbp]
@@ -69,4 +70,5 @@ LUT & $q'\to$ 表 & 主码本 & $MD_s2^{8/\glut}$ 坐标项 & 实数分解精确
 \end{tabularx}
 \end{table}
 
-\Cref{tab:5-query-stages,tab:5-evaluation-settings}明确阶段边界和被测配置。预算 harness 显式设置 16 lane、调度扫描及共享界；仅链接新版本库仍会保留标量／查询级默认值。组件消融会按各自协议覆盖相应开关。原始元数据和\Cref{tab:a-components}中的机制／版本对应表标识这些变体。
+\Cref{tab:5-query-stages,tab:5-evaluation-settings}区分阶段契约与显式配置的评测路径。
+组件消融保留各自开关，\cref{tab:a-components}对应机制及归档实现。

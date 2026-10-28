@@ -1,5 +1,9 @@
 # COMP8800 / JHQ-GPU Thesis
 
+当前稿已完成三轮重复内容合并：英文正文与摘要同口径估算为27,096词，PDF为104页，
+中文阅读稿89页。公式、证明、27幅图、44张表及表格数据全部保留；采用学院长论文模板的
+KOMA-Script结构及有记录的电子稿适配。详见[全文去重记录](assessment/deduplication-rounds.md)。
+
 九章正文和摘要均有中英文总稿。本轮已把Claude于2026-10-28完成的
 `JHQ_GPU/experiments/thesis_evidence` 补证核对后纳入第3--9章、引言与摘要。
 新增TF32/FP32敏感性、重复空缓存构建与采样峰值、表示审计、完整预算决策及直接复用计时。
@@ -18,6 +22,8 @@
 - [独立复核材料入口](evidence/review/README.md)：T4/T5、T1及A2所用的原始记录和源文件子集。
 - [实验协议详细清单](docs/experiment-protocol.md)：从附录A移出的完整程序／路径和诊断细节。
 - [附录精简记录](assessment/backmatter-streamlining.txt)：保留A/B，原附录C合并至前置来源与工具披露页。
+- [三轮全文去重记录](assessment/deduplication-rounds.md)：仅合并重复说明，保留全部公式、证明和图表。
+- [去重保留核查](scripts/audit_deduplication.py) · [机器核查结果](data/deduplication/audit.json) · [学院模板来源](assessment/template-sources.json)
 
 个人分工、声明签署与最终工具披露仍需作者确认，见
 [作者确认项](assessment/author-confirmation.txt)。研究来源与工具披露已合并至前置页；个人课程签署由作者按实际任务办理。
@@ -27,7 +33,8 @@
 [第 3 章证据说明](assessment/ch3-evidence.txt)；离线核对入口为
 `python3 scripts/audit_ch3.py`，机器清单为 `data/ch3/audit.json`。
 
-总稿按本目录 `6.pdf` 的九章骨架组织；排版不是 ANU 官方指定样式。
+总稿按本目录 `6.pdf` 的九章骨架组织，采用学院提供的 KOMA-Script 长论文模板结构及有记录的电子提交适配。
+学院模板允许调整；没有据此宣称本届 COMP8800 强制使用某套排版。
 蓝图文字、旧 ADC 数字和未经核验的结果不自动成为当前实验结论。
 
 ## 当前审核入口
@@ -97,9 +104,9 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 
 ## 排版默认值
 
-- A4，单面单栏，11pt Latin Modern 正文及配套数学字体。
-- 左右 27mm、上下 28mm 页边距；英文 1.18 倍行距，中文 1.25 倍。
-- 黑白封面、主副标题分层；统一章／节标题与轻量页眉。
+- A4，KOMA-Script `scrbook` 长论文结构，单面单栏，11pt Latin Modern 正文及配套数学字体。
+- 保留左右 27mm、上下 28mm 页边距；英文正常单倍 leading，中文阅读稿 1.25 倍。
+- 英文半行段间距（`parskip=half-`）；中文保留两字缩进；KOMA 原生章节和页眉；黑白封面、数字引用及黑色链接。
 - 图表目录使用简短标题，完整图注保留在正文；目录采用单倍行距。
 - 前置部分罗马页码，正文阿拉伯页码，附录字母编号。
 - 自动目录、图目录、表目录、PDF 书签和可点击交叉引用。
@@ -107,7 +114,9 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 
 中英文共享 `config/layout.tex` 中的页边距、标题、页眉和图注样式；
 语言与字体设置分别在 `config/preamble.tex` 和 `zh/preamble.tex`。
-上述均为排版选择，不能声称为本届课程硬性规定。
+框架依据 Pascal Bercher 的 School of Computing 模板1.2.2，电子稿采用 `oneside/openany`。
+原作者允许调整模板；来源与文件哈希见 [模板核查](assessment/template-sources.json) 和 `FORMAT_NOTES.txt`。
+原模板源码不在本仓库转载。这些选项不冒充本届课程硬性规定。
 
 ## 正式编译
 

@@ -99,36 +99,10 @@ live arrays, including pipeline scratch. Stella's smaller two-pass
 repack payload, plus model/context, explains its lower observed peak
 despite its larger database.
 
-\subsection{What the completed measurements establish}
+\subsection{Construction measurements}
 
-\Cref{tab:7-build-memory,tab:7-build-repeat,fig:7-build} incorporate the
-supplementary empty-cache builds: three normal runs with warm input pages,
-one first-read run and one synchronised phase diagnostic per dataset.
-Normal train+add ranges are 0.558--0.566\,s for Vogue and
-10.543--10.653\,s for Stella. Vogue's archived 1.056\,s training time
-does not reproduce; the three normal repetitions take 298--303\,ms.
-The phase diagnostic forces synchronisation and one pipeline buffer, so
-its totals are kept outside the normal timing range.
-
-Train+add starts after construction and sample preparation. Timestamped
-process-start-to-add-completion observations additionally include file
-opening, host QR and library setup: 18.2--18.6\,s for Stella with warm
-input pages, versus 129.9\,s on this session's first read. The boundary
-ends before schedule calibration and the first search. It is not a
-universal disk-cold latency. Six fixed operating points over five builds
-have recall ranges no wider than 0.0012; entire retrained frontiers were
-not repeated.
-
-Successful isolated Stella CAGRA int8 builds take 74.55 and 82.45\,s,
-including dataset quantisation, at graph degrees 32 and 64. The repeated
-JHQ construction intervals are shorter under their respective boundaries;
-complete deployment latency also depends on preparation, calibration and
-serialization requirements.
-
-The completed large searches contain 10,091,524 BGE and 17,776,615 Stella
-vectors. Their raw FP32 arrays alone require 38.50 and 67.81\,GiB.
-JHQ and successful CAGRA int8 builds both establish single-device
-feasibility for the tested Stella workload. The useful deployment
-comparison combines quality, query cost, rebuild frequency and available
-memory, as evaluated in \cref{sec:7-7}; the ability to fit is shared by
-multiple compressed designs.
+\Cref{sec:7-7} evaluates these phase models with repeated empty-cache
+builds, broader startup intervals and sampled device peaks, alongside
+baseline construction and large-dataset search. Their timing boundaries
+follow \cref{sec:3-3}; the construction algorithm and allocation lifetimes
+above determine which costs can overlap.

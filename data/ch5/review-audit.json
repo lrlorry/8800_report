@@ -183,7 +183,7 @@
     },
     {
       "path": "CMakeLists.txt",
-      "sha256": "acb26e86c098a9d04c5831f47ae065473695ef7fe68c1d3ab2e6193beee7ef95"
+      "sha256": "a5a45e7438d6320ecafbec6b99a5db4282bbb44f6d229d05e835d416397fb679"
     },
     {
       "path": "experiments/adc_v69/RAW_LUT/v71_g1_arxiv-768_np128.json",

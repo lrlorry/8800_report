@@ -1,4 +1,4 @@
-% These are editable defaults, NOT a prescribed ANU/COMP8800 house style.
+% Chinese reading copy of the documented School of Computing long-thesis adaptation.
 \usepackage{fontspec}
 \usepackage{xeCJK}
 \setmainfont{lmroman10-regular.otf}[
@@ -20,7 +20,6 @@
 \setCJKmonofont{FandolFang-Regular.otf}
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip=0pt plus 1pt
-\setlength{\parindent}{2em}
 \usepackage{microtype}
 \usepackage{geometry}
 \usepackage{setspace}
@@ -43,14 +42,16 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,decorations.pathreplacing}
 \usepackage[numbers,sort&compress]{natbib}
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\newcommand{\thesischapterlabel}{第\thechapter 章}
+\usepackage[automark,headsepline]{scrlayer-scrpage}
 \input{config/layout}
 % Chinese characters need slightly more leading than the Latin reading copy.
 \setstretch{1.25}
+\setparsizes{2em}{0pt plus .5pt}{0pt plus 1fil}
+\renewcommand*{\chapterformat}{第\thechapter 章}
+\renewcommand*{\chaptermarkformat}{第\thechapter 章\enskip}
 \AddToHook{cmd/appendix/after}{%
-  \renewcommand{\thesischapterlabel}{附录~\thechapter}}
+  \renewcommand*{\chapterformat}{附录~\thechapter}%
+  \renewcommand*{\chaptermarkformat}{附录~\thechapter\enskip}}
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{1}
 \setlength{\emergencystretch}{2em}
@@ -112,14 +113,7 @@
 \newcommand{\lrefine}{\ell_{\mathrm{ref}}}
 
 % Chinese reading-copy names; labels and numbering follow the English draft.
-\renewcommand{\contentsname}{目录}
-\renewcommand{\listfigurename}{插图目录}
-\renewcommand{\listtablename}{表格目录}
-\renewcommand{\figurename}{图}
-\renewcommand{\tablename}{表}
-\renewcommand{\bibname}{参考文献}
 \renewcommand{\bibfont}{\raggedright}
-\renewcommand{\appendixname}{附录}
 \crefname{figure}{图}{图}
 \Crefname{figure}{图}{图}
 \crefname{table}{表}{表}
@@ -139,6 +133,13 @@
 \crefformat{equation}{式~(#2#1#3)}
 \Crefformat{equation}{式~(#2#1#3)}
 \AtBeginDocument{%
+  \renewcommand{\contentsname}{目录}%
+  \renewcommand{\listfigurename}{插图目录}%
+  \renewcommand{\listtablename}{表格目录}%
+  \renewcommand{\figurename}{图}%
+  \renewcommand{\tablename}{表}%
+  \renewcommand{\bibname}{参考文献}%
+  \renewcommand{\appendixname}{附录}%
   \renewcommand{\crefpairconjunction}{与}%
   \renewcommand{\crefmiddleconjunction}{、}%
   \renewcommand{\creflastconjunction}{与}%

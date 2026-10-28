@@ -1,0 +1,1286 @@
+{
+  "baseline": "e610272e50db0d416d92b41d19b8dbfa40c00baa",
+  "scope": "Three bilingual rounds of prose consolidation; preserved unique evidence and protected blocks; no GPU run.",
+  "editorial_review": "assessment/deduplication-rounds.md; semantic retention is a human/source review, not inferred from word counts",
+  "checked_chapter_files": [
+    "chapters/01-1-context.tex",
+    "chapters/01-2-scope.tex",
+    "chapters/01-3-challenges.tex",
+    "chapters/01-4-questions.tex",
+    "chapters/01-5-contributions.tex",
+    "chapters/01-introduction.tex",
+    "chapters/02-1-objective.tex",
+    "chapters/02-2-hierarchy.tex",
+    "chapters/02-3-jhq.tex",
+    "chapters/02-4-gpu.tex",
+    "chapters/02-5-graphs.tex",
+    "chapters/02-6-quantised.tex",
+    "chapters/02-7-gap.tex",
+    "chapters/02-background.tex",
+    "chapters/03-1-comparisons.tex",
+    "chapters/03-2-data.tex",
+    "chapters/03-3-measurement.tex",
+    "chapters/03-4-frontiers.tex",
+    "chapters/03-5-ledger.tex",
+    "chapters/03-6-validity.tex",
+    "chapters/03-methodology.tex",
+    "chapters/04-1-boundaries.tex",
+    "chapters/04-2-training.tex",
+    "chapters/04-3-layout.tex",
+    "chapters/04-4-lifecycle.tex",
+    "chapters/04-5-construction.tex",
+    "chapters/04-6-contracts.tex",
+    "chapters/04-architecture.tex",
+    "chapters/05-1-query-path.tex",
+    "chapters/05-2-lut.tex",
+    "chapters/05-3-packed-access.tex",
+    "chapters/05-4-global-selection.tex",
+    "chapters/05-5-bound-scheduling.tex",
+    "chapters/05-6-refinement.tex",
+    "chapters/05-7-probe.tex",
+    "chapters/05-gpu-execution.tex",
+    "chapters/06-1-motivation.tex",
+    "chapters/06-2-agreement.tex",
+    "chapters/06-3-search.tex",
+    "chapters/06-4-controls.tex",
+    "chapters/06-5-economics.tex",
+    "chapters/06-6-scope.tex",
+    "chapters/06-refinement.tex",
+    "chapters/07-evaluation.tex",
+    "chapters/07-supp-budget.tex",
+    "chapters/07-supp-precision.tex",
+    "chapters/07-supp-selection.tex",
+    "chapters/07-supp-smallbatch.tex",
+    "chapters/08-1-insights.tex",
+    "chapters/08-2-negative.tex",
+    "chapters/08-3-validity.tex",
+    "chapters/08-4-directions.tex",
+    "chapters/08-5-deployment.tex",
+    "chapters/08-discussion.tex",
+    "chapters/09-conclusion.tex",
+    "zh/chapters/01-1-context.tex",
+    "zh/chapters/01-2-scope.tex",
+    "zh/chapters/01-3-challenges.tex",
+    "zh/chapters/01-4-questions.tex",
+    "zh/chapters/01-5-contributions.tex",
+    "zh/chapters/01-introduction.tex",
+    "zh/chapters/02-1-objective.tex",
+    "zh/chapters/02-2-hierarchy.tex",
+    "zh/chapters/02-3-jhq.tex",
+    "zh/chapters/02-4-gpu.tex",
+    "zh/chapters/02-5-graphs.tex",
+    "zh/chapters/02-6-quantised.tex",
+    "zh/chapters/02-7-gap.tex",
+    "zh/chapters/02-background.tex",
+    "zh/chapters/03-1-comparisons.tex",
+    "zh/chapters/03-2-data.tex",
+    "zh/chapters/03-3-measurement.tex",
+    "zh/chapters/03-4-frontiers.tex",
+    "zh/chapters/03-5-ledger.tex",
+    "zh/chapters/03-6-validity.tex",
+    "zh/chapters/03-methodology.tex",
+    "zh/chapters/04-1-boundaries.tex",
+    "zh/chapters/04-2-training.tex",
+    "zh/chapters/04-3-layout.tex",
+    "zh/chapters/04-4-lifecycle.tex",
+    "zh/chapters/04-5-construction.tex",
+    "zh/chapters/04-6-contracts.tex",
+    "zh/chapters/04-architecture.tex",
+    "zh/chapters/05-1-query-path.tex",
+    "zh/chapters/05-2-lut.tex",
+    "zh/chapters/05-3-packed-access.tex",
+    "zh/chapters/05-4-global-selection.tex",
+    "zh/chapters/05-5-bound-scheduling.tex",
+    "zh/chapters/05-6-refinement.tex",
+    "zh/chapters/05-7-probe.tex",
+    "zh/chapters/05-gpu-execution.tex",
+    "zh/chapters/06-1-motivation.tex",
+    "zh/chapters/06-2-agreement.tex",
+    "zh/chapters/06-3-search.tex",
+    "zh/chapters/06-4-controls.tex",
+    "zh/chapters/06-5-economics.tex",
+    "zh/chapters/06-6-scope.tex",
+    "zh/chapters/06-refinement.tex",
+    "zh/chapters/07-evaluation.tex",
+    "zh/chapters/07-supp-budget.tex",
+    "zh/chapters/07-supp-precision.tex",
+    "zh/chapters/07-supp-selection.tex",
+    "zh/chapters/07-supp-smallbatch.tex",
+    "zh/chapters/08-1-insights.tex",
+    "zh/chapters/08-2-negative.tex",
+    "zh/chapters/08-3-validity.tex",
+    "zh/chapters/08-4-directions.tex",
+    "zh/chapters/08-5-deployment.tex",
+    "zh/chapters/08-discussion.tex",
+    "zh/chapters/09-conclusion.tex"
+  ],
+  "protected_blocks": {
+    "equation": 116,
+    "align": 6,
+    "lemma": 4,
+    "proposition": 6,
+    "proof": 12,
+    "corollary": 2,
+    "definition": 0,
+    "figure": 46,
+    "table": 48,
+    "minipage": 44
+  },
+  "identical_figure_and_table_assets": 87,
+  "retained_citation_keys": [
+    "adc_artifact",
+    "bang",
+    "blackwell_tuning",
+    "cagra",
+    "cuda_platform",
+    "cuda_programming_guide",
+    "cuvs_refinement",
+    "darth",
+    "data_arxiv",
+    "data_bge",
+    "data_openai1536",
+    "data_openai3072",
+    "data_stella",
+    "data_vogue",
+    "faiss_autotune",
+    "faiss_clustering",
+    "faiss_refine",
+    "fastscan",
+    "gpu_merge_path",
+    "gpu_topk",
+    "ivfrabitq",
+    "jhq",
+    "johnson_gpu",
+    "learn_then_test",
+    "li_termination",
+    "mailman",
+    "nist_binomial",
+    "nist_hypergeometric",
+    "opq",
+    "pq",
+    "ptx_isa",
+    "quickeradc",
+    "rabitq",
+    "rabitq_multi",
+    "scann",
+    "song"
+  ],
+  "chapter_words": [
+    {
+      "chapter": 1,
+      "before": 1432,
+      "after": 1432,
+      "removed": 0
+    },
+    {
+      "chapter": 2,
+      "before": 2419,
+      "after": 2419,
+      "removed": 0
+    },
+    {
+      "chapter": 3,
+      "before": 1943,
+      "after": 1837,
+      "removed": 106
+    },
+    {
+      "chapter": 4,
+      "before": 4046,
+      "after": 3732,
+      "removed": 314
+    },
+    {
+      "chapter": 5,
+      "before": 5803,
+      "after": 5372,
+      "removed": 431
+    },
+    {
+      "chapter": 6,
+      "before": 2464,
+      "after": 2364,
+      "removed": 100
+    },
+    {
+      "chapter": 7,
+      "before": 8991,
+      "after": 7486,
+      "removed": 1505
+    },
+    {
+      "chapter": 8,
+      "before": 2091,
+      "after": 1650,
+      "removed": 441
+    },
+    {
+      "chapter": 9,
+      "before": 497,
+      "after": 497,
+      "removed": 0
+    }
+  ],
+  "chapters_and_abstract": {
+    "before": 29993,
+    "after": 27096
+  },
+  "word_count_scope": "Prose and captions; table bodies and displayed/inline mathematics excluded; not an official course count",
+  "inputs": [
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-1-context.tex",
+      "sha256": "239b02d7b0060c904b3a9194bb0c94af54430af48eb35d2ba6c42fc61aeedaf4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-2-scope.tex",
+      "sha256": "6f4a8ee3c537d762097bcb91aa5ce32d1a058971375aaf6ef195cc5cb01af765"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-3-challenges.tex",
+      "sha256": "68788c9d3e6fc1778211b8644bfef3f89265dc3008484ef642708863f24f4d47"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-4-questions.tex",
+      "sha256": "a043d2f4f43cd0f7a29f28ab12d763785d3d0fef6916180ee7d56e73a2491f25"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-5-contributions.tex",
+      "sha256": "ba8aceca02a4bb481fd8620da480b5537fea566c498c4617ed41da9a3722e626"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-introduction.tex",
+      "sha256": "9553e77c7d077f8c528adea4413fae8d31bf61f777a7f78ea2c83aebe9da738c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-1-objective.tex",
+      "sha256": "d74393329775084ec0256911f47d6d63bcc4ae7ab6559f5a1bd80b9fc20a73bd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-2-hierarchy.tex",
+      "sha256": "35eb3adbd46f92dfe30cbdd8efa55bf651bc81948a65569ce93334a1a2a18dab"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-3-jhq.tex",
+      "sha256": "70487af553f0f1c8bda00c13e0f2db44f4f405a5da98b064bf7dfff77144ab68"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-4-gpu.tex",
+      "sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-5-graphs.tex",
+      "sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-6-quantised.tex",
+      "sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-7-gap.tex",
+      "sha256": "99a5f77f9949be6ae1a9f9697e496308542f33d32e474e2a341b2464bf5eee9a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-background.tex",
+      "sha256": "1565808b5066866b1a73236e883d8436860eac9df4419d44d5e353cce63f96d0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-1-comparisons.tex",
+      "sha256": "e103ea1aa65046714ab0f912e4b4c8f7ea0a2db94e2080314f6bba7cad6e349b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-2-data.tex",
+      "sha256": "d4098eb45fd144f04cf41d7982fc13df445237bed9a24d64e6de72175ffa17c0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-3-measurement.tex",
+      "sha256": "461d8fd57a1f32818d862ab79577ed9579bf7b125c096834b4ec314d157eb746"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-4-frontiers.tex",
+      "sha256": "520986eda1b5b24dbaa550e7944398402e2e785c48720b6ab1df29e68bd270a1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-5-ledger.tex",
+      "sha256": "342fbf6296527213df0863cd07f7e32449761fca65d7b8765ad895dfac1972d6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-6-validity.tex",
+      "sha256": "b990dd98217007ded7ce5699305d64d9bd0e4ea90ae81cfe7a3a52936fc4c014"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-methodology.tex",
+      "sha256": "5d5476a1bf6800dd89920bb50c6129748e72ccd73ddb277889045853d78e1be4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-1-boundaries.tex",
+      "sha256": "1ea3a67fee49c32592e8e36d362a401021dbae2f7114b7aa058afde3b311adfe"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-2-training.tex",
+      "sha256": "7caef2b2c93b950ef3318723183fb57fd11a8d7cae7c9a785cc3b1c7649b3421"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-3-layout.tex",
+      "sha256": "3c30bea567f39198a663b7f8613b55dc6a13d5be92fbac4732cd8f3ab1581420"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-4-lifecycle.tex",
+      "sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-5-construction.tex",
+      "sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-6-contracts.tex",
+      "sha256": "40c153b90f3209109fa42c74c3a9e0b3f5fded02688234f2e8ebc47a9de1a32b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-architecture.tex",
+      "sha256": "1d452fa40ad440eae66aa263c1ab1439e891f685c9cb66ffbe718c6946192498"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-1-query-path.tex",
+      "sha256": "8a2fdecdbc2b954612874857e98285e575f41c07c31c22c1ed0967607d8b799a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-2-lut.tex",
+      "sha256": "ff629614eb48614f5e4ce39841ab072a7f8c07ab4cc63f3d6b3165033fbec43d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-3-packed-access.tex",
+      "sha256": "8cfc9974f9828574b7546f29df2e1161f2a25f7f0c692ed52a41595968f6c897"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "8d6de7ce0bc99d68545b47bbb2274708d57e0002e075f965e7931ff5f664a94e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "sha256": "1eb53d5401bf5d4a4315134f1026e74dde87039a162f14496761668d528c9aa3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-6-refinement.tex",
+      "sha256": "3600e0334d80553fcfaa0bf85237b167b0993925d5dd39a34e2aebe0dba5a6c0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-7-probe.tex",
+      "sha256": "2d7d6b519683172b1d85e009e99100c31b35d3a8c13083d9456bdf3d342dfec1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-gpu-execution.tex",
+      "sha256": "352fc492c8c4df331c51e2ff3e9f4c5747292581d7f13617bb51d23fd07355a1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-1-motivation.tex",
+      "sha256": "c04806492af142c14bd22858f6eee90e7643f022a4b8d248459bf6835a0b19aa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-2-agreement.tex",
+      "sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-3-search.tex",
+      "sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-4-controls.tex",
+      "sha256": "1cf630b19baa5d123177cc713d2bbb47f0a3429c5a8f86dea9f1f17cd7482769"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-5-economics.tex",
+      "sha256": "3beb90ca1b074aed770085f3c3c33b5477cd6ade35993d65a539b52f6eb39571"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-6-scope.tex",
+      "sha256": "7e62a4398bffebb77f948461f18629e5c1f14475678db4cbb1ee798d7cc75864"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-refinement.tex",
+      "sha256": "edf300459ccada3fd21a5b37284f7d242c9b6e2259af0b1f0fee2cc86adf2a51"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "678364c0a6c5f7098df0dfad508a2006429d61de166c247400089dd913c4dd58"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-budget.tex",
+      "sha256": "701d5e7df7e9fb3ffc4558c8d70af6f646f20ad71e5d1eab6b5601133f3d6313"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-precision.tex",
+      "sha256": "ea23f7c00dc95009f311545ff1bbbc21e6e79075966d6c18b64edfb2766759ef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-selection.tex",
+      "sha256": "7c9e048ef49e1a900cfd7c2b460e052d191d718524a7c48418a781083483c664"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-smallbatch.tex",
+      "sha256": "14e293dea7038ebce2acc2ff811fd997feb176c96debd7f5695c07dbc6d7095b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-1-insights.tex",
+      "sha256": "976e6a72a20cadb96488530a9f8a4ef4a7544696807166b8ecb190365c922075"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-4-directions.tex",
+      "sha256": "bde5ca43042620cbb9cbb6e966f814606d4d3b2cf4ea6152f5516d549b96d97f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-discussion.tex",
+      "sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/09-conclusion.tex",
+      "sha256": "88bd7983a7e5c2fc61a6285011116b234aefd284b2717dfcc184cd747e39c984"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-1-context.tex",
+      "sha256": "1fad6266421bf437fb071002407d99191396900b4fa6d6b1c44833924f5b75d1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-2-scope.tex",
+      "sha256": "4b834a055713090c4403815c56026afb4cc79015638060fc1130310dd215d2c9"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-3-challenges.tex",
+      "sha256": "9b4c2085db917e476cda14433c96649a7f8b8efa1fad40008db4fb2623a8f65f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-4-questions.tex",
+      "sha256": "d2069a961c0f17dc815110ae6a2356223b7d1ae7914e135ff6f768c96df1e509"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-5-contributions.tex",
+      "sha256": "8a28248126d685a376d19545c992fea2e1c72b4cc92529a0f63343364926fc24"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-introduction.tex",
+      "sha256": "21422d078cebaaf34a344f872b2bd2c61ca30a3f65a438dfeed06b6e89098d39"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-1-objective.tex",
+      "sha256": "1f50afadfb38aa9d5219dad5578226485d69da6cd0d6cc30dc51b30b61615805"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-2-hierarchy.tex",
+      "sha256": "89ff4ead3ef173d3eef314994bc2c6d9853fc1255ad228adc0f64dc3890be4c6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-3-jhq.tex",
+      "sha256": "3adf63742bcf0c14b6d8e9a91a06e8c5f835f46adde899a60bf78c314ccca00e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-4-gpu.tex",
+      "sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-5-graphs.tex",
+      "sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-6-quantised.tex",
+      "sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-7-gap.tex",
+      "sha256": "c9ee3045957253b708e01926080525b8d0820d4e0c20836d008312f19dc76bfb"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-background.tex",
+      "sha256": "97f2e13b1581824537fd2198684060d86973ba1355207f354dcd7c00fccf9188"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-1-comparisons.tex",
+      "sha256": "06c41e79a3712a904f30e9c46d24c600b602e19fcdf618f5cc1ab9cf01b5ac3b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-2-data.tex",
+      "sha256": "d295f7573038b3c04faf76db58d3fc63a8e4171aff9e8f7fbdc6cfacb4ea605e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-3-measurement.tex",
+      "sha256": "4cbdc831a8e80aec11d3f46f600000e2f2b303e10f61ebea419a063177f4df42"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-4-frontiers.tex",
+      "sha256": "f0ec837bdd5f16b47e9809c45ceaefad683ea388e2968c134e29f35b840931f7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-5-ledger.tex",
+      "sha256": "e65f7024574aeaca3093f4af2568811a08c2d2d3c7ec4f42c483c116d95c922c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-6-validity.tex",
+      "sha256": "c7635519d1e29b18b330636c70c01eec8fb851d91dfc74ccf4faeef2c13d1b6c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-methodology.tex",
+      "sha256": "dbae06970aa2d8808911fb4f301b2bc5bc0a3ed01d6a2535682cdca1cb63bd4a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-1-boundaries.tex",
+      "sha256": "3fc03235a055c30aa876c3a9c8068686f16edf3f1a14437403d97f6ab00c4666"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-2-training.tex",
+      "sha256": "bf7025de379d4f96404dbf6c339dd588e0820a25bf1f7b81a79e40b0bed992c7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-3-layout.tex",
+      "sha256": "263c43a99894db3922a031fdcc3703f00aa899113c49d593892a2927969f9a2d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-5-construction.tex",
+      "sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-6-contracts.tex",
+      "sha256": "06341d4680c6792dea11da51e6b3088c47bdd56945a111c1f8a0c0991845d729"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-architecture.tex",
+      "sha256": "604003d787125af8fbe3284f6d6e1268d3afc2fb5dec80078eefa27ac30328f0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-1-query-path.tex",
+      "sha256": "05f668e3df66a4228b4c0c13eff5b1ba238713d60a10c20056b8ff840e3645f8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-2-lut.tex",
+      "sha256": "470734032705149724239ab7bf143f2ecb6b9b0d3f2c3330b2445f8cd7ea7e30"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-3-packed-access.tex",
+      "sha256": "3c2cdecc73ab7b519a9e0d28f6d6e6d6bfde1d169be48c05fccde74f4a531e69"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-4-global-selection.tex",
+      "sha256": "472e38a4634673a0afa31214707e37e88efcbc60be6070dc52cdc028444a9bef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "sha256": "5dd2f64a0977156d20bbca9fd9523dea343d34863172131af68a125484616239"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-6-refinement.tex",
+      "sha256": "75a4fd9792628d91d4c3eb6193e3ef8a4585742ca7c4cf0d618096fa01bc5c40"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-7-probe.tex",
+      "sha256": "4802a67528251fae53faba048a4ac51e8e3cb3197a66e9a5d62f1ac7ca619cac"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-gpu-execution.tex",
+      "sha256": "7a429d77c64616d412f0e5c76891f7889c2d0872368f0b7f082055b8ebdea46a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-1-motivation.tex",
+      "sha256": "d31b8eba967b6d7c3c65f9f6531b652abaaef011487cfbe11a91ab22a4bc2f3b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-2-agreement.tex",
+      "sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-3-search.tex",
+      "sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-4-controls.tex",
+      "sha256": "03c0b0cdf3a01cb2bea33ae31b46866e73a8a75ecfd6d436b54f46899f64bdf8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-5-economics.tex",
+      "sha256": "86f6e665e65bd6a2c4400200f5a0c97f9802e64c6890719cadd739c2c3b085c6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-6-scope.tex",
+      "sha256": "7a1e589eca1200439a53ff0b28591c6aa0186274b1595ea4bca7c33e51f5ee11"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-refinement.tex",
+      "sha256": "1e781a970986ac6064146f10733bc36c0f5cb9cc83e9a96ef535953711b7e67c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "98e0858fff510cc5ef27f1471db0aa85c4820c3cdfda06df5b3393ede7691716"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "sha256": "f6997c2327a521f9adfcfd70414386e7cfac5923c52e28da690caac8d6637e54"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-precision.tex",
+      "sha256": "f9e5b8dcfb4ab6403f981e7edf5b2f0067d87b74467eeb090ce836cb6eeb141d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-selection.tex",
+      "sha256": "4b5e2e3b6a958a054d1acde73546ab43211944dec7598ea1cca152a53a4d1b78"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-smallbatch.tex",
+      "sha256": "b2f2afe00d1810b6c675b3a65479e3c6e8b8bd96fc9b1785bdf420c4a2c6eb70"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-1-insights.tex",
+      "sha256": "c73205ab0ee668a4cff620b414cd6c4d9012e48ca2f4adbe9be14a8fd31e5104"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-4-directions.tex",
+      "sha256": "83106d1dc10c37db4cd4be8558ab0479382f15eaead3547e5d1c53c598d8e833"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-discussion.tex",
+      "sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/09-conclusion.tex",
+      "sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch1/challenges.tex",
+      "sha256": "e88609d836bf21986c4dae7fe8296323134b10d84d685a71b7f9dc426efe7144"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch2/candidate-cascade.tex",
+      "sha256": "48526c21c9b8c37a1bbebdd38316cc5faf2909b70f75e3e2c7bb7324f1a2ae81"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch3/measurement-boundary.tex",
+      "sha256": "5ed7ed9097899ef462d051f9082b6d48838aa4d94eff3b5888bdae21a4205d83"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch4/architecture.tex",
+      "sha256": "1a2f6168799ec1ea5b1160a2145cf0b29eb56e082fb9b2e9cf6816c07ed19a14"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch4/physical-layout.tex",
+      "sha256": "2923cb51cc4bc024d3533855f6a7ad3d736228cbcf3a05178175e3df4d27996d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/global-selection.tex",
+      "sha256": "a8410c287c5a0b4554e3594b4ac91c5509d821453fe8f000edc9285236f4e83c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/lane-refinement.tex",
+      "sha256": "c0ef82dcfeb8959dd18c31203937b102c57c17bd718ee5604df65a9120fcc606"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/packed-access.tex",
+      "sha256": "a54b7835c1bd42fce260f1447c9481f043f5e9aa50f5f97136e9d41125bb4a43"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/query-path.tex",
+      "sha256": "2f4628ddcbd4f4e8ec265de9bbfcb07391424f4931aaf15391d41b5fb161136b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/shared-bound.tex",
+      "sha256": "2831bd77d9528c57e851cf906635b4e95b61fd0987e82961622b7d16ddca081c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/budget-scope.tex",
+      "sha256": "1bb200fa2cd38f601a3f4692a4de58b53fa0dd4705a76285b44489e18c756b45"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/calibration-flow.tex",
+      "sha256": "8099f8ee93ab306c45ac34bd88f657b48da7a4fbedc451af47f90f879118de11"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/nesting-example.tex",
+      "sha256": "4e3b7a2f3cf8fabc47808c4c8105d01030590717e638fb05d8f4f51e4d7315d5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/batch_execution.pdf",
+      "sha256": "be97e43aa5e154e881e8c200990da49223132d5eff78152f01ddc57e5e557b35"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/batch_execution.png",
+      "sha256": "96ac610fda770e3721f2959a14efd4a494b10ed1df5c6024f431aaa0aed4adbd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_payback.pdf",
+      "sha256": "4403a378f9eac9775fd29f4bcba3c1e93f7d8924f6e7d7e8bcfd9895f9f11474"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_payback.png",
+      "sha256": "268dccebde4c8c8f87afb20cdbe2a2ba7516ba1397421b031adfc7e77ca9a669"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_risk.pdf",
+      "sha256": "63e31459af38dc5a2d54b2b3879c438a0e3d1a5a06cc053b2d7d6fdc2f7e5b6f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_risk.png",
+      "sha256": "4a13bd8e6e95e7bdf7264b0cd7c37fc6df8c8f8fe9da78390319118b097eaf16"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/construction.pdf",
+      "sha256": "bb25ad09679a0e7a458a1c245fba66507c96e838f6c1294f5469bf11a3e7ac1d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/construction.png",
+      "sha256": "c854de301f4f9a0c412c3b7726a0a42eba26558cb034743492a4ae12c8e7a952"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_budget_payback_v69.pdf",
+      "sha256": "ea2fadfb2fb0ba23240cf67ff932a27d1cc78809d7be2163ca329fb3b3fc6b4e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_budget_risk_v69.pdf",
+      "sha256": "2827fc7a88fb9ba5a2d74f54da15da889f386be95af794d5465cb47c24d00096"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_build_v69.pdf",
+      "sha256": "748ab9d276b6a127371349743068e8376535d731402aec7339d7a88631ae1afa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_lutgroups_v69.pdf",
+      "sha256": "0aaf301b5313d747aa25f422058a8561aafceb86d20d78a38c5808cdbd1c1ab6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_memory_v69.pdf",
+      "sha256": "7956fe18f8a46983182f5d6552eb64e6f9071523b045da21a2ebdc73c5fd9a6a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/frontiers.pdf",
+      "sha256": "469f97b0a8c605e2045dce8a9bcb898a60704ae371863401d5a7bb32dabb646c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/frontiers.png",
+      "sha256": "4042a3024710430f6f9ebdedb0c6735b22120fd32094129c1c4c828323613325"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/large_frontiers.pdf",
+      "sha256": "22415b8969ea623d7cb001bb81842bef0f8ead2a10e5b7c7c86412fc1a47c4cd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/large_frontiers.png",
+      "sha256": "d52e754854f8f01d890236e9a773e9eb6d2b0b18a877e9af6a7cbe58175ae8fd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/lutgroups.pdf",
+      "sha256": "8343a47a078f7131a74000c32380f51efb469142dbd34ffda88abd78dfafce3d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/lutgroups.png",
+      "sha256": "d49175a35484a6800dad8f9d751c31e7eaf138f375807cb4aece0611e1456060"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/memory.pdf",
+      "sha256": "6be0feb34556a6d62a821cfdc020ac7bb2528112976370c2f703000dfffc16f1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/memory.png",
+      "sha256": "a5621dccf33a89c2d07e2b8fbef24784a2dd45e30a5566f521c3479f62b8bef2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/packing_refinement.pdf",
+      "sha256": "dff5a1c49285fe8fca31c0a19698a8b3591bbde53c8dcfb765bdf2dc2a77ba89"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/packing_refinement.png",
+      "sha256": "4e6d89e283563865513d66ccce9de1c70b708cfc395921ef61ce7dfa0c045240"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch8/negative-evidence.pdf",
+      "sha256": "7bc3158ead5654f9a1a40b94cd25df60cd2c65328f264d997b41e56ff42fb1de"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch8/negative-evidence.png",
+      "sha256": "3b6a28b3516174d5fd1f9dfc9a57eb0f3c255b8025d4c5d5b458def0692e992d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/supplement/finite-pool.pdf",
+      "sha256": "17a465180a95f3bb3f9a901bb9cc94aefad5c68e587754426abb017302f131e5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/supplement/precision.pdf",
+      "sha256": "93207061c78da16ba0fdc3d1f14725006837a78bebbd0e1a70819681016b2cc0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/supplement/stream-cost.pdf",
+      "sha256": "3d1128b45ed53662b289326090e4f4923bbfd1ebe90afea28aeef5fb2d4285b7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/t4-t5/smallbatch.pdf",
+      "sha256": "41328a056458a03775edc9eaf6f79825e5efe9a20968853b44bf4754868d3ab2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/appendix/e1-counts.tex",
+      "sha256": "97754c3ddddae7e5e976f08a5606e85aed8f60e304b9d660d984c9e56f976572"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch3/datasets.tex",
+      "sha256": "6c1d82243c399ae1f3a0146d05ed8d5a8dc8232ae451fae0f572af3e05188797"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_cost.tex",
+      "sha256": "0311e0ab42b2962a3a865c264270ea13044833d4ea8d640bdf030945dbfd005b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_full.tex",
+      "sha256": "959620129869a4651b79e9c62c6b21085024a2678489f4158bcc2ced2416f563"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_quality.tex",
+      "sha256": "3f6e39d48901d041a0ecb714b1277b15cb5eaabccaee9f67510b2cdda4107824"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/build_memory.tex",
+      "sha256": "6e586a5ba678a704926f4ea0588c612357ff726e1a70c1e43e022f425da72f6c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/e1_memory.tex",
+      "sha256": "af7c61ac85faab10d5d4a2dcef4904119df1521d91af92e118e1c77e08b53d4d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/e1_paths.tex",
+      "sha256": "4ce33f2364b7a22bf83b349724109abc982e1b872c22d455b63d637f538b0265"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/fixed_budgets.tex",
+      "sha256": "00e0a0dcf94e0a02cd04540c5861dd02f34644772744038355b5caf3078a1e58"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/matched97.tex",
+      "sha256": "d3dc4b6d2046a63215067fbb4f0b66a3b69b7602dcb612e47d7aa063173d5aef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/probe.tex",
+      "sha256": "51b345171bf1d0f4e76612a342ba98143068b46fe3822809b4320de5a485db7c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/refinement.tex",
+      "sha256": "53084f65c7daad1f139bdeb161936788e709f5b1c16e3293a909c506c591ead1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/scheduling.tex",
+      "sha256": "bba8022278f6d2fa62e8740a33a5300f5d7a67b3b07f9aeb5dd9963e0de7d536"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/full-review/precision-anchors.tex",
+      "sha256": "7f5cac12b6fe423bc25171a9ba030e13540a0987ffce254b4614dd3df43e0c8d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/full-review/scratch.tex",
+      "sha256": "2ef07d8442f84705650d02f369239ad1694aba6e1dc00c94cb7a7c4790138ac4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/budget_tails.tex",
+      "sha256": "e274cc26d81c76d89a1b43b16def17d859351e044d53acc6c66c43b5b10065b8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/build.tex",
+      "sha256": "3241ae86d4a835d7e94cd4faa81e59350af31c90d46223d3230732cdc3c69931"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/precision.tex",
+      "sha256": "17f8fe1ce405e170aa10fa799c15d74d375863f15ddd4f59aaebce9847e140f1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/representation.tex",
+      "sha256": "c04b0e646afbc52fc311d18e3b1b23490baa8b0c21374b4d3aaaa56ed2d7d301"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/stream.tex",
+      "sha256": "573c1c93fcf0f3011d665eeaca96a9e285c8781b662864104825bc7709b17564"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/t4-t5/smallbatch.tex",
+      "sha256": "8520e5a19603b60c390f1991171bc14102f4667035fbc0da71b7172e87b01c58"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/t4-t5/strict-selection.tex",
+      "sha256": "95507256369fb15ca70eb70fa72e2c18be10404e571e9eafa18489d832f21987"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/appendix/e1-counts.tex",
+      "sha256": "91524493881554f6e6b7f7ca47fb7f3ec5fe91e038afc57b61fa7c655b378583"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_cost.tex",
+      "sha256": "067ae5f8f1c6b3dab363ab00a6387ce75e42ca1aca7c23eb20d11b4df3f6b889"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_full.tex",
+      "sha256": "d12d02a31a5db97ccd72e082a9f76d7ee81cd5ad3e6bb6d8e8f37e26972e1841"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_quality.tex",
+      "sha256": "085d50be946da61ad814fa08bd4ac5b3bab234af4d305b7d8b5726b5491ffa8f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/build_memory.tex",
+      "sha256": "6d04aca0ef7b91f48e990f44e80cd5b4fe517663cebf0008ec04a0668255fc38"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/ch3-datasets.tex",
+      "sha256": "6aa6eae048a6eaccfedbbdb8256ace12f50fe99c564de8379ae7742f256dab48"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/e1_memory.tex",
+      "sha256": "68239cb349946c03b3775f87f8a2d062f700ee05250495cfa515f5a4e5eaa7b7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/e1_paths.tex",
+      "sha256": "28cf9a998d2c3e5343e3f0f1c8ecbaa2dd361d7c40a38546326c457c4ce5d4a3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/fixed_budgets.tex",
+      "sha256": "cdd455f7db8e016f23a05f40806bb65c11d20d8df99e63d512884b01586d2b7e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/full-review/precision-anchors.tex",
+      "sha256": "5027ad48fa205eb13f3b8f7d7051d812eccf3d0bc6a732443f1f1d98974917d0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/full-review/scratch.tex",
+      "sha256": "00eb1173b3e15c92aca38e4c09c0be2f2f1e694be03bd94ea8987daddc985372"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/matched97.tex",
+      "sha256": "c0dd6bbbb1a8a0aabc28c7df235106d3a45c9934c89ea93b77f73f53a943c4d2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/probe.tex",
+      "sha256": "7a9fa3d87e72374874ffd36acbcc1a414975ec7cae0660c84528ca0edb7054ef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/refinement.tex",
+      "sha256": "18cdeb6e16617bfa5ac697b355808d185456c7c5cdbc1274b8ead4902200cbe8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/scheduling.tex",
+      "sha256": "ed08033c5f8379c4cc32537aa466eff367e11b7702e63c473a1c23a5597df2aa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/budget_tails.tex",
+      "sha256": "ca2226774c2cc2c09bf824b439485ab404fe4f89057bcc22ae3cbb40a0f3b8aa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/build.tex",
+      "sha256": "89ebae5fd3ba1016dbefad32a8994a0e03fd61bf4a07a966a8797e1f1f32cd30"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/precision.tex",
+      "sha256": "6df4bdc0d12ae212872e294947b00d9acbcee3f416f633a1f8be7525f08961b5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/representation.tex",
+      "sha256": "1afcb84e955a9724263dcef139e15cacc62553525c3506fab32937a2ee43e400"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/stream.tex",
+      "sha256": "ba391b8266f1a7a13510695a53e6398b6e33c9eed5f048d77eb9abe5bda16f98"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/t4-t5/smallbatch.tex",
+      "sha256": "422d32f54bdd6de256e182443d5ad9a6defbe2fe983e0e0d9cd837b15c92a87f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/t4-t5/strict-selection.tex",
+      "sha256": "1088d37cb9bf3dbf2c9a4dc793adf2a2ad72f67b54db31b589f180607256dae6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/abstract.tex",
+      "sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/abstract.tex",
+      "sha256": "32f7c3596dd93d3e03e71510a367a6b9c3afb2572cdca75c36b735ed6be21ea0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/b-supplementary.tex",
+      "sha256": "c3fda9f9a7db43207eac427e605691d5e24035ec4192dc4f1568eb83a37d084f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/appendices/b-supplementary.tex",
+      "sha256": "0a46723fcdb229bb3aff0b272df0d6c50f8680f8b4bd8cff392cf7b34ee8d23e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_deduplication.py",
+      "sha256": "64a8dc169fe479c5c7810f46c201e34925db7df9bf59262a05260c5506abbd7d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_synthesis.py",
+      "sha256": "108b719bb2cdc1f62d7f3d30d56724c794edfe8d55298159f40a5da337df39c7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/deduplication-rounds.md",
+      "sha256": "f405ca2902d13f0782f515633fee9840fe8132b86ca5976c01a4faae1399d0b9"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/template-sources.json",
+      "sha256": "b395dfcecf3e00520458ae5f640674d5a607602eb3710e59b083f1e5557dc4ec"
+    },
+    {
+      "repository": "8800_report",
+      "path": "FORMAT_NOTES.txt",
+      "sha256": "f1517c65e4999052a9f83a1365242ee5525a9639d950449cd4f1dd996c49dbfd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "main.tex",
+      "sha256": "3dac948d776c617d448201b98541c1d8d542d360c3531dc4484572e95fb5d8ba"
+    },
+    {
+      "repository": "8800_report",
+      "path": "main-zh.tex",
+      "sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "config/layout.tex",
+      "sha256": "e85235570d216a6bcc6ad816f48cbc60942b291a5ce52bb99d5c97347ba434d3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "config/preamble.tex",
+      "sha256": "2701f51a3c0370d7a3736ced00f8fca0050d58058afe98a10db47a2cb72bb1c2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/preamble.tex",
+      "sha256": "1410ee195bd51fe70414261c8f5d7f49a8e1eb73a9a2276c829687556baa3e33"
+    }
+  ]
+}

@@ -40,18 +40,11 @@ searching that snapshot. Changes are handled by building a replacement snapshot.
 simple bulk-rebuild lifecycle; mutable insert/delete operations and
 transactional publication would require additional index management.
 
-Search accepts host queries and returns host IDs and computed ranking
-scores. The returned $D_H$ equals the reconstructed squared distance plus
-the query constant $\|q'\|^2$ (\cref{eq:5-refined-constant}). This preserves
-within-query ordering. Range thresholds or comparisons across queries
-must first remove that constant and still account for reconstruction error.
-It stages input through pinned memory, transfers each batch, executes the
-device query pipeline and returns its results. The principal throughput
-measurements use this host-to-host boundary. The exact call/repetition
-protocol and warm-up treatment are stated in Chapter 7. Original-file
-loading, training, adding and schedule calibration are outside steady-state
-search QPS. These boundaries make the same index usable across query
-budgets without attributing model construction to every search call.
+Search accepts host queries and returns host IDs and computed scores.
+The query-only constant in those scores and its implications for range
+thresholds are derived in \cref{eq:5-refined-constant}. The measured
+host-to-host call boundary is defined in \cref{sec:3-3}.
+
 
 This design streams construction inputs from host memory while retaining
 the compressed database on the GPU. It supplies neither a disk-backed

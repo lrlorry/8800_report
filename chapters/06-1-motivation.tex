@@ -45,14 +45,12 @@ An explanatory latency decomposition is
 \end{equation}
 For a fixed batch and route, $T_{\rm base}$ includes transfer, rotation,
 routing and primary-score production; selection, residual scoring and
-final selection depend on the survivor capacity
-(\cref{fig:6-budget-scope}). This is a work model,
-not a fitted latency predictor. Buffer capacities, launch occupancy and
-resource thresholds can change in steps. At small budgets, fixed work can produce a throughput plateau.
-Ten alternating remeasurements of OpenAI-3072 at 128 probes give
-142.3/142.7 kQPS for $\alpha=4/2$, reversing the archived noisy
-145.0/128.7 kQPS contrast (\cref{sec:7-budget-trace}). The policy
-minimises accepted budget rather than optimising a noisy timing rank.
+final selection depend on survivor capacity (\cref{fig:6-budget-scope}).
+Buffer capacities, occupancy and resource thresholds can change in steps,
+so this work model does not predict a monotone runtime. The measured
+small-budget plateau is evaluated in \cref{sec:7-budget-trace}; the policy
+minimises accepted budget rather than a noisy timing rank.
+
 
 Each calibration trial still runs rotation, probing and primary scoring
 before refinement. Reusing the index avoids rebuilding or retraining;

@@ -1,6 +1,6 @@
 % Chinese reading copy: make pdf-zh (XeLaTeX).
 % Chapters 1--9 and the abstract have Chinese reading versions.
-\documentclass[a4paper,11pt,oneside,openany]{report}
+\documentclass[a4paper,11pt,oneside,openany,parskip=never,bibliography=totoc]{scrbook}
 
 \input{config/metadata}
 \renewcommand{\thesistitle}{JHQ-GPU：面向表示的 GPU 近似最近邻搜索与工作负载级精排预算校准}
@@ -40,8 +40,6 @@
 \input{zh/chapters/09-conclusion}
 
 \clearpage
-\phantomsection
-\addcontentsline{toc}{chapter}{参考文献}
 \bibliographystyle{plainnat}
 \bibliography{references}
 

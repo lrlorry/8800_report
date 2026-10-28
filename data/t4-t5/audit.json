@@ -1010,12 +1010,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/05-2-lut.tex",
-      "sha256": "7587fd52368fbff50b842c6dec9354f45b3f4e03222f5c07e1d39702e3c904e7"
+      "sha256": "ff629614eb48614f5e4ce39841ab072a7f8c07ab4cc63f3d6b3165033fbec43d"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-2-lut.tex",
-      "sha256": "e64cc09586d02a8c97ad0ab8a44b872503e8b48719f6e0c5d202afd3b407b8c7"
+      "sha256": "470734032705149724239ab7bf143f2ecb6b9b0d3f2c3330b2445f8cd7ea7e30"
     },
     {
       "repository": "8800_report",
@@ -1030,12 +1030,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "404e839170d9542431287558f1fc7b58b9757f1078e53c69e8520a79d6d392be"
+      "sha256": "678364c0a6c5f7098df0dfad508a2006429d61de166c247400089dd913c4dd58"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "716db0ddec49fc3946f83ac584cb5d8f0700accf1003196c87226a182748730b"
+      "sha256": "98e0858fff510cc5ef27f1471db0aa85c4820c3cdfda06df5b3393ede7691716"
     },
     {
       "repository": "8800_report",
@@ -1060,22 +1060,22 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-3-validity.tex",
-      "sha256": "109ca315137fc3ebb9fcd8daaa62e4bdff670490683b5ed347aa15262d35f333"
+      "sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-3-validity.tex",
-      "sha256": "204a46faed4f6c149a70f70ed4c44a187ddd35648e985e427d89adef564eb887"
+      "sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22"
     },
     {
       "repository": "8800_report",
       "path": "chapters/08-5-deployment.tex",
-      "sha256": "31d9fd3fad974ac4d8f0ab6d75f31592eb575321f71fba00b22371002b5c214a"
+      "sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-5-deployment.tex",
-      "sha256": "c1e76c0958e1082c7bf83d68e4778387664596c6a3a76ad5637b32fecebc504f"
+      "sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9"
     },
     {
       "repository": "8800_report",

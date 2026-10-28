@@ -35,36 +35,16 @@ evaluation; it is not an input to these search decisions.}
 \label{fig:5-query-path}
 \end{figure}
 
-Routing computes centroid scores and selects $n_{\rm probe}$ lists
-(\Cref{sec:5-7}). Concatenating those lists defines the visited universe
-$U$ of size $n_c$. An exact probe primitive selects the requested
-centroids under the computed routing scores; it does not certify that
-$U$ contains every raw-space neighbour. The prefix offsets also expose
-the actual candidate counts needed for scanning and scheduling.
+Routing defines the visited universe $U$ of $n_c$ candidate occurrences;
+primary screening retains up to $c=\max\{k,\lceil\alpha k\rceil\}$ for
+residual scoring. \Cref{tab:5-query-stages} records each stage's inputs,
+reads and costs; \cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}
+develop their implementations.
 
-Primary screening builds query-specific LUTs and reads primary codes
-for the visited vectors. It retains up to
-$c=\max\{k,\lceil\alpha k\rceil\}$ candidates under $\primarydist$.
-With fixed table grouping, score evaluation costs $O(n_cM)$, in addition
-to local-selection and merge work. \Cref{sec:5-2,sec:5-3} address table
-and code access; \Cref{sec:5-4,sec:5-5} establish selection invariants
-and examine the cost of exposing more parallelism.
+The ordering and exactness columns of \cref{tab:5-query-stages}
+attach each claim to its score and tie rule. Chapter 7 tests survivor
+sets, ordered outputs and raw-space recall separately.
 
-Residual scoring then reads residual codes only for valid survivors,
-performs $O(cd)$ coordinate work and supplies $\refineddist$ to the final
-selector (\Cref{sec:5-6}). In this path, compressed reconstructions replace
-search-time raw-vector reads. The implementation's final repeated-minimum
-selector scans $c$ slots for each of $k$ outputs, with additional block
-reduction work.
-
-Deterministic ordering keys attach tie rules to these scores: centroid
-selection uses list ID, complete-key primary selection uses physical row
-position, and final selection uses database ID. The query-centric legacy
-primary path has a different cutoff-tie rule, qualified in
-\Cref{sec:5-4,sec:5-5}. Consequently, score preservation, survivor-set
-agreement, ordered-output equality and raw-space recall are separate
-claims. Chapter 7 tests them at their respective boundaries rather than
-treating a single unchanged recall value as proof of the whole pipeline.
 
 
 \begin{table}[tbp]
@@ -109,10 +89,7 @@ Schedule statistic & Not calibrated automatically & 512 database pseudoqueries \
 \end{tabularx}
 \end{table}
 
-\Cref{tab:5-query-stages,tab:5-evaluation-settings} specify the stage
-boundaries and measured configuration. In particular, the budget harness
-explicitly sets 16 lanes, scheduled scans and bound sharing; merely
-linking the newest library retains the scalar/query-centric defaults.
-Component ablations override the controls stated in their protocols.
-Raw run metadata and the mechanism-to-version map in
-\Cref{tab:a-components} identify those variants.
+\Cref{tab:5-query-stages,tab:5-evaluation-settings} distinguish the
+stage contracts and explicitly configured evaluation path. Component
+ablations retain their stated overrides; \cref{tab:a-components} maps
+mechanisms to recorded implementations.

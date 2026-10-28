@@ -1,12 +1,8 @@
-Internal validity is strongest for same-process paired interventions and
-weakest where versions, trained states or interfaces change together.
-\Cref{tab:8-threats} identifies the possible reversal for each main
-interpretation. The main safeguards are the shared inputs, explicit score
-contracts, retained timing arrays and versioned ledgers of Chapter 3.
-Repeated calls estimate conditional timing variation; they do not estimate
-the distribution over independently retrained indexes. Five supplementary builds now quantify recall variation at fixed operating
-points, not the distribution of entire retrained frontiers. Precision
-sensitivity also changes add/query arithmetic under a common cached model.
+\Cref{tab:8-threats} consolidates threats to the main interpretations.
+The shared-input, timing and provenance controls are defined in Chapter 3;
+\cref{sec:7-8} evaluates repeated execution, fixed-point rebuilding and
+precision sensitivity within their recorded boundaries.
+
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
@@ -34,15 +30,12 @@ sub-interval allocations and full retrained frontiers remain unmeasured \\
 \end{tabularx}
 \end{minipage}\par\medskip
 
-External validity is limited by one GPU, squared-L2 top-10 search, six
-prepared embedding datasets, E1 at batch 1,000 and T5 at 8/32. T5's
-high-recall reversal shows why E1's ordering cannot be transferred across
-batch regimes. Qualifying frontier endpoints must remain in a lower-target
-comparison, and measured-threshold results expose grid-sensitive rankings. Query removal
-by position does not certify the absence of near-duplicate embeddings.
-The exports are not a relevance-labelled retrieval benchmark. Database
-updates, concurrent traffic, deployment latency objectives and changing
-query populations are untested. The index is resident in compressed form;
-the result supplies no billion-scale or multi-device capacity evidence.
-These limitations identify the experiments needed before transferring an
-observed operating region to a deployment.
+External validity is limited by one GPU, squared-L2 top-10 and six
+prepared embedding datasets. The batch-dependent operating regions are
+reported in \cref{sec:7-smallbatch}. Query removal by position does not
+certify the absence of near-duplicate embeddings, and the exports are not
+a relevance-labelled retrieval benchmark. Database updates, concurrent
+traffic, deployment latency objectives and changing query populations
+remain untested. The resident-index results supply no billion-scale or
+multi-device capacity evidence. These are the remaining checks before
+transferring an observed region to deployment.

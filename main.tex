@@ -1,6 +1,8 @@
 % Compile from the repository root: latexmk -pdf main.tex
 % Overleaf: set main.tex as the main document; compiler = pdfLaTeX.
-\documentclass[a4paper,11pt,oneside,openany]{report}
+% KOMA-Script long-thesis structure used by the School of Computing template.
+% Electronic copy: oneside/openany avoids inserted binding-only blank pages.
+\documentclass[a4paper,11pt,oneside,openany,parskip=half-,bibliography=totoc]{scrbook}
 
 \input{config/metadata}
 \input{config/preamble}
@@ -39,8 +41,6 @@
 \input{chapters/09-conclusion}
 
 \clearpage
-\phantomsection
-\addcontentsline{toc}{chapter}{Bibliography}
 \bibliographystyle{plainnat}
 \bibliography{references}
 

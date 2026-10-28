@@ -77,17 +77,12 @@ for this query pipeline.
 
 
 
-The archived probe checker reports 1,792 cases with zero differences
-against the earlier selector in IDs, offsets and total candidate counts.
-Its distributions include many ties, all-equal values, mixed signed
-zeros, mostly infinite values and extreme magnitudes. Cases also cover
-requested probe counts larger than the number of lists. These are
-targeted finite tests of the probe primitive, not a proof of primary
-top-$c$ or of exact nearest neighbours.
+The primitive tests cover many ties, all-equal values, mixed signed
+zeros, mostly infinite values, extreme magnitudes and requested probe
+counts exceeding the list count. Their outcomes and real-query checks
+are reported in \cref{sec:7-4}.
 
-\Cref{sec:7-4} gives the real-query identity checks, stage timings and
-end-to-end comparison. It also retains the Vogue cross-process anomaly:
-matching probe/primary dumps do not imply identical final pipeline
-outputs. The optional FP16 routing changes score precision and is
-a separate approximation; high probe overlap or unchanged recall does
-not make it part of the computed-score equivalence claim.
+
+The optional FP16 routing changes score precision and is evaluated as
+a separate approximation in \cref{sec:7-4}, alongside the cross-process
+pipeline-identity checks.

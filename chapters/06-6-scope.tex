@@ -35,12 +35,13 @@ conditional exact search for that decision and a cost model for reuse.
 Chapter 7 tests its quality and speed against fixed budgets and the
 diagnostic oracle, and directly measures calibrated reuse on four cells.
 
-The supplementary archive now contains every draw's sample IDs, selected
-$\alpha$, full $D_S$ curve and loss, full-pool enumeration, pool-level
-$X_q$ records and 500-batch traces. Remaining work concerns arbitrary-subset
-per-query invariance, a strict CPU reference for actual primary scores,
-the Vogue cross-process discrepancy and future workload changes. Their
-status is maintained in \path{assessment/ch7-pending-experiments.txt}.
+The supplementary trace contents and completed strict CPU-reference
+checks are documented in \cref{sec:a-supplement,sec:a-t4-t5}.
+Remaining checks concern arbitrary-subset per-query invariance,
+rearchiving candidate dumps for independent re-sorting, the Vogue
+cross-process discrepancy and future query changes. Their status is
+maintained in \path{assessment/ch7-pending-experiments.txt}.
+
 
 The reported budget campaign and its trace rerun use v69 arithmetic,
 including TF32 on the OpenAI datasets. The separate FP32 sensitivity

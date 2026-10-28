@@ -108,6 +108,7 @@ def main():
                 'frontmatter/acknowledgements.tex','zh/acknowledgements.tex',
                 'appendices/a-reproducibility.tex','appendices/b-supplementary.tex',
                 'docs/experiment-protocol.md','assessment/backmatter-streamlining.txt',
+                'assessment/deduplication-rounds.md','assessment/template-sources.json',
                 'config/layout.tex','config/preamble.tex','zh/preamble.tex',
                 'config/metadata.tex','frontmatter/title.tex','zh/title.tex',
                 'frontmatter/notation.tex','README.md','FORMAT_NOTES.txt',

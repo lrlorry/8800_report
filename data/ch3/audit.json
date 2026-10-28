@@ -403,14 +403,14 @@
     "small-batch comparisons beyond T5 batches 8/32, its four datasets and five variants"
   ],
   "prose_word_estimate": {
-    "total": 1943,
+    "total": 1837,
     "per_file": {
       "chapters/03-1-comparisons.tex": 242,
       "chapters/03-2-data.tex": 406,
-      "chapters/03-3-measurement.tex": 538,
+      "chapters/03-3-measurement.tex": 500,
       "chapters/03-4-frontiers.tex": 306,
       "chapters/03-5-ledger.tex": 211,
-      "chapters/03-6-validity.tex": 137,
+      "chapters/03-6-validity.tex": 69,
       "chapters/03-methodology.tex": 103
     },
     "method": "prose/captions, excluding math/table bodies/labels/macros; not official course count"
@@ -844,17 +844,17 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "404e839170d9542431287558f1fc7b58b9757f1078e53c69e8520a79d6d392be"
+      "sha256": "678364c0a6c5f7098df0dfad508a2006429d61de166c247400089dd913c4dd58"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "716db0ddec49fc3946f83ac584cb5d8f0700accf1003196c87226a182748730b"
+      "sha256": "98e0858fff510cc5ef27f1471db0aa85c4820c3cdfda06df5b3393ede7691716"
     },
     {
       "repository": "8800_report",
       "path": "main-zh.tex",
-      "sha256": "ee0d3e55f2f60c1db5726fd34875de7121f6eef3704ca39dd1701dec2febf527"
+      "sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b"
     },
     {
       "repository": "8800_report",
@@ -884,17 +884,17 @@
     {
       "repository": "8800_report",
       "path": "data/ch4/audit.json",
-      "sha256": "6f52b6d9ce66701286c4a96b1845dd71bea6fa78bac628c67723fadd435b0aed"
+      "sha256": "34fa3227899e0dd3b977eff1dc45f55eac5ef17882ca1e657ea4ce0c22d32fad"
     },
     {
       "repository": "8800_report",
       "path": "data/ch6/audit.json",
-      "sha256": "205c58e369afe19b51e0df9455d7546c9b32d43b31113b4a83c02c8340ea4912"
+      "sha256": "c7ab3233fc85c546c22a78dd45f682eaa6f84494dc1d4b9b91b10644504c1c31"
     },
     {
       "repository": "8800_report",
       "path": "data/ch7/round2-audit.json",
-      "sha256": "0406c65dbad8d3042c28f40061346b1e70b186e40cbfd16981720d0af5401720"
+      "sha256": "9aa761cf85d9691032d17afc9cd2443df73864c68fefd738071f4973d88bf5b7"
     },
     {
       "repository": "8800_report",
@@ -914,7 +914,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-3-measurement.tex",
-      "sha256": "c6ebe30ef9aac21b66e7d6f87858789d8d3af2461403d30a1b4600ce56994b6a"
+      "sha256": "461d8fd57a1f32818d862ab79577ed9579bf7b125c096834b4ec314d157eb746"
     },
     {
       "repository": "8800_report",
@@ -929,7 +929,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-6-validity.tex",
-      "sha256": "dc4d66b0e9a7a23102dae10c61d64afb140933e61ec262ca2234f82f74ce5c0f"
+      "sha256": "b990dd98217007ded7ce5699305d64d9bd0e4ea90ae81cfe7a3a52936fc4c014"
     },
     {
       "repository": "8800_report",
@@ -949,7 +949,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-3-measurement.tex",
-      "sha256": "ee1746cffcca612b1af0501e12a09b156b85476e2a271e4ca72d78b793e1d82b"
+      "sha256": "4cbdc831a8e80aec11d3f46f600000e2f2b303e10f61ebea419a063177f4df42"
     },
     {
       "repository": "8800_report",
@@ -964,7 +964,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-6-validity.tex",
-      "sha256": "89c1980363fe47e594ff1293a8e715683e50c84559c98149949bc2db7bdc3c6c"
+      "sha256": "c7635519d1e29b18b330636c70c01eec8fb851d91dfc74ccf4faeef2c13d1b6c"
     },
     {
       "repository": "8800_report",

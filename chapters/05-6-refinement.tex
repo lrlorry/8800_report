@@ -92,10 +92,5 @@ lane reductions also change floating-point association before selection,
 which can move near-tied candidates even when the real-arithmetic
 formula is unchanged.
 
-\Cref{sec:7-3} separates these effects: L1 is bit-identical in its tested
-cases, while multi-lane distance differences reach approximately
-$1.6\times10^{-6}$ relative error. The ordinary L16 end-to-end gains
-range from $1.015$ to $1.789\times$; kernel-only gains are larger and
-must not be substituted for them. The design is supported by controlled
-load-only and cooperative variants, with numerical equivalence tested
-rather than assumed.
+\Cref{sec:7-3} reports the load-only and cooperative controls,
+numerical differences, kernel times and end-to-end gains separately.

@@ -1,0 +1,61 @@
+{
+  "checked_on": "2026-10-28",
+  "timezone": "Australia/Sydney",
+  "author": "Pascal Bercher",
+  "template_version": "1.2.2",
+  "repository": "https://gitlab.anu.edu.au/u1092535/latex-templates",
+  "revision": "677d6cb4af756f08be7c086d9f4a4cbfe42d6d52",
+  "revision_date": "2026-09-19T20:27:21.000+10:00",
+  "author_guidance": "https://bercher.net/phd-students/thesiswriting",
+  "overleaf_institutional_gallery": "https://www.overleaf.com/edu/anu",
+  "course_requirements": "https://programsandcourses.anu.edu.au/2026/course/COMP4550/Second%20Semester/8720",
+  "scope": "The author identifies this as the School of Computing thesis/project-report template. Setup instructions allow adaptations; course-specific Canvas requirements remain controlling.",
+  "inspected_files": [
+    {
+      "path": "readme.txt",
+      "sha256": "224908644eb1fb39daf1506abbaa65fda3f82e8c684f6b273b8829ec6fe7cef7"
+    },
+    {
+      "path": "project-report/acknowledgements.txt",
+      "sha256": "d70b72fd12590185e0e7c4b471bea2c2c299a98107548245d20b15ea1e57ee57"
+    },
+    {
+      "path": "project-report/readme-and-changelog.txt",
+      "sha256": "c89b00d9fb2428a676ce1198151d28b95e02b81a8e0edab4700c086016474c27"
+    },
+    {
+      "path": "project-report/template/main-short.tex",
+      "sha256": "4ec76b926eff90a2b0de0659f0035b5ebbc48a12cba694698caa026a4291a80b"
+    },
+    {
+      "path": "project-report/template/configuration.tex",
+      "sha256": "5abcd42ee1b34c13ac5226a6c0ea6fae00608bc7e70848821e1c2431cb705347"
+    },
+    {
+      "path": "project-report/template/main-long.tex",
+      "sha256": "6f884ef8e693ccd69f305082e21b9dffbd215275f62cda67e07d5b1a27ac42b4"
+    },
+    {
+      "path": "project-report/template/body.tex",
+      "sha256": "b16610af0a5c980534743308a365e2cbe90e3eeaa49f6d82654017f167d08b76"
+    },
+    {
+      "path": "project-report/template/macros.tex",
+      "sha256": "e990205b2d9695e059ddea31948a173085543ab38fa28d447e1ef2d2869fb31f"
+    },
+    {
+      "path": "project-report/template/4-setup.tex",
+      "sha256": "e2f8fcfa8a333b1c5ab365792a6a0c000a7a9a5e58d223d2112fb3a22398dfb3"
+    },
+    {
+      "path": "project-report/template/0-titlepage.tex",
+      "sha256": "b22fff570866ee1deca17e6ecb4323c7ea2d932a8aeca2b9fcf152c65d87c00c"
+    },
+    {
+      "path": "project-report/template/style-switch.tex",
+      "sha256": "afbc57cffa33ed98e6694c057cd4b3db26d246a293938271f951ad8f9e2353e5"
+    }
+  ],
+  "implementation": "Independent KOMA-Script scrbook long-thesis configuration; 11pt Latin Modern, normal English leading, half-line paragraph separation (parskip=half- for full-width boxes); existing 27/28mm margins retained; oneside/openany for electronic copy; native KOMA headings and page styles; Chinese reading-copy leading and two-character paragraph indentation retained.",
+  "source_distribution": "The template header permits personal use and requests no sharing of its source; original files are inspected outside this repository and are not redistributed."
+}

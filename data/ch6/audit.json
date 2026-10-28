@@ -781,15 +781,15 @@
   },
   "prose_word_estimate": {
     "per_file": {
-      "chapters/06-1-motivation.tex": 521,
-      "chapters/06-2-agreement.tex": 457,
+      "chapters/06-1-motivation.tex": 499,
+      "chapters/06-2-agreement.tex": 422,
       "chapters/06-3-search.tex": 650,
       "chapters/06-4-controls.tex": 179,
-      "chapters/06-5-economics.tex": 307,
-      "chapters/06-6-scope.tex": 246,
+      "chapters/06-5-economics.tex": 275,
+      "chapters/06-6-scope.tex": 235,
       "chapters/06-refinement.tex": 104
     },
-    "total": 2464,
+    "total": 2364,
     "method": "prose/captions only; table bodies, math, labels, citations and macro names excluded; not an official count"
   },
   "limitations": [
@@ -2242,12 +2242,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "404e839170d9542431287558f1fc7b58b9757f1078e53c69e8520a79d6d392be"
+      "sha256": "678364c0a6c5f7098df0dfad508a2006429d61de166c247400089dd913c4dd58"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "716db0ddec49fc3946f83ac584cb5d8f0700accf1003196c87226a182748730b"
+      "sha256": "98e0858fff510cc5ef27f1471db0aa85c4820c3cdfda06df5b3393ede7691716"
     },
     {
       "repository": "8800_report",
@@ -2287,17 +2287,17 @@
     {
       "repository": "8800_report",
       "path": "main-zh.tex",
-      "sha256": "ee0d3e55f2f60c1db5726fd34875de7121f6eef3704ca39dd1701dec2febf527"
+      "sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b"
     },
     {
       "repository": "8800_report",
       "path": "config/preamble.tex",
-      "sha256": "aa842a20fa277f74488c177948e9139abe1551ff69bace0357e3e4878d044cbc"
+      "sha256": "2701f51a3c0370d7a3736ced00f8fca0050d58058afe98a10db47a2cb72bb1c2"
     },
     {
       "repository": "8800_report",
       "path": "zh/preamble.tex",
-      "sha256": "bb0b1b96cba2c50b40b8ef91a6f06b7a645ddb9f7daf6cdd9d7a4dcc5ee83efc"
+      "sha256": "1410ee195bd51fe70414261c8f5d7f49a8e1eb73a9a2276c829687556baa3e33"
     },
     {
       "repository": "8800_report",
@@ -2342,12 +2342,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/06-1-motivation.tex",
-      "sha256": "5fe3b540aa21eed8bd79065bcdc322709595cd37fa0e0b874b4250d6e7686dc1"
+      "sha256": "c04806492af142c14bd22858f6eee90e7643f022a4b8d248459bf6835a0b19aa"
     },
     {
       "repository": "8800_report",
       "path": "chapters/06-2-agreement.tex",
-      "sha256": "c644881539ff819d6a6f671a2c41182ae97f7dbe043b0b23cec62ee46b317337"
+      "sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205"
     },
     {
       "repository": "8800_report",
@@ -2362,12 +2362,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/06-5-economics.tex",
-      "sha256": "deb493d4c80db33d7b057e2d3741098386fd1e82d9491e28aece99b0cad9a4e8"
+      "sha256": "3beb90ca1b074aed770085f3c3c33b5477cd6ade35993d65a539b52f6eb39571"
     },
     {
       "repository": "8800_report",
       "path": "chapters/06-6-scope.tex",
-      "sha256": "7137ec04a866d55e5259ee007d6de02a32a4414589b092858dc1106eda645f30"
+      "sha256": "7e62a4398bffebb77f948461f18629e5c1f14475678db4cbb1ee798d7cc75864"
     },
     {
       "repository": "8800_report",
@@ -2377,12 +2377,12 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-1-motivation.tex",
-      "sha256": "728efdceec4482105fdd141d3f315a6f1b6b1bd216d471c50f382c83a2e13b3d"
+      "sha256": "d31b8eba967b6d7c3c65f9f6531b652abaaef011487cfbe11a91ab22a4bc2f3b"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-2-agreement.tex",
-      "sha256": "e6dfaa9cae9c0d0ac6dd38f178dd4d820a983e134eae86c956dec018ee683853"
+      "sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914"
     },
     {
       "repository": "8800_report",
@@ -2397,12 +2397,12 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-5-economics.tex",
-      "sha256": "efdd822179a183969fccfa60af9074e4c7dea3cbf0eb6504660a3e3f010f6736"
+      "sha256": "86f6e665e65bd6a2c4400200f5a0c97f9802e64c6890719cadd739c2c3b085c6"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-6-scope.tex",
-      "sha256": "52cea394f2abfa06cb8c957bb643a47a2a40179500e98436026038e47649b9fa"
+      "sha256": "7a1e589eca1200439a53ff0b28591c6aa0186274b1595ea4bca7c33e51f5ee11"
     },
     {
       "repository": "8800_report",

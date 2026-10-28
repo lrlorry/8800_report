@@ -1,56 +1,40 @@
 \subsection{A useful representation exposes a useful unit of reuse}
 
-The Cartesian codebook permits an exact coordinate decomposition of each
-primary table into two 16-entry tables. The newer sweep favours that choice
-in 22/24 cells, while four- and eight-way splits store the same 16 entries
-per subspace and perform different numbers of lookups
-(\cref{fig:7-lut}). The representation therefore makes a compact scorer
-possible, but table size alone fails to determine its best implementation.
-The relevant reusable unit is the query-specific coordinate group: its
-distances are computed once and reused across candidates.
+The grouping results in \cref{fig:7-lut} show that compact state alone
+does not determine the best scorer. The reusable unit is the
+query-specific coordinate group: its distances are computed once and
+reused across candidates, as constructed in \cref{sec:5-2}.
 
-Shared-memory feasibility explains an important resource transition. Full
-tables exceed the available space after scan scratch in the evaluated
-configurations; two-group tables fit. Beyond that transition, more lookups
-and accumulation steps compete with further state reduction. Packed words
-likewise change instruction and addressing work while preserving logical
-code bytes. These observations support joint consideration of storage,
-instructions and reuse. They do not distinguish cache, bank, register and
-issue effects without counters. The two exceptional LUT cells and the
-Mailman case below are useful counterexamples to a universal smallest-table
-rule. Keeping two groups as the default follows the measured trade-off;
-it does not identify a device-independent optimum.
 
-The opportunity is narrower than arbitrary PQ: the product here exists
-\emph{inside} each primary subcodebook. A learned PQ subspace generally
-contains coupled centroids, so splitting the label bits does not split its
-distance. Conversely, changing a codebook to improve reconstruction can
-remove this execution advantage. A representation should therefore be
-assessed by the attainable recall--cost frontier of its scorer and residual
-hierarchy, alongside reconstruction error. This connects the mathematical
-compatibility check in Chapter 5 to the end-to-end question in Chapter 7.
+The shared-memory transition and word-access costs in
+\cref{sec:5-2,sec:5-3} call for joint consideration of storage,
+instructions and reuse. The exceptional LUT cells and Mailman case
+below counter a universal smallest-table rule. Two groups are an
+empirical default for this device, rather than a device-independent optimum.
+
+
+The compatibility condition in \cref{sec:5-2} limits this opportunity:
+improving a codebook's reconstruction can remove its execution advantage.
+A representation should therefore be assessed by the attainable
+recall--cost frontier of its scorer and residual hierarchy, alongside
+reconstruction error.
+
 
 \subsection{Useful parallelism is bounded by duplicated state and selection}
 
-Integrated scheduling improves geometric-mean throughput by $2.727\times$
-at batch 8 and only $1.015\times$ at batch 1,000 against the lane-refinement
-reference (\cref{fig:7-batch}). Splitting one query across blocks provides
-work when a batch exposes too little query-level parallelism. Each extra
-group also brings local buffers, repeated query/table staging and merging.
-When the original grid already supplies enough blocks, these costs can
-consume the benefit. This interpretation explains the batch trend without
-treating maximum occupancy as the objective.
+The batch trend in \cref{fig:7-batch} reflects a trade-off between
+available parallelism and duplicated state/selection. Once query-level
+concurrency is sufficient, staging, local buffers and merging can consume
+the benefit of additional blocks. Maximum occupancy alone is therefore
+the wrong objective.
 
-Load skew supplies a separate reason for grouping. At E1's full batch,
-only Vogue takes the grouped route, with candidate-count CV 0.338--0.622.
-Its matched-recall ratio to RaBitQ at 0.97 changes from 0.933 for one block
-to 1.059 for the scheduled path (\cref{tab:7-e1-paths}). The paired runs
-therefore connect execution design to a competitive operating region.
-They measure the combined scheduling, retention, bound and merge path;
-isolating the shared bound requires its own ablation. The schedule also
-loses at some shallow-probe Vogue settings, and its regret reaches 1.217
-on BGE at batch 256. CV captures imbalance, but omits absolute work and
-the cost of staging and merging.
+
+Vogue's path-sensitive frontier and BGE's scheduling regret
+(\cref{tab:7-e1-paths,sec:7-6}) connect execution design to the
+competitive region. They also expose the limitation of CV: it measures
+imbalance without absolute work or staging/merge costs. The combined
+path comparison remains distinct from the shared-bound-only ablation.
+
 
 A practical consequence is to retain a query-centric path and choose
 grouping from both available parallelism and expected work per query.
@@ -71,23 +55,14 @@ the opposite effect on refinement's relative share. Neither transformation
 changes the quality consequence of discarding a particular candidate.
 
 This is a cost-model implication, rather than a causal explanation for
-every historical/newer budget difference. The ADC manuscript's older
-calibration times and speedups belong to different execution records.
-Comparing those summaries with the newer v69 measurements changes several
-conditions simultaneously. A causal test would replay identical budget
-decisions and candidate sets while changing only the refinement kernel.
-Likewise, selected-arm QPS is measured independently of calibration; net
-service savings require enough reuse; direct four-cell traces now measure
-that boundary
-(\cref{sec:6-5}).
+every historical/newer budget difference. A causal test would replay
+identical budget decisions and candidate sets while changing only the
+refinement kernel. The cross-campaign comparison and direct reuse
+measurements are reported in \cref{sec:7-5,sec:7-stream-cost}.
 
-The newer FULL results establish a useful observed quality-first working
-point: all twelve cells meet the tested $10^{-3}$ relative-loss target.
-Smaller samples reduce calibration cost but sometimes accept harmful
-budgets. The independent-slot resolution calculation motivates a sample
-scale near 500, while its stronger independence assumption and the
-conditional ordering assumptions remain explicit; supplementary FULL
-enumeration agrees in all twelve cells. The engineering
-decision is to spend calibration effort according to a workload's quality
-requirement and expected reuse. Optimising the selector alone, or reporting
-only a favourable selected-arm mean, leaves that decision incomplete.
+
+The FULL working point and sampled tail risks in
+\cref{tab:7-budget-full,fig:7-budget-risk} imply that calibration effort
+should reflect the quality requirement and expected reuse. Optimising
+the selector alone, or reporting only a favourable selected-arm mean,
+leaves that engineering decision incomplete.

@@ -95,12 +95,9 @@ only zero-count queries or one single-count query \cite{nist_hypergeometric}:
  =\frac{\binom{n_0}{S}+n_1\binom{n_0}{S-1}}{\binom{N_{\rm cal}}{S}}.
  \label{eq:6-finite-pool}
 \end{equation}
-Out-of-range binomial coefficients are zero. This is a conditional
-acceptance model. Predicting selection risk additionally needs the
-grid's acceptance structure and selected-arm quality map. The supplementary full-pool records reproduce every sampled curve by
-summing the recorded $X_q$ over its actual sample IDs: 18,432 grid counts
-match, including changes of execution path (\cref{sec:7-budget-trace}).
-This validates the aggregate counts on those draws. Prediction for arbitrary
-subsets still assumes stable per-query counts. Acceptance needs no labels;
-predicting GT-loss crossings additionally uses the fixed-arm held-out
-quality map.
+Out-of-range binomial coefficients are zero. This conditional acceptance
+model additionally needs the grid's acceptance structure and selected-arm
+quality map to predict selection risk. Acceptance uses no labels;
+GT-loss crossings use held-out fixed-arm quality. The subset-sum checks
+in \cref{sec:7-budget-trace} test the count-invariance assumption on the
+recorded draws.

@@ -8,9 +8,7 @@ advantages also depend on dataset and grid. Grouped scheduling helps
 JHQ internally without guaranteeing a cross-system lead
 (\cref{sec:7-smallbatch}).
 
-The recorded FULL policy is the quality-first calibration starting point,
-followed by validation on the deployment's queries and direct reuse timing.
-Compare quality, total time and resident memory under the actual batch
-regime. The single-client synchronous experiment does not establish
-concurrent-service tail latency, online-update performance or a population
-recall guarantee.
+Start calibration from the recorded FULL working point, then validate
+quality and direct reuse cost on deployment queries. Compare total time
+and resident memory under the actual batch regime, subject to the
+external-validity limits in \cref{sec:8-3}.
