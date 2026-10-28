@@ -256,7 +256,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-1-insights.tex",
-      "sha256": "375848b7d9436273649d57ddd72aa03b9915b7b2c91b355e46c5c675f7abbda8"
+      "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
     },
     {
       "repository": "8800_report",
@@ -281,12 +281,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-discussion.tex",
-      "sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434"
+      "sha256": "6fb25ee99e270ab465bd957660ceefd0657c1eea544da66a07917e8a65061b79"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-1-insights.tex",
-      "sha256": "013853dcf8763f35d1875444d0d03ec6061650e81d5d1fbc496a8e31dd36401b"
+      "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
     },
     {
       "repository": "8800_report",
@@ -311,7 +311,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-discussion.tex",
-      "sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c"
+      "sha256": "ae4edf8d5fc82d376b1d9c950bebda97e31922cd4888ee87bbc44f93242c5232"
     },
     {
       "repository": "8800_report",

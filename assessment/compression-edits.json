@@ -3,135 +3,231 @@
   "scope": "Compression of highlighted repetitive exposition, not a detector-score claim; no GPU experiment",
   "source_edits": [
     {
+      "path": "chapters/01-1-context.tex",
+      "before_sha256": "239b02d7b0060c904b3a9194bb0c94af54430af48eb35d2ba6c42fc61aeedaf4",
+      "after_sha256": "03e5374087e49bed60464118f37705148262149697b5cf4322a2e29a99df41de",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
       "path": "chapters/01-5-contributions.tex",
       "before_sha256": "ab4175a773399b512a6caf66b651f4a4e95e4d58938d33b09e621b5dbd3f923b",
-      "after_sha256": "ea159602c2122d6f1de5944ea63beb027e1d7f98696b03c53247cf6a66b7e8c2",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "after_sha256": "80665b5c899510a9e7e8c2ba35946cc90a494e18a913924919e853d388acc505",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/04-4-lifecycle.tex",
       "before_sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e",
       "after_sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/04-5-construction.tex",
       "before_sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72",
       "after_sha256": "d381bb2fec723460765fbe24bbe52b2fef1a7994f04f57a1822a6c21668c704d",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/04-6-contracts.tex",
       "before_sha256": "9585272384890fb1cdfd1247546ac3af37e842fcd14fa0d2c75308032bc8eecd",
       "after_sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/05-3-packed-access.tex",
       "before_sha256": "8cfc9974f9828574b7546f29df2e1161f2a25f7f0c692ed52a41595968f6c897",
       "after_sha256": "b37b27c7ac1350b0ef013c89b3bc9f32e4ec69d239d624538f9b7d52f2a00d2e",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/05-4-global-selection.tex",
       "before_sha256": "8d6de7ce0bc99d68545b47bbb2274708d57e0002e075f965e7931ff5f664a94e",
       "after_sha256": "b4f5f113259341e7d52540e40ba96f15371d0216e61a184a9dd480454c6cb0d7",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/05-5-bound-scheduling.tex",
       "before_sha256": "1eb53d5401bf5d4a4315134f1026e74dde87039a162f14496761668d528c9aa3",
       "after_sha256": "00396e0629f695d1feca35e5b17efcda12b66acbb41df156199f2efae2102052",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/05-6-refinement.tex",
       "before_sha256": "3600e0334d80553fcfaa0bf85237b167b0993925d5dd39a34e2aebe0dba5a6c0",
       "after_sha256": "81b4f388d56aabac0d863e6072e9bc7a051de2f6cf5a64ac6570a1a7ade37a28",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/06-6-scope.tex",
       "before_sha256": "a5cd9fec9834b358cda1a77ec54b644ba2e90ad44945767ce3b3d2b401c9d480",
       "after_sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "chapters/07-evaluation.tex",
       "before_sha256": "7061b0bfb1e946fb770a90b17314b464a2c279f1a6072dfc5c6962305ef2e23d",
-      "after_sha256": "70ea879a20773183d05c8c7024a7d3d8251cd5c288cefe2d777054df5bf3d239",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "after_sha256": "0b8f9a7940093b96c23ec08a6e306eeb531baf3aecccb46665ca73bca90f9fdb",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "chapters/08-1-insights.tex",
+      "before_sha256": "375848b7d9436273649d57ddd72aa03b9915b7b2c91b355e46c5c675f7abbda8",
+      "after_sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "chapters/08-discussion.tex",
+      "before_sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434",
+      "after_sha256": "6fb25ee99e270ab465bd957660ceefd0657c1eea544da66a07917e8a65061b79",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "chapters/09-conclusion.tex",
+      "before_sha256": "88bd7983a7e5c2fc61a6285011116b234aefd284b2717dfcc184cd747e39c984",
+      "after_sha256": "7325670d320c0b9cb7baed3a80382598d376184e4f3734fb2a8d135fc9f024bb",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "frontmatter/abstract.tex",
+      "before_sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f",
+      "after_sha256": "3d6ce9810958cfc651e1bec5ac388c6e3b994c05ba56b0966054a3011734fef1",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "frontmatter/acknowledgements.tex",
+      "before_sha256": "80e83bfb88e3880fb72ba5c088875bfb8680616a6fbd15dd16724ab1baec2fd6",
+      "after_sha256": "f3fc118179198978d5e6b9ddcfab3313eadd8b7c1fd1b9129eaf707e774ac547",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "frontmatter/declaration.tex",
+      "before_sha256": "7bbad473711a37facb8ff005b92ae4432a0c6f0e490aec8d88b2edd4701520f9",
+      "after_sha256": "098ff409691558142ae72890a649739f2856968d2890130ade5f72b751242d9c",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "main-zh.tex",
+      "before_sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b",
+      "after_sha256": "12949979059c7c49b5caf410b5926e9d33a812e5e793b2d47db4a17237dca38f",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "main.tex",
+      "before_sha256": "3dac948d776c617d448201b98541c1d8d542d360c3531dc4484572e95fb5d8ba",
+      "after_sha256": "7cfcb5504a3d852ee535911b1d04bb1e407d03e1429da726c16b544ed0a45a69",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/abstract.tex",
+      "before_sha256": "32f7c3596dd93d3e03e71510a367a6b9c3afb2572cdca75c36b735ed6be21ea0",
+      "after_sha256": "b2b92a08849bcb22b87aa956afdfa413f385cf4d5a096e9aca72a37f80b932d2",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/acknowledgements.tex",
+      "before_sha256": "1d0dff7df16307e27a0249f44271ecaef0e3c1f89677eb65a3a440d9738de320",
+      "after_sha256": "0b2a322cb403905dbec812f89504310e341fa49bd9064a12a9581e64599ed532",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/chapters/01-1-context.tex",
+      "before_sha256": "1fad6266421bf437fb071002407d99191396900b4fa6d6b1c44833924f5b75d1",
+      "after_sha256": "97040707d38385dd1430466f606827baf469e74deeb0cea99c5effe13a1acf81",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/01-5-contributions.tex",
       "before_sha256": "3f1d58a915cd760ba7e725fda664a08d42e707ef13848d3033a492b9ef20cc8a",
-      "after_sha256": "86c8df777a7275e4b5564c05ce2918bb2ab50a8416dda20d2a5c553561fc6d40",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "after_sha256": "9c0a40e3bb225ff264a2babf4bd05a437d32f314871a1fecc847bcc838fd7c09",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/04-4-lifecycle.tex",
       "before_sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f",
       "after_sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/04-5-construction.tex",
       "before_sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60",
       "after_sha256": "9fc69c8ae0ce53fdd99790d86ddcb94c8b84e2dee75443606db134f457807b69",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/04-6-contracts.tex",
       "before_sha256": "850e40e734d4968c3836cf97dbbb59cb2a01a38b499201cd2f0295c3f9caee76",
       "after_sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/05-3-packed-access.tex",
       "before_sha256": "3c2cdecc73ab7b519a9e0d28f6d6e6d6bfde1d169be48c05fccde74f4a531e69",
       "after_sha256": "dd549bb7376c9332251f2d779eb9218ce18337309a6272ae79f9c75e3a68fad6",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/05-4-global-selection.tex",
       "before_sha256": "472e38a4634673a0afa31214707e37e88efcbc60be6070dc52cdc028444a9bef",
       "after_sha256": "7102b80b87a5f828cd898cf679c8482d837db8cac095e44489adf37956eada6d",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/05-5-bound-scheduling.tex",
       "before_sha256": "5dd2f64a0977156d20bbca9fd9523dea343d34863172131af68a125484616239",
       "after_sha256": "121e2b4d496ca220391aa30fbc4e274fa1942e16d1b9afe282115bd9369de70b",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/05-6-refinement.tex",
       "before_sha256": "75a4fd9792628d91d4c3eb6193e3ef8a4585742ca7c4cf0d618096fa01bc5c40",
       "after_sha256": "ed60a17a6397b9aec083380ad8fc079b1a60e7e4ed2b44852cc3f9b2353c32d2",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/06-6-scope.tex",
       "before_sha256": "e004df9dc0e8c196d4c5da3e2acce212ea06e63b29a1ce2a876c562294988619",
       "after_sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
       "before_sha256": "35d9c2719c2f2bdb6746dbeb764b0e93a4b5d6fd339c1ccac1afd9d2504f5699",
-      "after_sha256": "448adf903ab34f864cf346c4e7894c90c5a8d12e194f218e7d965b16efb24234",
-      "reason": "Compress repeated explanation; preserve stage contracts, evidence and proof bodies"
+      "after_sha256": "4868cb8f7131c5ebf06ca741ad35903a7d3497b3e0a904f41ecbe954d6a95264",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/chapters/08-1-insights.tex",
+      "before_sha256": "013853dcf8763f35d1875444d0d03ec6061650e81d5d1fbc496a8e31dd36401b",
+      "after_sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/chapters/08-discussion.tex",
+      "before_sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c",
+      "after_sha256": "ae4edf8d5fc82d376b1d9c950bebda97e31922cd4888ee87bbc44f93242c5232",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/chapters/09-conclusion.tex",
+      "before_sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05",
+      "after_sha256": "950537cedc8e78c9a89af5a098fe61706eeb2f22e606294e94e9caeaf3ee0aa8",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
+    },
+    {
+      "path": "zh/declaration.tex",
+      "before_sha256": "e73b7323143a37c09bb403b4bf034629890e1ae5ef9d4106cc64e8fc105d629c",
+      "after_sha256": "9a623f2d97272f8533c73d62682c07bcfe0e64330c41367edd48bcf1c7f9a58b",
+      "reason": "Declared compression rounds, ADC-based abstract, merged front matter and conditional cost-model analysis"
     }
   ],
-  "patch": "evidence/editorial/03775b7/compression.patch",
-  "patch_sha256": "91306fde5836484dfdeb8d4044d11484c9eefacd2ae0a8c123d6f52a42081f3f",
+  "patch": "evidence/editorial/a047ee8/compression-from-03775b7.patch",
+  "patch_sha256": "ac886be6c7c9be8f5242c4f526590122e8602e638e70076bdbb89375cfb1b6de",
   "archive_manifest": "evidence/editorial/03775b7/manifest.json",
   "chapter_words": [
     {
       "chapter": 1,
       "before": 1389,
-      "after": 1379,
-      "removed": 10
+      "after": 1246,
+      "removed": 143
     },
     {
       "chapter": 2,
@@ -166,25 +262,57 @@
     {
       "chapter": 7,
       "before": 7349,
-      "after": 6641,
-      "removed": 708
+      "after": 6637,
+      "removed": 712
     },
     {
       "chapter": 8,
       "before": 1650,
-      "after": 1650,
-      "removed": 0
+      "after": 1419,
+      "removed": 231
     },
     {
       "chapter": 9,
       "before": 497,
-      "after": 497,
-      "removed": 0
+      "after": 436,
+      "removed": 61
     }
   ],
   "chapters_and_abstract": {
     "before": 26932,
-    "after": 25562
+    "after": 25012
   },
-  "word_count_scope": "Prose/captions, math and table bodies excluded; not an official course count"
+  "word_count_scope": "Prose/captions, math and table bodies excluded; not an official course count",
+  "round_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4",
+  "round_patch": "evidence/editorial/a047ee8/revision.patch",
+  "round_patch_sha256": "09c6f14f9735037704dd4590bab0ce74746a61a950f92d167d5411f57aa066a6",
+  "approved_additions": [
+    {
+      "source": "chapters/08-1-insights.tex",
+      "archive": "evidence/editorial/a047ee8/refinement-sensitivity.tex",
+      "sha256": "df8a50896ce81ea5a923430373c1f8058201412068126c8ca318931157838df6",
+      "reason": "Conditional latency model and exact derivatives, not an empirical guarantee"
+    },
+    {
+      "source": "zh/chapters/08-1-insights.tex",
+      "archive": "evidence/editorial/a047ee8/refinement-sensitivity.tex",
+      "sha256": "df8a50896ce81ea5a923430373c1f8058201412068126c8ca318931157838df6",
+      "reason": "Conditional latency model and exact derivatives, not an empirical guarantee"
+    }
+  ],
+  "round_words": {
+    "before": 25562,
+    "after": 25012,
+    "removed": 550
+  },
+  "frontmatter_reduction": {
+    "frontmatter/declaration.tex": {
+      "before": 307,
+      "after": 74
+    },
+    "frontmatter/acknowledgements.tex": {
+      "before": 73,
+      "after": 24
+    }
+  }
 }

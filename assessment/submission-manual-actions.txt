@@ -2,7 +2,7 @@
 2026-10-29，Australia/Sydney
 ================================
 本清单对应合并审稿及后续精简后的论文。原审核见final-review-response.txt；
-最新精简范围与PDF检查见compression-review-response.txt及data/compression/audit.json。
+最新精简见adc-revision-response.txt，PDF检查见data/compression/audit.json。
 以下项目不能由AI根据Git记录、作者顺序或实验日志代填／代签。
 
 P0-1 个人研究贡献
@@ -20,7 +20,7 @@ P0-1 个人研究贡献
 
 P0-2 补全实际AI交互记录
 ----------------------
-已有：docs/ai-use-record.md及data/submission/ai-use-record.json，保留当前会话的8条真实Codex用户指令摘录。
+已有：docs/ai-use-record.md及data/submission/ai-use-record.json，保留当前会话的9条真实Codex用户指令摘录。
 论文披露页已经引用该记录，并明确它是部分记录。较早指令无可核实时间戳或模型版本，未编造。
 需要你补：ChatGPT／Claude原始prompt与相应输出或可追溯导出；其他有实质用途但未覆盖的交互。
 记录字段建议：工具、实际日期（如可取得）、实际版本（如可取得）、原始prompt、输出用途、你本人采取的验证。
@@ -35,7 +35,7 @@ P0-3 最终提交设置与手续
   [ ] 封面姓名Rui Luo、导师Dr Mengxuan Zhang及课程身份是否准确。
       学号当前为空；若任务要求，在config/metadata.tex的thesisstudentnumber内填写。
   [ ] 阅读并签署提交系统的真实电子声明，上传最终英文PDF。
-      论文来源页不是电子签名，不在此生成签名。
+      致谢内来源／工具说明不是电子签名，不在此生成签名。
   [ ] 保存submission ID、上传成功回执及提交后下载的PDF，核对它确实是最终版本。
   [ ] 核对10月16日Poster及Draft Abstract and Title的既往提交回执。
 用户目前未看到更多Canvas规则。2022其他课程的repo／slides条款不作为COMP8800本届硬性规则。

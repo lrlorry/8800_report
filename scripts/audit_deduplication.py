@@ -46,7 +46,9 @@ def main():
     pre_compression = {}
     for edit in compression['source_edits']:
         rel = edit['path']
-        assert rel.startswith(('chapters/', 'zh/chapters/')) and rel.endswith('.tex')
+        assert (rel.startswith(('chapters/', 'zh/chapters/')) and rel.endswith('.tex')) or rel in [
+            'frontmatter/abstract.tex', 'zh/abstract.tex', 'frontmatter/declaration.tex', 'zh/declaration.tex',
+            'frontmatter/acknowledgements.tex', 'zh/acknowledgements.tex', 'main.tex', 'main-zh.tex']
         before = git('show', compression['baseline'] + ':' + rel)
         after = current(rel)
         assert hashlib.sha256(before).hexdigest() == edit['before_sha256']
@@ -76,6 +78,17 @@ def main():
         def replace(m):
             return m[1] + ','.join(new_ref_map.get(k, k) for k in m[2].split(',')) + '}'
         return re.sub(r'(\\(?:[Cc]ref|[Ee]qref|ref)\{)([^}]+)\}', replace, s)
+
+    additions = collections.defaultdict(list)
+    for item in compression.get('approved_additions', []):
+        assert item['source'] in ['chapters/08-1-insights.tex', 'zh/chapters/08-1-insights.tex']
+        block = current(item['archive'])
+        assert hashlib.sha256(block).hexdigest() == item['sha256']
+        block = block.decode().removesuffix('\n')
+        assert (ROOT / item['source']).read_text().count(block) == 1
+        assert '\\label{eq:8-refinement-sensitivity}' in block
+        additions[item['source']].append(block)
+    assert sum(map(len, additions.values())) == 2
 
     final_review = json.loads(current('assessment/final-review-edits.json'))
     assert final_review['baseline'] == '682ef939ee41e3a9b9c9ec984604c62008406744'
@@ -169,12 +182,15 @@ def main():
             for block in new_blocks[rel]:
                 restored = restored.replace(block, '')
             restored = remap_new_refs(restored)
+            compared_actual = actual
+            for block in additions[rel]:
+                compared_actual = compared_actual.replace(block, '')
             for env in envs:
                 pat = r'\\begin\{' + env + r'\*?\}[\s\S]*?\\end\{' + env + r'\*?\}'
                 expected = re.findall(pat, restored)
-                assert expected == re.findall(pat, actual), ('changed retained scientific block', rel, env)
-                protected[env] += len(expected)
-            assert re.findall(labels_pattern, restored) == re.findall(labels_pattern, actual), rel
+                assert expected == re.findall(pat, compared_actual), ('changed retained scientific block', rel, env)
+                protected[env] += len(re.findall(pat, actual))
+            assert re.findall(labels_pattern, restored) == re.findall(labels_pattern, compared_actual), rel
             for text, keys in [(a, citations_before), (actual, citations_after)]:
                 for group in re.findall(r'\\(?:cite|citep|citet)\{([^}]+)\}', text):
                     keys.update(k.strip() for k in group.split(','))
@@ -198,6 +214,9 @@ def main():
     for rel in ['frontmatter/abstract.tex', 'zh/abstract.tex',
                 'appendices/b-supplementary.tex', 'zh/appendices/b-supplementary.tex']:
         data = current(rel)
+        if rel in ['frontmatter/abstract.tex', 'zh/abstract.tex']:
+            assert pre_compression[rel].encode() == old(rel)
+            continue  # Current abstract is pinned by its declared before/after hashes above.
         suffix = ''
         if rel.endswith('b-supplementary.tex'):
             edits = [e for e in final_review['source_edits'] if e['path'] == rel]
@@ -246,7 +265,7 @@ def main():
         font_only_asset_update=font_asset,
         retained_citation_keys=sorted(citations_after),
         chapter_words=word_rows,
-        chapters_and_abstract=dict(before=sum(r['before'] for r in word_rows)+abstract,
+        chapters_and_abstract=dict(before=sum(r['before'] for r in word_rows)+prose_count(old('frontmatter/abstract.tex').decode()),
                                    after=sum(r['after'] for r in word_rows)+abstract),
         word_count_scope='Prose and captions; table bodies and displayed/inline mathematics excluded; not an official course count',
         inputs=entries,

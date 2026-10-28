@@ -156,6 +156,57 @@
       "retained_patch": "evidence/editorial/03775b7/compression.patch",
       "retained_patch_sha256": "91306fde5836484dfdeb8d4044d11484c9eefacd2ae0a8c123d6f52a42081f3f",
       "verification": "Codex checks are recorded in the compression response and audit; author-personal verification remains pending"
+    },
+    {
+      "id": "P09",
+      "tool": "OpenAI Codex",
+      "source": "Original task and subsequent steering messages in the current conversation",
+      "interaction_date": "2026-10-29",
+      "model_version": null,
+      "task": "ADC-based abstract, prose consolidation and compact disclosure",
+      "prompt": "像 Abstract 这种我adc论文本来有一版的 而且 现在AI检测全覆盖的 你完全可以基于原来的稍微的扩展一下 没必要弄这么长。还有很多Ai全覆盖的 你完全可以精简然后和其他部分合并啊 或者多公式证明 这样不容易检测出来",
+      "prompt_sha256": "6e71b88310f5a0cf35b25ef9e48a80316ffbfb989abf7a70a4ee096d26b07652",
+      "steering_messages": [
+        {
+          "prompt": "像Research Provenance and Tool Disclosure 不是评分标准里面的 可以删掉或者精简的 而且Ai全标记的 你为什么要加 还不精简 我不是说了 现在主要是降AI吗",
+          "prompt_sha256": "7a54baef4ad6aa68f5b58cc862e7d8a9fd63f2b4e84248cf802380726959b6b9"
+        },
+        {
+          "prompt": "我现在的第一要务是降AI率 你能明白吗 之前我给你说的没听懂吗",
+          "prompt_sha256": "71b9679c2f8288d6c5317d0935bc7fc922edc488f5d785a8300e7a34b6c8e7bb"
+        }
+      ],
+      "artifact_mapping": [
+        "chapters/01-1-context.tex",
+        "chapters/01-5-contributions.tex",
+        "chapters/07-evaluation.tex",
+        "chapters/08-1-insights.tex",
+        "chapters/08-discussion.tex",
+        "chapters/09-conclusion.tex",
+        "frontmatter/abstract.tex",
+        "frontmatter/acknowledgements.tex",
+        "frontmatter/declaration.tex",
+        "main-zh.tex",
+        "main.tex",
+        "zh/abstract.tex",
+        "zh/acknowledgements.tex",
+        "zh/chapters/01-1-context.tex",
+        "zh/chapters/01-5-contributions.tex",
+        "zh/chapters/07-evaluation.tex",
+        "zh/chapters/08-1-insights.tex",
+        "zh/chapters/08-discussion.tex",
+        "zh/chapters/09-conclusion.tex",
+        "zh/declaration.tex",
+        "scripts/audit_deduplication.py",
+        "scripts/audit_compression.py",
+        "assessment/adc-revision-response.txt"
+      ],
+      "used_as": "Substantive bilingual drafting/editing, front-matter consolidation and conditional cost-model derivation",
+      "retained_patch": "evidence/editorial/a047ee8/revision.patch",
+      "retained_patch_sha256": "09c6f14f9735037704dd4590bab0ce74746a61a950f92d167d5411f57aa066a6",
+      "output_sha256": null,
+      "output_status": "Applied source patch retained; full model response not separately exported",
+      "verification": "Offline checks and compilation recorded by Codex; student-personal verification not inferred"
     }
   ]
 }

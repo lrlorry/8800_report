@@ -47,7 +47,8 @@ def main():
         words[prefix]=total
     abstract=read(ROOT,'frontmatter/abstract.tex');zhabs=read(ROOT,'zh/abstract.tex')
     assert '\\draftnote' not in abstract+zhabs
-    words['abstract']=prose_count(abstract);assert 250<=words['abstract']<=350,words
+    # Editorial bound for the requested shorter ADC-based abstract; not a course rule.
+    words['abstract']=prose_count(abstract);assert 150<=words['abstract']<=250,words
     texts.append(abstract)
     bib=read(ROOT,'references.bib')
     keys=re.findall(r'@\w+\s*\{([^,]+),',bib);assert len(keys)==len(set(keys))
@@ -113,6 +114,7 @@ def main():
                 'assessment/final-review-edits.json','assessment/final-review-response.txt',
                 'assessment/compression-edits.json','assessment/compression-review-source.json',
                 'assessment/compression-review-response.txt','assessment/editorial-standard-2026-10-29.txt',
+                'assessment/adc-revision-response.txt','assessment/adc-revision-source.json',
                 'assessment/submission-manual-actions.txt','docs/ai-use-record.md',
                 'data/submission/ai-use-record.json','docs/artifact-access.md',
                 'docs/supplementary-evidence.md',

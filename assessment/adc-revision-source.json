@@ -1,0 +1,18 @@
+{
+  "round_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4",
+  "source_repository": "JHQ_GPU",
+  "source_path": "paper_adc2026/ADC/mainADC.tex",
+  "source_sha256": "77bccb0f6c822365f29e30094a19455ac5f9e18396de0928705f9124ac9c429a",
+  "adc_abstract": "evidence/editorial/a047ee8/adc-abstract.txt",
+  "adc_abstract_sha256": "fc04419ad38bb77eec9338364e1b0786021463ad8a8564c7007c16432dc602bb",
+  "adc_abstract_prose_words": 121,
+  "thesis_abstract_before": 307,
+  "thesis_abstract_after": 186,
+  "scope": "Adapt shared manuscript wording and structure; update old experiment values; no claim that original wording is human-only",
+  "changes": [
+    "23/24 updated to current 22/24",
+    "Old scalar-refinement budget rates replaced by current full-pool quality and batch-dependent external results",
+    "Construction scale added; TF32 and small-batch boundary retained",
+    "Three discussion paragraphs replaced by a conditional latency sensitivity derivation"
+  ]
+}

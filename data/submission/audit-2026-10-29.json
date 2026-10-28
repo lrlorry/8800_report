@@ -15,11 +15,11 @@
     "NA": 4
   },
   "pdf": {
-    "english_pages": 97,
+    "english_pages": 96,
     "english_chapters_pages": 77,
-    "chinese_pages": 85,
-    "english_prose_and_abstract_estimate": 25562,
-    "abstract_estimate": 307,
+    "chinese_pages": 84,
+    "english_prose_and_abstract_estimate": 25012,
+    "abstract_estimate": 186,
     "figures": 26,
     "tables": 31,
     "word_scope": "九章及摘要文字／图注；表体和数学除外；不是学校官方计数",
@@ -29,8 +29,8 @@
       "type3": 0
     },
     "words_outside_page": 0,
-    "english_sha256": "303935e1e745a7aa70984e9a5afa539db1578b1a67c269f6dd9fd9be0bb26bc5",
-    "chinese_sha256": "b53734e4624d32659a2a4a973599dc976d4ea589b588ee596d72b83973937b4c"
+    "english_sha256": "0cb08f86a4868cb100584599478a58205217991e00d8e8c20a33d361017416af",
+    "chinese_sha256": "b72673e9fe396c93399e677dad48d650ad6d8335d35329910af436eeb52254d8"
   },
   "code": {
     "local_commit": "19135c965a2cfccf469efb6b75029a268c7c3b5b",
@@ -184,7 +184,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "PDF研究来源页不是提交系统的电子签署；本地和GitHub已有副本。",
+      "evidence": "PDF致谢内来源说明不是提交系统的电子签署；本地和GitHub已有副本。",
       "action": "由作者在提交页面阅读并签署实际声明；不能代签。"
     },
     {
@@ -251,7 +251,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "同口径工具估算25,562词；九章及摘要文字／图注，排除表体和数学。",
+      "evidence": "同口径工具估算25,012词；九章及摘要文字／图注，排除表体和数学。",
       "action": "这不是课程官方字数认证；若Canvas有独立计数规则，须按其重计。"
     },
     {
@@ -266,7 +266,7 @@
         "S05",
         "S09"
       ],
-      "evidence": "英文97页，其中九章77页、前置9页、书目4页、附录7页；未发现强制页数上限。",
+      "evidence": "英文96页，其中九章77页、前置8页、书目4页、附录7页；未发现强制页数上限。",
       "action": "第一章三行尾页已处理；保留正常章节尾页，不为60页删独有证据。"
     },
     {
@@ -321,7 +321,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "docs/ai-use-record.md及JSON已保存8条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
+      "evidence": "docs/ai-use-record.md及JSON已保存9条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
       "action": "作者补可恢复的原始交互和使用位置；未知日期／版本如实标未知；不编造prompt。"
     },
     {
@@ -362,7 +362,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "Ch1/Ch2、来源页及相关文献明确JHQ层次、IVF/PQ、GPU选择等前人成果。",
+      "evidence": "Ch1/Ch2、来源说明及相关文献明确JHQ层次、IVF/PQ、GPU选择等前人成果。",
       "action": ""
     },
     {
@@ -375,7 +375,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "adc_artifact注明项目手稿；来源页不推断投稿／录用状态，历史数字有分组边界。",
+      "evidence": "adc_artifact注明项目手稿；来源说明不推断投稿／录用状态，历史数字有分组边界。",
       "action": "可访问定位仍见E03。"
     },
     {
@@ -545,7 +545,7 @@
         "S05",
         "S09"
       ],
-      "evidence": "两稿编译清洁；来源页语法及第一章三行尾页已修正；BANG改正式期刊引用。",
+      "evidence": "两稿编译清洁；来源说明语法及第一章三行尾页已修正；BANG改正式期刊引用。",
       "action": "作者最后审读英文表达，并完成个人贡献确认。"
     },
     {
@@ -870,7 +870,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "PDF含上述内容；摘要307词；附录A/B；26图31表，两稿结构一致。",
+      "evidence": "PDF含上述内容；摘要186词；附录A/B；26图31表，两稿结构一致。",
       "action": ""
     },
     {
@@ -909,7 +909,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "bbox检查0词越物理页；97页缩略图巡查无明显裁切／空图／重叠。",
+      "evidence": "bbox检查0词越物理页；96页缩略图巡查无明显裁切／空图／重叠。",
       "action": "缩略图巡查不是逐句语言校对或正式可访问性认证。"
     },
     {
@@ -932,11 +932,11 @@
       "kind": "quality",
       "status": "PASS",
       "priority": 2,
-      "requirement": "来源页语言和贡献交叉说明精确",
+      "requirement": "来源说明语言和贡献交叉说明精确",
       "source_ids": [
         "S05"
       ],
-      "evidence": "来源页identify...map语法已修正；个人贡献已另记的误导定位已移除。",
+      "evidence": "来源与工具用途精简合并于致谢；未将个人分工或核验写成已经完成。",
       "action": "真正的个人贡献仍见B01，由作者补充。"
     },
     {
@@ -1178,7 +1178,7 @@
     }
   ],
   "checks": {
-    "local_input_hashes": 1666,
+    "local_input_hashes": 1712,
     "v71_bundle_files": 209,
     "review_bundle_files": 131,
     "cited_keys": 39,
@@ -1188,7 +1188,7 @@
     ],
     "undefined_refs": [],
     "duplicate_labels": [],
-    "visual_scope": "97-page contact-sheet overview and readable changed-page inspections, including revised Chapter 4 end; not full sentence proofreading or author-personal verification",
+    "visual_scope": "96-page contact-sheet overview plus readable revised abstract, acknowledgement and cost-model pages; not full sentence proofreading or student-personal verification",
     "isolated_checks": [
       "evidence/review/check.py --run-audits",
       "evidence/ch5/v71/check.py",
@@ -1202,7 +1202,7 @@
       "audit_synthesis.py"
     ],
     "isolated_numeric_table_changes": [],
-    "candidate_file_fingerprints": 153,
+    "candidate_file_fingerprints": 159,
     "candidate_fonts_type3": 0,
     "identical_scientific_assets": 86,
     "font_only_pdf_exports": 1,
@@ -1219,6 +1219,14 @@
       "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
     },
     {
+      "path": "assessment/adc-revision-response.txt",
+      "sha256": "6b8ee4264dd5bd0701d566e9981d446e11a6212103148fa7bb8d632e418024dc"
+    },
+    {
+      "path": "assessment/adc-revision-source.json",
+      "sha256": "b079eff9d3cc782ed2aa92a12a4b33baea04e00930f985776dea3078b617826f"
+    },
+    {
       "path": "assessment/author-confirmation.txt",
       "sha256": "2ac1422f9cd90aea17c5ed24f01fbc0b33b899fb3c2211ddaf852f16ac74bf43"
     },
@@ -1228,7 +1236,7 @@
     },
     {
       "path": "assessment/compression-edits.json",
-      "sha256": "63a90f557eefade6638b65cc95f4cefd37a25e9052230f2049b36ce927bcc5fb"
+      "sha256": "7cbc90a31f59a454a4a384c0ef5608e91e3d4b3ce74e3c278d9da034d4243ef2"
     },
     {
       "path": "assessment/compression-review-response.txt",
@@ -1252,7 +1260,7 @@
     },
     {
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "af89aaa9c087a3384f4ef2807ec14977227ca339616259937193187f5c0cec38"
+      "sha256": "36e6ed13a20d4d4e09d759ae7e9c1114bccd7038275e81a3f09d298ce593ea89"
     },
     {
       "path": "assessment/targeted-curation-review.md",
@@ -1264,7 +1272,7 @@
     },
     {
       "path": "chapters/01-1-context.tex",
-      "sha256": "239b02d7b0060c904b3a9194bb0c94af54430af48eb35d2ba6c42fc61aeedaf4"
+      "sha256": "03e5374087e49bed60464118f37705148262149697b5cf4322a2e29a99df41de"
     },
     {
       "path": "chapters/01-2-scope.tex",
@@ -1280,7 +1288,7 @@
     },
     {
       "path": "chapters/01-5-contributions.tex",
-      "sha256": "ea159602c2122d6f1de5944ea63beb027e1d7f98696b03c53247cf6a66b7e8c2"
+      "sha256": "80665b5c899510a9e7e8c2ba35946cc90a494e18a913924919e853d388acc505"
     },
     {
       "path": "chapters/01-introduction.tex",
@@ -1436,7 +1444,7 @@
     },
     {
       "path": "chapters/07-evaluation.tex",
-      "sha256": "70ea879a20773183d05c8c7024a7d3d8251cd5c288cefe2d777054df5bf3d239"
+      "sha256": "0b8f9a7940093b96c23ec08a6e306eeb531baf3aecccb46665ca73bca90f9fdb"
     },
     {
       "path": "chapters/07-supp-budget.tex",
@@ -1456,7 +1464,7 @@
     },
     {
       "path": "chapters/08-1-insights.tex",
-      "sha256": "375848b7d9436273649d57ddd72aa03b9915b7b2c91b355e46c5c675f7abbda8"
+      "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
     },
     {
       "path": "chapters/08-2-negative.tex",
@@ -1476,11 +1484,11 @@
     },
     {
       "path": "chapters/08-discussion.tex",
-      "sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434"
+      "sha256": "6fb25ee99e270ab465bd957660ceefd0657c1eea544da66a07917e8a65061b79"
     },
     {
       "path": "chapters/09-conclusion.tex",
-      "sha256": "88bd7983a7e5c2fc61a6285011116b234aefd284b2717dfcc184cd747e39c984"
+      "sha256": "7325670d320c0b9cb7baed3a80382598d376184e4f3734fb2a8d135fc9f024bb"
     },
     {
       "path": "config/layout.tex",
@@ -1496,7 +1504,7 @@
     },
     {
       "path": "data/submission/ai-use-record.json",
-      "sha256": "4d78f57d5b4e00af0747e821140b7c8842efa99964c264e62650936acc2b9ce8"
+      "sha256": "66a4682c5c3b0e25084c23f7bbd4b325f217a1550476a40d0edbc2383496e171"
     },
     {
       "path": "data/synthesis/primary-sources.json",
@@ -1504,7 +1512,7 @@
     },
     {
       "path": "docs/ai-use-record.md",
-      "sha256": "c2b05c70045267cc0865e143042c3a170f22fdbf1859fa079df28427a27d9cf3"
+      "sha256": "b2833739e06591b0e4807c8cf0470a42e6aa7a890cac3e37dff80c9dc51e111b"
     },
     {
       "path": "docs/artifact-access.md",
@@ -1543,20 +1551,36 @@
       "sha256": "87208ae9007b6a98d3f99f606eb2488a3fb88fb86815faa51b8b94a67dd9e007"
     },
     {
+      "path": "evidence/editorial/a047ee8/adc-abstract.txt",
+      "sha256": "fc04419ad38bb77eec9338364e1b0786021463ad8a8564c7007c16432dc602bb"
+    },
+    {
+      "path": "evidence/editorial/a047ee8/compression-from-03775b7.patch",
+      "sha256": "ac886be6c7c9be8f5242c4f526590122e8602e638e70076bdbb89375cfb1b6de"
+    },
+    {
+      "path": "evidence/editorial/a047ee8/refinement-sensitivity.tex",
+      "sha256": "df8a50896ce81ea5a923430373c1f8058201412068126c8ca318931157838df6"
+    },
+    {
+      "path": "evidence/editorial/a047ee8/revision.patch",
+      "sha256": "09c6f14f9735037704dd4590bab0ce74746a61a950f92d167d5411f57aa066a6"
+    },
+    {
       "path": "figures/t4-t5/smallbatch.pdf",
       "sha256": "197c8108cdeffa9a09d5f174175f28b5267fe5aeab797538ac421ac4d645e81c"
     },
     {
       "path": "frontmatter/abstract.tex",
-      "sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f"
+      "sha256": "3d6ce9810958cfc651e1bec5ac388c6e3b994c05ba56b0966054a3011734fef1"
     },
     {
       "path": "frontmatter/acknowledgements.tex",
-      "sha256": "80e83bfb88e3880fb72ba5c088875bfb8680616a6fbd15dd16724ab1baec2fd6"
+      "sha256": "f3fc118179198978d5e6b9ddcfab3313eadd8b7c1fd1b9129eaf707e774ac547"
     },
     {
       "path": "frontmatter/declaration.tex",
-      "sha256": "7bbad473711a37facb8ff005b92ae4432a0c6f0e490aec8d88b2edd4701520f9"
+      "sha256": "098ff409691558142ae72890a649739f2856968d2890130ade5f72b751242d9c"
     },
     {
       "path": "frontmatter/notation.tex",
@@ -1568,11 +1592,11 @@
     },
     {
       "path": "main-zh.tex",
-      "sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b"
+      "sha256": "12949979059c7c49b5caf410b5926e9d33a812e5e793b2d47db4a17237dca38f"
     },
     {
       "path": "main.tex",
-      "sha256": "3dac948d776c617d448201b98541c1d8d542d360c3531dc4484572e95fb5d8ba"
+      "sha256": "7cfcb5504a3d852ee535911b1d04bb1e407d03e1429da726c16b544ed0a45a69"
     },
     {
       "path": "references.bib",
@@ -1580,15 +1604,15 @@
     },
     {
       "path": "scripts/audit_compression.py",
-      "sha256": "1bd05fba0a505e8de47c464d5903f51897de97bcf2410612514349810ecc3d58"
+      "sha256": "3a182b1f0fa15606203a736d0e2504479fd1fc02e95ec66e95fb4c54b6e84a56"
     },
     {
       "path": "scripts/audit_deduplication.py",
-      "sha256": "58427cb4bf2c04d8d03786eb5e156845cf43bb2f5fc28ca1751c236d48944e4b"
+      "sha256": "9c31c1a931dfedd29dc7f28bfb0387a548192bf850dfbfa6d97eac45e1fe2cf4"
     },
     {
       "path": "scripts/audit_synthesis.py",
-      "sha256": "8241dd45679e1b78b5e0689541506da834f84d5e3f5139a684b966e520669153"
+      "sha256": "39715fc0b3109389cbc3dddcaec497e65ccf852e08670996577398fe0d9930f4"
     },
     {
       "path": "scripts/audit_t4_t5.py",
@@ -1596,15 +1620,15 @@
     },
     {
       "path": "thesis-zh.pdf",
-      "sha256": "b53734e4624d32659a2a4a973599dc976d4ea589b588ee596d72b83973937b4c"
+      "sha256": "b72673e9fe396c93399e677dad48d650ad6d8335d35329910af436eeb52254d8"
     },
     {
       "path": "thesis.pdf",
-      "sha256": "303935e1e745a7aa70984e9a5afa539db1578b1a67c269f6dd9fd9be0bb26bc5"
+      "sha256": "0cb08f86a4868cb100584599478a58205217991e00d8e8c20a33d361017416af"
     },
     {
       "path": "zh/chapters/01-1-context.tex",
-      "sha256": "1fad6266421bf437fb071002407d99191396900b4fa6d6b1c44833924f5b75d1"
+      "sha256": "97040707d38385dd1430466f606827baf469e74deeb0cea99c5effe13a1acf81"
     },
     {
       "path": "zh/chapters/01-2-scope.tex",
@@ -1620,7 +1644,7 @@
     },
     {
       "path": "zh/chapters/01-5-contributions.tex",
-      "sha256": "86c8df777a7275e4b5564c05ce2918bb2ab50a8416dda20d2a5c553561fc6d40"
+      "sha256": "9c0a40e3bb225ff264a2babf4bd05a437d32f314871a1fecc847bcc838fd7c09"
     },
     {
       "path": "zh/chapters/01-introduction.tex",
@@ -1776,7 +1800,7 @@
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "448adf903ab34f864cf346c4e7894c90c5a8d12e194f218e7d965b16efb24234"
+      "sha256": "4868cb8f7131c5ebf06ca741ad35903a7d3497b3e0a904f41ecbe954d6a95264"
     },
     {
       "path": "zh/chapters/07-supp-budget.tex",
@@ -1796,7 +1820,7 @@
     },
     {
       "path": "zh/chapters/08-1-insights.tex",
-      "sha256": "013853dcf8763f35d1875444d0d03ec6061650e81d5d1fbc496a8e31dd36401b"
+      "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
     },
     {
       "path": "zh/chapters/08-2-negative.tex",
@@ -1816,15 +1840,16 @@
     },
     {
       "path": "zh/chapters/08-discussion.tex",
-      "sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c"
+      "sha256": "ae4edf8d5fc82d376b1d9c950bebda97e31922cd4888ee87bbc44f93242c5232"
     },
     {
       "path": "zh/chapters/09-conclusion.tex",
-      "sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05"
+      "sha256": "950537cedc8e78c9a89af5a098fe61706eeb2f22e606294e94e9caeaf3ee0aa8"
     }
   ],
   "initial_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
   "audited_base_commit": "682ef939ee41e3a9b9c9ec984604c62008406744",
-  "revision_scope": "Final-review candidate plus declared compression edits; current file hashes identify the candidate. External course settings and personal attestations retain their previous pending status.",
-  "compression_baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e"
+  "revision_scope": "Declared compression rounds including ADC-based abstract and compact acknowledgement disclosure; current fingerprints identify candidate, personal/Canvas requirements remain pending",
+  "compression_baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
+  "adc_revision_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4"
 }

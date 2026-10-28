@@ -1,32 +1,17 @@
-High-dimensional embeddings support similarity search over images, documents
-and other objects. In the tested workloads, a vector has 768--3,072
-coordinates and the largest database contains 17.78 million vectors.
-Exhaustive distance computation exposes substantial arithmetic, while
-retaining full vectors consumes capacity before any index overhead. For
-example, the tested Stella FP32 array alone would occupy 67.81\,GiB
-(\cref{sec:7-7}). Approximate nearest-neighbour search exchanges some exact
-neighbour recovery for reduced access and scoring work.
+Approximate nearest-neighbour (ANN) search reduces query time by avoiding
+exhaustive, full-precision distance evaluation. Graph methods such as CAGRA
+restrict visits through navigation, while compressed IVF combines selective
+list access with inexpensive scoring \cite{cagra,johnson_gpu,ivfrabitq}.
+The tested embeddings have 768--3,072 coordinates and up to 17.78 million
+vectors; Stella's raw FP32 array alone requires 67.81\,GiB
+(\cref{sec:7-7}). Compact codes address capacity, but table construction,
+lookups, selection and launch overhead determine their query-time benefit.
 
-Modern GPU approaches offer several ways to make that exchange. Graph
-methods such as CAGRA avoid many vectors through navigation, while
-compressed IVF methods combine selective list access with compact distance
-computation \cite{cagra,johnson_gpu,ivfrabitq}. They make a systems question
-unavoidable: where do representation, selection and memory movement place
-the cost at a required recall? A short code saves storage, but table
-construction, dependent lookups, candidate retention and repeated launch
-setup can determine whether it also saves query time.
-
-JHQ provides a useful setting for studying this question \cite{jhq}. Its
-compact primary representation screens candidates, and a residual
-representation refines a shortlist. This architecture exposes two related
-decisions: how to execute the broad screen efficiently, and how many of its
-survivors to refine. It also permits a useful experimental separation:
-execution can change while keeping the represented score fixed, and budget
-can change while reusing a trained index.
-
-The practical objective is to improve the attainable combination of
-Recall@10, host-visible query throughput/latency, resident memory and
-construction cost. The evaluation includes cases where an alternative is
-faster or a proposed change fails. This makes the contribution an account
-of competitive operating conditions and their mechanisms, rather than a
-single speedup detached from quality and resource constraints.
+JHQ separates screening from refinement: compact primary codes score
+candidates, and residuals refine a shortlist \cite{jhq}. This exposes two
+decisions: how to execute the broad screen and how many survivors to refine.
+The trained index can be reused while varying execution or budget, allowing
+their effects to be tested separately. This thesis evaluates these decisions
+through Recall@10, host-visible throughput/latency, resident memory and
+construction cost, including configurations where a competitor or the
+unmodified design is faster.

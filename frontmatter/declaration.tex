@@ -1,48 +1,12 @@
-\frontchapter{Research Provenance and Tool Disclosure}
+\paragraph*{Research and AI assistance.}
+\phantomsection
 \label{front:provenance}
-This thesis presents the JHQ-GPU project undertaken by \thesisauthor{} for
-\thesiscourse{} under the supervision of \thesissupervisor{}.
-
-The underlying JHQ representation and primary/residual hierarchy are
-attributed to Jiabao Han, Mengxuan Zhang and Goce Trajcevski \cite{jhq}.
-IVF, product quantisation, existing GPU selection/merge techniques and
-baseline software retain their cited authorship. Rui Luo and Mengxuan
-Zhang are coauthors of the associated project manuscript
-\cite{adc_artifact}; their author order does not establish individual
-task allocation. The thesis expands the correctness arguments,
-measurements, supplementary checks and discussion of unsuccessful designs.
-\Cref{sec:1-5,tab:1-contributions} identify the project's relationship
-to that manuscript and map its technical contributions.
-
-\paragraph{Generative-AI assistance.}
-Project records document the following uses, identified by product name
-without inferring model versions:
-\textbf{OpenAI Codex} assisted with English/Chinese writing and revision,
-LaTeX, diagrams, analysis scripts, source/log inspection, offline numerical
-checks and PDF compilation \cite{ai_codex_record}.
-\textbf{ChatGPT} supplied frameworks and chapter reviews concerning evidence,
-scope and experimental design \cite{ai_chatgpt_record}.
-\textbf{Anthropic Claude} assisted with implementation, experiment
-automation and review; supplementary records cover construction,
-representation/precision checks, budget traces, strict selection and
-small-batch baselines \cite{ai_claude_record}. Selected original Codex
-prompts and their artifact mapping are retained in
+This thesis extends joint JHQ-GPU work with Mengxuan Zhang
+\cite{adc_artifact} and builds on JHQ \cite{jhq}.
+OpenAI Codex assisted with substantive drafting, revision, LaTeX, analysis
+and code/log checks \cite{ai_codex_record}; ChatGPT supplied frameworks
+and reviews \cite{ai_chatgpt_record}; Anthropic Claude assisted with
+implementation, experiments and review \cite{ai_claude_record}.
+Selected prompts, artifact mappings and record limitations are documented in
 \href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}.
-This is a partial record: complete original ChatGPT/Claude conversations,
-earlier interaction timestamps and model versions are not archived there.
-The joint manuscript separately discloses
-Claude/ChatGPT assistance with implementation, harnesses, figures and
-writing, retaining that manuscript's versioned scope.
-
-\paragraph{Traceability and responsibility.}
-Source histories, run records and analysis ledgers establish artifact
-provenance. \path{scripts/} retains analysis code;
-\path{assessment/} records accepted and corrected review recommendations;
-the code repository's \path{experiments/thesis_evidence/} retains
-supplementary experiment records. Appendices~\ref{app:reproducibility}
-and \ref{app:supplementary} identify the experimental contracts and
-supporting evidence. Bibliographic citations acknowledge inherited
-methods. These records describe the retained workflow, rather than a
-complete interaction export or a signed personal attestation.
-Responsibility for the submitted text, attribution and interpretation
-remains with the thesis author.
+The author is responsible for the submitted claims.

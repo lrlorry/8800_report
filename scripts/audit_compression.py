@@ -87,12 +87,13 @@ def main():
     toc = (ROOT / 'build/main.toc').read_text()
     chapter = lambda n: int(re.search(r'\\contentsline \{chapter\}\{\\numberline \{' + str(n) + r'\}[^\n]*?\}\{(\d+)\}\{chapter\.', toc)[1])
     bib = int(re.search(r'\\contentsline \{chapter\}\{\\nonumberline Bibliography\}\{(\d+)\}', toc)[1])
-    front = 9
+    source_pages = run('pdftotext', 'thesis.pdf', '-').split('\f')[:-1]
+    front = next(i for i, text in enumerate(source_pages)
+                 if re.search(r'(?m)^Chapter 1\s*$', text) and 'Introduction' in text)
     end = front + bib - 1
     split = front + chapter(6)
     copies = []
     if args.check_copies:
-        source_pages = run('pdftotext', 'thesis.pdf', '-').split('\f')[:-1]
         for filename, first, last in [('thesis-no-refs.pdf', 1, end),
                                       ('thesis-check-1.pdf', 1, split - 1),
                                       ('thesis-check-2.pdf', split, end)]:
@@ -107,13 +108,16 @@ def main():
                                all_nonwhitespace_characters_preserved=True))
 
     records = json.loads(read('data/submission/ai-use-record.json'))['records']
-    assert len(records) == 8 and records[-1]['id'] == 'P08'
+    assert len(records) == 9 and records[-1]['id'] == 'P09'
     for record in records:
         assert digest(record['prompt'].encode()) == record['prompt_sha256']
-    assert records[-1]['retained_patch_sha256'] == manifest['patch_sha256']
+    for record in records[-2:]:
+        assert digest(read(record['retained_patch'])) == record['retained_patch_sha256']
+    assert records[-1]['retained_patch_sha256'] == manifest['round_patch_sha256']
     for rel in ['assessment/compression-review-source.json', 'assessment/compression-review-response.txt',
                 'evidence/editorial/03775b7/manifest.json', manifest['patch'],
                 'docs/supplementary-evidence.md', 'docs/ai-use-record.md',
+                'assessment/adc-revision-response.txt','assessment/adc-revision-source.json',
                 'scripts/audit_compression.py']:
         read(rel)
     result = dict(date='2026-10-29', timezone='Australia/Sydney',

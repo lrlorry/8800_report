@@ -1,0 +1,674 @@
+diff --git a/chapters/01-1-context.tex b/chapters/01-1-context.tex
+index 8274fa2..70843da 100644
+--- a/chapters/01-1-context.tex
++++ b/chapters/01-1-context.tex
+@@ -1,32 +1,17 @@
+-High-dimensional embeddings support similarity search over images, documents
+-and other objects. In the tested workloads, a vector has 768--3,072
+-coordinates and the largest database contains 17.78 million vectors.
+-Exhaustive distance computation exposes substantial arithmetic, while
+-retaining full vectors consumes capacity before any index overhead. For
+-example, the tested Stella FP32 array alone would occupy 67.81\,GiB
+-(\cref{sec:7-7}). Approximate nearest-neighbour search exchanges some exact
+-neighbour recovery for reduced access and scoring work.
++Approximate nearest-neighbour (ANN) search reduces query time by avoiding
++exhaustive, full-precision distance evaluation. Graph methods such as CAGRA
++restrict visits through navigation, while compressed IVF combines selective
++list access with inexpensive scoring \cite{cagra,johnson_gpu,ivfrabitq}.
++The tested embeddings have 768--3,072 coordinates and up to 17.78 million
++vectors; Stella's raw FP32 array alone requires 67.81\,GiB
++(\cref{sec:7-7}). Compact codes address capacity, but table construction,
++lookups, selection and launch overhead determine their query-time benefit.
+ 
+-Modern GPU approaches offer several ways to make that exchange. Graph
+-methods such as CAGRA avoid many vectors through navigation, while
+-compressed IVF methods combine selective list access with compact distance
+-computation \cite{cagra,johnson_gpu,ivfrabitq}. They make a systems question
+-unavoidable: where do representation, selection and memory movement place
+-the cost at a required recall? A short code saves storage, but table
+-construction, dependent lookups, candidate retention and repeated launch
+-setup can determine whether it also saves query time.
+-
+-JHQ provides a useful setting for studying this question \cite{jhq}. Its
+-compact primary representation screens candidates, and a residual
+-representation refines a shortlist. This architecture exposes two related
+-decisions: how to execute the broad screen efficiently, and how many of its
+-survivors to refine. It also permits a useful experimental separation:
+-execution can change while keeping the represented score fixed, and budget
+-can change while reusing a trained index.
+-
+-The practical objective is to improve the attainable combination of
+-Recall@10, host-visible query throughput/latency, resident memory and
+-construction cost. The evaluation includes cases where an alternative is
+-faster or a proposed change fails. This makes the contribution an account
+-of competitive operating conditions and their mechanisms, rather than a
+-single speedup detached from quality and resource constraints.
++JHQ separates screening from refinement: compact primary codes score
++candidates, and residuals refine a shortlist \cite{jhq}. This exposes two
++decisions: how to execute the broad screen and how many survivors to refine.
++The trained index can be reused while varying execution or budget, allowing
++their effects to be tested separately. This thesis evaluates these decisions
++through Recall@10, host-visible throughput/latency, resident memory and
++construction cost, including configurations where a competitor or the
++unmodified design is faster.
+diff --git a/chapters/01-5-contributions.tex b/chapters/01-5-contributions.tex
+index c844a1d..f3f4deb 100644
+--- a/chapters/01-5-contributions.tex
++++ b/chapters/01-5-contributions.tex
+@@ -45,6 +45,6 @@ and shares the JHQ-GPU implementation and measurement artifacts
+ \cite{adc_artifact}. The thesis
+ expands the correctness contracts, newer experiment analysis and treatment
+ of failed designs; historical manuscript numbers retain their own versions.
+-Technical contribution labels describe the project scope. The provenance
+-statement distinguishes inherited and joint work and documents AI assistance.
++Technical contribution labels describe the project scope. The acknowledgements
++identify joint work and AI assistance.
+ The thesis author is responsible for the submitted claims and attribution.
+diff --git a/chapters/07-evaluation.tex b/chapters/07-evaluation.tex
+index cd358d9..d476e10 100644
+--- a/chapters/07-evaluation.tex
++++ b/chapters/07-evaluation.tex
+@@ -14,7 +14,7 @@ selection checks, budget calibration and construction/scale measurements.
+ the repository supplement retains the full family manifest.
+ 
+ 
+-\subsection{Evidence families and measurement boundaries}
++\subsection{Comparison protocol and reproducibility}
+ 
+ Datasets, timing and comparison families follow
+ \cref{sec:3-2,sec:3-3,sec:3-5}. The main RTX 5090 comparison measures
+@@ -30,8 +30,6 @@ recall-protocol issues.
+ Adaptive call counts and auxiliary device-only timing are documented in
+ \cref{sec:a-e1-protocol}.
+ 
+-\subsection{Metrics and reproducibility}
+-
+ Metrics and frontier estimators follow \cref{sec:3-2,sec:3-4};
+ $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
+ 
+diff --git a/chapters/08-1-insights.tex b/chapters/08-1-insights.tex
+index b2e6ccf..7028cd5 100644
+--- a/chapters/08-1-insights.tex
++++ b/chapters/08-1-insights.tex
+@@ -1,68 +1,45 @@
+ \subsection{A useful representation exposes a useful unit of reuse}
+ 
+-The grouping results in \cref{fig:7-lut} show that compact state alone
+-does not determine the best scorer. The reusable unit is the
+-query-specific coordinate group: its distances are computed once and
+-reused across candidates, as constructed in \cref{sec:5-2}.
+-
+-
+-The shared-memory transition and word-access costs in
+-\cref{sec:5-2,sec:5-3} call for joint consideration of storage,
+-instructions and reuse. The exceptional LUT cells and Mailman case
+-below counter a universal smallest-table rule. Two groups are an
+-empirical default for this device, rather than a device-independent optimum.
+-
+-
+-The compatibility condition in \cref{sec:5-2} limits this opportunity:
+-improving a codebook's reconstruction can remove its execution advantage.
+-A representation should therefore be assessed by the attainable
+-recall--cost frontier of its scorer and residual hierarchy, alongside
+-reconstruction error.
+-
++The coordinate-group LUT in \cref{sec:5-2} computes distances once for
++reuse across candidates. Yet the grouping results and Mailman case show
++that storage savings alone do not determine throughput (\cref{fig:7-lut}).
++Shared-memory placement and word access must be considered together
++(\cref{sec:5-2,sec:5-3}). Two groups are an empirical default on this GPU.
++A codebook change can remove Cartesian compatibility, so reconstruction
++error must be assessed alongside the scorer's attainable recall--cost
++frontier.
+ 
+ \subsection{Useful parallelism is bounded by duplicated state and selection}
+ 
+-The batch trend in \cref{fig:7-batch} reflects a trade-off between
+-available parallelism and duplicated state/selection. Once query-level
+-concurrency is sufficient, staging, local buffers and merging can consume
+-the benefit of additional blocks. Maximum occupancy alone is therefore
+-the wrong objective.
+-
+-
+-Vogue's path-sensitive frontier and BGE's scheduling regret
+-(\cref{sec:7-2,sec:7-6}) connect execution design to the
+-competitive region. They also expose the limitation of CV: it measures
+-imbalance without absolute work or staging/merge costs. The combined
+-path comparison remains distinct from the shared-bound-only ablation.
+-
+-
+-A practical consequence is to retain a query-centric path and choose
+-grouping from both available parallelism and expected work per query.
+-Candidate count, survivor capacity and local-buffer cost are plausible
+-inputs for a richer decision. A fitted selector would need held-out
+-workloads and its own calibration-cost accounting; the present observations
+-do not validate one. The existing heuristic is valuable precisely because
+-its gains and failure cells can be checked separately.
++The batch trend in \cref{fig:7-batch} reflects the cost of duplicating
++staging, selection and merging once query concurrency is sufficient.
++Vogue's path-sensitive frontier and BGE's regret expose what CV misses:
++absolute work and decomposition cost (\cref{sec:7-2,sec:7-6}). These
++integrated comparisons remain separate from the shared-bound ablation.
++A richer scheduler could combine candidate count, survivor capacity and
++local-buffer cost while retaining the query-centric path; its calibration
++cost and held-out workload performance would need evaluation.
+ 
+ \subsection{Execution speed changes the value of avoiding refinement}
+ 
+-Budget reduction removes residual reads, arithmetic and final selection,
+-while routing and broad primary-score production remain. Its potential
+-saving depends on the fraction of latency occupied by those removable
+-operations. Faster lane-cooperative refinement can consequently reduce the
+-reward for lowering the survivor budget. Faster primary scanning can have
+-the opposite effect on refinement's relative share. Neither transformation
+-changes the quality consequence of discarding a particular candidate.
+-
+-This is a cost-model implication, rather than a causal explanation for
+-every historical/newer budget difference. A causal test would replay
+-identical budget decisions and candidate sets while changing only the
+-refinement kernel. The cross-campaign comparison and direct reuse
+-measurements are reported in \cref{sec:7-5,sec:7-stream-cost}.
+-
+-
+-The FULL working point and sampled tail risks in
+-\cref{tab:7-budget-full,fig:7-budget-risk} imply that calibration effort
+-should reflect the quality requirement and expected reuse. Optimising
+-the selector alone, or reporting only a favourable selected-arm mean,
+-leaves that engineering decision incomplete.
++Consider a latency model with fixed non-refinement cost $T_0>0$,
++high-/low-budget refinement times $F_h\geq F_\ell>0$, and a common
++refinement-time multiplier $0<\eta\leq1$. The low-budget speedup and
++its derivatives are
++\begin{align}
++ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
++ \label{eq:8-refinement-sensitivity}\\
++ \frac{\partial S}{\partial\eta}
++ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
++ \frac{\partial S}{\partial T_0}
++ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
++\end{align}
++For $F_h>F_\ell$, faster refinement reduces the benefit of cutting its budget, while
++lower fixed cost increases it. This model holds non-refinement work
++constant; budget-dependent scan maintenance and resource transitions
++require measurement. A causal kernel comparison would fix candidate sets
++and budget decisions (\cref{sec:7-5,sec:7-stream-cost}).
++
++The FULL results and sampled tails show why this cost decision also
++needs a quality constraint and sufficient reuse
++(\cref{tab:7-budget-full,fig:7-budget-risk}).
+diff --git a/chapters/08-discussion.tex b/chapters/08-discussion.tex
+index 55bedf0..33741f5 100644
+--- a/chapters/08-discussion.tex
++++ b/chapters/08-discussion.tex
+@@ -1,14 +1,9 @@
+ \chapter[Discussion, Limitations and Future Research]{Discussion, Limitations\\and Future Research}
+ \label{ch:discussion}
+ \chaptermark{Discussion and Future Research}
+-The measurements favour a particular combination of structured codes,
+-selective refinement and workload-dependent execution. Their wider value
+-lies in explaining when an apparently cheaper operation becomes a faster
+-search. This chapter develops three interpretations, examines two designs
+-that did not justify general adoption, and turns the remaining limitations
+-into testable research questions. The interpretations retain the distinction
+-between measured effects, explanations and proposed extensions established
+-in \cref{sec:3-6}.
++This chapter relates code structure, execution cost and refinement effort,
++then uses the negative results to identify deployment limits and further
++tests. Interpretations follow the evidence distinctions in \cref{sec:3-6}.
+ 
+ \section{Three Cross-Layer Insights}
+ \label{sec:8-1}
+diff --git a/chapters/09-conclusion.tex b/chapters/09-conclusion.tex
+index e629c3e..b61d84d 100644
+--- a/chapters/09-conclusion.tex
++++ b/chapters/09-conclusion.tex
+@@ -57,13 +57,8 @@ rankings remain untested.
+ 
+ \section{Closing Principle and Outlook}
+ \label{sec:9-2}
+-The resulting principle is to co-evaluate representation, execution and
+-effort under a stated quality objective. A smaller table can add work;
+-more groups can duplicate it; less refinement can sacrifice the neighbours
+-that matter. The negative designs show why mathematical reuse and lower
+-reconstruction error need not improve the search frontier. The next step
+-is to test whether reusable calibration information can support valid risk
+-control at lower total cost, and whether explicit residual placement can
+-extend capacity without unacceptable tail latency (\cref{sec:8-4}). These
+-are hypotheses grounded in the measured limits, rather than capabilities
+-already supplied by the present system.
++Representation, execution and refinement effort must be assessed under
++the same quality objective. Future work should test whether reusable
++calibration information lowers the cost of valid risk control, and whether
++residual placement extends capacity within a tail-latency budget
++(\cref{sec:8-4}).
+diff --git a/frontmatter/abstract.tex b/frontmatter/abstract.tex
+index 24b1cd2..c9db078 100644
+--- a/frontmatter/abstract.tex
++++ b/frontmatter/abstract.tex
+@@ -1,37 +1,22 @@
+ \frontchapter{Abstract}
+-Efficient GPU approximate nearest-neighbour search requires compact
+-representations, efficient scoring and selection, and suitable refinement
+-effort. This thesis presents
+-JHQ-GPU, a GPU implementation and evaluation of JHQ's inherited Cartesian
+-primary/residual hierarchy for high-dimensional squared-L2 search.
++Reducing approximate nearest-neighbour (ANN) query time requires efficient
++screening and selective refinement. This thesis presents JHQ-GPU, which
++implements JHQ through representation-aware execution, GPU index construction
++and workload-level budget calibration. Cartesian codebook factorisation
++replaces each 256-entry distance table with two 16-entry tables, preserving
++the real-arithmetic represented distance while reducing table storage
++eightfold. Candidate-parallel scanning, packed access and lane-cooperative
++refinement complement this design. Refinement budgets are calibrated through
++sampled top-$k$ agreement with a larger reference budget, without ground-truth
++labels or a learned predictor.
+ 
+-The system combines GPU training and batched index construction with
+-representation-aware query execution. Cartesian structure decomposes each
+-256-entry primary distance table into two 16-entry tables without changing
+-the real-arithmetic represented distance. Packed access, lane-cooperative
+-refinement and workload-dependent grouped scanning complement this design.
+-Selection and shared-bound arguments specify correctness conditions,
+-backed by a strict computed-score reference. A workload-level policy selects a
+-refinement multiplier through unlabelled output agreement with a larger
+-reference budget; its analysis separates sampled agreement from GT recall.
+-
+-Archived measurements on an RTX 5090 cover six embedding datasets. The
+-largest tested index searches 17.78 million vectors at 20.44\,GiB resident
+-device memory. Two-group tables lead in 22/24 configurations. Integrated
+-scheduling improves geometric-mean throughput by $2.727\times$ at batch 8
+-against the lane-refinement reference, with much smaller full-batch gains.
+-At recall 0.97 and batch 1,000, interpolated comparisons place JHQ first
+-in three E1 datasets and near parity with IVF-RaBitQ on arXiv. OpenAI E1 uses TF32. FP32 interventions under a TF32-trained cache retain
+-numerical advantages, with cross-session comparisons distinguished from
+-contemporaneous anchors; neither experiment fully retrains FP32 models.
+-At batch 8 and the same recall, CAGRA fp32 instead leads on all four
+-datasets; batch-32 rankings also depend on the finite tuning grid.
+-
+-Full-pool calibration meets a $10^{-3}$ held-out recall-loss target relative
+-to the best tested budget in all twelve cells, with maximum observed loss
+-0.0006. Smaller $S=128$ samples have up to 40/64 threshold crossings.
+-These fixed-pool measurements provide no population recall guarantee.
+-Direct reuse measurements support net savings on suitable workloads. Negative designs
+-show that arithmetic reuse and lower reconstruction error need not improve
+-the search frontier. The findings support joint evaluation of representation,
+-execution and effort under explicit quality, timing and capacity conditions.
++Experiments on an RTX 5090 cover six datasets. Two-group tables lead in
++22/24 configurations; the largest index searches 17.78 million vectors at
++20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
++recall-loss target relative to the best tested budget in 12/12 cells, with
++maximum loss 0.0006; smaller samples expose workload-dependent quality risk.
++At recall 0.97 and batch 1,000, JHQ leads in three of four datasets and is
++near parity with IVF-RaBitQ on arXiv. OpenAI runs use TF32; FP32 checks
++retain favourable comparisons under a TF32-trained cache. At batch 8 and
++the same recall, CAGRA fp32 leads on all four datasets. These results
++locate the execution, quality and capacity trade-offs of GPU JHQ.
+diff --git a/frontmatter/acknowledgements.tex b/frontmatter/acknowledgements.tex
+index 3f553e7..c6d67aa 100644
+--- a/frontmatter/acknowledgements.tex
++++ b/frontmatter/acknowledgements.tex
+@@ -1,9 +1,5 @@
+ \frontchapter{Acknowledgements}
+-I thank Dr Mengxuan Zhang for supervising this research project.
+-The work builds on the JHQ research of Jiabao Han, Mengxuan Zhang and
+-Goce Trajcevski, and on the open-source ANN and GPU software cited
+-throughout the thesis. Their publications and implementations provided
+-the foundations and comparison systems for this study.
++I thank Dr Mengxuan Zhang for supervising this project and acknowledge the
++JHQ authors and open-source ANN/GPU software cited throughout this thesis.
+ 
+-The use of generative-AI tools in the project and thesis preparation is
+-documented in the \hyperref[front:provenance]{Research Provenance and Tool Disclosure}.
++\input{frontmatter/declaration}
+diff --git a/frontmatter/declaration.tex b/frontmatter/declaration.tex
+index 6da45d3..866d04e 100644
+--- a/frontmatter/declaration.tex
++++ b/frontmatter/declaration.tex
+@@ -1,48 +1,12 @@
+-\frontchapter{Research Provenance and Tool Disclosure}
++\paragraph*{Research and AI assistance.}
++\phantomsection
+ \label{front:provenance}
+-This thesis presents the JHQ-GPU project undertaken by \thesisauthor{} for
+-\thesiscourse{} under the supervision of \thesissupervisor{}.
+-
+-The underlying JHQ representation and primary/residual hierarchy are
+-attributed to Jiabao Han, Mengxuan Zhang and Goce Trajcevski \cite{jhq}.
+-IVF, product quantisation, existing GPU selection/merge techniques and
+-baseline software retain their cited authorship. Rui Luo and Mengxuan
+-Zhang are coauthors of the associated project manuscript
+-\cite{adc_artifact}; their author order does not establish individual
+-task allocation. The thesis expands the correctness arguments,
+-measurements, supplementary checks and discussion of unsuccessful designs.
+-\Cref{sec:1-5,tab:1-contributions} identify the project's relationship
+-to that manuscript and map its technical contributions.
+-
+-\paragraph{Generative-AI assistance.}
+-Project records document the following uses, identified by product name
+-without inferring model versions:
+-\textbf{OpenAI Codex} assisted with English/Chinese writing and revision,
+-LaTeX, diagrams, analysis scripts, source/log inspection, offline numerical
+-checks and PDF compilation \cite{ai_codex_record}.
+-\textbf{ChatGPT} supplied frameworks and chapter reviews concerning evidence,
+-scope and experimental design \cite{ai_chatgpt_record}.
+-\textbf{Anthropic Claude} assisted with implementation, experiment
+-automation and review; supplementary records cover construction,
+-representation/precision checks, budget traces, strict selection and
+-small-batch baselines \cite{ai_claude_record}. Selected original Codex
+-prompts and their artifact mapping are retained in
++This thesis extends joint JHQ-GPU work with Mengxuan Zhang
++\cite{adc_artifact} and builds on JHQ \cite{jhq}.
++OpenAI Codex assisted with substantive drafting, revision, LaTeX, analysis
++and code/log checks \cite{ai_codex_record}; ChatGPT supplied frameworks
++and reviews \cite{ai_chatgpt_record}; Anthropic Claude assisted with
++implementation, experiments and review \cite{ai_claude_record}.
++Selected prompts, artifact mappings and record limitations are documented in
+ \href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}.
+-This is a partial record: complete original ChatGPT/Claude conversations,
+-earlier interaction timestamps and model versions are not archived there.
+-The joint manuscript separately discloses
+-Claude/ChatGPT assistance with implementation, harnesses, figures and
+-writing, retaining that manuscript's versioned scope.
+-
+-\paragraph{Traceability and responsibility.}
+-Source histories, run records and analysis ledgers establish artifact
+-provenance. \path{scripts/} retains analysis code;
+-\path{assessment/} records accepted and corrected review recommendations;
+-the code repository's \path{experiments/thesis_evidence/} retains
+-supplementary experiment records. Appendices~\ref{app:reproducibility}
+-and \ref{app:supplementary} identify the experimental contracts and
+-supporting evidence. Bibliographic citations acknowledge inherited
+-methods. These records describe the retained workflow, rather than a
+-complete interaction export or a signed personal attestation.
+-Responsibility for the submitted text, attribution and interpretation
+-remains with the thesis author.
++The author is responsible for the submitted claims.
+diff --git a/main-zh.tex b/main-zh.tex
+index a6fa41b..65ed41d 100644
+--- a/main-zh.tex
++++ b/main-zh.tex
+@@ -11,7 +11,6 @@
+ \input{zh/title}
+ \pagenumbering{roman}
+ \hypersetup{pageanchor=true}
+-\input{zh/declaration}
+ \input{zh/abstract}
+ \input{zh/acknowledgements}
+ 
+diff --git a/main.tex b/main.tex
+index 203c334..0ee3061 100644
+--- a/main.tex
++++ b/main.tex
+@@ -12,7 +12,6 @@
+ \input{frontmatter/title}
+ \pagenumbering{roman}
+ \hypersetup{pageanchor=true}
+-\input{frontmatter/declaration}
+ \input{frontmatter/abstract}
+ \input{frontmatter/acknowledgements}
+ 
+diff --git a/zh/abstract.tex b/zh/abstract.tex
+index 1156785..020fe23 100644
+--- a/zh/abstract.tex
++++ b/zh/abstract.tex
+@@ -1,24 +1,14 @@
+ \frontchapter{摘要}
+-高效 GPU 近似最近邻搜索需要紧凑表示、高效评分与选择，以及适当的精排工作量。
+-本文提出JHQ-GPU，对继承的JHQ Cartesian主码／残差层次进行GPU
+-实现与评估，面向高维平方L2搜索。
++降低近似最近邻（ANN）查询时间需要高效筛选与选择性精排。本文提出 JHQ-GPU，
++通过面向表示的执行、GPU 索引构建与工作负载级预算校准实现 JHQ。
++Cartesian 码本因子化将每张 256 项距离表替换为两张 16 项表，保持实数运算下的
++表示距离，并将表存储缩小八倍。候选并行扫描、打包访问与 lane 协作精排配合该设计。
++预算通过采样 top-$k$ 与较大参考预算的输出一致性校准，不需要真实标签或学习预测器。
+ 
+-系统结合GPU训练、batch索引构建及面向表示的查询执行。
+-Cartesian结构把256项primary距离表拆成两张16项表，不改变实数表示距离。
+-packed访问、lane合作精排和工作负载相关分组扫描配合这一设计。
+-选择与共享界论证明确正确性条件，并由严格的计算分数参考支持。
+-工作负载策略以无标签输出和大预算参考的一致性选倍率，并区分样本一致性与GT recall。
+-
+-RTX 5090上的归档测量覆盖六份嵌入数据。最大被测索引搜索17.78百万向量，
+-常驻20.44\,GiB；两组表在22/24配置领先。
+-相对lane精排参考，batch 8集成调度吞吐几何平均为$2.727\times$，大batch收益小得多。
+-0.97 recall、batch 1,000 的插值比较中，JHQ 在四个 E1 数据集中的三个第一，
+-arXiv与IVF-RaBitQ接近平手。OpenAI E1 使用 TF32。TF32 训练缓存上的 FP32 干预仍有数值优势，跨会话比较与
+-同期锚点明确分开；两种实验均未完整重训 FP32 模型。相同 recall、batch 8 下，四个数据集
+-均改为 CAGRA fp32 领先；batch 32 的排名同样受有限调参网格影响。
+-
+-全池校准在全部12单元满足相对最佳被测预算的$10^{-3}$留出recall损失目标，
+-最大实测损失0.0006；$S=128$最多40/64次越阈。
+-这些固定查询池测量不提供总体 recall 保证；直接复用测量支持合适工作负载上的净收益。
+-负结果进一步说明算术复用和更低重建误差未必改善端到端前沿。
+-研究支持在明确质量、计时和容量条件下联合评价表示、执行及工作量。
++RTX 5090 上的实验覆盖六个数据集。两组表在 22/24 配置领先；最大索引搜索
++17.78 百万向量，常驻显存 20.44\,GiB。全池校准在 12/12 单元满足相对最佳被测预算的
++$10^{-3}$ 留出 recall 损失目标，最大损失为 0.0006；较小样本暴露工作负载相关质量风险。
++recall 0.97、batch 1,000 时，JHQ 在四个数据集中的三个领先，在 arXiv 上与
++IVF-RaBitQ 接近平手。OpenAI 运行使用 TF32；同一 TF32 训练缓存上的 FP32 检查仍保留
++有利比较方向。相同 recall、batch 8 时，四个数据集均由 CAGRA fp32 领先。
++这些结果界定 GPU JHQ 在执行、质量与容量之间的取舍。
+diff --git a/zh/acknowledgements.tex b/zh/acknowledgements.tex
+index b10a81f..44d9e0f 100644
+--- a/zh/acknowledgements.tex
++++ b/zh/acknowledgements.tex
+@@ -1,6 +1,4 @@
+ \frontchapter{致谢}
+-感谢Mengxuan Zhang博士指导本研究项目。
+-本工作以Jiabao Han、Mengxuan Zhang和Goce Trajcevski的JHQ研究，以及文中引用的
+-开源ANN与GPU软件为基础；这些论文和实现提供了研究基础与对照系统。
++感谢 Mengxuan Zhang 博士指导本项目，并感谢本文引用的 JHQ 作者及开源 ANN/GPU 软件贡献者。
+ 
+-本项目及论文准备中的生成式AI使用记录见\hyperref[front:provenance]{研究来源与工具使用说明}。
++\input{zh/declaration}
+diff --git a/zh/chapters/01-1-context.tex b/zh/chapters/01-1-context.tex
+index e302d51..566efb4 100644
+--- a/zh/chapters/01-1-context.tex
++++ b/zh/chapters/01-1-context.tex
+@@ -1,17 +1,10 @@
+-高维嵌入支持图片、文档等对象的相似搜索。所测向量有768--3,072个坐标，
+-最大数据库含17.78百万向量。穷举距离涉及大量算术，完整向量在索引开销之前
+-就占用容量，例如Stella的FP32数组本身需要67.81\,GiB（\cref{sec:7-7}）。
+-ANN允许牺牲部分精确近邻恢复，减少访问和评分工作。
++近似最近邻（ANN）通过避免穷举、全精度距离计算降低查询时间。
++CAGRA 等图方法通过导航限制访问，压缩 IVF 将选择性列表访问与低成本评分结合
++\cite{cagra,johnson_gpu,ivfrabitq}。被测嵌入为 768--3,072 维，最多 17.78 百万向量；
++Stella 原始 FP32 数组本身需要 67.81\,GiB（\cref{sec:7-7}）。紧凑编码解决容量问题，
++但建表、查表、选择与启动开销决定其查询时间收益。
+ 
+-现代GPU方法提供不同取舍：CAGRA等图方法通过导航避开很多向量，
+-压缩IVF把选择性列表访问与紧凑距离结合\cite{cagra,johnson_gpu,ivfrabitq}。
+-由此产生系统问题：指定recall下，表示、选择与内存移动把成本放在哪里？
+-短码节省存储，但建表、依赖查找、候选保留和重复launch设置可能决定是否也节省查询时间。
+-
+-JHQ为这一问题提供合适场景\cite{jhq}：紧凑primary筛选，残差表示精排短名单。
+-架构暴露两个相关决策：如何高效执行广泛筛选，以及精排多少survivor。
+-它也允许实验隔离：可以保持表示分数不变而改执行，或复用训练索引而改预算。
+-
+-实际目标是改善Recall@10、主机可见吞吐／延迟、常驻显存和构建成本的可达组合。
+-评估包括对手更快与方案失败的情况，使贡献成为有条件竞争区间及机制的解释，
+-而不是脱离质量与资源约束的单个提速比。
++JHQ 将筛选与精排分开：紧凑主码评分候选，残差精排短名单\cite{jhq}。
++由此产生两个决策：如何执行广泛筛选，以及精排多少候选。
++复用训练索引时可分别改变执行或预算，隔离其效果。本文以 Recall@10、主机可见吞吐／延迟、
++常驻显存及构建成本评估这些决策，同时纳入竞争方法或未修改设计更快的配置。
+diff --git a/zh/chapters/01-5-contributions.tex b/zh/chapters/01-5-contributions.tex
+index 18dd92c..6f7da1b 100644
+--- a/zh/chapters/01-5-contributions.tex
++++ b/zh/chapters/01-5-contributions.tex
+@@ -30,5 +30,5 @@ OpenAI E1使用TF32 GEMM；独立FP32敏感性仍保留较小领先（\cref{sec:
+ 本COMP8800项目由Rui Luo在Dr Mengxuan Zhang指导下呈现。
+ ADC合著稿列Rui Luo与Mengxuan Zhang，复用JHQ-GPU实现及测量产物\cite{adc_artifact}。
+ 论文扩展正确性契约、新版实验分析与失败方案讨论，历史稿数字保留各自版本。
+-技术贡献标签界定项目范围；来源说明区分继承与共同工作，并披露AI协助。
++技术贡献标签界定项目范围；致谢简要说明共同工作与AI协助。
+ 论文作者对提交的主张与归属标注负责。
+diff --git a/zh/chapters/07-evaluation.tex b/zh/chapters/07-evaluation.tex
+index fab75fe..6fcc910 100644
+--- a/zh/chapters/07-evaluation.tex
++++ b/zh/chapters/07-evaluation.tex
+@@ -11,7 +11,7 @@
+ 证据涵盖系统前沿、组件消融、选择检查、预算校准以及构建／规模测量。\Cref{app:reproducibility}记录实现及运行来源，仓库补充材料保留完整实验分组清单。
+ 
+ 
+-\subsection{证据分组与测量边界}
++\subsection{比较协议与可复现性}
+ 
+ 数据、计时与比较分组沿用\cref{sec:3-2,sec:3-3,sec:3-5}。RTX 5090 主比较测量
+ 主机到主机稳态吞吐，构建与校准分别计时，各消融保留自身分组基线。
+@@ -23,8 +23,6 @@
+ 
+ 自适应调用次数与辅助设备端计时见\cref{sec:a-e1-protocol}。
+ 
+-\subsection{指标与可复现性}
+-
+ 指标与前沿估计沿用\cref{sec:3-2,sec:3-4}；$\glut$与$\gscan$保留\cref{sec:5-1}中的不同含义。
+ 
+ 
+diff --git a/zh/chapters/08-1-insights.tex b/zh/chapters/08-1-insights.tex
+index 1ac78c7..5660ce2 100644
+--- a/zh/chapters/08-1-insights.tex
++++ b/zh/chapters/08-1-insights.tex
+@@ -1,43 +1,33 @@
+ \subsection{有价值的表示暴露有价值的复用单位}
+-\Cref{fig:7-lut}的分组结果表明，仅缩小状态不足以决定最佳评分器。
+-复用单位是查询相关坐标组：其距离按\cref{sec:5-2}构造一次，再供多个候选使用。
+-
+-
+-\Cref{sec:5-2,sec:5-3}中的共享内存转变和word访问成本要求联合考虑存储、指令与复用。
+-例外LUT单元及下文Mailman案例反驳普遍的最小表规则；两组是该设备上的经验默认，
+-而非跨设备最优。
+-
+-
+-\Cref{sec:5-2}的兼容条件限制了这种机会：改善码本重建可能失去执行优势。
+-因此，应把评分器与残差层次可达的recall--成本前沿和重建误差一起评价。
+ 
++\cref{sec:5-2}的坐标组 LUT 将计算所得距离复用于多个候选；但分组结果与 Mailman
++表明，仅节省存储不足以决定吞吐（\cref{fig:7-lut}）。共享内存放置与 word 访问须联合
++考虑（\cref{sec:5-2,sec:5-3}）；两组是该 GPU 上的经验默认。码本改变可能破坏
++Cartesian 兼容性，因此需将重建误差与评分器可达的 recall--成本前沿共同评价。
+ 
+ \subsection{有效并行受重复状态与选择成本限制}
+-\Cref{fig:7-batch}的批次趋势反映可用并行度与重复状态／选择工作的取舍。
+-查询级并发充足后，staging、局部缓冲与合并可吞掉额外block的收益，
+-因此最大occupancy本身不是合适的目标。
+-
+ 
+-Vogue依赖路径的前沿与BGE调度regret（\cref{sec:7-2,sec:7-6}）
+-把执行设计连接到竞争区间，也暴露CV的局限：它描述不均衡，却不含绝对工作量及staging／merge成本。
+-整体路径比较仍区别于单独共享界消融。
+-
+-
+-工程上应保留query-centric路径，并同时依据可用并行度与单查询预计工作选择分组。
+-候选数、survivor容量和局部缓冲成本是更丰富决策的候选输入。
+-拟合选择器还需留出工作负载与校准成本核算，目前观察未验证这类选择器。
+-现有启发式的价值也在于其收益与失败单元可以分别复查。
++\cref{fig:7-batch}的批次趋势反映查询并发充足后，重复暂存、选择与合并的成本。
++Vogue 的路径相关前沿与 BGE 的 regret 暴露 CV 未描述的绝对工作量及分解成本
++（\cref{sec:7-2,sec:7-6}）。这些集成比较仍与单独共享界消融分开。
++更丰富的调度器可以结合候选数、保留容量与局部缓冲成本，同时保留查询级路径；
++其校准成本与留出工作负载性能仍需评测。
+ 
+ \subsection{执行变快会改变避免精排的价值}
+-降低预算省去残差读取、计算与最终选择，路由和广泛primary评分仍保留。
+-可省比例取决于这些操作原本占多少延迟。更快的lane精排可能降低减少候选的回报，
+-更快primary扫描则可能提高精排的相对占比。二者都不会改变丢弃特定候选的质量后果。
+-
+-这是成本模型推论，而非每项历史／新版预算差异的因果解释。
+-因果测试应固定预算决策和候选集合，只改变精排内核。
+-跨实验比较与直接复用测量见\cref{sec:7-5,sec:7-stream-cost}。
+-
+ 
+-\Cref{tab:7-budget-full,fig:7-budget-risk}中的FULL工作点和采样尾风险说明，
+-校准投入应对应质量要求与预计复用。单独优化选择器，或仅报告有利的所选配置均值，
+-不足以完成该工程决策。
++考虑延迟模型：非精排成本固定为 $T_0>0$，高／低预算精排时间满足
++$F_h\geq F_\ell>0$，共同精排时间倍率为 $0<\eta\leq1$。低预算加速比及其导数为
++\begin{align}
++ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
++ \label{eq:8-refinement-sensitivity}\\
++ \frac{\partial S}{\partial\eta}
++ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
++ \frac{\partial S}{\partial T_0}
++ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
++\end{align}
++当 $F_h>F_\ell$ 时，精排加快降低削减预算的收益，固定成本降低则提高该收益。
++模型固定了非精排工作；预算相关扫描维护和资源阈值仍需实测。
++因果内核比较应固定候选集合及预算决策（\cref{sec:7-5,sec:7-stream-cost}）。
++
++FULL 结果与采样尾部说明，该成本决策还需质量约束及足够复用
++（\cref{tab:7-budget-full,fig:7-budget-risk}）。
+diff --git a/zh/chapters/08-discussion.tex b/zh/chapters/08-discussion.tex
+index 306ec7d..1dbd937 100644
+--- a/zh/chapters/08-discussion.tex
++++ b/zh/chapters/08-discussion.tex
+@@ -1,10 +1,8 @@
+ \chapter{讨论、局限与未来研究}
+ \label{ch:discussion}
+ \chaptermark{讨论与未来研究}
+-测量支持结构化编码、选择性精排与工作负载相关执行的一种具体组合。
+-更广泛的价值在于解释：表面上更便宜的操作，何时能变成更快的搜索。
+-本章提出三项解释，分析两条未能支持普遍采用的路线，再把局限转化为可检验的问题。
+-沿用\cref{sec:3-6}对实测效果、原因解释与未来扩展的区分。
++本章关联编码结构、执行成本与精排工作量，并以负结果确定部署边界和后续检验。
++解释沿用\cref{sec:3-6}的证据分类。
+ \section{三项跨层认识}
+ \label{sec:8-1}
+ \input{zh/chapters/08-1-insights}
+diff --git a/zh/chapters/09-conclusion.tex b/zh/chapters/09-conclusion.tex
+index 26a5d70..fce66af 100644
+--- a/zh/chapters/09-conclusion.tex
++++ b/zh/chapters/09-conclusion.tex
+@@ -38,9 +38,5 @@ batch 32 的边界依赖 recall 估计（\cref{sec:7-smallbatch}）。排名因
+ 
+ \section{系统原则与展望}
+ \label{sec:9-2}
+-最终原则是在明确质量目标下联合评估表示、执行与工作量。
+-表更小可能工作更多，分组更多可能重复工作，精排更少可能牺牲最重要近邻。
+-负结果解释数学复用和更低重建误差为何未必改善搜索前沿。
+-下一步应检验复用校准信息能否以更低总成本提供有效风险控制，以及显式残差放置
+-能否在可接受尾延迟下扩展容量（\cref{sec:8-4}）。这些是假设，来自已测局限，
+-不是当前系统已经提供的能力。
++表示、执行与精排工作量必须在同一质量目标下评价。后续应检验复用校准信息能否
++降低有效风险控制的成本，以及残差放置能否在尾延迟预算内扩展容量（\cref{sec:8-4}）。
+diff --git a/zh/declaration.tex b/zh/declaration.tex
+index ae6cf5a..2eb8bd5 100644
+--- a/zh/declaration.tex
++++ b/zh/declaration.tex
+@@ -1,29 +1,9 @@
+-\frontchapter{研究来源与工具使用说明}
++\paragraph*{研究与AI协助。}
++\phantomsection
+ \label{front:provenance}
+-本论文呈现\thesisauthor{}在\thesissupervisor{}指导下开展的COMP8800 JHQ-GPU项目。
+-
+-底层JHQ表示及主码／残差层次归属于Jiabao Han、Mengxuan Zhang和Goce Trajcevski
+-\cite{jhq}。IVF、乘积量化、已有GPU选择／合并技术和基线软件保留所引作者归属。
+-Rui Luo与Mengxuan Zhang为相关项目手稿的共同作者\cite{adc_artifact}；
+-作者顺序不表示具体个人分工。本论文扩展正确性论证、测量、补证核查及失败设计讨论。
+-\Cref{sec:1-5,tab:1-contributions}说明本项目与手稿的关系并对应技术贡献。
+-
+-\paragraph{生成式AI协助。}
+-项目记录支持以下用途；工具按产品名标识，不据此推断具体模型版本。
+-\textbf{OpenAI Codex}协助中英文写作修改、LaTeX、图件、分析脚本、源码／日志核查、
+-离线数值检查和PDF编译\cite{ai_codex_record}。
+-\textbf{ChatGPT}提供涉及证据、范围和实验设计的框架及章节审阅\cite{ai_chatgpt_record}。
+-\textbf{Anthropic Claude}协助实现、实验自动化和审阅；补证记录涉及构建、表示／精度核查、
+-预算轨迹、严格选择及小批次基线\cite{ai_claude_record}。部分Codex真实提示词及产物对应保留于
++本文扩展与 Mengxuan Zhang 合作的 JHQ-GPU 工作\cite{adc_artifact}，并以 JHQ 为基础\cite{jhq}。
++OpenAI Codex 协助实质性起草、修改、LaTeX、分析及代码／日志核查\cite{ai_codex_record}；
++ChatGPT 提供框架和审阅\cite{ai_chatgpt_record}；Anthropic Claude 协助实现、实验及审阅\cite{ai_claude_record}。
++部分提示词、产物对应与记录局限见
+ \href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}。
+-这是部分记录：其中没有完整ChatGPT／Claude原始会话，也没有归档较早交互的时间戳与模型版本。
+-共同手稿另行披露Claude／ChatGPT对实现、实验程序、
+-图件和写作的协助，保留该手稿的版本范围。
+-
+-\paragraph{可追溯性与责任。}
+-源码历史、运行记录和分析清单说明材料来源。\path{scripts/}保留分析代码，
+-\path{assessment/}记录接受及纠正的审阅建议，代码仓库的
+-\path{experiments/thesis_evidence/}保留补证记录。
+-附录\ref{app:reproducibility}和\ref{app:supplementary}说明实验契约及支撑证据，
+-参考文献标注继承方法。这些材料描述保留的工作流程，不等于完整交互导出或个人签署。
+-提交文本、归属标注与结论解释的责任由论文作者承担。
++论文作者对提交主张负责。

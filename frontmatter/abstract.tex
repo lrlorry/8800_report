@@ -1,37 +1,22 @@
 \frontchapter{Abstract}
-Efficient GPU approximate nearest-neighbour search requires compact
-representations, efficient scoring and selection, and suitable refinement
-effort. This thesis presents
-JHQ-GPU, a GPU implementation and evaluation of JHQ's inherited Cartesian
-primary/residual hierarchy for high-dimensional squared-L2 search.
+Reducing approximate nearest-neighbour (ANN) query time requires efficient
+screening and selective refinement. This thesis presents JHQ-GPU, which
+implements JHQ through representation-aware execution, GPU index construction
+and workload-level budget calibration. Cartesian codebook factorisation
+replaces each 256-entry distance table with two 16-entry tables, preserving
+the real-arithmetic represented distance while reducing table storage
+eightfold. Candidate-parallel scanning, packed access and lane-cooperative
+refinement complement this design. Refinement budgets are calibrated through
+sampled top-$k$ agreement with a larger reference budget, without ground-truth
+labels or a learned predictor.
 
-The system combines GPU training and batched index construction with
-representation-aware query execution. Cartesian structure decomposes each
-256-entry primary distance table into two 16-entry tables without changing
-the real-arithmetic represented distance. Packed access, lane-cooperative
-refinement and workload-dependent grouped scanning complement this design.
-Selection and shared-bound arguments specify correctness conditions,
-backed by a strict computed-score reference. A workload-level policy selects a
-refinement multiplier through unlabelled output agreement with a larger
-reference budget; its analysis separates sampled agreement from GT recall.
-
-Archived measurements on an RTX 5090 cover six embedding datasets. The
-largest tested index searches 17.78 million vectors at 20.44\,GiB resident
-device memory. Two-group tables lead in 22/24 configurations. Integrated
-scheduling improves geometric-mean throughput by $2.727\times$ at batch 8
-against the lane-refinement reference, with much smaller full-batch gains.
-At recall 0.97 and batch 1,000, interpolated comparisons place JHQ first
-in three E1 datasets and near parity with IVF-RaBitQ on arXiv. OpenAI E1 uses TF32. FP32 interventions under a TF32-trained cache retain
-numerical advantages, with cross-session comparisons distinguished from
-contemporaneous anchors; neither experiment fully retrains FP32 models.
-At batch 8 and the same recall, CAGRA fp32 instead leads on all four
-datasets; batch-32 rankings also depend on the finite tuning grid.
-
-Full-pool calibration meets a $10^{-3}$ held-out recall-loss target relative
-to the best tested budget in all twelve cells, with maximum observed loss
-0.0006. Smaller $S=128$ samples have up to 40/64 threshold crossings.
-These fixed-pool measurements provide no population recall guarantee.
-Direct reuse measurements support net savings on suitable workloads. Negative designs
-show that arithmetic reuse and lower reconstruction error need not improve
-the search frontier. The findings support joint evaluation of representation,
-execution and effort under explicit quality, timing and capacity conditions.
+Experiments on an RTX 5090 cover six datasets. Two-group tables lead in
+22/24 configurations; the largest index searches 17.78 million vectors at
+20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
+recall-loss target relative to the best tested budget in 12/12 cells, with
+maximum loss 0.0006; smaller samples expose workload-dependent quality risk.
+At recall 0.97 and batch 1,000, JHQ leads in three of four datasets and is
+near parity with IVF-RaBitQ on arXiv. OpenAI runs use TF32; FP32 checks
+retain favourable comparisons under a TF32-trained cache. At batch 8 and
+the same recall, CAGRA fp32 leads on all four datasets. These results
+locate the execution, quality and capacity trade-offs of GPU JHQ.

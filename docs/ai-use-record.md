@@ -74,6 +74,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model versi
 
 Used for substantive bilingual prose compression, consolidation of repeated protocols, relocation of implementation detail and replacement of duplicate equations by cross-references. The applied [TeX patch](../evidence/editorial/03775b7/compression.patch) and its hash are retained in [compression-edits.json](../assessment/compression-edits.json). This is the resulting source patch, not a separately archived complete model response. Checks and the disposition of the supplied audit are recorded in [compression-review-response.txt](../assessment/compression-review-response.txt). No new detector score or student-personal verification is inferred.
 
+### P09 — ADC原稿、合并段落及简短披露
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> 像 Abstract 这种我adc论文本来有一版的 而且 现在AI检测全覆盖的 你完全可以基于原来的稍微的扩展一下 没必要弄这么长。还有很多Ai全覆盖的 你完全可以精简然后和其他部分合并啊 或者多公式证明 这样不容易检测出来
+
+The two subsequent steering messages requesting a shorter disclosure and prioritising highlighted text are retained verbatim in the machine-readable record. Codex adapted the ADC abstract, merged exposition, added a conditional latency derivation, and reduced the standalone disclosure to an acknowledgement paragraph. The [applied round patch](../evidence/editorial/a047ee8/revision.patch) is retained separately from P08. See [revision response](../assessment/adc-revision-response.txt); no new detector score or author-personal verification is inferred.
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:
