@@ -261,7 +261,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-2-negative.tex",
-      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+      "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
     },
     {
       "repository": "8800_report",
@@ -291,7 +291,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-2-negative.tex",
-      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+      "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
     },
     {
       "repository": "8800_report",
@@ -331,7 +331,7 @@
     {
       "repository": "8800_report",
       "path": "references.bib",
-      "sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265"
+      "sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
     }
   ]
 }

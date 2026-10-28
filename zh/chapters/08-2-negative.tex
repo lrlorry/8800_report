@@ -25,7 +25,7 @@ pilot只写出primary分数，没有返回最终近邻。FP32/FP64检查揭示cu
 \captionof{figure}[Mailman 与面向排序编码]{两种不同证据边界。左：RTX 5090、128 probe、Vogue、arXiv、OpenAI-3072和
 两种batch下，最快Mailman评分器／packed表评分器速度，全部小于1。
 右：arXiv的400查询FP64离线测试划分中，满足原JHQ recall目标的最小survivor数。
-候选减少不是GPU提速；两图均由论文audit脚本从归档记录重新生成。}
+候选减少不是GPU提速。}
 \label{fig:8-negative}
 \end{minipage}\par\medskip
 
@@ -47,5 +47,5 @@ arXiv测试集中，中位数阈值把达到原目标所需的最小被测surviv
 残差导入相同搜索流水线，分别扫预算，再按实测recall阈值比较。
 在arXiv原$\alpha=100$目标，batch 8和1,000的比值约为1.40和1.21。
 Vogue median前沿最高0.9630，未达到原工作点0.9644；OpenAI-3072基本持平。
-这修正了“从未做GPU测试”的笼统表述，同时保留不采用通用替代的决定。
+这些收益仍依赖具体工作负载。
 跟进使用独立索引状态、查询池和三轮协议，不能把其吞吐插入E1。

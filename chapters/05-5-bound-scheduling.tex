@@ -180,8 +180,6 @@ groups. At calibration size $S=128$, eight use two groups, two use four,
 and two remain query-centric. Execution paths therefore differ in
 8/12 configurations. Grouped selection principally serves smaller
 batches and skewed workloads; there is no universal batch-256 boundary.
-The offline recount and input hashes are recorded in
-\path{data/ch5/review-audit.json}.
 
 The rule is a heuristic rather than an occupancy calculation or a
 latency oracle: it omits register pressure, shared-memory residency,

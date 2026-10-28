@@ -7,8 +7,7 @@ encoded rows and their placement, even when coarse routing succeeds.
 \subsection{Completed representation evidence}
 
 The 13 October residual-bound pilot exported $\Pi$, codebooks, IDs,
-offsets, corrections and logically decoded packed codes from the arms6
-trained cache. It covers complete Vogue (932,328 rows), arXiv (2,253,000)
+offsets, corrections and logically decoded packed codes from the trained cache. It covers complete Vogue (932,328 rows), arXiv (2,253,000)
 and OpenAI-3072 (999,000) databases.
 
 The codebook audit found zero separability mismatches, scalar-level
@@ -20,8 +19,7 @@ from $1.28\times10^{-7}$ to $2.77\times10^{-7}$. Sampled GPU-returned
 top-10 scores have maximum relative errors from $2.38\times10^{-7}$ to
 $4.85\times10^{-5}$, using $|s_{\rm GPU}-s_{64}|/s_{64}$ with the
 query-norm constant included. These are checks of the exported
-representation, not re-encoding from the original input vectors. The
-repository supplement retains the per-dataset diagnostics.
+representation, not re-encoding from the original input vectors.
 
 
 Across seven workloads and 896 query instances, the pilot additionally
@@ -33,7 +31,7 @@ from the routed map, leaving output membership incompletely checked.
 
 Encoder, primary/residual training and construction sources match the
 evaluated implementation after namespace normalisation and removal of
-the export method (\path{scripts/audit_ch4_review.py}). This source
+the export method. This source
 correspondence covers the shared path, leaving later model identity and
 large-dataset two-pass construction to separate checks.
 

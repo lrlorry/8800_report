@@ -1000,12 +1000,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
+      "sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
+      "sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
     },
     {
       "repository": "8800_report",
@@ -1020,7 +1020,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
+      "sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
     },
     {
       "repository": "8800_report",
@@ -1030,12 +1030,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
     },
     {
       "repository": "8800_report",
@@ -1090,17 +1090,17 @@
     {
       "repository": "8800_report",
       "path": "appendices/b-supplementary.tex",
-      "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
+      "sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
     },
     {
       "repository": "8800_report",
       "path": "zh/appendices/b-supplementary.tex",
-      "sha256": "c924c8743cbb6a718cdfe7ee35211d45e6f446b07b33c86c1b3f48c4b6193b82"
+      "sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
     },
     {
       "repository": "8800_report",
       "path": "appendices/a-reproducibility.tex",
-      "sha256": "e1719f401b185962532eda4a0c443d6e1b9588d3e58dc82ade6cd8d4527960fd"
+      "sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5"
     },
     {
       "repository": "8800_report",

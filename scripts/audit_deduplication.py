@@ -49,7 +49,9 @@ def main():
         assert (rel.startswith(('chapters/', 'zh/chapters/')) and rel.endswith('.tex')) or rel in [
             'frontmatter/abstract.tex', 'zh/abstract.tex', 'frontmatter/declaration.tex', 'zh/declaration.tex',
             'frontmatter/acknowledgements.tex', 'zh/acknowledgements.tex', 'main.tex', 'main-zh.tex',
-            'config/layout.tex', 'config/preamble.tex', 'zh/preamble.tex']
+            'config/layout.tex', 'config/preamble.tex', 'zh/preamble.tex',
+            'appendices/a-reproducibility.tex', 'appendices/b-supplementary.tex',
+            'zh/appendices/b-supplementary.tex', 'references.bib']
         before = git('show', compression['baseline'] + ':' + rel)
         after = current(rel)
         assert hashlib.sha256(before).hexdigest() == edit['before_sha256']
@@ -59,13 +61,34 @@ def main():
     assert hashlib.sha256(patch).hexdigest() == compression['patch_sha256']
     subprocess.run(['git', 'apply', '--check', '--reverse', compression['patch']],
                    cwd=ROOT, check=True, capture_output=True)
+    cleanup = json.loads(current('assessment/internal-reference-edits.json'))
+    assert cleanup['baseline'] == '2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab'
+    pre_cleanup = {}
+    for entry in cleanup['files']:
+        rel = entry['path']
+        before = git('show', cleanup['baseline'] + ':' + rel)
+        assert hashlib.sha256(before).hexdigest() == entry['before_sha256']
+        expected = before.decode()
+        for edit in cleanup['source_edits']:
+            if edit['path'] == rel:
+                assert expected.count(edit['before']) == 1, rel
+                expected = expected.replace(edit['before'], edit['after'])
+        actual = current(rel)
+        assert expected.encode() == actual, ('undeclared cleanup edit', rel)
+        assert hashlib.sha256(actual).hexdigest() == entry['after_sha256']
+        # Captions may lose workflow narration; mathematics and table rows may not.
+        for env in ['equation', 'align', 'lemma', 'proposition', 'proof',
+                    'corollary', 'definition', 'tabular', 'tabularx', 'longtable']:
+            pat = r'\\begin\{' + env + r'\*?\}[\s\S]*?\\end\{' + env + r'\*?\}'
+            assert re.findall(pat, before.decode()) == re.findall(pat, expected), (rel, env)
+        pre_cleanup[rel] = before.decode()
     # The proof-layout round may add only transparent containers to chapters.
     wrappers = compression['formatting_only_wrappers']
     assert wrappers['baseline'] == 'cc696f2f98f29ebe794d930f08d2d5ab4add994e'
     assert wrappers['environment'] == 'resultblock' and len(wrappers['source_files']) == 6
     wrapper_count = 0
     for rel in wrappers['source_files']:
-        actual = current(rel).decode()
+        actual = pre_cleanup.get(rel, current(rel).decode())
         wrapper_count += actual.count('\\begin{resultblock}')
         stripped = actual.replace('\\begin{resultblock}\n', '').replace('\n\\end{resultblock}', '')
         assert stripped == git('show', wrappers['baseline'] + ':' + rel).decode(), rel
@@ -210,6 +233,9 @@ def main():
             restored = remap_new_refs(restored)
             for block in section_removals[rel]:
                 restored = restored.replace(block, '')
+            for edit in cleanup['source_edits']:
+                if edit['path'] == rel and edit['before'] in restored:
+                    restored = restored.replace(edit['before'], edit['after'])
             compared_actual = actual
             for block in additions[rel]:
                 compared_actual = compared_actual.replace(block, '')
@@ -261,7 +287,8 @@ def main():
             edits = [e for e in final_review['source_edits'] if e['path'] == rel]
             assert len(edits) == 1 and edits[0]['after'].startswith(edits[0]['before'])
             suffix = edits[0]['after'][len(edits[0]['before']):]
-        assert data == old(rel) + suffix.encode(), ('changed retained material', rel)
+        historical = pre_cleanup.get(rel, data.decode()).encode()
+        assert historical == old(rel) + suffix.encode(), ('changed retained material', rel)
 
     word_rows = []
     for chapter in range(1, 10):

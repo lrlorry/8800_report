@@ -1,0 +1,3162 @@
+diff --git a/appendices/a-reproducibility.tex b/appendices/a-reproducibility.tex
+index 1dd846d..0c399ee 100644
+--- a/appendices/a-reproducibility.tex
++++ b/appendices/a-reproducibility.tex
+@@ -1,26 +1,22 @@
+ \chapter{Reproducibility and Experiment Manifest}
+ \label{app:reproducibility}
+ 
+-This appendix records the contracts needed to interpret the experiments.
+-The expanded protocol, executable names, raw-source paths and
+-result-to-figure mapping are retained in
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/experiment-protocol.md}{\nolinkurl{docs/experiment-protocol.md}} in the report repository.
++This appendix specifies the experimental environment and measurement
++protocol. Available source and measurement materials are listed in
++\cref{sec:b-artifacts}.
+ 
+ \section{Source, Environment and Trained States}
+ 
+ The principal environment is RTX 5090, driver 595.71.05, CUDA 13.0 and,
+ for E1, cuVS 26.08.01. JHQ targets compute\_80 PTX and uses driver JIT
+ compilation. \Cref{tab:a-components} separates run-header evidence from
+-versions stated in reports. The analysis checkout in
+-\path{data/ch7/audit.json} identifies the inspected workspace; a run-head
+-commit identifies source visible to that run. Neither supplies a missing
+-executable or trained-state fingerprint.
++versions stated in reports. Source revisions identify the inspected implementation; complete executable
++and trained-state fingerprints are unavailable for some historical runs.
+ 
+ \begin{table}[tbp]
+ \centering
+ \caption[Component and run provenance]{Recorded component provenance. Report and script identities
+-are distinguished from raw run headers; full executable and input paths
+-are in the expanded protocol.}
++are distinguished from raw run headers.}
+ \label{tab:a-components}
+ \footnotesize\setlength{\tabcolsep}{4pt}
+ \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.34\linewidth}>{\raggedright\arraybackslash}X@{}}
+@@ -42,10 +38,8 @@ Historical budget & Raw header \texttt{bf31b41}, v57 family \\
+ 
+ Dataset shapes and actual query counts are in \cref{tab:3-data}.
+ Comparisons reuse the exported vectors and squared-L2 ground truth per
+-dataset. Search sweeps load the recorded \path{arms6_cache} states;
+-cold-build records start without trained state. Input ledgers hash the
+-consumed analysis records, rather than every vector file, cache or binary.
+-Initial large-baseline attempts that retained an old index are superseded
++dataset. Search sweeps load the same cached trained states;
++cold-build records start without trained state. Initial large-baseline attempts that retained an old index are superseded
+ by isolated reruns. Stella's skipped batch-1,000 files contribute no
+ search points; corrected large-search records use its 999 queries.
+ 
+@@ -105,8 +99,7 @@ unknown query-population quality.
+ \section{Supplementary Evidence}
+ \label{sec:a-supplement}
+ 
+-Records under \path{JHQ_GPU/experiments/thesis_evidence/} retain campaign
+-identities and timing boundaries. A1 separates first-read, normal
++A1 separates first-read, normal
+ warm-input and synchronised phase runs on six datasets; five-build recall
+ is measured at fixed 128 probes. C1 checks four complete database layouts
+ and sampled re-encodings. Its FP64 norm checks use the stored rotation
+@@ -119,8 +112,7 @@ CUDA 13.0.88 \texttt{ptxas} for sm\_120. The observed 64-bit bound read
+ and atomic-min publication use an aligned query-key array with eight-byte
+ stride. The argument uses PTX alignment, scope and proxy semantics;
+ toolkit SASS corroborates it without supplying the driver's loaded JIT
+-code. Binary SHA and operation listings are in the expanded protocol
+-and the archived evidence.
++code.
+ 
+ D alternates v69/v72 over the E1 OpenAI grid, reusing TF32-trained states
+ and changing add/query GEMMs. Its baseline denominators remain archived
+@@ -160,8 +152,6 @@ qualifying endpoints below the minimum frontier recall; strict measured
+ thresholds remain separate. Python/C++ interfaces and warm-up policies
+ differ, and these measurements do not establish concurrent-service latency.
+ 
+-Source, records, manifests and offline checkers are archived in
+-\path{evidence/ch5/v71/} and \path{evidence/review/}. With the required
+-inputs, run \texttt{make ch7-data}, then \texttt{make pdf} or
+-\texttt{make pdf-zh}. GPU reruns additionally require original vectors,
+-trained states, matching builds and environment.
++GPU reproduction requires original vectors, matching trained states and
++builds, and the specified environment. \Cref{sec:b-artifacts} identifies
++which materials are available.
+diff --git a/appendices/b-supplementary.tex b/appendices/b-supplementary.tex
+index 3cbcedd..4d63430 100644
+--- a/appendices/b-supplementary.tex
++++ b/appendices/b-supplementary.tex
+@@ -2,17 +2,13 @@
+ \label{app:supplementary}
+ This appendix records parameter coverage, stage-specific validation and
+ secondary outcomes supporting Chapters 3--8. Measurement families retain
+-their own versions and timing boundaries. Their source mapping is in
++their own versions and timing boundaries. The experimental protocol is in
+ Appendix~\ref{app:reproducibility}.
+ 
+-\section{Complete Parameter Registry}
++\section{Parameter Coverage}
+ \label{sec:b-grids}
+ The E1 comparison contains 1,590 valid measured configurations, with
+-coverage in \cref{tab:b-e1-counts}. Each point's complete parameter JSON,
+-recall, host-to-host QPS and source filename is retained in
+-\path{data/appendix/e1-configurations.csv}. The registry is generated by
+-\path{scripts/build_appendix.py}, with source identity recorded in
+-\path{data/appendix/audit.json}. The sets below describe observed values;
++coverage in \cref{tab:b-e1-counts}. The sets below describe observed parameter values;
+ their Cartesian products are not assumed to have been measured.
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+@@ -112,7 +108,7 @@ The smaller representation-audit databases have identical primary and
+ residual bytes across one-/two-pass builds when joined by ID.
+ Corrections differ by at most $8.94\times10^{-8}$ and 1/\allowbreak{}1/\allowbreak{}40 rows change
+ list assignment; Stella validates its natural two-pass path
+-(\cref{sec:4-representation-audit}). T4 now supplies the strict
++(\cref{sec:4-representation-audit}). T4 supplies the strict
+ computed-score selection reference (\cref{sec:a-t4-t5}). The controlled
+ same-model Vogue cross-process diagnosis remains unperformed: archived
+ processes with matching probe/primary dumps still report final recall
+@@ -191,23 +187,14 @@ Both estimators retain a numerical FP32 advantage in this finite grid.
+ The OpenAI-3072 RaBitQ bracket spans recall 0.9669--0.9796, exposing
+ substantial interpolation sensitivity. These anchor sweeps do not replace
+ E1's full grid, establish a universal margin, or constitute FP32 retraining.
+-The raw JSON and reconstruction are mapped in
+-\path{data/full-review/audit.json}.
++
+ 
+ \section{Artifact Access}
+ \label{sec:b-artifacts}
+-The report repository contains the parameter registry, derived tables,
+-figure sources, analysis scripts and 209-file v71 source/measurement
+-bundle under \path{evidence/ch5/v71/}. The offline command
+-\texttt{python3}\ \path{evidence/ch5/v71/check.py} verifies that bundle.
+-Selected T4/T5, T1 and A2 source/record inputs are also mirrored in
+-\path{evidence/review/}. Its checker verifies hashes and can rerun the
+-two corresponding offline audits using that local source root.
+-The broader raw records remain in the sibling \texttt{JHQ\_GPU} project
+-at the ledger paths. Complete vectors, trained states and all executables
+-are not packaged here. Offline recomputation requires the stated inputs;
+-GPU reproduction also requires the corresponding build and environment.
+-
+-A fixed artifact map, including the public manuscript source and the
+-v71/T4/T5/T1/A2 evidence bundles, is provided in
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\nolinkurl{docs/artifact-access.md}}.
++Available source snapshots, measurement records and analysis tools are
++linked from the
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project artifact archive}.
++It includes the v71 source/measurement bundle and selected T4/T5, T1 and A2
++inputs. Complete vectors, trained states and all historical executables
++are not included; GPU reproduction requires those inputs and the matching
++build environment.
+diff --git a/chapters/01-1-context.tex b/chapters/01-1-context.tex
+index 8274fa2..70843da 100644
+--- a/chapters/01-1-context.tex
++++ b/chapters/01-1-context.tex
+@@ -1,32 +1,17 @@
+-High-dimensional embeddings support similarity search over images, documents
+-and other objects. In the tested workloads, a vector has 768--3,072
+-coordinates and the largest database contains 17.78 million vectors.
+-Exhaustive distance computation exposes substantial arithmetic, while
+-retaining full vectors consumes capacity before any index overhead. For
+-example, the tested Stella FP32 array alone would occupy 67.81\,GiB
+-(\cref{sec:7-7}). Approximate nearest-neighbour search exchanges some exact
+-neighbour recovery for reduced access and scoring work.
++Approximate nearest-neighbour (ANN) search reduces query time by avoiding
++exhaustive, full-precision distance evaluation. Graph methods such as CAGRA
++restrict visits through navigation, while compressed IVF combines selective
++list access with inexpensive scoring \cite{cagra,johnson_gpu,ivfrabitq}.
++The tested embeddings have 768--3,072 coordinates and up to 17.78 million
++vectors; Stella's raw FP32 array alone requires 67.81\,GiB
++(\cref{sec:7-7}). Compact codes address capacity, but table construction,
++lookups, selection and launch overhead determine their query-time benefit.
+ 
+-Modern GPU approaches offer several ways to make that exchange. Graph
+-methods such as CAGRA avoid many vectors through navigation, while
+-compressed IVF methods combine selective list access with compact distance
+-computation \cite{cagra,johnson_gpu,ivfrabitq}. They make a systems question
+-unavoidable: where do representation, selection and memory movement place
+-the cost at a required recall? A short code saves storage, but table
+-construction, dependent lookups, candidate retention and repeated launch
+-setup can determine whether it also saves query time.
+-
+-JHQ provides a useful setting for studying this question \cite{jhq}. Its
+-compact primary representation screens candidates, and a residual
+-representation refines a shortlist. This architecture exposes two related
+-decisions: how to execute the broad screen efficiently, and how many of its
+-survivors to refine. It also permits a useful experimental separation:
+-execution can change while keeping the represented score fixed, and budget
+-can change while reusing a trained index.
+-
+-The practical objective is to improve the attainable combination of
+-Recall@10, host-visible query throughput/latency, resident memory and
+-construction cost. The evaluation includes cases where an alternative is
+-faster or a proposed change fails. This makes the contribution an account
+-of competitive operating conditions and their mechanisms, rather than a
+-single speedup detached from quality and resource constraints.
++JHQ separates screening from refinement: compact primary codes score
++candidates, and residuals refine a shortlist \cite{jhq}. This exposes two
++decisions: how to execute the broad screen and how many survivors to refine.
++The trained index can be reused while varying execution or budget, allowing
++their effects to be tested separately. This thesis evaluates these decisions
++through Recall@10, host-visible throughput/latency, resident memory and
++construction cost, including configurations where a competitor or the
++unmodified design is faster.
+diff --git a/chapters/01-5-contributions.tex b/chapters/01-5-contributions.tex
+index 1d88612..456f273 100644
+--- a/chapters/01-5-contributions.tex
++++ b/chapters/01-5-contributions.tex
+@@ -29,23 +29,4 @@ smaller samples expose risk; four cells directly measure calibrated reuse \\
+ \end{tabularx}
+ \end{minipage}\par\medskip
+ 
+-The results make the claims concrete without making them universal. On
+-the full-batch E1 grid near recall 0.97, JHQ leads in three datasets and is
+-near parity with RaBitQ on arXiv under the interpolated comparison. Other
+-recall regions favour competitors. FULL's maximum observed held-out loss is
+-0.0006 relative to the best tested arm, while $S=128$ reaches 40/64 loss
+-crossings in one cell. These are empirical quality results; ten FULL cells
+-retain conditional nestedness coverage, while all twelve FULL
+-finite-grid choices now match enumeration (\cref{sec:7-budget-trace}).
+-The OpenAI E1 results use TF32 GEMMs; a separate FP32 sensitivity
+-retains smaller favourable margins (\cref{sec:7-precision}).
+-
+-This COMP8800 project is presented by Rui Luo under Dr Mengxuan Zhang's
+-supervision. The coauthored ADC manuscript names Rui Luo and Mengxuan Zhang
+-and shares the JHQ-GPU implementation and measurement artifacts
+-\cite{adc_artifact}. The thesis
+-expands the correctness contracts, newer experiment analysis and treatment
+-of failed designs; historical manuscript numbers retain their own versions.
+-Technical contribution labels describe the project scope. The provenance
+-statement distinguishes inherited and joint work and documents AI assistance.
+-The thesis author is responsible for the submitted claims and attribution.
++Performance depends on batch size and quality target; Chapters 7--8 report the unfavourable regions and numerical limits.
+diff --git a/chapters/01-introduction.tex b/chapters/01-introduction.tex
+index 96bbb56..45a15c1 100644
+--- a/chapters/01-introduction.tex
++++ b/chapters/01-introduction.tex
+@@ -1,11 +1,5 @@
+ \chapter{Introduction}
+ \label{ch:introduction}
+-Searching a large embedding database requires decisions about both
+-information and work: how compactly to represent each vector, which vectors
+-to inspect, and how much precision to spend on them. A GPU makes many
+-operations parallel, but it does not make these decisions free. This thesis
+-studies their interaction in JHQ-GPU, a GPU implementation and experimental
+-analysis of JHQ's primary/residual quantisation hierarchy.
+ 
+ \section{Context and Practical Objectives}
+ \label{sec:1-1}
+@@ -23,15 +17,6 @@ analysis of JHQ's primary/residual quantisation hierarchy.
+ \label{sec:1-4}
+ \input{chapters/01-4-questions}
+ 
+-\section{Contributions and Research Ownership}
++\section{Research Contributions}
+ \label{sec:1-5}
+ \input{chapters/01-5-contributions}
+-
+-\section{Thesis Roadmap}
+-\label{sec:1-6}
+-Chapters 2--3 establish the background and measurement design.
+-Chapters 4--6 develop index construction, GPU execution and workload-level
+-calibration. Chapter 7 evaluates their correctness, quality, cost and
+-competitive regions. Chapter 8 discusses negative results, limitations
+-and testable extensions; Chapter 9 answers the research questions.
+-Appendices A--B record reproduction contracts and supplementary evidence.
+diff --git a/chapters/02-background.tex b/chapters/02-background.tex
+index 832f917..1d68547 100644
+--- a/chapters/02-background.tex
++++ b/chapters/02-background.tex
+@@ -1,4 +1,4 @@
+-\chapter{Background and Critical Related Work}
++\chapter{Background and Related Work}
+ \label{ch:background}
+ \chaptermark{Background and Related Work}
+ An ANN system combines a candidate-access strategy, a representation and a
+diff --git a/chapters/03-2-data.tex b/chapters/03-2-data.tex
+index e9b060f..2a640f4 100644
+--- a/chapters/03-2-data.tex
++++ b/chapters/03-2-data.tex
+@@ -9,7 +9,7 @@ measured exports after preparation, rather than the current upstream cards.
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+-\captionof{table}[Dataset and training manifest]{Data and JHQ training manifest. $n_q$ is the actual query count;
++\captionof{table}[Dataset and training configuration]{Data and JHQ training configuration. $n_q$ is the actual query count;
+ $n_t=39n_{\rm list}$ is the requested coarse-training sample size. E1 uses
+ the first four rows. All rows use squared L2 and $k=10$.}
+ \label{tab:3-data}
+@@ -45,8 +45,8 @@ only ten entries are scored. Duplicate returned IDs do not earn repeated
+ credit. Range, duplicate and repeat-call checks are recorded separately.
+ 
+ JHQ uses $M=d/8$, $B=B_r=8$, eight coarse iterations and a requested
+-100,000-vector residual-training sample. Search sweeps reuse the
+-\texttt{arms6\_cache} trained states and re-encode the database; cold builds
++100,000-vector residual-training sample. Search sweeps reuse cached
++trained states and re-encode the database; cold builds
+ start without that state. The code requests training from database samples,
+ separately from calibration queries. For budget evaluation, even query
+ positions form a 500-query calibration pool and odd positions form a
+@@ -57,6 +57,4 @@ the deployable agreement rule uses search outputs
+ (\cref{sec:6-2,sec:a-budget-contract}).
+ 
+ Preparation code and shape logs establish this protocol; complete historical
+-vector-file and trained-state hashes are unavailable. The ledger preserves
+-that distinction between an inspected preparation procedure and an
+-immutable identity of every run's data.
++vector-file and trained-state hashes are unavailable.
+diff --git a/chapters/03-5-ledger.tex b/chapters/03-5-ledger.tex
+index d7842b6..daf78ef 100644
+--- a/chapters/03-5-ledger.tex
++++ b/chapters/03-5-ledger.tex
+@@ -1,29 +1,7 @@
+-Every main empirical claim is associated with an experiment family, a
+-metric and consumed records. The machine-readable registry is
+-\path{data/ch3/audit.json}; detailed numeric reconstruction is in the
+-Chapter 4--7 audit files. Records identify the intervention, execution,
+-index/query configuration, measurement boundary and analysis inputs.
+-A file hash verifies the input consumed by analysis; it cannot recover
+-an executable or trained state that was never archived. Appendix A gives
+-the reproduction entry points; the repository's supplementary evidence
+-retains the complete field definitions.\footnote{Repository supplement: \path{docs/supplementary-evidence.md}.}
+-
+-
+-The E1 system frontier, newer table sweep, budget campaign and large-data
+-extensions remain separate from the ADC paper's older measurements.
+-Historical packing and refinement records answer their original paired
+-questions. The poster links these mechanisms visually, but does not replace
+-run metadata or extend a comparison's coverage. Version names therefore
+-describe provenance; mechanism names describe the scientific intervention.
+-
+-\path{scripts/build_ch7.py} reads archived measurements and regenerates
+-the empirical plots and principal numeric tables, including
+-\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}.
+-The source ledger and family audits retain original paths and hashes;
+-\path{scripts/audit_ch3.py} checks the common protocol against them.
+-Source inspection and offline reconstruction establish correspondence
+-between archived records and reported quantities. Repeating GPU measurements
+-additionally requires the relevant binaries, datasets and trained states;
+-missing diagnostic coverage is identified with each result. Appendix A
+-supplies implementation and artifact details and specifies which reproduction
+-inputs are available.
++Each experiment family records the implementation version, index and query
++settings, timing boundary and measured outputs. Paired comparisons reuse
++the same trained states; changes of version, state or precision define
++separate experiment families. Historical executable and trained-state
++fingerprints are incomplete, limiting exact reproduction of some runs.
++\Cref{app:reproducibility} summarises the available environment and
++experimental protocol.
+diff --git a/chapters/03-6-validity.tex b/chapters/03-6-validity.tex
+index ed6f762..3cc1249 100644
+--- a/chapters/03-6-validity.tex
++++ b/chapters/03-6-validity.tex
+@@ -1,14 +1,7 @@
+-Proofs establish properties under their stated assumptions; independent
+-references test implementation agreement on finite cases. Paired benchmarks
+-measure an intervention within a fixed workload, and system measurements
+-locate operating regions on the tested device and grids. Byte and payback
+-models retain their accounting assumptions; proposed explanations require
+-separate tests. Exact primary selection concerns the computed primary score,
+-whereas raw-vector recall also depends on routing and reconstruction.
+-
+-
+-Shared-index dependence, finite pools, grid selection, interface
+-asymmetry and one-device coverage motivate the controls above.
+-The population and ordering assumptions are analysed in
+-\cref{sec:6-2,sec:6-3}; \cref{sec:8-3} consolidates the resulting limits
+-to interpretation and deployment.
++Exactness claims name the computed score and ordering assumptions;
++raw-vector recall also depends on routing and reconstruction. Independent
++references have finite coverage, paired timings retain their workload
++controls, and byte/payback models retain their accounting assumptions.
++Population and ordering conditions are analysed in
++\cref{sec:6-2,sec:6-3}; \cref{sec:8-3} consolidates the limits arising
++from shared indexes, finite pools, tuning grids, interfaces and one device.
+diff --git a/chapters/03-methodology.tex b/chapters/03-methodology.tex
+index c5cc283..56c3923 100644
+--- a/chapters/03-methodology.tex
++++ b/chapters/03-methodology.tex
+@@ -1,5 +1,5 @@
+ % Six-section design follows 6.pdf; records audited offline in data/ch3/audit.json.
+-\chapter[Research Design and Measurement Methodology]{Research Design and\\Measurement Methodology}
++\chapter{Research Design and Measurement}
+ \label{ch:methodology}
+ \chaptermark{Research Design and Measurement}
+ The evaluation connects a systems intervention to an observable cost or
+@@ -26,7 +26,7 @@ describe the mechanisms; Chapter 7 presents their measured outcomes.
+ \label{sec:3-4}
+ \input{chapters/03-4-frontiers}
+ 
+-\section{Versioned Claim-to-Evidence Ledger}
++\section{Experimental Records and Reproducibility}
+ \label{sec:3-5}
+ \input{chapters/03-5-ledger}
+ 
+diff --git a/chapters/04-2-training.tex b/chapters/04-2-training.tex
+index 43b70a6..dcce8a8 100644
+--- a/chapters/04-2-training.tex
++++ b/chapters/04-2-training.tex
+@@ -31,8 +31,6 @@ recall monotonically, and the residual codes themselves changed
+ substantially. These results motivate the bounded training cost while
+ preserving a measurable quality tradeoff. They used 25 residual Lloyd
+ iterations and do not replace the later six-dataset evaluation.
+-Historical diagnostics and their input hashes are recorded in
+-\path{data/ch4/review-audit.json}.
+ 
+ \subsection{Why retain the analytical primary model?}
+ 
+@@ -79,6 +77,7 @@ The source offers FP32 and accelerated assignment paths; under its usual
+ dimensional constraints, the default uses int8 products to filter choices
+ and FP32 recomputation to resolve ambiguity.
+ 
++\begin{resultblock}
+ \begin{lemma}[Assignment with certified score intervals]
+ \label{lem:4-assignment-bound}
+ Let $\widetilde y,\widetilde\mu_\ell$ be dequantised approximations,
+@@ -101,6 +100,7 @@ and apply Cauchy--Schwarz. A discarded score exceeds an upper bound on
+ some retained score, so it cannot attain the minimum. Keeping interval
+ equality preserves possible ties.
+ \end{proof}
++\end{resultblock}
+ 
+ The implementation uses conservative norm bounds and FP32 headroom
+ constants in this filter-and-refine pattern. The lemma explains why a
+diff --git a/chapters/04-4-lifecycle.tex b/chapters/04-4-lifecycle.tex
+index 6fb3b92..6076f5a 100644
+--- a/chapters/04-4-lifecycle.tex
++++ b/chapters/04-4-lifecycle.tex
+@@ -54,29 +54,11 @@ directly. Group scratch follows \cref{eq:5-group-workspace} and can retain
+ a larger capacity than the current scan uses: recorded 128-probe samples
+ reserve about 93.8\,MiB even on the query-centric path.
+ 
+-\begin{table}[tbp]
+-\centering
+-\caption[Construction and query object lifetimes]{Object lifetimes. Sizes describe named arrays, rather than all
+-allocations of a CUDA process. Construction phases are expanded in
+-\cref{sec:4-5}.}
+-\label{tab:4-lifetimes}
+-\footnotesize\setlength{\tabcolsep}{4pt}
+-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+-\toprule
+-Object & Producer & Location & Lifetime & Bytes / scale \\
+-\midrule
+-Input / samples & Loader / harness & Host & Build input; external ownership & $4Nd$ raw; sampled subsets \\
+-Transform / models & QR / training & Host, GPU & Model and index lifetime & $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ basic GPU arrays \\
+-Trained cache & Training & Host file & Across processes; rebuild still needed & Serialised model state \\
+-Input staging & Add pipeline & Pinned host, GPU & During add & $4n_ba_{\rm in}d$ host; $8n_ba_{\rm in}d$ GPU floats, plus scratch \\
+-Assignment products & IVF assignment & GPU & During add; freed before gather & $4n_b n_{\rm list}a_{\rm assign}$; independent row capacity \\
+-IDs / offsets & Sort / lower bound & GPU & Completed snapshot & $4N+4(n_{\rm list}+1)$ \\
+-Codes / correction & Encode / reorder & GPU & Completed snapshot & $N(M+b_r+4)$ \\
+-Order / inverse & Sort / inversion & GPU & Construction only & $4N$ per array; phase dependent \\
+-Query workspace / graph & Search / capture & GPU, host & Allocations reused; batch contents replaced & Capacity dependent; graph references resident arrays \\
+-\bottomrule
+-\end{tabularx}
+-\end{table}
++Raw input remains caller-owned. Build-only staging requires
++$4n_ba_{\rm in}d$ pinned-host bytes, while each order/inverse array
++requires $4N$ device bytes. Assignment products are freed before gather;
++\cref{eq:4-staging-rows,eq:4-assignment-scratch} give their independent
++capacities.
+ 
+ \subsection{Reuse, recovery and invalidation}
+ 
+diff --git a/chapters/04-5-construction.tex b/chapters/04-5-construction.tex
+index 26dbd8d..06d706d 100644
+--- a/chapters/04-5-construction.tex
++++ b/chapters/04-5-construction.tex
+@@ -74,10 +74,8 @@ Stella & 19.20 & 40.59 & 21.32 \\
+ cold log selects two passes and prints 41.6\,GiB for
+ \cref{eq:4-peak-heuristic}, against 30.6\,GiB available at the tail.
+ The separately sampled resident process totals, including context and
+-query workspace, are 11.93\,GiB for BGE and 20.44\,GiB for Stella.
+-Search working sets depend on batch/probe/candidate capacity as described
+-in \cref{sec:4-4}. Thus static rows, construction phases and searchable
+-resident memory have explicit, different accounting boundaries. The supplementary 20\,ms device samples observe a 26.08\,GiB BGE peak
++query workspace, are 11.93\,GiB for BGE and 20.44\,GiB for Stella
++(\cref{sec:4-4}). The supplementary 20\,ms device samples observe a 26.08\,GiB BGE peak
+ near the start of add, and a 22.58\,GiB Stella peak during repack.
+ These are sampled device totals including context; shorter-lived peaks
+ can be missed.
+diff --git a/chapters/04-6-contracts.tex b/chapters/04-6-contracts.tex
+index 0658ae5..ccde66c 100644
+--- a/chapters/04-6-contracts.tex
++++ b/chapters/04-6-contracts.tex
+@@ -1,21 +1,14 @@
+-Representation contracts protect both numerical geometry and the joins
+-between encoded fields. Their practical importance is illustrated by a
+-historical large-sample failure: a 32-bit $n_t d$ product overflowed at
+-$2^{31}$, produced zero primary scale, and collapsed the primary
+-codebook. A later run initially loaded that model from an older cache
+-because its key omitted the code version. Correct coarse routing alone
+-could not detect the broken primary representation. The corrected
+-implementation chunks the norm computation and accumulates in double.
+-This motivates checking the model, encoded rows and placement separately.
++A historical 32-bit $n_t d$ overflow at $2^{31}$ collapsed the primary
++codebook to zero scale; a later process reloaded it because the cache key
++omitted the code version. Chunked norm computation with double accumulation
++fixed the overflow. The failure requires separate checks of model geometry,
++encoded rows and their placement, even when coarse routing succeeds.
+ 
+ \subsection{Completed representation evidence}
+ 
+-The 13 October residual-bound pilot exported trained state and encoded
+-database arrays, including the actual $\Pi$, primary/residual codebooks,
+-IDs, offsets and corrections. The exporter decodes the packed word layout
+-into logical vector-major codes. The pilot reports reusing the arms6
+-trained cache rather than retraining. Its three complete databases are
+-Vogue (932,328 rows), arXiv (2,253,000) and OpenAI-3072 (999,000).
++The 13 October residual-bound pilot exported $\Pi$, codebooks, IDs,
++offsets, corrections and logically decoded packed codes from the trained cache. It covers complete Vogue (932,328 rows), arXiv (2,253,000)
++and OpenAI-3072 (999,000) databases.
+ 
+ The codebook audit found zero separability mismatches, scalar-level
+ mismatches and unsorted residual-codebook pairs. Independently decoding
+@@ -26,28 +19,21 @@ from $1.28\times10^{-7}$ to $2.77\times10^{-7}$. Sampled GPU-returned
+ top-10 scores have maximum relative errors from $2.38\times10^{-7}$ to
+ $4.85\times10^{-5}$, using $|s_{\rm GPU}-s_{64}|/s_{64}$ with the
+ query-norm constant included. These are checks of the exported
+-representation, not re-encoding from the original input vectors. The
+-repository supplement retains the per-dataset diagnostics.
++representation, not re-encoding from the original input vectors.
+ 
+ 
+ Across seven workloads and 896 query instances, the pilot additionally
+ checked the proposed residual bounds against FP64 reconstructed distances
+ for 72,800,590 routed candidate instances, with zero reported violations.
+-That population also supports the FP64 composite-score identity check;
+-it is different from comparing GPU-returned scores, which considers only
+-top-10 slots. The historical harness skips returned IDs absent from the
+-routed candidate map, so its maximum error alone is not an exhaustive
+-output-membership certificate.
++The same population supports the FP64 composite-score identity check.
++GPU-returned-score checks cover only top-10 slots and skip IDs absent
++from the routed map, leaving output membership incompletely checked.
+ 
+-Offline comparison found identical encoder, primary-training,
+-residual-training and index-construction translation units between the
+-pilot and the evaluated implementation after namespace normalization and
+-removal of the pilot-only export method. This supports applying the
+-pilot's checks to the shared representation path. It does not establish
+-that every later process used byte-identical trained state or verify the
+-large-dataset two-pass path: the audited databases are smaller.
+-The per-workload values, raw-summary checks and source correspondence
+-are reproducible with \texttt{scripts/audit\_ch4\_review.py}.
++Encoder, primary/residual training and construction sources match the
++evaluated implementation after namespace normalisation and removal of
++the export method. This source
++correspondence covers the shared path, leaving later model identity and
++large-dataset two-pass construction to separate checks.
+ 
+ \subsection{Independent input and placement audit}
+ \label{sec:4-representation-audit}
+@@ -109,17 +95,12 @@ Execution & Valid indexing, synchronisation and score-order contracts & Archived
+ \end{tabularx}
+ \end{table}
+ 
+-The constructor requires $M$ to divide $d$ and $D_s$ to divide $B$;
+-word packing requires $M\bmod4=0$. Query-side LUT verification checks
+-factorisation against actual codeword slices. Positions and IDs are
+-signed 32-bit fields, while large counts and byte-address products require
+-wider arithmetic. The input contract assumes finite vectors and
+-representable counts, and reserves invalid sentinel positions.
++Construction requires $M\mid d$, $D_s\mid B$ and $M\bmod4=0$;
++LUT verification checks actual codeword slices. Inputs must be finite,
++counts representable and sentinel positions reserved. IDs/positions use
++signed 32-bit fields; large counts and address products use wider arithmetic.
+ 
+-The audit consumes the exported rotation and codebooks, rather than a
+-matrix regenerated from its seed. Remaining work is narrower: independently
+-verify membership against exported IVF centroids and test deliberately
+-empty lists and adversarial tails. The strict computed-score CPU selection
+-reference has now been completed on the T4 grid
+-(\cref{sec:7-strict-selection}); it is separate from FP64 input recoding. Chapter 5 conditions selection on the
+-resulting objects; Chapter 7 evaluates quality and cost.
++Audits use exported models, rather than seed-regenerated ones. T4 checks
++computed-score selection separately from input recoding
++(\cref{sec:7-strict-selection}). Centroid membership, empty lists and
++adversarial tails remain open checks.
+diff --git a/chapters/04-architecture.tex b/chapters/04-architecture.tex
+index d5158a9..6b33e17 100644
+--- a/chapters/04-architecture.tex
++++ b/chapters/04-architecture.tex
+@@ -1,14 +1,9 @@
+ % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+-\chapter[System Architecture and GPU Index Construction]{System Architecture and\\GPU Index Construction}
++\chapter{GPU Index Design and Construction}
+ \label{ch:architecture}
+-This chapter addresses RQ1: how to construct a searchable, GPU-resident
+-JHQ index from high-dimensional vectors. JHQ supplies the transform and
+-primary/residual representation \cite{jhq}. The systems problem is to
+-train that representation, encode a database larger than its available
+-full-precision device storage, and expose consistent list-ordered arrays
+-to the query path. The discussion follows training, placement, allocation and validation. Detailed query
+-kernels follow in \Cref{ch:gpu-execution}; measured comparisons are in
+-\Cref{sec:7-7}.
++GPU construction trains and encodes JHQ's representation into list-ordered
++arrays with bounded temporary storage \cite{jhq}. Query kernels and measured
++construction costs are in \Cref{ch:gpu-execution,sec:7-7}.
+ 
+ \section{End-to-End Build and Search Boundaries}
+ \label{sec:4-1}
+diff --git a/chapters/05-3-packed-access.tex b/chapters/05-3-packed-access.tex
+index e7164a3..fa83efc 100644
+--- a/chapters/05-3-packed-access.tex
++++ b/chapters/05-3-packed-access.tex
+@@ -1,9 +1,6 @@
+-LUT factorisation reduces the query-specific table; code layout determines
+-how lanes fetch each candidate's table indices. These are separate
+-optimisations. The scan assigns neighbouring lanes to neighbouring
+-candidate occurrences, so its broad phase benefits from storing codes
+-by subspace across candidates rather than storing each candidate's full
+-primary code contiguously.
++Neighbouring scan lanes process neighbouring candidates. Subspace-major
++storage makes their code accesses adjacent; LUT factorisation separately
++reduces the query-specific table.
+ 
+ \subsection{Address mapping and four-byte packing}
+ 
+@@ -50,21 +47,13 @@ coexisting; it is outside the search timing boundary.
+ 
+ \subsection{What packed access saves, and what it preserves}
+ 
+-At the source level, a candidate now obtains four codes with one word
+-load instead of four byte loads, followed by shifts and masks in
+-registers. Within a contiguous list segment, 32 lanes request a logical
+-128-byte word window. Actual transactions depend on alignment, active
+-lanes and the memory hierarchy. A fourfold reduction in source-level
+-load operations does not establish a fourfold reduction in transactions
+-or elapsed time.
+-
+-The logical payload remains $M$ bytes per candidate: this repacking
+-does not further compress the index. Both byte and word alternatives
+-already organise the scan copy by subspace or subspace group. The
+-historical on/off comparison therefore measures the net effect of the
+-packed layout and its load/unpack path, not the isolated contribution
+-of transposing candidate-major storage. It also cannot uniquely separate
+-instruction count, addressing and cache effects.
++One word load obtains four codes, followed by register shifts and masks.
++For 32 consecutive positions the logical window is 128 bytes; actual
++transactions depend on alignment, active lanes and the memory hierarchy.
++The payload remains $M$ bytes per candidate. Both measured alternatives
++are already subspace-major, so the on/off comparison tests the combined
++packing/load/unpack path, without isolating transpose, instruction or
++cache effects.
+ 
+ \Cref{sec:7-3} evaluates the packed path's throughput, recall and
+ variability against the byte path.
+diff --git a/chapters/05-4-global-selection.tex b/chapters/05-4-global-selection.tex
+index ab25ce6..f29e1c1 100644
+--- a/chapters/05-4-global-selection.tex
++++ b/chapters/05-4-global-selection.tex
+@@ -1,10 +1,8 @@
+-Primary screening must expose enough GPU work without losing a candidate
+-that should reach residual refinement. A query-centric scan launches one
+-block per query; a small batch therefore offers few blocks even when each
+-query visits many vectors. GPU selection is a substantial design problem
+-in its own right \cite{johnson_gpu}. The grouped-scan component partitions the visited candidates across blocks and combines their
+-survivors. Its contract is exact selection under the computed primary
+-scores. IVF routing and the quantised representation remain approximate.
++A query-centric scan exposes only one block per query. Grouped scanning
++partitions each query's candidates across blocks and merges their
++survivors, addressing the GPU selection problem \cite{johnson_gpu}.
++Exactness concerns computed primary scores; routing and representation
++remain approximate.
+ 
+ \subsection{Candidate partition and deterministic ordering}
+ 
+@@ -51,6 +49,7 @@ This distinction is necessary: with $c=4$ and two groups, all four
+ global winners may belong to one group. Retaining only two from each
+ group loses winners even though the combined capacity is four.
+ 
++\begin{resultblock}
+ \begin{lemma}[Local-buffer retention]
+ \label{lem:5-buffer}
+ Let $V_t$ be the candidates scored by a block through chunk $t$, and
+@@ -79,7 +78,9 @@ Filtering removes only keys above an observed bound. Induction over
+ appends, compactions and filtering proves the claim. The running minimum
+ is essential if reads may return different stale published values.
+ \end{proof}
++\end{resultblock}
+ 
++\begin{resultblock}
+ \begin{proposition}[Coverage and truncated merging]
+ \label{prop:5-local-coverage}
+ For fixed keys under a common total order, let $U$ be the visited
+@@ -112,6 +113,7 @@ top-$c$. A discarded candidate already has at least $c$ predecessors
+ within that union and cannot enter the top-$c$ of any larger union.
+ Induction over the merge tree establishes the claim.
+ \end{proof}
++\end{resultblock}
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -134,19 +136,14 @@ only candidates preceding the threshold are appended. Its $c$ witness
+ candidates make the threshold a safe upper bound for the best $c$ of
+ the scanned prefix, even as further candidates arrive.
+ 
+-Each chunk contributes at most $T_{\rm blk}$ appends. After a chunk, the block
+-compacts whenever the next chunk would exceed capacity. Following
+-compaction at most $c$ entries remain, so $C_{\rm buf}\geq c+T_{\rm blk}$ provides space
+-for the next chunk; otherwise the explicit capacity check provides it.
+-This invariant prevents overflow without restricting how many competitive
+-candidates one thread may encounter. A per-thread fixed-size retention
+-buffer does not provide the same coverage guarantee.
+-Together with exact bitonic compaction, this capacity argument discharges
+-the implementation premises of \Cref{lem:5-buffer}. With sharing, every
+-observed bound is above the global $c$th key by
+-\Cref{prop:5-shared-bound}; the lemma therefore retains every global
+-winner belonging to this block, even when its full local top-$c$ is
+-filtered. The general coverage proposition then justifies the merge.
++Each chunk appends at most $T_{\rm blk}$ entries. Compaction precedes
++any chunk that would exceed capacity, leaving at most $c$ entries and
++space for the next chunk because $C_{\rm buf}\geq c+T_{\rm blk}$.
++This supplies the capacity premise of \Cref{lem:5-buffer} without a
++per-thread quota. With sharing, \Cref{prop:5-shared-bound} bounds every
++observed threshold above the global $c$th key. The buffer lemma and
++coverage proposition therefore preserve global winners through filtering
++and merging.
+ 
+ An alternative is to materialise all $n_c$ score/position pairs and then
+ invoke a separate selector. That preserves the target but adds an
+@@ -205,7 +202,7 @@ prefix's $c$th distance and enough candidates at that distance to fill
+ $\min(c,|V_t|)$ slots. A rejected distance has $c$ retained witnesses
+ with no larger distance; exact distance sorting preserves this rank
+ property at each compaction. Tied identities need not be unique.
+-The strict CPU reference in \cref{sec:7-strict-selection} now checks the
++The strict CPU reference in \cref{sec:7-strict-selection} checks the
+ same computed score/position target: all 55,296 grouped query instances
+ match its complete-key order. All 13,824 one-block instances satisfy the
+ distance preorder; 56 choose different cutoff-tie members. This complements
+diff --git a/chapters/05-5-bound-scheduling.tex b/chapters/05-5-bound-scheduling.tex
+index 36fe486..e1ac834 100644
+--- a/chapters/05-5-bound-scheduling.tex
++++ b/chapters/05-5-bound-scheduling.tex
+@@ -20,6 +20,7 @@ No bound is published from fewer than $c$ valid candidates. If the entire
+ universe has fewer than $c$, no group can publish such a bound and all
+ valid candidates remain eligible.
+ 
++\begin{resultblock}
+ \begin{proposition}[Safe rejection by a witnessed bound]
+ \label{prop:5-shared-bound}
+ Assume fixed keys, publications backed by $c$ distinct candidates, and
+@@ -36,14 +37,11 @@ made after earlier safe rejections remain valid: any $c$ retained
+ distinct candidates still supply $c$ witnesses, whether or not they are
+ the best $c$ of their group.
+ \end{proof}
++\end{resultblock}
+ 
+-This last distinction matters. With sharing enabled, a group need not
+-return its own full local top-$c$: it can discard locally competitive
+-candidates already certified as globally uncompetitive. Correctness
+-requires the union still to contain every global winner. The truncated
+-merge argument of \Cref{prop:5-local-coverage} then applies to that union.
+-Candidates equal to the shared bound remain eligible, including the
+-witness that established it. The implemented admission condition is
++Sharing may remove local winners certified as globally uncompetitive;
++the retained union still satisfies \Cref{prop:5-local-coverage}.
++Equality with the shared bound remains eligible. Admission requires
+ \begin{equation}
+  K_q(x)\prec\lambda_j
+  \quad\text{and}\quad
+@@ -66,8 +64,6 @@ This relies on positive-zero encoding and excludes NaNs and negative
+ scores; it is not a general signed-float encoding. Positive infinity
+ orders after finite scores, and the all-one initial word orders after
+ valid encodings. Invalid positions are excluded from bound publication.
+-These are score-domain and representation preconditions, not properties
+-inferred from unchanged recall.
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -102,14 +98,11 @@ and one GPU-scope atomic-min reduction, recorded in
+ the driver JIT's actual SASS was not captured. CUDA C++ \texttt{volatile}
+ alone is not the basis of the argument \cite{cuda_programming_guide}.
+ 
+-\Cref{fig:5-shared-bound} also identifies what this optimisation saves.
+-Every scanned candidate still loads its primary code and computes its
+-complete primary score. The bound avoids some buffer appends, local
+-sorts and intermediate writes, and shortens the lists consumed by the
+-merge. It does not implement partial-distance early termination or
+-reduce the number of primary scores evaluated. Its benefit competes
+-with polling and atomic-update overhead. The observed paired speedup
+-range includes a slight slowdown, as reported in \Cref{sec:7-4}.
++Every candidate's full primary score precedes filtering
++(\cref{fig:5-shared-bound}). Bounds save appends, sorts, intermediate
++writes and merge work, while adding polling and atomic updates; they
++provide no partial-distance early termination. The net trade-off includes
++a slight slowdown in \cref{sec:7-4}.
+ 
+ \subsection{Choosing parallelism without changing the budget}
+ 
+@@ -187,8 +180,6 @@ groups. At calibration size $S=128$, eight use two groups, two use four,
+ and two remain query-centric. Execution paths therefore differ in
+ 8/12 configurations. Grouped selection principally serves smaller
+ batches and skewed workloads; there is no universal batch-256 boundary.
+-The offline recount and input hashes are recorded in
+-\path{data/ch5/review-audit.json}.
+ 
+ The rule is a heuristic rather than an occupancy calculation or a
+ latency oracle: it omits register pressure, shared-memory residency,
+diff --git a/chapters/05-6-refinement.tex b/chapters/05-6-refinement.tex
+index e20fe68..80afefe 100644
+--- a/chapters/05-6-refinement.tex
++++ b/chapters/05-6-refinement.tex
+@@ -1,8 +1,6 @@
+-Only the primary survivors access residual codes. This preserves a broad,
+-cheap scan over $n_c$ candidates followed by a narrower $O(cd)$ scoring
+-stage. Reading residuals for every visited candidate would instead move
+-that coordinate work towards $O(n_cd)$. Lane cooperation accelerates the
+-chosen survivors; it does not decide the refinement budget.
++Residual access is restricted to primary survivors, reducing coordinate
++work from $O(n_cd)$ to $O(cd)$. Lane cooperation accelerates that work
++at a fixed budget.
+ 
+ \subsection{Reconstructed scoring and the query-only constant}
+ 
+@@ -17,12 +15,9 @@ The implemented refined ranking score is
+  &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+  \label{eq:5-refined-constant}
+ \end{align}
+-The second equality follows by expanding the squared norms. Thus the
+-score orders hierarchical reconstructions by squared distance, but the
+-returned value includes a query-only constant. It is neither a direct
+-raw-vector distance nor an unshifted reconstruction distance. The
+-constant does not affect a fixed query's ordering. Reconstruction error
+-remains even when selection under this score is exact \cite{jhq}.
++Expanding the norms proves the second equality. The returned score is
++reconstructed squared distance plus a query-only constant, which
++preserves ordering while retaining reconstruction error \cite{jhq}.
+ 
+ Residual coordinates use scalar codebook entries shared within a
+ subspace. The scalar path walks each candidate's dimensions and sums
+@@ -77,13 +72,11 @@ database IDs, the final kernel performs exact top-$k$ selection under
+ $(\refineddist,\mathrm{database\ ID})$. One block per query loads the
+ $c$ scores and repeatedly reduces the minimum, emits its ID and score,
+ and removes that score before the next round. All $c$ slots are scanned
+-at each round; there is no fixed per-thread candidate quota. This
+-contract requires $k$ finite valid entries. In a degenerate pool,
+-selection sets the winning score to infinity but leaves its position
+-valid: after finite entries are exhausted, the smallest valid ID can
+-repeat with an infinite score. An entirely invalid pool returns invalid
+-IDs and infinity. These cases lie outside the finite-pool contract used
+-for the reported evaluation.
++at each round; there is no fixed per-thread candidate quota. In a
++degenerate pool, selected scores become infinite but positions remain
++valid: after finite entries run out, the smallest valid ID can repeat
++with infinity. An entirely invalid pool returns invalid IDs and infinity.
++The evaluation satisfies the finite-entry contract.
+ 
+ The final ID tie rule differs from the physical-position rule used for
+ primary retention. An exact final selector cannot recover candidates
+diff --git a/chapters/05-gpu-execution.tex b/chapters/05-gpu-execution.tex
+index a07760a..0debd9f 100644
+--- a/chapters/05-gpu-execution.tex
++++ b/chapters/05-gpu-execution.tex
+@@ -1,15 +1,9 @@
+ % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+-\chapter[Representation-Aware GPU Search Execution]{Representation-Aware\\GPU Search Execution}
++\chapter{Representation-Aware GPU Search}
+ \label{ch:gpu-execution}
+-This chapter addresses RQ2: how JHQ's compressed representation can support
+-correct and efficient GPU execution. The transform, Cartesian primary
+-codebook and residual hierarchy are inherited from JHQ \cite{jhq}; the
+-focus here is their execution. The argument follows the query path from
+-routing through primary selection to residual scoring. For each mechanism,
+-it separates the mathematical target, implementation conditions and
+-resource trade-offs, with the corresponding measurements in
+-\Cref{ch:evaluation}. Workload-level refinement-budget selection is
+-developed separately in \Cref{ch:refinement}.
++The transform and primary/residual hierarchy follow JHQ \cite{jhq}.
++This chapter develops their GPU scoring and computed-score selection;
++\Cref{ch:evaluation,ch:refinement} cover measurement and budget choice.
+ 
+ \section{Query Path and Four Distinct Ranking Objects}
+ \label{sec:5-1}
+diff --git a/chapters/06-6-scope.tex b/chapters/06-6-scope.tex
+index 800c952..e41c66d 100644
+--- a/chapters/06-6-scope.tex
++++ b/chapters/06-6-scope.tex
+@@ -1,30 +1,14 @@
+-Reuse is justified only for a sufficiently stable index, $k$, routing
+-configuration and query population. Changing the index or routing changes
+-the calibration target; a different batch regime may also change ties and
+-arithmetic through scheduling. Interpreting agreement requires valid,
+-unique output IDs, held-out GT quality and measured tail loss. Reuse
+-additionally requires common ordering or matched enumeration, repeated
+-timing and enough subsequent work to recover calibration cost
+-(\cref{sec:6-3,sec:6-5}). These are applicability conditions; the harness
+-does not automatically detect workload changes.
++Reuse requires a stable index, $k$, routing and query population;
++batch-dependent scheduling may change ties and arithmetic. Valid, unique
++IDs and common ordering or matched enumeration underpin the decision
++(\cref{sec:6-3}); held-out quality, tail loss and amortised cost determine
++its utility (\cref{sec:6-5}). The harness does not detect workload drift.
+ 
+ 
+-For the observed workload family, the resulting choice is full-pool
+-calibration when quality takes priority, with $S=128$ as the cheaper
+-variant whose crossing risk is measured separately. A caller must install
+-the selected $\alpha$ explicitly and reuse it with the same index, route
+-and $k$. The contribution is a label-free finite-grid decision, a
+-conditional exact search for that decision and a cost model for reuse.
+-Chapter 7 tests its quality and speed against fixed budgets and the
+-diagnostic oracle, and directly measures calibrated reuse on four cells.
+-
+-The supplementary trace contents and completed strict CPU-reference
+-checks are documented in \cref{sec:a-supplement,sec:a-t4-t5}.
+-Remaining checks concern arbitrary-subset per-query invariance,
+-rearchiving candidate dumps for independent re-sorting, the Vogue
+-cross-process discrepancy and future query changes. Their status is
+-maintained in \path{assessment/ch7-pending-experiments.txt}.
+-
++The observed family favours FULL for quality coverage and $S=128$ for
++lower calibration cost. The caller explicitly installs $\alpha$.
++Chapter 7 evaluates fixed-budget/oracle controls and four direct reuse
++measurements.
+ 
+ The reported budget campaign and its trace rerun use v69 arithmetic,
+ including TF32 on the OpenAI datasets. The separate FP32 sensitivity
+diff --git a/chapters/06-refinement.tex b/chapters/06-refinement.tex
+index 112320b..100208b 100644
+--- a/chapters/06-refinement.tex
++++ b/chapters/06-refinement.tex
+@@ -1,14 +1,9 @@
+ % Structure follows 6.pdf; all six sections use audited implementation/evidence.
+-\chapter[Workload-Level Refinement-Budget Calibration]{Workload-Level\\Refinement-Budget Calibration}
++\chapter{Workload-Level Budget Calibration}
+ \label{ch:refinement}
+-
+-Chapters 4 and 5 establish a compressed index and its GPU execution.
+-This chapter addresses RQ3: how much refinement work a workload needs,
+-and whether selecting that budget repays its calibration cost. The
+-policy compares unlabelled query outputs with a larger-budget reference
+-and reuses one selected multiplier across batches. The method is analysed
+-through its acceptance rule, conditional selection theorem, experimental
+-controls and amortisation model. Chapter 7 reports the measured outcomes.
++The policy selects one workload-level refinement multiplier through
++unlabelled agreement with a larger-budget reference, then reuses it across
++batches. Quality and calibration cost constrain that reuse.
+ 
+ \section{Why Fixed Refinement Budgets Can Be Wasteful}
+ \label{sec:6-1}
+diff --git a/chapters/07-evaluation.tex b/chapters/07-evaluation.tex
+index f7f254b..3cd9e74 100644
+--- a/chapters/07-evaluation.tex
++++ b/chapters/07-evaluation.tex
+@@ -1,64 +1,39 @@
+-\chapter[Experimental Evaluation and Research Findings]{Experimental Evaluation\\and Research Findings}
++\chapter{Experimental Evaluation}
+ \label{ch:evaluation}
+ \chaptermark{Experimental Evaluation}
+ 
+-This chapter evaluates construction and capacity (RQ1), execution correctness
+-and cost (RQ2), held-out budget quality and reuse cost (RQ3), and competitive
+-search regions (RQ4). The experiment families below retain their own
+-controls; \cref{sec:9-1} synthesises the answers to the research questions.
++The experiments address construction and capacity (RQ1), execution (RQ2),
++budget quality and reuse cost (RQ3), and competitive search regions (RQ4).
+ 
+-\section{Final Experiment Manifest and Comparison Families}
++\section{Experimental Protocol}
+ \label{sec:7-1}
+ 
+-The evidence comprises system frontiers, component ablations,
+-selection checks, budget calibration and construction/scale measurements.
+-\Cref{app:reproducibility} records implementation and run provenance;
+-the repository supplement retains the full family manifest.
++\subsection{Comparison protocol and reproducibility}
+ 
++Datasets, timing and comparison families follow
++\cref{sec:3-2,sec:3-3,sec:3-5}. The main RTX 5090 comparison measures
++host-to-host steady-state throughput; construction and calibration are
++timed separately. Ablation ratios retain their own family baselines.
+ 
+-\subsection{Evidence families and measurement boundaries}
+-
+-Historical packing/refinement ablations and newer v69/v71 measurements
+-retain the family-specific boundaries defined in \cref{sec:3-5}. Their
+-ratios are interpreted within each comparison, as required by
+-\cref{sec:3-1}.
+-
+-
+-\Cref{sec:3-2,sec:3-3} define the dataset manifest, environment and
+-measurement protocol. The main system comparison uses host-to-host
+-steady-state throughput on the RTX 5090. Construction and budget
+-calibration are measured separately.
+-
+-The authors' CPU JHQ artifact is represented in separate archived CPU
+-experiments, rather than in the E1 frontier. The October locality campaign
+-uses Vogue with 1,024 lists and level bits $[8,4]$, whereas E1 uses 4,096
+-lists and a different residual budget. Older CPU CSVs come from a local
+-reimplementation; separate CPU audit notes document legacy recall-protocol
+-issues. These records support CPU-local questions, but supply no
+-matched-protocol CPU/GPU acceleration factor here.
++Archived CPU JHQ results supply no matched-protocol CPU/GPU acceleration
++factor: the October locality campaign uses Vogue with 1,024 lists and
++level bits $[8,4]$, versus E1's 4,096 lists and different residual budget.
++Older CSVs use a local reimplementation with documented legacy
++recall-protocol issues.
+ 
+ Adaptive call counts and auxiliary device-only timing are documented in
+ \cref{sec:a-e1-protocol}.
+ 
+-\subsection{Metrics and reproducibility}
+-
+ Metrics and frontier estimators follow \cref{sec:3-2,sec:3-4};
+ $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
+ 
+ 
+-Numeric tables and figures are regenerated from archived measurements using the ledger procedure in \cref{sec:3-5}.\footnote{The
+-report repository provides \path{scripts/build_ch7.py},
+-\path{data/ch7/audit.json}, \path{data/ch7/matched.csv} and the source
+-ledger \path{data/ch7/sources.csv}. The script requires the sibling
+-\texttt{JHQ\_GPU} checkout containing the archived measurements.}
++
+ 
+ 
+ \section{Modern GPU ANN Recall--QPS Frontiers}
+ \label{sec:7-2}
+ 
+-This section answers RQ4 by locating common-recall operating regions,
+-including regions in which competing methods are faster.
+-
+ \subsection{Comparison scope and frontier construction}
+ 
+ \Cref{fig:7-frontiers} compares JHQ-GPU with the graph, compressed-IVF
+@@ -122,10 +97,7 @@ Against CAGRA fp32, interpolated ratios at this target range from
+ $1.317\times$ on arXiv to $1.747\times$ on the two OpenAI datasets.
+ Against IVF-RaBitQ, the corresponding values are $1.059\times$,
+ $0.996\times$, $1.130\times$ and $1.157\times$. The arXiv result is a
+-near tie: its interpolated rate is slightly lower, while the measured
+-threshold comparison is slightly higher. Reporting this as an unequivocal
+-win would give the interpolation convention more evidential weight than
+-the measurement supports.
++near tie whose direction depends on the estimator.
+ 
+ The paired E1 one-block measurements connect RQ2 to this RQ4 result.
+ Rebuilding Vogue's frontier with $\gscan=0$ reduces its 0.97 ratio to
+@@ -144,9 +116,8 @@ However, adding CAGRA int8 changes the low-recall interpretation: around
+ 0.90--0.92, its lower-precision graph search can be faster than JHQ.
+ At higher recall, IVF-RaBitQ often regains the lead, including several
+ targets at 0.98 or above. On arXiv around 0.99, CAGRA fp32 is also faster
+-than JHQ in the recorded grid. The defensible claim is therefore that
+-JHQ has useful competitive regions, particularly around moderately high
+-recall, rather than that it dominates modern GPU ANN methods.
++than JHQ in the recorded grid. JHQ's favourable region is bounded by
++both target recall and competing representation.
+ 
+ CAGRA int8 reaches maximum measured recalls of 0.9453, 0.9620, 0.9667 and
+ 0.9683 on Vogue, arXiv, OpenAI-1536 and OpenAI-3072, respectively. It
+@@ -159,11 +130,8 @@ coverage and does not extend to every target below 0.97.
+ The two estimators can disagree substantially where the grid is sparse.
+ For example, at recall 0.97 the OpenAI-1536 comparison with CAGRA fp32 is
+ $1.747\times$ by interpolation but $2.294\times$ using qualifying measured
+-points. The latter includes the cost of whichever baseline point next
+-exceeds the threshold. It should not be presented as a directly measured
+-same-recall advantage of that magnitude. The companion matched table
+-preserves both estimators and marks targets without coverage, enabling
+-readers to distinguish an operating-region result from a sampling artefact.
++points. The measured estimator pays for the next qualifying baseline
++point; the gap between estimators exposes grid sensitivity.
+ 
+ \input{chapters/07-supp-precision}
+ 
+@@ -202,14 +170,11 @@ sensitivity.
+ \section{Cartesian LUT, Packed Loads and Lane Refinement}
+ \label{sec:7-3}
+ 
+-For RQ2, the ablations separate representation-preserving table and load
+-changes from cooperative residual scoring and measure their application
+-effect as well as their kernel effect.
++The RQ2 ablations measure both kernel and application effects.
+ 
+ \subsection{Exact table factorization and its throughput consequence}
+ 
+-The factorisation and resource costs are derived in \cref{sec:5-2}.
+-Here the ablation tests their throughput consequence and FP32 ranking
++The LUT ablation tests the cost model in \cref{sec:5-2} and FP32 ranking
+ effects.
+ 
+ 
+@@ -237,13 +202,9 @@ of per-dataset QPS ratios to the one-group arm; shading shows their range.}
+ \end{figure}
+ 
+ The two-group/one-group ratio ranges from $0.998$ to $1.914$.
+-Four and eight groups each require only 16 total entries, but differ in
+-the number and granularity of lookups. Their performance provides a
+-useful control: reducing table storage beyond the two-group design does
+-not necessarily improve search. Additional indexing and accumulation
+-work can outweigh storage savings. The measurements establish the net
+-trade-off; without a separate occupancy or instruction-counter experiment,
+-they do not identify one hardware effect as the sole cause. The maximum
++Four and eight groups each store 16 entries but require more lookups
++and additions. These arms show that smaller tables need not improve
++throughput; occupancy and instruction costs were not isolated. The maximum
+ reported recall spread within any four-arm cell is $10^{-4}$.
+ At 128 probes and $\alpha=100$, T4 compares identical candidates on
+ Vogue, arXiv and OpenAI-3072. Full versus $16+16$ tables differ in
+@@ -305,10 +266,8 @@ a larger reduction in refinement time. On arXiv at $\alpha=100$, the
+ profiled refinement kernel falls from 4,277.5 to 716.8\,$\mu$s, a
+ $5.97\times$ gain, while total throughput improves $1.789\times$.
+ OpenAI-3072's refinement kernel improves $8.81\times$, but total throughput
+-improves $1.171\times$. This is consistent with Amdahl's law: acceleration
+-of a small stage cannot remove the cost of routing, screening, final
+-selection or transfers. It also motivates the subsequent scan and probe
+-experiments, which target the remaining work.
++improves $1.171\times$. The remaining routing, screening, selection and
++transfer costs limit the application gain.
+ 
+ A quantitative Amdahl check uses the refinement kernel's baseline time
+ as a fraction $f$ of host-to-host baseline latency and its kernel speedup
+@@ -321,11 +280,10 @@ and wall-time measurements and are explanatory estimates.
+ Cooperative reductions alter floating-point addition order. The tested
+ multi-lane variants have very small distance differences, with maximum
+ reported relative error about $1.6\times10^{-6}$, and occasional changes
+-near ranking boundaries. The evidence therefore supports numerically
+-close scoring with measured end-to-end gains, rather than universal
+-bitwise equivalence. Sanitizer checks cover the recorded refinement and
+-top-$k$ kernels on small query subsets; they are useful implementation
+-checks, not a proof for arbitrary inputs.
++near ranking boundaries. Sanitizer checks cover the recorded refinement
++and top-$k$ kernels on small query subsets. These checks and numerical
++tolerances delimit the evidence; multi-lane scoring is not universally
++bit-identical.
+ 
+ \section{Global Top-c, Shared Bound and Probe Correctness/Ablation}
+ \label{sec:7-4}
+@@ -366,9 +324,7 @@ preceding score arithmetic. On OpenAI this includes TF32 GEMMs
+ Its synthetic checker covers 1,792 cases and reports zero failures.
+ Checks of the real arXiv, Vogue and OpenAI-3072 workloads find identical
+ probe identifiers and identical primary top-$c$ positions and distances
+-for all 1,000 queries. These are more specific observations than a single
+-unchanged recall number: they test the routing and screening outputs
+-directly.
++for all 1,000 queries.
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -383,23 +339,18 @@ directly.
+ \Cref{tab:7-probe} shows end-to-end improvements of $1.034$--$1.167\times$.
+ At batch 8, the profiled probe stage falls from 56.5 to 22.6\,$\mu$s
+ on arXiv, 52.7 to 14.7\,$\mu$s on Vogue, and 77.8 to 16.7\,$\mu$s
+-on OpenAI-3072. Smaller full-batch gains are expected because the
+-unmodified stages account for more of total elapsed time. These are
+-within-family ratios; they should not be multiplied by the preceding
+-v62 or refinement gains as if all measurements shared a single baseline.
++on OpenAI-3072. The unchanged stages limit full-batch gains. These
++within-family ratios have different baselines from the preceding ablations.
+ 
+-Vogue isolates an important distinction between the probe primitive and
+-cross-process pipeline reproducibility. The probe/primary dump is
++On Vogue, the probe/primary dump is
+ byte-identical across the two binaries for all 1,000 queries in the
+ one-group, batch-8 test, yet final recall is 0.9642 versus 0.9644. The
+ same baseline binary also changes from 0.9642 in the identity run to
+-0.9644 in each of its two timing runs. Thus the observed variation does
+-not require the probe change; in the dump-controlled case it arises
+-after the recorded primary-selection boundary. Residual representations,
+-inputs and score computation remain possible sources, whose root cause
+-is unconfirmed. Within each checked process, scheduled and one-block
+-outputs remain bit-identical. Appendix~\ref{app:reproducibility} records
+-the dump coverage so that it is not mistaken for every timed path.
++0.9644 in each of its two timing runs. The variation therefore also
++occurs without the probe change and lies after primary selection in the
++dump-controlled case. Its root cause remains unresolved. Scheduled and
++one-block outputs are bit-identical within each checked process; dump
++coverage is in \cref{app:reproducibility}.
+ 
+ Finally, the optional v70 FP16 experiment is a separate approximation.
+ Its probe sets match the v69 reference on 936/1,000 arXiv queries, 979/1,000
+@@ -411,11 +362,8 @@ and from the exact-probe claim.
+ \section{Held-out Budget Quality, Throughput and Payback}
+ \label{sec:7-5}
+ 
+-The policy and its sufficient monotonicity conditions are defined in
+-\Cref{ch:refinement,prop:6-monotonicity}. Here RQ3 concerns quality and
+-amortized cost against credible fixed budgets.
+-Accordingly, the comparison includes both the inherited $\alpha=100$
+-and the stronger universal fixed control $\alpha=64$.
++RQ3 compares the policy of \cref{ch:refinement} with fixed
++$\alpha=100$ and the stronger universal control $\alpha=64$.
+ 
+ \subsection{Unlabelled selection and a labelled diagnostic oracle}
+ 
+@@ -424,20 +372,9 @@ sampled, FULL, enumeration and oracle controls in \cref{sec:6-4}.
+ The disjoint pools and 64 draws per sample size follow \cref{sec:3-2}.
+ 
+ 
+-Using the grid and reference defined in \cref{sec:6-2}, the experiment
+-accepts a budget when
+-\begin{equation}
+- D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+- \left(10-|\mathcal R_\alpha(q)\cap\mathcal R_{200}(q)|\right),
+- \qquad D_S(\alpha)\leq 1.
+- \label{eq:7-agreement}
+-\end{equation}
+-Reference agreement has the GT-recall interpretation established in
+-\cref{sec:6-2}.
+-
+-
+-The oracle uses held-out labels, whereas FULL applies the unlabelled
+-rule to all calibration queries (\cref{tab:6-controls}).
++All rule variants use \cref{eq:6-agreement} with $k=10$ and $\epsilon=1$.
++FULL uses all calibration queries; the diagnostic oracle uses held-out
++labels (\cref{tab:6-controls}).
+ 
+ 
+ \subsection{Full-pool calibration as the quality-first working point}
+@@ -452,9 +389,8 @@ shows the complete comparison. Against fixed 64, full-pool selection is
+ faster in six cells, equal in two and slower in four: its main advantage
+ is the observed coverage of all twelve quality targets.
+ 
+-FULL is therefore the retrospective quality-first working point for
+-these cells; $S=128$ is the lower-cost alternative. The statistical scope
+-remains that of \cref{sec:6-2}.
++These cells favour FULL for quality coverage and $S=128$ for lower
++calibration cost, within the statistical scope of \cref{sec:6-2}.
+ 
+ 
+ \begin{table}[tbp]
+@@ -473,12 +409,9 @@ stream timing. Held-out counts are 500, or 499 for Stella.}
+ \Cref{tab:7-budget-quality} reports the $S=128$ result. The median selected
+ budget matches the oracle budget in ten of twelve cells; it differs on
+ arXiv at 128 probes and OpenAI-3072 at 512. The selected budgets span
+-4--200, indicating substantial workload dependence. However, a median
+-budget and a mean recall describe different aspects of the draw
+-population. They need not correspond to the performance of one arm.
+-In addition, mean recall in the table is reconstructed from the printed
+-best recall minus printed mean loss, so its four-decimal precision is
+-approximate.
++4--200, indicating substantial workload dependence. Median budget and
++mean recall need not describe one arm. The latter is reconstructed from
++printed best recall minus mean loss and is approximate at four decimals.
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -498,10 +431,8 @@ more than $10^{-3}$ recall even though mean loss is only 0.0009; at
+ 512 probes, 32/64 draws cross the threshold. BGE at 512 probes has
+ 24/64 threshold crossings and a 95th-percentile loss of 0.0014. Stella
+ has fewer crossings but a 95th-percentile loss of 0.0030 at both probe
+-depths. Thus mean quality, violation frequency and tail magnitude must
+-be read together. OpenAI-3072 has no observed threshold crossings in
+-these draws, which supports a favourable result on this pool, not a
+-zero-risk statement about unseen queries.
++depths. OpenAI-3072 has no observed crossings in this finite pool. Mean
++loss, crossing frequency and tail magnitude distinguish these outcomes.
+ 
+ Under the lower-order percentile convention in \cref{sec:a-budget-contract}
+ (zero-based index 59),
+@@ -515,7 +446,7 @@ The crossing count in the table preserves that distinction.
+ \caption[Held-out risk across sample sizes]{Held-out risk across sample sizes. The vertical axis is the
+ percentage of calibration draws losing more than $10^{-3}$ held-out recall
+ relative to the best tested budget. Increasing $S$ also tightens the allowed
+-slot-disagreement fraction because \cref{eq:7-agreement} keeps threshold one.}
++slot-disagreement fraction because \cref{eq:6-agreement} keeps threshold one.}
+ \label{fig:7-budget-risk}
+ \end{figure}
+ 
+@@ -535,19 +466,17 @@ Across the eight fixed choices, $\alpha=64$ and 100 each qualify in
+ ten of twelve cells against the diagnostic quality target; $\alpha=200$
+ qualifies in all twelve. Among qualifying cells, their maximum QPS deficits
+ to the diagnostic oracle are 26.6\%, 40.9\% and 57.1\%, respectively.
+-The complete eight-arm comparison is retained in the repository supplement. Full-pool
+-calibration is not identical to the oracle either: on Vogue it selects
+-100 at both probe depths while the oracle selects 64. Agreement-based
+-selection and fastest quality-constrained selection solve different
+-problems, even with a larger calibration sample. Full-pool calibration costs
+-9.5--60.3\,ms. In these twelve cells $\alpha=200$ attains the best
+-measured recall and therefore serves as a high-budget coverage control;
+-its 12/12 qualification is not an independent quality guarantee.
++Full-pool
++calibration selects 100 on Vogue at both probe depths while the oracle
++selects 64: reference agreement and fastest quality-constrained selection
++have different objectives. Here $\alpha=200$ attains the best measured
++recall, so its 12/12 qualification follows from its role as the coverage
++control.
+ The short fixed-arm timings have apparent small-budget inversions.
+ Supplementary alternating repetitions resolve the cited OpenAI inversion
+ as timing variation and establish a low-budget plateau
+-(\cref{sec:7-budget-trace}). A minimum accepted budget remains a quality
+-decision, rather than a guarantee of the fastest measured arm.
++(\cref{sec:7-budget-trace}). Minimum accepted budget consequently need
++not maximise throughput.
+ 
+ 
+ \subsection{Estimated throughput and calibration economics}
+@@ -588,13 +517,8 @@ held-out loss target.}
+ \end{table}
+ 
+ Calibration costs 3.9--21.3\,ms under the boundary in
+-\cref{sec:a-budget-contract}. For an equal-sized subsequent batch,
+-\begin{equation}
+- B^*=\frac{T_{\rm cal}}{T_{100}-T_{\rm rule}},\qquad
+- T_{\rm rule}<T_{100}.
+- \label{eq:7-payback}
+-\end{equation}
+-Using $T_{\rm rule}\approx n/\overline Q_{\rm rule}$ gives the estimates
++\cref{sec:a-budget-contract}. Applying \cref{eq:6-payback} with fixed
++$\alpha=100$ and $T_{\rm rule}\approx1000n/\overline Q_{\rm rule}$ in milliseconds gives the estimates
+ in \cref{tab:7-budget-cost}: 2.4--55.4 subsequent held-out-sized batches
+ against fixed 100 in favourable cells. Against fixed 64, the corresponding
+ range is 5.7--404.3 batches in nine favourable cells; Vogue at 512 probes
+@@ -605,8 +529,7 @@ $S=128$ break-even estimates correspond to 0.54\,s versus fixed 100
+ and 2.72\,s versus fixed 64 (about 27.7K and 202.2K queries).
+ Full-pool positive cases reach at most 1.52/2.25\,s and 64.9K/78.7K
+ queries against those controls, using their own calibration costs.
+-These short modelled horizons favour reuse on long stable jobs. The
+-estimates use 500 queries per held-out batch, or 499 for Stella.
++These modelled horizons favour reuse on long stable jobs.
+ 
+ 
+ These estimates inherit the mean-rate inversion and stationary-reuse
+@@ -614,10 +537,8 @@ assumptions analysed in \cref{sec:6-5}. Direct execution below checks
+ their net-cost implication on the recorded query stream.
+ 
+ 
+-For historical comparison, the earlier scalar-refinement implementation
+-(v57) reported $1.054$--$2.773\times$ gains over fixed 100 in 10/12
+-cells and 5.2--30.8\,ms calibration. The newer lane-refined pipeline's
+-smaller gains are consistent with less removable refinement time.
++The newer lane-refined pipeline leaves less removable refinement work
++than the historical scalar implementation.
+ The runs share the budget protocol and grid, but this cross-campaign
+ comparison does not isolate refinement as the sole cause of the change.
+ 
+@@ -686,21 +607,18 @@ additional configurations were measured.
+ \Cref{tab:7-scheduling} recomputes the results from the raw timing arrays.
+ The scheduled geometric-mean gains are $2.727\times$, $2.356\times$,
+ $1.057\times$ and $1.015\times$ at batches 8, 32, 256 and 1,000.
+-There are thirteen configurations at the first three batch sizes,
+-including an additional high-budget arXiv case, but only eleven at batch
+-1,000: Stella's 999-query pool cannot provide a complete 1,000-query
+-batch. The held-out subsets contain nine and seven configurations,
+-respectively. A plot connecting these means summarizes regimes rather
+-than a perfectly balanced repeated-measures population.
++The first three batch sizes have thirteen configurations, including a
++high-budget arXiv control; batch 1,000 has eleven because Stella has only
++999 queries. The held-out subsets contain nine and seven configurations.
++Thus the connected means describe partly different configuration sets.
+ 
+ Fixed eight-group execution matches the scheduled mean closely at batch
+ 8 but falls to $0.886\times$ at batch 1,000. Scheduling largely retains
+-the small-batch gain while avoiding that full-batch loss. It is nevertheless
+-a heuristic, not an oracle. At batch 256 its worst ratio of best fixed
++the small-batch gain while avoiding that full-batch loss. At batch 256
++its worst ratio of best fixed
+ throughput to scheduled throughput is 1.217, on a BGE configuration.
+ Candidate-count CV does not capture every cost of list traversal,
+-selection or merging. This failure identifies a limitation of the chosen
+-feature rather than evidence that execution scheduling is unnecessary.
++selection or merging.
+ 
+ Vogue illustrates both the value and limits of the skew feature. Its E1
+ candidate-count CV ranges from 0.338 to 0.622 as probes change, forcing
+@@ -709,9 +627,8 @@ from 0.895 to 1.175. It loses at $(n_{\rm probe},\alpha)=(16,16)$,
+ $(16,64)$ and $(32,64)$, with ratios 0.955, 0.895 and 0.955.
+ Candidate-count dispersion alone does not encode absolute per-query work;
+ the rule can add overhead to these low-probe cases while enabling Vogue's
+-0.97 cross-system lead in \cref{sec:7-2}. This complements the
+-BGE batch-256 regret: balancing work and paying for decomposition are
+-distinct scheduling decisions.
++0.97 cross-system lead in \cref{sec:7-2}. Both failures expose
++decomposition costs missing from the CV feature.
+ 
+ Finally, correctness is checked independently of timing. Across 250
+ variant/configuration comparisons and 234,320 query comparisons, the
+@@ -729,15 +646,8 @@ large-dataset searches; the E1 memory comparison also informs RQ4.
+ 
+ \subsection{Cold builds and the lifecycle boundary}
+ 
+-The principal search sweeps reuse trained-state caches. Loading that state
+-and adding vectors is not a cold build. Separate logs explicitly train
+-with an empty trained-state cache and then encode/add the database;
+-\cref{tab:7-build-memory} reports their recorded training and add times.
+-The supplementary repetitions use the same empty-cache construction
+-boundary; \cref{tab:7-build-memory} now reports the medians of three
+-normal runs per dataset. The complete six-dataset repetition record is
+-retained in the repository supplement; the ranges and sampled peaks below
+-explain the construction boundary.
++Unlike the cached search sweeps, \cref{tab:7-build-memory} uses three
++normal empty-cache train/add repetitions per dataset.
+ Vogue's training is 298--303\,ms, so its normal total is about 0.56\,s;
+ the archived 1.33\,s total (including 1.056\,s training) is an unusually slow single observation.
+ Stella's normal totals are 10.54--10.65\,s, close to the historical
+@@ -756,14 +666,8 @@ measured used total, not the fraction read per query.}
+ \input{tables/ch7/build_memory}
+ \end{table}
+ 
+-Construction and startup intervals follow the distinct lifecycle
+-boundaries in \cref{sec:3-3,sec:a-e1-protocol}.
+-
+-
+-\Cref{fig:7-build} contrasts JHQ's normal-build repetitions with
+-baseline configuration ranges. As specified in its caption, RaBitQ's
+-build-function time excludes the serialization round trip required
+-before search.
++Construction and startup boundaries follow \cref{sec:3-3,sec:a-e1-protocol};
++\cref{fig:7-build} compares these repetitions with baseline configurations.
+ 
+ 
+ \begin{figure}[tbp]
+@@ -783,9 +687,8 @@ On Stella, successful isolated CAGRA int8 builds take approximately
+ 74.55 and 82.45\,s including dataset quantization, depending on graph
+ degree; the measured IVF-PQ build median is 86.59\,s across its three
+ configurations. JHQ's 10.54--10.65\,s repeated interval is substantially shorter under the
+-reported boundaries, but does not establish a universally fastest builder
+-or equal downstream recall. Construction speed, searchable quality and
+-resident cost are separate deployment dimensions.
++reported boundaries. Downstream quality and resident cost are evaluated
++separately.
+ 
+ 
+ Across five independent builds per dataset at fixed 128-probe points,
+@@ -954,14 +857,9 @@ remain, so the result is not solely a consequence of long calls.
+ \subsection{Exactness is attached to a particular stage}
+ \label{sec:7-recall-attribution}
+ 
+-\Cref{tab:5-query-stages} distinguishes the score and selection targets;
+-the stage contracts in Chapter 5 determine the scope of each exactness
+-claim.
+-
+-
+-The lane-rounding, cutoff-tie and cross-process observations above
+-therefore qualify different stages. Their unchanged real-arithmetic
+-formulas do not establish raw-space exact kNN.
++The stage contracts in \cref{tab:5-query-stages} distinguish computed-score
++selection from raw-space kNN; lane rounding, cutoff ties and process
++variation qualify different stages.
+ 
+ 
+ The archived reconstruction pilot measures the remaining gap to
+@@ -977,17 +875,3 @@ the seven arms include two budgets on one dataset--probe workload.
+ FP64 reconstructed scoring also differs from the GPU arithmetic, so the
+ pilot does not isolate a pure budget effect in every arm. Separating
+ routing from representation requires additional stage-wise GT coverage.
+-
+-\subsection{Scope of the research findings}
+-
+-The results support representation-aware execution and workload-specific
+-refinement effort, with separate evidence for correctness, speed and
+-quality. Chapter 8 develops the cross-layer implications and negative
+-cases; \cref{sec:9-1} brings together the answers to RQ1--RQ4.
+-
+-
+-The claims apply to squared-L2 top-10 search, the recorded query pools
+-and the tested RTX 5090 environment. Cross-device behaviour, changing
+-queries, online updates and open-loop service latency remain untested.
+-These boundaries accompany the results rather than replacing their
+-positive findings.
+diff --git a/chapters/07-supp-budget.tex b/chapters/07-supp-budget.tex
+index bf3f081..cd1e697 100644
+--- a/chapters/07-supp-budget.tex
++++ b/chapters/07-supp-budget.tex
+@@ -16,7 +16,6 @@ than checking the selected budget alone, and supports using
+ \cref{eq:6-finite-pool} for these observations despite the scan-path
+ changes. It checks aggregate counts on the traced subsets, rather than
+ per-query invariance on every possible subset.
+-The repository supplement retains all twelve cells of per-draw maxima.
+ 
+ 
+ At $S=128$, maxima reach 0.0050 for arXiv/512 and 0.0046 for BGE/512;
+diff --git a/chapters/08-1-insights.tex b/chapters/08-1-insights.tex
+index b2e6ccf..7028cd5 100644
+--- a/chapters/08-1-insights.tex
++++ b/chapters/08-1-insights.tex
+@@ -1,68 +1,45 @@
+ \subsection{A useful representation exposes a useful unit of reuse}
+ 
+-The grouping results in \cref{fig:7-lut} show that compact state alone
+-does not determine the best scorer. The reusable unit is the
+-query-specific coordinate group: its distances are computed once and
+-reused across candidates, as constructed in \cref{sec:5-2}.
+-
+-
+-The shared-memory transition and word-access costs in
+-\cref{sec:5-2,sec:5-3} call for joint consideration of storage,
+-instructions and reuse. The exceptional LUT cells and Mailman case
+-below counter a universal smallest-table rule. Two groups are an
+-empirical default for this device, rather than a device-independent optimum.
+-
+-
+-The compatibility condition in \cref{sec:5-2} limits this opportunity:
+-improving a codebook's reconstruction can remove its execution advantage.
+-A representation should therefore be assessed by the attainable
+-recall--cost frontier of its scorer and residual hierarchy, alongside
+-reconstruction error.
+-
++The coordinate-group LUT in \cref{sec:5-2} computes distances once for
++reuse across candidates. Yet the grouping results and Mailman case show
++that storage savings alone do not determine throughput (\cref{fig:7-lut}).
++Shared-memory placement and word access must be considered together
++(\cref{sec:5-2,sec:5-3}). Two groups are an empirical default on this GPU.
++A codebook change can remove Cartesian compatibility, so reconstruction
++error must be assessed alongside the scorer's attainable recall--cost
++frontier.
+ 
+ \subsection{Useful parallelism is bounded by duplicated state and selection}
+ 
+-The batch trend in \cref{fig:7-batch} reflects a trade-off between
+-available parallelism and duplicated state/selection. Once query-level
+-concurrency is sufficient, staging, local buffers and merging can consume
+-the benefit of additional blocks. Maximum occupancy alone is therefore
+-the wrong objective.
+-
+-
+-Vogue's path-sensitive frontier and BGE's scheduling regret
+-(\cref{sec:7-2,sec:7-6}) connect execution design to the
+-competitive region. They also expose the limitation of CV: it measures
+-imbalance without absolute work or staging/merge costs. The combined
+-path comparison remains distinct from the shared-bound-only ablation.
+-
+-
+-A practical consequence is to retain a query-centric path and choose
+-grouping from both available parallelism and expected work per query.
+-Candidate count, survivor capacity and local-buffer cost are plausible
+-inputs for a richer decision. A fitted selector would need held-out
+-workloads and its own calibration-cost accounting; the present observations
+-do not validate one. The existing heuristic is valuable precisely because
+-its gains and failure cells can be checked separately.
++The batch trend in \cref{fig:7-batch} reflects the cost of duplicating
++staging, selection and merging once query concurrency is sufficient.
++Vogue's path-sensitive frontier and BGE's regret expose what CV misses:
++absolute work and decomposition cost (\cref{sec:7-2,sec:7-6}). These
++integrated comparisons remain separate from the shared-bound ablation.
++A richer scheduler could combine candidate count, survivor capacity and
++local-buffer cost while retaining the query-centric path; its calibration
++cost and held-out workload performance would need evaluation.
+ 
+ \subsection{Execution speed changes the value of avoiding refinement}
+ 
+-Budget reduction removes residual reads, arithmetic and final selection,
+-while routing and broad primary-score production remain. Its potential
+-saving depends on the fraction of latency occupied by those removable
+-operations. Faster lane-cooperative refinement can consequently reduce the
+-reward for lowering the survivor budget. Faster primary scanning can have
+-the opposite effect on refinement's relative share. Neither transformation
+-changes the quality consequence of discarding a particular candidate.
+-
+-This is a cost-model implication, rather than a causal explanation for
+-every historical/newer budget difference. A causal test would replay
+-identical budget decisions and candidate sets while changing only the
+-refinement kernel. The cross-campaign comparison and direct reuse
+-measurements are reported in \cref{sec:7-5,sec:7-stream-cost}.
+-
+-
+-The FULL working point and sampled tail risks in
+-\cref{tab:7-budget-full,fig:7-budget-risk} imply that calibration effort
+-should reflect the quality requirement and expected reuse. Optimising
+-the selector alone, or reporting only a favourable selected-arm mean,
+-leaves that engineering decision incomplete.
++Consider a latency model with fixed non-refinement cost $T_0>0$,
++high-/low-budget refinement times $F_h\geq F_\ell>0$, and a common
++refinement-time multiplier $0<\eta\leq1$. The low-budget speedup and
++its derivatives are
++\begin{align}
++ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
++ \label{eq:8-refinement-sensitivity}\\
++ \frac{\partial S}{\partial\eta}
++ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
++ \frac{\partial S}{\partial T_0}
++ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
++\end{align}
++For $F_h>F_\ell$, faster refinement reduces the benefit of cutting its budget, while
++lower fixed cost increases it. This model holds non-refinement work
++constant; budget-dependent scan maintenance and resource transitions
++require measurement. A causal kernel comparison would fix candidate sets
++and budget decisions (\cref{sec:7-5,sec:7-stream-cost}).
++
++The FULL results and sampled tails show why this cost decision also
++needs a quality constraint and sufficient reuse
++(\cref{tab:7-budget-full,fig:7-budget-risk}).
+diff --git a/chapters/08-2-negative.tex b/chapters/08-2-negative.tex
+index 97b29d3..81d921c 100644
+--- a/chapters/08-2-negative.tex
++++ b/chapters/08-2-negative.tex
+@@ -39,8 +39,7 @@ Mailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,
+ arXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below
+ one. Right: minimum survivor
+ counts meeting the original JHQ recall target on arXiv's 400-query FP64
+-offline test split. The candidate reduction is not a GPU speedup. Both
+-panels are regenerated from archived records by the thesis audit script.}
++offline test split. The candidate reduction is not a GPU speedup.}
+ \label{fig:8-negative}
+ \end{minipage}\par\medskip
+ 
+@@ -73,7 +72,5 @@ pipeline, then compares independently swept budgets at measured recall
+ thresholds. At arXiv's original $\alpha=100$ target it yields ratios of
+ approximately 1.40 at batch 8 and 1.21 at batch 1,000. Vogue's tested median
+ frontier stops at 0.9630, below the original 0.9644 working point;
+-OpenAI-3072 is essentially tied. These results revise a blanket ``never
+-GPU-tested'' description, while preserving the decision against a universal
+-replacement. The follow-up uses its own index states, query pool and
++OpenAI-3072 is essentially tied. The gains remain workload-specific. The follow-up uses its own index states, query pool and
+ three-round protocol; its rates are not inserted into E1.
+diff --git a/chapters/08-discussion.tex b/chapters/08-discussion.tex
+index 55bedf0..296d3ac 100644
+--- a/chapters/08-discussion.tex
++++ b/chapters/08-discussion.tex
+@@ -1,14 +1,6 @@
+-\chapter[Discussion, Limitations and Future Research]{Discussion, Limitations\\and Future Research}
++\chapter{Discussion and Future Work}
+ \label{ch:discussion}
+-\chaptermark{Discussion and Future Research}
+-The measurements favour a particular combination of structured codes,
+-selective refinement and workload-dependent execution. Their wider value
+-lies in explaining when an apparently cheaper operation becomes a faster
+-search. This chapter develops three interpretations, examines two designs
+-that did not justify general adoption, and turns the remaining limitations
+-into testable research questions. The interpretations retain the distinction
+-between measured effects, explanations and proposed extensions established
+-in \cref{sec:3-6}.
++\chaptermark{Discussion and Future Work}
+ 
+ \section{Three Cross-Layer Insights}
+ \label{sec:8-1}
+diff --git a/chapters/09-conclusion.tex b/chapters/09-conclusion.tex
+index e629c3e..d15c82c 100644
+--- a/chapters/09-conclusion.tex
++++ b/chapters/09-conclusion.tex
+@@ -1,9 +1,5 @@
+ \chapter{Conclusion}
+ \label{ch:conclusion}
+-JHQ-GPU demonstrates how a structured quantised hierarchy can be translated
+-into a useful GPU search pipeline, and why its execution and refinement
+-effort must be evaluated together. The four research questions now have
+-concrete, bounded answers.
+ 
+ \section{Answers to the Four Research Questions}
+ \label{sec:9-1}
+@@ -57,13 +53,8 @@ rankings remain untested.
+ 
+ \section{Closing Principle and Outlook}
+ \label{sec:9-2}
+-The resulting principle is to co-evaluate representation, execution and
+-effort under a stated quality objective. A smaller table can add work;
+-more groups can duplicate it; less refinement can sacrifice the neighbours
+-that matter. The negative designs show why mathematical reuse and lower
+-reconstruction error need not improve the search frontier. The next step
+-is to test whether reusable calibration information can support valid risk
+-control at lower total cost, and whether explicit residual placement can
+-extend capacity without unacceptable tail latency (\cref{sec:8-4}). These
+-are hypotheses grounded in the measured limits, rather than capabilities
+-already supplied by the present system.
++Representation, execution and refinement effort must be assessed under
++the same quality objective. Future work should test whether reusable
++calibration information lowers the cost of valid risk control, and whether
++residual placement extends capacity within a tail-latency budget
++(\cref{sec:8-4}).
+diff --git a/config/layout.tex b/config/layout.tex
+index fddd8b1..4aa773f 100644
+--- a/config/layout.tex
++++ b/config/layout.tex
+@@ -4,19 +4,52 @@
+ \geometry{a4paper,left=27mm,right=27mm,top=28mm,bottom=28mm,
+   headheight=18pt,headsep=7mm,footskip=12mm}
+ \setstretch{1.0}
++% Classic thesis paragraphs: indent instead of a half-line blank between them.
++\setparsizes{1.2em}{0pt plus .5pt}{0pt plus 1fil}
+ % Preserve the existing, scoped roman math subscripts without rewriting equations.
+ \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+ 
+-\KOMAoptions{chapterprefix=true,headings=normal,numbers=noendperiod}
++% Mathematical statements and proofs share the body-text margins. Their
++% headings occupy a separate line; upright statements distinguish prose from
++% the mathematical symbols without switching whole paragraphs to italics.
++\newtheoremstyle{thesis}
++  {6pt plus 1pt minus 1pt}{4pt plus 1pt minus 1pt}
++  {\normalfont\setlength{\parindent}{0pt}}{0pt}
++  {\normalfont\bfseries}{.}{\newline}{}
++\theoremstyle{thesis}
++\makeatletter
++\renewenvironment{proof}[1][\proofname]{%
++  \par\pushQED{\qed}\normalfont
++  \setlength{\parindent}{0pt}\setlength{\listparindent}{0pt}%
++  \setlength{\parskip}{2pt plus .5pt}%
++  \topsep4\p@\@plus\p@\@minus\p@\relax
++  \trivlist
++  \item[\hskip\labelsep\normalfont\bfseries #1\@addpunct{.}]%
++  \leavevmode\par\nobreak\noindent\ignorespaces
++}{%
++  \popQED\endtrivlist\@endpefalse
++}
++\makeatother
++% Each current statement/proof pair fits comfortably on one page. Keep the
++% short pairs together so floats and page breaks cannot separate their parts.
++\newenvironment{resultblock}{%
++  \par\addvspace{6pt}\noindent\begin{minipage}[t]{\linewidth}%
++}{%
++  \end{minipage}\par\addvspace{6pt}%
++}
++
++\KOMAoptions{chapterprefix=false,headings=normal,numbers=noendperiod}
+ \setkomafont{disposition}{\normalfont\bfseries}
+-\setkomafont{chapter}{\normalfont\LARGE\bfseries}
++\setkomafont{chapter}{\normalfont\Large\bfseries}
+ \setkomafont{chapterprefix}{\normalfont\large\bfseries}
+-\RedeclareSectionCommand[beforeskip=2ex plus .5ex minus .2ex,
+-  afterskip=1ex plus .2ex]{chapter}
+-\RedeclareSectionCommand[beforeskip=2.1ex plus .5ex minus .2ex,
+-  afterskip=.9ex plus .2ex]{section}
+-\RedeclareSectionCommand[beforeskip=1.7ex plus .4ex minus .2ex,
+-  afterskip=.7ex plus .2ex]{subsection}
++\RedeclareSectionCommand[beforeskip=1.5ex plus .3ex minus .2ex,
++  afterskip=.8ex plus .2ex]{chapter}
++\RedeclareSectionCommand[beforeskip=1.8ex plus .4ex minus .2ex,
++  afterskip=.7ex plus .2ex]{section}
++\RedeclareSectionCommand[beforeskip=1.4ex plus .3ex minus .2ex,
++  afterskip=.6ex plus .2ex]{subsection}
++\RedeclareSectionCommand[runin=true,beforeskip=.9ex plus .3ex minus .1ex,
++  afterskip=.75em]{paragraph}
+ 
+ \clearpairofpagestyles
+ \automark[chapter]{chapter}
+@@ -26,16 +59,36 @@
+ \setkomafont{pagenumber}{\normalfont\small\color{black}}
+ \pagestyle{scrheadings}
+ 
+-\captionsetup{font={small,stretch=1.1},labelfont=bf,labelsep=period,
+-  justification=raggedright,singlelinecheck=false,skip=7pt}
+-\captionsetup[table]{position=top,skip=6pt}
+-\setlength{\textfloatsep}{16pt plus 3pt minus 3pt}
+-\setlength{\floatsep}{12pt plus 3pt minus 3pt}
+-\setlength{\intextsep}{14pt plus 3pt minus 3pt}
+-\setlength{\abovecaptionskip}{7pt}
++\captionsetup{font={small,stretch=1.0},labelfont=bf,labelsep=period,
++  justification=raggedright,singlelinecheck=false,skip=5pt}
++\captionsetup[table]{position=top,skip=4pt}
++\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
++\setlength{\floatsep}{10pt plus 2pt minus 2pt}
++\setlength{\intextsep}{10pt plus 2pt minus 2pt}
++% Keep neighbouring floats together on float-only pages.
++\makeatletter
++\setlength{\@fptop}{0pt}
++\setlength{\@fpsep}{12pt plus 2pt minus 2pt}
++\setlength{\@fpbot}{0pt plus 1fil}
++\makeatother
++\setlength{\abovecaptionskip}{5pt}
+ \setlength{\belowcaptionskip}{0pt}
+ \setlist{itemsep=.15em,topsep=.35em,parsep=0pt}
+-\setlength{\bibsep}{.4em}
++\setlength{\bibsep}{.3em}
++\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}
++\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
++\setlength{\abovedisplayshortskip}{4pt plus 1pt}
++\setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}
++\AtBeginDocument{%
++  \setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}%
++  \setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}%
++  \setlength{\abovedisplayshortskip}{4pt plus 1pt}%
++  \setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}}
++
++% Short preliminary sections may share a page; numbered chapters stay separate.
++\newcommand{\frontsection}[1]{%
++  \section*{#1}\phantomsection\addcontentsline{toc}{chapter}{#1}%
++  \markboth{#1}{#1}}
+ 
+ % Native KOMA contents/list styles and appendix terminology.
+ \DeclareTOCStyleEntry[beforeskip=.5em plus .1em]{chapter}{chapter}
+diff --git a/config/preamble.tex b/config/preamble.tex
+index 4d1d5aa..f0cc7a2 100644
+--- a/config/preamble.tex
++++ b/config/preamble.tex
+@@ -25,7 +25,7 @@
+ \usepackage{tikz}
+ \usetikzlibrary{arrows.meta,positioning,decorations.pathreplacing}
+ \usepackage[numbers,sort&compress]{natbib}
+-\renewcommand{\bibfont}{\raggedright}
++\renewcommand{\bibfont}{\small\raggedright}
+ \usepackage[automark,headsepline]{scrlayer-scrpage}
+ \input{config/layout}
+ \setcounter{secnumdepth}{2}
+@@ -35,10 +35,10 @@
+ \clubpenalty=10000
+ \raggedbottom
+ % Keep result figures with nearby text; align forced float pages at the top.
+-\renewcommand{\topfraction}{0.90}
+-\renewcommand{\bottomfraction}{0.85}
+-\renewcommand{\textfraction}{0.10}
+-\renewcommand{\floatpagefraction}{0.75}
++\renewcommand{\topfraction}{0.95}
++\renewcommand{\bottomfraction}{0.90}
++\renewcommand{\textfraction}{0.05}
++\renewcommand{\floatpagefraction}{0.70}
+ \setcounter{topnumber}{3}
+ \setcounter{totalnumber}{4}
+ \makeatletter
+@@ -55,7 +55,7 @@
+ \newtheorem{corollary}[proposition]{Corollary}
+ \crefname{corollary}{corollary}{corollaries}
+ \Crefname{corollary}{Corollary}{Corollaries}
+-\theoremstyle{definition}
++\theoremstyle{thesis}
+ \newtheorem{definition}[proposition]{Definition}
+ 
+ \newcommand{\frontchapter}[1]{%
+diff --git a/frontmatter/abstract.tex b/frontmatter/abstract.tex
+index 24b1cd2..c9db078 100644
+--- a/frontmatter/abstract.tex
++++ b/frontmatter/abstract.tex
+@@ -1,37 +1,22 @@
+ \frontchapter{Abstract}
+-Efficient GPU approximate nearest-neighbour search requires compact
+-representations, efficient scoring and selection, and suitable refinement
+-effort. This thesis presents
+-JHQ-GPU, a GPU implementation and evaluation of JHQ's inherited Cartesian
+-primary/residual hierarchy for high-dimensional squared-L2 search.
++Reducing approximate nearest-neighbour (ANN) query time requires efficient
++screening and selective refinement. This thesis presents JHQ-GPU, which
++implements JHQ through representation-aware execution, GPU index construction
++and workload-level budget calibration. Cartesian codebook factorisation
++replaces each 256-entry distance table with two 16-entry tables, preserving
++the real-arithmetic represented distance while reducing table storage
++eightfold. Candidate-parallel scanning, packed access and lane-cooperative
++refinement complement this design. Refinement budgets are calibrated through
++sampled top-$k$ agreement with a larger reference budget, without ground-truth
++labels or a learned predictor.
+ 
+-The system combines GPU training and batched index construction with
+-representation-aware query execution. Cartesian structure decomposes each
+-256-entry primary distance table into two 16-entry tables without changing
+-the real-arithmetic represented distance. Packed access, lane-cooperative
+-refinement and workload-dependent grouped scanning complement this design.
+-Selection and shared-bound arguments specify correctness conditions,
+-backed by a strict computed-score reference. A workload-level policy selects a
+-refinement multiplier through unlabelled output agreement with a larger
+-reference budget; its analysis separates sampled agreement from GT recall.
+-
+-Archived measurements on an RTX 5090 cover six embedding datasets. The
+-largest tested index searches 17.78 million vectors at 20.44\,GiB resident
+-device memory. Two-group tables lead in 22/24 configurations. Integrated
+-scheduling improves geometric-mean throughput by $2.727\times$ at batch 8
+-against the lane-refinement reference, with much smaller full-batch gains.
+-At recall 0.97 and batch 1,000, interpolated comparisons place JHQ first
+-in three E1 datasets and near parity with IVF-RaBitQ on arXiv. OpenAI E1 uses TF32. FP32 interventions under a TF32-trained cache retain
+-numerical advantages, with cross-session comparisons distinguished from
+-contemporaneous anchors; neither experiment fully retrains FP32 models.
+-At batch 8 and the same recall, CAGRA fp32 instead leads on all four
+-datasets; batch-32 rankings also depend on the finite tuning grid.
+-
+-Full-pool calibration meets a $10^{-3}$ held-out recall-loss target relative
+-to the best tested budget in all twelve cells, with maximum observed loss
+-0.0006. Smaller $S=128$ samples have up to 40/64 threshold crossings.
+-These fixed-pool measurements provide no population recall guarantee.
+-Direct reuse measurements support net savings on suitable workloads. Negative designs
+-show that arithmetic reuse and lower reconstruction error need not improve
+-the search frontier. The findings support joint evaluation of representation,
+-execution and effort under explicit quality, timing and capacity conditions.
++Experiments on an RTX 5090 cover six datasets. Two-group tables lead in
++22/24 configurations; the largest index searches 17.78 million vectors at
++20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
++recall-loss target relative to the best tested budget in 12/12 cells, with
++maximum loss 0.0006; smaller samples expose workload-dependent quality risk.
++At recall 0.97 and batch 1,000, JHQ leads in three of four datasets and is
++near parity with IVF-RaBitQ on arXiv. OpenAI runs use TF32; FP32 checks
++retain favourable comparisons under a TF32-trained cache. At batch 8 and
++the same recall, CAGRA fp32 leads on all four datasets. These results
++locate the execution, quality and capacity trade-offs of GPU JHQ.
+diff --git a/frontmatter/acknowledgements.tex b/frontmatter/acknowledgements.tex
+index 3f553e7..247bf17 100644
+--- a/frontmatter/acknowledgements.tex
++++ b/frontmatter/acknowledgements.tex
+@@ -1,9 +1,5 @@
+-\frontchapter{Acknowledgements}
+-I thank Dr Mengxuan Zhang for supervising this research project.
+-The work builds on the JHQ research of Jiabao Han, Mengxuan Zhang and
+-Goce Trajcevski, and on the open-source ANN and GPU software cited
+-throughout the thesis. Their publications and implementations provided
+-the foundations and comparison systems for this study.
++\frontsection{Acknowledgements}
++I thank Dr Mengxuan Zhang for supervising this project and acknowledge the
++JHQ authors and open-source ANN/GPU software cited throughout this thesis.
+ 
+-The use of generative-AI tools in the project and thesis preparation is
+-documented in the \hyperref[front:provenance]{Research Provenance and Tool Disclosure}.
++\input{frontmatter/declaration}
+diff --git a/frontmatter/declaration.tex b/frontmatter/declaration.tex
+index 6da45d3..c8da00b 100644
+--- a/frontmatter/declaration.tex
++++ b/frontmatter/declaration.tex
+@@ -1,48 +1,12 @@
+-\frontchapter{Research Provenance and Tool Disclosure}
++\paragraph*{Research and AI assistance.}
++\phantomsection
+ \label{front:provenance}
+-This thesis presents the JHQ-GPU project undertaken by \thesisauthor{} for
+-\thesiscourse{} under the supervision of \thesissupervisor{}.
+-
+-The underlying JHQ representation and primary/residual hierarchy are
+-attributed to Jiabao Han, Mengxuan Zhang and Goce Trajcevski \cite{jhq}.
+-IVF, product quantisation, existing GPU selection/merge techniques and
+-baseline software retain their cited authorship. Rui Luo and Mengxuan
+-Zhang are coauthors of the associated project manuscript
+-\cite{adc_artifact}; their author order does not establish individual
+-task allocation. The thesis expands the correctness arguments,
+-measurements, supplementary checks and discussion of unsuccessful designs.
+-\Cref{sec:1-5,tab:1-contributions} identify the project's relationship
+-to that manuscript and map its technical contributions.
+-
+-\paragraph{Generative-AI assistance.}
+-Project records document the following uses, identified by product name
+-without inferring model versions:
+-\textbf{OpenAI Codex} assisted with English/Chinese writing and revision,
+-LaTeX, diagrams, analysis scripts, source/log inspection, offline numerical
+-checks and PDF compilation \cite{ai_codex_record}.
+-\textbf{ChatGPT} supplied frameworks and chapter reviews concerning evidence,
+-scope and experimental design \cite{ai_chatgpt_record}.
+-\textbf{Anthropic Claude} assisted with implementation, experiment
+-automation and review; supplementary records cover construction,
+-representation/precision checks, budget traces, strict selection and
+-small-batch baselines \cite{ai_claude_record}. Selected original Codex
+-prompts and their artifact mapping are retained in
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}.
+-This is a partial record: complete original ChatGPT/Claude conversations,
+-earlier interaction timestamps and model versions are not archived there.
+-The joint manuscript separately discloses
+-Claude/ChatGPT assistance with implementation, harnesses, figures and
+-writing, retaining that manuscript's versioned scope.
+-
+-\paragraph{Traceability and responsibility.}
+-Source histories, run records and analysis ledgers establish artifact
+-provenance. \path{scripts/} retains analysis code;
+-\path{assessment/} records accepted and corrected review recommendations;
+-the code repository's \path{experiments/thesis_evidence/} retains
+-supplementary experiment records. Appendices~\ref{app:reproducibility}
+-and \ref{app:supplementary} identify the experimental contracts and
+-supporting evidence. Bibliographic citations acknowledge inherited
+-methods. These records describe the retained workflow, rather than a
+-complete interaction export or a signed personal attestation.
+-Responsibility for the submitted text, attribution and interpretation
+-remains with the thesis author.
++This thesis extends joint JHQ-GPU work with Mengxuan Zhang
++\cite{adc_artifact} and builds on JHQ \cite{jhq}.
++OpenAI Codex assisted with substantive drafting, revision, LaTeX, analysis
++and code/log checks \cite{ai_codex_record}; ChatGPT supplied frameworks
++and reviews \cite{ai_chatgpt_record}; Anthropic Claude assisted with
++implementation, experiments and review \cite{ai_claude_record}.
++Selected prompts and usage details are available in the
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{AI-use record}.
++The author is responsible for the submitted claims.
+diff --git a/main-zh.tex b/main-zh.tex
+index a6fa41b..65ed41d 100644
+--- a/main-zh.tex
++++ b/main-zh.tex
+@@ -11,7 +11,6 @@
+ \input{zh/title}
+ \pagenumbering{roman}
+ \hypersetup{pageanchor=true}
+-\input{zh/declaration}
+ \input{zh/abstract}
+ \input{zh/acknowledgements}
+ 
+diff --git a/main.tex b/main.tex
+index 203c334..0ee3061 100644
+--- a/main.tex
++++ b/main.tex
+@@ -12,7 +12,6 @@
+ \input{frontmatter/title}
+ \pagenumbering{roman}
+ \hypersetup{pageanchor=true}
+-\input{frontmatter/declaration}
+ \input{frontmatter/abstract}
+ \input{frontmatter/acknowledgements}
+ 
+diff --git a/references.bib b/references.bib
+index dc6f7e7..40c8dc5 100644
+--- a/references.bib
++++ b/references.bib
+@@ -5,8 +5,8 @@
+   author = {Luo, Rui and Zhang, Mengxuan},
+   title = {{JHQ-GPU}: Representation-Driven {GPU} Execution and Workload-Adaptive Hierarchical Refinement},
+   year = {2026},
+-  url = {https://github.com/lrlorry/JHQ_GPU/blob/70da383056b50f4e9b8e9a8030bc9b92281ba537/paper_adc2026/ADC/mainADC.tex},
+-  note = {Project manuscript source at a fixed public revision; its historical measurement versions are distinguished in this thesis}
++  howpublished = {\href{https://github.com/lrlorry/JHQ_GPU/blob/70da383056b50f4e9b8e9a8030bc9b92281ba537/paper_adc2026/ADC/mainADC.tex}{Project manuscript source}},
++  note = {Project manuscript}
+ }
+ 
+ @article{mailman,
+@@ -327,20 +327,20 @@
+   author = {{OpenAI}},
+   title = {{Codex}: Selected Thesis-Preparation Interactions},
+   year = {2026},
+-  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},
+-  note = {Selected original user prompts retained from the current conversation; record compiled 29 October 2026. Earlier timestamps and model versions are unavailable; this is not a complete interaction export}
++  howpublished = {\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},
++  note = {Selected prompts and uses; compiled 29 October 2026. Partial record; historical interaction metadata unavailable}
+ }
+ @misc{ai_chatgpt_record,
+   author = {{OpenAI}},
+   title = {{ChatGPT}: Project Review Assistance Record},
+   year = {2026},
+-  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},
+-  note = {Use documented by retained review excerpts and the project disclosure; record compiled 29 October 2026. Complete original prompts, interaction dates and model versions remain unavailable}
++  howpublished = {\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},
++  note = {Retained review excerpts; original prompts and interaction metadata unavailable}
+ }
+ @misc{ai_claude_record,
+   author = {{Anthropic}},
+   title = {{Claude}: Implementation, Experiment and Review Assistance Record},
+   year = {2026},
+-  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},
+-  note = {Use documented by retained project and experiment records; record compiled 29 October 2026. Complete original prompts, interaction dates and model versions remain unavailable}
++  howpublished = {\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},
++  note = {Implementation and experiment records; original prompts and interaction metadata unavailable}
+ }
+diff --git a/zh/abstract.tex b/zh/abstract.tex
+index 1156785..020fe23 100644
+--- a/zh/abstract.tex
++++ b/zh/abstract.tex
+@@ -1,24 +1,14 @@
+ \frontchapter{摘要}
+-高效 GPU 近似最近邻搜索需要紧凑表示、高效评分与选择，以及适当的精排工作量。
+-本文提出JHQ-GPU，对继承的JHQ Cartesian主码／残差层次进行GPU
+-实现与评估，面向高维平方L2搜索。
++降低近似最近邻（ANN）查询时间需要高效筛选与选择性精排。本文提出 JHQ-GPU，
++通过面向表示的执行、GPU 索引构建与工作负载级预算校准实现 JHQ。
++Cartesian 码本因子化将每张 256 项距离表替换为两张 16 项表，保持实数运算下的
++表示距离，并将表存储缩小八倍。候选并行扫描、打包访问与 lane 协作精排配合该设计。
++预算通过采样 top-$k$ 与较大参考预算的输出一致性校准，不需要真实标签或学习预测器。
+ 
+-系统结合GPU训练、batch索引构建及面向表示的查询执行。
+-Cartesian结构把256项primary距离表拆成两张16项表，不改变实数表示距离。
+-packed访问、lane合作精排和工作负载相关分组扫描配合这一设计。
+-选择与共享界论证明确正确性条件，并由严格的计算分数参考支持。
+-工作负载策略以无标签输出和大预算参考的一致性选倍率，并区分样本一致性与GT recall。
+-
+-RTX 5090上的归档测量覆盖六份嵌入数据。最大被测索引搜索17.78百万向量，
+-常驻20.44\,GiB；两组表在22/24配置领先。
+-相对lane精排参考，batch 8集成调度吞吐几何平均为$2.727\times$，大batch收益小得多。
+-0.97 recall、batch 1,000 的插值比较中，JHQ 在四个 E1 数据集中的三个第一，
+-arXiv与IVF-RaBitQ接近平手。OpenAI E1 使用 TF32。TF32 训练缓存上的 FP32 干预仍有数值优势，跨会话比较与
+-同期锚点明确分开；两种实验均未完整重训 FP32 模型。相同 recall、batch 8 下，四个数据集
+-均改为 CAGRA fp32 领先；batch 32 的排名同样受有限调参网格影响。
+-
+-全池校准在全部12单元满足相对最佳被测预算的$10^{-3}$留出recall损失目标，
+-最大实测损失0.0006；$S=128$最多40/64次越阈。
+-这些固定查询池测量不提供总体 recall 保证；直接复用测量支持合适工作负载上的净收益。
+-负结果进一步说明算术复用和更低重建误差未必改善端到端前沿。
+-研究支持在明确质量、计时和容量条件下联合评价表示、执行及工作量。
++RTX 5090 上的实验覆盖六个数据集。两组表在 22/24 配置领先；最大索引搜索
++17.78 百万向量，常驻显存 20.44\,GiB。全池校准在 12/12 单元满足相对最佳被测预算的
++$10^{-3}$ 留出 recall 损失目标，最大损失为 0.0006；较小样本暴露工作负载相关质量风险。
++recall 0.97、batch 1,000 时，JHQ 在四个数据集中的三个领先，在 arXiv 上与
++IVF-RaBitQ 接近平手。OpenAI 运行使用 TF32；同一 TF32 训练缓存上的 FP32 检查仍保留
++有利比较方向。相同 recall、batch 8 时，四个数据集均由 CAGRA fp32 领先。
++这些结果界定 GPU JHQ 在执行、质量与容量之间的取舍。
+diff --git a/zh/acknowledgements.tex b/zh/acknowledgements.tex
+index b10a81f..6de2a61 100644
+--- a/zh/acknowledgements.tex
++++ b/zh/acknowledgements.tex
+@@ -1,6 +1,4 @@
+-\frontchapter{致谢}
+-感谢Mengxuan Zhang博士指导本研究项目。
+-本工作以Jiabao Han、Mengxuan Zhang和Goce Trajcevski的JHQ研究，以及文中引用的
+-开源ANN与GPU软件为基础；这些论文和实现提供了研究基础与对照系统。
++\frontsection{致谢}
++感谢 Mengxuan Zhang 博士指导本项目，并感谢本文引用的 JHQ 作者及开源 ANN/GPU 软件贡献者。
+ 
+-本项目及论文准备中的生成式AI使用记录见\hyperref[front:provenance]{研究来源与工具使用说明}。
++\input{zh/declaration}
+diff --git a/zh/appendices/b-supplementary.tex b/zh/appendices/b-supplementary.tex
+index 246ca9d..053355f 100644
+--- a/zh/appendices/b-supplementary.tex
++++ b/zh/appendices/b-supplementary.tex
+@@ -1,14 +1,11 @@
+ \chapter{补充结果与正确性检查}
+ \label{app:supplementary}
+ 本附录记录支持第3--8章的参数覆盖、逐阶段验证及次要结果。
+-各测量家族保留各自版本与计时边界，来源映射见附录\ref{app:reproducibility}。
++各测量家族保留各自版本与计时边界，实验协议见附录\ref{app:reproducibility}。
+ 
+-\section{完整参数记录}
++\section{参数覆盖}
+ \label{sec:b-grids}
+ E1比较有1,590个有效实测配置，覆盖见\cref{tab:b-e1-counts}。
+-逐点完整参数JSON、recall、主机到主机QPS及源文件名保存在
+-\path{data/appendix/e1-configurations.csv}。
+-\path{scripts/build_appendix.py}生成该记录，输入身份见\path{data/appendix/audit.json}。
+ 下列集合表示观测值，不假定其笛卡尔积全部测量过。
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+@@ -143,17 +140,11 @@ T1 晚于 D，在同一会话重测 recall 0.97 附近的 JHQ 和竞争基线，
+ 
+ 两种估计在该有限网格均保留 FP32 数值优势。OpenAI-3072 的 RaBitQ 插值区间为
+ recall 0.9669--0.9796，揭示较强插值敏感性。这些锚点不替换 E1 完整网格，
+-不建立通用优势幅度，也不是 FP32 重训。原始 JSON 及复算映射见
+-\path{data/full-review/audit.json}。
++不建立通用优势幅度，也不是 FP32 重训。
+ 
+ \section{材料获取}
+ \label{sec:b-artifacts}
+-报告仓库提供参数记录、派生表、图源、分析脚本，以及\path{evidence/ch5/v71/}下的
+-209文件v71源码／测量包，可用\texttt{python3}\ \path{evidence/ch5/v71/check.py}离线核对。
+-另在\path{evidence/review/}保留 T4/T5、T1 和 A2 消费的源码／记录子集；检查器核对
+-哈希，并可用这个本地源码根目录重新运行两项离线审计。
+-更多原始记录位于同级\texttt{JHQ\_GPU}项目的清单路径，完整向量、训练状态与所有
+-可执行文件没有打包在本报告仓库。离线复算需要所列输入，GPU复现还需要相应构建和环境。
+-
+-固定材料入口（含公开手稿源码及v71／T4／T5／T1／A2证据包）见
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\nolinkurl{docs/artifact-access.md}}。
++可获得的源码快照、测量记录与分析工具见
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目复现材料}，
++包括 v71 源码／测量包及部分 T4/T5、T1、A2 输入。完整向量、训练状态与全部历史
++可执行文件未包含在内；GPU 复现还需要这些输入及匹配的构建环境。
+diff --git a/zh/chapters/01-1-context.tex b/zh/chapters/01-1-context.tex
+index e302d51..566efb4 100644
+--- a/zh/chapters/01-1-context.tex
++++ b/zh/chapters/01-1-context.tex
+@@ -1,17 +1,10 @@
+-高维嵌入支持图片、文档等对象的相似搜索。所测向量有768--3,072个坐标，
+-最大数据库含17.78百万向量。穷举距离涉及大量算术，完整向量在索引开销之前
+-就占用容量，例如Stella的FP32数组本身需要67.81\,GiB（\cref{sec:7-7}）。
+-ANN允许牺牲部分精确近邻恢复，减少访问和评分工作。
++近似最近邻（ANN）通过避免穷举、全精度距离计算降低查询时间。
++CAGRA 等图方法通过导航限制访问，压缩 IVF 将选择性列表访问与低成本评分结合
++\cite{cagra,johnson_gpu,ivfrabitq}。被测嵌入为 768--3,072 维，最多 17.78 百万向量；
++Stella 原始 FP32 数组本身需要 67.81\,GiB（\cref{sec:7-7}）。紧凑编码解决容量问题，
++但建表、查表、选择与启动开销决定其查询时间收益。
+ 
+-现代GPU方法提供不同取舍：CAGRA等图方法通过导航避开很多向量，
+-压缩IVF把选择性列表访问与紧凑距离结合\cite{cagra,johnson_gpu,ivfrabitq}。
+-由此产生系统问题：指定recall下，表示、选择与内存移动把成本放在哪里？
+-短码节省存储，但建表、依赖查找、候选保留和重复launch设置可能决定是否也节省查询时间。
+-
+-JHQ为这一问题提供合适场景\cite{jhq}：紧凑primary筛选，残差表示精排短名单。
+-架构暴露两个相关决策：如何高效执行广泛筛选，以及精排多少survivor。
+-它也允许实验隔离：可以保持表示分数不变而改执行，或复用训练索引而改预算。
+-
+-实际目标是改善Recall@10、主机可见吞吐／延迟、常驻显存和构建成本的可达组合。
+-评估包括对手更快与方案失败的情况，使贡献成为有条件竞争区间及机制的解释，
+-而不是脱离质量与资源约束的单个提速比。
++JHQ 将筛选与精排分开：紧凑主码评分候选，残差精排短名单\cite{jhq}。
++由此产生两个决策：如何执行广泛筛选，以及精排多少候选。
++复用训练索引时可分别改变执行或预算，隔离其效果。本文以 Recall@10、主机可见吞吐／延迟、
++常驻显存及构建成本评估这些决策，同时纳入竞争方法或未修改设计更快的配置。
+diff --git a/zh/chapters/01-5-contributions.tex b/zh/chapters/01-5-contributions.tex
+index 2cb1cc7..26c3df6 100644
+--- a/zh/chapters/01-5-contributions.tex
++++ b/zh/chapters/01-5-contributions.tex
+@@ -21,14 +21,4 @@ C3 & 候选扩张和输出一致性思路 & 工作负载预算规则、有条件
+ \end{tabularx}
+ \end{minipage}\par\medskip
+ 
+-结果使主张具体，但不使之普遍。E1大batch的0.97附近插值比较中，JHQ在三个数据集
+-领先，arXiv与RaBitQ接近平手，其他recall区间有对手领先。
+-FULL最大实测留出损失相对最佳被测臂为0.0006，$S=128$一个单元有40/64次越阈。
+-这些是经验质量结果；10个FULL单元一般嵌套仍有条件，但十二个FULL有限网格选择均与枚举一致（\cref{sec:7-budget-trace}）。
+-OpenAI E1使用TF32 GEMM；独立FP32敏感性仍保留较小领先（\cref{sec:7-precision}）。
+-
+-本COMP8800项目由Rui Luo在Dr Mengxuan Zhang指导下呈现。
+-ADC合著稿列Rui Luo与Mengxuan Zhang，复用JHQ-GPU实现及测量产物\cite{adc_artifact}。
+-论文扩展正确性契约、新版实验分析与失败方案讨论，历史稿数字保留各自版本。
+-技术贡献标签界定项目范围；来源说明区分继承与共同工作，并披露AI协助。
+-论文作者对提交的主张与归属标注负责。
++性能依赖批大小与质量目标；第七、八章报告不利区间和数值边界。
+diff --git a/zh/chapters/01-introduction.tex b/zh/chapters/01-introduction.tex
+index e0cfb8e..e5d341b 100644
+--- a/zh/chapters/01-introduction.tex
++++ b/zh/chapters/01-introduction.tex
+@@ -1,8 +1,6 @@
+ \chapter{引言}
+ \label{ch:introduction}
+-搜索大型嵌入数据库需要同时决定信息与工作：每向量压缩多少、检查哪些向量、
+-为它们投入多少精度。GPU可以并行执行许多操作，却不会使这些决策免费。
+-本文以JHQ-GPU研究这种相互作用，包括JHQ主码／残差层次的GPU实现与实验分析。
++
+ \section{背景与实际目标}
+ \label{sec:1-1}
+ \input{zh/chapters/01-1-context}
+@@ -15,11 +13,6 @@
+ \section{研究问题与可反驳主张}
+ \label{sec:1-4}
+ \input{zh/chapters/01-4-questions}
+-\section{贡献与研究归属}
++\section{研究贡献}
+ \label{sec:1-5}
+ \input{zh/chapters/01-5-contributions}
+-\section{论文结构}
+-\label{sec:1-6}
+-第2--3章建立背景与测量设计，第4--6章发展索引构建、GPU执行及工作负载校准。
+-第7章评估正确性、质量、成本与竞争区间，第8章讨论负结果、限制及可检验扩展，
+-第9章回答研究问题。附录A--B记录复现契约与补充证据。
+diff --git a/zh/chapters/02-background.tex b/zh/chapters/02-background.tex
+index fa3f2bb..a52d911 100644
+--- a/zh/chapters/02-background.tex
++++ b/zh/chapters/02-background.tex
+@@ -1,4 +1,4 @@
+-\chapter{背景与批判性相关工作}
++\chapter{背景与相关工作}
+ \label{ch:background}
+ \chaptermark{背景与相关工作}
+ ANN系统结合候选访问、数据表示与选择过程。三者成本互相影响：紧凑编码可能需要
+diff --git a/zh/chapters/03-2-data.tex b/zh/chapters/03-2-data.tex
+index ed2a336..7a22c9b 100644
+--- a/zh/chapters/03-2-data.tex
++++ b/zh/chapters/03-2-data.tex
+@@ -7,7 +7,7 @@ BGE使用意大利语Wikipedia配置，Stella使用TREC24 BioGen语料导出
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+-\captionof{table}[数据集与训练配置]{数据与JHQ训练清单。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
++\captionof{table}[数据集与训练配置]{数据与JHQ训练配置。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
+ 粗聚类训练样本数。E1使用前四行；全部使用平方L2及$k=10$。}
+ \label{tab:3-data}
+ \small\setlength{\tabcolsep}{4pt}
+@@ -35,7 +35,7 @@ Vogue/arXiv的GT行宽为100，其余四份为20，评分只比较前10项。
+ 返回重复ID不会重复得分；越界、重复和跨调用变化分别记录。
+ 
+ JHQ采用$M=d/8$、$B=B_r=8$、8次粗聚类迭代，并请求100,000条残差训练样本。
+-搜索扫描复用\texttt{arms6\_cache}训练状态，重新编码数据库；
++搜索扫描复用缓存的训练状态，重新编码数据库；
+ 冷构建从没有该状态开始。源码从数据库抽取训练样本，与校准查询分开。
+ 预算实验以偶数查询位置构成500条校准池，奇数位置构成500条留出池，
+ Stella留出499条。每个单元在$S=32,64,128$下各抽64次，FULL使用全部500条。
+@@ -43,4 +43,3 @@ GT只参与离线oracle和留出质量评估，可部署的一致性规则使用
+ （\cref{sec:6-2,sec:a-budget-contract}）。
+ 
+ 准备源码和形状日志支持上述协议，但历史向量文件与训练状态的完整哈希缺失。
+-证据登记区分已检查的准备流程与每次运行数据的不可变身份。
+diff --git a/zh/chapters/03-5-ledger.tex b/zh/chapters/03-5-ledger.tex
+index f1a2091..eb084db 100644
+--- a/zh/chapters/03-5-ledger.tex
++++ b/zh/chapters/03-5-ledger.tex
+@@ -1,17 +1,4 @@
+-每项主要实证主张都关联实验族、指标和实际读取记录。机器可读登记为
+-\path{data/ch3/audit.json}；第4--7章audit文件提供详细数值重算。
+-记录包含干预、执行、索引／查询配置、测量边界及分析输入。文件哈希验证分析读取的输入，
+-无法恢复从未归档的可执行文件或训练状态。附录A提供复现入口，仓库补充材料保留完整字段定义。\footnote{仓库补充材料：\path{docs/supplementary-evidence.md}。}
+-
+-
+-E1系统前沿、新版表分组、预算及大型数据扩展与ADC论文的旧测量分开。
+-历史packing和精排记录回答其原有配对问题。海报在视觉上连接这些机制，
+-但不能替代运行元数据或扩展比较范围。版本名说明来源，机制名说明科学干预。
+-
+-\path{scripts/build_ch7.py}读取归档测量并重新生成实证图和主要数字表，
+-包括\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}。
+-source ledger与实验族audit保留原始路径及哈希；
+-\path{scripts/audit_ch3.py}对照这些记录检查统一协议。
+-源码检查与离线重算建立归档记录和报告数值之间的对应关系。
+-重复GPU测量还需要相应binary、数据和训练状态；各项结果注明缺失的诊断覆盖。
+-附录A提供实现与产物细节，并明确可获得的复现实验输入。
++各实验族记录实现版本、索引与查询配置、计时边界及测量输出。配对比较复用相同
++训练状态；版本、状态或精度的变化分别构成独立实验族。历史可执行文件和训练状态
++指纹仍不完整，限制了部分运行的精确复现。\Cref{app:reproducibility}汇总可获得的
++环境信息与实验协议。
+diff --git a/zh/chapters/03-6-validity.tex b/zh/chapters/03-6-validity.tex
+index fb42ccd..1878c1f 100644
+--- a/zh/chapters/03-6-validity.tex
++++ b/zh/chapters/03-6-validity.tex
+@@ -1,8 +1,4 @@
+-证明在明确前提下建立性质，独立参考检验有限样例中的实现一致性。
+-配对基准测量固定工作负载内的干预效果，系统测量定位被测设备与网格中的竞争区间。
+-字节与回本模型保留各自核算假设，解释候选需要另行检验。
+-精确primary选择针对实际算出的primary分数，原始向量recall还受路由和重建影响。
+-
+-
+-共享索引依赖、有限池、网格选择、接口不对称及单设备范围构成上述对照设计的动机。
+-总体与排序假设见\cref{sec:6-2,sec:6-3}，\cref{sec:8-3}统一讨论其对解释和部署的限制。
++精确性声明指明计算分数与排序前提，原始向量 recall 还受路由和重建影响。
++独立参考的覆盖有限，配对计时保留工作负载对照，字节／回本模型保留核算前提。
++总体与排序条件见\cref{sec:6-2,sec:6-3}；\cref{sec:8-3}汇总共享索引、有限查询池、
++调参网格、接口及单设备带来的限制。
+diff --git a/zh/chapters/03-methodology.tex b/zh/chapters/03-methodology.tex
+index 16b97dd..c420fbc 100644
+--- a/zh/chapters/03-methodology.tex
++++ b/zh/chapters/03-methodology.tex
+@@ -1,4 +1,4 @@
+-\chapter{研究设计与测量方法}
++\chapter{研究设计与测量}
+ \label{ch:methodology}
+ \chaptermark{研究设计与测量方法}
+ 评估需要把系统干预与可观测的成本或质量变化联系起来。本文结合配对执行消融、
+@@ -18,7 +18,7 @@
+ \section{基线、调参网格与前沿构造}
+ \label{sec:3-4}
+ \input{zh/chapters/03-4-frontiers}
+-\section{带版本的主张与证据登记}
++\section{实验记录与可复现性}
+ \label{sec:3-5}
+ \input{zh/chapters/03-5-ledger}
+ \section{证据强度与有效性控制}
+diff --git a/zh/chapters/04-2-training.tex b/zh/chapters/04-2-training.tex
+index 2b91716..b8eec31 100644
+--- a/zh/chapters/04-2-training.tex
++++ b/zh/chapters/04-2-training.tex
+@@ -14,7 +14,7 @@ OpenAI各319,488行，BGE与Stella各1,277,952行，均为$39n_{\rm list}$。
+ 这与FAISS默认的每质心39训练点警告阈值一致\cite{faiss_clustering}，是采样规则，
+ 不是八轮IVF拟合的统计保证。残差训练另用100,000行等距样本，成本不随较大粗训练样本增长。
+ 
+-历史受控扫描固定主模型和 IVF 中心，仅改变 Vogue 与 OpenAI-3072 的残差训练样本量，覆盖 $B_r\in\{4,8\}$ 和 32/128/256 探针。12 个配置中，100K 相对全量的召回率差值最大为 $0.0018$：11 项较低、1 项相等。增加到中间样本量没有带来单调提升，残差码本身也发生较大变化。这支持有界训练成本的取舍，同时保留可测量的质量损失。该扫描使用 25 轮残差 Lloyd，不能替代之后六个数据集的评测。历史诊断及输入哈希见 \path{data/ch4/review-audit.json}。
++历史受控扫描固定主模型和 IVF 中心，仅改变 Vogue 与 OpenAI-3072 的残差训练样本量，覆盖 $B_r\in\{4,8\}$ 和 32/128/256 探针。12 个配置中，100K 相对全量的召回率差值最大为 $0.0018$：11 项较低、1 项相等。增加到中间样本量没有带来单调提升，残差码本身也发生较大变化。这支持有界训练成本的取舍，同时保留可测量的质量损失。该扫描使用 25 轮残差 Lloyd，不能替代之后六个数据集的评测。
+ 
+ \subsection{为何保留解析主码模型}
+ 
+@@ -39,6 +39,7 @@ OpenAI各319,488行，BGE与Stella各1,277,952行，均为$39n_{\rm list}$。
+ 
+ IVF 中心从变换样本的等距行初始化，执行配置的八轮更新。分配按 $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$ 排序。源码提供 FP32 与加速分配路径；满足通常的维数约束时，默认用 int8 乘积过滤，再用 FP32 重算有歧义的选择。
+ 
++\begin{resultblock}
+ \begin{lemma}[具有认证分数区间的分配]
+ \label{lem:4-assignment-bound}
+ 令 $\widetilde y,\widetilde\mu_\ell$ 为反量化近似，$e=y-\widetilde y$，$f_\ell=\mu_\ell-\widetilde\mu_\ell$。保持中心范数精确时，近似分数
+@@ -53,6 +54,7 @@ $\widetilde s_\ell=\|\mu_\ell\|^2-2\langle\widetilde y,\widetilde\mu_\ell\rangle
+ \begin{proof}
+ 将内积误差展开为 $\langle y,f_\ell\rangle+\langle e,\widetilde\mu_\ell\rangle$，应用 Cauchy--Schwarz。被丢弃分数大于某个保留分数的上界，因此不能取得最小值；保留区间相等情形则不会丢失可能的并列者。
+ \end{proof}
++\end{resultblock}
+ 
+ 实现用保守范数界与 FP32 余量常数实现这一过滤与精算模式。引理说明有效界为何允许精确排除；若要求与每种 FP32 累加顺序逐位一致，还需要覆盖相应算术误差的界。已归档诊断对比 FP16 路径，在 Vogue、BGE、Stella 尾批次分别记录 0/14,838、6/31,748、3/16,359 个分配差异。这是有限实现证据，不是完整 FP32 参考认证；冷建日志也未追踪实际执行的分配精度。
+ 
+diff --git a/zh/chapters/04-4-lifecycle.tex b/zh/chapters/04-4-lifecycle.tex
+index 3627395..dfa4920 100644
+--- a/zh/chapters/04-4-lifecycle.tex
++++ b/zh/chapters/04-4-lifecycle.tex
+@@ -29,27 +29,10 @@ CAGRA 比较使用图度数 $d_g=32$ 时的 $d+4d_g$ 字节，与测试程序的
+ 
+ 基本 FP32 模型数组中，变换占 $4d^2$ 字节，物化主码码本占 $4MKD_s$，残差码本占 $4MK_r$，IVF 中心与范数占 $4n_{\rm list}(d+1)$。选定路径还分配派生中心副本和编码级值。查询工作区包括两个 $[b_{\rm cap},d]$ FP32 查询矩阵、$[b_{\rm cap},n_{\rm list}]$ 中心分数、LUT、探针及候选缓冲区。可选残差 LUT 另占 $4b_{\rm cap}dK_r$ 字节；默认精排直接计算残差分数。分组工作区遵循\cref{eq:5-group-workspace}，其容量可大于当前扫描所需：已记录的 128 探针样本即使走 query-centric 路径，也保留约 93.8\,MiB。
+ 
+-\begin{table}[tbp]
+-\centering
+-\caption[构建与查询对象生命周期]{对象生命周期。大小描述具名数组，不是 CUDA 进程的全部分配；构建阶段见\cref{sec:4-5}。}
+-\label{tab:4-lifetimes}
+-\footnotesize\setlength{\tabcolsep}{4pt}
+-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+-\toprule
+-对象 & 生产者 & 位置 & 生命周期 & 字节／规模 \\
+-\midrule
+-输入／样本 & 加载器／测试程序 & 主机 & 构建输入；外部持有 & 原始 $4Nd$；采样子集 \\
+-变换／模型 & QR／训练 & 主机、GPU & 模型及索引寿命 & 基本 GPU 数组 $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ \\
+-训练缓存 & 训练 & 主机文件 & 跨进程；仍需建库 & 序列化模型状态 \\
+-输入暂存 & 添加流水线 & Pinned 主机、GPU & add 期间 & 主机 $4n_ba_{\rm in}d$；GPU 浮点数组 $8n_ba_{\rm in}d$，另加 scratch \\
+-分配乘积 & IVF 分配 & GPU & add 期间；gather 前释放 & $4n_b n_{\rm list}a_{\rm assign}$；独立行容量 \\
+-ID／偏移 & 排序／lower bound & GPU & 完成后的快照 & $4N+4(n_{\rm list}+1)$ \\
+-编码／修正项 & 编码／重排 & GPU & 完成后的快照 & $N(M+b_r+4)$ \\
+-顺序／逆映射 & 排序／求逆 & GPU & 仅构建期间 & 每数组 $4N$，依阶段而定 \\
+-查询工作区／graph & 搜索／捕获 & GPU、主机 & 复用分配，逐批替换内容 & 依容量而定；graph 引用常驻数组 \\
+-\bottomrule
+-\end{tabularx}
+-\end{table}
++原始输入由调用方持有。构建暂存占用 $4n_ba_{\rm in}d$ pinned-host 字节，
++每个排序／逆映射数组占用 $4N$ 设备字节。分配乘积在 gather 前释放；
++\cref{eq:4-staging-rows,eq:4-assignment-scratch}分别给出独立容量。
++
+ 
+ \subsection{复用、恢复与失效}
+ 
+diff --git a/zh/chapters/04-5-construction.tex b/zh/chapters/04-5-construction.tex
+index 6a88aa2..39f80c6 100644
+--- a/zh/chapters/04-5-construction.tex
++++ b/zh/chapters/04-5-construction.tex
+@@ -44,7 +44,7 @@ Stella & 19.20 & 40.59 & 21.32 \\
+ \end{tabular}
+ \end{table}
+ 
+-\Cref{tab:4-phase-storage}量化了压缩副本的节省。Stella 冷日志选择两遍，报告\cref{eq:4-peak-heuristic}为 41.6\,GiB，尾部可用为 30.6\,GiB。另行采样的常驻进程总量包括上下文及查询工作区，BGE 为 11.93\,GiB，Stella 为 20.44\,GiB。搜索工作集依批／探针／候选容量而变，见\cref{sec:4-4}。静态行、构建阶段与常驻显存有不同核算边界。
++\Cref{tab:4-phase-storage}量化了压缩副本的节省。Stella 冷日志选择两遍，报告\cref{eq:4-peak-heuristic}为 41.6\,GiB，尾部可用为 30.6\,GiB。另行采样的常驻进程总量包括上下文及查询工作区，BGE 为 11.93\,GiB，Stella 为 20.44\,GiB。容量模型见\cref{sec:4-4}。
+ 补证以20\,ms间隔采样，BGE在add开头观测26.08\,GiB，Stella在repack阶段
+ 观测22.58\,GiB。这是含上下文的设备采样最大值，可能漏掉更短暂分配。
+ 
+diff --git a/zh/chapters/04-6-contracts.tex b/zh/chapters/04-6-contracts.tex
+index 96de5ae..3954e64 100644
+--- a/zh/chapters/04-6-contracts.tex
++++ b/zh/chapters/04-6-contracts.tex
+@@ -1,15 +1,15 @@
+-表示契约同时保护数值几何和编码字段之间的对应。一个历史大样本故障说明其实际意义：32-bit 的 $n_t d$ 乘积在 $2^{31}$ 处溢出，导致主码尺度为零、码本坍缩。之后一次运行又因 cache key 不含代码版本，先加载了旧缓存中的错误模型。粗路由正确并不能发现损坏的主表示。修正后的实现分块计算范数并用 double 累积。因此，需要分别检查模型、编码行与放置关系。
++历史上，32-bit 的 $n_t d$ 在 $2^{31}$ 处溢出，导致主码尺度归零；后续进程又因 cache key 不含代码版本而加载了错误模型。分块计算范数并以 double 累积修复了溢出。这一故障要求分别核查模型几何、编码行与放置关系，即使粗路由成功也不例外。
+ 
+ \subsection{已完成的表示证据}
+ 
+-10 月 13 日的残差下界 pilot 导出训练状态和编码数据库数组，包括实际 $\Pi$、主码／残差码本、ID、偏移与修正项。导出器将打包 word 解码为逻辑 vector-major 编码。pilot 报告复用 arms6 训练缓存，没有重新训练。三个完整数据库分别为 Vogue（932,328 行）、arXiv（2,253,000 行）和 OpenAI-3072（999,000 行）。
++10 月 13 日的残差下界 pilot 从训练缓存导出 $\Pi$、码本、ID、偏移、修正项及逻辑解码后的打包编码，覆盖完整的 Vogue（932,328 行）、arXiv（2,253,000 行）和 OpenAI-3072（999,000 行）数据库。
+ 
+-码本检查发现可分离性不匹配、标量级值不匹配、残差码本无序对均为零。独立解码导出的主码／残差后，FP64 循环遍历每一行，核对 $\gamma=2\langle\widehat p,\widehat r\rangle$。三个数据库的最大修正项绝对误差为$1.28\times10^{-7}$--$2.77\times10^{-7}$；采样GPU返回top-10分数的最大相对误差为$2.38\times10^{-7}$--$4.85\times10^{-5}$，定义为$|s_{\rm GPU}-s_{64}|/s_{64}$，参考含查询范数常数。这些是导出表示的检查，不是从原始输入向量重新编码；逐数据集诊断保留在仓库补充材料。
++码本检查发现可分离性不匹配、标量级值不匹配、残差码本无序对均为零。独立解码导出的主码／残差后，FP64 循环遍历每一行，核对 $\gamma=2\langle\widehat p,\widehat r\rangle$。三个数据库的最大修正项绝对误差为$1.28\times10^{-7}$--$2.77\times10^{-7}$；采样GPU返回top-10分数的最大相对误差为$2.38\times10^{-7}$--$4.85\times10^{-5}$，定义为$|s_{\rm GPU}-s_{64}|/s_{64}$，参考含查询范数常数。这些是导出表示的检查，不是从原始输入向量重新编码。
+ 
+ 
+-在七个工作负载、896 个查询实例中，pilot 还对 72,800,590 个路由候选实例，将所提残差下界与 FP64 重建距离比较，未报告违反。该候选集合也支持 FP64 组合分数恒等式检查；它与 GPU 返回分数比较不同，后者仅考察 top-10 槽位。历史程序会跳过路由候选映射中不存在的返回 ID，因此仅看最大误差并不是完整的输出成员关系认证。
++在七个工作负载、896 个查询实例中，pilot 对 72,800,590 个路由候选实例检查所提残差下界与 FP64 重建距离，未报告违反；同一集合也支持 FP64 组合分数恒等式检查。GPU 返回分数检查仅覆盖 top-10 槽位，并跳过路由映射中不存在的 ID，因此尚未完整验证输出成员关系。
+ 
+-离线比较发现，pilot 与评测实现的编码、主码训练、残差训练和索引构建编译单元，在规范化命名空间并去掉 pilot 专用导出方法后完全一致。这支持将 pilot 检查用于共同表示路径，但不能证明之后每个进程采用逐字节一致的训练状态，也未验证大数据集两遍路径：已审计数据库规模较小。逐工作负载数值、原始汇总核对与源码对应可用 \texttt{scripts/audit\_ch4\_review.py} 复算。
++规范化命名空间并去掉导出方法后，编码、主码／残差训练与构建源码同评测实现一致。该对应覆盖共同路径；后续模型身份与大数据集两遍构建仍需单独核查。
+ 
+ \subsection{独立输入与放置审计}
+ \label{sec:4-representation-audit}
+@@ -61,10 +61,8 @@ C1：放置 & 偏移覆盖行，ID 为置换，字段遵循同一置换 & 全行
+ \end{tabularx}
+ \end{table}
+ 
+-构造器要求 $M$ 整除 $d$、$D_s$ 整除 $B$；word 打包要求 $M\bmod4=0$。查询侧 LUT 验证器依据实际码字切片检查因子化。位置和 ID 使用 signed 32-bit，较大计数与字节地址乘积需要更宽算术。输入契约假定向量有限、计数可表示，并保留无效哨兵位置。
++构建要求 $M\mid d$、$D_s\mid B$、$M\bmod4=0$，LUT 验证使用实际码字切片。
++输入须有限、计数可表示并预留哨兵位置。ID／位置用 signed 32-bit；较大计数与地址乘积用更宽算术。
+ 
+-审计使用导出的旋转与码本，而非凭seed重新生成矩阵。剩余工作收窄为：
+-导出IVF质心独立验证成员关系，以及构造空列表与对抗尾批次。
+-计算分数选择的严格 CPU 参考已在 T4 网格完成（\cref{sec:7-strict-selection}），
+-它与 FP64 输入重编码验证不同。
+-第五章以所得对象为前提论证选择，第七章评测质量与成本。
++审计使用导出模型而非按 seed 重生成。T4 检查计算分数选择，与输入重编码分开
++（\cref{sec:7-strict-selection}）；质心成员关系、空列表与对抗尾批次仍待验证。
+diff --git a/zh/chapters/04-architecture.tex b/zh/chapters/04-architecture.tex
+index 577ae0d..82b5646 100644
+--- a/zh/chapters/04-architecture.tex
++++ b/zh/chapters/04-architecture.tex
+@@ -1,6 +1,7 @@
+-\chapter{系统架构与 GPU 索引构建}
++\chapter{GPU 索引设计与构建}
+ \label{ch:architecture}
+-本章回答 RQ1：如何从高维向量构造可搜索的 GPU 常驻 JHQ 索引。变换与主码／残差表示继承自 JHQ\cite{jhq}。系统问题在于训练这一表示、编码完整 FP32 数据超出可用设备空间的数据库，并为查询路径提供一致的列表顺序数组。本章依次讨论训练、放置、分配与验证；查询 kernel 细节见\Cref{ch:gpu-execution}，实测比较见\Cref{sec:7-7}。
++GPU 构建训练并编码 JHQ 表示，以有界临时存储生成列表顺序数组\cite{jhq}。
++查询内核与构建实测见\Cref{ch:gpu-execution,sec:7-7}。
+ 
+ \section{端到端建库与搜索边界}
+ \label{sec:4-1}
+diff --git a/zh/chapters/05-3-packed-access.tex b/zh/chapters/05-3-packed-access.tex
+index d8caa4f..411cbe5 100644
+--- a/zh/chapters/05-3-packed-access.tex
++++ b/zh/chapters/05-3-packed-access.tex
+@@ -1,4 +1,4 @@
+-LUT 分解减少每查询的查找表；编码布局决定各 lane 如何取得候选对应的表索引。这是两项独立优化。扫描将相邻 lane 分配给相邻候选出现位置，因此广泛扫描适合按子空间跨候选存储编码，而不是将每个候选的完整主码连续存放。
++相邻扫描 lane 处理相邻候选，子空间优先存储使其编码访问相邻；LUT 分解则独立减少每查询的查找表。
+ 
+ \subsection{地址映射与四字节打包}
+ 
+@@ -23,8 +23,9 @@ LUT 分解减少每查询的查找表；编码布局决定各 lane 如何取得
+ 
+ \subsection{打包访问省下什么、保持什么}
+ 
+-在源码层面，一个候选用一次 word load 取得四个编码，替代四次 byte load，然后在寄存器中移位和掩码解包。同一列表连续区间内，32 个 lane 请求逻辑上共 128 字节的 word 窗口。实际事务依赖对齐、活跃 lane 和内存层次。源码 load 操作减少四倍，不代表事务数或耗时也减少四倍。
+-
+-逻辑载荷仍是每候选 $M$ 字节；重排没有进一步压缩索引。逐字节和 word 两种方案本来就按子空间或子空间组组织扫描副本。因此，历史开关对照测量的是打包布局及其加载／解包路径的净影响，不是从候选优先布局进行物理转置的独立贡献，也不能唯一分离指令数、寻址和 cache 的效果。
++一次 word load 取得四个编码，随后在寄存器中移位与掩码解包。
++32 个连续位置的逻辑窗口为 128 字节，实际事务取决于对齐、活跃 lane 及内存层次。
++载荷仍为每候选 $M$ 字节。两种被测布局已按子空间组织，因此开关对照测试的是
++打包／加载／解包的综合效果，没有单独分离转置、指令或 cache 的贡献。
+ 
+ \Cref{sec:7-3}比较打包路径与逐字节路径的吞吐量、召回率及波动。
+diff --git a/zh/chapters/05-4-global-selection.tex b/zh/chapters/05-4-global-selection.tex
+index ea6c12d..7e926a0 100644
+--- a/zh/chapters/05-4-global-selection.tex
++++ b/zh/chapters/05-4-global-selection.tex
+@@ -1,4 +1,4 @@
+-主码筛选既需要暴露足够的 GPU 并行工作，又不能丢掉本应进入残差精排的候选。以查询为单位的扫描为每条查询启动一个 block；当 batch 很小时，即使每条查询访问大量向量，也只有少量 block 可供执行。GPU 上的选择操作本身就是一个重要的设计问题\cite{johnson_gpu}。分组扫描将已访问候选划分给多个 block，再合并各组保留的候选。它保证的是基于已计算主码分数的精确选择；IVF 路由和量化表示仍然具有近似性。
++查询级扫描仅为每条查询暴露一个 block。分组扫描将候选划分给多个 block 后合并保留结果，处理 GPU 选择问题\cite{johnson_gpu}。精确性针对已计算主码分数，路由与表示仍具有近似性。
+ 
+ \subsection{候选划分与确定性顺序}
+ 
+@@ -24,6 +24,7 @@
+ 
+ 用 $\operatorname{Top}_c(V)$ 表示将 $V$ 按 $K_q$ 排序后最前面的 $\min(c,|V|)$ 个候选，其中 $c=\max\{k,\lceil\alpha k\rceil\}$。每个独立组保留完整的局部 top-$c$，而不是分得一个 $c/\gscan$ 配额。这一区别不可省略：当 $c=4$、组数为二时，四个全局优胜候选可能全在同一组。如果每组只保留两个，即使总容量为四，仍会丢掉全局优胜候选。
+ 
++\begin{resultblock}
+ \begin{lemma}[局部缓冲区保留]
+ \label{lem:5-buffer}
+ 设 $V_t$ 为一个 block 截至 chunk $t$ 已评分的候选，$B_t$ 为该时刻完成压缩或过滤后的有效缓冲区。假设完整 key 固定、追加容量充足、压缩精确保留 top-$c$。令 $\beta_t$ 为截至该时刻读到的全部完整共享界的最小值，包含初始顶哨兵，则
+@@ -37,7 +38,9 @@
+ \begin{proof}
+ 空前缀满足不变量。新候选若未通过局部准入阈值，则已有 $c$ 个保留 key 排在它之前；这些前驱在之后的前缀中仍存在。共享界拒绝的候选均在 $\beta_t$ 之后。旧候选若已不属于前缀 top-$c$，前缀增长也不会改善其名次。因此，每个符合界的新前缀优胜候选，要么已经保留，要么获准追加。精确压缩不会丢弃它：在整个前缀中排在它之前的成员少于 $c$，缓冲区内也如此。过滤仅删除读到的界之后的 key。对追加、压缩及过滤归纳即得结论。若读取可能返回不同的旧发布值，必须使用历史读取的最小值表述不变量。
+ \end{proof}
++\end{resultblock}
+ 
++\begin{resultblock}
+ \begin{proposition}[覆盖与截断合并]
+ \label{prop:5-local-coverage}
+ 在固定 key 和共同全序下，设 $U$ 为已访问候选全集，$V$ 为任一保留子集。若 $\operatorname{Top}_c(U)\subseteq V\subseteq U$，则 $\operatorname{Top}_c(V)=\operatorname{Top}_c(U)$。有序列表两两合并且每轮截取前 $c$ 项保持这一结论。特别地，对互不相交的分组，有
+@@ -54,6 +57,7 @@
+ 
+ 对于合并，两个有序列表的前 $c$ 项就是二者并集的 top-$c$。被截去的候选在该并集中已经有至少 $c$ 个前驱，不可能再进入任何更大并集的 top-$c$。对合并树的各轮归纳即可得到结论。
+ \end{proof}
++\end{resultblock}
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -64,9 +68,10 @@
+ 
+ CUDA 实现在共享内存中维护容量为 $C_{\rm buf}$ 的 key 对缓冲区。扫描 block 含 $T_{\rm blk}$ 个线程，$C_{\rm buf}$ 为二的幂且满足 $C_{\rm buf}\geq c+T_{\rm blk}$。压缩操作通过 bitonic 网络排序，保留至多 $c$ 个有效条目；当有效条目达到 $c$ 个时，将最后一个保留 key 记为局部阈值。在此之前，阈值是排在所有有效 key 之后的哨兵。两次压缩之间，仅追加排在阈值之前的候选。即使后续候选继续到来，阈值对应的 $c$ 个见证候选仍使它成为已扫描前缀中最优 $c$ 项的安全上界。
+ 
+-每个 chunk 最多追加 $T_{\rm blk}$ 项。处理完一个 chunk 后，如果下一个 chunk 可能使缓冲区越界，就先压缩。压缩后至多剩下 $c$ 项，$C_{\rm buf}\geq c+T_{\rm blk}$ 保证容得下下一个 chunk；不压缩时，显式容量检查提供同样保证。该不变量防止溢出，也不限制一个线程可以遇到多少个有竞争力的候选。固定容量的逐线程保留缓冲区并不具有相同的覆盖保证。
+-
+-容量论证和精确 bitonic 压缩一起满足\Cref{lem:5-buffer}的实现前提。启用共享时，\Cref{prop:5-shared-bound}保证每个已读界不小于全局第 $c$ 个 key；因此，即使完整局部 top-$c$ 被过滤，引理仍保证该 block 保留自己负责的全部全局优胜候选，再由一般覆盖命题保证合并正确。
++每个 chunk 最多追加 $T_{\rm blk}$ 项；可能越界前先压缩至至多 $c$ 项，
++$C_{\rm buf}\geq c+T_{\rm blk}$ 保证下一块容量。这满足\Cref{lem:5-buffer}的容量前提，
++无需逐线程配额。共享时，\Cref{prop:5-shared-bound}保证已读阈值不小于全局第 $c$ 个 key，
++再由缓冲区引理与覆盖命题保证过滤及合并保留全局优胜候选。
+ 
+ 另一种方案是先将全部 $n_c$ 个分数／位置对写出，再调用独立选择器。这保持相同目标，但增加一个 $O(n_c)$ 中间数组及其写入。这里将打包主码的评分直接送入有界局部缓冲区，以重复局部排序换取 $O(\gscan c)$ 规模的中间输出。基于寄存器的选择也是已有的 GPU 设计\cite{johnson_gpu}；本轮实验以归档参考路径评估选定的扫描变体。
+ 
+diff --git a/zh/chapters/05-5-bound-scheduling.tex b/zh/chapters/05-5-bound-scheduling.tex
+index 8aeac37..62f738b 100644
+--- a/zh/chapters/05-5-bound-scheduling.tex
++++ b/zh/chapters/05-5-bound-scheduling.tex
+@@ -9,6 +9,7 @@
+ \end{equation}
+ 不足 $c$ 个有效候选时不得发布界。如果整个候选集合不足 $c$，任何组都无法发布这样的界，所有有效候选保持可接纳。
+ 
++\begin{resultblock}
+ \begin{proposition}[由见证界安全排除候选]
+ \label{prop:5-shared-bound}
+ 假设 key 固定，每次发布都有 $c$ 个互不相同的候选作为见证，每次读取返回初始哨兵或某个完整的已发布 key。仅在 $K_q(x)\succ\tau$ 时排除候选，不会删除任何全局 top-$c$ 成员，与发布时序无关。
+@@ -16,8 +17,10 @@
+ \begin{proof}
+ 每个已发布界都不小于 $K_{(c)}$，这些界的最小值也不小于 $K_{(c)}$。全局优胜候选满足 $K_q(x)\preceq K_{(c)}\preceq\tau$，因此不会被排除。较旧的界仍是上界，只会允许更多工作。此前的安全排除也不破坏后续发布的有效性：任意保留的 $c$ 个互不相同候选仍提供 $c$ 个见证，无论它们是否是该组最好的 $c$ 项。
+ \end{proof}
++\end{resultblock}
+ 
+-最后这一点很重要。启用共享后，一个组不必返回自己的完整局部 top-$c$：它可以丢掉局部有竞争力、但已被证明不可能进入全局结果的候选。正确性只要求各组输出的并集仍包含全部全局优胜候选，之后\Cref{prop:5-local-coverage}的截断合并论证仍适用。与共享界相等的候选继续有资格被接纳，包括建立该界的见证候选。实际接纳条件为
++共享可以删除已获证的全局非优胜局部候选，保留并集仍满足\Cref{prop:5-local-coverage}。
++与共享界相等的候选仍可接纳，实际条件为
+ \begin{equation}
+  K_q(x)\prec\lambda_j
+  \quad\text{and}\quad
+@@ -33,7 +36,7 @@
+  \kappa(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
+  \label{eq:5-packed-key}
+ \end{equation}
+-此时无符号整数比较与字典序一致。这依赖正零编码，并排除 NaN 和负分数；它不是通用的有符号浮点编码。正无穷排在有限分数之后，全一位模式的初始字又排在有效编码之后。无效位置不得用于发布界。这些是分数定义域与表示的前提，不能从 recall 不变推断出来。
++此时无符号整数比较与字典序一致。这依赖正零编码，并排除 NaN 和负分数；它不是通用的有符号浮点编码。正无穷排在有限分数之后，全一位模式的初始字又排在有效编码之后。无效位置不得用于发布界。
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -52,7 +55,9 @@ single-copy atomicity\cite{ptx_isa}，这些对齐64位操作在PTX层提供完
+ toolkit反汇编支持这一契约，但未捕获驱动JIT实际SASS；论证不单凭CUDA C++
+ \texttt{volatile}\cite{cuda_programming_guide}。
+ 
+-\Cref{fig:5-shared-bound}也明确了优化省下什么。每个被扫描候选仍读取主码，并计算完整主码分数。共享界避免一部分缓冲区追加、局部排序和中间写出，并缩短合并输入列表。它没有实现基于部分距离的提前终止，也没有减少完整主码评分的候选数量。收益还要抵消轮询和原子更新的开销；\Cref{sec:7-4}报告的配对加速范围中也包含轻微变慢的情况。
++每个候选在过滤前完成全部主码评分（\cref{fig:5-shared-bound}）。共享界节省追加、排序、
++中间写出和合并工作，但增加轮询及原子更新，不提供部分距离提前终止。
++\cref{sec:7-4}的净权衡也包括轻微变慢。
+ 
+ \subsection{在不改变预算的情况下选择并行度}
+ 
+@@ -82,6 +87,6 @@ toolkit反汇编支持这一契约，但未捕获驱动JIT实际SASS；论证不
+ 
+ Vogue 的调度路径与查询级路径比较中，每 1,000 条查询有 3--15 条仅主码并列成员不同，非并列差异为零，所有记录单元的最终输出均逐位一致。7--11 的较窄范围仅适用于 $n_{\rm probe}=128$。
+ 
+-预算实验进一步明确了校准与评测的区别：12 个持出配置中，十个在 batch 500（Stella 为 499）使用查询级扫描，两个 Vogue 配置使用四组。校准样本量 $S=128$ 时，八个配置使用两组，两个使用四组，两个仍为查询级路径，即 8/12 配置的校准与评测执行路径不同。分组选择主要服务较小 batch 和候选数偏斜的负载，并不存在普遍适用的 batch 256 分界。离线重计数与输入哈希记录在 \path{data/ch5/review-audit.json}。
++预算实验进一步明确了校准与评测的区别：12 个持出配置中，十个在 batch 500（Stella 为 499）使用查询级扫描，两个 Vogue 配置使用四组。校准样本量 $S=128$ 时，八个配置使用两组，两个使用四组，两个仍为查询级路径，即 8/12 配置的校准与评测执行路径不同。分组选择主要服务较小 batch 和候选数偏斜的负载，并不存在普遍适用的 batch 256 分界。
+ 
+ 该规则是启发式策略，不是 occupancy 计算，也不是延迟 oracle：它没有建模寄存器压力、共享内存驻留限制、与预算相关的压缩成本和合并成本。冻结的伪查询统计也可能无法代表未来查询。记录中的最大 regret 出现在 batch 256，此时某个固定组数方案约快 $1.217\times$。该设计组合候选并行扫描、带见证过滤和工作负载相关执行，并在固定精排预算下测量收益和 regret。后续残差精排与最终 top-$k$ 按\Cref{sec:5-6}消费这些有效候选。
+diff --git a/zh/chapters/05-6-refinement.tex b/zh/chapters/05-6-refinement.tex
+index 7545c1c..a102303 100644
+--- a/zh/chapters/05-6-refinement.tex
++++ b/zh/chapters/05-6-refinement.tex
+@@ -1,4 +1,4 @@
+-只有主码保留候选才访问残差码。这使系统先对 $n_c$ 个候选进行广泛而便宜的扫描，再执行较窄的 $O(cd)$ 评分阶段。如果对每个访问候选读取残差，坐标计算量将趋向 $O(n_cd)$。lane 协作加速已选候选，不负责决定精排预算。
++残差访问仅限于主码保留候选，将坐标工作从 $O(n_cd)$ 缩减到 $O(cd)$；lane 协作在固定预算下加速这一阶段。
+ 
+ \subsection{重建评分与查询相关常数}
+ 
+@@ -10,7 +10,7 @@
+  &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+  \label{eq:5-refined-constant}
+ \end{align}
+-第二个等式由展开平方范数得到。因此，该分数按平方距离对层次重建排序，但返回值还包含一个仅与查询有关的常数；它既不是直接计算的原始向量距离，也不是未平移的重建距离。该常数不影响固定查询的排序。即使按此分数精确选择，重建误差仍然存在\cite{jhq}。
++展开范数即得第二个等式。返回分数是重建平方距离加查询相关常数，保持排序但仍有重建误差\cite{jhq}。
+ 
+ 残差坐标使用子空间内共享的标量码本项。标量路径遍历每个候选的各维，累加与 $q'$ 的平方差。查询坐标及在容量允许时的残差码本会搬入共享内存，最后再加上已存的修正项和主码分数。
+ 
+@@ -31,7 +31,7 @@
+ 
+ \subsection{最终选择与数值边界}
+ 
+-当至少有 $k$ 个有效候选具有有限精排分数、且数据库 ID 唯一时，最终 kernel 按 $(\refineddist,\mathrm{database\ ID})$ 精确选择 top-$k$。每条查询一个 block，读入 $c$ 个分数后反复归约最小值，输出其 ID 和分数，再移除该分数进入下一轮。每轮扫描全部 $c$ 个槽位，没有固定的逐线程候选配额。该契约要求至少 $k$ 个有限有效条目。退化池中，选择器将已选分数设为无穷，但保留有效位置：有限条目用完后，最小的有效 ID 可能以无穷分数重复输出。全无效池则返回无效 ID 和无穷分数。这些情形超出本文评测使用的有限候选池契约。
++当至少有 $k$ 个有限分数的有效候选且 ID 唯一时，最终 kernel 按 $(\refineddist,\mathrm{database\ ID})$ 精确选择 top-$k$。每查询一个 block，读入 $c$ 个分数后反复归约最小值、输出 ID 与分数并移除该分数。每轮扫描全部 $c$ 个槽位，没有逐线程配额。退化池中，已选分数变为无穷而位置仍有效：有限条目耗尽后，最小有效 ID 可能以无穷重复输出。全无效池返回无效 ID 和无穷。本文评测满足有限条目契约。
+ 
+ 最终 ID 并列规则与主码保留使用的物理位置规则不同。精确的最终选择器不能找回路由或主码筛选丢掉的候选，也不能消除量化误差。多 lane 归约在选择前改变浮点结合顺序，因此即使实数公式不变，近似并列候选也可能发生排序变化。
+ 
+diff --git a/zh/chapters/05-gpu-execution.tex b/zh/chapters/05-gpu-execution.tex
+index a55a66d..ebd3962 100644
+--- a/zh/chapters/05-gpu-execution.tex
++++ b/zh/chapters/05-gpu-execution.tex
+@@ -1,7 +1,8 @@
+ % Chinese reading copy of the completed Chapter 5.
+-\chapter{面向表示的 GPU 搜索执行}
++\chapter{面向表示的 GPU 搜索}
+ \label{ch:gpu-execution}
+-本章回答 RQ2：如何使 JHQ 的压缩表示支持正确且高效的 GPU 执行。变换、Cartesian 主码码本及残差层次继承自 JHQ\cite{jhq}；这里关注它们的执行方式。论证沿查询路径，从路由到主码选择，再到残差评分。对每种机制，分别讨论数学目标、实现条件和资源权衡，对应测量见\Cref{ch:evaluation}。工作负载级精排预算选择则在\Cref{ch:refinement}单独展开。
++变换与主码／残差层次继承自 JHQ\cite{jhq}。本章发展 GPU 评分及计算分数选择；
++测量与预算选择见\Cref{ch:evaluation,ch:refinement}。
+ 
+ \section{查询路径与四种不同的排序对象}
+ \label{sec:5-1}
+diff --git a/zh/chapters/06-6-scope.tex b/zh/chapters/06-6-scope.tex
+index 375eb03..66958c6 100644
+--- a/zh/chapters/06-6-scope.tex
++++ b/zh/chapters/06-6-scope.tex
+@@ -1,12 +1,10 @@
+-复用要求索引、$k$、路由配置和查询群体足够稳定。改变索引或路由会改变校准目标；批次制度变化也可能经调度改变并列和算术。解释一致性要求有效且唯一的输出ID、留出GT质量与实测尾损失。复用还要求共同排序或配对枚举、重复计时，以及足以抵消校准成本的后续工作量（\cref{sec:6-3,sec:6-5}）。这些是适用条件；程序不会自动检测工作负载变化。
++复用要求索引、$k$、路由与查询群体稳定；批次相关调度可能改变并列及算术。
++有效且唯一的 ID、共同排序或配对枚举支撑决策（\cref{sec:6-3}），留出质量、
++尾损失和摊销成本决定实用性（\cref{sec:6-5}）。程序不会检测查询漂移。
+ 
+ 
+-对已观察的工作负载族，质量优先时采用全池校准，$S=128$ 则是校准更便宜、单独测量越阈风险的变体。调用方须显式设置所选 $\alpha$，并在相同索引、路由和 $k$ 下复用。贡献是无需标签的有限网格决策、针对该决策的有条件精确搜索，以及复用成本模型。第七章以固定预算及诊断oracle检验质量与速度，并在四个单元直接计时校准后的复用。
+-
+-补证轨迹内容及已完成的严格CPU参考见\cref{sec:a-supplement,sec:a-t4-t5}。
+-剩余检查为任意子集逐查询不变性、重新归档候选dump以供独立重排、Vogue跨进程差异及未来查询变化。
+-状态维护在\path{assessment/ch7-pending-experiments.txt}。
+-
++已观察的工作负载族支持 FULL 的质量覆盖，以及 $S=128$ 的较低校准成本。
++调用方须显式设置 $\alpha$。第七章评估固定预算／oracle 对照及四个直接复用测量。
+ 
+ 预算主实验及轨迹重跑均使用v69算术，OpenAI包含TF32。独立FP32敏感性测量搜索前沿，
+ 没有在FP32下重新校准或验证这些预算选择。
+diff --git a/zh/chapters/06-refinement.tex b/zh/chapters/06-refinement.tex
+index fbe18db..cdb2901 100644
+--- a/zh/chapters/06-refinement.tex
++++ b/zh/chapters/06-refinement.tex
+@@ -1,7 +1,7 @@
+-\chapter{工作负载级精排预算校准}
++\chapter{工作负载级预算校准}
+ \label{ch:refinement}
+-
+-第四、五章确立压缩索引及其 GPU 执行。本章回答 RQ3：一个工作负载需要多少精排工作，选择该预算能否收回校准成本。策略将无标签查询输出与较大预算参考比较，并跨批复用选定的乘数。本章分析接纳规则、有条件的选择定理、实验对照和摊销模型；第七章报告实测结果。
++策略通过无标签输出与大预算参考的一致性选择工作负载级精排倍率，并跨批复用。
++质量与校准成本约束这一复用。
+ 
+ \section{固定精排预算为何可能浪费}
+ \label{sec:6-1}
+diff --git a/zh/chapters/07-evaluation.tex b/zh/chapters/07-evaluation.tex
+index be2af5d..e20615e 100644
+--- a/zh/chapters/07-evaluation.tex
++++ b/zh/chapters/07-evaluation.tex
+@@ -1,41 +1,34 @@
+ % 中文阅读译稿；对应 chapters/07-evaluation.tex，不增加实验或结论。
+-\chapter{实验评估与研究发现}
++\chapter{实验评估}
+ \label{ch:evaluation}
+ \chaptermark{实验评估}
+ 
+-本章评价构建与容量（RQ1）、执行正确性与成本（RQ2）、留出预算质量与复用成本（RQ3），
+-以及跨系统搜索竞争区间（RQ4）。各实验组保留相应对照，\cref{sec:9-1}综合回答研究问题。
++实验考察构建与容量（RQ1）、执行（RQ2）、预算质量及复用成本（RQ3），以及搜索竞争区间（RQ4）。
+ 
+-\section{最终实验清单与对照实验组}
++\section{实验协议}
+ \label{sec:7-1}
+ 
+-证据涵盖系统前沿、组件消融、选择检查、预算校准以及构建／规模测量。\Cref{app:reproducibility}记录实现及运行来源，仓库补充材料保留完整实验分组清单。
++\subsection{比较协议与可复现性}
+ 
++数据、计时与比较分组沿用\cref{sec:3-2,sec:3-3,sec:3-5}。RTX 5090 主比较测量
++主机到主机稳态吞吐，构建与校准分别计时，各消融保留自身分组基线。
+ 
+-\subsection{证据分组与测量边界}
+ 
+-历史打包／精排消融和较新的v69/v71测量保留\cref{sec:3-5}定义的分组边界；
+-各加速比按\cref{sec:3-1}规定，在相应对照内解释。
+-
+-
+-\Cref{sec:3-2,sec:3-3}定义数据清单、环境与测量协议。主系统比较采用RTX 5090上的主机到主机稳态吞吐；构建与预算校准单独测量。
+-
+-作者的 CPU JHQ artifact 已用于单独归档的 CPU 实验，但未纳入 E1 前沿。十月访存局部性实验在 Vogue 上采用 1,024 个列表和 $[8,4]$ 级比特，而 E1 为 4,096 个列表及不同残差预算。较早 CPU CSV 还涉及本地重实现，CPU 审计笔记另记录了历史 recall 协议问题。这些记录能回答 CPU 内部问题，但没有提供本章协议匹配的 CPU/GPU 加速倍数。
++归档 CPU JHQ 结果不提供协议匹配的 CPU/GPU 加速倍数：十月局部性实验在 Vogue
++使用 1,024 个列表与 $[8,4]$ 级比特，而 E1 为 4,096 个列表及不同残差预算。
++较早 CSV 使用本地重实现，并有已记录的历史 recall 协议问题。
+ 
+ 自适应调用次数与辅助设备端计时见\cref{sec:a-e1-protocol}。
+ 
+-\subsection{指标与可复现性}
+-
+ 指标与前沿估计沿用\cref{sec:3-2,sec:3-4}；$\glut$与$\gscan$保留\cref{sec:5-1}中的不同含义。
+ 
+ 
+-数字表格和图件按\cref{sec:3-5}的清单流程从归档测量重新生成。\footnote{报告仓库提供 \path{scripts/build_ch7.py}、\path{data/ch7/audit.json}、\path{data/ch7/matched.csv} 和证据清单 \path{data/ch7/sources.csv}。脚本需要同级目录中包含归档测量的 \texttt{JHQ\_GPU} 仓库。}
++
+ 
+ 
+ \section{现代 GPU ANN 的召回率—QPS 前沿}
+ \label{sec:7-2}
+ 
+-本节通过定位共同召回率下的运行区间回答 RQ4，同时包含竞争方法更快的区间。
+ 
+ \subsection{比较范围与前沿构造}
+ 
+@@ -79,16 +72,16 @@ E1共1,590个有效点，没有失败记录、无效ID或行内重复标记。
+ \input{zh/tables/matched97}
+ \end{table}
+ 
+-相较于 CAGRA fp32，该目标下的插值比值从 arXiv 的 $1.317\times$ 到两个 OpenAI 数据集的 $1.747\times$ 不等。相较于 IVF-RaBitQ，对应数值分别为 $1.059\times$、$0.996\times$、$1.130\times$ 和 $1.157\times$。arXiv 的结果应视为接近平手：插值吞吐量略低，但实测阈值比较略高。如果将其表述为明确获胜，就会让插值约定获得超出测量本身所支持的证据权重。
++相较于 CAGRA fp32，该目标下的插值比值从 arXiv 的 $1.317\times$ 到两个 OpenAI 数据集的 $1.747\times$ 不等。相较于 IVF-RaBitQ，对应数值分别为 $1.059\times$、$0.996\times$、$1.130\times$ 和 $1.157\times$。arXiv 接近平手，方向取决于估计方法。
+ 
+ E1 同批单线程块测量把 RQ2 与这项 RQ4 结果连接起来。以 $\gscan=0$ 重建 Vogue 前沿，0.97 处相对 RaBitQ 的比值从 $1.059$ 降到 $0.933$；0.96处对应比值为$1.250$与$1.072$。两者使用相同运行—预算网格、batch 1,000及log-QPS插值规则。因此，这份网格中的有利方向依赖调度后的分组路径。每对保持索引、探针、预算和最终输出不变；它测的是集成路径，未单独隔离共享界的贡献。
+ 
+ 
+-在有共同覆盖的比较中，目标召回率 0.90--0.985 范围内，JHQ 相对 CAGRA fp32 的插值优势约为 $1.10$--$2.44\times$。但是，加入 CAGRA int8 后，低召回率区间的解释发生变化：在 0.90--0.92 附近，其低精度图搜索可以快于 JHQ。在更高召回率下，IVF-RaBitQ 常重新领先，包括若干 0.98 及以上目标。在 arXiv 约 0.99 的召回率处，记录网格中的 CAGRA fp32 也快于 JHQ。因此，可被证据支持的结论是：JHQ 在部分有价值的区间具有竞争力，尤其是中高召回率附近，而不是全面优于现代 GPU ANN 方法。
++在有共同覆盖的比较中，目标召回率 0.90--0.985 范围内，JHQ 相对 CAGRA fp32 的插值优势约为 $1.10$--$2.44\times$。但是，加入 CAGRA int8 后，低召回率区间的解释发生变化：在 0.90--0.92 附近，其低精度图搜索可以快于 JHQ。在更高召回率下，IVF-RaBitQ 常重新领先，包括若干 0.98 及以上目标。在 arXiv 约 0.99 的召回率处，记录网格中的 CAGRA fp32 也快于 JHQ。JHQ 的有利区间同时受到目标召回率与竞争表示的限制。
+ 
+ CAGRA int8 在 Vogue、arXiv、OpenAI-1536 和 OpenAI-3072 上的最高实测召回率分别为 0.9453、0.9620、0.9667 和 0.9683，因此这些网格中没有达到 0.97 的配置。按相同插值规则，目标召回率 0.90--0.92 处，它约比 JHQ 快 $1.20$--$1.98\times$；在 arXiv 的 0.95 和两个 OpenAI 数据集的 0.94 处也仍然更快。0.97 的结果针对具有测量覆盖的方法，不能推广为低于 0.97 的每个目标均领先。
+ 
+-网格稀疏时，两种估计可能有明显差异。例如，OpenAI-1536 在召回率 0.97 处相对 CAGRA fp32 的比值，插值为 $1.747\times$，而按满足阈值的实测点计算为 $2.294\times$。后一个数值包含了基线下一个超过阈值的测量点所付出的代价，不能将其表述为在完全相同召回率下直接测得的同等幅度优势。配套匹配表保留两种估计，并标明没有覆盖的目标，使读者能够区分真实的运行区间结果与参数采样带来的影响。
++网格稀疏时，两种估计可能有明显差异。例如，OpenAI-1536 在召回率 0.97 处相对 CAGRA fp32 的比值，插值为 $1.747\times$，而按满足阈值的实测点计算为 $2.294\times$。实测估计支付基线下一个达标点的成本，两种估计之间的差距揭示网格敏感性。
+ 
+ \input{zh/chapters/07-supp-precision}
+ 
+@@ -113,7 +106,7 @@ OpenAI对照来自Qdrant DBpedia的\texttt{text-embedding-3-large}语料族，
+ \section{笛卡尔查找表、打包加载与 lane 协作精排}
+ \label{sec:7-3}
+ 
+-针对 RQ2，消融区分了保持表示不变的查找表、加载改动与协作式残差评分，并同时测量内核效果和整体应用效果。
++RQ2 消融同时测量内核与应用效果。
+ 
+ T4在128探针、$\alpha=100$下比较Vogue、arXiv和OpenAI-3072的相同候选。
+ 整表与$16+16$表中，22.6--26.1\%候选评分的FP32比特模式不同，最大相对误差
+@@ -124,7 +117,7 @@ $4.64\times10^{-7}$。Vogue有2--4/256条查询的末端ID不同，arXiv／OpenA
+ 
+ \subsection{查找表的精确因子化及其吞吐量影响}
+ 
+-因子化及资源成本已在\cref{sec:5-2}推导；本节测量其吞吐量后果及FP32排名影响。
++LUT 消融检验\cref{sec:5-2}的成本模型及 FP32 排名影响。
+ 
+ 
+ \Cref{fig:7-lut} 比较六个数据集上的笛卡尔查找表分组，探针数为 8/32/128/512、固定 $\alpha=100$，以及 $\glut\in\{1,2,4,8\}$。每个变体有五轮计时；除 Stella 使用 999 条查询外，批大小均为 1,000。在 24 个单元中，两组查找表有 22 个取得最高吞吐量中位数。例外是 arXiv 的 128 探针配置，单组约快 0.23\%；以及 OpenAI-3072 的八探针配置，四组约快 0.84\%。这些小差异更适合视为接近平手。新版统计是 22/24，而不是历史 ADC 论文中的 23/24。
+@@ -137,7 +130,7 @@ $4.64\times10^{-7}$。Vogue有2--4/256条查询的末端ID不同，arXiv／OpenA
+ \label{fig:7-lut}
+ \end{figure}
+ 
+-两组相对单组的吞吐量比值为 $0.998$--$1.914$。四组与八组都只需总计 16 个表项，但查表次数和粒度不同。这构成了有用的对照：在两组设计的基础上进一步缩小表存储，并不必然提高搜索性能。额外的索引计算与累加工作可能超过存储节省带来的收益。测量建立的是净收益与开销之间的权衡；缺少独立的占用率或指令计数实验，就不能将某个硬件因素认定为唯一原因。任一四变体单元内，报告的最大召回率差为 $10^{-4}$。
++两组相对单组的吞吐量比值为 $0.998$--$1.914$。四组与八组均存储 16 项，却需要更多查表及加法，说明更小的表不一定提高吞吐；占用率与指令成本尚未单独隔离。任一四变体单元内，报告的最大召回率差为 $10^{-4}$。
+ 
+ \subsection{打包访存与协作式残差评分}
+ 
+@@ -160,16 +153,15 @@ $4.64\times10^{-7}$。Vogue有2--4/256条查询的末端ID不同，arXiv／OpenA
+ \input{zh/tables/refinement}
+ \end{table}
+ 
+-在被测用例中，仅改变加载的对照与 L0 逐位一致，但已使 arXiv 吞吐量提高至 $1.368\times$。lane 协作进一步缩短了精排时间。在 arXiv 的 $\alpha=100$ 配置上，精排内核由 4,277.5 降至 716.8\,$\mu$s，即 $5.97\times$ 的内核加速，但整体吞吐量只提高至 $1.789\times$。OpenAI-3072 的精排内核加速为 $8.81\times$，整体吞吐量则为 $1.171\times$。这与 Amdahl 定律一致：加速一个较小阶段，并不能消除路由、筛选、最终选择或传输的成本。这也说明了随后扫描与探针实验的动机——继续处理剩余工作。
++在被测用例中，仅改变加载的对照与 L0 逐位一致，但已使 arXiv 吞吐量提高至 $1.368\times$。lane 协作进一步缩短了精排时间。在 arXiv 的 $\alpha=100$ 配置上，精排内核由 4,277.5 降至 716.8\,$\mu$s，即 $5.97\times$ 的内核加速，但整体吞吐量只提高至 $1.789\times$。OpenAI-3072 的精排内核加速为 $8.81\times$，整体吞吐量则为 $1.171\times$。剩余路由、筛选、选择与传输成本限制应用收益。
+ 
+ 定量 Amdahl 检验使用基线精排内核时间占主机到主机基线延迟的比例 $f$，以及内核加速比 $s$；若其余耗时不变，整体估计为 $1/(1-f+f/s)$。arXiv 和 OpenAI-3072 的比例约为 0.529 和 0.168，对应估计 $1.787\times$ 和 $1.175\times$，接近实测 $1.789\times$ 和 $1.171\times$。它结合了单独的内核剖析与墙钟测量，只是机制解释的估计。
+ 
+-协作归约改变了浮点加法顺序。被测多 lane 变体的距离差异很小，最大报告相对误差约为 $1.6\times10^{-6}$，但排序边界附近偶有结果变化。因此，证据支持的是数值接近、且具有实测端到端收益的评分，而不是无条件的逐位等价。Sanitizer 检查在较小查询子集上覆盖了记录中的精排和 top-$k$ 内核；这些是有用的实现检查，并不是对任意输入的证明。
++协作归约改变了浮点加法顺序。被测多 lane 变体的距离差异很小，最大报告相对误差约为 $1.6\times10^{-6}$，但排序边界附近偶有结果变化。Sanitizer 在较小查询子集上检查记录中的精排与 top-$k$ 内核。这些检查和数值容差界定证据范围，多 lane 评分并非普遍逐位一致。
+ 
+ \section{全局 top-c、共享界与探针选择的正确性及消融}
+ \label{sec:7-4}
+ 
+-\Cref{sec:4-6}的早期表示 pilot 另行检查了码本结构、全行修正项及采样返回分数。这些检查补充下文的查询选择比较，两者均不能替代原始输入重编码或完整放置参考。
+ 
+ \Cref{sec:4-6}核查存储表示，本节评价查询选择及其成本。
+ 
+@@ -192,7 +184,7 @@ $4.64\times10^{-7}$。Vogue有2--4/256条查询的末端ID不同，arXiv／OpenA
+ 
+ \subsection{精确探针选择与流水线一致性的边界}
+ 
+-当筛选变快后，IVF 探针选择在小批次时间中的占比会提高。基数探针原语（v69）改变了选取最小质心评分的实现，保留此前算分制度；OpenAI包含TF32 GEMM（\cref{sec:7-precision}）。其合成检查覆盖 1,792 个用例，失败数为零。在真实 arXiv、Vogue 和 OpenAI-3072 工作负载上，检查发现全部 1,000 条查询的探针标识符相同，主码 top-$c$ 位置与距离也相同。这比“召回率数字没有变化”更具体，因为它直接检查了路由和筛选输出。
++当筛选变快后，IVF 探针选择在小批次时间中的占比会提高。基数探针原语（v69）改变了选取最小质心评分的实现，保留此前算分制度；OpenAI包含TF32 GEMM（\cref{sec:7-precision}）。其合成检查覆盖 1,792 个用例，失败数为零。在真实 arXiv、Vogue 和 OpenAI-3072 工作负载上，检查发现全部 1,000 条查询的探针标识符相同，主码 top-$c$ 位置与距离也相同。
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -202,16 +194,20 @@ $4.64\times10^{-7}$。Vogue有2--4/256条查询的末端ID不同，arXiv／OpenA
+ \input{zh/tables/probe}
+ \end{table}
+ 
+-\Cref{tab:7-probe} 显示端到端吞吐量提高至 $1.034$--$1.167\times$。批大小为 8 时，剖析得到的探针阶段在 arXiv 上从 56.5 降至 22.6\,$\mu$s，在 Vogue 上从 52.7 降至 14.7\,$\mu$s，在 OpenAI-3072 上从 77.8 降至 16.7\,$\mu$s。大批次下，未修改阶段占整体耗时比例更高，因此整体收益较小符合预期。这些是各自实验组内部的比值，不能把它们与前面的 v62 或精排收益相乘，仿佛所有测量都共享同一个基线。
++\Cref{tab:7-probe} 显示端到端吞吐量提高至 $1.034$--$1.167\times$。批大小为 8 时，剖析得到的探针阶段在 arXiv 上从 56.5 降至 22.6\,$\mu$s，在 Vogue 上从 52.7 降至 14.7\,$\mu$s，在 OpenAI-3072 上从 77.8 降至 16.7\,$\mu$s。未修改阶段限制大批次收益，各分组比值与前述消融采用不同基线。
+ 
+-Vogue 区分了探针原语与跨进程流水线可复现性。在一组、批大小 8 的测试中，两种二进制的探针/主码 dump 对全部 1,000 条查询逐字节相同，但最终召回率为 0.9642 与 0.9644。同一个基线二进制也从一致性运行中的 0.9642，变成之后两次计时运行中的 0.9644。因此，观察到的变化并不需要探针改动才能发生；在 dump 控制的用例中，它出现在已记录主码选择边界之后。残差表示、输入和评分计算仍是可能来源，根因尚未确定。在各被检进程内部，调度与单线程块输出仍逐位一致。附录~\ref{app:reproducibility}明确了 dump 的覆盖范围，避免将其当作对每条计时路径的检查。
++Vogue 的一组、batch 8 测试中，两种二进制的探针／主码 dump 在全部 1,000 条查询上
++逐字节一致，但最终 recall 为 0.9642／0.9644。同一基线也从一致性运行的 0.9642
++变成两次计时中的 0.9644。因此，不改探针也会出现差异；在 dump 控制情形下，
++差异位于主码选择之后，根因仍未解决。各已查进程内，调度与单 block 输出逐位一致；
++dump 覆盖见\cref{app:reproducibility}。
+ 
+ 最后，可选的 v70 FP16 实验属于另一项近似。在 arXiv 的 936/1,000 条、Vogue 的 979/1,000 条、OpenAI-3072 的 998/1,000 条查询上，其探针集合与v69参考完全相同，平均集合重叠率很高。但高重叠率和很小的召回率变化，并不能使该原语变成精确操作。这些结果不纳入主要 E1 前沿，也不纳入精确探针选择结论。
+ 
+ \section{留出查询上的预算质量、吞吐量与回本}
+ \label{sec:7-5}
+ 
+-策略及其单调充分条件见\Cref{ch:refinement,prop:6-monotonicity}。本节 RQ3 考察相对可信固定预算的质量和摊销成本。因此，比较同时包含沿用的 $\alpha=100$ 与更强的统一固定对照 $\alpha=64$。
++RQ3 将\cref{ch:refinement}的策略与固定 $\alpha=100$ 及更强的统一固定对照 $\alpha=64$ 比较。
+ 
+ \subsection{无标签选择与使用标签的诊断性 oracle}
+ 
+@@ -219,25 +215,17 @@ Vogue 区分了探针原语与跨进程流水线可复现性。在一组、批
+ 不相交查询池和每个样本大小64次抽样沿用\cref{sec:3-2}。
+ 
+ 
+-使用\cref{sec:6-2}定义的网格与参考结果，实验在以下条件下接纳预算：
+-\begin{equation}
+- D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+- \left(10-|\mathcal R_\alpha(q)\cap\mathcal R_{200}(q)|\right),
+- \qquad D_S(\alpha)\leq 1.
+- \label{eq:7-agreement}
+-\end{equation}
+-参考一致性与GT召回率的关系沿用\cref{sec:6-2}中的界定。
++所有规则变体使用\cref{eq:6-agreement}，取 $k=10$、$\epsilon=1$。
+ 
+ 
+-oracle使用留出标签，FULL则对全部校准查询应用无标签规则（\cref{tab:6-controls}）。
++FULL 使用全部校准查询，诊断 oracle 使用留出标签（\cref{tab:6-controls}）。
+ 
+ 
+ \subsection{全池校准作为质量优先工作点}
+ 
+ 全池校准每个单元使用全部 500 条校准查询一次。选中预算在 12/12 单元均满足 $10^{-3}$ 留出损失目标，最大观测损失为 0.0006；速率为 GT oracle 的 0.908--1.000，校准为 9.5--60.3\,ms。相对固定 100 的几何平均速率比为 $1.111\times$，仅计该对照也达标的十项则为 $1.193\times$。完整比较见\Cref{tab:7-budget-full}。相对固定 64，全池选择六项更快、两项相等、四项更慢，其主要优势是十二项质量目标均观测达标。
+ 
+-因此，FULL是这些单元的回顾性质量优先工作点，$S=128$为较低成本替代；
+-统计解释范围仍见\cref{sec:6-2}。
++这些单元支持 FULL 的质量覆盖与 $S=128$ 的较低校准成本；统计范围见\cref{sec:6-2}。
+ 
+ 
+ \begin{table}[tbp]
+@@ -250,7 +238,7 @@ oracle使用留出标签，FULL则对全部校准查询应用无标签规则（\
+ 
+ \subsection{低成本采样及其质量风险}
+ 
+-\Cref{tab:7-budget-quality} 给出了 $S=128$ 的结果。十二个单元中，所选预算的中位数有十个与 oracle 预算一致；不一致的两个是 arXiv 的 128 探针配置和 OpenAI-3072 的 512 探针配置。所选预算跨越 4--200，显示出明显的工作负载依赖。然而，预算中位数与平均召回率描述的是抽样总体的不同方面，二者不一定对应某一个配置的性能。此外，表中平均召回率由日志打印的最佳召回率减去打印的平均损失重构，所以保留到四位小数的值是近似值。
++\Cref{tab:7-budget-quality} 给出了 $S=128$ 的结果。十二个单元中，所选预算的中位数有十个与 oracle 预算一致；不一致的两个是 arXiv 的 128 探针配置和 OpenAI-3072 的 512 探针配置。所选预算跨越 4--200，显示出明显的工作负载依赖。预算中位数与平均 recall 未必对应同一配置；后者由打印的最佳 recall 减平均损失重构，四位小数仅为近似。
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -260,7 +248,7 @@ oracle使用留出标签，FULL则对全部校准查询应用无标签规则（\
+ \input{zh/tables/budget_quality}
+ \end{table}
+ 
+-一个重要反例是 arXiv。在 128 探针下，即使平均损失仅为 0.0009，仍有 40/64 次抽样的召回率损失超过 $10^{-3}$；512 探针下有 32/64 次超标。BGE 的 512 探针配置有 24/64 次超标，95 分位损失为 0.0014。Stella 超标次数较少，但两个探针数下的 95 分位损失均为 0.0030。因此，平均质量、超标频率与尾部损失幅度必须一起看。OpenAI-3072 在这些抽样中未观察到超标，这支持其在当前查询池上的有利表现，却不是对未见查询的零风险保证。
++一个重要反例是 arXiv。在 128 探针下，即使平均损失仅为 0.0009，仍有 40/64 次抽样的召回率损失超过 $10^{-3}$；512 探针下有 32/64 次超标。BGE 的 512 探针配置有 24/64 次超标，95 分位损失为 0.0014。Stella 超标次数较少，但两个探针数下的 95 分位损失均为 0.0030。OpenAI-3072 在这一有限池中未观察到超标。平均损失、越阈频率和尾部幅度区分这些结果。
+ 
+ 按\cref{sec:a-budget-contract}中的较低次序统计量约定（从零起算第59项），四个非零尾部损失可与
+ $L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区别。
+@@ -269,7 +257,7 @@ $L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区
+ \begin{figure}[tbp]
+ \centering
+ \includegraphics[width=0.82\linewidth]{ch7/budget_risk.pdf}
+-\caption[不同样本大小的留出风险]{不同样本大小下的留出风险。纵轴为相对最佳被测预算，留出召回率损失超过 $10^{-3}$ 的校准抽样百分比。由于\cref{eq:7-agreement}始终保持阈值一，增加 $S$ 也收紧了允许的槽位不一致比例。}
++\caption[不同样本大小的留出风险]{不同样本大小下的留出风险。纵轴为相对最佳被测预算，留出召回率损失超过 $10^{-3}$ 的校准抽样百分比。由于\cref{eq:6-agreement}始终保持阈值一，增加 $S$ 也收紧了允许的槽位不一致比例。}
+ \label{fig:7-budget-risk}
+ \end{figure}
+ 
+@@ -280,9 +268,13 @@ $L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区
+ 八个单元校准到评测的换路涉及预算迁移，区别于本项核查。
+ 
+ 
+-八个固定选项中，$\alpha=64$和100各有10/12单元达到诊断性质量目标，200则为12/12。在各自达标单元中，相对诊断oracle的最大QPS缺口分别为26.6\%、40.9\%与57.1\%。完整八档比较保留在仓库补充材料。全校准池校准也不等于 oracle：在 Vogue 两个探针数下，它均选择 100，而 oracle 选择 64。即使增加校准样本，基于输出一致性的选择与“质量约束下最快”的选择仍解决不同问题。全校准池耗时为 9.5--60.3\,ms。在这十二个单元中，$\alpha=200$ 达到最高实测召回率，因此作为高预算覆盖对照；12/12 达标不是独立的质量保证。短固定臂计时出现表面的小预算反转；补证交替重复将所引OpenAI反转解释为
+-计时变化，并建立小预算平台（\cref{sec:7-budget-trace}）。最小接纳预算是质量决策，
+-不保证为测得最快的预算。
++八个固定选项中，$\alpha=64$ 和 100 各有 10/12 单元达标，200 为 12/12；
++各自达标单元相对诊断 oracle 的最大 QPS 缺口为 26.6\%、40.9\%、57.1\%。
++Vogue 的两个探针数下，FULL 选 100 而 oracle
++选 64，说明参考一致性与质量约束下最快选择具有不同目标。此处 $\alpha=200$
++达到最佳实测 recall，12/12 达标来自其覆盖对照的定义。
++短计时中的 OpenAI 小预算反转经交替重复被解释为计时变化，并形成低预算平台
++（\cref{sec:7-budget-trace}）；最小接纳预算未必使吞吐最大。
+ 
+ 
+ \subsection{估计吞吐量与校准经济性}
+@@ -305,20 +297,15 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置
+ \end{table}
+ 
+ 按\cref{sec:a-budget-contract}的计时边界，校准成本为3.9--21.3\,ms。
+-对于相同大小的后续批次，
+-\begin{equation}
+- B^*=\frac{T_{\rm cal}}{T_{100}-T_{\rm rule}},\qquad
+- T_{\rm rule}<T_{100}.
+- \label{eq:7-payback}
+-\end{equation}
+-使用 $T_{\rm rule}\approx n/\overline Q_{\rm rule}$ 得到\cref{tab:7-budget-cost}中的估计：有利单元相对固定 100 约需 2.4--55.4 个留出池大小的后续批次。相对固定 64，九个有利单元约需 5.7--404.3 批，Vogue 的 512 探针配置没有吞吐量回本。两个 arXiv 对照也未满足质量目标，因此其计时比较是诊断，不是同质量比较。按对照速率换算，$S=128$ 的最大正回本估计相对固定 100 为 0.54\,s、相对固定 64 为 2.72\,s，约 27.7K 和 202.2K 查询。全池正收益项按自身校准成本计算，对应最多 1.52/2.25\,s、64.9K/78.7K 查询。这些较短的模型时域支持长稳定任务复用，估计使用每批500条留出查询，Stella为499条。
++对固定 $\alpha=100$ 应用\cref{eq:6-payback}，取毫秒单位的 $T_{\rm rule}\approx1000n/\overline Q_{\rm rule}$，得到\cref{tab:7-budget-cost}中的估计：有利单元相对固定 100 约需 2.4--55.4 个留出池大小的后续批次。相对固定 64，九个有利单元约需 5.7--404.3 批，Vogue 的 512 探针配置没有吞吐量回本。两个 arXiv 对照也未满足质量目标，因此其计时比较是诊断，不是同质量比较。按对照速率换算，$S=128$ 的最大正回本估计相对固定 100 为 0.54\,s、相对固定 64 为 2.72\,s，约 27.7K 和 202.2K 查询。全池正收益项按自身校准成本计算，对应最多 1.52/2.25\,s、64.9K/78.7K 查询。这些模型时域支持长稳定任务复用。
+ 
+ 
+ 这些估计沿用\cref{sec:6-5}分析的平均速率倒数与稳定复用假设；
+ 下文直接执行核查它们在归档查询流上的净成本含义。
+ 
+ 
+-作为历史比较，较早的标量精排实现（v57）在 10/12 个单元中报告相对固定 100 的 $1.054$--$2.773\times$ 收益，校准耗时为 5.2--30.8\,ms。较新的 lane 精排流水线收益更小，与可节省精排时间减少的解释相容。两次运行共享预算协议和网格，但跨实验比较并未隔离证明精排是变化的唯一原因。
++较新的 lane 精排流水线比历史标量实现保留更少的可消除精排工作。
++各次运行共享预算协议与网格，但跨实验比较没有隔离精排作为变化的唯一原因。
+ 
+ \input{zh/chapters/07-supp-budget}
+ 
+@@ -354,11 +341,11 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置
+ \input{zh/tables/scheduling}
+ \end{table}
+ 
+-\Cref{tab:7-scheduling} 从原始计时数组重新计算结果。批大小为 8、32、256 和 1,000 时，调度收益的几何平均分别为 $2.727\times$、$2.356\times$、$1.057\times$ 和 $1.015\times$。前三种批大小有十三个配置，其中包含额外的 arXiv 高预算配置；批大小 1,000 只有十一个，因为 Stella 的 999 条查询池无法组成一个完整的 1,000 查询批次。对应的留出配置子集分别含九个和七个配置。因此，将这些均值连接起来的图总结的是运行区间，而不是完全平衡的重复测量总体。
++\Cref{tab:7-scheduling} 从原始计时数组重新计算结果。批大小为 8、32、256 和 1,000 时，调度收益的几何平均分别为 $2.727\times$、$2.356\times$、$1.057\times$ 和 $1.015\times$。前三种批大小有十三个配置，含高预算 arXiv 对照；batch 1,000 只有十一个，因为 Stella 仅有 999 条查询。留出配置子集含九个和七个，故连线均值对应部分不同的配置集合。
+ 
+-固定八组在批大小 8 时的均值接近调度结果，但在批大小 1,000 时降至 $0.886\times$。调度大体保留了小批次收益，并避免上述大批次损失。不过，它仍是启发式规则，不是 oracle。批大小 256 时，在一个 BGE 配置上，“最佳固定吞吐量 / 调度吞吐量”的最差比值为 1.217。候选数 CV 无法描述列表遍历、选择或合并的全部成本。这一失败表明所选特征存在局限，并不说明执行调度没有必要。
++固定八组在批大小 8 时的均值接近调度结果，但在批大小 1,000 时降至 $0.886\times$。调度大体保留了小批次收益，并避免上述大批次损失。批大小 256 时，在一个 BGE 配置上，“最佳固定吞吐量 / 调度吞吐量”的最差比值为 1.217。候选数 CV 无法描述列表遍历、选择或合并的全部成本。
+ 
+-Vogue 同时说明偏斜特征的价值与局限。E1 候选数 CV 随探针数在 0.338--0.622 变化，使批大小 1,000 仍采用四组。集成路径相对单线程块的比值为 0.895--1.175；在 $(n_{\rm probe},\alpha)=(16,16)$、$(16,64)$、$(32,64)$ 时变慢，比值依次为 0.955、0.895、0.955。候选数离散程度没有编码每条查询的绝对工作量，因此规则可能给这些低探针配置增加开销，同时又支撑\cref{sec:7-2}中 0.97 的跨系统领先。这与 BGE 批大小 256 的 regret 互补：平衡工作和支付分解成本是两项不同的调度决策。
++Vogue 同时说明偏斜特征的价值与局限。E1 候选数 CV 随探针数在 0.338--0.622 变化，使批大小 1,000 仍采用四组。集成路径相对单线程块的比值为 0.895--1.175；在 $(n_{\rm probe},\alpha)=(16,16)$、$(16,64)$、$(32,64)$ 时变慢，比值依次为 0.955、0.895、0.955。候选数离散程度没有编码每条查询的绝对工作量，因此规则可能给这些低探针配置增加开销，同时又支撑\cref{sec:7-2}中 0.97 的跨系统领先。两项失败都暴露出 CV 特征未覆盖的分解成本。
+ 
+ 最后，正确性检查独立于计时。在 250 个变体/配置比较、234,320 次逐查询比较中，集成实验未发现非并列主码选择差异，也未发现最终标识符集合差异。在并列情况下，最终顺序可能不同，因而不能将整个实验描述为无条件逐位一致。吞吐量结果针对顺序同步提交，不足以建立开放到达过程下的尾延迟表现。
+ 
+@@ -369,8 +356,8 @@ Vogue 同时说明偏斜特征的价值与局限。E1 候选数 CV 随探针数
+ 
+ \subsection{冷构建与生命周期边界}
+ 
+-主要搜索扫描复用了已训练状态缓存。加载该状态并添加向量不属于冷构建。独立日志明确在训练状态缓存为空时训练，然后编码并添加数据库；\cref{tab:7-build-memory}给出这些记录中的训练与添加时间。补证重复沿用空训练缓存边界，\cref{tab:7-build-memory}改报每数据集三次正常构建
+-中位数。六数据集完整重复记录保留在仓库补充材料，下文用范围与采样峰值解释构建边界。
++与缓存搜索扫描不同，\cref{tab:7-build-memory}采用每数据集三次正常空缓存训练／添加
++重复。
+ Vogue训练298--303\,ms，正常合计约0.56\,s，归档1.33\,s（含1.056\,s训练）为一次偏慢观测；
+ Stella为10.54--10.65\,s，接近历史10.40\,s。
+ 
+@@ -382,11 +369,9 @@ Stella为10.54--10.65\,s，接近历史10.40\,s。
+ \input{zh/tables/build_memory}
+ \end{table}
+ 
+-构建与启动区间分别沿用\cref{sec:3-3,sec:a-e1-protocol}定义的生命周期边界。
++构建与启动边界沿用\cref{sec:3-3,sec:a-e1-protocol}；\cref{fig:7-build}比较这些重复与基线配置。
+ 
+ 
+-\Cref{fig:7-build}并列JHQ正常构建重复与基线配置范围。
+-如图注所示，RaBitQ构建函数计时不含搜索前必需的序列化往返。
+ 
+ 
+ \begin{figure}[tbp]
+@@ -396,7 +381,7 @@ Stella为10.54--10.65\,s，接近历史10.40\,s。
+ \label{fig:7-build}
+ \end{figure}
+ 
+-在 Stella 上，CAGRA int8 成功的隔离构建按图出度不同，包含数据集量化后约为 74.55 和 82.45\,s；IVF-PQ 三个配置的实测构建中位数为 86.59\,s。在报告边界内，JHQ重复10.54--10.65\,s的区间明显更短，但不能据此证明它在所有条件下构建最快，也不能证明后续召回率相同。构建速度、可搜索质量与常驻成本是部署时需要分别考虑的维度。
++在 Stella 上，CAGRA int8 成功的隔离构建按图出度不同，包含数据集量化后约为 74.55 和 82.45\,s；IVF-PQ 三个配置的实测构建中位数为 86.59\,s。在报告边界内，JHQ 重复的 10.54--10.65\,s 明显更短；后续质量与常驻成本分别评估。
+ 
+ 
+ 每数据集固定128探针工作点的五次独立构建中，最大recall范围为arXiv的0.0012；正常计时范围只取三次无阶段插桩构建。较宽启动边界的差别明显：Stella热输入页18.2--18.6\,s，本会话首次读取129.9\,s。
+@@ -472,18 +457,9 @@ arXiv与LUT接近平手的结论仍保持较窄解释。
+ \subsection{精确性必须限定到具体阶段}
+ \label{sec:7-recall-attribution}
+ 
+-\Cref{tab:5-query-stages}区分评分与选择目标；第5章各阶段契约界定相应精确性声明的范围。
++\Cref{tab:5-query-stages}的阶段契约区分计算分数选择与原始空间 kNN；lane 舍入、截断并列与进程变化限定不同阶段。
+ 
+ 
+-因此，上文的lane舍入、截断并列与跨进程现象限定的是不同阶段。
+-实数公式不变并不建立原始空间精确kNN。
+ 
+ 
+ 归档重建 pilot 测量了相对全探针重建评分的剩余差距。七个工作负载—预算变体各用 128 条查询，全部 probe 候选的 FP64 评分相对所选预算的 GPU 输出，recall 增益为 0--0.002344。在 arXiv 的 128 探针配置，$\alpha=200$ 与全 IVF 重建答案集合在全部 128 条查询上一致；100 时 recall 为 0.9734375，全 IVF 为 0.9750，即在联合路由／重建缺口 0.0250 之外，再有 0.0015625 的预算缺口（\cref{sec:6-2}）。这些是 pilot 特定的总体差异，七个变体包含同一数据集—探针工作负载的两个预算。FP64 重建评分也不同于 GPU 运算，因而不能在每个变体中单独隔离纯预算效应。进一步分开路由与表示，需要逐阶段 GT 覆盖检查。
+-
+-\subsection{研究发现的适用范围}
+-
+-结果支持面向表示的执行模式与工作负载相关精排工作量，并分别提供正确性、速度和质量证据。第八章讨论跨层认识与负结果，\cref{sec:9-1}综合回答RQ1--RQ4。
+-
+-
+-结论适用于平方 L2 的 top-10 搜索、记录查询池与被测 RTX 5090 环境。跨设备行为、变化查询、在线更新与开放到达服务延迟尚未测试。这些边界与正面结果共同呈现，而不是取代正面发现。
+diff --git a/zh/chapters/07-supp-budget.tex b/zh/chapters/07-supp-budget.tex
+index 23597bb..be9a119 100644
+--- a/zh/chapters/07-supp-budget.tex
++++ b/zh/chapters/07-supp-budget.tex
+@@ -9,7 +9,7 @@
+ 2,304条采样不一致曲线均单调，选择全部与枚举一致；十二条全池曲线也通过两项
+ 检查。进一步，将全池逐查询计数按各次实际样本ID求和，18,432个网格计数全部
+ 复现。这比只核对最终预算更强，支持在这些观测中使用\cref{eq:6-finite-pool}，
+-包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。十二单元的逐抽样最大损失完整矩阵保留在仓库补充材料。
++包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。
+ 
+ 
+ $S=128$时，arXiv/512最大损失0.0050、BGE/512为0.0046；$S=32$最大达0.0294。
+diff --git a/zh/chapters/08-1-insights.tex b/zh/chapters/08-1-insights.tex
+index 1ac78c7..5660ce2 100644
+--- a/zh/chapters/08-1-insights.tex
++++ b/zh/chapters/08-1-insights.tex
+@@ -1,43 +1,33 @@
+ \subsection{有价值的表示暴露有价值的复用单位}
+-\Cref{fig:7-lut}的分组结果表明，仅缩小状态不足以决定最佳评分器。
+-复用单位是查询相关坐标组：其距离按\cref{sec:5-2}构造一次，再供多个候选使用。
+-
+-
+-\Cref{sec:5-2,sec:5-3}中的共享内存转变和word访问成本要求联合考虑存储、指令与复用。
+-例外LUT单元及下文Mailman案例反驳普遍的最小表规则；两组是该设备上的经验默认，
+-而非跨设备最优。
+-
+-
+-\Cref{sec:5-2}的兼容条件限制了这种机会：改善码本重建可能失去执行优势。
+-因此，应把评分器与残差层次可达的recall--成本前沿和重建误差一起评价。
+ 
++\cref{sec:5-2}的坐标组 LUT 将计算所得距离复用于多个候选；但分组结果与 Mailman
++表明，仅节省存储不足以决定吞吐（\cref{fig:7-lut}）。共享内存放置与 word 访问须联合
++考虑（\cref{sec:5-2,sec:5-3}）；两组是该 GPU 上的经验默认。码本改变可能破坏
++Cartesian 兼容性，因此需将重建误差与评分器可达的 recall--成本前沿共同评价。
+ 
+ \subsection{有效并行受重复状态与选择成本限制}
+-\Cref{fig:7-batch}的批次趋势反映可用并行度与重复状态／选择工作的取舍。
+-查询级并发充足后，staging、局部缓冲与合并可吞掉额外block的收益，
+-因此最大occupancy本身不是合适的目标。
+-
+ 
+-Vogue依赖路径的前沿与BGE调度regret（\cref{sec:7-2,sec:7-6}）
+-把执行设计连接到竞争区间，也暴露CV的局限：它描述不均衡，却不含绝对工作量及staging／merge成本。
+-整体路径比较仍区别于单独共享界消融。
+-
+-
+-工程上应保留query-centric路径，并同时依据可用并行度与单查询预计工作选择分组。
+-候选数、survivor容量和局部缓冲成本是更丰富决策的候选输入。
+-拟合选择器还需留出工作负载与校准成本核算，目前观察未验证这类选择器。
+-现有启发式的价值也在于其收益与失败单元可以分别复查。
++\cref{fig:7-batch}的批次趋势反映查询并发充足后，重复暂存、选择与合并的成本。
++Vogue 的路径相关前沿与 BGE 的 regret 暴露 CV 未描述的绝对工作量及分解成本
++（\cref{sec:7-2,sec:7-6}）。这些集成比较仍与单独共享界消融分开。
++更丰富的调度器可以结合候选数、保留容量与局部缓冲成本，同时保留查询级路径；
++其校准成本与留出工作负载性能仍需评测。
+ 
+ \subsection{执行变快会改变避免精排的价值}
+-降低预算省去残差读取、计算与最终选择，路由和广泛primary评分仍保留。
+-可省比例取决于这些操作原本占多少延迟。更快的lane精排可能降低减少候选的回报，
+-更快primary扫描则可能提高精排的相对占比。二者都不会改变丢弃特定候选的质量后果。
+-
+-这是成本模型推论，而非每项历史／新版预算差异的因果解释。
+-因果测试应固定预算决策和候选集合，只改变精排内核。
+-跨实验比较与直接复用测量见\cref{sec:7-5,sec:7-stream-cost}。
+-
+ 
+-\Cref{tab:7-budget-full,fig:7-budget-risk}中的FULL工作点和采样尾风险说明，
+-校准投入应对应质量要求与预计复用。单独优化选择器，或仅报告有利的所选配置均值，
+-不足以完成该工程决策。
++考虑延迟模型：非精排成本固定为 $T_0>0$，高／低预算精排时间满足
++$F_h\geq F_\ell>0$，共同精排时间倍率为 $0<\eta\leq1$。低预算加速比及其导数为
++\begin{align}
++ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
++ \label{eq:8-refinement-sensitivity}\\
++ \frac{\partial S}{\partial\eta}
++ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
++ \frac{\partial S}{\partial T_0}
++ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
++\end{align}
++当 $F_h>F_\ell$ 时，精排加快降低削减预算的收益，固定成本降低则提高该收益。
++模型固定了非精排工作；预算相关扫描维护和资源阈值仍需实测。
++因果内核比较应固定候选集合及预算决策（\cref{sec:7-5,sec:7-stream-cost}）。
++
++FULL 结果与采样尾部说明，该成本决策还需质量约束及足够复用
++（\cref{tab:7-budget-full,fig:7-budget-risk}）。
+diff --git a/zh/chapters/08-2-negative.tex b/zh/chapters/08-2-negative.tex
+index 4aa19bb..595e0a8 100644
+--- a/zh/chapters/08-2-negative.tex
++++ b/zh/chapters/08-2-negative.tex
+@@ -25,7 +25,7 @@ pilot只写出primary分数，没有返回最终近邻。FP32/FP64检查揭示cu
+ \captionof{figure}[Mailman 与面向排序编码]{两种不同证据边界。左：RTX 5090、128 probe、Vogue、arXiv、OpenAI-3072和
+ 两种batch下，最快Mailman评分器／packed表评分器速度，全部小于1。
+ 右：arXiv的400查询FP64离线测试划分中，满足原JHQ recall目标的最小survivor数。
+-候选减少不是GPU提速；两图均由论文audit脚本从归档记录重新生成。}
++候选减少不是GPU提速。}
+ \label{fig:8-negative}
+ \end{minipage}\par\medskip
+ 
+@@ -47,5 +47,5 @@ arXiv测试集中，中位数阈值把达到原目标所需的最小被测surviv
+ 残差导入相同搜索流水线，分别扫预算，再按实测recall阈值比较。
+ 在arXiv原$\alpha=100$目标，batch 8和1,000的比值约为1.40和1.21。
+ Vogue median前沿最高0.9630，未达到原工作点0.9644；OpenAI-3072基本持平。
+-这修正了“从未做GPU测试”的笼统表述，同时保留不采用通用替代的决定。
++这些收益仍依赖具体工作负载。
+ 跟进使用独立索引状态、查询池和三轮协议，不能把其吞吐插入E1。
+diff --git a/zh/chapters/08-discussion.tex b/zh/chapters/08-discussion.tex
+index 306ec7d..6708b00 100644
+--- a/zh/chapters/08-discussion.tex
++++ b/zh/chapters/08-discussion.tex
+@@ -1,10 +1,7 @@
+-\chapter{讨论、局限与未来研究}
++\chapter{讨论与未来工作}
+ \label{ch:discussion}
+-\chaptermark{讨论与未来研究}
+-测量支持结构化编码、选择性精排与工作负载相关执行的一种具体组合。
+-更广泛的价值在于解释：表面上更便宜的操作，何时能变成更快的搜索。
+-本章提出三项解释，分析两条未能支持普遍采用的路线，再把局限转化为可检验的问题。
+-沿用\cref{sec:3-6}对实测效果、原因解释与未来扩展的区分。
++\chaptermark{讨论与未来工作}
++
+ \section{三项跨层认识}
+ \label{sec:8-1}
+ \input{zh/chapters/08-1-insights}
+diff --git a/zh/chapters/09-conclusion.tex b/zh/chapters/09-conclusion.tex
+index 26a5d70..5452344 100644
+--- a/zh/chapters/09-conclusion.tex
++++ b/zh/chapters/09-conclusion.tex
+@@ -1,7 +1,6 @@
+ \chapter{结论}
+ \label{ch:conclusion}
+-JHQ-GPU展示如何把结构化量化层次转化为有用的GPU搜索流水线，
+-以及为什么执行与精排工作量需要联合评估。四个研究问题得到具体且有边界的答案。
++
+ \section{四个研究问题的答案}
+ \label{sec:9-1}
+ \paragraph{RQ1：构建与容量。}
+@@ -38,9 +37,5 @@ batch 32 的边界依赖 recall 估计（\cref{sec:7-smallbatch}）。排名因
+ 
+ \section{系统原则与展望}
+ \label{sec:9-2}
+-最终原则是在明确质量目标下联合评估表示、执行与工作量。
+-表更小可能工作更多，分组更多可能重复工作，精排更少可能牺牲最重要近邻。
+-负结果解释数学复用和更低重建误差为何未必改善搜索前沿。
+-下一步应检验复用校准信息能否以更低总成本提供有效风险控制，以及显式残差放置
+-能否在可接受尾延迟下扩展容量（\cref{sec:8-4}）。这些是假设，来自已测局限，
+-不是当前系统已经提供的能力。
++表示、执行与精排工作量必须在同一质量目标下评价。后续应检验复用校准信息能否
++降低有效风险控制的成本，以及残差放置能否在尾延迟预算内扩展容量（\cref{sec:8-4}）。
+diff --git a/zh/declaration.tex b/zh/declaration.tex
+index ae6cf5a..dfdee11 100644
+--- a/zh/declaration.tex
++++ b/zh/declaration.tex
+@@ -1,29 +1,9 @@
+-\frontchapter{研究来源与工具使用说明}
++\paragraph*{研究与AI协助。}
++\phantomsection
+ \label{front:provenance}
+-本论文呈现\thesisauthor{}在\thesissupervisor{}指导下开展的COMP8800 JHQ-GPU项目。
+-
+-底层JHQ表示及主码／残差层次归属于Jiabao Han、Mengxuan Zhang和Goce Trajcevski
+-\cite{jhq}。IVF、乘积量化、已有GPU选择／合并技术和基线软件保留所引作者归属。
+-Rui Luo与Mengxuan Zhang为相关项目手稿的共同作者\cite{adc_artifact}；
+-作者顺序不表示具体个人分工。本论文扩展正确性论证、测量、补证核查及失败设计讨论。
+-\Cref{sec:1-5,tab:1-contributions}说明本项目与手稿的关系并对应技术贡献。
+-
+-\paragraph{生成式AI协助。}
+-项目记录支持以下用途；工具按产品名标识，不据此推断具体模型版本。
+-\textbf{OpenAI Codex}协助中英文写作修改、LaTeX、图件、分析脚本、源码／日志核查、
+-离线数值检查和PDF编译\cite{ai_codex_record}。
+-\textbf{ChatGPT}提供涉及证据、范围和实验设计的框架及章节审阅\cite{ai_chatgpt_record}。
+-\textbf{Anthropic Claude}协助实现、实验自动化和审阅；补证记录涉及构建、表示／精度核查、
+-预算轨迹、严格选择及小批次基线\cite{ai_claude_record}。部分Codex真实提示词及产物对应保留于
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}。
+-这是部分记录：其中没有完整ChatGPT／Claude原始会话，也没有归档较早交互的时间戳与模型版本。
+-共同手稿另行披露Claude／ChatGPT对实现、实验程序、
+-图件和写作的协助，保留该手稿的版本范围。
+-
+-\paragraph{可追溯性与责任。}
+-源码历史、运行记录和分析清单说明材料来源。\path{scripts/}保留分析代码，
+-\path{assessment/}记录接受及纠正的审阅建议，代码仓库的
+-\path{experiments/thesis_evidence/}保留补证记录。
+-附录\ref{app:reproducibility}和\ref{app:supplementary}说明实验契约及支撑证据，
+-参考文献标注继承方法。这些材料描述保留的工作流程，不等于完整交互导出或个人签署。
+-提交文本、归属标注与结论解释的责任由论文作者承担。
++本文扩展与 Mengxuan Zhang 合作的 JHQ-GPU 工作\cite{adc_artifact}，并以 JHQ 为基础\cite{jhq}。
++OpenAI Codex 协助实质性起草、修改、LaTeX、分析及代码／日志核查\cite{ai_codex_record}；
++ChatGPT 提供框架和审阅\cite{ai_chatgpt_record}；Anthropic Claude 协助实现、实验及审阅\cite{ai_claude_record}。
++部分提示词与使用详情见
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{AI 使用记录}。
++论文作者对提交主张负责。
+diff --git a/zh/preamble.tex b/zh/preamble.tex
+index 32a2ae3..87c0b38 100644
+--- a/zh/preamble.tex
++++ b/zh/preamble.tex
+@@ -59,10 +59,10 @@
+ \clubpenalty=10000
+ \raggedbottom
+ % Match the English thesis's result-figure placement.
+-\renewcommand{\topfraction}{0.90}
+-\renewcommand{\bottomfraction}{0.85}
+-\renewcommand{\textfraction}{0.10}
+-\renewcommand{\floatpagefraction}{0.75}
++\renewcommand{\topfraction}{0.95}
++\renewcommand{\bottomfraction}{0.90}
++\renewcommand{\textfraction}{0.05}
++\renewcommand{\floatpagefraction}{0.70}
+ \setcounter{topnumber}{3}
+ \setcounter{totalnumber}{4}
+ \makeatletter
+@@ -79,7 +79,7 @@
+ \newtheorem{corollary}[proposition]{推论}
+ \crefname{corollary}{推论}{推论}
+ \Crefname{corollary}{推论}{推论}
+-\theoremstyle{definition}
++\theoremstyle{thesis}
+ \newtheorem{definition}[proposition]{定义}
+ \renewcommand{\proofname}{证明}
+ 
+@@ -113,7 +113,7 @@
+ \newcommand{\lrefine}{\ell_{\mathrm{ref}}}
+ 
+ % Chinese reading-copy names; labels and numbering follow the English draft.
+-\renewcommand{\bibfont}{\raggedright}
++\renewcommand{\bibfont}{\small\raggedright}
+ \crefname{figure}{图}{图}
+ \Crefname{figure}{图}{图}
+ \crefname{table}{表}{表}

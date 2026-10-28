@@ -786,10 +786,10 @@
       "chapters/06-3-search.tex": 650,
       "chapters/06-4-controls.tex": 179,
       "chapters/06-5-economics.tex": 277,
-      "chapters/06-6-scope.tex": 145,
+      "chapters/06-6-scope.tex": 108,
       "chapters/06-refinement.tex": 62
     },
-    "total": 2234,
+    "total": 2197,
     "method": "prose/captions only; table bodies, math, labels, citations and macro names excluded; not an official count"
   },
   "limitations": [
@@ -2242,12 +2242,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
     },
     {
       "repository": "8800_report",
@@ -2302,12 +2302,12 @@
     {
       "repository": "8800_report",
       "path": "references.bib",
-      "sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265"
+      "sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
     },
     {
       "repository": "8800_report",
       "path": "appendices/a-reproducibility.tex",
-      "sha256": "e1719f401b185962532eda4a0c443d6e1b9588d3e58dc82ade6cd8d4527960fd"
+      "sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5"
     },
     {
       "repository": "8800_report",
@@ -2367,7 +2367,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/06-6-scope.tex",
-      "sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267"
+      "sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
     },
     {
       "repository": "8800_report",
@@ -2402,7 +2402,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-6-scope.tex",
-      "sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c"
+      "sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
     },
     {
       "repository": "8800_report",

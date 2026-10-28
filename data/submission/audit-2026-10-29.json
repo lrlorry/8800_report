@@ -15,22 +15,22 @@
     "NA": 4
   },
   "pdf": {
-    "english_pages": 84,
-    "english_chapters_pages": 68,
-    "chinese_pages": 81,
-    "english_prose_and_abstract_estimate": 24293,
+    "english_pages": 83,
+    "english_chapters_pages": 67,
+    "chinese_pages": 80,
+    "english_prose_and_abstract_estimate": 24124,
     "abstract_estimate": 186,
     "figures": 26,
     "tables": 31,
     "word_scope": "九章及摘要文字／图注；表体和数学除外；不是学校官方计数",
     "fonts": {
-      "entries": 48,
+      "entries": 47,
       "all_embedded": true,
       "type3": 0
     },
     "words_outside_page": 0,
-    "english_sha256": "9d1ca9e9ca905677d759015b9ce4e5b2cac24323377be43e562a2ba9cca53aef",
-    "chinese_sha256": "ef15f496adad0fbd376ffe86b8a4e2466d607950965413d51ca7095a6ca07b8d"
+    "english_sha256": "192983af31b2953bb83188775354a0e97140ee032ce1f95310c652ee4874768b",
+    "chinese_sha256": "75a171e6385f19f9144efaf2ef422a1a1f455bc3c0fae7626f20a69a47fd8a95"
   },
   "code": {
     "local_commit": "19135c965a2cfccf469efb6b75029a268c7c3b5b",
@@ -251,7 +251,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "同口径工具估算24,293词；九章及摘要文字／图注，排除表体和数学。",
+      "evidence": "同口径工具估算24,124词；九章及摘要文字／图注，排除表体和数学。",
       "action": "这不是课程官方字数认证；若Canvas有独立计数规则，须按其重计。"
     },
     {
@@ -266,7 +266,7 @@
         "S05",
         "S09"
       ],
-      "evidence": "英文84页，其中九章68页、前置7页、书目3页、附录6页；未发现强制页数上限。",
+      "evidence": "英文83页，其中九章67页、前置7页、书目3页、附录6页；未发现强制页数上限。",
       "action": "第一章三行尾页已处理；保留正常章节尾页，不为60页删独有证据。"
     },
     {
@@ -321,7 +321,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "docs/ai-use-record.md及JSON已保存11条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
+      "evidence": "docs/ai-use-record.md及JSON已保存12条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
       "action": "作者补可恢复的原始交互和使用位置；未知日期／版本如实标未知；不编造prompt。"
     },
     {
@@ -909,7 +909,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "bbox检查0词越物理页；84页缩略图及数学页巡查无明显裁切／空图／重叠。",
+      "evidence": "bbox检查0词越物理页；83页缩略图、数学页及内部路径扫描无明显裁切／空图／重叠。",
       "action": "缩略图巡查不是逐句语言校对或正式可访问性认证。"
     },
     {
@@ -1178,7 +1178,7 @@
     }
   ],
   "checks": {
-    "local_input_hashes": 1792,
+    "local_input_hashes": 1848,
     "v71_bundle_files": 209,
     "review_bundle_files": 131,
     "cited_keys": 39,
@@ -1188,7 +1188,7 @@
     ],
     "undefined_refs": [],
     "duplicate_labels": [],
-    "visual_scope": "84-page contact-sheet overview and readable checks of all six statement/proof pairs in each language; not full sentence proofreading or student-personal verification",
+    "visual_scope": "Full compiled-text scan for internal workflow references in both PDFs; readable checks of changed front matter, Chapter 3, bibliography and appendix pages; retained proof-layout checks; not full sentence proofreading or student-personal verification",
     "isolated_checks": [
       "evidence/review/check.py --run-audits",
       "evidence/ch5/v71/check.py",
@@ -1202,13 +1202,14 @@
       "audit_synthesis.py"
     ],
     "isolated_numeric_table_changes": [],
-    "candidate_file_fingerprints": 183,
+    "candidate_file_fingerprints": 188,
     "candidate_fonts_type3": 0,
     "identical_scientific_assets": 86,
     "font_only_pdf_exports": 1,
     "hash_count_scope": "All current data/* inputs entries, including the refreshed candidate fingerprints and compression audit",
     "compression_audit": "scripts/audit_compression.py --check-copies; data/compression/audit.json",
-    "mathematical_typography": "12 statement/proof pairs retained verbatim; six per language kept on one page with headings and first proof lines within 1pt of the 27mm left margin"
+    "mathematical_typography": "12 statement/proof pairs retained verbatim; six per language kept on one page with headings and first proof lines within 1pt of the 27mm left margin",
+    "internal_workflow_paths_visible": 0
   },
   "inputs": [
     {
@@ -1217,15 +1218,15 @@
     },
     {
       "path": "README.md",
-      "sha256": "bee5c5cc49b090fef37fbff0b42cc50b1b499a362bc55f7aeab8b8665b332cde"
+      "sha256": "2ee9cba73ead75028a5dde74c8c984be4d76a24a91ed8980c4b08fdea89ed2c0"
     },
     {
       "path": "appendices/a-reproducibility.tex",
-      "sha256": "e1719f401b185962532eda4a0c443d6e1b9588d3e58dc82ade6cd8d4527960fd"
+      "sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5"
     },
     {
       "path": "appendices/b-supplementary.tex",
-      "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
+      "sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
     },
     {
       "path": "assessment/adc-revision-response.txt",
@@ -1245,7 +1246,7 @@
     },
     {
       "path": "assessment/compression-edits.json",
-      "sha256": "757b783b20ab4917b9d33dee8385d569fe8efe468e3c6f0ec9aa9311a788df29"
+      "sha256": "6b6603efb75456095d1544843c56dc11f81e461b8186253c4179748f7a54d747"
     },
     {
       "path": "assessment/compression-review-response.txt",
@@ -1268,6 +1269,10 @@
       "sha256": "69630b472ff5b4e269a1dc50de8dc868ddd207c4d07269923464c798a7114584"
     },
     {
+      "path": "assessment/internal-reference-edits.json",
+      "sha256": "a118fa12dbc98bad144ae976337d65944261f75aeb5f845b7d916b750c8f0994"
+    },
+    {
       "path": "assessment/layout-reflow-2026-10-29.txt",
       "sha256": "d0e3190e0890746303f2aa4211dcbb9660b2eb9c831989d7d3b8a4a7de961cdf"
     },
@@ -1277,11 +1282,11 @@
     },
     {
       "path": "assessment/submission-audit-2026-10-29.txt",
-      "sha256": "c1b81bd7ce07078e78172c247b1ca090d002b98e7bb2bfb186870a0893d06bb5"
+      "sha256": "750306c303503a397f0157632b50bd6e85e363bef80c9eab10e00bf940a0d526"
     },
     {
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "fd23e679fc29b6171a6fc43524030606a21c717d1750d04ef0556c41e0ee35d8"
+      "sha256": "c661be95d41e37f8fff5e02cd43a407ff8cd7f813386c5a2a23e4b40c6fcb00a"
     },
     {
       "path": "assessment/targeted-curation-review.md",
@@ -1357,7 +1362,7 @@
     },
     {
       "path": "chapters/03-2-data.tex",
-      "sha256": "d4098eb45fd144f04cf41d7982fc13df445237bed9a24d64e6de72175ffa17c0"
+      "sha256": "e36022336d1cd6c3c11b0a945d77367d86818d553f4281e25970c94d3330bfaa"
     },
     {
       "path": "chapters/03-3-measurement.tex",
@@ -1369,7 +1374,7 @@
     },
     {
       "path": "chapters/03-5-ledger.tex",
-      "sha256": "0a95d68edd431bf914cd384fc5926645d45cb78b8f9b0ba3c23f5ecb70fda066"
+      "sha256": "1067b2f6095bae7df11cf77449dc662d4e80a03a57e35e8a12e51470b6f9d551"
     },
     {
       "path": "chapters/03-6-validity.tex",
@@ -1377,7 +1382,7 @@
     },
     {
       "path": "chapters/03-methodology.tex",
-      "sha256": "8fc2f73725813f1baa5e3766436f133ac2648aade23340991a970b0057a8b07c"
+      "sha256": "972e4803c07e5dc1db3722abd0e9850ebd25af985ce3ad3bce7209ad5712781e"
     },
     {
       "path": "chapters/04-1-boundaries.tex",
@@ -1385,7 +1390,7 @@
     },
     {
       "path": "chapters/04-2-training.tex",
-      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
+      "sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
     },
     {
       "path": "chapters/04-3-layout.tex",
@@ -1393,7 +1398,7 @@
     },
     {
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
+      "sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
     },
     {
       "path": "chapters/04-5-construction.tex",
@@ -1401,7 +1406,7 @@
     },
     {
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
+      "sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
     },
     {
       "path": "chapters/04-architecture.tex",
@@ -1421,11 +1426,11 @@
     },
     {
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
+      "sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
     },
     {
       "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
+      "sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5"
     },
     {
       "path": "chapters/05-6-refinement.tex",
@@ -1461,7 +1466,7 @@
     },
     {
       "path": "chapters/06-6-scope.tex",
-      "sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267"
+      "sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
     },
     {
       "path": "chapters/06-refinement.tex",
@@ -1469,11 +1474,11 @@
     },
     {
       "path": "chapters/07-evaluation.tex",
-      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
     },
     {
       "path": "chapters/07-supp-budget.tex",
-      "sha256": "a8e8aad088e789d765e638c3a37730a8ac47f24fb6b14b71202a76f699c358a9"
+      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
     },
     {
       "path": "chapters/07-supp-precision.tex",
@@ -1493,7 +1498,7 @@
     },
     {
       "path": "chapters/08-2-negative.tex",
-      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+      "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
     },
     {
       "path": "chapters/08-3-validity.tex",
@@ -1529,43 +1534,43 @@
     },
     {
       "path": "data/ch3/audit.json",
-      "sha256": "1bf66c7b53ddf7a8f5c0457fd936231de130547fd0787682b010067e28c53fcd"
+      "sha256": "9dc402d2f6b01717279fe0faae7187cab85f2d749547dbe3d8abab8e1322200c"
     },
     {
       "path": "data/ch4/audit.json",
-      "sha256": "162f79987b90efd3c8f9f3227933a25c48d6e2317a43baa1f1def554e659a27f"
+      "sha256": "49b9184c09bc0ddfbf17fd0dee3ef1957e19894f97c6de3c5b5eeba10f1e0349"
     },
     {
       "path": "data/ch6/audit.json",
-      "sha256": "f68ba775c966dd7e1834ec8c8020a7a66e643827fab6af08ba7365e7d8208bf0"
+      "sha256": "32cb4989cc0418c1d1024272d77ff9f376fb5f3a6e7a0e97b207b778b995e70b"
     },
     {
       "path": "data/ch7/round2-audit.json",
-      "sha256": "4d5722b986f7561ac625f22d850072fb2e820b3b55df6b38587913fa97242535"
+      "sha256": "e1a5d2e1c4f9a5cba82b791f770dfb710eec639c3817f683ca32c8820e0cfaba"
     },
     {
       "path": "data/ch8/audit.json",
-      "sha256": "dc7c2315d49654cd012a2ee237a29c85076f3487b8dd8f4c7499201463fdc632"
+      "sha256": "cc59cca01dac1ca4dfbe4786a8ca62836ed36dac651e84e8eb581d10b6cbe07e"
     },
     {
       "path": "data/compression/audit.json",
-      "sha256": "fb161f31c87ef3f6455ffa2270f8dc8cb3225db6675fb722ab40f8a2a6c98bbc"
+      "sha256": "b285c6eaf30c6dee04752e19e0fd012f6d155ce02a4ec6d611870241edc5008a"
     },
     {
       "path": "data/deduplication/audit.json",
-      "sha256": "58be87574794af7083d06bf5eb75d109d8ec053f56629d0087399f4aa6d09e3e"
+      "sha256": "39591210118e3362449ada363845271cb7399edabf2828cd59a45f141b24b45a"
     },
     {
       "path": "data/full-review/audit.json",
-      "sha256": "2293c9c11b7f92d8c043da4174da5e0218f966eefd91c70c9b45d0b3befd04bf"
+      "sha256": "dee9596cfa19fd999ad925ecc4111006c972e0a19b139e79c5fdc3e2dc71fc17"
     },
     {
       "path": "data/submission/ai-use-record.json",
-      "sha256": "f0733b88324709d2590ff659c5a9a3b34a179991c5347e1bae3a9037749ff220"
+      "sha256": "bdb80fd06415f5b6f0e9530bcfd8b5f03db53e3fae8588ff899287e7d9a42caf"
     },
     {
       "path": "data/synthesis/audit.json",
-      "sha256": "4cbaa348d498a468d04871c1f3ce5c02229cce5829748eb24ff0b21aafffa261"
+      "sha256": "0c665e114e07d0f69c5c9f037f8a3d4b25da08ffbf6436490fadb2a913303ea5"
     },
     {
       "path": "data/synthesis/primary-sources.json",
@@ -1573,11 +1578,11 @@
     },
     {
       "path": "data/t4-t5/audit.json",
-      "sha256": "eb9c8147a2b088435d617dcfd025ecbee9cabede53d19f619aac21d03f56081a"
+      "sha256": "80f3c8adb8582e2f2395a32fd540a6015b35ec77c7898d99d46fc789289f22db"
     },
     {
       "path": "docs/ai-use-record.md",
-      "sha256": "1f3ed403c92459983549d808e1eaf9f393d73820b0aeb840b4711b383e6e88f4"
+      "sha256": "0e953bf8099b53496f23819aba83167b8d9364bceecfc6dcf6a46506e93bb632"
     },
     {
       "path": "docs/artifact-access.md",
@@ -1614,6 +1619,14 @@
     {
       "path": "evidence/editorial/03775b7/zh/tab-4-lifetimes.tex",
       "sha256": "87208ae9007b6a98d3f99f606eb2488a3fb88fb86815faa51b8b94a67dd9e007"
+    },
+    {
+      "path": "evidence/editorial/2d9d2aa/compression-from-03775b7.patch",
+      "sha256": "286c236d86effa1bff59a09b5ee4c44f5b9004e9c9b7f2a3acc35470bff3258c"
+    },
+    {
+      "path": "evidence/editorial/2d9d2aa/internal-reference-cleanup.patch",
+      "sha256": "8ba171e2fe84cdea1371b57fb9d1b01539b400b1532718c63fb0928f07a59e47"
     },
     {
       "path": "evidence/editorial/a047ee8/adc-abstract.txt",
@@ -1669,7 +1682,7 @@
     },
     {
       "path": "frontmatter/declaration.tex",
-      "sha256": "098ff409691558142ae72890a649739f2856968d2890130ade5f72b751242d9c"
+      "sha256": "375b7a6d29814182c0f6e39288972f6cf978f4bdef0202623a5248af2dd3d0ce"
     },
     {
       "path": "frontmatter/notation.tex",
@@ -1689,15 +1702,15 @@
     },
     {
       "path": "references.bib",
-      "sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265"
+      "sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
     },
     {
       "path": "scripts/audit_compression.py",
-      "sha256": "bb5d18370e5fb4dba297e8fcd1a758d9a129de8fbde67bf407d9aeee19f2547b"
+      "sha256": "1edf78ff5336143249211842385a8f5fb79ebf4b48ad9b54622e011752b428e9"
     },
     {
       "path": "scripts/audit_deduplication.py",
-      "sha256": "6d380e5a0634e333f47aa5d538e140f25d210ad79dc7aa8293953209bac02d95"
+      "sha256": "827ba97dc35fd3a3891efe619ea46c2fa7245f4f3ab6aae9b56b017a037e5084"
     },
     {
       "path": "scripts/audit_synthesis.py",
@@ -1709,15 +1722,19 @@
     },
     {
       "path": "thesis-zh.pdf",
-      "sha256": "ef15f496adad0fbd376ffe86b8a4e2466d607950965413d51ca7095a6ca07b8d"
+      "sha256": "75a171e6385f19f9144efaf2ef422a1a1f455bc3c0fae7626f20a69a47fd8a95"
     },
     {
       "path": "thesis.pdf",
-      "sha256": "9d1ca9e9ca905677d759015b9ce4e5b2cac24323377be43e562a2ba9cca53aef"
+      "sha256": "192983af31b2953bb83188775354a0e97140ee032ce1f95310c652ee4874768b"
     },
     {
       "path": "zh/acknowledgements.tex",
       "sha256": "91047d57c147608809cc2e6ce91f7b93aab9712a625104984e7c6128c7e0c840"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
     },
     {
       "path": "zh/chapters/01-1-context.tex",
@@ -1781,7 +1798,7 @@
     },
     {
       "path": "zh/chapters/03-2-data.tex",
-      "sha256": "d295f7573038b3c04faf76db58d3fc63a8e4171aff9e8f7fbdc6cfacb4ea605e"
+      "sha256": "aee423dc4dfdc672f1586941c11c63660f3fdabaf55aba8c84e56eb78d146d60"
     },
     {
       "path": "zh/chapters/03-3-measurement.tex",
@@ -1793,7 +1810,7 @@
     },
     {
       "path": "zh/chapters/03-5-ledger.tex",
-      "sha256": "13a7ad64a8780c1eb8685d76768e5a9ca8c9d40a88dd2c941dabf54bab96729f"
+      "sha256": "8ef399cdd64568fa4211c0ae306118c1f399b0cc82485c28c305e8a05b503c36"
     },
     {
       "path": "zh/chapters/03-6-validity.tex",
@@ -1801,7 +1818,7 @@
     },
     {
       "path": "zh/chapters/03-methodology.tex",
-      "sha256": "bdffb18fe5f16899bb483edf7e7a0ddf8a6373316795197df2f137535d490acb"
+      "sha256": "8ad37d66ba24ba8d7adf19e350b25464db5b4deabfd478c12dcfa026f6661e4e"
     },
     {
       "path": "zh/chapters/04-1-boundaries.tex",
@@ -1809,7 +1826,7 @@
     },
     {
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+      "sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
     },
     {
       "path": "zh/chapters/04-3-layout.tex",
@@ -1817,7 +1834,7 @@
     },
     {
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
+      "sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
     },
     {
       "path": "zh/chapters/04-5-construction.tex",
@@ -1825,7 +1842,7 @@
     },
     {
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
+      "sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
     },
     {
       "path": "zh/chapters/04-architecture.tex",
@@ -1849,7 +1866,7 @@
     },
     {
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
+      "sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164"
     },
     {
       "path": "zh/chapters/05-6-refinement.tex",
@@ -1885,7 +1902,7 @@
     },
     {
       "path": "zh/chapters/06-6-scope.tex",
-      "sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c"
+      "sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
     },
     {
       "path": "zh/chapters/06-refinement.tex",
@@ -1893,11 +1910,11 @@
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
     },
     {
       "path": "zh/chapters/07-supp-budget.tex",
-      "sha256": "ca80ce1ca9a22b8f9b10a90ac754d6651702b877d9315d7c8b69306092947a0e"
+      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
     },
     {
       "path": "zh/chapters/07-supp-precision.tex",
@@ -1917,7 +1934,7 @@
     },
     {
       "path": "zh/chapters/08-2-negative.tex",
-      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+      "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
     },
     {
       "path": "zh/chapters/08-3-validity.tex",
@@ -1940,15 +1957,20 @@
       "sha256": "c95901e2616c009d470b5adc9214e0a124bc0c61fdebe6515730d154e26cb120"
     },
     {
+      "path": "zh/declaration.tex",
+      "sha256": "2f331c30973c9726f6be1cdc82d408d010ca65e88bce319c0c34d195f646d3c4"
+    },
+    {
       "path": "zh/preamble.tex",
       "sha256": "fc2bfe414a63bbab3d6d6546c168ff01f7408ce1d183e6d259283a4c1b55603e"
     }
   ],
   "initial_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
   "audited_base_commit": "682ef939ee41e3a9b9c9ec984604c62008406744",
-  "revision_scope": "Mathematical typography: upright statements, separate headings, flush-left proofs and same-page short pairs; proof and formula text preserved; personal/Canvas requirements remain pending",
+  "revision_scope": "Remove internal workflow paths and editing narration across chapters, captions, front matter, bibliography and appendices; retain scientific content and descriptive artifact links",
   "compression_baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
   "adc_revision_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4",
   "layout_baseline": "f39bf756dbd5f3b9708a6f2919de7c124af7cdf1",
-  "proof_layout_baseline": "cc696f2f98f29ebe794d930f08d2d5ab4add994e"
+  "proof_layout_baseline": "cc696f2f98f29ebe794d930f08d2d5ab4add994e",
+  "internal_reference_cleanup_baseline": "2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab"
 }

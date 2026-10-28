@@ -39,8 +39,7 @@ Mailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,
 arXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below
 one. Right: minimum survivor
 counts meeting the original JHQ recall target on arXiv's 400-query FP64
-offline test split. The candidate reduction is not a GPU speedup. Both
-panels are regenerated from archived records by the thesis audit script.}
+offline test split. The candidate reduction is not a GPU speedup.}
 \label{fig:8-negative}
 \end{minipage}\par\medskip
 
@@ -73,7 +72,5 @@ pipeline, then compares independently swept budgets at measured recall
 thresholds. At arXiv's original $\alpha=100$ target it yields ratios of
 approximately 1.40 at batch 8 and 1.21 at batch 1,000. Vogue's tested median
 frontier stops at 0.9630, below the original 0.9644 working point;
-OpenAI-3072 is essentially tied. These results revise a blanket ``never
-GPU-tested'' description, while preserving the decision against a universal
-replacement. The follow-up uses its own index states, query pool and
+OpenAI-3072 is essentially tied. The gains remain workload-specific. The follow-up uses its own index states, query pool and
 three-round protocol; its rates are not inserted into E1.

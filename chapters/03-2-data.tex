@@ -9,7 +9,7 @@ measured exports after preparation, rather than the current upstream cards.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[Dataset and training manifest]{Data and JHQ training manifest. $n_q$ is the actual query count;
+\captionof{table}[Dataset and training configuration]{Data and JHQ training configuration. $n_q$ is the actual query count;
 $n_t=39n_{\rm list}$ is the requested coarse-training sample size. E1 uses
 the first four rows. All rows use squared L2 and $k=10$.}
 \label{tab:3-data}
@@ -45,8 +45,8 @@ only ten entries are scored. Duplicate returned IDs do not earn repeated
 credit. Range, duplicate and repeat-call checks are recorded separately.
 
 JHQ uses $M=d/8$, $B=B_r=8$, eight coarse iterations and a requested
-100,000-vector residual-training sample. Search sweeps reuse the
-\texttt{arms6\_cache} trained states and re-encode the database; cold builds
+100,000-vector residual-training sample. Search sweeps reuse cached
+trained states and re-encode the database; cold builds
 start without that state. The code requests training from database samples,
 separately from calibration queries. For budget evaluation, even query
 positions form a 500-query calibration pool and odd positions form a
@@ -57,6 +57,4 @@ the deployable agreement rule uses search outputs
 (\cref{sec:6-2,sec:a-budget-contract}).
 
 Preparation code and shape logs establish this protocol; complete historical
-vector-file and trained-state hashes are unavailable. The ledger preserves
-that distinction between an inspected preparation procedure and an
-immutable identity of every run's data.
+vector-file and trained-state hashes are unavailable.

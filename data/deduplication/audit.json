@@ -4,7 +4,7 @@
   "editorial_review": "assessment/deduplication-rounds.md; assessment/targeted-curation-review.md; assessment/compression-review-response.txt; semantic retention requires source review",
   "compression_round": {
     "baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
-    "source_edits": 57,
+    "source_edits": 67,
     "archive_manifest": "evidence/editorial/03775b7/manifest.json",
     "removed_tables_per_language": 1,
     "removed_duplicate_equations_per_language": 2,
@@ -238,38 +238,38 @@
     {
       "chapter": 3,
       "before": 1943,
-      "after": 1682,
-      "removed": 261
+      "after": 1648,
+      "removed": 295
     },
     {
       "chapter": 4,
       "before": 4046,
-      "after": 3470,
-      "removed": 576
+      "after": 3446,
+      "removed": 600
     },
     {
       "chapter": 5,
       "before": 5803,
-      "after": 4957,
-      "removed": 846
+      "after": 4947,
+      "removed": 856
     },
     {
       "chapter": 6,
       "before": 2464,
-      "after": 2234,
-      "removed": 230
+      "after": 2197,
+      "removed": 267
     },
     {
       "chapter": 7,
       "before": 8991,
-      "after": 6570,
-      "removed": 2421
+      "after": 6530,
+      "removed": 2461
     },
     {
       "chapter": 8,
       "before": 2091,
-      "after": 1390,
-      "removed": 701
+      "after": 1366,
+      "removed": 725
     },
     {
       "chapter": 9,
@@ -280,14 +280,24 @@
   ],
   "chapters_and_abstract": {
     "before": 29993,
-    "after": 24293
+    "after": 24124
   },
   "word_count_scope": "Prose and captions; table bodies and displayed/inline mathematics excluded; not an official course count",
   "inputs": [
     {
       "repository": "8800_report",
       "path": "assessment/compression-edits.json",
-      "sha256": "757b783b20ab4917b9d33dee8385d569fe8efe468e3c6f0ec9aa9311a788df29"
+      "sha256": "6b6603efb75456095d1544843c56dc11f81e461b8186253c4179748f7a54d747"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/b-supplementary.tex",
+      "sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
     },
     {
       "repository": "8800_report",
@@ -311,8 +321,13 @@
     },
     {
       "repository": "8800_report",
+      "path": "chapters/03-2-data.tex",
+      "sha256": "e36022336d1cd6c3c11b0a945d77367d86818d553f4281e25970c94d3330bfaa"
+    },
+    {
+      "repository": "8800_report",
       "path": "chapters/03-5-ledger.tex",
-      "sha256": "0a95d68edd431bf914cd384fc5926645d45cb78b8f9b0ba3c23f5ecb70fda066"
+      "sha256": "1067b2f6095bae7df11cf77449dc662d4e80a03a57e35e8a12e51470b6f9d551"
     },
     {
       "repository": "8800_report",
@@ -322,17 +337,17 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-methodology.tex",
-      "sha256": "8fc2f73725813f1baa5e3766436f133ac2648aade23340991a970b0057a8b07c"
+      "sha256": "972e4803c07e5dc1db3722abd0e9850ebd25af985ce3ad3bce7209ad5712781e"
     },
     {
       "repository": "8800_report",
       "path": "chapters/04-2-training.tex",
-      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
+      "sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
     },
     {
       "repository": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
+      "sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
     },
     {
       "repository": "8800_report",
@@ -342,7 +357,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
+      "sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
     },
     {
       "repository": "8800_report",
@@ -357,12 +372,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
+      "sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
     },
     {
       "repository": "8800_report",
       "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
+      "sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5"
     },
     {
       "repository": "8800_report",
@@ -377,7 +392,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/06-6-scope.tex",
-      "sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267"
+      "sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
     },
     {
       "repository": "8800_report",
@@ -387,12 +402,22 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-budget.tex",
+      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
     },
     {
       "repository": "8800_report",
       "path": "chapters/08-1-insights.tex",
       "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
     },
     {
       "repository": "8800_report",
@@ -427,7 +452,7 @@
     {
       "repository": "8800_report",
       "path": "frontmatter/declaration.tex",
-      "sha256": "098ff409691558142ae72890a649739f2856968d2890130ade5f72b751242d9c"
+      "sha256": "375b7a6d29814182c0f6e39288972f6cf978f4bdef0202623a5248af2dd3d0ce"
     },
     {
       "repository": "8800_report",
@@ -441,6 +466,11 @@
     },
     {
       "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
+    },
+    {
+      "repository": "8800_report",
       "path": "zh/abstract.tex",
       "sha256": "b2b92a08849bcb22b87aa956afdfa413f385cf4d5a096e9aca72a37f80b932d2"
     },
@@ -448,6 +478,11 @@
       "repository": "8800_report",
       "path": "zh/acknowledgements.tex",
       "sha256": "91047d57c147608809cc2e6ce91f7b93aab9712a625104984e7c6128c7e0c840"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/appendices/b-supplementary.tex",
+      "sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
     },
     {
       "repository": "8800_report",
@@ -471,8 +506,13 @@
     },
     {
       "repository": "8800_report",
+      "path": "zh/chapters/03-2-data.tex",
+      "sha256": "aee423dc4dfdc672f1586941c11c63660f3fdabaf55aba8c84e56eb78d146d60"
+    },
+    {
+      "repository": "8800_report",
       "path": "zh/chapters/03-5-ledger.tex",
-      "sha256": "13a7ad64a8780c1eb8685d76768e5a9ca8c9d40a88dd2c941dabf54bab96729f"
+      "sha256": "8ef399cdd64568fa4211c0ae306118c1f399b0cc82485c28c305e8a05b503c36"
     },
     {
       "repository": "8800_report",
@@ -482,17 +522,17 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-methodology.tex",
-      "sha256": "bdffb18fe5f16899bb483edf7e7a0ddf8a6373316795197df2f137535d490acb"
+      "sha256": "8ad37d66ba24ba8d7adf19e350b25464db5b4deabfd478c12dcfa026f6661e4e"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+      "sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
+      "sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
     },
     {
       "repository": "8800_report",
@@ -502,7 +542,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
+      "sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
     },
     {
       "repository": "8800_report",
@@ -522,7 +562,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
+      "sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164"
     },
     {
       "repository": "8800_report",
@@ -537,7 +577,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-6-scope.tex",
-      "sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c"
+      "sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
     },
     {
       "repository": "8800_report",
@@ -547,12 +587,22 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-1-insights.tex",
       "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
     },
     {
       "repository": "8800_report",
@@ -567,7 +617,7 @@
     {
       "repository": "8800_report",
       "path": "zh/declaration.tex",
-      "sha256": "9a623f2d97272f8533c73d62682c07bcfe0e64330c41367edd48bcf1c7f9a58b"
+      "sha256": "2f331c30973c9726f6be1cdc82d408d010ca65e88bce319c0c34d195f646d3c4"
     },
     {
       "repository": "8800_report",
@@ -576,28 +626,178 @@
     },
     {
       "repository": "8800_report",
-      "path": "evidence/editorial/cc696f2/compression-from-03775b7.patch",
-      "sha256": "4cb8b0bd46cff73e23dead245edc5614898b2d8a80856310048b549b0b54fa80"
+      "path": "evidence/editorial/2d9d2aa/compression-from-03775b7.patch",
+      "sha256": "286c236d86effa1bff59a09b5ee4c44f5b9004e9c9b7f2a3acc35470bff3258c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/internal-reference-edits.json",
+      "sha256": "a118fa12dbc98bad144ae976337d65944261f75aeb5f845b7d916b750c8f0994"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-5-ledger.tex",
+      "sha256": "1067b2f6095bae7df11cf77449dc662d4e80a03a57e35e8a12e51470b6f9d551"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-5-ledger.tex",
+      "sha256": "8ef399cdd64568fa4211c0ae306118c1f399b0cc82485c28c305e8a05b503c36"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-methodology.tex",
+      "sha256": "972e4803c07e5dc1db3722abd0e9850ebd25af985ce3ad3bce7209ad5712781e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-methodology.tex",
+      "sha256": "8ad37d66ba24ba8d7adf19e350b25464db5b4deabfd478c12dcfa026f6661e4e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/03-2-data.tex",
+      "sha256": "e36022336d1cd6c3c11b0a945d77367d86818d553f4281e25970c94d3330bfaa"
     },
     {
       "repository": "8800_report",
       "path": "chapters/04-2-training.tex",
-      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
-    },
-    {
-      "repository": "8800_report",
-      "path": "chapters/05-4-global-selection.tex",
-      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
-    },
-    {
-      "repository": "8800_report",
-      "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
+      "sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+      "sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-4-lifecycle.tex",
+      "sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-6-contracts.tex",
+      "sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-6-contracts.tex",
+      "sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-budget.tex",
+      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-6-scope.tex",
+      "sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-6-scope.tex",
+      "sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/declaration.tex",
+      "sha256": "375b7a6d29814182c0f6e39288972f6cf978f4bdef0202623a5248af2dd3d0ce"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/declaration.tex",
+      "sha256": "2f331c30973c9726f6be1cdc82d408d010ca65e88bce319c0c34d195f646d3c4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/b-supplementary.tex",
+      "sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/appendices/b-supplementary.tex",
+      "sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "references.bib",
+      "sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/03-2-data.tex",
+      "sha256": "aee423dc4dfdc672f1586941c11c63660f3fdabaf55aba8c84e56eb78d146d60"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-2-training.tex",
+      "sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-2-training.tex",
+      "sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
     },
     {
       "repository": "8800_report",
@@ -607,7 +807,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
+      "sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164"
     },
     {
       "repository": "8800_report",
@@ -882,7 +1082,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-2-data.tex",
-      "sha256": "d4098eb45fd144f04cf41d7982fc13df445237bed9a24d64e6de72175ffa17c0"
+      "sha256": "e36022336d1cd6c3c11b0a945d77367d86818d553f4281e25970c94d3330bfaa"
     },
     {
       "repository": "8800_report",
@@ -897,7 +1097,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-5-ledger.tex",
-      "sha256": "0a95d68edd431bf914cd384fc5926645d45cb78b8f9b0ba3c23f5ecb70fda066"
+      "sha256": "1067b2f6095bae7df11cf77449dc662d4e80a03a57e35e8a12e51470b6f9d551"
     },
     {
       "repository": "8800_report",
@@ -907,7 +1107,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-methodology.tex",
-      "sha256": "8fc2f73725813f1baa5e3766436f133ac2648aade23340991a970b0057a8b07c"
+      "sha256": "972e4803c07e5dc1db3722abd0e9850ebd25af985ce3ad3bce7209ad5712781e"
     },
     {
       "repository": "8800_report",
@@ -917,7 +1117,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-2-training.tex",
-      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
+      "sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
     },
     {
       "repository": "8800_report",
@@ -927,7 +1127,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
+      "sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
     },
     {
       "repository": "8800_report",
@@ -937,7 +1137,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
+      "sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
     },
     {
       "repository": "8800_report",
@@ -962,12 +1162,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
+      "sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
     },
     {
       "repository": "8800_report",
       "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
+      "sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5"
     },
     {
       "repository": "8800_report",
@@ -1012,7 +1212,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/06-6-scope.tex",
-      "sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267"
+      "sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
     },
     {
       "repository": "8800_report",
@@ -1022,12 +1222,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
     },
     {
       "repository": "8800_report",
       "path": "chapters/07-supp-budget.tex",
-      "sha256": "a8e8aad088e789d765e638c3a37730a8ac47f24fb6b14b71202a76f699c358a9"
+      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
     },
     {
       "repository": "8800_report",
@@ -1052,7 +1252,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-2-negative.tex",
-      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+      "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
     },
     {
       "repository": "8800_report",
@@ -1157,7 +1357,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-2-data.tex",
-      "sha256": "d295f7573038b3c04faf76db58d3fc63a8e4171aff9e8f7fbdc6cfacb4ea605e"
+      "sha256": "aee423dc4dfdc672f1586941c11c63660f3fdabaf55aba8c84e56eb78d146d60"
     },
     {
       "repository": "8800_report",
@@ -1172,7 +1372,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-5-ledger.tex",
-      "sha256": "13a7ad64a8780c1eb8685d76768e5a9ca8c9d40a88dd2c941dabf54bab96729f"
+      "sha256": "8ef399cdd64568fa4211c0ae306118c1f399b0cc82485c28c305e8a05b503c36"
     },
     {
       "repository": "8800_report",
@@ -1182,7 +1382,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-methodology.tex",
-      "sha256": "bdffb18fe5f16899bb483edf7e7a0ddf8a6373316795197df2f137535d490acb"
+      "sha256": "8ad37d66ba24ba8d7adf19e350b25464db5b4deabfd478c12dcfa026f6661e4e"
     },
     {
       "repository": "8800_report",
@@ -1192,7 +1392,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+      "sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
     },
     {
       "repository": "8800_report",
@@ -1202,7 +1402,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
+      "sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
     },
     {
       "repository": "8800_report",
@@ -1212,7 +1412,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
+      "sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
     },
     {
       "repository": "8800_report",
@@ -1242,7 +1442,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
+      "sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164"
     },
     {
       "repository": "8800_report",
@@ -1287,7 +1487,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-6-scope.tex",
-      "sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c"
+      "sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
     },
     {
       "repository": "8800_report",
@@ -1297,12 +1497,12 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-supp-budget.tex",
-      "sha256": "ca80ce1ca9a22b8f9b10a90ac754d6651702b877d9315d7c8b69306092947a0e"
+      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
     },
     {
       "repository": "8800_report",
@@ -1327,7 +1527,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-2-negative.tex",
-      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+      "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
     },
     {
       "repository": "8800_report",
@@ -1357,12 +1557,12 @@
     {
       "repository": "8800_report",
       "path": "frontmatter/declaration.tex",
-      "sha256": "098ff409691558142ae72890a649739f2856968d2890130ade5f72b751242d9c"
+      "sha256": "375b7a6d29814182c0f6e39288972f6cf978f4bdef0202623a5248af2dd3d0ce"
     },
     {
       "repository": "8800_report",
       "path": "zh/declaration.tex",
-      "sha256": "9a623f2d97272f8533c73d62682c07bcfe0e64330c41367edd48bcf1c7f9a58b"
+      "sha256": "2f331c30973c9726f6be1cdc82d408d010ca65e88bce319c0c34d195f646d3c4"
     },
     {
       "repository": "8800_report",
@@ -1817,17 +2017,17 @@
     {
       "repository": "8800_report",
       "path": "appendices/b-supplementary.tex",
-      "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
+      "sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
     },
     {
       "repository": "8800_report",
       "path": "zh/appendices/b-supplementary.tex",
-      "sha256": "c924c8743cbb6a718cdfe7ee35211d45e6f446b07b33c86c1b3f48c4b6193b82"
+      "sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
     },
     {
       "repository": "8800_report",
       "path": "scripts/audit_deduplication.py",
-      "sha256": "6d380e5a0634e333f47aa5d538e140f25d210ad79dc7aa8293953209bac02d95"
+      "sha256": "827ba97dc35fd3a3891efe619ea46c2fa7245f4f3ab6aae9b56b017a037e5084"
     },
     {
       "repository": "8800_report",
@@ -1862,7 +2062,7 @@
     {
       "repository": "8800_report",
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "fd23e679fc29b6171a6fc43524030606a21c717d1750d04ef0556c41e0ee35d8"
+      "sha256": "c661be95d41e37f8fff5e02cd43a407ff8cd7f813386c5a2a23e4b40c6fcb00a"
     },
     {
       "repository": "8800_report",
@@ -1877,12 +2077,12 @@
     {
       "repository": "8800_report",
       "path": "docs/ai-use-record.md",
-      "sha256": "1f3ed403c92459983549d808e1eaf9f393d73820b0aeb840b4711b383e6e88f4"
+      "sha256": "0e953bf8099b53496f23819aba83167b8d9364bceecfc6dcf6a46506e93bb632"
     },
     {
       "repository": "8800_report",
       "path": "data/submission/ai-use-record.json",
-      "sha256": "f0733b88324709d2590ff659c5a9a3b34a179991c5347e1bae3a9037749ff220"
+      "sha256": "bdb80fd06415f5b6f0e9530bcfd8b5f03db53e3fae8588ff899287e7d9a42caf"
     },
     {
       "repository": "8800_report",

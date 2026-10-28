@@ -1,0 +1,555 @@
+{
+  "baseline": "2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab",
+  "scope": "Remove internal workflow references and editorial narration; retain scientific evidence and necessary descriptive access links",
+  "source_edits": [
+    {
+      "path": "chapters/03-5-ledger.tex",
+      "before": "The evidence ledger \\path{data/ch3/audit.json} identifies configurations,\nmeasurement boundaries and analysis inputs. Family-specific versions and\ncontrols remain separate. Hashes identify consumed files; historical\nexecutable and trained-state identities are incomplete. Appendix A lists\navailable reproduction inputs, and the repository supplement gives the\nregistry fields.\\footnote{\\path{docs/supplementary-evidence.md}.}\n\n\\path{scripts/build_ch7.py} regenerates the principal plots and tables,\nincluding \\cref{fig:7-frontiers,fig:7-lut,fig:7-memory};\n\\path{scripts/audit_ch3.py} checks the common protocol.\nThese are offline reconstructions. Repeating GPU measurements additionally\nrequires the listed binaries, datasets and trained states.\n",
+      "after": "Each experiment family records the implementation version, index and query\nsettings, timing boundary and measured outputs. Paired comparisons reuse\nthe same trained states; changes of version, state or precision define\nseparate experiment families. Historical executable and trained-state\nfingerprints are incomplete, limiting exact reproduction of some runs.\n\\Cref{app:reproducibility} summarises the available environment and\nexperimental protocol.\n",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/03-5-ledger.tex",
+      "before": "证据登记 \\path{data/ch3/audit.json} 标识配置、测量边界和分析输入，各实验族保留\n独立版本及对照。哈希标识已读取文件，历史可执行文件和训练状态身份仍不完整。\n附录 A 列出可获得的复现输入，仓库补充材料给出登记字段。\\footnote{\\path{docs/supplementary-evidence.md}。}\n\n\\path{scripts/build_ch7.py} 重新生成主要图表，包括\n\\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}；\\path{scripts/audit_ch3.py} 核查统一协议。\n这些是离线重算，重复 GPU 测量还需所列二进制程序、数据和训练状态。\n",
+      "after": "各实验族记录实现版本、索引与查询配置、计时边界及测量输出。配对比较复用相同\n训练状态；版本、状态或精度的变化分别构成独立实验族。历史可执行文件和训练状态\n指纹仍不完整，限制了部分运行的精确复现。\\Cref{app:reproducibility}汇总可获得的\n环境信息与实验协议。\n",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/03-methodology.tex",
+      "before": "\\section{Versioned Claim-to-Evidence Ledger}",
+      "after": "\\section{Experimental Records and Reproducibility}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/03-methodology.tex",
+      "before": "\\section{带版本的主张与证据登记}",
+      "after": "\\section{实验记录与可复现性}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "before": " The ledger preserves\nthat distinction between an inspected preparation procedure and an\nimmutable identity of every run's data.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/04-2-training.tex",
+      "before": "Historical diagnostics and their input hashes are recorded in\n\\path{data/ch4/review-audit.json}.\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/04-2-training.tex",
+      "before": "历史诊断及输入哈希见 \\path{data/ch4/review-audit.json}。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/04-4-lifecycle.tex",
+      "before": " The repository supplement retains the object-lifetime table.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "before": "完整对象生命周期表保留在仓库补充材料中。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "before": " The\nrepository supplement retains the per-dataset diagnostics.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/04-6-contracts.tex",
+      "before": "；逐数据集诊断保留在仓库补充材料",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "before": "the export method (\\path{scripts/audit_ch4_review.py}).",
+      "after": "the export method.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/04-6-contracts.tex",
+      "before": "（\\path{scripts/audit_ch4_review.py}）",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "before": "The offline recount and input hashes are recorded in\n\\path{data/ch5/review-audit.json}.\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "before": "离线重计数与输入哈希记录在 \\path{data/ch5/review-audit.json}。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before": "Tables and figures follow the regeneration ledger in \\cref{sec:3-5}.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "图表沿用\\cref{sec:3-5}的重新生成清单。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before": "The complete eight-arm comparison is retained in the repository supplement. ",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "完整八档比较保留在仓库补充材料。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before": " (repository supplement)",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "，历史对比见仓库补充材料",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before": " The complete\nsix-dataset record is retained in the repository supplement.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "六数据集完整记录保留在仓库补充材料。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/07-supp-budget.tex",
+      "before": "The repository supplement retains all twelve cells of per-draw maxima.\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before": "十二单元的逐抽样最大损失完整矩阵保留在仓库补充材料。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/08-2-negative.tex",
+      "before": " Both\npanels are regenerated from archived records by the thesis audit script.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/08-2-negative.tex",
+      "before": "；两图均由论文audit脚本从归档记录重新生成",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/08-2-negative.tex",
+      "before": "These results revise a blanket ``never\nGPU-tested'' description, while preserving the decision against a universal\nreplacement.",
+      "after": "The gains remain workload-specific.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/08-2-negative.tex",
+      "before": "这修正了“从未做GPU测试”的笼统表述，同时保留不采用通用替代的决定。",
+      "after": "这些收益仍依赖具体工作负载。",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "chapters/06-6-scope.tex",
+      "before": "The supplementary trace contents and completed strict CPU-reference\nchecks are documented in \\cref{sec:a-supplement,sec:a-t4-t5}.\nRemaining checks concern arbitrary-subset per-query invariance,\nrearchiving candidate dumps for independent re-sorting, the Vogue\ncross-process discrepancy and future query changes. Their status is\nmaintained in \\path{assessment/ch7-pending-experiments.txt}.\n\n\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/06-6-scope.tex",
+      "before": "补证轨迹内容及已完成的严格CPU参考见\\cref{sec:a-supplement,sec:a-t4-t5}。\n剩余检查为任意子集逐查询不变性、重新归档候选dump以供独立重排、Vogue跨进程差异及未来查询变化。\n状态维护在\\path{assessment/ch7-pending-experiments.txt}。\n\n\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "frontmatter/declaration.tex",
+      "before": "Selected prompts, artifact mappings and record limitations are documented in\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\\nolinkurl{docs/ai-use-record.md}}.",
+      "after": "Selected prompts and usage details are available in the\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{AI-use record}.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/declaration.tex",
+      "before": "部分提示词、产物对应与记录局限见\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\\nolinkurl{docs/ai-use-record.md}}。",
+      "after": "部分提示词与使用详情见\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{AI 使用记录}。",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "This appendix records the contracts needed to interpret the experiments.\nThe expanded protocol, executable names, raw-source paths and\nresult-to-figure mapping are retained in\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/experiment-protocol.md}{\\nolinkurl{docs/experiment-protocol.md}} in the report repository.",
+      "after": "This appendix specifies the experimental environment and measurement\nprotocol. Available source and measurement materials are listed in\n\\cref{sec:b-artifacts}.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "The analysis checkout in\n\\path{data/ch7/audit.json} identifies the inspected workspace; a run-head\ncommit identifies source visible to that run. Neither supplies a missing\nexecutable or trained-state fingerprint.",
+      "after": "Source revisions identify the inspected implementation; complete executable\nand trained-state fingerprints are unavailable for some historical runs.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "Report and script identities\nare distinguished from raw run headers; full executable and input paths\nare in the expanded protocol.",
+      "after": "Report and script identities\nare distinguished from raw run headers.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "the recorded \\path{arms6_cache} states",
+      "after": "the same cached trained states",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "Input ledgers hash the\nconsumed analysis records, rather than every vector file, cache or binary.\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "Records under \\path{JHQ_GPU/experiments/thesis_evidence/} retain campaign\nidentities and timing boundaries. ",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "Binary SHA and operation listings are in the expanded protocol\nand the archived evidence.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "Source, records, manifests and offline checkers are archived in\n\\path{evidence/ch5/v71/} and \\path{evidence/review/}. With the required\ninputs, run \\texttt{make ch7-data}, then \\texttt{make pdf} or\n\\texttt{make pdf-zh}. GPU reruns additionally require original vectors,\ntrained states, matching builds and environment.",
+      "after": "GPU reproduction requires original vectors, matching trained states and\nbuilds, and the specified environment. \\Cref{sec:b-artifacts} identifies\nwhich materials are available.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before": "Their source mapping is in\nAppendix~\\ref{app:reproducibility}.",
+      "after": "The experimental protocol is in\nAppendix~\\ref{app:reproducibility}.",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "before": "来源映射见附录\\ref{app:reproducibility}。",
+      "after": "实验协议见附录\\ref{app:reproducibility}。",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before": "\\section{Complete Parameter Registry}",
+      "after": "\\section{Parameter Coverage}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "before": "\\section{完整参数记录}",
+      "after": "\\section{参数覆盖}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before": "Each point's complete parameter JSON,\nrecall, host-to-host QPS and source filename is retained in\n\\path{data/appendix/e1-configurations.csv}. The registry is generated by\n\\path{scripts/build_appendix.py}, with source identity recorded in\n\\path{data/appendix/audit.json}. The sets below describe observed values;",
+      "after": "The sets below describe observed parameter values;",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "before": "逐点完整参数JSON、recall、主机到主机QPS及源文件名保存在\n\\path{data/appendix/e1-configurations.csv}。\n\\path{scripts/build_appendix.py}生成该记录，输入身份见\\path{data/appendix/audit.json}。\n",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before": "The raw JSON and reconstruction are mapped in\n\\path{data/full-review/audit.json}.",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "before": "原始 JSON 及复算映射见\n\\path{data/full-review/audit.json}。",
+      "after": "",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before": "The report repository contains the parameter registry, derived tables,\nfigure sources, analysis scripts and 209-file v71 source/measurement\nbundle under \\path{evidence/ch5/v71/}. The offline command\n\\texttt{python3}\\ \\path{evidence/ch5/v71/check.py} verifies that bundle.\nSelected T4/T5, T1 and A2 source/record inputs are also mirrored in\n\\path{evidence/review/}. Its checker verifies hashes and can rerun the\ntwo corresponding offline audits using that local source root.\nThe broader raw records remain in the sibling \\texttt{JHQ\\_GPU} project\nat the ledger paths. Complete vectors, trained states and all executables\nare not packaged here. Offline recomputation requires the stated inputs;\nGPU reproduction also requires the corresponding build and environment.\n\nA fixed artifact map, including the public manuscript source and the\nv71/T4/T5/T1/A2 evidence bundles, is provided in\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\\nolinkurl{docs/artifact-access.md}}.\n",
+      "after": "Available source snapshots, measurement records and analysis tools are\nlinked from the\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project artifact archive}.\nIt includes the v71 source/measurement bundle and selected T4/T5, T1 and A2\ninputs. Complete vectors, trained states and all historical executables\nare not included; GPU reproduction requires those inputs and the matching\nbuild environment.\n",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "before": "报告仓库提供参数记录、派生表、图源、分析脚本，以及\\path{evidence/ch5/v71/}下的\n209文件v71源码／测量包，可用\\texttt{python3}\\ \\path{evidence/ch5/v71/check.py}离线核对。\n另在\\path{evidence/review/}保留 T4/T5、T1 和 A2 消费的源码／记录子集；检查器核对\n哈希，并可用这个本地源码根目录重新运行两项离线审计。\n更多原始记录位于同级\\texttt{JHQ\\_GPU}项目的清单路径，完整向量、训练状态与所有\n可执行文件没有打包在本报告仓库。离线复算需要所列输入，GPU复现还需要相应构建和环境。\n\n固定材料入口（含公开手稿源码及v71／T4／T5／T1／A2证据包）见\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\\nolinkurl{docs/artifact-access.md}}。\n",
+      "after": "可获得的源码快照、测量记录与分析工具见\n\\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目复现材料}，\n包括 v71 源码／测量包及部分 T4/T5、T1、A2 输入。完整向量、训练状态与全部历史\n可执行文件未包含在内；GPU 复现还需要这些输入及匹配的构建环境。\n",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "references.bib",
+      "before": "@misc{ai_codex_record,\n  author = {{OpenAI}},\n  title = {{Codex}: Selected Thesis-Preparation Interactions},\n  year = {2026},\n  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},\n  note = {Selected original user prompts retained from the current conversation; record compiled 29 October 2026. Earlier timestamps and model versions are unavailable; this is not a complete interaction export}\n}",
+      "after": "@misc{ai_codex_record,\n  author = {{OpenAI}},\n  title = {{Codex}: Selected Thesis-Preparation Interactions},\n  year = {2026},\n  howpublished = {\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},\n  note = {Selected prompts and uses; compiled 29 October 2026. Partial record; historical interaction metadata unavailable}\n}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "references.bib",
+      "before": "@misc{ai_chatgpt_record,\n  author = {{OpenAI}},\n  title = {{ChatGPT}: Project Review Assistance Record},\n  year = {2026},\n  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},\n  note = {Use documented by retained review excerpts and the project disclosure; record compiled 29 October 2026. Complete original prompts, interaction dates and model versions remain unavailable}\n}",
+      "after": "@misc{ai_chatgpt_record,\n  author = {{OpenAI}},\n  title = {{ChatGPT}: Project Review Assistance Record},\n  year = {2026},\n  howpublished = {\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},\n  note = {Retained review excerpts; original prompts and interaction metadata unavailable}\n}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "references.bib",
+      "before": "@misc{ai_claude_record,\n  author = {{Anthropic}},\n  title = {{Claude}: Implementation, Experiment and Review Assistance Record},\n  year = {2026},\n  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},\n  note = {Use documented by retained project and experiment records; record compiled 29 October 2026. Complete original prompts, interaction dates and model versions remain unavailable}\n}",
+      "after": "@misc{ai_claude_record,\n  author = {{Anthropic}},\n  title = {{Claude}: Implementation, Experiment and Review Assistance Record},\n  year = {2026},\n  howpublished = {\\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},\n  note = {Implementation and experiment records; original prompts and interaction metadata unavailable}\n}",
+      "reason": "Remove internal workflow narration or use a descriptive reference"
+    },
+    {
+      "path": "zh/chapters/03-2-data.tex",
+      "before": "证据登记区分已检查的准备流程与每次运行数据的不可变身份。\n",
+      "after": "",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "zh/chapters/03-2-data.tex",
+      "before": "搜索扫描复用\\texttt{arms6\\_cache}训练状态，重新编码数据库；",
+      "after": "搜索扫描复用缓存的训练状态，重新编码数据库；",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "before": "from the arms6\ntrained cache",
+      "after": "from the trained cache",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "zh/chapters/04-6-contracts.tex",
+      "before": "从 arms6 训练缓存导出",
+      "after": "从训练缓存导出",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before": "code. \n",
+      "after": "code.\n",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "chapters/05-4-global-selection.tex",
+      "before": "The strict CPU reference in \\cref{sec:7-strict-selection} now checks",
+      "after": "The strict CPU reference in \\cref{sec:7-strict-selection} checks",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before": "T4 now supplies the strict",
+      "after": "T4 supplies the strict",
+      "reason": "Remove internal cache naming or editorial wording"
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "before": "Search sweeps reuse the\n\\texttt{arms6\\_cache} trained states",
+      "after": "Search sweeps reuse cached\ntrained states",
+      "reason": "Describe the experimental configuration without internal cache naming"
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "before": "Dataset and training manifest",
+      "after": "Dataset and training configuration",
+      "reason": "Describe the experimental configuration without internal cache naming"
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "before": "Data and JHQ training manifest",
+      "after": "Data and JHQ training configuration",
+      "reason": "Describe the experimental configuration without internal cache naming"
+    },
+    {
+      "path": "zh/chapters/03-2-data.tex",
+      "before": "数据与JHQ训练清单",
+      "after": "数据与JHQ训练配置",
+      "reason": "Describe the experimental configuration without internal cache naming"
+    },
+    {
+      "path": "references.bib",
+      "before": "  url = {https://github.com/lrlorry/JHQ_GPU/blob/70da383056b50f4e9b8e9a8030bc9b92281ba537/paper_adc2026/ADC/mainADC.tex},",
+      "after": "  howpublished = {\\href{https://github.com/lrlorry/JHQ_GPU/blob/70da383056b50f4e9b8e9a8030bc9b92281ba537/paper_adc2026/ADC/mainADC.tex}{Project manuscript source}},",
+      "reason": "Use a descriptive manuscript citation rather than printing the internal source filename"
+    },
+    {
+      "path": "references.bib",
+      "before": "  note = {Project manuscript source at a fixed public revision; its historical measurement versions are distinguished in this thesis}",
+      "after": "  note = {Project manuscript}",
+      "reason": "Use a descriptive manuscript citation rather than printing the internal source filename"
+    }
+  ],
+  "files": [
+    {
+      "path": "chapters/03-5-ledger.tex",
+      "before_sha256": "0a95d68edd431bf914cd384fc5926645d45cb78b8f9b0ba3c23f5ecb70fda066",
+      "after_sha256": "1067b2f6095bae7df11cf77449dc662d4e80a03a57e35e8a12e51470b6f9d551"
+    },
+    {
+      "path": "zh/chapters/03-5-ledger.tex",
+      "before_sha256": "13a7ad64a8780c1eb8685d76768e5a9ca8c9d40a88dd2c941dabf54bab96729f",
+      "after_sha256": "8ef399cdd64568fa4211c0ae306118c1f399b0cc82485c28c305e8a05b503c36"
+    },
+    {
+      "path": "chapters/03-methodology.tex",
+      "before_sha256": "8fc2f73725813f1baa5e3766436f133ac2648aade23340991a970b0057a8b07c",
+      "after_sha256": "972e4803c07e5dc1db3722abd0e9850ebd25af985ce3ad3bce7209ad5712781e"
+    },
+    {
+      "path": "zh/chapters/03-methodology.tex",
+      "before_sha256": "bdffb18fe5f16899bb483edf7e7a0ddf8a6373316795197df2f137535d490acb",
+      "after_sha256": "8ad37d66ba24ba8d7adf19e350b25464db5b4deabfd478c12dcfa026f6661e4e"
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "before_sha256": "d4098eb45fd144f04cf41d7982fc13df445237bed9a24d64e6de72175ffa17c0",
+      "after_sha256": "e36022336d1cd6c3c11b0a945d77367d86818d553f4281e25970c94d3330bfaa"
+    },
+    {
+      "path": "chapters/04-2-training.tex",
+      "before_sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de",
+      "after_sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
+    },
+    {
+      "path": "zh/chapters/04-2-training.tex",
+      "before_sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275",
+      "after_sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
+    },
+    {
+      "path": "chapters/04-4-lifecycle.tex",
+      "before_sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8",
+      "after_sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
+    },
+    {
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "before_sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1",
+      "after_sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "before_sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3",
+      "after_sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
+    },
+    {
+      "path": "zh/chapters/04-6-contracts.tex",
+      "before_sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c",
+      "after_sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
+    },
+    {
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "before_sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5",
+      "after_sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5"
+    },
+    {
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "before_sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383",
+      "after_sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before_sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c",
+      "after_sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before_sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd",
+      "after_sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
+    },
+    {
+      "path": "chapters/07-supp-budget.tex",
+      "before_sha256": "a8e8aad088e789d765e638c3a37730a8ac47f24fb6b14b71202a76f699c358a9",
+      "after_sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
+    },
+    {
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before_sha256": "ca80ce1ca9a22b8f9b10a90ac754d6651702b877d9315d7c8b69306092947a0e",
+      "after_sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
+    },
+    {
+      "path": "chapters/08-2-negative.tex",
+      "before_sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85",
+      "after_sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
+    },
+    {
+      "path": "zh/chapters/08-2-negative.tex",
+      "before_sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f",
+      "after_sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
+    },
+    {
+      "path": "chapters/06-6-scope.tex",
+      "before_sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267",
+      "after_sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
+    },
+    {
+      "path": "zh/chapters/06-6-scope.tex",
+      "before_sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c",
+      "after_sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
+    },
+    {
+      "path": "frontmatter/declaration.tex",
+      "before_sha256": "098ff409691558142ae72890a649739f2856968d2890130ade5f72b751242d9c",
+      "after_sha256": "375b7a6d29814182c0f6e39288972f6cf978f4bdef0202623a5248af2dd3d0ce"
+    },
+    {
+      "path": "zh/declaration.tex",
+      "before_sha256": "9a623f2d97272f8533c73d62682c07bcfe0e64330c41367edd48bcf1c7f9a58b",
+      "after_sha256": "2f331c30973c9726f6be1cdc82d408d010ca65e88bce319c0c34d195f646d3c4"
+    },
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "before_sha256": "e1719f401b185962532eda4a0c443d6e1b9588d3e58dc82ade6cd8d4527960fd",
+      "after_sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "before_sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0",
+      "after_sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
+    },
+    {
+      "path": "zh/appendices/b-supplementary.tex",
+      "before_sha256": "c924c8743cbb6a718cdfe7ee35211d45e6f446b07b33c86c1b3f48c4b6193b82",
+      "after_sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
+    },
+    {
+      "path": "references.bib",
+      "before_sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265",
+      "after_sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
+    },
+    {
+      "path": "zh/chapters/03-2-data.tex",
+      "before_sha256": "d295f7573038b3c04faf76db58d3fc63a8e4171aff9e8f7fbdc6cfacb4ea605e",
+      "after_sha256": "aee423dc4dfdc672f1586941c11c63660f3fdabaf55aba8c84e56eb78d146d60"
+    },
+    {
+      "path": "chapters/05-4-global-selection.tex",
+      "before_sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f",
+      "after_sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
+    }
+  ]
+}

@@ -7,7 +7,7 @@ BGE使用意大利语Wikipedia配置，Stella使用TREC24 BioGen语料导出
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[数据集与训练配置]{数据与JHQ训练清单。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
+\captionof{table}[数据集与训练配置]{数据与JHQ训练配置。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
 粗聚类训练样本数。E1使用前四行；全部使用平方L2及$k=10$。}
 \label{tab:3-data}
 \small\setlength{\tabcolsep}{4pt}
@@ -35,7 +35,7 @@ Vogue/arXiv的GT行宽为100，其余四份为20，评分只比较前10项。
 返回重复ID不会重复得分；越界、重复和跨调用变化分别记录。
 
 JHQ采用$M=d/8$、$B=B_r=8$、8次粗聚类迭代，并请求100,000条残差训练样本。
-搜索扫描复用\texttt{arms6\_cache}训练状态，重新编码数据库；
+搜索扫描复用缓存的训练状态，重新编码数据库；
 冷构建从没有该状态开始。源码从数据库抽取训练样本，与校准查询分开。
 预算实验以偶数查询位置构成500条校准池，奇数位置构成500条留出池，
 Stella留出499条。每个单元在$S=32,64,128$下各抽64次，FULL使用全部500条。
@@ -43,4 +43,3 @@ GT只参与离线oracle和留出质量评估，可部署的一致性规则使用
 （\cref{sec:6-2,sec:a-budget-contract}）。
 
 准备源码和形状日志支持上述协议，但历史向量文件与训练状态的完整哈希缺失。
-证据登记区分已检查的准备流程与每次运行数据的不可变身份。

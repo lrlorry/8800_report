@@ -28,7 +28,7 @@ Metrics and frontier estimators follow \cref{sec:3-2,sec:3-4};
 $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
 
 
-Tables and figures follow the regeneration ledger in \cref{sec:3-5}.
+
 
 
 \section{Modern GPU ANN Recall--QPS Frontiers}
@@ -466,7 +466,7 @@ Across the eight fixed choices, $\alpha=64$ and 100 each qualify in
 ten of twelve cells against the diagnostic quality target; $\alpha=200$
 qualifies in all twelve. Among qualifying cells, their maximum QPS deficits
 to the diagnostic oracle are 26.6\%, 40.9\% and 57.1\%, respectively.
-The complete eight-arm comparison is retained in the repository supplement. Full-pool
+Full-pool
 calibration selects 100 on Vogue at both probe depths while the oracle
 selects 64: reference agreement and fastest quality-constrained selection
 have different objectives. Here $\alpha=200$ attains the best measured
@@ -538,7 +538,7 @@ their net-cost implication on the recorded query stream.
 
 
 The newer lane-refined pipeline leaves less removable refinement work
-than the historical scalar implementation (repository supplement).
+than the historical scalar implementation.
 The runs share the budget protocol and grid, but this cross-campaign
 comparison does not isolate refinement as the sole cause of the change.
 
@@ -647,8 +647,7 @@ large-dataset searches; the E1 memory comparison also informs RQ4.
 \subsection{Cold builds and the lifecycle boundary}
 
 Unlike the cached search sweeps, \cref{tab:7-build-memory} uses three
-normal empty-cache train/add repetitions per dataset. The complete
-six-dataset record is retained in the repository supplement.
+normal empty-cache train/add repetitions per dataset.
 Vogue's training is 298--303\,ms, so its normal total is about 0.56\,s;
 the archived 1.33\,s total (including 1.056\,s training) is an unusually slow single observation.
 Stella's normal totals are 10.54--10.65\,s, close to the historical

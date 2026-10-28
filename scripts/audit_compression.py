@@ -59,6 +59,10 @@ def main():
                   if re.search(r'Warning|Overfull|Underfull|Missing character|^!', s)]
         assert not issues, (name, issues)
         info = run('pdfinfo', pdf)
+        visible = re.sub(r'\s+', '', run('pdftotext', pdf, '-'))
+        internal = re.findall(r'(?:docs/(?:supplementary-evidence|ai-use-record|experiment-protocol|artifact-access)|scripts/|assessment/|data/(?:ch\d|appendix|full-review)|evidence/(?:ch5|review)|paper_adc2026/ADC/mainADC\.tex)', visible)
+        assert not internal, (pdf, 'internal workflow paths visible in PDF', internal)
+        assert 'repositorysupplement' not in visible and 'thesisauditscript' not in visible
         pages = int(re.search(r'^Pages:\s*(\d+)', info, re.M)[1])
         fonts = run('pdffonts', pdf).splitlines()[2:]
         for line in fonts:
@@ -108,6 +112,7 @@ def main():
         pdfs[pdf] = dict(pages=pages, sha256=digest(b), bytes=len(b),
                          figures=figures, tables=tables, fonts=len(fonts),
                          all_fonts_embedded=True, type3_fonts=0, words_outside_page=0,
+                         internal_workflow_paths_visible=0,
                          proof_alignment=proof_margins, statement_proof_pairs_same_page=6)
 
     toc = (ROOT / 'build/main.toc').read_text()
@@ -138,7 +143,7 @@ def main():
                                all_nonwhitespace_characters_preserved=True))
 
     records = json.loads(read('data/submission/ai-use-record.json'))['records']
-    assert len(records) == 11 and records[-1]['id'] == 'P11'
+    assert len(records) == 12 and records[-1]['id'] == 'P12'
     for record in records:
         assert digest(record['prompt'].encode()) == record['prompt_sha256']
         for steering in record.get('steering_messages', []):

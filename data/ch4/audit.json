@@ -31,7 +31,7 @@
     {
       "source": "8800_report",
       "path": "chapters/04-2-training.tex",
-      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
+      "sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088"
     },
     {
       "source": "8800_report",
@@ -41,7 +41,7 @@
     {
       "source": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
+      "sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
     },
     {
       "source": "8800_report",
@@ -51,7 +51,7 @@
     {
       "source": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
+      "sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b"
     },
     {
       "source": "8800_report",
@@ -61,7 +61,7 @@
     {
       "source": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
+      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
     },
     {
       "source": "8800_report",
@@ -101,7 +101,7 @@
     {
       "source": "8800_report",
       "path": "references.bib",
-      "sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265"
+      "sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3"
     },
     {
       "source": "8800_report",
@@ -131,7 +131,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+      "sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135"
     },
     {
       "source": "8800_report",
@@ -141,7 +141,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
+      "sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
     },
     {
       "source": "8800_report",
@@ -151,7 +151,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
+      "sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf"
     },
     {
       "source": "8800_report",
@@ -161,7 +161,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
+      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
     },
     {
       "source": "8800_report",

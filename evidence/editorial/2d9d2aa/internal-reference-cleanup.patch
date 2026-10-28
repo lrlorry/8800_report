@@ -1,0 +1,713 @@
+diff --git a/appendices/a-reproducibility.tex b/appendices/a-reproducibility.tex
+index 1dd846d..0c399ee 100644
+--- a/appendices/a-reproducibility.tex
++++ b/appendices/a-reproducibility.tex
+@@ -1,26 +1,22 @@
+ \chapter{Reproducibility and Experiment Manifest}
+ \label{app:reproducibility}
+ 
+-This appendix records the contracts needed to interpret the experiments.
+-The expanded protocol, executable names, raw-source paths and
+-result-to-figure mapping are retained in
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/experiment-protocol.md}{\nolinkurl{docs/experiment-protocol.md}} in the report repository.
++This appendix specifies the experimental environment and measurement
++protocol. Available source and measurement materials are listed in
++\cref{sec:b-artifacts}.
+ 
+ \section{Source, Environment and Trained States}
+ 
+ The principal environment is RTX 5090, driver 595.71.05, CUDA 13.0 and,
+ for E1, cuVS 26.08.01. JHQ targets compute\_80 PTX and uses driver JIT
+ compilation. \Cref{tab:a-components} separates run-header evidence from
+-versions stated in reports. The analysis checkout in
+-\path{data/ch7/audit.json} identifies the inspected workspace; a run-head
+-commit identifies source visible to that run. Neither supplies a missing
+-executable or trained-state fingerprint.
++versions stated in reports. Source revisions identify the inspected implementation; complete executable
++and trained-state fingerprints are unavailable for some historical runs.
+ 
+ \begin{table}[tbp]
+ \centering
+ \caption[Component and run provenance]{Recorded component provenance. Report and script identities
+-are distinguished from raw run headers; full executable and input paths
+-are in the expanded protocol.}
++are distinguished from raw run headers.}
+ \label{tab:a-components}
+ \footnotesize\setlength{\tabcolsep}{4pt}
+ \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.34\linewidth}>{\raggedright\arraybackslash}X@{}}
+@@ -42,10 +38,8 @@ Historical budget & Raw header \texttt{bf31b41}, v57 family \\
+ 
+ Dataset shapes and actual query counts are in \cref{tab:3-data}.
+ Comparisons reuse the exported vectors and squared-L2 ground truth per
+-dataset. Search sweeps load the recorded \path{arms6_cache} states;
+-cold-build records start without trained state. Input ledgers hash the
+-consumed analysis records, rather than every vector file, cache or binary.
+-Initial large-baseline attempts that retained an old index are superseded
++dataset. Search sweeps load the same cached trained states;
++cold-build records start without trained state. Initial large-baseline attempts that retained an old index are superseded
+ by isolated reruns. Stella's skipped batch-1,000 files contribute no
+ search points; corrected large-search records use its 999 queries.
+ 
+@@ -105,8 +99,7 @@ unknown query-population quality.
+ \section{Supplementary Evidence}
+ \label{sec:a-supplement}
+ 
+-Records under \path{JHQ_GPU/experiments/thesis_evidence/} retain campaign
+-identities and timing boundaries. A1 separates first-read, normal
++A1 separates first-read, normal
+ warm-input and synchronised phase runs on six datasets; five-build recall
+ is measured at fixed 128 probes. C1 checks four complete database layouts
+ and sampled re-encodings. Its FP64 norm checks use the stored rotation
+@@ -119,8 +112,7 @@ CUDA 13.0.88 \texttt{ptxas} for sm\_120. The observed 64-bit bound read
+ and atomic-min publication use an aligned query-key array with eight-byte
+ stride. The argument uses PTX alignment, scope and proxy semantics;
+ toolkit SASS corroborates it without supplying the driver's loaded JIT
+-code. Binary SHA and operation listings are in the expanded protocol
+-and the archived evidence.
++code.
+ 
+ D alternates v69/v72 over the E1 OpenAI grid, reusing TF32-trained states
+ and changing add/query GEMMs. Its baseline denominators remain archived
+@@ -160,8 +152,6 @@ qualifying endpoints below the minimum frontier recall; strict measured
+ thresholds remain separate. Python/C++ interfaces and warm-up policies
+ differ, and these measurements do not establish concurrent-service latency.
+ 
+-Source, records, manifests and offline checkers are archived in
+-\path{evidence/ch5/v71/} and \path{evidence/review/}. With the required
+-inputs, run \texttt{make ch7-data}, then \texttt{make pdf} or
+-\texttt{make pdf-zh}. GPU reruns additionally require original vectors,
+-trained states, matching builds and environment.
++GPU reproduction requires original vectors, matching trained states and
++builds, and the specified environment. \Cref{sec:b-artifacts} identifies
++which materials are available.
+diff --git a/appendices/b-supplementary.tex b/appendices/b-supplementary.tex
+index 3cbcedd..4d63430 100644
+--- a/appendices/b-supplementary.tex
++++ b/appendices/b-supplementary.tex
+@@ -2,17 +2,13 @@
+ \label{app:supplementary}
+ This appendix records parameter coverage, stage-specific validation and
+ secondary outcomes supporting Chapters 3--8. Measurement families retain
+-their own versions and timing boundaries. Their source mapping is in
++their own versions and timing boundaries. The experimental protocol is in
+ Appendix~\ref{app:reproducibility}.
+ 
+-\section{Complete Parameter Registry}
++\section{Parameter Coverage}
+ \label{sec:b-grids}
+ The E1 comparison contains 1,590 valid measured configurations, with
+-coverage in \cref{tab:b-e1-counts}. Each point's complete parameter JSON,
+-recall, host-to-host QPS and source filename is retained in
+-\path{data/appendix/e1-configurations.csv}. The registry is generated by
+-\path{scripts/build_appendix.py}, with source identity recorded in
+-\path{data/appendix/audit.json}. The sets below describe observed values;
++coverage in \cref{tab:b-e1-counts}. The sets below describe observed parameter values;
+ their Cartesian products are not assumed to have been measured.
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+@@ -112,7 +108,7 @@ The smaller representation-audit databases have identical primary and
+ residual bytes across one-/two-pass builds when joined by ID.
+ Corrections differ by at most $8.94\times10^{-8}$ and 1/\allowbreak{}1/\allowbreak{}40 rows change
+ list assignment; Stella validates its natural two-pass path
+-(\cref{sec:4-representation-audit}). T4 now supplies the strict
++(\cref{sec:4-representation-audit}). T4 supplies the strict
+ computed-score selection reference (\cref{sec:a-t4-t5}). The controlled
+ same-model Vogue cross-process diagnosis remains unperformed: archived
+ processes with matching probe/primary dumps still report final recall
+@@ -191,23 +187,14 @@ Both estimators retain a numerical FP32 advantage in this finite grid.
+ The OpenAI-3072 RaBitQ bracket spans recall 0.9669--0.9796, exposing
+ substantial interpolation sensitivity. These anchor sweeps do not replace
+ E1's full grid, establish a universal margin, or constitute FP32 retraining.
+-The raw JSON and reconstruction are mapped in
+-\path{data/full-review/audit.json}.
++
+ 
+ \section{Artifact Access}
+ \label{sec:b-artifacts}
+-The report repository contains the parameter registry, derived tables,
+-figure sources, analysis scripts and 209-file v71 source/measurement
+-bundle under \path{evidence/ch5/v71/}. The offline command
+-\texttt{python3}\ \path{evidence/ch5/v71/check.py} verifies that bundle.
+-Selected T4/T5, T1 and A2 source/record inputs are also mirrored in
+-\path{evidence/review/}. Its checker verifies hashes and can rerun the
+-two corresponding offline audits using that local source root.
+-The broader raw records remain in the sibling \texttt{JHQ\_GPU} project
+-at the ledger paths. Complete vectors, trained states and all executables
+-are not packaged here. Offline recomputation requires the stated inputs;
+-GPU reproduction also requires the corresponding build and environment.
+-
+-A fixed artifact map, including the public manuscript source and the
+-v71/T4/T5/T1/A2 evidence bundles, is provided in
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\nolinkurl{docs/artifact-access.md}}.
++Available source snapshots, measurement records and analysis tools are
++linked from the
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project artifact archive}.
++It includes the v71 source/measurement bundle and selected T4/T5, T1 and A2
++inputs. Complete vectors, trained states and all historical executables
++are not included; GPU reproduction requires those inputs and the matching
++build environment.
+diff --git a/chapters/03-2-data.tex b/chapters/03-2-data.tex
+index e9b060f..2a640f4 100644
+--- a/chapters/03-2-data.tex
++++ b/chapters/03-2-data.tex
+@@ -9,7 +9,7 @@ measured exports after preparation, rather than the current upstream cards.
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+-\captionof{table}[Dataset and training manifest]{Data and JHQ training manifest. $n_q$ is the actual query count;
++\captionof{table}[Dataset and training configuration]{Data and JHQ training configuration. $n_q$ is the actual query count;
+ $n_t=39n_{\rm list}$ is the requested coarse-training sample size. E1 uses
+ the first four rows. All rows use squared L2 and $k=10$.}
+ \label{tab:3-data}
+@@ -45,8 +45,8 @@ only ten entries are scored. Duplicate returned IDs do not earn repeated
+ credit. Range, duplicate and repeat-call checks are recorded separately.
+ 
+ JHQ uses $M=d/8$, $B=B_r=8$, eight coarse iterations and a requested
+-100,000-vector residual-training sample. Search sweeps reuse the
+-\texttt{arms6\_cache} trained states and re-encode the database; cold builds
++100,000-vector residual-training sample. Search sweeps reuse cached
++trained states and re-encode the database; cold builds
+ start without that state. The code requests training from database samples,
+ separately from calibration queries. For budget evaluation, even query
+ positions form a 500-query calibration pool and odd positions form a
+@@ -57,6 +57,4 @@ the deployable agreement rule uses search outputs
+ (\cref{sec:6-2,sec:a-budget-contract}).
+ 
+ Preparation code and shape logs establish this protocol; complete historical
+-vector-file and trained-state hashes are unavailable. The ledger preserves
+-that distinction between an inspected preparation procedure and an
+-immutable identity of every run's data.
++vector-file and trained-state hashes are unavailable.
+diff --git a/chapters/03-5-ledger.tex b/chapters/03-5-ledger.tex
+index 0965964..daf78ef 100644
+--- a/chapters/03-5-ledger.tex
++++ b/chapters/03-5-ledger.tex
+@@ -1,12 +1,7 @@
+-The evidence ledger \path{data/ch3/audit.json} identifies configurations,
+-measurement boundaries and analysis inputs. Family-specific versions and
+-controls remain separate. Hashes identify consumed files; historical
+-executable and trained-state identities are incomplete. Appendix A lists
+-available reproduction inputs, and the repository supplement gives the
+-registry fields.\footnote{\path{docs/supplementary-evidence.md}.}
+-
+-\path{scripts/build_ch7.py} regenerates the principal plots and tables,
+-including \cref{fig:7-frontiers,fig:7-lut,fig:7-memory};
+-\path{scripts/audit_ch3.py} checks the common protocol.
+-These are offline reconstructions. Repeating GPU measurements additionally
+-requires the listed binaries, datasets and trained states.
++Each experiment family records the implementation version, index and query
++settings, timing boundary and measured outputs. Paired comparisons reuse
++the same trained states; changes of version, state or precision define
++separate experiment families. Historical executable and trained-state
++fingerprints are incomplete, limiting exact reproduction of some runs.
++\Cref{app:reproducibility} summarises the available environment and
++experimental protocol.
+diff --git a/chapters/03-methodology.tex b/chapters/03-methodology.tex
+index 38e2cc5..56c3923 100644
+--- a/chapters/03-methodology.tex
++++ b/chapters/03-methodology.tex
+@@ -26,7 +26,7 @@ describe the mechanisms; Chapter 7 presents their measured outcomes.
+ \label{sec:3-4}
+ \input{chapters/03-4-frontiers}
+ 
+-\section{Versioned Claim-to-Evidence Ledger}
++\section{Experimental Records and Reproducibility}
+ \label{sec:3-5}
+ \input{chapters/03-5-ledger}
+ 
+diff --git a/chapters/04-2-training.tex b/chapters/04-2-training.tex
+index 42cbf5d..dcce8a8 100644
+--- a/chapters/04-2-training.tex
++++ b/chapters/04-2-training.tex
+@@ -31,8 +31,6 @@ recall monotonically, and the residual codes themselves changed
+ substantially. These results motivate the bounded training cost while
+ preserving a measurable quality tradeoff. They used 25 residual Lloyd
+ iterations and do not replace the later six-dataset evaluation.
+-Historical diagnostics and their input hashes are recorded in
+-\path{data/ch4/review-audit.json}.
+ 
+ \subsection{Why retain the analytical primary model?}
+ 
+diff --git a/chapters/04-4-lifecycle.tex b/chapters/04-4-lifecycle.tex
+index 6ac7460..6076f5a 100644
+--- a/chapters/04-4-lifecycle.tex
++++ b/chapters/04-4-lifecycle.tex
+@@ -58,7 +58,7 @@ Raw input remains caller-owned. Build-only staging requires
+ $4n_ba_{\rm in}d$ pinned-host bytes, while each order/inverse array
+ requires $4N$ device bytes. Assignment products are freed before gather;
+ \cref{eq:4-staging-rows,eq:4-assignment-scratch} give their independent
+-capacities. The repository supplement retains the object-lifetime table.
++capacities.
+ 
+ \subsection{Reuse, recovery and invalidation}
+ 
+diff --git a/chapters/04-6-contracts.tex b/chapters/04-6-contracts.tex
+index d887c37..ccde66c 100644
+--- a/chapters/04-6-contracts.tex
++++ b/chapters/04-6-contracts.tex
+@@ -7,8 +7,7 @@ encoded rows and their placement, even when coarse routing succeeds.
+ \subsection{Completed representation evidence}
+ 
+ The 13 October residual-bound pilot exported $\Pi$, codebooks, IDs,
+-offsets, corrections and logically decoded packed codes from the arms6
+-trained cache. It covers complete Vogue (932,328 rows), arXiv (2,253,000)
++offsets, corrections and logically decoded packed codes from the trained cache. It covers complete Vogue (932,328 rows), arXiv (2,253,000)
+ and OpenAI-3072 (999,000) databases.
+ 
+ The codebook audit found zero separability mismatches, scalar-level
+@@ -20,8 +19,7 @@ from $1.28\times10^{-7}$ to $2.77\times10^{-7}$. Sampled GPU-returned
+ top-10 scores have maximum relative errors from $2.38\times10^{-7}$ to
+ $4.85\times10^{-5}$, using $|s_{\rm GPU}-s_{64}|/s_{64}$ with the
+ query-norm constant included. These are checks of the exported
+-representation, not re-encoding from the original input vectors. The
+-repository supplement retains the per-dataset diagnostics.
++representation, not re-encoding from the original input vectors.
+ 
+ 
+ Across seven workloads and 896 query instances, the pilot additionally
+@@ -33,7 +31,7 @@ from the routed map, leaving output membership incompletely checked.
+ 
+ Encoder, primary/residual training and construction sources match the
+ evaluated implementation after namespace normalisation and removal of
+-the export method (\path{scripts/audit_ch4_review.py}). This source
++the export method. This source
+ correspondence covers the shared path, leaving later model identity and
+ large-dataset two-pass construction to separate checks.
+ 
+diff --git a/chapters/05-4-global-selection.tex b/chapters/05-4-global-selection.tex
+index f311293..f29e1c1 100644
+--- a/chapters/05-4-global-selection.tex
++++ b/chapters/05-4-global-selection.tex
+@@ -202,7 +202,7 @@ prefix's $c$th distance and enough candidates at that distance to fill
+ $\min(c,|V_t|)$ slots. A rejected distance has $c$ retained witnesses
+ with no larger distance; exact distance sorting preserves this rank
+ property at each compaction. Tied identities need not be unique.
+-The strict CPU reference in \cref{sec:7-strict-selection} now checks the
++The strict CPU reference in \cref{sec:7-strict-selection} checks the
+ same computed score/position target: all 55,296 grouped query instances
+ match its complete-key order. All 13,824 one-block instances satisfy the
+ distance preorder; 56 choose different cutoff-tie members. This complements
+diff --git a/chapters/05-5-bound-scheduling.tex b/chapters/05-5-bound-scheduling.tex
+index 3ee1791..e1ac834 100644
+--- a/chapters/05-5-bound-scheduling.tex
++++ b/chapters/05-5-bound-scheduling.tex
+@@ -180,8 +180,6 @@ groups. At calibration size $S=128$, eight use two groups, two use four,
+ and two remain query-centric. Execution paths therefore differ in
+ 8/12 configurations. Grouped selection principally serves smaller
+ batches and skewed workloads; there is no universal batch-256 boundary.
+-The offline recount and input hashes are recorded in
+-\path{data/ch5/review-audit.json}.
+ 
+ The rule is a heuristic rather than an occupancy calculation or a
+ latency oracle: it omits register pressure, shared-memory residency,
+diff --git a/chapters/06-6-scope.tex b/chapters/06-6-scope.tex
+index e7f7872..e41c66d 100644
+--- a/chapters/06-6-scope.tex
++++ b/chapters/06-6-scope.tex
+@@ -10,14 +10,6 @@ lower calibration cost. The caller explicitly installs $\alpha$.
+ Chapter 7 evaluates fixed-budget/oracle controls and four direct reuse
+ measurements.
+ 
+-The supplementary trace contents and completed strict CPU-reference
+-checks are documented in \cref{sec:a-supplement,sec:a-t4-t5}.
+-Remaining checks concern arbitrary-subset per-query invariance,
+-rearchiving candidate dumps for independent re-sorting, the Vogue
+-cross-process discrepancy and future query changes. Their status is
+-maintained in \path{assessment/ch7-pending-experiments.txt}.
+-
+-
+ The reported budget campaign and its trace rerun use v69 arithmetic,
+ including TF32 on the OpenAI datasets. The separate FP32 sensitivity
+ measures a search frontier; it does not recalibrate or validate these
+diff --git a/chapters/07-evaluation.tex b/chapters/07-evaluation.tex
+index 3a1f7d7..3cd9e74 100644
+--- a/chapters/07-evaluation.tex
++++ b/chapters/07-evaluation.tex
+@@ -28,7 +28,7 @@ Metrics and frontier estimators follow \cref{sec:3-2,sec:3-4};
+ $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
+ 
+ 
+-Tables and figures follow the regeneration ledger in \cref{sec:3-5}.
++
+ 
+ 
+ \section{Modern GPU ANN Recall--QPS Frontiers}
+@@ -466,7 +466,7 @@ Across the eight fixed choices, $\alpha=64$ and 100 each qualify in
+ ten of twelve cells against the diagnostic quality target; $\alpha=200$
+ qualifies in all twelve. Among qualifying cells, their maximum QPS deficits
+ to the diagnostic oracle are 26.6\%, 40.9\% and 57.1\%, respectively.
+-The complete eight-arm comparison is retained in the repository supplement. Full-pool
++Full-pool
+ calibration selects 100 on Vogue at both probe depths while the oracle
+ selects 64: reference agreement and fastest quality-constrained selection
+ have different objectives. Here $\alpha=200$ attains the best measured
+@@ -538,7 +538,7 @@ their net-cost implication on the recorded query stream.
+ 
+ 
+ The newer lane-refined pipeline leaves less removable refinement work
+-than the historical scalar implementation (repository supplement).
++than the historical scalar implementation.
+ The runs share the budget protocol and grid, but this cross-campaign
+ comparison does not isolate refinement as the sole cause of the change.
+ 
+@@ -647,8 +647,7 @@ large-dataset searches; the E1 memory comparison also informs RQ4.
+ \subsection{Cold builds and the lifecycle boundary}
+ 
+ Unlike the cached search sweeps, \cref{tab:7-build-memory} uses three
+-normal empty-cache train/add repetitions per dataset. The complete
+-six-dataset record is retained in the repository supplement.
++normal empty-cache train/add repetitions per dataset.
+ Vogue's training is 298--303\,ms, so its normal total is about 0.56\,s;
+ the archived 1.33\,s total (including 1.056\,s training) is an unusually slow single observation.
+ Stella's normal totals are 10.54--10.65\,s, close to the historical
+diff --git a/chapters/07-supp-budget.tex b/chapters/07-supp-budget.tex
+index bf3f081..cd1e697 100644
+--- a/chapters/07-supp-budget.tex
++++ b/chapters/07-supp-budget.tex
+@@ -16,7 +16,6 @@ than checking the selected budget alone, and supports using
+ \cref{eq:6-finite-pool} for these observations despite the scan-path
+ changes. It checks aggregate counts on the traced subsets, rather than
+ per-query invariance on every possible subset.
+-The repository supplement retains all twelve cells of per-draw maxima.
+ 
+ 
+ At $S=128$, maxima reach 0.0050 for arXiv/512 and 0.0046 for BGE/512;
+diff --git a/chapters/08-2-negative.tex b/chapters/08-2-negative.tex
+index 97b29d3..81d921c 100644
+--- a/chapters/08-2-negative.tex
++++ b/chapters/08-2-negative.tex
+@@ -39,8 +39,7 @@ Mailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,
+ arXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below
+ one. Right: minimum survivor
+ counts meeting the original JHQ recall target on arXiv's 400-query FP64
+-offline test split. The candidate reduction is not a GPU speedup. Both
+-panels are regenerated from archived records by the thesis audit script.}
++offline test split. The candidate reduction is not a GPU speedup.}
+ \label{fig:8-negative}
+ \end{minipage}\par\medskip
+ 
+@@ -73,7 +72,5 @@ pipeline, then compares independently swept budgets at measured recall
+ thresholds. At arXiv's original $\alpha=100$ target it yields ratios of
+ approximately 1.40 at batch 8 and 1.21 at batch 1,000. Vogue's tested median
+ frontier stops at 0.9630, below the original 0.9644 working point;
+-OpenAI-3072 is essentially tied. These results revise a blanket ``never
+-GPU-tested'' description, while preserving the decision against a universal
+-replacement. The follow-up uses its own index states, query pool and
++OpenAI-3072 is essentially tied. The gains remain workload-specific. The follow-up uses its own index states, query pool and
+ three-round protocol; its rates are not inserted into E1.
+diff --git a/frontmatter/declaration.tex b/frontmatter/declaration.tex
+index 866d04e..c8da00b 100644
+--- a/frontmatter/declaration.tex
++++ b/frontmatter/declaration.tex
+@@ -7,6 +7,6 @@ OpenAI Codex assisted with substantive drafting, revision, LaTeX, analysis
+ and code/log checks \cite{ai_codex_record}; ChatGPT supplied frameworks
+ and reviews \cite{ai_chatgpt_record}; Anthropic Claude assisted with
+ implementation, experiments and review \cite{ai_claude_record}.
+-Selected prompts, artifact mappings and record limitations are documented in
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}.
++Selected prompts and usage details are available in the
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{AI-use record}.
+ The author is responsible for the submitted claims.
+diff --git a/references.bib b/references.bib
+index dc6f7e7..40c8dc5 100644
+--- a/references.bib
++++ b/references.bib
+@@ -5,8 +5,8 @@
+   author = {Luo, Rui and Zhang, Mengxuan},
+   title = {{JHQ-GPU}: Representation-Driven {GPU} Execution and Workload-Adaptive Hierarchical Refinement},
+   year = {2026},
+-  url = {https://github.com/lrlorry/JHQ_GPU/blob/70da383056b50f4e9b8e9a8030bc9b92281ba537/paper_adc2026/ADC/mainADC.tex},
+-  note = {Project manuscript source at a fixed public revision; its historical measurement versions are distinguished in this thesis}
++  howpublished = {\href{https://github.com/lrlorry/JHQ_GPU/blob/70da383056b50f4e9b8e9a8030bc9b92281ba537/paper_adc2026/ADC/mainADC.tex}{Project manuscript source}},
++  note = {Project manuscript}
+ }
+ 
+ @article{mailman,
+@@ -327,20 +327,20 @@
+   author = {{OpenAI}},
+   title = {{Codex}: Selected Thesis-Preparation Interactions},
+   year = {2026},
+-  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},
+-  note = {Selected original user prompts retained from the current conversation; record compiled 29 October 2026. Earlier timestamps and model versions are unavailable; this is not a complete interaction export}
++  howpublished = {\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},
++  note = {Selected prompts and uses; compiled 29 October 2026. Partial record; historical interaction metadata unavailable}
+ }
+ @misc{ai_chatgpt_record,
+   author = {{OpenAI}},
+   title = {{ChatGPT}: Project Review Assistance Record},
+   year = {2026},
+-  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},
+-  note = {Use documented by retained review excerpts and the project disclosure; record compiled 29 October 2026. Complete original prompts, interaction dates and model versions remain unavailable}
++  howpublished = {\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},
++  note = {Retained review excerpts; original prompts and interaction metadata unavailable}
+ }
+ @misc{ai_claude_record,
+   author = {{Anthropic}},
+   title = {{Claude}: Implementation, Experiment and Review Assistance Record},
+   year = {2026},
+-  url = {https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md},
+-  note = {Use documented by retained project and experiment records; record compiled 29 October 2026. Complete original prompts, interaction dates and model versions remain unavailable}
++  howpublished = {\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{Project AI-use record}},
++  note = {Implementation and experiment records; original prompts and interaction metadata unavailable}
+ }
+diff --git a/zh/appendices/b-supplementary.tex b/zh/appendices/b-supplementary.tex
+index 246ca9d..053355f 100644
+--- a/zh/appendices/b-supplementary.tex
++++ b/zh/appendices/b-supplementary.tex
+@@ -1,14 +1,11 @@
+ \chapter{补充结果与正确性检查}
+ \label{app:supplementary}
+ 本附录记录支持第3--8章的参数覆盖、逐阶段验证及次要结果。
+-各测量家族保留各自版本与计时边界，来源映射见附录\ref{app:reproducibility}。
++各测量家族保留各自版本与计时边界，实验协议见附录\ref{app:reproducibility}。
+ 
+-\section{完整参数记录}
++\section{参数覆盖}
+ \label{sec:b-grids}
+ E1比较有1,590个有效实测配置，覆盖见\cref{tab:b-e1-counts}。
+-逐点完整参数JSON、recall、主机到主机QPS及源文件名保存在
+-\path{data/appendix/e1-configurations.csv}。
+-\path{scripts/build_appendix.py}生成该记录，输入身份见\path{data/appendix/audit.json}。
+ 下列集合表示观测值，不假定其笛卡尔积全部测量过。
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+@@ -143,17 +140,11 @@ T1 晚于 D，在同一会话重测 recall 0.97 附近的 JHQ 和竞争基线，
+ 
+ 两种估计在该有限网格均保留 FP32 数值优势。OpenAI-3072 的 RaBitQ 插值区间为
+ recall 0.9669--0.9796，揭示较强插值敏感性。这些锚点不替换 E1 完整网格，
+-不建立通用优势幅度，也不是 FP32 重训。原始 JSON 及复算映射见
+-\path{data/full-review/audit.json}。
++不建立通用优势幅度，也不是 FP32 重训。
+ 
+ \section{材料获取}
+ \label{sec:b-artifacts}
+-报告仓库提供参数记录、派生表、图源、分析脚本，以及\path{evidence/ch5/v71/}下的
+-209文件v71源码／测量包，可用\texttt{python3}\ \path{evidence/ch5/v71/check.py}离线核对。
+-另在\path{evidence/review/}保留 T4/T5、T1 和 A2 消费的源码／记录子集；检查器核对
+-哈希，并可用这个本地源码根目录重新运行两项离线审计。
+-更多原始记录位于同级\texttt{JHQ\_GPU}项目的清单路径，完整向量、训练状态与所有
+-可执行文件没有打包在本报告仓库。离线复算需要所列输入，GPU复现还需要相应构建和环境。
+-
+-固定材料入口（含公开手稿源码及v71／T4／T5／T1／A2证据包）见
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\nolinkurl{docs/artifact-access.md}}。
++可获得的源码快照、测量记录与分析工具见
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目复现材料}，
++包括 v71 源码／测量包及部分 T4/T5、T1、A2 输入。完整向量、训练状态与全部历史
++可执行文件未包含在内；GPU 复现还需要这些输入及匹配的构建环境。
+diff --git a/zh/chapters/03-2-data.tex b/zh/chapters/03-2-data.tex
+index ed2a336..7a22c9b 100644
+--- a/zh/chapters/03-2-data.tex
++++ b/zh/chapters/03-2-data.tex
+@@ -7,7 +7,7 @@ BGE使用意大利语Wikipedia配置，Stella使用TREC24 BioGen语料导出
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+-\captionof{table}[数据集与训练配置]{数据与JHQ训练清单。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
++\captionof{table}[数据集与训练配置]{数据与JHQ训练配置。$n_q$为实际查询数；$n_t=39n_{\rm list}$是请求的
+ 粗聚类训练样本数。E1使用前四行；全部使用平方L2及$k=10$。}
+ \label{tab:3-data}
+ \small\setlength{\tabcolsep}{4pt}
+@@ -35,7 +35,7 @@ Vogue/arXiv的GT行宽为100，其余四份为20，评分只比较前10项。
+ 返回重复ID不会重复得分；越界、重复和跨调用变化分别记录。
+ 
+ JHQ采用$M=d/8$、$B=B_r=8$、8次粗聚类迭代，并请求100,000条残差训练样本。
+-搜索扫描复用\texttt{arms6\_cache}训练状态，重新编码数据库；
++搜索扫描复用缓存的训练状态，重新编码数据库；
+ 冷构建从没有该状态开始。源码从数据库抽取训练样本，与校准查询分开。
+ 预算实验以偶数查询位置构成500条校准池，奇数位置构成500条留出池，
+ Stella留出499条。每个单元在$S=32,64,128$下各抽64次，FULL使用全部500条。
+@@ -43,4 +43,3 @@ GT只参与离线oracle和留出质量评估，可部署的一致性规则使用
+ （\cref{sec:6-2,sec:a-budget-contract}）。
+ 
+ 准备源码和形状日志支持上述协议，但历史向量文件与训练状态的完整哈希缺失。
+-证据登记区分已检查的准备流程与每次运行数据的不可变身份。
+diff --git a/zh/chapters/03-5-ledger.tex b/zh/chapters/03-5-ledger.tex
+index edd7615..eb084db 100644
+--- a/zh/chapters/03-5-ledger.tex
++++ b/zh/chapters/03-5-ledger.tex
+@@ -1,7 +1,4 @@
+-证据登记 \path{data/ch3/audit.json} 标识配置、测量边界和分析输入，各实验族保留
+-独立版本及对照。哈希标识已读取文件，历史可执行文件和训练状态身份仍不完整。
+-附录 A 列出可获得的复现输入，仓库补充材料给出登记字段。\footnote{\path{docs/supplementary-evidence.md}。}
+-
+-\path{scripts/build_ch7.py} 重新生成主要图表，包括
+-\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}；\path{scripts/audit_ch3.py} 核查统一协议。
+-这些是离线重算，重复 GPU 测量还需所列二进制程序、数据和训练状态。
++各实验族记录实现版本、索引与查询配置、计时边界及测量输出。配对比较复用相同
++训练状态；版本、状态或精度的变化分别构成独立实验族。历史可执行文件和训练状态
++指纹仍不完整，限制了部分运行的精确复现。\Cref{app:reproducibility}汇总可获得的
++环境信息与实验协议。
+diff --git a/zh/chapters/03-methodology.tex b/zh/chapters/03-methodology.tex
+index 2c75975..c420fbc 100644
+--- a/zh/chapters/03-methodology.tex
++++ b/zh/chapters/03-methodology.tex
+@@ -18,7 +18,7 @@
+ \section{基线、调参网格与前沿构造}
+ \label{sec:3-4}
+ \input{zh/chapters/03-4-frontiers}
+-\section{带版本的主张与证据登记}
++\section{实验记录与可复现性}
+ \label{sec:3-5}
+ \input{zh/chapters/03-5-ledger}
+ \section{证据强度与有效性控制}
+diff --git a/zh/chapters/04-2-training.tex b/zh/chapters/04-2-training.tex
+index 8df7d0e..b8eec31 100644
+--- a/zh/chapters/04-2-training.tex
++++ b/zh/chapters/04-2-training.tex
+@@ -14,7 +14,7 @@ OpenAI各319,488行，BGE与Stella各1,277,952行，均为$39n_{\rm list}$。
+ 这与FAISS默认的每质心39训练点警告阈值一致\cite{faiss_clustering}，是采样规则，
+ 不是八轮IVF拟合的统计保证。残差训练另用100,000行等距样本，成本不随较大粗训练样本增长。
+ 
+-历史受控扫描固定主模型和 IVF 中心，仅改变 Vogue 与 OpenAI-3072 的残差训练样本量，覆盖 $B_r\in\{4,8\}$ 和 32/128/256 探针。12 个配置中，100K 相对全量的召回率差值最大为 $0.0018$：11 项较低、1 项相等。增加到中间样本量没有带来单调提升，残差码本身也发生较大变化。这支持有界训练成本的取舍，同时保留可测量的质量损失。该扫描使用 25 轮残差 Lloyd，不能替代之后六个数据集的评测。历史诊断及输入哈希见 \path{data/ch4/review-audit.json}。
++历史受控扫描固定主模型和 IVF 中心，仅改变 Vogue 与 OpenAI-3072 的残差训练样本量，覆盖 $B_r\in\{4,8\}$ 和 32/128/256 探针。12 个配置中，100K 相对全量的召回率差值最大为 $0.0018$：11 项较低、1 项相等。增加到中间样本量没有带来单调提升，残差码本身也发生较大变化。这支持有界训练成本的取舍，同时保留可测量的质量损失。该扫描使用 25 轮残差 Lloyd，不能替代之后六个数据集的评测。
+ 
+ \subsection{为何保留解析主码模型}
+ 
+diff --git a/zh/chapters/04-4-lifecycle.tex b/zh/chapters/04-4-lifecycle.tex
+index 41c47f3..dfa4920 100644
+--- a/zh/chapters/04-4-lifecycle.tex
++++ b/zh/chapters/04-4-lifecycle.tex
+@@ -32,7 +32,7 @@ CAGRA 比较使用图度数 $d_g=32$ 时的 $d+4d_g$ 字节，与测试程序的
+ 原始输入由调用方持有。构建暂存占用 $4n_ba_{\rm in}d$ pinned-host 字节，
+ 每个排序／逆映射数组占用 $4N$ 设备字节。分配乘积在 gather 前释放；
+ \cref{eq:4-staging-rows,eq:4-assignment-scratch}分别给出独立容量。
+-完整对象生命周期表保留在仓库补充材料中。
++
+ 
+ \subsection{复用、恢复与失效}
+ 
+diff --git a/zh/chapters/04-6-contracts.tex b/zh/chapters/04-6-contracts.tex
+index 8d35afb..3954e64 100644
+--- a/zh/chapters/04-6-contracts.tex
++++ b/zh/chapters/04-6-contracts.tex
+@@ -2,14 +2,14 @@
+ 
+ \subsection{已完成的表示证据}
+ 
+-10 月 13 日的残差下界 pilot 从 arms6 训练缓存导出 $\Pi$、码本、ID、偏移、修正项及逻辑解码后的打包编码，覆盖完整的 Vogue（932,328 行）、arXiv（2,253,000 行）和 OpenAI-3072（999,000 行）数据库。
++10 月 13 日的残差下界 pilot 从训练缓存导出 $\Pi$、码本、ID、偏移、修正项及逻辑解码后的打包编码，覆盖完整的 Vogue（932,328 行）、arXiv（2,253,000 行）和 OpenAI-3072（999,000 行）数据库。
+ 
+-码本检查发现可分离性不匹配、标量级值不匹配、残差码本无序对均为零。独立解码导出的主码／残差后，FP64 循环遍历每一行，核对 $\gamma=2\langle\widehat p,\widehat r\rangle$。三个数据库的最大修正项绝对误差为$1.28\times10^{-7}$--$2.77\times10^{-7}$；采样GPU返回top-10分数的最大相对误差为$2.38\times10^{-7}$--$4.85\times10^{-5}$，定义为$|s_{\rm GPU}-s_{64}|/s_{64}$，参考含查询范数常数。这些是导出表示的检查，不是从原始输入向量重新编码；逐数据集诊断保留在仓库补充材料。
++码本检查发现可分离性不匹配、标量级值不匹配、残差码本无序对均为零。独立解码导出的主码／残差后，FP64 循环遍历每一行，核对 $\gamma=2\langle\widehat p,\widehat r\rangle$。三个数据库的最大修正项绝对误差为$1.28\times10^{-7}$--$2.77\times10^{-7}$；采样GPU返回top-10分数的最大相对误差为$2.38\times10^{-7}$--$4.85\times10^{-5}$，定义为$|s_{\rm GPU}-s_{64}|/s_{64}$，参考含查询范数常数。这些是导出表示的检查，不是从原始输入向量重新编码。
+ 
+ 
+ 在七个工作负载、896 个查询实例中，pilot 对 72,800,590 个路由候选实例检查所提残差下界与 FP64 重建距离，未报告违反；同一集合也支持 FP64 组合分数恒等式检查。GPU 返回分数检查仅覆盖 top-10 槽位，并跳过路由映射中不存在的 ID，因此尚未完整验证输出成员关系。
+ 
+-规范化命名空间并去掉导出方法后，编码、主码／残差训练与构建源码同评测实现一致（\path{scripts/audit_ch4_review.py}）。该对应覆盖共同路径；后续模型身份与大数据集两遍构建仍需单独核查。
++规范化命名空间并去掉导出方法后，编码、主码／残差训练与构建源码同评测实现一致。该对应覆盖共同路径；后续模型身份与大数据集两遍构建仍需单独核查。
+ 
+ \subsection{独立输入与放置审计}
+ \label{sec:4-representation-audit}
+diff --git a/zh/chapters/05-5-bound-scheduling.tex b/zh/chapters/05-5-bound-scheduling.tex
+index 831101c..62f738b 100644
+--- a/zh/chapters/05-5-bound-scheduling.tex
++++ b/zh/chapters/05-5-bound-scheduling.tex
+@@ -87,6 +87,6 @@ toolkit反汇编支持这一契约，但未捕获驱动JIT实际SASS；论证不
+ 
+ Vogue 的调度路径与查询级路径比较中，每 1,000 条查询有 3--15 条仅主码并列成员不同，非并列差异为零，所有记录单元的最终输出均逐位一致。7--11 的较窄范围仅适用于 $n_{\rm probe}=128$。
+ 
+-预算实验进一步明确了校准与评测的区别：12 个持出配置中，十个在 batch 500（Stella 为 499）使用查询级扫描，两个 Vogue 配置使用四组。校准样本量 $S=128$ 时，八个配置使用两组，两个使用四组，两个仍为查询级路径，即 8/12 配置的校准与评测执行路径不同。分组选择主要服务较小 batch 和候选数偏斜的负载，并不存在普遍适用的 batch 256 分界。离线重计数与输入哈希记录在 \path{data/ch5/review-audit.json}。
++预算实验进一步明确了校准与评测的区别：12 个持出配置中，十个在 batch 500（Stella 为 499）使用查询级扫描，两个 Vogue 配置使用四组。校准样本量 $S=128$ 时，八个配置使用两组，两个使用四组，两个仍为查询级路径，即 8/12 配置的校准与评测执行路径不同。分组选择主要服务较小 batch 和候选数偏斜的负载，并不存在普遍适用的 batch 256 分界。
+ 
+ 该规则是启发式策略，不是 occupancy 计算，也不是延迟 oracle：它没有建模寄存器压力、共享内存驻留限制、与预算相关的压缩成本和合并成本。冻结的伪查询统计也可能无法代表未来查询。记录中的最大 regret 出现在 batch 256，此时某个固定组数方案约快 $1.217\times$。该设计组合候选并行扫描、带见证过滤和工作负载相关执行，并在固定精排预算下测量收益和 regret。后续残差精排与最终 top-$k$ 按\Cref{sec:5-6}消费这些有效候选。
+diff --git a/zh/chapters/06-6-scope.tex b/zh/chapters/06-6-scope.tex
+index c8dda51..66958c6 100644
+--- a/zh/chapters/06-6-scope.tex
++++ b/zh/chapters/06-6-scope.tex
+@@ -6,10 +6,5 @@
+ 已观察的工作负载族支持 FULL 的质量覆盖，以及 $S=128$ 的较低校准成本。
+ 调用方须显式设置 $\alpha$。第七章评估固定预算／oracle 对照及四个直接复用测量。
+ 
+-补证轨迹内容及已完成的严格CPU参考见\cref{sec:a-supplement,sec:a-t4-t5}。
+-剩余检查为任意子集逐查询不变性、重新归档候选dump以供独立重排、Vogue跨进程差异及未来查询变化。
+-状态维护在\path{assessment/ch7-pending-experiments.txt}。
+-
+-
+ 预算主实验及轨迹重跑均使用v69算术，OpenAI包含TF32。独立FP32敏感性测量搜索前沿，
+ 没有在FP32下重新校准或验证这些预算选择。
+diff --git a/zh/chapters/07-evaluation.tex b/zh/chapters/07-evaluation.tex
+index d8b7be4..e20615e 100644
+--- a/zh/chapters/07-evaluation.tex
++++ b/zh/chapters/07-evaluation.tex
+@@ -23,7 +23,7 @@
+ 指标与前沿估计沿用\cref{sec:3-2,sec:3-4}；$\glut$与$\gscan$保留\cref{sec:5-1}中的不同含义。
+ 
+ 
+-图表沿用\cref{sec:3-5}的重新生成清单。
++
+ 
+ 
+ \section{现代 GPU ANN 的召回率—QPS 前沿}
+@@ -270,7 +270,7 @@ $L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区
+ 
+ 八个固定选项中，$\alpha=64$ 和 100 各有 10/12 单元达标，200 为 12/12；
+ 各自达标单元相对诊断 oracle 的最大 QPS 缺口为 26.6\%、40.9\%、57.1\%。
+-完整八档比较保留在仓库补充材料。Vogue 的两个探针数下，FULL 选 100 而 oracle
++Vogue 的两个探针数下，FULL 选 100 而 oracle
+ 选 64，说明参考一致性与质量约束下最快选择具有不同目标。此处 $\alpha=200$
+ 达到最佳实测 recall，12/12 达标来自其覆盖对照的定义。
+ 短计时中的 OpenAI 小预算反转经交替重复被解释为计时变化，并形成低预算平台
+@@ -304,7 +304,7 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置
+ 下文直接执行核查它们在归档查询流上的净成本含义。
+ 
+ 
+-较新的 lane 精排流水线比历史标量实现保留更少的可消除精排工作，历史对比见仓库补充材料。
++较新的 lane 精排流水线比历史标量实现保留更少的可消除精排工作。
+ 各次运行共享预算协议与网格，但跨实验比较没有隔离精排作为变化的唯一原因。
+ 
+ \input{zh/chapters/07-supp-budget}
+@@ -357,7 +357,7 @@ Vogue 同时说明偏斜特征的价值与局限。E1 候选数 CV 随探针数
+ \subsection{冷构建与生命周期边界}
+ 
+ 与缓存搜索扫描不同，\cref{tab:7-build-memory}采用每数据集三次正常空缓存训练／添加
+-重复。六数据集完整记录保留在仓库补充材料。
++重复。
+ Vogue训练298--303\,ms，正常合计约0.56\,s，归档1.33\,s（含1.056\,s训练）为一次偏慢观测；
+ Stella为10.54--10.65\,s，接近历史10.40\,s。
+ 
+diff --git a/zh/chapters/07-supp-budget.tex b/zh/chapters/07-supp-budget.tex
+index 23597bb..be9a119 100644
+--- a/zh/chapters/07-supp-budget.tex
++++ b/zh/chapters/07-supp-budget.tex
+@@ -9,7 +9,7 @@
+ 2,304条采样不一致曲线均单调，选择全部与枚举一致；十二条全池曲线也通过两项
+ 检查。进一步，将全池逐查询计数按各次实际样本ID求和，18,432个网格计数全部
+ 复现。这比只核对最终预算更强，支持在这些观测中使用\cref{eq:6-finite-pool}，
+-包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。十二单元的逐抽样最大损失完整矩阵保留在仓库补充材料。
++包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。
+ 
+ 
+ $S=128$时，arXiv/512最大损失0.0050、BGE/512为0.0046；$S=32$最大达0.0294。
+diff --git a/zh/chapters/08-2-negative.tex b/zh/chapters/08-2-negative.tex
+index 4aa19bb..595e0a8 100644
+--- a/zh/chapters/08-2-negative.tex
++++ b/zh/chapters/08-2-negative.tex
+@@ -25,7 +25,7 @@ pilot只写出primary分数，没有返回最终近邻。FP32/FP64检查揭示cu
+ \captionof{figure}[Mailman 与面向排序编码]{两种不同证据边界。左：RTX 5090、128 probe、Vogue、arXiv、OpenAI-3072和
+ 两种batch下，最快Mailman评分器／packed表评分器速度，全部小于1。
+ 右：arXiv的400查询FP64离线测试划分中，满足原JHQ recall目标的最小survivor数。
+-候选减少不是GPU提速；两图均由论文audit脚本从归档记录重新生成。}
++候选减少不是GPU提速。}
+ \label{fig:8-negative}
+ \end{minipage}\par\medskip
+ 
+@@ -47,5 +47,5 @@ arXiv测试集中，中位数阈值把达到原目标所需的最小被测surviv
+ 残差导入相同搜索流水线，分别扫预算，再按实测recall阈值比较。
+ 在arXiv原$\alpha=100$目标，batch 8和1,000的比值约为1.40和1.21。
+ Vogue median前沿最高0.9630，未达到原工作点0.9644；OpenAI-3072基本持平。
+-这修正了“从未做GPU测试”的笼统表述，同时保留不采用通用替代的决定。
++这些收益仍依赖具体工作负载。
+ 跟进使用独立索引状态、查询池和三轮协议，不能把其吞吐插入E1。
+diff --git a/zh/declaration.tex b/zh/declaration.tex
+index 2eb8bd5..dfdee11 100644
+--- a/zh/declaration.tex
++++ b/zh/declaration.tex
+@@ -4,6 +4,6 @@
+ 本文扩展与 Mengxuan Zhang 合作的 JHQ-GPU 工作\cite{adc_artifact}，并以 JHQ 为基础\cite{jhq}。
+ OpenAI Codex 协助实质性起草、修改、LaTeX、分析及代码／日志核查\cite{ai_codex_record}；
+ ChatGPT 提供框架和审阅\cite{ai_chatgpt_record}；Anthropic Claude 协助实现、实验及审阅\cite{ai_claude_record}。
+-部分提示词、产物对应与记录局限见
+-\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{\nolinkurl{docs/ai-use-record.md}}。
++部分提示词与使用详情见
++\href{https://github.com/lrlorry/8800_report/blob/main/docs/ai-use-record.md}{AI 使用记录}。
+ 论文作者对提交主张负责。

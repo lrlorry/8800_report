@@ -350,7 +350,7 @@
     {
       "repository": "8800_report",
       "path": "data/t4-t5/audit.json",
-      "sha256": "eb9c8147a2b088435d617dcfd025ecbee9cabede53d19f619aac21d03f56081a"
+      "sha256": "80f3c8adb8582e2f2395a32fd540a6015b35ec77c7898d99d46fc789289f22db"
     },
     {
       "repository": "8800_report",
@@ -375,7 +375,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
+      "sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93"
     },
     {
       "repository": "8800_report",
@@ -385,7 +385,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
+      "sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180"
     },
     {
       "repository": "8800_report",
@@ -405,12 +405,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-2-negative.tex",
-      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+      "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-2-negative.tex",
-      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+      "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
     },
     {
       "repository": "8800_report",
@@ -425,12 +425,12 @@
     {
       "repository": "8800_report",
       "path": "appendices/b-supplementary.tex",
-      "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
+      "sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c"
     },
     {
       "repository": "8800_report",
       "path": "zh/appendices/b-supplementary.tex",
-      "sha256": "c924c8743cbb6a718cdfe7ee35211d45e6f446b07b33c86c1b3f48c4b6193b82"
+      "sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b"
     }
   ]
 }

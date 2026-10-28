@@ -1,7 +1,4 @@
-证据登记 \path{data/ch3/audit.json} 标识配置、测量边界和分析输入，各实验族保留
-独立版本及对照。哈希标识已读取文件，历史可执行文件和训练状态身份仍不完整。
-附录 A 列出可获得的复现输入，仓库补充材料给出登记字段。\footnote{\path{docs/supplementary-evidence.md}。}
-
-\path{scripts/build_ch7.py} 重新生成主要图表，包括
-\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}；\path{scripts/audit_ch3.py} 核查统一协议。
-这些是离线重算，重复 GPU 测量还需所列二进制程序、数据和训练状态。
+各实验族记录实现版本、索引与查询配置、计时边界及测量输出。配对比较复用相同
+训练状态；版本、状态或精度的变化分别构成独立实验族。历史可执行文件和训练状态
+指纹仍不完整，限制了部分运行的精确复现。\Cref{app:reproducibility}汇总可获得的
+环境信息与实验协议。

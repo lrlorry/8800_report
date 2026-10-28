@@ -1,26 +1,22 @@
 \chapter{Reproducibility and Experiment Manifest}
 \label{app:reproducibility}
 
-This appendix records the contracts needed to interpret the experiments.
-The expanded protocol, executable names, raw-source paths and
-result-to-figure mapping are retained in
-\href{https://github.com/lrlorry/8800_report/blob/main/docs/experiment-protocol.md}{\nolinkurl{docs/experiment-protocol.md}} in the report repository.
+This appendix specifies the experimental environment and measurement
+protocol. Available source and measurement materials are listed in
+\cref{sec:b-artifacts}.
 
 \section{Source, Environment and Trained States}
 
 The principal environment is RTX 5090, driver 595.71.05, CUDA 13.0 and,
 for E1, cuVS 26.08.01. JHQ targets compute\_80 PTX and uses driver JIT
 compilation. \Cref{tab:a-components} separates run-header evidence from
-versions stated in reports. The analysis checkout in
-\path{data/ch7/audit.json} identifies the inspected workspace; a run-head
-commit identifies source visible to that run. Neither supplies a missing
-executable or trained-state fingerprint.
+versions stated in reports. Source revisions identify the inspected implementation; complete executable
+and trained-state fingerprints are unavailable for some historical runs.
 
 \begin{table}[tbp]
 \centering
 \caption[Component and run provenance]{Recorded component provenance. Report and script identities
-are distinguished from raw run headers; full executable and input paths
-are in the expanded protocol.}
+are distinguished from raw run headers.}
 \label{tab:a-components}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.34\linewidth}>{\raggedright\arraybackslash}X@{}}
@@ -42,10 +38,8 @@ Historical budget & Raw header \texttt{bf31b41}, v57 family \\
 
 Dataset shapes and actual query counts are in \cref{tab:3-data}.
 Comparisons reuse the exported vectors and squared-L2 ground truth per
-dataset. Search sweeps load the recorded \path{arms6_cache} states;
-cold-build records start without trained state. Input ledgers hash the
-consumed analysis records, rather than every vector file, cache or binary.
-Initial large-baseline attempts that retained an old index are superseded
+dataset. Search sweeps load the same cached trained states;
+cold-build records start without trained state. Initial large-baseline attempts that retained an old index are superseded
 by isolated reruns. Stella's skipped batch-1,000 files contribute no
 search points; corrected large-search records use its 999 queries.
 
@@ -105,8 +99,7 @@ unknown query-population quality.
 \section{Supplementary Evidence}
 \label{sec:a-supplement}
 
-Records under \path{JHQ_GPU/experiments/thesis_evidence/} retain campaign
-identities and timing boundaries. A1 separates first-read, normal
+A1 separates first-read, normal
 warm-input and synchronised phase runs on six datasets; five-build recall
 is measured at fixed 128 probes. C1 checks four complete database layouts
 and sampled re-encodings. Its FP64 norm checks use the stored rotation
@@ -119,8 +112,7 @@ CUDA 13.0.88 \texttt{ptxas} for sm\_120. The observed 64-bit bound read
 and atomic-min publication use an aligned query-key array with eight-byte
 stride. The argument uses PTX alignment, scope and proxy semantics;
 toolkit SASS corroborates it without supplying the driver's loaded JIT
-code. Binary SHA and operation listings are in the expanded protocol
-and the archived evidence.
+code.
 
 D alternates v69/v72 over the E1 OpenAI grid, reusing TF32-trained states
 and changing add/query GEMMs. Its baseline denominators remain archived
@@ -160,8 +152,6 @@ qualifying endpoints below the minimum frontier recall; strict measured
 thresholds remain separate. Python/C++ interfaces and warm-up policies
 differ, and these measurements do not establish concurrent-service latency.
 
-Source, records, manifests and offline checkers are archived in
-\path{evidence/ch5/v71/} and \path{evidence/review/}. With the required
-inputs, run \texttt{make ch7-data}, then \texttt{make pdf} or
-\texttt{make pdf-zh}. GPU reruns additionally require original vectors,
-trained states, matching builds and environment.
+GPU reproduction requires original vectors, matching trained states and
+builds, and the specified environment. \Cref{sec:b-artifacts} identifies
+which materials are available.

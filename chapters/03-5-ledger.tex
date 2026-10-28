@@ -1,12 +1,7 @@
-The evidence ledger \path{data/ch3/audit.json} identifies configurations,
-measurement boundaries and analysis inputs. Family-specific versions and
-controls remain separate. Hashes identify consumed files; historical
-executable and trained-state identities are incomplete. Appendix A lists
-available reproduction inputs, and the repository supplement gives the
-registry fields.\footnote{\path{docs/supplementary-evidence.md}.}
-
-\path{scripts/build_ch7.py} regenerates the principal plots and tables,
-including \cref{fig:7-frontiers,fig:7-lut,fig:7-memory};
-\path{scripts/audit_ch3.py} checks the common protocol.
-These are offline reconstructions. Repeating GPU measurements additionally
-requires the listed binaries, datasets and trained states.
+Each experiment family records the implementation version, index and query
+settings, timing boundary and measured outputs. Paired comparisons reuse
+the same trained states; changes of version, state or precision define
+separate experiment families. Historical executable and trained-state
+fingerprints are incomplete, limiting exact reproduction of some runs.
+\Cref{app:reproducibility} summarises the available environment and
+experimental protocol.

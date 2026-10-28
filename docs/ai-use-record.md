@@ -98,6 +98,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model versi
 
 Codex made theorem headings separate from upright statement text, aligned proof headings and paragraphs with the text margin, and kept each short statement/proof pair together. Mathematical expressions and proof text were retained unchanged. The [source patch](../evidence/editorial/cc696f2/proof-layout.patch) and [inspection record](../assessment/proof-layout-review-2026-10-29.txt) identify the formatting work.
 
+### P12 — 清理成稿中的内部路径与编辑旁白
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> 卧槽了 这种你写上去干嘛啊 docs/supplementary-evidence.md 全文审核下这种无意义的东西
+
+Codex removed printed repository paths, script and JSON filenames, pending-list references and editing narration across the chapters, front matter and appendices. Necessary access links use descriptive labels; scientific caveats and attribution remain. Exact replacements are recorded in [internal-reference-edits.json](../assessment/internal-reference-edits.json), with the [source patch](../evidence/editorial/2d9d2aa/internal-reference-cleanup.patch).
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:

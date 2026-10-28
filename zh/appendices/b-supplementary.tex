@@ -1,14 +1,11 @@
 \chapter{补充结果与正确性检查}
 \label{app:supplementary}
 本附录记录支持第3--8章的参数覆盖、逐阶段验证及次要结果。
-各测量家族保留各自版本与计时边界，来源映射见附录\ref{app:reproducibility}。
+各测量家族保留各自版本与计时边界，实验协议见附录\ref{app:reproducibility}。
 
-\section{完整参数记录}
+\section{参数覆盖}
 \label{sec:b-grids}
 E1比较有1,590个有效实测配置，覆盖见\cref{tab:b-e1-counts}。
-逐点完整参数JSON、recall、主机到主机QPS及源文件名保存在
-\path{data/appendix/e1-configurations.csv}。
-\path{scripts/build_appendix.py}生成该记录，输入身份见\path{data/appendix/audit.json}。
 下列集合表示观测值，不假定其笛卡尔积全部测量过。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
@@ -143,17 +140,11 @@ T1 晚于 D，在同一会话重测 recall 0.97 附近的 JHQ 和竞争基线，
 
 两种估计在该有限网格均保留 FP32 数值优势。OpenAI-3072 的 RaBitQ 插值区间为
 recall 0.9669--0.9796，揭示较强插值敏感性。这些锚点不替换 E1 完整网格，
-不建立通用优势幅度，也不是 FP32 重训。原始 JSON 及复算映射见
-\path{data/full-review/audit.json}。
+不建立通用优势幅度，也不是 FP32 重训。
 
 \section{材料获取}
 \label{sec:b-artifacts}
-报告仓库提供参数记录、派生表、图源、分析脚本，以及\path{evidence/ch5/v71/}下的
-209文件v71源码／测量包，可用\texttt{python3}\ \path{evidence/ch5/v71/check.py}离线核对。
-另在\path{evidence/review/}保留 T4/T5、T1 和 A2 消费的源码／记录子集；检查器核对
-哈希，并可用这个本地源码根目录重新运行两项离线审计。
-更多原始记录位于同级\texttt{JHQ\_GPU}项目的清单路径，完整向量、训练状态与所有
-可执行文件没有打包在本报告仓库。离线复算需要所列输入，GPU复现还需要相应构建和环境。
-
-固定材料入口（含公开手稿源码及v71／T4／T5／T1／A2证据包）见
-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{\nolinkurl{docs/artifact-access.md}}。
+可获得的源码快照、测量记录与分析工具见
+\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目复现材料}，
+包括 v71 源码／测量包及部分 T4/T5、T1、A2 输入。完整向量、训练状态与全部历史
+可执行文件未包含在内；GPU 复现还需要这些输入及匹配的构建环境。
