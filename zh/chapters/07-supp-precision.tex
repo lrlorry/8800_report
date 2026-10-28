@@ -3,7 +3,7 @@
 
 补证源码检查确认：E1实现虽然输入和存储为FP32，OpenAI旋转与质心GEMM实际采用
 TF32乘法、FP32累积，源码注释具有误导性（\cref{sec:4-2}）。主E1前沿保留该历史
-实现的测量，另以FP32变体修正cuBLAS开关，重跑37／39个OpenAI配置，batch为1,000，
+实现的测量，D 实验另以 FP32 变体修正 cuBLAS 开关，重跑37／39个OpenAI配置，batch为1,000，
 每配置五轮，在各探针设置间交替变体执行顺序。两者复用同一TF32训练模型，改变的是
 add／查询算术，包括数据库编码及路由，而不是独立FP32训练模型的对比。\Cref{tab:7-precision}汇总配对变化。
 
@@ -11,7 +11,7 @@ add／查询算术，包括数据库编码及路由，而不是独立FP32训练�
 \centering\captionsetup{hypcap=false}
 \captionof{table}[匹配配置下的 FP32 敏感性]{FP32敏感性。QPS比值为相同配置下FP32/TF32的几何平均，召回差方向相同。
 最后两列在recall 0.97处比较FP32前沿与归档E1的IVF-RaBitQ及CAGRA fp32；
-基线没有重新测量。}
+D 实验没有重新测量基线。}
 \label{tab:7-precision}
 \scriptsize\setlength{\tabcolsep}{3pt}
 \input{zh/tables/supplement/precision}
@@ -19,14 +19,16 @@ add／查询算术，包括数据库编码及路由，而不是独立FP32训练�
 
 相同配置下，FP32吞吐约低5\%，recall高0--0.0005。recall 0.97处，吞吐比同会话
 TF32前沿约低3\%，仍为归档RaBitQ的$1.086\times$／$1.079\times$，以及归档
-CAGRA fp32的$1.679\times$／$1.629\times$。同会话v69/RaBitQ为1.118／1.114，
-历史值为1.130／1.157。这将精度干预与会话波动分开：领先方向仍在、幅度缩小，
-跨会话基线比较仍有计时不确定性。两精度变体完整前沿见\cref{fig:7-precision}。
+CAGRA fp32 的 $1.679\times$／$1.629\times$。新会话 v69 测量相对归档 E1
+RaBitQ 为 1.118／1.114，历史比为 1.130／1.157。D 中只有 v69--v72 干预为同期；
+这些基线比仍是跨会话数值比较。\Cref{fig:7-precision}展示两条 JHQ 前沿及归档对手。
+后续 T1 已在同一会话重测基线锚点；\cref{sec:b-precision-anchors}单独报告其受网格
+影响的结果。
 
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/precision.pdf}
-\caption[TF32 与 FP32 精度前沿]{补证精度前沿。实线为同会话JHQ变体，虚线／点线为历史E1基线；
+\caption[TF32 与 FP32 精度前沿]{D 实验精度前沿。实线为同会话JHQ变体，虚线／点线为历史E1基线；
 均采用本章前沿及插值规则。}
 \label{fig:7-precision}
 \end{figure}

@@ -1,0 +1,76 @@
+COMP8800 Full Review 逐项核对与修改（2026-10-28）
+
+审稿PDF以f010beb为基线；本轮从80abac9开始核对。两者间已加入T4/T5，
+所以不把旧版“C2待补／没有跨系统小batch”重新登记为当前事实。
+提供的PDF身份及哈希见full-review-source.json，原附件不另外公开上传。
+本文不采用审稿人自定的百分比作为ANU官方权重，不作分数承诺。
+
+F01：成立，已修改。
+原a_b把input/rotated staging行数与assignment-product分配行数混为一谈。
+对照v69：AB_rows受add_batch及每数组stage_budget限制；abatch由独立环境参数或
+nlist阈值选择。正文改为a_add/a_in/a_assign，并保留源码max(1,...)。
+4.4生命周期表、4.5公式与符号表同步；附录B加入四个默认配置的离线重算表。
+正确d_dots总量为0.375/12/3/3GiB；BGE/Stella的12GiB例子不变。
+明确分配容量不同于实际子批大小；没有因此重跑GPU或修改已测峰值。
+架构框文字从笼统Floats改成Input / rotated staging <=768MiB。
+
+F02：成立，已修改并核对后续现成数据。
+D的v69-v72是同会话干预，但对RaBitQ/CAGRA的分母来自历史E1。
+正文删除“Same-session v69/RaBitQ”混合修饰，改为new-session v69 / archived E1。
+保留D的1.086/1.079等数字及跨会话身份，不把它们升级为稳健优势下界。
+摘要与第9章减少重复百分比，明确缓存模型、非完整FP32重训及比较制度。
+
+报告原建议补同会话锚点；本地T1其实已经完成。因此本轮另用JSON复核T1，
+没有用日志舍入值覆盖原数据：每数据集12配对配置，各两次重复、每次五轮，
+E1 workspace pools开启。R=.97的FP32/TF32插值为0.980/0.973；
+FP32/RaBitQ的插值/严格实测为1.126/1.053及1.328/1.316，
+FP32/CAGRA为1.752/1.633及1.825/2.019。
+独立放在附录B，不替换D表或历史E1主前沿。OpenAI3072的RaBitQ锚点间隔
+0.9669--0.9796，明确网格／重建状态敏感性，不把1.328解释成通用稳定幅度。
+T1/T2/T3并非同一干预：本轮只纳入直接对应F02的T1，不冒称重新审核了T2/T3。
+
+F03：成立，已修改。
+图8.1右侧是rank-oriented / median coding的离线survivor数量，不是residual bound。
+中英文短标题及图目录统一为Mailman and rank-oriented coding／Mailman与面向排序编码。
+完整图注、图中数据及论证对象保留。
+
+F04：审稿时成立，当前已由80abac9的T4实质更新。
+270配置、69,120查询实例；55,296分组实例完整键集合及顺序全同。
+G=0的56个集合差异都是截断并列。CPU排序GPU产生的分数，不用FP64重算替代。
+原始.topc临时数组已删除，现有JSONL/stdout只能复核保留计数，不能重演这些数组。
+如要求从期望／实际键序列独立重做排序，已把固定case补跑并重新归档列入待补清单。
+有效padding计数不是逐字节哨兵验证；刻意空列表和对抗输入仍属更广覆盖。
+保留理论前提与有限经验边界，不把T4升级为任意输入或原空间精确kNN保证。
+
+F05：原结论保持限定；本轮补做可读原件核查与可访问性。
+已读RAW_A2的kernel PTX及toolkit SASS、提取操作行、toolchain和contents。
+观察2处ld.volatile.global.u64及2处atom.global.min.u64，操作地址均为rd22；
+rd22由qkey全局基址加query_index<<3形成。源代码cudaMalloc分配ull数组，按8字节索引。
+按PTX ISA9.0：volatile对应relaxed/sys；atomic默认gpu；同GPU线程的兼容scope、
+同generic proxy、全重叠64位访问给出morally-strong条件及single-copy atomicity前提。
+官方依据：
+https://docs.nvidia.com/cuda/archive/13.0.0/parallel-thread-execution/index.html#volatile-operation
+https://docs.nvidia.com/cuda/archive/13.0.0/parallel-thread-execution/index.html#morally-strong-operations
+https://docs.nvidia.com/cuda/archive/13.0.0/parallel-thread-execution/index.html#axiom-atomicity
+仅支持归档PTX及toolkit重编范围，不冒充CUDA C++ volatile可移植保证。
+没有重新从原binary提取，也未捕获driver JIT实际SASS；记录的binary SHA不是binary字节。
+
+证据可访问性：已核实仓库归属，并补最小复核材料。
+1786e6e属于lrlorry/8800_report，不属于lrlorry/JHQ_GPU；GitHub API已能解析完整SHA：
+1786e6ec227ce54b657a605d9bfa11dbf3c89923。
+README改成含仓库名和直接链接；不能在JHQ_GPU里查不到它就推断报告补证没发布。
+在原209文件v71包之外，新增evidence/review/中的消费输入子集，供T4/T5、T1和A2离线复核。
+包中没有大向量、训练cache、原binary或已删除.topc，也不是完整CUDA独立构建包。
+对归档记录的核查不等于独立GPU复现实验。JHQ_GPU本地未推送提交不会在本轮一并发布。
+
+其余建议：按当前证据保留／落实。
+保留九章职责、原ADC/海报与新thesis版本差异；不改旧ADC摘要来拼接好看数字。
+FULL仍为固定池回顾性工作点；保留S128尾风险、fixed64对照、重复held-out流边界。
+保持sampled device peak、同配置/插值/实测阈值、算术和会话标签；不新增显著性宣称。
+保留C3未解释Vogue跨进程差异，不臆造根因。图文/页码/书签检查以重编PDF为准。
+未取得审稿所称check_review_math.py，不能声称重跑其500/13108/4374个案例；
+论文自身的离线审计与新增容量、T1、PTX检查另有机器记录data/full-review/audit.json。
+
+个人贡献：按用户明确回复留给作者本人后续修改。
+不替作者填写独立贡献，不生成签名，也不把提交历史或共同作者顺序当个人分工事实。
+本轮不修改个人独立性声明；已有研究来源与工具记录继续保留其可证实范围。

@@ -68,7 +68,8 @@ Object & Producer & Location & Lifetime & Bytes / scale \\
 Input / samples & Loader / harness & Host & Build input; external ownership & $4Nd$ raw; sampled subsets \\
 Transform / models & QR / training & Host, GPU & Model and index lifetime & $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ basic GPU arrays \\
 Trained cache & Training & Host file & Across processes; rebuild still needed & Serialised model state \\
-Input staging & Add pipeline & Pinned host, GPU & During add & $4n_ba_bd$ host; $8n_ba_bd$ GPU floats, plus scratch \\
+Input staging & Add pipeline & Pinned host, GPU & During add & $4n_ba_{\rm in}d$ host; $8n_ba_{\rm in}d$ GPU floats, plus scratch \\
+Assignment products & IVF assignment & GPU & During add; freed before gather & $4n_b n_{\rm list}a_{\rm assign}$; independent row capacity \\
 IDs / offsets & Sort / lower bound & GPU & Completed snapshot & $4N+4(n_{\rm list}+1)$ \\
 Codes / correction & Encode / reorder & GPU & Completed snapshot & $N(M+b_r+4)$ \\
 Order / inverse & Sort / inversion & GPU & Construction only & $4N$ per array; phase dependent \\

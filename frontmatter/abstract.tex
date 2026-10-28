@@ -1,7 +1,7 @@
 \frontchapter{Abstract}
-Compact vector representations reduce storage, but efficient GPU approximate
-nearest-neighbour search also depends on how scores are computed, candidates
-are selected and refinement effort is allocated. This thesis presents
+Efficient GPU approximate nearest-neighbour search requires compact
+representations, efficient scoring and selection, and suitable refinement
+effort. This thesis presents
 JHQ-GPU, a GPU implementation and evaluation of JHQ's inherited Cartesian
 primary/residual hierarchy for high-dimensional squared-L2 search.
 
@@ -10,8 +10,8 @@ representation-aware query execution. Cartesian structure decomposes each
 256-entry primary distance table into two 16-entry tables without changing
 the real-arithmetic represented distance. Packed access, lane-cooperative
 refinement and workload-dependent grouped scanning complement this design.
-Selection and shared-bound arguments state correctness conditions; a strict
-CPU sorting reference matches all 55,296 tested grouped query instances. A workload-level policy selects a
+Selection and shared-bound arguments specify correctness conditions,
+backed by a strict computed-score reference. A workload-level policy selects a
 refinement multiplier through unlabelled output agreement with a larger
 reference budget; its analysis separates sampled agreement from GT recall.
 
@@ -21,18 +21,17 @@ device memory. Two-group tables lead in 22/24 configurations. Integrated
 scheduling improves geometric-mean throughput by $2.727\times$ at batch 8
 against the lane-refinement reference, with much smaller full-batch gains.
 At recall 0.97 and batch 1,000, interpolated comparisons place JHQ first
-in three E1 datasets and near parity with IVF-RaBitQ on arXiv. Those OpenAI runs use TF32 GEMMs; a separate FP32 sensitivity
-retains 7.9--8.6\% leads over archived IVF-RaBitQ at that target.
+in three E1 datasets and near parity with IVF-RaBitQ on arXiv. OpenAI E1 uses TF32. FP32 interventions under a TF32-trained cache retain
+numerical advantages, with cross-session comparisons distinguished from
+contemporaneous anchors; neither experiment fully retrains FP32 models.
 At batch 8 and the same recall, CAGRA fp32 instead leads on all four
 datasets; batch-32 rankings also depend on the finite tuning grid.
 
 Full-pool calibration meets a $10^{-3}$ held-out recall-loss target relative
 to the best tested budget in all twelve cells, with maximum observed loss
 0.0006. Smaller $S=128$ samples have up to 40/64 threshold crossings.
-These are fixed-pool observations, not population recall guarantees;
-complete traces confirm all sampled and full-pool finite-grid decisions.
-Direct reuse measurements support net savings on suitable workloads;
-distance-only ties retain conditional theoretical coverage. Negative designs
+These fixed-pool measurements provide no population recall guarantee.
+Direct reuse measurements support net savings on suitable workloads. Negative designs
 show that arithmetic reuse and lower reconstruction error need not improve
 the search frontier. The findings support joint evaluation of representation,
 execution and effort under explicit quality, timing and capacity conditions.

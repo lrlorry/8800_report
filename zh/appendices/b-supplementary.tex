@@ -108,9 +108,49 @@ Vogue未达严格目标，OpenAI-3072接近平手。阈值、级值和残差训�
 直接复用测量四个重复池的累计成本；精度干预在同一TF32训练缓存上改变add／查询GEMM。
 完整FP32重训、未来查询漂移、跨设备排名及在线更新不属于这些实验。
 
+\section{构建容量与精度锚点}
+\label{sec:b-full-review}
+
+\Cref{tab:b-scratch}区分输入暂存与独立分配的乘积数组。源码默认三个缓冲区、
+配置 add 行数 65,536、每个输入／旋转浮点数组 128\,MiB。
+这些是分配容量，不是当前子批大小或进程整体峰值。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[独立构建缓冲容量]{默认构建缓冲容量。
+末列为 $4n_b n_{\rm list}a_{\rm assign}/2^{30}$；用 $a_{\rm in}$ 代入会得到错误的一般模型。}
+\label{tab:b-scratch}
+\footnotesize\input{zh/tables/full-review/scratch}
+\end{minipage}\par\medskip
+
+\subsection{同期精度锚点}
+\label{sec:b-precision-anchors}
+
+T1 晚于 D，在同一会话重测 recall 0.97 附近的 JHQ 和竞争基线，启用 E1 工作区池。
+每个 JHQ 配置在基线前后各重复一次，每次五轮计时；每配置 QPS 对两次轮中位数
+取几何平均。每个 OpenAI 数据集有十二个配对配置，FP32/TF32 几何平均为
+0.956／0.964。两种变体复用 TF32 训练缓存，改变 add／查询算术。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[同会话精度锚点]{T1，recall 0.97、batch 1,000。
+基线列依次为插值／严格实测阈值，FP32/TF32 列为插值。
+这里全部方法均为同期测量，与 D 的跨会话基线比值分开。}
+\label{tab:b-precision-anchors}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{zh/tables/full-review/precision-anchors}
+\end{minipage}\par\medskip
+
+两种估计在该有限网格均保留 FP32 数值优势。OpenAI-3072 的 RaBitQ 插值区间为
+recall 0.9669--0.9796，揭示较强插值敏感性。这些锚点不替换 E1 完整网格，
+不建立通用优势幅度，也不是 FP32 重训。原始 JSON 及复算映射见
+\path{data/full-review/audit.json}。
+
 \section{材料获取}
 \label{sec:b-artifacts}
 报告仓库提供参数记录、派生表、图源、分析脚本，以及\path{evidence/ch5/v71/}下的
-209文件v71源码／测量包，可用\path{python3 evidence/ch5/v71/check.py}离线核对。
+209文件v71源码／测量包，可用\texttt{python3}\ \path{evidence/ch5/v71/check.py}离线核对。
+另在\path{evidence/review/}保留 T4/T5、T1 和 A2 消费的源码／记录子集；检查器核对
+哈希，并可用这个本地源码根目录重新运行两项离线审计。
 更多原始记录位于同级\texttt{JHQ\_GPU}项目的清单路径，完整向量、训练状态与所有
 可执行文件没有打包在本报告仓库。离线复算需要所列输入，GPU复现还需要相应构建和环境。

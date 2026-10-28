@@ -9,7 +9,7 @@
 \node[box] (model) at (4.8,0) {Host model\\QR rotation $\Pi$\\Primary codebook};
 \node[box] (cache) at (9.6,0) {Host model cache\\$\Pi$ and codebooks\\IVF centroids};
 \node[gpu] (train) at (0,-3.6) {GPU training\\Rotate samples\\Fit IVF centroids\\Fit residual model};
-\node[gpu] (add) at (4.8,-3.6) {GPU bulk build\\1 or 2 passes\\Assign / encode\\Reorder / pack\\Floats $\leq768$ MiB};
+\node[gpu] (add) at (4.8,-3.6) {GPU bulk build\\1 or 2 passes\\Assign / encode\\Reorder / pack\\Input / rotated staging\\$\leq768$ MiB};
 \node[gpu] (index) at (9.6,-3.6) {GPU-resident index\\Offsets and IDs\\Primary / residual codes\\Corrections};
 \node[box] (query) at (0,-7.2) {Host query batch\\Pinned staging\\Transfer to GPU};
 \node[gpu] (search) at (4.8,-7.2) {GPU query pipeline\\Rotate; probe; scan\\Refine; final top-$k$\\Workspace / graph};

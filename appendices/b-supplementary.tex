@@ -148,12 +148,61 @@ The precision intervention changes add/query GEMMs on one TF32-trained
 cache. Full FP32 retraining, future-query drift, cross-device rankings
 and online updates are outside these experiments.
 
+\section{Construction Capacities and Precision Anchors}
+\label{sec:b-full-review}
+
+\Cref{tab:b-scratch} separates input staging from independently allocated
+assignment products. Source defaults are three buffers, 65,536 configured
+add rows and 128\,MiB per input/rotated float array. These are allocation
+capacities, not current sub-batch sizes or total process peaks.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Independent construction-buffer capacities]{Default construction-buffer capacities.
+The last column is $4n_b n_{\rm list}a_{\rm assign}/2^{30}$; substituting
+$a_{\rm in}$ would give an incorrect general model.}
+\label{tab:b-scratch}
+\footnotesize\input{tables/full-review/scratch}
+\end{minipage}\par\medskip
+
+\subsection{Contemporaneous precision anchors}
+\label{sec:b-precision-anchors}
+
+T1 is a later campaign than D: it remeasures JHQ and competing baselines
+near recall 0.97 in one session, with the E1 workspace pools enabled.
+Each JHQ configuration has two repetitions bracketing the baselines;
+each repetition uses five timing rounds. Per-configuration QPS combines
+the two round medians geometrically. There are twelve paired configurations
+per OpenAI dataset. The FP32/TF32 geometric means are 0.956/0.964;
+both variants reuse a TF32-trained cache and change add/query arithmetic.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Same-session precision anchors]{T1 at recall 0.97 and batch 1,000.
+Baseline columns report interpolation / strict measured threshold;
+the FP32/TF32 column is interpolated. All methods here are contemporaneous;
+these values are separate from D's cross-session baseline ratios.}
+\label{tab:b-precision-anchors}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{tables/full-review/precision-anchors}
+\end{minipage}\par\medskip
+
+Both estimators retain a numerical FP32 advantage in this finite grid.
+The OpenAI-3072 RaBitQ bracket spans recall 0.9669--0.9796, exposing
+substantial interpolation sensitivity. These anchor sweeps do not replace
+E1's full grid, establish a universal margin, or constitute FP32 retraining.
+The raw JSON and reconstruction are mapped in
+\path{data/full-review/audit.json}.
+
 \section{Artifact Access}
 \label{sec:b-artifacts}
 The report repository contains the parameter registry, derived tables,
 figure sources, analysis scripts and 209-file v71 source/measurement
 bundle under \path{evidence/ch5/v71/}. The offline command
-\path{python3 evidence/ch5/v71/check.py} verifies that bundle.
+\texttt{python3}\ \path{evidence/ch5/v71/check.py} verifies that bundle.
+Selected T4/T5, T1 and A2 source/record inputs are also mirrored in
+\path{evidence/review/}. Its checker verifies hashes and can rerun the
+two corresponding offline audits using that local source root.
 The broader raw records remain in the sibling \texttt{JHQ\_GPU} project
 at the ledger paths. Complete vectors, trained states and all executables
 are not packaged here. Offline recomputation requires the stated inputs;

@@ -43,9 +43,11 @@ retain the quality/time tradeoff on difficult ones.
 \paragraph{RQ4: Competitive operating regions.}
 At recall 0.97, the interpolated full-batch E1 comparison places JHQ first
 in three datasets and near parity with IVF-RaBitQ on arXiv
-(\cref{sec:7-2}). Vogue's lead depends on the grouped path. The OpenAI E1 runs use TF32;
-a same-session FP32 sensitivity still exceeds archived RaBitQ by
-7.9--8.6\% and CAGRA fp32 by $1.63$--$1.68\times$ at that target. CAGRA int8
+(\cref{sec:7-2}). Vogue's lead depends on the grouped path. The OpenAI E1 runs use TF32. Removing it under the cached-model boundary
+retains numerical advantages over archived baselines in D, a cross-session
+comparison. Separate T1 anchors retain this direction with contemporaneous
+baselines and grid-sensitive margins (\cref{sec:b-precision-anchors});
+neither intervention fully retrains FP32 models. CAGRA int8
 wins in lower-recall regions, and IVF-RaBitQ wins at some higher targets.
 T5 narrows that region: CAGRA fp32 leads on all four datasets at recall
 0.97 and batch 8; batch-32 borderlines depend on the recall estimator

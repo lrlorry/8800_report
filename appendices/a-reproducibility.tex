@@ -395,3 +395,13 @@ competitors: OpenAI-3072 at recall 0.90 changes from about 2.08 to 1.032
 at batch 8, and from 1.26 to 0.866 at batch 32. Strict measured thresholds
 are reported separately, revealing the effect of finite grid spacing.
 These estimates leave the historical E1 campaign unchanged.
+
+Selected consumed T4/T5, T1 and A2 inputs are mirrored under
+\path{evidence/review/JHQ_GPU/}, with original relative paths and hashes.
+The package checker and the two follow-up audit scripts support offline
+record reconstruction without the sibling code checkout. It excludes
+vectors, trained states, measured binaries and deleted candidate dumps.
+The archived PTX accesses the shared bound at the global query-key base
+plus an eight-byte query offset; the inspected source allocates that
+64-bit array with \texttt{cudaMalloc}. Its whole-key argument uses the
+specified alignment, scope and proxy contract, not C++ volatile alone.

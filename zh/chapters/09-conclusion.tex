@@ -28,8 +28,9 @@ $S=128$一个单元则有40/64次越阈（\cref{sec:7-5}）。
 
 \paragraph{RQ4：竞争区间。}
 0.97 recall的大batch E1插值比较中，JHQ在三个数据集第一，arXiv与IVF-RaBitQ
-接近平手（\cref{sec:7-2}）；Vogue领先依赖分组路径。OpenAI E1使用TF32；同会话FP32敏感性在该目标仍领先归档
-RaBitQ 7.9--8.6\%，为CAGRA fp32的$1.63$--$1.68\times$。
+接近平手（\cref{sec:7-2}）；Vogue领先依赖分组路径。OpenAI E1 使用 TF32。同一缓存模型下移除 TF32 后，D 的跨会话比较对归档基线
+仍有数值优势。独立 T1 同期锚点也保持方向，幅度受网格影响
+（\cref{sec:b-precision-anchors}）；两种干预均未完整重训 FP32 模型。
 低recall由CAGRA int8领先，部分高目标由IVF-RaBitQ领先。
 T5 收窄该区间：recall 0.97、batch 8 下，四个数据集均由 CAGRA fp32 领先；
 batch 32 的边界依赖 recall 估计（\cref{sec:7-smallbatch}）。排名因此依赖 batch、

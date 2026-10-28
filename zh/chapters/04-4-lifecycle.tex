@@ -41,7 +41,8 @@ CAGRA 比较使用图度数 $d_g=32$ 时的 $d+4d_g$ 字节，与测试程序的
 输入／样本 & 加载器／测试程序 & 主机 & 构建输入；外部持有 & 原始 $4Nd$；采样子集 \\
 变换／模型 & QR／训练 & 主机、GPU & 模型及索引寿命 & 基本 GPU 数组 $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ \\
 训练缓存 & 训练 & 主机文件 & 跨进程；仍需建库 & 序列化模型状态 \\
-输入暂存 & 添加流水线 & Pinned 主机、GPU & add 期间 & 主机 $4n_ba_bd$；GPU 浮点数组 $8n_ba_bd$，另加 scratch \\
+输入暂存 & 添加流水线 & Pinned 主机、GPU & add 期间 & 主机 $4n_ba_{\rm in}d$；GPU 浮点数组 $8n_ba_{\rm in}d$，另加 scratch \\
+分配乘积 & IVF 分配 & GPU & add 期间；gather 前释放 & $4n_b n_{\rm list}a_{\rm assign}$；独立行容量 \\
 ID／偏移 & 排序／lower bound & GPU & 完成后的快照 & $4N+4(n_{\rm list}+1)$ \\
 编码／修正项 & 编码／重排 & GPU & 完成后的快照 & $N(M+b_r+4)$ \\
 顺序／逆映射 & 排序／求逆 & GPU & 仅构建期间 & 每数组 $4N$，依阶段而定 \\

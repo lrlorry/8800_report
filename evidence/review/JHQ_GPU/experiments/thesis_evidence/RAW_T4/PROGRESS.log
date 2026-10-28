@@ -1,0 +1,49 @@
+2026-10-27T22:16:23Z === T4 start head=d3db2cc v73: a strict CPU reference for the primary top-c and the final top-k; the table forms compared per candidate dirty=0
+2026-10-27T22:17:24Z build_rc=0
+2026-10-27T22:17:24Z binary c00aff49754bb3d89b791c6dabfe33a4bc830af4bef09bc8574d7d69f6b736af  build/demo_jhq_v73_g1_topcref
+2026-10-27T22:17:24Z binary 59a94d79be121bbe39feec5bb3220443af02df74068b9275998d671b5b976070  build/demo_jhq_v73_g2_topcref
+2026-10-27T22:17:24Z binary 5a96638a25a3ae35dd07adc156fb5e83db41403046822032ff6f016f95094e65  build/demo_jhq_v73_g4_topcref
+2026-10-27T22:17:24Z binary 086d64c64340b67ffaac6de3cf20b76e3557de0c4d2d6b939e2554603aeb44d1  build/demo_jhq_v73_g8_topcref
+2026-10-27T22:17:24Z got the GPU
+2026-10-27T22:17:34Z strict vogue-768 np=1 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:17:40Z strict vogue-768 np=8 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:18:29Z strict vogue-768 np=128 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:18:35Z lutg1 vogue-768 np=128 g=1 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:18:40Z lutg2 vogue-768 np=128 g=2 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:18:46Z lutg4 vogue-768 np=128 g=4 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:18:51Z lutg8 vogue-768 np=128 g=8 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:18:55Z strict arxiv-768 np=1 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:19:02Z strict arxiv-768 np=8 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:19:52Z strict arxiv-768 np=128 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:19:57Z lutg1 arxiv-768 np=128 g=1 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:20:03Z lutg2 arxiv-768 np=128 g=2 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:20:09Z lutg4 arxiv-768 np=128 g=4 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:20:15Z lutg8 arxiv-768 np=128 g=8 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:20:23Z strict openai3-3072 np=1 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:20:32Z strict openai3-3072 np=8 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:20:57Z strict openai3-3072 np=128 g=2 rc=0 30 configs, nontie 0, score_mm 0
+2026-10-27T22:21:05Z lutg1 openai3-3072 np=128 g=1 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:21:13Z lutg2 openai3-3072 np=128 g=2 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:21:20Z lutg4 openai3-3072 np=128 g=4 rc=0 2 configs, nontie 0, score_mm 0
+2026-10-27T22:21:28Z lutg8 openai3-3072 np=128 g=8 rc=0 2 configs, nontie 0, score_mm 0
+| dataset | path | table | cand./query | scores differing | max abs diff | max rel diff | top-c set differs | top-c order differs | final ids differ | final dist max diff |
+|---|---|---|---|---|---|---|---|---|---|---|
+| arxiv-768 | G0_sh1 | g=1 vs 2 | 47191 | 2745674 (2.27e-01) | 2.98e-07 | 4.53e-07 | 0/256 | 160/256 | 0/256 | 2.38e-07 |
+| arxiv-768 | G0_sh1 | g=4 vs 2 | 47191 | 2480451 (2.05e-01) | 2.98e-07 | 4.38e-07 | 0/256 | 153/256 | 0/256 | 3.58e-07 |
+| arxiv-768 | G0_sh1 | g=8 vs 2 | 47191 | 3040378 (2.52e-01) | 2.38e-07 | 4.27e-07 | 0/256 | 162/256 | 0/256 | 3.58e-07 |
+| arxiv-768 | G2_sh1 | g=1 vs 2 | 47191 | 2745674 (2.27e-01) | 2.98e-07 | 4.53e-07 | 0/256 | 107/256 | 0/256 | 2.38e-07 |
+| arxiv-768 | G2_sh1 | g=4 vs 2 | 47191 | 2480451 (2.05e-01) | 2.98e-07 | 4.38e-07 | 0/256 | 100/256 | 0/256 | 3.58e-07 |
+| arxiv-768 | G2_sh1 | g=8 vs 2 | 47191 | 3040378 (2.52e-01) | 2.38e-07 | 4.27e-07 | 0/256 | 121/256 | 0/256 | 3.58e-07 |
+| openai3-3072 | G0_sh1 | g=1 vs 2 | 18346 | 1060736 (2.26e-01) | 4.77e-07 | 4.16e-07 | 0/256 | 95/256 | 0/256 | 3.58e-07 |
+| openai3-3072 | G0_sh1 | g=4 vs 2 | 18346 | 969697 (2.06e-01) | 4.77e-07 | 4.34e-07 | 0/256 | 96/256 | 0/256 | 3.58e-07 |
+| openai3-3072 | G0_sh1 | g=8 vs 2 | 18346 | 1181200 (2.52e-01) | 5.96e-07 | 4.63e-07 | 0/256 | 95/256 | 0/256 | 4.77e-07 |
+| openai3-3072 | G2_sh1 | g=1 vs 2 | 18346 | 1060736 (2.26e-01) | 4.77e-07 | 4.16e-07 | 0/256 | 62/256 | 0/256 | 3.58e-07 |
+| openai3-3072 | G2_sh1 | g=4 vs 2 | 18346 | 969697 (2.06e-01) | 4.77e-07 | 4.34e-07 | 0/256 | 52/256 | 0/256 | 3.58e-07 |
+| openai3-3072 | G2_sh1 | g=8 vs 2 | 18346 | 1181200 (2.52e-01) | 5.96e-07 | 4.63e-07 | 0/256 | 67/256 | 0/256 | 4.77e-07 |
+| vogue-768 | G0_sh1 | g=1 vs 2 | 47072 | 3147608 (2.61e-01) | 4.77e-07 | 4.06e-07 | 3/256 | 229/256 | 3/256 | 3.58e-07 |
+| vogue-768 | G0_sh1 | g=4 vs 2 | 47072 | 2877555 (2.39e-01) | 4.77e-07 | 4.53e-07 | 2/256 | 236/256 | 4/256 | 2.38e-07 |
+| vogue-768 | G0_sh1 | g=8 vs 2 | 47072 | 3537225 (2.94e-01) | 4.77e-07 | 4.41e-07 | 4/256 | 235/256 | 2/256 | 2.38e-07 |
+| vogue-768 | G2_sh1 | g=1 vs 2 | 47072 | 3147608 (2.61e-01) | 4.77e-07 | 4.06e-07 | 1/256 | 81/256 | 3/256 | 3.58e-07 |
+| vogue-768 | G2_sh1 | g=4 vs 2 | 47072 | 2877555 (2.39e-01) | 4.77e-07 | 4.53e-07 | 0/256 | 66/256 | 4/256 | 2.38e-07 |
+| vogue-768 | G2_sh1 | g=8 vs 2 | 47072 | 3537225 (2.94e-01) | 4.77e-07 | 4.41e-07 | 1/256 | 88/256 | 2/256 | 2.38e-07 |
+2026-10-27T22:21:32Z === T4_DONE

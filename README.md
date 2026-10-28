@@ -3,7 +3,8 @@
 九章正文和摘要均有中英文总稿。本轮已把Claude于2026-10-28完成的
 `JHQ_GPU/experiments/thesis_evidence` 补证核对后纳入第3--9章、引言与摘要。
 新增TF32/FP32敏感性、重复空缓存构建与采样峰值、表示审计、完整预算决策及直接复用计时。
-补证基线已发布为 `1786e6e`。后续已补全Conclusion后的附录B/C，整理前置页，
+补证基线已发布为 [lrlorry/8800_report@1786e6e](https://github.com/lrlorry/8800_report/commit/1786e6ec227ce54b657a605d9bfa11dbf3c89923)，
+这个提交属于报告仓库，不能在 `lrlorry/JHQ_GPU` 中查询它。后续已补全Conclusion后的附录B/C，整理前置页，
 移除示例附录及草稿文字，并默认启用正式编译。核对过程没有启动GPU实验。
 
 - [本轮补证整合与边界](assessment/supplement-integration.txt)
@@ -12,6 +13,9 @@
 - [新补证离线复算](scripts/audit_t4_t5.py) · [结果与输入哈希](data/t4-t5/audit.json)
 - [最新完成／待补清单](assessment/ch7-pending-experiments.txt)：C2已在T4有限网格完成；C3 Vogue跨进程诊断仍未完成。
 - [上一轮章节迭代记录](assessment/synthesis-iteration.txt)
+- [全文审稿逐项核对](assessment/full-review-response.txt)：修正构建容量符号、D/T1会话口径及负结果图短标题。
+- [全文审核离线复算](scripts/audit_full_review.py) · [输入与结果](data/full-review/audit.json)
+- [独立复核材料入口](evidence/review/README.md)：T4/T5、T1及A2所用的原始记录和源文件子集。
 
 个人分工、声明签署与最终工具披露仍需作者确认，见
 [作者确认项](assessment/author-confirmation.txt)。研究来源页及附录B/C已写入正式内容；个人课程签署由作者按实际任务办理。

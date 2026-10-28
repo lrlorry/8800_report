@@ -1,0 +1,4 @@
+256:ld.volatile.global.u64 %rd102, [%rd22];
+691:atom.global.min.u64 %rd180, [%rd22], %rd179;
+874:atom.global.min.u64 %rd184, [%rd22], %rd183;
+877:ld.volatile.global.u64 %rd32, [%rd22];

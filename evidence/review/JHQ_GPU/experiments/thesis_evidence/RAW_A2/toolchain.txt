@@ -1,0 +1,8 @@
+binary 5371616ed99ab2b2dd323688eb3cf7a23dafb9f3f6a3904cf44475f65cf63ceb  /root/autodl-tmp/jhq_pipeline_wt/build/demo_jhq_v69_batch
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0
+driver 595.71.05
+ptx_module=demo_jhq_v69_batch.2.sm_80.ptx
+ptxas_rc=0

@@ -12,6 +12,7 @@ pdf-zh:
 ch7-data:
 	python3 scripts/audit_supplement.py
 	python3 scripts/audit_t4_t5.py
+	python3 scripts/audit_full_review.py
 	python3 scripts/build_ch7.py --source ../JHQ_GPU
 	python3 scripts/audit_ch7_round2.py
 	python3 scripts/build_appendix.py

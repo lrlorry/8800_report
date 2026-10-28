@@ -1,6 +1,15 @@
 \subsection{有界输入批次与两遍构建}
 
-一次旋转全部 $N$ 个原始向量需要两个 FP32 设备数组，共 $8Nd$ 字节。构建器改用 pinned 主机内存和设备原始／旋转缓冲区分批暂存。若有 $n_b$ 个流水缓冲区，每个最多 $a_b$ 行，则两个设备数组共占 $8n_ba_bd$ 字节。源码默认三个缓冲区、每个浮点数组上限 128\,MiB，这一组件至多占 768\,MiB。分配乘积及主码编码 scratch 还需额外空间；暂存界不是整个流水线的内存上界。
+一次旋转全部 $N$ 个原始向量需要两个 FP32 设备数组，共 $8Nd$ 字节。构建器改用 pinned 主机内存和设备原始／旋转缓冲区分批暂存。若有 $n_b$ 个流水缓冲区、配置 add 行数 $a_{\rm add}$、每数组字节预算
+$S_{\rm stage}$，源码暂存行数为
+\begin{equation}
+ a_{\rm in}=\max\!\left\{1,\min\!\left(a_{\rm add},
+ \left\lfloor\frac{S_{\rm stage}}{4d}\right\rfloor\right)\right\},
+ \qquad S_{\rm float}=8n_ba_{\rm in}d.
+ \label{eq:4-staging-rows}
+\end{equation}
+默认三个缓冲区、128\,MiB 预算，使输入／旋转设备浮点数组至多占 768\,MiB。
+分配乘积和编码 scratch 是独立分配。
 
 一遍路径先编码输入顺序的主码／残差数组，再 gather 成列表顺序，临时与最终压缩副本共存。容量规则预测内存不足时，两遍构建先分配列表、排序 ID、构建偏移，再次读取输入，旋转、编码并直接 scatter 到最终位置。它用额外一次输入扫描和旋转换取较少的同时存活压缩副本。两遍路径的默认分配可在原始输入与反变换中心之间比较；正交性给出相应的实数算术恒等式。
 
@@ -39,13 +48,17 @@ Stella & 19.20 & 40.59 & 21.32 \\
 补证以20\,ms间隔采样，BGE在add开头观测26.08\,GiB，Stella在repack阶段
 观测22.58\,GiB。这是含上下文的设备采样最大值，可能漏掉更短暂分配。
 
-add早期还有此前遗漏的分配乘积项：
+分配乘积容量使用独立配置行数 $a_{\rm assign}$，由
+\texttt{JHQ\_ASSIGN\_BATCH} 或默认值选择：列表数至少 8,192 时为 32,768，
+否则为 8,192。
 \begin{equation}
- S_{\rm dots}=4n_b n_{\rm list}a_b\quad\text{bytes}.
+ S_{\rm dots}=4n_b n_{\rm list}a_{\rm assign}\quad\text{bytes}.
  \label{eq:4-assignment-scratch}
 \end{equation}
-三个缓冲区、32,768个列表、每缓冲区32,768行时，为三个各4\,GiB的数组，
-总计12\,GiB；它们在add入口附近与其他流水及数据库数组共存。
+分配容量不必随 $a_{\rm in}$ 或某次调用的实际处理行数缩小。
+\Cref{tab:b-scratch}核对四种默认配置：1,536／3,072 维虽暂存行数不同，
+分配乘积均占 3\,GiB。BGE／Stella 在 add 入口附近仍分配三个各 4\,GiB 数组，
+共 12\,GiB。
 23.05\,GiB的gather载荷属于后续阶段，不能直接再加12\,GiB作为真实峰值。
 峰值模型应对各阶段实际存活数组（含流水scratch）取最大值。
 Stella两遍repack的较小载荷加模型／上下文，解释了其数据库更大却观测峰值更低。

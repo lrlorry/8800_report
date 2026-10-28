@@ -1,0 +1,54 @@
+2026-10-27T21:56:13Z === T5 start head=1d69f3a v72: v69 with TF32 actually off in the faithful build; the TF32 run of the thesis evidence dirty=0
+2026-10-27T21:56:27Z build bench_rabitq_smallbatch rc=0
+2026-10-27T21:56:27Z binary 5371616ed99ab2b2dd323688eb3cf7a23dafb9f3f6a3904cf44475f65cf63ceb  build/demo_jhq_v69_batch
+2026-10-27T21:56:27Z binary f844b9cfd84ec0df1f4f4b5e212b3a3e3be243dda93b69d79e672811b4bc0a49  /root/autodl-tmp/jhq_pipeline_wt/build_e1/bench_rabitq_smallbatch
+2026-10-27T21:56:27Z binary bf1a4beb4c9c2c1d7afd3101350ac427a4802a638c99c04a344a99f18b954e2a  experiments/thesis_evidence/bench_cuvs_smallbatch.py
+2026-10-27T21:56:27Z got the GPU; loadavg 13.06 14.14 13.08
+2026-10-27T21:56:31Z jhq vogue-768 np=16 rc=0 1 ok, 0 flagged
+2026-10-27T21:56:36Z jhq vogue-768 np=32 rc=0 1 ok, 0 flagged
+2026-10-27T21:56:43Z jhq vogue-768 np=64 rc=0 1 ok, 0 flagged
+2026-10-27T21:56:51Z jhq vogue-768 np=96 rc=0 1 ok, 0 flagged
+2026-10-27T21:57:00Z jhq vogue-768 np=128 rc=0 1 ok, 0 flagged
+2026-10-27T21:57:10Z jhq vogue-768 np=192 rc=0 1 ok, 0 flagged
+2026-10-27T21:57:21Z jhq vogue-768 np=256 rc=0 1 ok, 0 flagged
+2026-10-27T21:57:33Z jhq vogue-768 np=384 rc=0 1 ok, 0 flagged
+2026-10-27T21:57:47Z jhq vogue-768 np=512 rc=0 1 ok, 0 flagged
+2026-10-27T21:58:02Z rabitq vogue-768 bits=9 rc=0 32 points, 0 failed
+2026-10-27T21:58:15Z rabitq vogue-768 bits=4 rc=0 32 points, 0 failed
+2026-10-27T21:58:55Z cuvs cagra vogue-768 rc=0 128 points, 0 failed
+2026-10-27T21:59:28Z cuvs cagra-int8 vogue-768 rc=0 128 points, 0 failed
+2026-10-27T21:59:33Z jhq arxiv-768 np=16 rc=0 1 ok, 0 flagged
+2026-10-27T21:59:40Z jhq arxiv-768 np=32 rc=0 1 ok, 0 flagged
+2026-10-27T21:59:49Z jhq arxiv-768 np=64 rc=0 1 ok, 0 flagged
+2026-10-27T21:59:59Z jhq arxiv-768 np=96 rc=0 1 ok, 0 flagged
+2026-10-27T22:00:10Z jhq arxiv-768 np=128 rc=0 1 ok, 0 flagged
+2026-10-27T22:00:23Z jhq arxiv-768 np=192 rc=0 1 ok, 0 flagged
+2026-10-27T22:00:36Z jhq arxiv-768 np=256 rc=0 1 ok, 0 flagged
+2026-10-27T22:00:52Z jhq arxiv-768 np=384 rc=0 1 ok, 0 flagged
+2026-10-27T22:01:09Z jhq arxiv-768 np=512 rc=0 1 ok, 0 flagged
+2026-10-27T22:01:26Z jhq arxiv-768 np=1024 rc=0 1 ok, 0 flagged
+2026-10-27T22:01:55Z rabitq arxiv-768 bits=9 rc=0 32 points, 0 failed
+2026-10-27T22:02:19Z rabitq arxiv-768 bits=4 rc=0 32 points, 0 failed
+2026-10-27T22:03:08Z cuvs cagra arxiv-768 rc=0 128 points, 0 failed
+2026-10-27T22:03:49Z cuvs cagra-int8 arxiv-768 rc=0 128 points, 0 failed
+2026-10-27T22:03:55Z jhq openai3-1536 np=32 rc=0 1 ok, 0 flagged
+2026-10-27T22:04:04Z jhq openai3-1536 np=64 rc=0 1 ok, 0 flagged
+2026-10-27T22:04:13Z jhq openai3-1536 np=128 rc=0 1 ok, 0 flagged
+2026-10-27T22:04:46Z jhq openai3-1536 np=256 rc=0 1 ok, 0 flagged
+2026-10-27T22:05:28Z jhq openai3-1536 np=512 rc=0 1 ok, 0 flagged
+2026-10-27T22:06:20Z jhq openai3-1536 np=1024 rc=0 1 ok, 0 flagged
+2026-10-27T22:07:01Z rabitq openai3-1536 bits=9 rc=0 32 points, 0 failed
+2026-10-27T22:07:26Z rabitq openai3-1536 bits=4 rc=0 32 points, 0 failed
+2026-10-27T22:08:22Z cuvs cagra openai3-1536 rc=0 128 points, 0 failed
+2026-10-27T22:09:00Z cuvs cagra-int8 openai3-1536 rc=0 128 points, 0 failed
+2026-10-27T22:09:10Z jhq openai3-3072 np=32 rc=0 1 ok, 0 flagged
+2026-10-27T22:09:21Z jhq openai3-3072 np=64 rc=0 1 ok, 0 flagged
+2026-10-27T22:09:46Z jhq openai3-3072 np=128 rc=0 1 ok, 0 flagged
+2026-10-27T22:10:18Z jhq openai3-3072 np=256 rc=0 1 ok, 0 flagged
+2026-10-27T22:10:59Z jhq openai3-3072 np=512 rc=0 1 ok, 0 flagged
+2026-10-27T22:11:49Z jhq openai3-3072 np=1024 rc=0 1 ok, 0 flagged
+2026-10-27T22:12:37Z rabitq openai3-3072 bits=9 rc=0 32 points, 0 failed
+2026-10-27T22:13:24Z rabitq openai3-3072 bits=4 rc=0 32 points, 0 failed
+2026-10-27T22:15:07Z cuvs cagra openai3-3072 rc=0 128 points, 0 failed
+2026-10-27T22:16:05Z cuvs cagra-int8 openai3-3072 rc=0 128 points, 0 failed
+2026-10-27T22:16:05Z === T5_DONE

@@ -16,7 +16,7 @@
     {
       "source": "8800_report",
       "path": "assessment/ch7-pending-experiments.txt",
-      "sha256": "b51dc00df1111d4d07b545dfd8dc8617e70140a8d8227849bac63b037ef2425b"
+      "sha256": "7a1e564b1b25f7f3c27fb8b96ba6aed89f173b39b07d38182d2b2b919946a729"
     },
     {
       "source": "8800_report",
@@ -41,12 +41,12 @@
     {
       "source": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "a178318e83e49d97dd91106fa1a34f896899578994d0908966c0ff99dfdc4b03"
+      "sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-5-construction.tex",
-      "sha256": "a20666edb0b701cd8c8b48c825a4e6fe894b9ce632e561f86bd369420f076740"
+      "sha256": "cceb234886b55eafab3101fa3e2a6c7c19ad76618a5c9a9d91cba8875f1c61e2"
     },
     {
       "source": "8800_report",
@@ -76,7 +76,7 @@
     {
       "source": "8800_report",
       "path": "figures/ch4/architecture.tex",
-      "sha256": "6c14988e0da407777f603d8895dacef77e1fa94b5128965e99a98bb14699e443"
+      "sha256": "1a2f6168799ec1ea5b1160a2145cf0b29eb56e082fb9b2e9cf6816c07ed19a14"
     },
     {
       "source": "8800_report",
@@ -141,12 +141,12 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "9bdccbc2cbd80996ee237ead118ea3fc97cb34fef9e3b73b00782453443fb3bc"
+      "sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-5-construction.tex",
-      "sha256": "490b1f043d36fe8d1964d713154d75aa0c8091d49d0e042a897d3c6962da03a2"
+      "sha256": "1c967d64dfeb9239413966c2cc874d2682804207ef5a82f954d9f22849fee0bc"
     },
     {
       "source": "8800_report",

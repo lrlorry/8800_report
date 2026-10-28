@@ -1,0 +1,32 @@
+  [mmap loader] reusing cached /root/autodl-tmp/openai3-3072/base.fvecs.raw_f32
+TR np=1 a=4 G=0 sh=0 effG=0 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=0 sh=1 effG=0 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=1 sh=0 effG=1 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=1 sh=1 effG=1 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=2 sh=0 effG=2 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=2 sh=1 effG=2 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=4 sh=0 effG=4 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=4 sh=1 effG=4 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=8 sh=0 effG=8 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=4 G=8 sh=1 effG=8 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=3 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=0 sh=0 effG=0 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=255 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=0 sh=1 effG=0 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=255 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=1 sh=0 effG=1 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=1 sh=1 effG=1 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=2 sh=0 effG=2 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=2 sh=1 effG=2 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=4 sh=0 effG=4 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=4 sh=1 effG=4 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=8 sh=0 effG=8 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=100 G=8 sh=1 effG=8 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=0 sh=0 effG=0 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=254 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=0 sh=1 effG=0 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=255 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=1 sh=0 effG=1 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=1 sh=1 effG=1 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=2 sh=0 effG=2 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=2 sh=1 effG=2 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=4 sh=0 effG=4 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=4 sh=1 effG=4 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=8 sh=0 effG=8 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+TR np=1 a=200 G=8 sh=1 effG=8 lutg=2 q=256 cand_mean=185 score_mm=0 set_eq=256 order_eq=256 preorder=256 tie_only=0 nontie=0 pad_ok=256 underfull=256 cutoff_ties=0 final_ok=256/256
+=== TR_OK ===

@@ -1,0 +1,4 @@
+467:        /*0e80*/               @P0 LDG.E.64.STRONG.SYS R14, desc[UR8][R14.64] ;            /* 0x000000080e0e0981 */
+1255:        /*2720*/                   REDG.E.MIN.64.STRONG.GPU desc[UR8][R14.64], R12 ;       /* 0x0000000c0e00798e */
+1573:        /*3110*/                   REDG.E.MIN.64.STRONG.GPU desc[UR8][R14.64], R10 ;       /* 0x0000000a0e00798e */
+1575:        /*3120*/                   LDG.E.64.STRONG.SYS R10, desc[UR8][R14.64] ;            /* 0x000000080e0a7981 */

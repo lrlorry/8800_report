@@ -3,11 +3,17 @@
 Rotating all $N$ raw vectors at once requires two FP32 device arrays,
 together $8Nd$ bytes. The builder instead stages bounded batches through
 pinned host memory and device raw/rotated buffers. For $n_b$ pipeline
-buffers and at most $a_b$ rows each, those two device arrays occupy
-$8n_ba_bd$ bytes. With the source defaults of three buffers and a
-128\,MiB limit per float array, this component is at most 768\,MiB.
-Assignment products and primary-encoder scratch are additional: the
-staging bound alone is not a bound on all pipeline memory.
+buffers, configured add rows $a_{\rm add}$ and per-array byte budget
+$S_{\rm stage}$, the source stages
+\begin{equation}
+ a_{\rm in}=\max\!\left\{1,\min\!\left(a_{\rm add},
+ \left\lfloor\frac{S_{\rm stage}}{4d}\right\rfloor\right)\right\},
+ \qquad S_{\rm float}=8n_ba_{\rm in}d.
+ \label{eq:4-staging-rows}
+\end{equation}
+Three buffers and the default 128\,MiB budget give at most 768\,MiB of
+input/rotated device floats. Assignment products and encoder scratch
+are separate allocations.
 
 The one-pass path encodes input-order primary/residual arrays, then
 gathers them into list order. Its temporary and final compressed copies
@@ -76,14 +82,17 @@ near the start of add, and a 22.58\,GiB Stella peak during repack.
 These are sampled device totals including context; shorter-lived peaks
 can be missed.
 
-The early add phase has a previously omitted assignment-product term:
+Assignment-product capacity uses an independent configured row count
+$a_{\rm assign}$, selected by \texttt{JHQ\_ASSIGN\_BATCH} or the source
+default: 32,768 for at least 8,192 lists, otherwise 8,192.
 \begin{equation}
- S_{\rm dots}=4n_b n_{\rm list}a_b\quad\text{bytes}.
+ S_{\rm dots}=4n_b n_{\rm list}a_{\rm assign}\quad\text{bytes}.
  \label{eq:4-assignment-scratch}
 \end{equation}
-For three buffers, 32,768 lists and 32,768 rows per buffer, this is
-three 4\,GiB buffers, or 12\,GiB in total. This allocation coexists with
-other pipeline and database arrays near add entry. The 23.05\,GiB gather
+Allocation capacity need not shrink with $a_{\rm in}$ or the rows in a
+particular call. \Cref{tab:b-scratch} checks four defaults: the 1,536/3,072-dimensional
+cases allocate 3\,GiB, despite different staging rows. BGE/Stella still
+allocate three 4\,GiB arrays, or 12\,GiB, near add entry. The 23.05\,GiB gather
 payload describes a later lifetime: adding 12\,GiB to it would not give
 the actual peak. Peak modelling must take the maximum over stage-specific
 live arrays, including pipeline scratch. Stella's smaller two-pass

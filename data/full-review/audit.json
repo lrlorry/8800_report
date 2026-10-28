@@ -1,0 +1,436 @@
+{
+  "review_baseline": "f010beb84d211438eaa61fe4b9f311bff1974dfc",
+  "checked_against": "80abac9 plus the changes in this review response",
+  "scope": "Offline source/record audit, no GPU run. T1 is separate from the earlier D campaign.",
+  "scratch": [
+    {
+      "d": 768,
+      "nlist": 4096,
+      "add_rows": 65536,
+      "input_rows": 43690,
+      "assignment_rows": 8192,
+      "buffers": 3,
+      "stage_mib": 128,
+      "device_float_bytes": 805294080,
+      "assignment_bytes": 402653184,
+      "incorrect_substitution_bytes": 2147450880
+    },
+    {
+      "d": 1024,
+      "nlist": 32768,
+      "add_rows": 65536,
+      "input_rows": 32768,
+      "assignment_rows": 32768,
+      "buffers": 3,
+      "stage_mib": 128,
+      "device_float_bytes": 805306368,
+      "assignment_bytes": 12884901888,
+      "incorrect_substitution_bytes": 12884901888
+    },
+    {
+      "d": 1536,
+      "nlist": 8192,
+      "add_rows": 65536,
+      "input_rows": 21845,
+      "assignment_rows": 32768,
+      "buffers": 3,
+      "stage_mib": 128,
+      "device_float_bytes": 805294080,
+      "assignment_bytes": 3221225472,
+      "incorrect_substitution_bytes": 2147450880
+    },
+    {
+      "d": 3072,
+      "nlist": 8192,
+      "add_rows": 65536,
+      "input_rows": 10922,
+      "assignment_rows": 32768,
+      "buffers": 3,
+      "stage_mib": 128,
+      "device_float_bytes": 805257216,
+      "assignment_bytes": 3221225472,
+      "incorrect_substitution_bytes": 1073676288
+    }
+  ],
+  "precision_anchors": [
+    {
+      "dataset": "openai3-1536",
+      "paired_configurations": 12,
+      "paired_qps_ratio": 0.95579216660579,
+      "interpolated_qps": {
+        "v69": 128672.13857164548,
+        "v72": 126145.23485984042,
+        "rabitq": 111998.64167083337,
+        "cagra": 71991.88387908739
+      },
+      "measured_qps": {
+        "v69": 117715.39946196506,
+        "v72": 113530.39866661263,
+        "rabitq": 107829.3,
+        "cagra": 69522.2
+      },
+      "fp32_tf32_at97": 0.9803616871542237,
+      "fp32_rabitq_interp": 1.126310399643812,
+      "fp32_rabitq_measured": 1.0528715169866876,
+      "fp32_cagra_interp": 1.7522146673047934,
+      "fp32_cagra_measured": 1.6330092929540871,
+      "rabitq_bracket": [
+        0.9638,
+        0.9717
+      ]
+    },
+    {
+      "dataset": "openai3-3072",
+      "paired_configurations": 12,
+      "paired_qps_ratio": 0.9638711694912266,
+      "interpolated_qps": {
+        "v69": 56622.90539852351,
+        "v72": 55069.32443144321,
+        "rabitq": 41454.18176435414,
+        "cagra": 30171.406919784244
+      },
+      "measured_qps": {
+        "v69": 53815.62112305317,
+        "v72": 52207.99120738125,
+        "rabitq": 39676.7,
+        "cagra": 25858.8
+      },
+      "fp32_tf32_at97": 0.9725626766032954,
+      "fp32_rabitq_interp": 1.3284383405390607,
+      "fp32_rabitq_measured": 1.3158350167070663,
+      "fp32_cagra_interp": 1.8252156612336397,
+      "fp32_cagra_measured": 2.018964190425745,
+      "rabitq_bracket": [
+        0.9669,
+        0.9796
+      ]
+    }
+  ],
+  "ptx": {
+    "binary_sha256": "5371616ed99ab2b2dd323688eb3cf7a23dafb9f3f6a3904cf44475f65cf63ceb",
+    "scalar_volatile_loads": 2,
+    "atomic_min_operations": 2,
+    "key_stride_bytes": 8,
+    "scope": "Recorded PTX and toolkit SASS only; no binary re-extraction or driver-JIT capture."
+  },
+  "findings": {
+    "F01": "Corrected separate capacities",
+    "F02": "Corrected D scope; T1 anchors separately audited",
+    "F03": "Corrected navigation title",
+    "F04": "Already addressed by T4 in 80abac9",
+    "F05": "Qualified PTX contract retained and archived instructions inspected",
+    "personal_contributions": "Deferred by explicit author request; no invented attribution"
+  },
+  "inputs": [
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v69_probesel/jhq_gpu_index.cu",
+      "sha256": "504f631427cbfa644c87d5cc4e6535ee2b1b53e90fffd67e1f2c5725c39797c1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v69_probesel/jhq_gpu_index.cuh",
+      "sha256": "7d575257498e700ed846a9446af6bf835f2d477306bc9d58aa8e7f69d27a6f5d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v69_probesel/search.cu",
+      "sha256": "2094df6858cdff80b2e79be75fadd0351fae975a075ee21bcd09882feec8c22d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_A2/group_kernels.ptx",
+      "sha256": "7e0d6c6c6532ab7e472ae909cea72781223a55d3ae7591f1b9bd0e857480b8e5"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_A2/group_kernels.sass",
+      "sha256": "a81e6fbf2077b57496c1cd6e122de42f0e457a038a99e4fc3bf974f55e88f6e4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_A2/toolchain.txt",
+      "sha256": "9303502ad1c148984f857480ce89f899ee4a4332455f39eb429af5005522e79e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_A2/contents.txt",
+      "sha256": "0e629177c006cb90d1344af01f312819e36a9af046660d48cda43a1a80287e62"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_A2/ptx_bound_ops.txt",
+      "sha256": "d5fec41c10deec7dda3ebce4a51cd80175e580869e6ec8cd68b22d2076d799b3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_A2/sass_bound_ops.txt",
+      "sha256": "a0a09f6b9ce66b9e1707f9e57eaa5dd86daf2e3cd65430ebb014ffcfd97a805a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t1_tf32_session.sh",
+      "sha256": "8a9428f0948dd9927b346f7fda704374008fa401c3458286fd57597aa5d26d1a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/analyze_t1.py",
+      "sha256": "9a8e18c2b3f4f108458629150bf2316a1207dfd6aaa736306ca47973f4e63c57"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/T1_SUMMARY.md",
+      "sha256": "978b6c1b13ddd344c2a775c72cdc6a799d1602f287911c8ee6e4ba7425464b57"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/PROGRESS.log",
+      "sha256": "8969bec54ca403c8bf21b7e0f92f6d5aff39c010850b17016e1271267652fb36"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-1536_np256_r1.json",
+      "sha256": "1e815853a7295590c6d3f3f04ac88d9e01fbf045eb4c19419f43a37ea6c7aec6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-1536_np256_r2.json",
+      "sha256": "5f58932921178115624ad305c515e1edd7847819a2345ca3dcc990188f2c7271"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-1536_np384_r1.json",
+      "sha256": "070cb55b2e3e17c69ecfba1d4839896b3a49a4c9148900a8ee65d98451648000"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-1536_np384_r2.json",
+      "sha256": "d9440dd8f9a6ddf9ea370d131ebab44d45c9105f5f6fbc9b80e72256d9dffd7b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-1536_np512_r1.json",
+      "sha256": "ea345d0199fac523e19416c56c6ed9fce48a4ab75ef452b4291a6dabaa351c1f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-1536_np512_r2.json",
+      "sha256": "cd2bf5273125cd6229457ff7242c9fdabe14eb034ac88f4797abdf2097949b89"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-1536_np256_r1.json",
+      "sha256": "6b4ab0c3e83449059de08ca343a3f2fbf8e8c76e5143e8a5bb2d430c759d6e85"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-1536_np256_r2.json",
+      "sha256": "0927e68b1012f48ade0f8e5e0628c886fd0ceb49c27ab6780112e1fa2f9ef405"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-1536_np384_r1.json",
+      "sha256": "c7553387f6e4edb976338533154fe28bfe0db61ddd78f077b305660d24d09de4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-1536_np384_r2.json",
+      "sha256": "f6dd1fd141216669069515c09760163ed7a6a87e6f8fb84c501cc15094566bb2"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-1536_np512_r1.json",
+      "sha256": "46e4fe1c121564aa508f233c8b2d3fcddb8b8f7222dc5c9b23e7e33cb11d418b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-1536_np512_r2.json",
+      "sha256": "070914cb8357e783a10af6dbd8b0c1257e2bb5696d8c3f75e2bf90cb5356148b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/rabitq_openai3-1536.jsonl",
+      "sha256": "fcb88ae3c9b611c25e3c00fbe12536796c723e87c3f300acda9c0eded0823cb8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/cuvs_openai3-1536_cagra.jsonl",
+      "sha256": "9ccaf08fd367397ebe858120755723bbc8d89d0c8502cdf2892497a5a00e6b6c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-3072_np256_r1.json",
+      "sha256": "7a6a903e023ee9926906a303d8250b7f9fd9a24253f5083fe544a5407dfc4291"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-3072_np256_r2.json",
+      "sha256": "ada98e201107c99652ba3c0366418d533540937c08efbd9c6e0fefa82c656f4d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-3072_np384_r1.json",
+      "sha256": "3d192208fccda363f02a3719fe870a7622c2b579df7d209afc945050c4520895"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-3072_np384_r2.json",
+      "sha256": "bf7648382b0dc05f59e819b76c0af96208f9f4a28feb2bcc2c82a87737453164"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-3072_np512_r1.json",
+      "sha256": "bb7b4e748aa38ccb83947a48cb161311dff4b5dec9becb6109ae377553a66f4f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v69_openai3-3072_np512_r2.json",
+      "sha256": "64715dddbda944b3f0d9a92ac65cb42acd930d9fe71d010c123242bee21e8f06"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-3072_np256_r1.json",
+      "sha256": "00291f195608f9666d7a01951681d93ad91c9339faad857373966741e8fad109"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-3072_np256_r2.json",
+      "sha256": "69d8ea3066c19ed753da2d5d3b3b3afab37d3bc8e1aaa61e12bb429053631e56"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-3072_np384_r1.json",
+      "sha256": "62e3d53941c4343a86b18f8e15afee4653778ed44e22c77c1559a758127b4c24"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-3072_np384_r2.json",
+      "sha256": "892a0c8ab17cac99f66c55f5aa45b936dafa1a470dda6e0fcd42cbdc1c3e9aea"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-3072_np512_r1.json",
+      "sha256": "4af70de60586e292d610d9360e46fa8898276095ef55670b6a5119cfc32950c8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/jhq_v72_openai3-3072_np512_r2.json",
+      "sha256": "73f28a0edfaffbf6413eeb149e73e9a4bf6f517291632525183416ad913ebc75"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/rabitq_openai3-3072.jsonl",
+      "sha256": "53dc47a1f980abcdeff51d21291e7dcadec79aec70e1e384b2e823ca1186f96d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T1/cuvs_openai3-3072_cagra.jsonl",
+      "sha256": "0e274b4f7c47928dee3d3979f802bb118ff43075a1a3d7fd31cee54ef60271a1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_full_review.py",
+      "sha256": "218ff596486b954cedd8f0525e094fb7845589173c06446a87e3bc8836a5c951"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_t4_t5.py",
+      "sha256": "e9470e1cd4e468a3f05c95c787a367ba60a6d7255dbc8f191bfd6a9f933f874f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/full-review-response.txt",
+      "sha256": "adc2aa47d23fd5df3bd22de528dff89a01c6ba8d911b7149602632ef1c363fee"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/full-review-source.json",
+      "sha256": "73a3e9f12da3948bb4178415f63188b4f903355f2647c84c2d59eb17a56322ca"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/t4-t5/audit.json",
+      "sha256": "2eb402268d4e311057dcee38ac8f00527e2cc5bfda8f3c2d3d9e61d4943f2344"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/abstract.tex",
+      "sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/abstract.tex",
+      "sha256": "32f7c3596dd93d3e03e71510a367a6b9c3afb2572cdca75c36b735ed6be21ea0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/09-conclusion.tex",
+      "sha256": "88bd7983a7e5c2fc61a6285011116b234aefd284b2717dfcc184cd747e39c984"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/09-conclusion.tex",
+      "sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-4-lifecycle.tex",
+      "sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-5-construction.tex",
+      "sha256": "cceb234886b55eafab3101fa3e2a6c7c19ad76618a5c9a9d91cba8875f1c61e2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-5-construction.tex",
+      "sha256": "1c967d64dfeb9239413966c2cc874d2682804207ef5a82f954d9f22849fee0bc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-precision.tex",
+      "sha256": "ea23f7c00dc95009f311545ff1bbbc21e6e79075966d6c18b64edfb2766759ef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-precision.tex",
+      "sha256": "f9e5b8dcfb4ab6403f981e7edf5b2f0067d87b74467eeb090ce836cb6eeb141d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch4/architecture.tex",
+      "sha256": "1a2f6168799ec1ea5b1160a2145cf0b29eb56e082fb9b2e9cf6816c07ed19a14"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/notation.tex",
+      "sha256": "f4c49e0fed14bd8d4b00aaae3535f05d036aafd535e898d7e383c5b74bd86ae3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/b-supplementary.tex",
+      "sha256": "c3fda9f9a7db43207eac427e605691d5e24035ec4192dc4f1568eb83a37d084f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/appendices/b-supplementary.tex",
+      "sha256": "0a46723fcdb229bb3aff0b272df0d6c50f8680f8b4bd8cff392cf7b34ee8d23e"
+    }
+  ]
+}

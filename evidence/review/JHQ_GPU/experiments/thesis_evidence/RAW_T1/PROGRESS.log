@@ -1,0 +1,36 @@
+2026-10-27T21:25:10Z === T1 start head=1d69f3a v72: v69 with TF32 actually off in the faithful build; the TF32 run of the thesis evidence dirty=0
+2026-10-27T21:25:10Z binary 5371616ed99ab2b2dd323688eb3cf7a23dafb9f3f6a3904cf44475f65cf63ceb  build/demo_jhq_v69_batch
+2026-10-27T21:25:10Z binary 51fa493df8550bac50cbb9dbd6a791d91e458ca5bf60aabec1f61b51906df313  build/demo_jhq_v72_batch
+2026-10-27T21:25:10Z binary dd0e2ca60477178fb5092a774f0d5f782ee6642689574c6e2668922aad317d8e  build_e1/bench_rabitq_sweep
+2026-10-27T21:25:10Z got the GPU; loadavg 14.69 11.39 10.58
+2026-10-27T21:25:19Z jhq v69 openai3-1536 np=256 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:25:28Z jhq v72 openai3-1536 np=256 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:25:39Z jhq v69 openai3-1536 np=384 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:25:50Z jhq v72 openai3-1536 np=384 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:26:02Z jhq v69 openai3-1536 np=512 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:26:15Z jhq v72 openai3-1536 np=512 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:26:44Z rabitq openai3-1536 nlist=4096 bits=9 modes=0 rc=0 4 points, 0 failed
+2026-10-27T21:27:07Z rabitq openai3-1536 nlist=8192 bits=9 modes=0 rc=0 3 points, 0 failed
+2026-10-27T21:27:27Z rabitq openai3-1536 nlist=4096 bits=8 modes=0 rc=0 2 points, 0 failed
+2026-10-27T21:28:44Z cagra openai3-1536 rc=0 17 lines, 0 failed
+2026-10-27T21:28:53Z jhq v72 openai3-1536 np=256 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:29:02Z jhq v69 openai3-1536 np=256 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:29:13Z jhq v72 openai3-1536 np=384 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:29:24Z jhq v69 openai3-1536 np=384 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:29:37Z jhq v72 openai3-1536 np=512 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:29:49Z jhq v69 openai3-1536 np=512 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:30:07Z jhq v69 openai3-3072 np=256 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:30:25Z jhq v72 openai3-3072 np=256 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:30:46Z jhq v69 openai3-3072 np=384 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:31:07Z jhq v72 openai3-3072 np=384 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:31:32Z jhq v69 openai3-3072 np=512 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:31:58Z jhq v72 openai3-3072 np=512 r=1 rc=0 1 ok, 0 flagged
+2026-10-27T21:33:23Z rabitq openai3-3072 nlist=4096 bits=9 modes=0,2 rc=0 8 points, 0 failed
+2026-10-27T21:35:44Z cagra openai3-3072 rc=0 17 lines, 0 failed
+2026-10-27T21:36:02Z jhq v72 openai3-3072 np=256 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:36:19Z jhq v69 openai3-3072 np=256 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:36:40Z jhq v72 openai3-3072 np=384 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:37:01Z jhq v69 openai3-3072 np=384 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:37:27Z jhq v72 openai3-3072 np=512 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:37:52Z jhq v69 openai3-3072 np=512 r=2 rc=0 1 ok, 0 flagged
+2026-10-27T21:37:52Z === T1_DONE

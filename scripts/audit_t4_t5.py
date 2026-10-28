@@ -18,6 +18,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CODE = ROOT.parent / 'JHQ_GPU'
+if not CODE.exists():
+    CODE = ROOT / 'evidence/review/JHQ_GPU'
 SRC = CODE / 'experiments/thesis_evidence'
 OUT = ROOT / 'data/t4-t5'
 DATASETS = ['vogue-768', 'arxiv-768', 'openai3-1536', 'openai3-3072']
@@ -104,9 +106,13 @@ def interpolated(points, target, qualifying_endpoint=False):
 
 
 def main():
+    global CODE, SRC
     args = argparse.ArgumentParser()
     args.add_argument('--no-plot', action='store_true')
+    args.add_argument('--source', type=Path, default=CODE)
     opt = args.parse_args()
+    CODE = opt.source.resolve()
+    SRC = CODE / 'experiments/thesis_evidence'
     OUT.mkdir(parents=True, exist_ok=True)
     correspondence = source_check()
     for name in ['REPORT_CN.md', 't4_topcref.sh', 't4_lut_compare.py',
