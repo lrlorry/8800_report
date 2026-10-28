@@ -1,10 +1,14 @@
 # 论文补充证据：移出PDF的辅助图表
 
-本文件对应以 `86bf0f0` 为基线的精准精简：12张辅助表与1张估算图不再编入中英文PDF。
+本文件记录两轮精简：以 `86bf0f0` 为基线移出12张辅助表与1张估算图；
+以 `03775b7` 为基线再移出1张对象生命周期表，并将第7章两处重复公式改引第6章。
 完整原表、图注和数值仍在仓库；这些是既有记录，没有运行新实验。论文不增加同PDF附录。
 核心公式与证明、T4/T5、FULL及抽样风险、直接复用、规模结果和两项负案例保持在论文中。
-第4章的内存生命周期表继续留在正文。下文显示英文原表内容；中英文精确TeX原件及SHA-256见
+生命周期的容量公式与关键释放关系留在正文。下文显示英文原表内容；首轮中英文精确TeX原件及SHA-256见
 [归档清单](../evidence/editorial/86bf0f0/manifest.json)。标签为移出前的历史标签，当前PDF编号已更新。
+
+第二轮原件和哈希见[归档清单](../evidence/editorial/03775b7/manifest.json)，
+对应的[完整正文补丁](../evidence/editorial/03775b7/compression.patch)可在固定基线上复查。
 
 ## 证据登记字段
 
@@ -227,3 +231,13 @@ Maximum held-out recall loss over the 64 draws at each sample size, relative to 
 | BGE | 512 | 64 | 0.0294 | 0.0046 | 0.0046 |
 | Stella | 512 | 16 | 0.0182 | 0.0030 | 0.0030 |
 
+
+## 构建对象生命周期与重复公式
+
+第二轮历史标签：`tab:4-lifetimes`、`eq:7-agreement`、`eq:7-payback`。
+
+- 对象生命周期：[英文原表](../evidence/editorial/03775b7/en/tab-4-lifetimes.tex) · [中文原表](../evidence/editorial/03775b7/zh/tab-4-lifetimes.tex)。正文保留独立暂存／assignment 容量、order/inverse 的 4N 字节、assignment 在 gather 前释放，以及索引与查询缓冲复用。
+- 第7章一致性式：[英文](../evidence/editorial/03775b7/en/eq-7-agreement.tex) · [中文](../evidence/editorial/03775b7/zh/eq-7-agreement.tex)。它是第6章 `eq:6-agreement` 在 k=10、epsilon=1 时的特例；实际规则仍允许一次缺失，FULL 并非所有查询必须完全一致。
+- 第7章回本式：[英文](../evidence/editorial/03775b7/en/eq-7-payback.tex) · [中文](../evidence/editorial/03775b7/zh/eq-7-payback.tex)。它是 `eq:6-payback` 对 fixed-100 的特例，正文继续报告估算与四个直接复用测量。
+
+历史 v57 的标量精排对比不再展开于第7章：相对 fixed-100 在10/12单元的速率比为1.054–2.773，校准5.2–30.8 ms。它与较新的 lane 精排实验共享预算网格，但跨实验比较不隔离因果。固定基线 `03775b7` 的原文及上述补丁保留了这段历史来源。

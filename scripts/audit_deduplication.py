@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check thesis consolidation against its pre-edit commit; no GPU or network.
 
-Proofs and displayed mathematics remain intact. Explicit display removals
-are checked against archived originals. Numeric assets remain unchanged;
+Proofs and unique displayed mathematics remain intact. Explicit duplicate
+equation/display removals are checked against archived originals. Numeric assets remain unchanged;
 one explicitly archived PDF font export is permitted. This is not an
 automatic judgement of prose.
 """
@@ -39,6 +39,44 @@ def main():
     def old(rel):
         return git('show', baseline + ':' + rel)
 
+    # Validate this round separately; restore its pinned before-images for
+    # the older exact-edit checks, whose historical scope stays unchanged.
+    compression = json.loads(current('assessment/compression-edits.json'))
+    assert compression['baseline'] == '03775b765ce0fbbc378f55a98cfa48669b9a223e'
+    pre_compression = {}
+    for edit in compression['source_edits']:
+        rel = edit['path']
+        assert rel.startswith(('chapters/', 'zh/chapters/')) and rel.endswith('.tex')
+        before = git('show', compression['baseline'] + ':' + rel)
+        after = current(rel)
+        assert hashlib.sha256(before).hexdigest() == edit['before_sha256']
+        assert hashlib.sha256(after).hexdigest() == edit['after_sha256'], ('unrecorded compression edit', rel)
+        pre_compression[rel] = before.decode()
+    patch = current(compression['patch'])
+    assert hashlib.sha256(patch).hexdigest() == compression['patch_sha256']
+    subprocess.run(['git', 'apply', '--check', '--reverse', compression['patch']],
+                   cwd=ROOT, check=True, capture_output=True)
+    new_curation = json.loads(current('evidence/editorial/03775b7/manifest.json'))
+    assert new_curation['baseline'] == compression['baseline']
+    assert len(new_curation['entries']) == 6
+    new_blocks = collections.defaultdict(list)
+    new_ref_map = {}
+    for entry in new_curation['entries']:
+        data = current(entry['archive'])
+        assert hashlib.sha256(data).hexdigest() == entry['sha256']
+        block = data.decode().removesuffix('\n')
+        assert pre_compression[entry['source']].count(block) == 1
+        new_blocks[entry['source']].append(block)
+        new_ref_map[entry['label']] = entry['replacement_reference']
+    assert set(new_ref_map) == {'tab:4-lifetimes', 'eq:7-agreement', 'eq:7-payback'}
+    for lang in ['en', 'zh']:
+        assert {e['label'] for e in new_curation['entries'] if e['language'] == lang} == set(new_ref_map)
+
+    def remap_new_refs(s):
+        def replace(m):
+            return m[1] + ','.join(new_ref_map.get(k, k) for k in m[2].split(',')) + '}'
+        return re.sub(r'(\\(?:[Cc]ref|[Ee]qref|ref)\{)([^}]+)\}', replace, s)
+
     final_review = json.loads(current('assessment/final-review-edits.json'))
     assert final_review['baseline'] == '682ef939ee41e3a9b9c9ec984604c62008406744'
     # Explicitly recorded prose/source replacements; scientific blocks below
@@ -52,7 +90,8 @@ def main():
         assert expected.count(edit['before']) == 1, ('invalid declared edit', rel)
         expected_sources[rel] = expected.replace(edit['before'], edit['after'])
     for rel, expected in expected_sources.items():
-        assert (ROOT / rel).read_text() == expected, ('undeclared final-review edit', rel)
+        candidate = pre_compression.get(rel, (ROOT / rel).read_text())
+        assert candidate == expected, ('undeclared final-review edit', rel)
 
     manifest_path = 'evidence/editorial/86bf0f0/manifest.json'
     curation = json.loads(current(manifest_path))
@@ -108,7 +147,10 @@ def main():
     for folder in ['chapters', 'zh/chapters']:
         for p in sorted((ROOT / folder).glob('*.tex')):
             rel = str(p.relative_to(ROOT))
-            a, b = old(rel).decode(), current(rel).decode()
+            a, actual = old(rel).decode(), current(rel).decode()
+            if rel not in pre_compression:
+                assert actual == git('show', compression['baseline'] + ':' + rel).decode(), ('undeclared compression source', rel)
+            b = pre_compression.get(rel, actual)
             for block in by_source[rel]:
                 a = a.replace(block, '')
             a = remap_refs(a)
@@ -120,9 +162,20 @@ def main():
                 pat = r'\\begin\{' + env + r'\*?\}[\s\S]*?\\end\{' + env + r'\*?\}'
                 before, after = re.findall(pat, a), re.findall(pat, b)
                 assert before == after, (rel, env)
-                protected[env] += len(before)
             assert re.findall(labels_pattern, a) == re.findall(labels_pattern, b), rel
-            for text, keys in [(a, citations_before), (b, citations_after)]:
+            # Further changes to protected blocks must match the archived
+            # removals and reference substitutions, leaving proofs intact.
+            restored = b
+            for block in new_blocks[rel]:
+                restored = restored.replace(block, '')
+            restored = remap_new_refs(restored)
+            for env in envs:
+                pat = r'\\begin\{' + env + r'\*?\}[\s\S]*?\\end\{' + env + r'\*?\}'
+                expected = re.findall(pat, restored)
+                assert expected == re.findall(pat, actual), ('changed retained scientific block', rel, env)
+                protected[env] += len(expected)
+            assert re.findall(labels_pattern, restored) == re.findall(labels_pattern, actual), rel
+            for text, keys in [(a, citations_before), (actual, citations_after)]:
                 for group in re.findall(r'\\(?:cite|citep|citet)\{([^}]+)\}', text):
                     keys.update(k.strip() for k in group.split(','))
             checked.append(rel)
@@ -166,6 +219,7 @@ def main():
                 'assessment/deduplication-rounds.md', 'assessment/template-sources.json',
                 'assessment/targeted-curation-review.md', 'assessment/targeted-curation-source.json',
                 'assessment/final-review-response.txt', 'assessment/submission-manual-actions.txt',
+                'assessment/compression-review-response.txt', 'assessment/compression-review-source.json',
                 'docs/ai-use-record.md', 'data/submission/ai-use-record.json', 'docs/artifact-access.md',
                 'docs/supplementary-evidence.md',
                 'FORMAT_NOTES.txt', 'main.tex', 'main-zh.tex',
@@ -173,8 +227,12 @@ def main():
         current(rel)
     result = dict(
         baseline=baseline,
-        scope='Prose consolidation, explicit display curation and declared final-review edits; no GPU run.',
-        editorial_review='assessment/deduplication-rounds.md; assessment/targeted-curation-review.md; semantic retention requires source review',
+        scope='Prose consolidation, declared display/equation curation and review edits; no GPU run.',
+        editorial_review='assessment/deduplication-rounds.md; assessment/targeted-curation-review.md; assessment/compression-review-response.txt; semantic retention requires source review',
+        compression_round=dict(baseline=compression['baseline'],source_edits=len(compression['source_edits']),
+                               archive_manifest='evidence/editorial/03775b7/manifest.json',
+                               removed_tables_per_language=1,removed_duplicate_equations_per_language=2,
+                               reference_remapping=new_ref_map),
         display_curation=dict(baseline=curation['baseline'],
                               archived_blocks=len(curation['entries']),
                               removed_tables_per_language=12,

@@ -66,6 +66,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29. Model version: not preserved.
 
 Current artifact mapping: [`assessment/final-review-edits.json`](../assessment/final-review-edits.json), [`assessment/submission-manual-actions.txt`](../assessment/submission-manual-actions.txt).
 
+### P08 — 检测标注与形式化审计后的精简
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> gpt 给了这个报告 主要去压被AI标注的部分，请你结合这个和之前的分析 按照我的思路去压AI率
+
+Used for substantive bilingual prose compression, consolidation of repeated protocols, relocation of implementation detail and replacement of duplicate equations by cross-references. The applied [TeX patch](../evidence/editorial/03775b7/compression.patch) and its hash are retained in [compression-edits.json](../assessment/compression-edits.json). This is the resulting source patch, not a separately archived complete model response. Checks and the disposition of the supplied audit are recorded in [compression-review-response.txt](../assessment/compression-review-response.txt). No new detector score or student-personal verification is inferred.
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:
@@ -74,6 +82,7 @@ The user supplied ChatGPT frameworks and reviews covering chapter structure, evi
 - [Display-curation review](../assessment/targeted-curation-review.md) and [source identity](../assessment/targeted-curation-source.json).
 - [Submission requirements audit](../assessment/submission-audit-2026-10-29.txt).
 - [Current review identity and applied edits](../assessment/final-review-edits.json).
+- [Formalisation/compression review identity](../assessment/compression-review-source.json) and [response](../assessment/compression-review-response.txt). The user supplied the resulting review PDF; its original ChatGPT prompt and full research interaction were not supplied.
 
 The original ChatGPT prompts, full responses, interaction dates and model versions are not supplied by those derivative records. The author must add the original recoverable records or accurately explain their absence. These references are evidence of retained review use, not a replacement for its original prompts.
 

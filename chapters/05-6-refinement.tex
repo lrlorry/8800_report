@@ -1,8 +1,6 @@
-Only the primary survivors access residual codes. This preserves a broad,
-cheap scan over $n_c$ candidates followed by a narrower $O(cd)$ scoring
-stage. Reading residuals for every visited candidate would instead move
-that coordinate work towards $O(n_cd)$. Lane cooperation accelerates the
-chosen survivors; it does not decide the refinement budget.
+Residual access is restricted to primary survivors, reducing coordinate
+work from $O(n_cd)$ to $O(cd)$. Lane cooperation accelerates that work
+at a fixed budget.
 
 \subsection{Reconstructed scoring and the query-only constant}
 
@@ -17,12 +15,9 @@ The implemented refined ranking score is
  &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
  \label{eq:5-refined-constant}
 \end{align}
-The second equality follows by expanding the squared norms. Thus the
-score orders hierarchical reconstructions by squared distance, but the
-returned value includes a query-only constant. It is neither a direct
-raw-vector distance nor an unshifted reconstruction distance. The
-constant does not affect a fixed query's ordering. Reconstruction error
-remains even when selection under this score is exact \cite{jhq}.
+Expanding the norms proves the second equality. The returned score is
+reconstructed squared distance plus a query-only constant, which
+preserves ordering while retaining reconstruction error \cite{jhq}.
 
 Residual coordinates use scalar codebook entries shared within a
 subspace. The scalar path walks each candidate's dimensions and sums
@@ -77,13 +72,11 @@ database IDs, the final kernel performs exact top-$k$ selection under
 $(\refineddist,\mathrm{database\ ID})$. One block per query loads the
 $c$ scores and repeatedly reduces the minimum, emits its ID and score,
 and removes that score before the next round. All $c$ slots are scanned
-at each round; there is no fixed per-thread candidate quota. This
-contract requires $k$ finite valid entries. In a degenerate pool,
-selection sets the winning score to infinity but leaves its position
-valid: after finite entries are exhausted, the smallest valid ID can
-repeat with an infinite score. An entirely invalid pool returns invalid
-IDs and infinity. These cases lie outside the finite-pool contract used
-for the reported evaluation.
+at each round; there is no fixed per-thread candidate quota. In a
+degenerate pool, selected scores become infinite but positions remain
+valid: after finite entries run out, the smallest valid ID can repeat
+with infinity. An entirely invalid pool returns invalid IDs and infinity.
+The evaluation satisfies the finite-entry contract.
 
 The final ID tie rule differs from the physical-position rule used for
 primary retention. An exact final selector cannot recover candidates

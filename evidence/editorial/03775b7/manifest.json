@@ -1,0 +1,65 @@
+{
+  "baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
+  "entries": [
+    {
+      "language": "en",
+      "source": "chapters/04-4-lifecycle.tex",
+      "label": "tab:4-lifetimes",
+      "environment": "table",
+      "archive": "evidence/editorial/03775b7/en/tab-4-lifetimes.tex",
+      "sha256": "1f58dd424f8c902778d0db90da44ab4f51956276fc16540bd66619f655fc6887",
+      "replacement_reference": "sec:4-4",
+      "reason": "Implementation lifecycle details retained outside thesis"
+    },
+    {
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "label": "eq:7-agreement",
+      "environment": "equation",
+      "archive": "evidence/editorial/03775b7/en/eq-7-agreement.tex",
+      "sha256": "1aee3546d3a6519e02828b0a6b9ee7577dcca141c687f8cc27bfe7aedd3f8026",
+      "replacement_reference": "eq:6-agreement",
+      "reason": "Duplicate specialisation of retained Chapter 6 equation"
+    },
+    {
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "label": "eq:7-payback",
+      "environment": "equation",
+      "archive": "evidence/editorial/03775b7/en/eq-7-payback.tex",
+      "sha256": "1e1df70d3b573b9cf7f29a1b6f70672e523c34414eccff37b306064753aaa897",
+      "replacement_reference": "eq:6-payback",
+      "reason": "Duplicate specialisation of retained Chapter 6 equation"
+    },
+    {
+      "language": "zh",
+      "source": "zh/chapters/04-4-lifecycle.tex",
+      "label": "tab:4-lifetimes",
+      "environment": "table",
+      "archive": "evidence/editorial/03775b7/zh/tab-4-lifetimes.tex",
+      "sha256": "87208ae9007b6a98d3f99f606eb2488a3fb88fb86815faa51b8b94a67dd9e007",
+      "replacement_reference": "sec:4-4",
+      "reason": "Implementation lifecycle details retained outside thesis"
+    },
+    {
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "label": "eq:7-agreement",
+      "environment": "equation",
+      "archive": "evidence/editorial/03775b7/zh/eq-7-agreement.tex",
+      "sha256": "1aee3546d3a6519e02828b0a6b9ee7577dcca141c687f8cc27bfe7aedd3f8026",
+      "replacement_reference": "eq:6-agreement",
+      "reason": "Duplicate specialisation of retained Chapter 6 equation"
+    },
+    {
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "label": "eq:7-payback",
+      "environment": "equation",
+      "archive": "evidence/editorial/03775b7/zh/eq-7-payback.tex",
+      "sha256": "1e1df70d3b573b9cf7f29a1b6f70672e523c34414eccff37b306064753aaa897",
+      "replacement_reference": "eq:6-payback",
+      "reason": "Duplicate specialisation of retained Chapter 6 equation"
+    }
+  ]
+}

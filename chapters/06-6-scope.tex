@@ -1,22 +1,14 @@
-Reuse is justified only for a sufficiently stable index, $k$, routing
-configuration and query population. Changing the index or routing changes
-the calibration target; a different batch regime may also change ties and
-arithmetic through scheduling. Interpreting agreement requires valid,
-unique output IDs, held-out GT quality and measured tail loss. Reuse
-additionally requires common ordering or matched enumeration, repeated
-timing and enough subsequent work to recover calibration cost
-(\cref{sec:6-3,sec:6-5}). These are applicability conditions; the harness
-does not automatically detect workload changes.
+Reuse requires a stable index, $k$, routing and query population;
+batch-dependent scheduling may change ties and arithmetic. Valid, unique
+IDs and common ordering or matched enumeration underpin the decision
+(\cref{sec:6-3}); held-out quality, tail loss and amortised cost determine
+its utility (\cref{sec:6-5}). The harness does not detect workload drift.
 
 
-For the observed workload family, the resulting choice is full-pool
-calibration when quality takes priority, with $S=128$ as the cheaper
-variant whose crossing risk is measured separately. A caller must install
-the selected $\alpha$ explicitly and reuse it with the same index, route
-and $k$. The contribution is a label-free finite-grid decision, a
-conditional exact search for that decision and a cost model for reuse.
-Chapter 7 tests its quality and speed against fixed budgets and the
-diagnostic oracle, and directly measures calibrated reuse on four cells.
+The observed family favours FULL for quality coverage and $S=128$ for
+lower calibration cost. The caller explicitly installs $\alpha$.
+Chapter 7 evaluates fixed-budget/oracle controls and four direct reuse
+measurements.
 
 The supplementary trace contents and completed strict CPU-reference
 checks are documented in \cref{sec:a-supplement,sec:a-t4-t5}.

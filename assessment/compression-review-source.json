@@ -1,0 +1,14 @@
+{
+  "review_title": "Formalisation and Compression Audit for the COMP8800 Thesis",
+  "review_sha256": "11f105397e1969b536a7ee7e9d2d84e38beee39298b32936b6c947df92558bc4",
+  "pages": 23,
+  "baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
+  "scope": "Evaluate recommendations against current source; preserve empirical and mathematical contracts; no GPU run",
+  "decisions": [
+    "Previously relocated displays are already absent; do not count their savings again",
+    "Reject zero-disagreement FULL formula and linear-search pseudocode: implementation uses epsilon=1 and bisection",
+    "Retain existing local-buffer, coverage, shared-bound and nestedness proofs; do not replace them with weaker sketches",
+    "Compress highlighted audit narration and duplicate protocol/interpretation; archive lifecycle table and two duplicate Chapter 7 equations",
+    "No claim of student-personal verification and no fabricated historical prompts or output hashes"
+  ]
+}

@@ -41,17 +41,17 @@
     {
       "source": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e"
+      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-5-construction.tex",
-      "sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72"
+      "sha256": "d381bb2fec723460765fbe24bbe52b2fef1a7994f04f57a1822a6c21668c704d"
     },
     {
       "source": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "9585272384890fb1cdfd1247546ac3af37e842fcd14fa0d2c75308032bc8eecd"
+      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
     },
     {
       "source": "8800_report",
@@ -61,7 +61,7 @@
     {
       "source": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "7061b0bfb1e946fb770a90b17314b464a2c279f1a6072dfc5c6962305ef2e23d"
+      "sha256": "70ea879a20773183d05c8c7024a7d3d8251cd5c288cefe2d777054df5bf3d239"
     },
     {
       "source": "8800_report",
@@ -141,17 +141,17 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f"
+      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-5-construction.tex",
-      "sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60"
+      "sha256": "9fc69c8ae0ce53fdd99790d86ddcb94c8b84e2dee75443606db134f457807b69"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "850e40e734d4968c3836cf97dbbb59cb2a01a38b499201cd2f0295c3f9caee76"
+      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
     },
     {
       "source": "8800_report",
@@ -161,7 +161,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "35d9c2719c2f2bdb6746dbeb764b0e93a4b5d6fd339c1ccac1afd9d2504f5699"
+      "sha256": "448adf903ab34f864cf346c4e7894c90c5a8d12e194f218e7d965b16efb24234"
     },
     {
       "source": "8800_report",

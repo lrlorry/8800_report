@@ -2,10 +2,8 @@
 \label{ch:evaluation}
 \chaptermark{Experimental Evaluation}
 
-This chapter evaluates construction and capacity (RQ1), execution correctness
-and cost (RQ2), held-out budget quality and reuse cost (RQ3), and competitive
-search regions (RQ4). The experiment families below retain their own
-controls; \cref{sec:9-1} synthesises the answers to the research questions.
+The experiments address construction and capacity (RQ1), execution (RQ2),
+budget quality and reuse cost (RQ3), and competitive search regions (RQ4).
 
 \section{Final Experiment Manifest and Comparison Families}
 \label{sec:7-1}
@@ -18,24 +16,16 @@ the repository supplement retains the full family manifest.
 
 \subsection{Evidence families and measurement boundaries}
 
-Historical packing/refinement ablations and newer v69/v71 measurements
-retain the family-specific boundaries defined in \cref{sec:3-5}. Their
-ratios are interpreted within each comparison, as required by
-\cref{sec:3-1}.
+Datasets, timing and comparison families follow
+\cref{sec:3-2,sec:3-3,sec:3-5}. The main RTX 5090 comparison measures
+host-to-host steady-state throughput; construction and calibration are
+timed separately. Ablation ratios retain their own family baselines.
 
-
-\Cref{sec:3-2,sec:3-3} define the dataset manifest, environment and
-measurement protocol. The main system comparison uses host-to-host
-steady-state throughput on the RTX 5090. Construction and budget
-calibration are measured separately.
-
-The authors' CPU JHQ artifact is represented in separate archived CPU
-experiments, rather than in the E1 frontier. The October locality campaign
-uses Vogue with 1,024 lists and level bits $[8,4]$, whereas E1 uses 4,096
-lists and a different residual budget. Older CPU CSVs come from a local
-reimplementation; separate CPU audit notes document legacy recall-protocol
-issues. These records support CPU-local questions, but supply no
-matched-protocol CPU/GPU acceleration factor here.
+Archived CPU JHQ results supply no matched-protocol CPU/GPU acceleration
+factor: the October locality campaign uses Vogue with 1,024 lists and
+level bits $[8,4]$, versus E1's 4,096 lists and different residual budget.
+Older CSVs use a local reimplementation with documented legacy
+recall-protocol issues.
 
 Adaptive call counts and auxiliary device-only timing are documented in
 \cref{sec:a-e1-protocol}.
@@ -46,18 +36,11 @@ Metrics and frontier estimators follow \cref{sec:3-2,sec:3-4};
 $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
 
 
-Numeric tables and figures are regenerated from archived measurements using the ledger procedure in \cref{sec:3-5}.\footnote{The
-report repository provides \path{scripts/build_ch7.py},
-\path{data/ch7/audit.json}, \path{data/ch7/matched.csv} and the source
-ledger \path{data/ch7/sources.csv}. The script requires the sibling
-\texttt{JHQ\_GPU} checkout containing the archived measurements.}
+Tables and figures follow the regeneration ledger in \cref{sec:3-5}.
 
 
 \section{Modern GPU ANN Recall--QPS Frontiers}
 \label{sec:7-2}
-
-This section answers RQ4 by locating common-recall operating regions,
-including regions in which competing methods are faster.
 
 \subsection{Comparison scope and frontier construction}
 
@@ -122,10 +105,7 @@ Against CAGRA fp32, interpolated ratios at this target range from
 $1.317\times$ on arXiv to $1.747\times$ on the two OpenAI datasets.
 Against IVF-RaBitQ, the corresponding values are $1.059\times$,
 $0.996\times$, $1.130\times$ and $1.157\times$. The arXiv result is a
-near tie: its interpolated rate is slightly lower, while the measured
-threshold comparison is slightly higher. Reporting this as an unequivocal
-win would give the interpolation convention more evidential weight than
-the measurement supports.
+near tie whose direction depends on the estimator.
 
 The paired E1 one-block measurements connect RQ2 to this RQ4 result.
 Rebuilding Vogue's frontier with $\gscan=0$ reduces its 0.97 ratio to
@@ -144,9 +124,8 @@ However, adding CAGRA int8 changes the low-recall interpretation: around
 0.90--0.92, its lower-precision graph search can be faster than JHQ.
 At higher recall, IVF-RaBitQ often regains the lead, including several
 targets at 0.98 or above. On arXiv around 0.99, CAGRA fp32 is also faster
-than JHQ in the recorded grid. The defensible claim is therefore that
-JHQ has useful competitive regions, particularly around moderately high
-recall, rather than that it dominates modern GPU ANN methods.
+than JHQ in the recorded grid. JHQ's favourable region is bounded by
+both target recall and competing representation.
 
 CAGRA int8 reaches maximum measured recalls of 0.9453, 0.9620, 0.9667 and
 0.9683 on Vogue, arXiv, OpenAI-1536 and OpenAI-3072, respectively. It
@@ -159,11 +138,8 @@ coverage and does not extend to every target below 0.97.
 The two estimators can disagree substantially where the grid is sparse.
 For example, at recall 0.97 the OpenAI-1536 comparison with CAGRA fp32 is
 $1.747\times$ by interpolation but $2.294\times$ using qualifying measured
-points. The latter includes the cost of whichever baseline point next
-exceeds the threshold. It should not be presented as a directly measured
-same-recall advantage of that magnitude. The companion matched table
-preserves both estimators and marks targets without coverage, enabling
-readers to distinguish an operating-region result from a sampling artefact.
+points. The measured estimator pays for the next qualifying baseline
+point; the gap between estimators exposes grid sensitivity.
 
 \input{chapters/07-supp-precision}
 
@@ -202,14 +178,11 @@ sensitivity.
 \section{Cartesian LUT, Packed Loads and Lane Refinement}
 \label{sec:7-3}
 
-For RQ2, the ablations separate representation-preserving table and load
-changes from cooperative residual scoring and measure their application
-effect as well as their kernel effect.
+The RQ2 ablations measure both kernel and application effects.
 
 \subsection{Exact table factorization and its throughput consequence}
 
-The factorisation and resource costs are derived in \cref{sec:5-2}.
-Here the ablation tests their throughput consequence and FP32 ranking
+The LUT ablation tests the cost model in \cref{sec:5-2} and FP32 ranking
 effects.
 
 
@@ -237,13 +210,9 @@ of per-dataset QPS ratios to the one-group arm; shading shows their range.}
 \end{figure}
 
 The two-group/one-group ratio ranges from $0.998$ to $1.914$.
-Four and eight groups each require only 16 total entries, but differ in
-the number and granularity of lookups. Their performance provides a
-useful control: reducing table storage beyond the two-group design does
-not necessarily improve search. Additional indexing and accumulation
-work can outweigh storage savings. The measurements establish the net
-trade-off; without a separate occupancy or instruction-counter experiment,
-they do not identify one hardware effect as the sole cause. The maximum
+Four and eight groups each store 16 entries but require more lookups
+and additions. These arms show that smaller tables need not improve
+throughput; occupancy and instruction costs were not isolated. The maximum
 reported recall spread within any four-arm cell is $10^{-4}$.
 At 128 probes and $\alpha=100$, T4 compares identical candidates on
 Vogue, arXiv and OpenAI-3072. Full versus $16+16$ tables differ in
@@ -305,10 +274,8 @@ a larger reduction in refinement time. On arXiv at $\alpha=100$, the
 profiled refinement kernel falls from 4,277.5 to 716.8\,$\mu$s, a
 $5.97\times$ gain, while total throughput improves $1.789\times$.
 OpenAI-3072's refinement kernel improves $8.81\times$, but total throughput
-improves $1.171\times$. This is consistent with Amdahl's law: acceleration
-of a small stage cannot remove the cost of routing, screening, final
-selection or transfers. It also motivates the subsequent scan and probe
-experiments, which target the remaining work.
+improves $1.171\times$. The remaining routing, screening, selection and
+transfer costs limit the application gain.
 
 A quantitative Amdahl check uses the refinement kernel's baseline time
 as a fraction $f$ of host-to-host baseline latency and its kernel speedup
@@ -321,11 +288,10 @@ and wall-time measurements and are explanatory estimates.
 Cooperative reductions alter floating-point addition order. The tested
 multi-lane variants have very small distance differences, with maximum
 reported relative error about $1.6\times10^{-6}$, and occasional changes
-near ranking boundaries. The evidence therefore supports numerically
-close scoring with measured end-to-end gains, rather than universal
-bitwise equivalence. Sanitizer checks cover the recorded refinement and
-top-$k$ kernels on small query subsets; they are useful implementation
-checks, not a proof for arbitrary inputs.
+near ranking boundaries. Sanitizer checks cover the recorded refinement
+and top-$k$ kernels on small query subsets. These checks and numerical
+tolerances delimit the evidence; multi-lane scoring is not universally
+bit-identical.
 
 \section{Global Top-c, Shared Bound and Probe Correctness/Ablation}
 \label{sec:7-4}
@@ -366,9 +332,7 @@ preceding score arithmetic. On OpenAI this includes TF32 GEMMs
 Its synthetic checker covers 1,792 cases and reports zero failures.
 Checks of the real arXiv, Vogue and OpenAI-3072 workloads find identical
 probe identifiers and identical primary top-$c$ positions and distances
-for all 1,000 queries. These are more specific observations than a single
-unchanged recall number: they test the routing and screening outputs
-directly.
+for all 1,000 queries.
 
 \begin{table}[tbp]
 \centering
@@ -383,23 +347,18 @@ directly.
 \Cref{tab:7-probe} shows end-to-end improvements of $1.034$--$1.167\times$.
 At batch 8, the profiled probe stage falls from 56.5 to 22.6\,$\mu$s
 on arXiv, 52.7 to 14.7\,$\mu$s on Vogue, and 77.8 to 16.7\,$\mu$s
-on OpenAI-3072. Smaller full-batch gains are expected because the
-unmodified stages account for more of total elapsed time. These are
-within-family ratios; they should not be multiplied by the preceding
-v62 or refinement gains as if all measurements shared a single baseline.
+on OpenAI-3072. The unchanged stages limit full-batch gains. These
+within-family ratios have different baselines from the preceding ablations.
 
-Vogue isolates an important distinction between the probe primitive and
-cross-process pipeline reproducibility. The probe/primary dump is
+On Vogue, the probe/primary dump is
 byte-identical across the two binaries for all 1,000 queries in the
 one-group, batch-8 test, yet final recall is 0.9642 versus 0.9644. The
 same baseline binary also changes from 0.9642 in the identity run to
-0.9644 in each of its two timing runs. Thus the observed variation does
-not require the probe change; in the dump-controlled case it arises
-after the recorded primary-selection boundary. Residual representations,
-inputs and score computation remain possible sources, whose root cause
-is unconfirmed. Within each checked process, scheduled and one-block
-outputs remain bit-identical. Appendix~\ref{app:reproducibility} records
-the dump coverage so that it is not mistaken for every timed path.
+0.9644 in each of its two timing runs. The variation therefore also
+occurs without the probe change and lies after primary selection in the
+dump-controlled case. Its root cause remains unresolved. Scheduled and
+one-block outputs are bit-identical within each checked process; dump
+coverage is in \cref{app:reproducibility}.
 
 Finally, the optional v70 FP16 experiment is a separate approximation.
 Its probe sets match the v69 reference on 936/1,000 arXiv queries, 979/1,000
@@ -411,11 +370,8 @@ and from the exact-probe claim.
 \section{Held-out Budget Quality, Throughput and Payback}
 \label{sec:7-5}
 
-The policy and its sufficient monotonicity conditions are defined in
-\Cref{ch:refinement,prop:6-monotonicity}. Here RQ3 concerns quality and
-amortized cost against credible fixed budgets.
-Accordingly, the comparison includes both the inherited $\alpha=100$
-and the stronger universal fixed control $\alpha=64$.
+RQ3 compares the policy of \cref{ch:refinement} with fixed
+$\alpha=100$ and the stronger universal control $\alpha=64$.
 
 \subsection{Unlabelled selection and a labelled diagnostic oracle}
 
@@ -424,20 +380,9 @@ sampled, FULL, enumeration and oracle controls in \cref{sec:6-4}.
 The disjoint pools and 64 draws per sample size follow \cref{sec:3-2}.
 
 
-Using the grid and reference defined in \cref{sec:6-2}, the experiment
-accepts a budget when
-\begin{equation}
- D_S(\alpha)=\sum_{q\in\mathcal Q_S}
- \left(10-|\mathcal R_\alpha(q)\cap\mathcal R_{200}(q)|\right),
- \qquad D_S(\alpha)\leq 1.
- \label{eq:7-agreement}
-\end{equation}
-Reference agreement has the GT-recall interpretation established in
-\cref{sec:6-2}.
-
-
-The oracle uses held-out labels, whereas FULL applies the unlabelled
-rule to all calibration queries (\cref{tab:6-controls}).
+All rule variants use \cref{eq:6-agreement} with $k=10$ and $\epsilon=1$.
+FULL uses all calibration queries; the diagnostic oracle uses held-out
+labels (\cref{tab:6-controls}).
 
 
 \subsection{Full-pool calibration as the quality-first working point}
@@ -452,9 +397,8 @@ shows the complete comparison. Against fixed 64, full-pool selection is
 faster in six cells, equal in two and slower in four: its main advantage
 is the observed coverage of all twelve quality targets.
 
-FULL is therefore the retrospective quality-first working point for
-these cells; $S=128$ is the lower-cost alternative. The statistical scope
-remains that of \cref{sec:6-2}.
+These cells favour FULL for quality coverage and $S=128$ for lower
+calibration cost, within the statistical scope of \cref{sec:6-2}.
 
 
 \begin{table}[tbp]
@@ -473,12 +417,9 @@ stream timing. Held-out counts are 500, or 499 for Stella.}
 \Cref{tab:7-budget-quality} reports the $S=128$ result. The median selected
 budget matches the oracle budget in ten of twelve cells; it differs on
 arXiv at 128 probes and OpenAI-3072 at 512. The selected budgets span
-4--200, indicating substantial workload dependence. However, a median
-budget and a mean recall describe different aspects of the draw
-population. They need not correspond to the performance of one arm.
-In addition, mean recall in the table is reconstructed from the printed
-best recall minus printed mean loss, so its four-decimal precision is
-approximate.
+4--200, indicating substantial workload dependence. Median budget and
+mean recall need not describe one arm. The latter is reconstructed from
+printed best recall minus mean loss and is approximate at four decimals.
 
 \begin{table}[tbp]
 \centering
@@ -498,10 +439,8 @@ more than $10^{-3}$ recall even though mean loss is only 0.0009; at
 512 probes, 32/64 draws cross the threshold. BGE at 512 probes has
 24/64 threshold crossings and a 95th-percentile loss of 0.0014. Stella
 has fewer crossings but a 95th-percentile loss of 0.0030 at both probe
-depths. Thus mean quality, violation frequency and tail magnitude must
-be read together. OpenAI-3072 has no observed threshold crossings in
-these draws, which supports a favourable result on this pool, not a
-zero-risk statement about unseen queries.
+depths. OpenAI-3072 has no observed crossings in this finite pool. Mean
+loss, crossing frequency and tail magnitude distinguish these outcomes.
 
 Under the lower-order percentile convention in \cref{sec:a-budget-contract}
 (zero-based index 59),
@@ -515,7 +454,7 @@ The crossing count in the table preserves that distinction.
 \caption[Held-out risk across sample sizes]{Held-out risk across sample sizes. The vertical axis is the
 percentage of calibration draws losing more than $10^{-3}$ held-out recall
 relative to the best tested budget. Increasing $S$ also tightens the allowed
-slot-disagreement fraction because \cref{eq:7-agreement} keeps threshold one.}
+slot-disagreement fraction because \cref{eq:6-agreement} keeps threshold one.}
 \label{fig:7-budget-risk}
 \end{figure}
 
@@ -536,18 +475,16 @@ ten of twelve cells against the diagnostic quality target; $\alpha=200$
 qualifies in all twelve. Among qualifying cells, their maximum QPS deficits
 to the diagnostic oracle are 26.6\%, 40.9\% and 57.1\%, respectively.
 The complete eight-arm comparison is retained in the repository supplement. Full-pool
-calibration is not identical to the oracle either: on Vogue it selects
-100 at both probe depths while the oracle selects 64. Agreement-based
-selection and fastest quality-constrained selection solve different
-problems, even with a larger calibration sample. Full-pool calibration costs
-9.5--60.3\,ms. In these twelve cells $\alpha=200$ attains the best
-measured recall and therefore serves as a high-budget coverage control;
-its 12/12 qualification is not an independent quality guarantee.
+calibration selects 100 on Vogue at both probe depths while the oracle
+selects 64: reference agreement and fastest quality-constrained selection
+have different objectives. Here $\alpha=200$ attains the best measured
+recall, so its 12/12 qualification follows from its role as the coverage
+control.
 The short fixed-arm timings have apparent small-budget inversions.
 Supplementary alternating repetitions resolve the cited OpenAI inversion
 as timing variation and establish a low-budget plateau
-(\cref{sec:7-budget-trace}). A minimum accepted budget remains a quality
-decision, rather than a guarantee of the fastest measured arm.
+(\cref{sec:7-budget-trace}). Minimum accepted budget consequently need
+not maximise throughput.
 
 
 \subsection{Estimated throughput and calibration economics}
@@ -588,13 +525,8 @@ held-out loss target.}
 \end{table}
 
 Calibration costs 3.9--21.3\,ms under the boundary in
-\cref{sec:a-budget-contract}. For an equal-sized subsequent batch,
-\begin{equation}
- B^*=\frac{T_{\rm cal}}{T_{100}-T_{\rm rule}},\qquad
- T_{\rm rule}<T_{100}.
- \label{eq:7-payback}
-\end{equation}
-Using $T_{\rm rule}\approx n/\overline Q_{\rm rule}$ gives the estimates
+\cref{sec:a-budget-contract}. Applying \cref{eq:6-payback} with fixed
+$\alpha=100$ and $T_{\rm rule}\approx1000n/\overline Q_{\rm rule}$ in milliseconds gives the estimates
 in \cref{tab:7-budget-cost}: 2.4--55.4 subsequent held-out-sized batches
 against fixed 100 in favourable cells. Against fixed 64, the corresponding
 range is 5.7--404.3 batches in nine favourable cells; Vogue at 512 probes
@@ -605,8 +537,7 @@ $S=128$ break-even estimates correspond to 0.54\,s versus fixed 100
 and 2.72\,s versus fixed 64 (about 27.7K and 202.2K queries).
 Full-pool positive cases reach at most 1.52/2.25\,s and 64.9K/78.7K
 queries against those controls, using their own calibration costs.
-These short modelled horizons favour reuse on long stable jobs. The
-estimates use 500 queries per held-out batch, or 499 for Stella.
+These modelled horizons favour reuse on long stable jobs.
 
 
 These estimates inherit the mean-rate inversion and stationary-reuse
@@ -614,10 +545,8 @@ assumptions analysed in \cref{sec:6-5}. Direct execution below checks
 their net-cost implication on the recorded query stream.
 
 
-For historical comparison, the earlier scalar-refinement implementation
-(v57) reported $1.054$--$2.773\times$ gains over fixed 100 in 10/12
-cells and 5.2--30.8\,ms calibration. The newer lane-refined pipeline's
-smaller gains are consistent with less removable refinement time.
+The newer lane-refined pipeline leaves less removable refinement work
+than the historical scalar implementation (repository supplement).
 The runs share the budget protocol and grid, but this cross-campaign
 comparison does not isolate refinement as the sole cause of the change.
 
@@ -686,21 +615,18 @@ additional configurations were measured.
 \Cref{tab:7-scheduling} recomputes the results from the raw timing arrays.
 The scheduled geometric-mean gains are $2.727\times$, $2.356\times$,
 $1.057\times$ and $1.015\times$ at batches 8, 32, 256 and 1,000.
-There are thirteen configurations at the first three batch sizes,
-including an additional high-budget arXiv case, but only eleven at batch
-1,000: Stella's 999-query pool cannot provide a complete 1,000-query
-batch. The held-out subsets contain nine and seven configurations,
-respectively. A plot connecting these means summarizes regimes rather
-than a perfectly balanced repeated-measures population.
+The first three batch sizes have thirteen configurations, including a
+high-budget arXiv control; batch 1,000 has eleven because Stella has only
+999 queries. The held-out subsets contain nine and seven configurations.
+Thus the connected means describe partly different configuration sets.
 
 Fixed eight-group execution matches the scheduled mean closely at batch
 8 but falls to $0.886\times$ at batch 1,000. Scheduling largely retains
-the small-batch gain while avoiding that full-batch loss. It is nevertheless
-a heuristic, not an oracle. At batch 256 its worst ratio of best fixed
+the small-batch gain while avoiding that full-batch loss. At batch 256
+its worst ratio of best fixed
 throughput to scheduled throughput is 1.217, on a BGE configuration.
 Candidate-count CV does not capture every cost of list traversal,
-selection or merging. This failure identifies a limitation of the chosen
-feature rather than evidence that execution scheduling is unnecessary.
+selection or merging.
 
 Vogue illustrates both the value and limits of the skew feature. Its E1
 candidate-count CV ranges from 0.338 to 0.622 as probes change, forcing
@@ -709,9 +635,8 @@ from 0.895 to 1.175. It loses at $(n_{\rm probe},\alpha)=(16,16)$,
 $(16,64)$ and $(32,64)$, with ratios 0.955, 0.895 and 0.955.
 Candidate-count dispersion alone does not encode absolute per-query work;
 the rule can add overhead to these low-probe cases while enabling Vogue's
-0.97 cross-system lead in \cref{sec:7-2}. This complements the
-BGE batch-256 regret: balancing work and paying for decomposition are
-distinct scheduling decisions.
+0.97 cross-system lead in \cref{sec:7-2}. Both failures expose
+decomposition costs missing from the CV feature.
 
 Finally, correctness is checked independently of timing. Across 250
 variant/configuration comparisons and 234,320 query comparisons, the
@@ -729,15 +654,9 @@ large-dataset searches; the E1 memory comparison also informs RQ4.
 
 \subsection{Cold builds and the lifecycle boundary}
 
-The principal search sweeps reuse trained-state caches. Loading that state
-and adding vectors is not a cold build. Separate logs explicitly train
-with an empty trained-state cache and then encode/add the database;
-\cref{tab:7-build-memory} reports their recorded training and add times.
-The supplementary repetitions use the same empty-cache construction
-boundary; \cref{tab:7-build-memory} now reports the medians of three
-normal runs per dataset. The complete six-dataset repetition record is
-retained in the repository supplement; the ranges and sampled peaks below
-explain the construction boundary.
+Unlike the cached search sweeps, \cref{tab:7-build-memory} uses three
+normal empty-cache train/add repetitions per dataset. The complete
+six-dataset record is retained in the repository supplement.
 Vogue's training is 298--303\,ms, so its normal total is about 0.56\,s;
 the archived 1.33\,s total (including 1.056\,s training) is an unusually slow single observation.
 Stella's normal totals are 10.54--10.65\,s, close to the historical
@@ -756,14 +675,8 @@ measured used total, not the fraction read per query.}
 \input{tables/ch7/build_memory}
 \end{table}
 
-Construction and startup intervals follow the distinct lifecycle
-boundaries in \cref{sec:3-3,sec:a-e1-protocol}.
-
-
-\Cref{fig:7-build} contrasts JHQ's normal-build repetitions with
-baseline configuration ranges. As specified in its caption, RaBitQ's
-build-function time excludes the serialization round trip required
-before search.
+Construction and startup boundaries follow \cref{sec:3-3,sec:a-e1-protocol};
+\cref{fig:7-build} compares these repetitions with baseline configurations.
 
 
 \begin{figure}[tbp]
@@ -783,9 +696,8 @@ On Stella, successful isolated CAGRA int8 builds take approximately
 74.55 and 82.45\,s including dataset quantization, depending on graph
 degree; the measured IVF-PQ build median is 86.59\,s across its three
 configurations. JHQ's 10.54--10.65\,s repeated interval is substantially shorter under the
-reported boundaries, but does not establish a universally fastest builder
-or equal downstream recall. Construction speed, searchable quality and
-resident cost are separate deployment dimensions.
+reported boundaries. Downstream quality and resident cost are evaluated
+separately.
 
 
 Across five independent builds per dataset at fixed 128-probe points,
@@ -954,14 +866,9 @@ remain, so the result is not solely a consequence of long calls.
 \subsection{Exactness is attached to a particular stage}
 \label{sec:7-recall-attribution}
 
-\Cref{tab:5-query-stages} distinguishes the score and selection targets;
-the stage contracts in Chapter 5 determine the scope of each exactness
-claim.
-
-
-The lane-rounding, cutoff-tie and cross-process observations above
-therefore qualify different stages. Their unchanged real-arithmetic
-formulas do not establish raw-space exact kNN.
+The stage contracts in \cref{tab:5-query-stages} distinguish computed-score
+selection from raw-space kNN; lane rounding, cutoff ties and process
+variation qualify different stages.
 
 
 The archived reconstruction pilot measures the remaining gap to
@@ -980,14 +887,7 @@ routing from representation requires additional stage-wise GT coverage.
 
 \subsection{Scope of the research findings}
 
-The results support representation-aware execution and workload-specific
-refinement effort, with separate evidence for correctness, speed and
-quality. Chapter 8 develops the cross-layer implications and negative
-cases; \cref{sec:9-1} brings together the answers to RQ1--RQ4.
-
-
-The claims apply to squared-L2 top-10 search, the recorded query pools
-and the tested RTX 5090 environment. Cross-device behaviour, changing
-queries, online updates and open-loop service latency remain untested.
-These boundaries accompany the results rather than replacing their
-positive findings.
+The findings concern squared-L2 top-10 on the recorded query pools and
+RTX 5090. \Cref{tab:8-threats} consolidates transfer limits; Chapter 8
+develops the systems implications and negative cases, and \cref{sec:9-1}
+answers RQ1--RQ4.

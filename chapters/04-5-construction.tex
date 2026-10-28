@@ -74,10 +74,8 @@ Stella & 19.20 & 40.59 & 21.32 \\
 cold log selects two passes and prints 41.6\,GiB for
 \cref{eq:4-peak-heuristic}, against 30.6\,GiB available at the tail.
 The separately sampled resident process totals, including context and
-query workspace, are 11.93\,GiB for BGE and 20.44\,GiB for Stella.
-Search working sets depend on batch/probe/candidate capacity as described
-in \cref{sec:4-4}. Thus static rows, construction phases and searchable
-resident memory have explicit, different accounting boundaries. The supplementary 20\,ms device samples observe a 26.08\,GiB BGE peak
+query workspace, are 11.93\,GiB for BGE and 20.44\,GiB for Stella
+(\cref{sec:4-4}). The supplementary 20\,ms device samples observe a 26.08\,GiB BGE peak
 near the start of add, and a 22.58\,GiB Stella peak during repack.
 These are sampled device totals including context; shorter-lived peaks
 can be missed.

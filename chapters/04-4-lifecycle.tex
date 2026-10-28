@@ -54,29 +54,11 @@ directly. Group scratch follows \cref{eq:5-group-workspace} and can retain
 a larger capacity than the current scan uses: recorded 128-probe samples
 reserve about 93.8\,MiB even on the query-centric path.
 
-\begin{table}[tbp]
-\centering
-\caption[Construction and query object lifetimes]{Object lifetimes. Sizes describe named arrays, rather than all
-allocations of a CUDA process. Construction phases are expanded in
-\cref{sec:4-5}.}
-\label{tab:4-lifetimes}
-\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
-\toprule
-Object & Producer & Location & Lifetime & Bytes / scale \\
-\midrule
-Input / samples & Loader / harness & Host & Build input; external ownership & $4Nd$ raw; sampled subsets \\
-Transform / models & QR / training & Host, GPU & Model and index lifetime & $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ basic GPU arrays \\
-Trained cache & Training & Host file & Across processes; rebuild still needed & Serialised model state \\
-Input staging & Add pipeline & Pinned host, GPU & During add & $4n_ba_{\rm in}d$ host; $8n_ba_{\rm in}d$ GPU floats, plus scratch \\
-Assignment products & IVF assignment & GPU & During add; freed before gather & $4n_b n_{\rm list}a_{\rm assign}$; independent row capacity \\
-IDs / offsets & Sort / lower bound & GPU & Completed snapshot & $4N+4(n_{\rm list}+1)$ \\
-Codes / correction & Encode / reorder & GPU & Completed snapshot & $N(M+b_r+4)$ \\
-Order / inverse & Sort / inversion & GPU & Construction only & $4N$ per array; phase dependent \\
-Query workspace / graph & Search / capture & GPU, host & Allocations reused; batch contents replaced & Capacity dependent; graph references resident arrays \\
-\bottomrule
-\end{tabularx}
-\end{table}
+Raw input remains caller-owned. Build-only staging requires
+$4n_ba_{\rm in}d$ pinned-host bytes, while each order/inverse array
+requires $4N$ device bytes. Assignment products are freed before gather;
+\cref{eq:4-staging-rows,eq:4-assignment-scratch} give their independent
+capacities. The repository supplement retains the object-lifetime table.
 
 \subsection{Reuse, recovery and invalidation}
 

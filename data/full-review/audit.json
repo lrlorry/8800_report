@@ -350,7 +350,7 @@
     {
       "repository": "8800_report",
       "path": "data/t4-t5/audit.json",
-      "sha256": "9275a6f0a2a545b8c60a8dd3997a6c8091446b762d2a4a00fc4a90ff337dfa11"
+      "sha256": "f528d56a884e4ed774d0b3ddc3ff21e9e6ecaec0d83bfd4490196935080c0201"
     },
     {
       "repository": "8800_report",
@@ -375,22 +375,22 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
-      "sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e"
+      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
     },
     {
       "repository": "8800_report",
       "path": "chapters/04-5-construction.tex",
-      "sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72"
+      "sha256": "d381bb2fec723460765fbe24bbe52b2fef1a7994f04f57a1822a6c21668c704d"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
-      "sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f"
+      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-5-construction.tex",
-      "sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60"
+      "sha256": "9fc69c8ae0ce53fdd99790d86ddcb94c8b84e2dee75443606db134f457807b69"
     },
     {
       "repository": "8800_report",

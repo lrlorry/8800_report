@@ -1,21 +1,15 @@
-Representation contracts protect both numerical geometry and the joins
-between encoded fields. Their practical importance is illustrated by a
-historical large-sample failure: a 32-bit $n_t d$ product overflowed at
-$2^{31}$, produced zero primary scale, and collapsed the primary
-codebook. A later run initially loaded that model from an older cache
-because its key omitted the code version. Correct coarse routing alone
-could not detect the broken primary representation. The corrected
-implementation chunks the norm computation and accumulates in double.
-This motivates checking the model, encoded rows and placement separately.
+A historical 32-bit $n_t d$ overflow at $2^{31}$ collapsed the primary
+codebook to zero scale; a later process reloaded it because the cache key
+omitted the code version. Chunked norm computation with double accumulation
+fixed the overflow. The failure requires separate checks of model geometry,
+encoded rows and their placement, even when coarse routing succeeds.
 
 \subsection{Completed representation evidence}
 
-The 13 October residual-bound pilot exported trained state and encoded
-database arrays, including the actual $\Pi$, primary/residual codebooks,
-IDs, offsets and corrections. The exporter decodes the packed word layout
-into logical vector-major codes. The pilot reports reusing the arms6
-trained cache rather than retraining. Its three complete databases are
-Vogue (932,328 rows), arXiv (2,253,000) and OpenAI-3072 (999,000).
+The 13 October residual-bound pilot exported $\Pi$, codebooks, IDs,
+offsets, corrections and logically decoded packed codes from the arms6
+trained cache. It covers complete Vogue (932,328 rows), arXiv (2,253,000)
+and OpenAI-3072 (999,000) databases.
 
 The codebook audit found zero separability mismatches, scalar-level
 mismatches and unsorted residual-codebook pairs. Independently decoding
@@ -33,21 +27,15 @@ repository supplement retains the per-dataset diagnostics.
 Across seven workloads and 896 query instances, the pilot additionally
 checked the proposed residual bounds against FP64 reconstructed distances
 for 72,800,590 routed candidate instances, with zero reported violations.
-That population also supports the FP64 composite-score identity check;
-it is different from comparing GPU-returned scores, which considers only
-top-10 slots. The historical harness skips returned IDs absent from the
-routed candidate map, so its maximum error alone is not an exhaustive
-output-membership certificate.
+The same population supports the FP64 composite-score identity check.
+GPU-returned-score checks cover only top-10 slots and skip IDs absent
+from the routed map, leaving output membership incompletely checked.
 
-Offline comparison found identical encoder, primary-training,
-residual-training and index-construction translation units between the
-pilot and the evaluated implementation after namespace normalization and
-removal of the pilot-only export method. This supports applying the
-pilot's checks to the shared representation path. It does not establish
-that every later process used byte-identical trained state or verify the
-large-dataset two-pass path: the audited databases are smaller.
-The per-workload values, raw-summary checks and source correspondence
-are reproducible with \texttt{scripts/audit\_ch4\_review.py}.
+Encoder, primary/residual training and construction sources match the
+evaluated implementation after namespace normalisation and removal of
+the export method (\path{scripts/audit_ch4_review.py}). This source
+correspondence covers the shared path, leaving later model identity and
+large-dataset two-pass construction to separate checks.
 
 \subsection{Independent input and placement audit}
 \label{sec:4-representation-audit}
@@ -109,17 +97,12 @@ Execution & Valid indexing, synchronisation and score-order contracts & Archived
 \end{tabularx}
 \end{table}
 
-The constructor requires $M$ to divide $d$ and $D_s$ to divide $B$;
-word packing requires $M\bmod4=0$. Query-side LUT verification checks
-factorisation against actual codeword slices. Positions and IDs are
-signed 32-bit fields, while large counts and byte-address products require
-wider arithmetic. The input contract assumes finite vectors and
-representable counts, and reserves invalid sentinel positions.
+Construction requires $M\mid d$, $D_s\mid B$ and $M\bmod4=0$;
+LUT verification checks actual codeword slices. Inputs must be finite,
+counts representable and sentinel positions reserved. IDs/positions use
+signed 32-bit fields; large counts and address products use wider arithmetic.
 
-The audit consumes the exported rotation and codebooks, rather than a
-matrix regenerated from its seed. Remaining work is narrower: independently
-verify membership against exported IVF centroids and test deliberately
-empty lists and adversarial tails. The strict computed-score CPU selection
-reference has now been completed on the T4 grid
-(\cref{sec:7-strict-selection}); it is separate from FP64 input recoding. Chapter 5 conditions selection on the
-resulting objects; Chapter 7 evaluates quality and cost.
+Audits use exported models, rather than seed-regenerated ones. T4 checks
+computed-score selection separately from input recoding
+(\cref{sec:7-strict-selection}). Centroid membership, empty lists and
+adversarial tails remain open checks.

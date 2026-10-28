@@ -111,6 +111,8 @@ def main():
                 'assessment/deduplication-rounds.md','assessment/template-sources.json',
                 'assessment/targeted-curation-review.md','assessment/targeted-curation-source.json',
                 'assessment/final-review-edits.json','assessment/final-review-response.txt',
+                'assessment/compression-edits.json','assessment/compression-review-source.json',
+                'assessment/compression-review-response.txt','assessment/editorial-standard-2026-10-29.txt',
                 'assessment/submission-manual-actions.txt','docs/ai-use-record.md',
                 'data/submission/ai-use-record.json','docs/artifact-access.md',
                 'docs/supplementary-evidence.md',

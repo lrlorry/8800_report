@@ -37,13 +37,9 @@ distinct candidates still supply $c$ witnesses, whether or not they are
 the best $c$ of their group.
 \end{proof}
 
-This last distinction matters. With sharing enabled, a group need not
-return its own full local top-$c$: it can discard locally competitive
-candidates already certified as globally uncompetitive. Correctness
-requires the union still to contain every global winner. The truncated
-merge argument of \Cref{prop:5-local-coverage} then applies to that union.
-Candidates equal to the shared bound remain eligible, including the
-witness that established it. The implemented admission condition is
+Sharing may remove local winners certified as globally uncompetitive;
+the retained union still satisfies \Cref{prop:5-local-coverage}.
+Equality with the shared bound remains eligible. Admission requires
 \begin{equation}
  K_q(x)\prec\lambda_j
  \quad\text{and}\quad
@@ -66,8 +62,6 @@ This relies on positive-zero encoding and excludes NaNs and negative
 scores; it is not a general signed-float encoding. Positive infinity
 orders after finite scores, and the all-one initial word orders after
 valid encodings. Invalid positions are excluded from bound publication.
-These are score-domain and representation preconditions, not properties
-inferred from unchanged recall.
 
 \begin{figure}[tbp]
 \centering
@@ -102,14 +96,11 @@ and one GPU-scope atomic-min reduction, recorded in
 the driver JIT's actual SASS was not captured. CUDA C++ \texttt{volatile}
 alone is not the basis of the argument \cite{cuda_programming_guide}.
 
-\Cref{fig:5-shared-bound} also identifies what this optimisation saves.
-Every scanned candidate still loads its primary code and computes its
-complete primary score. The bound avoids some buffer appends, local
-sorts and intermediate writes, and shortens the lists consumed by the
-merge. It does not implement partial-distance early termination or
-reduce the number of primary scores evaluated. Its benefit competes
-with polling and atomic-update overhead. The observed paired speedup
-range includes a slight slowdown, as reported in \Cref{sec:7-4}.
+Every candidate's full primary score precedes filtering
+(\cref{fig:5-shared-bound}). Bounds save appends, sorts, intermediate
+writes and merge work, while adding polling and atomic updates; they
+provide no partial-distance early termination. The net trade-off includes
+a slight slowdown in \cref{sec:7-4}.
 
 \subsection{Choosing parallelism without changing the budget}
 

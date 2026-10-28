@@ -1,10 +1,8 @@
-Primary screening must expose enough GPU work without losing a candidate
-that should reach residual refinement. A query-centric scan launches one
-block per query; a small batch therefore offers few blocks even when each
-query visits many vectors. GPU selection is a substantial design problem
-in its own right \cite{johnson_gpu}. The grouped-scan component partitions the visited candidates across blocks and combines their
-survivors. Its contract is exact selection under the computed primary
-scores. IVF routing and the quantised representation remain approximate.
+A query-centric scan exposes only one block per query. Grouped scanning
+partitions each query's candidates across blocks and merges their
+survivors, addressing the GPU selection problem \cite{johnson_gpu}.
+Exactness concerns computed primary scores; routing and representation
+remain approximate.
 
 \subsection{Candidate partition and deterministic ordering}
 
@@ -134,19 +132,14 @@ only candidates preceding the threshold are appended. Its $c$ witness
 candidates make the threshold a safe upper bound for the best $c$ of
 the scanned prefix, even as further candidates arrive.
 
-Each chunk contributes at most $T_{\rm blk}$ appends. After a chunk, the block
-compacts whenever the next chunk would exceed capacity. Following
-compaction at most $c$ entries remain, so $C_{\rm buf}\geq c+T_{\rm blk}$ provides space
-for the next chunk; otherwise the explicit capacity check provides it.
-This invariant prevents overflow without restricting how many competitive
-candidates one thread may encounter. A per-thread fixed-size retention
-buffer does not provide the same coverage guarantee.
-Together with exact bitonic compaction, this capacity argument discharges
-the implementation premises of \Cref{lem:5-buffer}. With sharing, every
-observed bound is above the global $c$th key by
-\Cref{prop:5-shared-bound}; the lemma therefore retains every global
-winner belonging to this block, even when its full local top-$c$ is
-filtered. The general coverage proposition then justifies the merge.
+Each chunk appends at most $T_{\rm blk}$ entries. Compaction precedes
+any chunk that would exceed capacity, leaving at most $c$ entries and
+space for the next chunk because $C_{\rm buf}\geq c+T_{\rm blk}$.
+This supplies the capacity premise of \Cref{lem:5-buffer} without a
+per-thread quota. With sharing, \Cref{prop:5-shared-bound} bounds every
+observed threshold above the global $c$th key. The buffer lemma and
+coverage proposition therefore preserve global winners through filtering
+and merging.
 
 An alternative is to materialise all $n_c$ score/position pairs and then
 invoke a separate selector. That preserves the target but adds an

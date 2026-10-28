@@ -44,7 +44,7 @@ Stella & 19.20 & 40.59 & 21.32 \\
 \end{tabular}
 \end{table}
 
-\Cref{tab:4-phase-storage}量化了压缩副本的节省。Stella 冷日志选择两遍，报告\cref{eq:4-peak-heuristic}为 41.6\,GiB，尾部可用为 30.6\,GiB。另行采样的常驻进程总量包括上下文及查询工作区，BGE 为 11.93\,GiB，Stella 为 20.44\,GiB。搜索工作集依批／探针／候选容量而变，见\cref{sec:4-4}。静态行、构建阶段与常驻显存有不同核算边界。
+\Cref{tab:4-phase-storage}量化了压缩副本的节省。Stella 冷日志选择两遍，报告\cref{eq:4-peak-heuristic}为 41.6\,GiB，尾部可用为 30.6\,GiB。另行采样的常驻进程总量包括上下文及查询工作区，BGE 为 11.93\,GiB，Stella 为 20.44\,GiB。容量模型见\cref{sec:4-4}。
 补证以20\,ms间隔采样，BGE在add开头观测26.08\,GiB，Stella在repack阶段
 观测22.58\,GiB。这是含上下文的设备采样最大值，可能漏掉更短暂分配。
 

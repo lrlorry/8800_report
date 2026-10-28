@@ -115,6 +115,47 @@
         "assessment/submission-manual-actions.txt"
       ],
       "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P08",
+      "tool": "OpenAI Codex",
+      "source": "User task message retained in the current Codex conversation",
+      "interaction_date": "2026-10-29",
+      "model_version": null,
+      "task": "基于检测标注和形式化审计精简论文",
+      "prompt": "gpt 给了这个报告 主要去压被AI标注的部分，请你结合这个和之前的分析 按照我的思路去压AI率",
+      "prompt_sha256": "44c1e1c29e5c1dc60f808c4ade6fa05f0dc35cea168e7cfed369f5d55ca94142",
+      "artifact_mapping": [
+        "chapters/01-5-contributions.tex",
+        "chapters/04-4-lifecycle.tex",
+        "chapters/04-5-construction.tex",
+        "chapters/04-6-contracts.tex",
+        "chapters/05-3-packed-access.tex",
+        "chapters/05-4-global-selection.tex",
+        "chapters/05-5-bound-scheduling.tex",
+        "chapters/05-6-refinement.tex",
+        "chapters/06-6-scope.tex",
+        "chapters/07-evaluation.tex",
+        "zh/chapters/01-5-contributions.tex",
+        "zh/chapters/04-4-lifecycle.tex",
+        "zh/chapters/04-5-construction.tex",
+        "zh/chapters/04-6-contracts.tex",
+        "zh/chapters/05-3-packed-access.tex",
+        "zh/chapters/05-4-global-selection.tex",
+        "zh/chapters/05-5-bound-scheduling.tex",
+        "zh/chapters/05-6-refinement.tex",
+        "zh/chapters/06-6-scope.tex",
+        "zh/chapters/07-evaluation.tex",
+        "assessment/compression-review-response.txt",
+        "scripts/audit_compression.py",
+        "scripts/audit_deduplication.py"
+      ],
+      "used_as": "Substantive bilingual prose compression, reference consolidation and offline validation scripts; unique proofs and experimental assets retained",
+      "output_sha256": null,
+      "output_status": "Complete model response not separately archived; retained applied TeX patch is identified below",
+      "retained_patch": "evidence/editorial/03775b7/compression.patch",
+      "retained_patch_sha256": "91306fde5836484dfdeb8d4044d11484c9eefacd2ae0a8c123d6f52a42081f3f",
+      "verification": "Codex checks are recorded in the compression response and audit; author-personal verification remains pending"
     }
   ]
 }

@@ -1,0 +1,21 @@
+\begin{table}[tbp]
+\centering
+\caption[构建与查询对象生命周期]{对象生命周期。大小描述具名数组，不是 CUDA 进程的全部分配；构建阶段见\cref{sec:4-5}。}
+\label{tab:4-lifetimes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{1.5cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+对象 & 生产者 & 位置 & 生命周期 & 字节／规模 \\
+\midrule
+输入／样本 & 加载器／测试程序 & 主机 & 构建输入；外部持有 & 原始 $4Nd$；采样子集 \\
+变换／模型 & QR／训练 & 主机、GPU & 模型及索引寿命 & 基本 GPU 数组 $4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)$ \\
+训练缓存 & 训练 & 主机文件 & 跨进程；仍需建库 & 序列化模型状态 \\
+输入暂存 & 添加流水线 & Pinned 主机、GPU & add 期间 & 主机 $4n_ba_{\rm in}d$；GPU 浮点数组 $8n_ba_{\rm in}d$，另加 scratch \\
+分配乘积 & IVF 分配 & GPU & add 期间；gather 前释放 & $4n_b n_{\rm list}a_{\rm assign}$；独立行容量 \\
+ID／偏移 & 排序／lower bound & GPU & 完成后的快照 & $4N+4(n_{\rm list}+1)$ \\
+编码／修正项 & 编码／重排 & GPU & 完成后的快照 & $N(M+b_r+4)$ \\
+顺序／逆映射 & 排序／求逆 & GPU & 仅构建期间 & 每数组 $4N$，依阶段而定 \\
+查询工作区／graph & 搜索／捕获 & GPU、主机 & 复用分配，逐批替换内容 & 依容量而定；graph 引用常驻数组 \\
+\bottomrule
+\end{tabularx}
+\end{table}

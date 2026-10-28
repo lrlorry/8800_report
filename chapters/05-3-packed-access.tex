@@ -1,9 +1,6 @@
-LUT factorisation reduces the query-specific table; code layout determines
-how lanes fetch each candidate's table indices. These are separate
-optimisations. The scan assigns neighbouring lanes to neighbouring
-candidate occurrences, so its broad phase benefits from storing codes
-by subspace across candidates rather than storing each candidate's full
-primary code contiguously.
+Neighbouring scan lanes process neighbouring candidates. Subspace-major
+storage makes their code accesses adjacent; LUT factorisation separately
+reduces the query-specific table.
 
 \subsection{Address mapping and four-byte packing}
 
@@ -50,21 +47,13 @@ coexisting; it is outside the search timing boundary.
 
 \subsection{What packed access saves, and what it preserves}
 
-At the source level, a candidate now obtains four codes with one word
-load instead of four byte loads, followed by shifts and masks in
-registers. Within a contiguous list segment, 32 lanes request a logical
-128-byte word window. Actual transactions depend on alignment, active
-lanes and the memory hierarchy. A fourfold reduction in source-level
-load operations does not establish a fourfold reduction in transactions
-or elapsed time.
-
-The logical payload remains $M$ bytes per candidate: this repacking
-does not further compress the index. Both byte and word alternatives
-already organise the scan copy by subspace or subspace group. The
-historical on/off comparison therefore measures the net effect of the
-packed layout and its load/unpack path, not the isolated contribution
-of transposing candidate-major storage. It also cannot uniquely separate
-instruction count, addressing and cache effects.
+One word load obtains four codes, followed by register shifts and masks.
+For 32 consecutive positions the logical window is 128 bytes; actual
+transactions depend on alignment, active lanes and the memory hierarchy.
+The payload remains $M$ bytes per candidate. Both measured alternatives
+are already subspace-major, so the on/off comparison tests the combined
+packing/load/unpack path, without isolating transpose, instruction or
+cache effects.
 
 \Cref{sec:7-3} evaluates the packed path's throughput, recall and
 variability against the byte path.

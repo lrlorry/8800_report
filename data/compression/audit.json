@@ -1,0 +1,676 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Australia/Sydney",
+  "scope": "Editorial compression and offline/PDF checks; no GPU or AI-detector rerun",
+  "baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
+  "source_files": 20,
+  "words": {
+    "before": 26932,
+    "after": 25562,
+    "removed": 1370,
+    "scope": "Prose/captions, math and table bodies excluded; not an official course count"
+  },
+  "english_body_pages": 77,
+  "pdfs": {
+    "thesis.pdf": {
+      "pages": 97,
+      "sha256": "303935e1e745a7aa70984e9a5afa539db1578b1a67c269f6dd9fd9be0bb26bc5",
+      "bytes": 1098010,
+      "figures": 26,
+      "tables": 31,
+      "fonts": 48,
+      "all_fonts_embedded": true,
+      "type3_fonts": 0,
+      "words_outside_page": 0
+    },
+    "thesis-zh.pdf": {
+      "pages": 85,
+      "sha256": "b53734e4624d32659a2a4a973599dc976d4ea589b588ee596d72b83973937b4c",
+      "bytes": 1294516,
+      "figures": 26,
+      "tables": 31,
+      "fonts": 40,
+      "all_fonts_embedded": true,
+      "type3_fonts": 0,
+      "words_outside_page": 0
+    }
+  },
+  "unchanged_scientific_assets": 87,
+  "retained_proof_blocks": 12,
+  "detector_score": null,
+  "derived_copies": [
+    {
+      "path": "thesis-no-refs.pdf",
+      "pages": 86,
+      "source_physical_pages": [
+        1,
+        86
+      ],
+      "sha256": "854c4f93223c78727b5bff426b1b850d850b2c1bf3f6db99ef276488846a264f",
+      "all_nonwhitespace_characters_preserved": true
+    },
+    {
+      "path": "thesis-check-1.pdf",
+      "pages": 50,
+      "source_physical_pages": [
+        1,
+        50
+      ],
+      "sha256": "24723fd89f475c69d531b48a4035b3669fe6a4adc999a4a68908e8d1ea569ddf",
+      "all_nonwhitespace_characters_preserved": true
+    },
+    {
+      "path": "thesis-check-2.pdf",
+      "pages": 36,
+      "source_physical_pages": [
+        51,
+        86
+      ],
+      "sha256": "56ba133477a796b242640f7b0b1043cce6bc76823c7353c70d27e65536479ae0",
+      "all_nonwhitespace_characters_preserved": true
+    }
+  ],
+  "visual_scope": "Contact-sheet overview plus readable changed-page inspections; not full sentence proofreading or student-personal verification",
+  "inputs": [
+    {
+      "repository": "8800_report",
+      "path": "assessment/compression-edits.json",
+      "sha256": "63a90f557eefade6638b65cc95f4cefd37a25e9052230f2049b36ce927bcc5fb"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/deduplication/audit.json",
+      "sha256": "4b67d9ebb8bf512e80f00f2d14bdd29f5ede70f4a85695547569780be8a25d6e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/01-5-contributions.tex",
+      "sha256": "ea159602c2122d6f1de5944ea63beb027e1d7f98696b03c53247cf6a66b7e8c2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-4-lifecycle.tex",
+      "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-5-construction.tex",
+      "sha256": "d381bb2fec723460765fbe24bbe52b2fef1a7994f04f57a1822a6c21668c704d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-6-contracts.tex",
+      "sha256": "0cfe2c0487096daa8df1cb5b694ce4637d358e247e9bc4dd5dc4fbdb947de9f3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-3-packed-access.tex",
+      "sha256": "b37b27c7ac1350b0ef013c89b3bc9f32e4ec69d239d624538f9b7d52f2a00d2e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "b4f5f113259341e7d52540e40ba96f15371d0216e61a184a9dd480454c6cb0d7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "sha256": "00396e0629f695d1feca35e5b17efcda12b66acbb41df156199f2efae2102052"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-6-refinement.tex",
+      "sha256": "81b4f388d56aabac0d863e6072e9bc7a051de2f6cf5a64ac6570a1a7ade37a28"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-6-scope.tex",
+      "sha256": "678da0f692bc13ec19cc50173b5af5ab65d7e6746d60279fdb53b71f89383267"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "70ea879a20773183d05c8c7024a7d3d8251cd5c288cefe2d777054df5bf3d239"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/01-5-contributions.tex",
+      "sha256": "86c8df777a7275e4b5564c05ce2918bb2ab50a8416dda20d2a5c553561fc6d40"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-5-construction.tex",
+      "sha256": "9fc69c8ae0ce53fdd99790d86ddcb94c8b84e2dee75443606db134f457807b69"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-6-contracts.tex",
+      "sha256": "2d1f718c7bc9c8acba7d51c994b1bff936c130cde972d45536b39049f3ec0d6c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-3-packed-access.tex",
+      "sha256": "dd549bb7376c9332251f2d779eb9218ce18337309a6272ae79f9c75e3a68fad6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-4-global-selection.tex",
+      "sha256": "7102b80b87a5f828cd898cf679c8482d837db8cac095e44489adf37956eada6d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "sha256": "121e2b4d496ca220391aa30fbc4e274fa1942e16d1b9afe282115bd9369de70b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-6-refinement.tex",
+      "sha256": "ed60a17a6397b9aec083380ad8fc079b1a60e7e4ed2b44852cc3f9b2353c32d2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-6-scope.tex",
+      "sha256": "469d5211d7c9f8aba1ac2585fde2e0bf9da8382ba1330aec40bcdec889c9444c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "448adf903ab34f864cf346c4e7894c90c5a8d12e194f218e7d965b16efb24234"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/abstract.tex",
+      "sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch1/challenges.tex",
+      "sha256": "e88609d836bf21986c4dae7fe8296323134b10d84d685a71b7f9dc426efe7144"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch2/candidate-cascade.tex",
+      "sha256": "48526c21c9b8c37a1bbebdd38316cc5faf2909b70f75e3e2c7bb7324f1a2ae81"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch3/measurement-boundary.tex",
+      "sha256": "5ed7ed9097899ef462d051f9082b6d48838aa4d94eff3b5888bdae21a4205d83"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch4/architecture.tex",
+      "sha256": "1a2f6168799ec1ea5b1160a2145cf0b29eb56e082fb9b2e9cf6816c07ed19a14"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch4/physical-layout.tex",
+      "sha256": "2923cb51cc4bc024d3533855f6a7ad3d736228cbcf3a05178175e3df4d27996d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/global-selection.tex",
+      "sha256": "a8410c287c5a0b4554e3594b4ac91c5509d821453fe8f000edc9285236f4e83c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/lane-refinement.tex",
+      "sha256": "c0ef82dcfeb8959dd18c31203937b102c57c17bd718ee5604df65a9120fcc606"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/packed-access.tex",
+      "sha256": "a54b7835c1bd42fce260f1447c9481f043f5e9aa50f5f97136e9d41125bb4a43"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/query-path.tex",
+      "sha256": "2f4628ddcbd4f4e8ec265de9bbfcb07391424f4931aaf15391d41b5fb161136b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch5/shared-bound.tex",
+      "sha256": "2831bd77d9528c57e851cf906635b4e95b61fd0987e82961622b7d16ddca081c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/budget-scope.tex",
+      "sha256": "1bb200fa2cd38f601a3f4692a4de58b53fa0dd4705a76285b44489e18c756b45"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/calibration-flow.tex",
+      "sha256": "8099f8ee93ab306c45ac34bd88f657b48da7a4fbedc451af47f90f879118de11"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch6/nesting-example.tex",
+      "sha256": "4e3b7a2f3cf8fabc47808c4c8105d01030590717e638fb05d8f4f51e4d7315d5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/batch_execution.pdf",
+      "sha256": "be97e43aa5e154e881e8c200990da49223132d5eff78152f01ddc57e5e557b35"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/batch_execution.png",
+      "sha256": "96ac610fda770e3721f2959a14efd4a494b10ed1df5c6024f431aaa0aed4adbd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_payback.pdf",
+      "sha256": "4403a378f9eac9775fd29f4bcba3c1e93f7d8924f6e7d7e8bcfd9895f9f11474"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_payback.png",
+      "sha256": "268dccebde4c8c8f87afb20cdbe2a2ba7516ba1397421b031adfc7e77ca9a669"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_risk.pdf",
+      "sha256": "63e31459af38dc5a2d54b2b3879c438a0e3d1a5a06cc053b2d7d6fdc2f7e5b6f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/budget_risk.png",
+      "sha256": "4a13bd8e6e95e7bdf7264b0cd7c37fc6df8c8f8fe9da78390319118b097eaf16"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/construction.pdf",
+      "sha256": "bb25ad09679a0e7a458a1c245fba66507c96e838f6c1294f5469bf11a3e7ac1d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/construction.png",
+      "sha256": "c854de301f4f9a0c412c3b7726a0a42eba26558cb034743492a4ae12c8e7a952"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_budget_payback_v69.pdf",
+      "sha256": "ea2fadfb2fb0ba23240cf67ff932a27d1cc78809d7be2163ca329fb3b3fc6b4e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_budget_risk_v69.pdf",
+      "sha256": "2827fc7a88fb9ba5a2d74f54da15da889f386be95af794d5465cb47c24d00096"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_build_v69.pdf",
+      "sha256": "748ab9d276b6a127371349743068e8376535d731402aec7339d7a88631ae1afa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_lutgroups_v69.pdf",
+      "sha256": "0aaf301b5313d747aa25f422058a8561aafceb86d20d78a38c5808cdbd1c1ab6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/fig_memory_v69.pdf",
+      "sha256": "7956fe18f8a46983182f5d6552eb64e6f9071523b045da21a2ebdc73c5fd9a6a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/frontiers.pdf",
+      "sha256": "469f97b0a8c605e2045dce8a9bcb898a60704ae371863401d5a7bb32dabb646c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/frontiers.png",
+      "sha256": "4042a3024710430f6f9ebdedb0c6735b22120fd32094129c1c4c828323613325"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/large_frontiers.pdf",
+      "sha256": "22415b8969ea623d7cb001bb81842bef0f8ead2a10e5b7c7c86412fc1a47c4cd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/large_frontiers.png",
+      "sha256": "d52e754854f8f01d890236e9a773e9eb6d2b0b18a877e9af6a7cbe58175ae8fd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/lutgroups.pdf",
+      "sha256": "8343a47a078f7131a74000c32380f51efb469142dbd34ffda88abd78dfafce3d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/lutgroups.png",
+      "sha256": "d49175a35484a6800dad8f9d751c31e7eaf138f375807cb4aece0611e1456060"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/memory.pdf",
+      "sha256": "6be0feb34556a6d62a821cfdc020ac7bb2528112976370c2f703000dfffc16f1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/memory.png",
+      "sha256": "a5621dccf33a89c2d07e2b8fbef24784a2dd45e30a5566f521c3479f62b8bef2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/packing_refinement.pdf",
+      "sha256": "dff5a1c49285fe8fca31c0a19698a8b3591bbde53c8dcfb765bdf2dc2a77ba89"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch7/packing_refinement.png",
+      "sha256": "4e6d89e283563865513d66ccce9de1c70b708cfc395921ef61ce7dfa0c045240"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch8/negative-evidence.pdf",
+      "sha256": "7bc3158ead5654f9a1a40b94cd25df60cd2c65328f264d997b41e56ff42fb1de"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/ch8/negative-evidence.png",
+      "sha256": "3b6a28b3516174d5fd1f9dfc9a57eb0f3c255b8025d4c5d5b458def0692e992d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/supplement/finite-pool.pdf",
+      "sha256": "17a465180a95f3bb3f9a901bb9cc94aefad5c68e587754426abb017302f131e5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/supplement/precision.pdf",
+      "sha256": "93207061c78da16ba0fdc3d1f14725006837a78bebbd0e1a70819681016b2cc0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/supplement/stream-cost.pdf",
+      "sha256": "3d1128b45ed53662b289326090e4f4923bbfd1ebe90afea28aeef5fb2d4285b7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "figures/t4-t5/smallbatch.pdf",
+      "sha256": "197c8108cdeffa9a09d5f174175f28b5267fe5aeab797538ac421ac4d645e81c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/appendix/e1-counts.tex",
+      "sha256": "97754c3ddddae7e5e976f08a5606e85aed8f60e304b9d660d984c9e56f976572"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch3/datasets.tex",
+      "sha256": "6c1d82243c399ae1f3a0146d05ed8d5a8dc8232ae451fae0f572af3e05188797"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_cost.tex",
+      "sha256": "0311e0ab42b2962a3a865c264270ea13044833d4ea8d640bdf030945dbfd005b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_full.tex",
+      "sha256": "959620129869a4651b79e9c62c6b21085024a2678489f4158bcc2ced2416f563"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/budget_quality.tex",
+      "sha256": "3f6e39d48901d041a0ecb714b1277b15cb5eaabccaee9f67510b2cdda4107824"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/build_memory.tex",
+      "sha256": "6e586a5ba678a704926f4ea0588c612357ff726e1a70c1e43e022f425da72f6c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/e1_memory.tex",
+      "sha256": "af7c61ac85faab10d5d4a2dcef4904119df1521d91af92e118e1c77e08b53d4d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/e1_paths.tex",
+      "sha256": "4ce33f2364b7a22bf83b349724109abc982e1b872c22d455b63d637f538b0265"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/fixed_budgets.tex",
+      "sha256": "00e0a0dcf94e0a02cd04540c5861dd02f34644772744038355b5caf3078a1e58"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/matched97.tex",
+      "sha256": "d3dc4b6d2046a63215067fbb4f0b66a3b69b7602dcb612e47d7aa063173d5aef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/probe.tex",
+      "sha256": "51b345171bf1d0f4e76612a342ba98143068b46fe3822809b4320de5a485db7c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/refinement.tex",
+      "sha256": "53084f65c7daad1f139bdeb161936788e709f5b1c16e3293a909c506c591ead1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/ch7/scheduling.tex",
+      "sha256": "bba8022278f6d2fa62e8740a33a5300f5d7a67b3b07f9aeb5dd9963e0de7d536"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/full-review/precision-anchors.tex",
+      "sha256": "7f5cac12b6fe423bc25171a9ba030e13540a0987ffce254b4614dd3df43e0c8d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/full-review/scratch.tex",
+      "sha256": "2ef07d8442f84705650d02f369239ad1694aba6e1dc00c94cb7a7c4790138ac4"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/budget_tails.tex",
+      "sha256": "e274cc26d81c76d89a1b43b16def17d859351e044d53acc6c66c43b5b10065b8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/build.tex",
+      "sha256": "3241ae86d4a835d7e94cd4faa81e59350af31c90d46223d3230732cdc3c69931"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/precision.tex",
+      "sha256": "17f8fe1ce405e170aa10fa799c15d74d375863f15ddd4f59aaebce9847e140f1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/representation.tex",
+      "sha256": "c04b0e646afbc52fc311d18e3b1b23490baa8b0c21374b4d3aaaa56ed2d7d301"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/supplement/stream.tex",
+      "sha256": "573c1c93fcf0f3011d665eeaca96a9e285c8781b662864104825bc7709b17564"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/t4-t5/smallbatch.tex",
+      "sha256": "8520e5a19603b60c390f1991171bc14102f4667035fbc0da71b7172e87b01c58"
+    },
+    {
+      "repository": "8800_report",
+      "path": "tables/t4-t5/strict-selection.tex",
+      "sha256": "95507256369fb15ca70eb70fa72e2c18be10404e571e9eafa18489d832f21987"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/appendix/e1-counts.tex",
+      "sha256": "91524493881554f6e6b7f7ca47fb7f3ec5fe91e038afc57b61fa7c655b378583"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_cost.tex",
+      "sha256": "067ae5f8f1c6b3dab363ab00a6387ce75e42ca1aca7c23eb20d11b4df3f6b889"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_full.tex",
+      "sha256": "d12d02a31a5db97ccd72e082a9f76d7ee81cd5ad3e6bb6d8e8f37e26972e1841"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/budget_quality.tex",
+      "sha256": "085d50be946da61ad814fa08bd4ac5b3bab234af4d305b7d8b5726b5491ffa8f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/build_memory.tex",
+      "sha256": "6d04aca0ef7b91f48e990f44e80cd5b4fe517663cebf0008ec04a0668255fc38"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/ch3-datasets.tex",
+      "sha256": "6aa6eae048a6eaccfedbbdb8256ace12f50fe99c564de8379ae7742f256dab48"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/e1_memory.tex",
+      "sha256": "68239cb349946c03b3775f87f8a2d062f700ee05250495cfa515f5a4e5eaa7b7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/e1_paths.tex",
+      "sha256": "28cf9a998d2c3e5343e3f0f1c8ecbaa2dd361d7c40a38546326c457c4ce5d4a3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/fixed_budgets.tex",
+      "sha256": "cdd455f7db8e016f23a05f40806bb65c11d20d8df99e63d512884b01586d2b7e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/full-review/precision-anchors.tex",
+      "sha256": "5027ad48fa205eb13f3b8f7d7051d812eccf3d0bc6a732443f1f1d98974917d0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/full-review/scratch.tex",
+      "sha256": "00eb1173b3e15c92aca38e4c09c0be2f2f1e694be03bd94ea8987daddc985372"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/matched97.tex",
+      "sha256": "c0dd6bbbb1a8a0aabc28c7df235106d3a45c9934c89ea93b77f73f53a943c4d2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/probe.tex",
+      "sha256": "7a9fa3d87e72374874ffd36acbcc1a414975ec7cae0660c84528ca0edb7054ef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/refinement.tex",
+      "sha256": "18cdeb6e16617bfa5ac697b355808d185456c7c5cdbc1274b8ead4902200cbe8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/scheduling.tex",
+      "sha256": "ed08033c5f8379c4cc32537aa466eff367e11b7702e63c473a1c23a5597df2aa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/budget_tails.tex",
+      "sha256": "ca2226774c2cc2c09bf824b439485ab404fe4f89057bcc22ae3cbb40a0f3b8aa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/build.tex",
+      "sha256": "89ebae5fd3ba1016dbefad32a8994a0e03fd61bf4a07a966a8797e1f1f32cd30"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/precision.tex",
+      "sha256": "6df4bdc0d12ae212872e294947b00d9acbcee3f416f633a1f8be7525f08961b5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/representation.tex",
+      "sha256": "1afcb84e955a9724263dcef139e15cacc62553525c3506fab32937a2ee43e400"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/supplement/stream.tex",
+      "sha256": "ba391b8266f1a7a13510695a53e6398b6e33c9eed5f048d77eb9abe5bda16f98"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/t4-t5/smallbatch.tex",
+      "sha256": "422d32f54bdd6de256e182443d5ad9a6defbe2fe983e0e0d9cd837b15c92a87f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/tables/t4-t5/strict-selection.tex",
+      "sha256": "1088d37cb9bf3dbf2c9a4dc793adf2a2ad72f67b54db31b589f180607256dae6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "thesis.pdf",
+      "sha256": "303935e1e745a7aa70984e9a5afa539db1578b1a67c269f6dd9fd9be0bb26bc5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "thesis-zh.pdf",
+      "sha256": "b53734e4624d32659a2a4a973599dc976d4ea589b588ee596d72b83973937b4c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/submission/ai-use-record.json",
+      "sha256": "4d78f57d5b4e00af0747e821140b7c8842efa99964c264e62650936acc2b9ce8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/compression-review-source.json",
+      "sha256": "a008b6d283db04f7e5f72ec56e8e1d518dd4730330b899eb887fa7b320d78957"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/compression-review-response.txt",
+      "sha256": "d65b2948ba8e4b0c3d905e578928ffa495a6d8e7f07651b924d6a870ffd66f5b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/03775b7/manifest.json",
+      "sha256": "a08cbfa89eaf51df9fb2315cfdf4700421b26586a4f3984a420b295e78a2c149"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/03775b7/compression.patch",
+      "sha256": "91306fde5836484dfdeb8d4044d11484c9eefacd2ae0a8c123d6f52a42081f3f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "docs/supplementary-evidence.md",
+      "sha256": "d15693f2c7469677e2ce3482ea2d252abdb603176c5d94ce7393ddba25944d83"
+    },
+    {
+      "repository": "8800_report",
+      "path": "docs/ai-use-record.md",
+      "sha256": "c2b05c70045267cc0865e143042c3a170f22fdbf1859fa079df28427a27d9cf3"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_compression.py",
+      "sha256": "1bd05fba0a505e8de47c464d5903f51897de97bcf2410612514349810ecc3d58"
+    }
+  ]
+}
