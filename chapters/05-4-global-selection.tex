@@ -205,13 +205,10 @@ prefix's $c$th distance and enough candidates at that distance to fill
 $\min(c,|V_t|)$ slots. A rejected distance has $c$ retained witnesses
 with no larger distance; exact distance sorting preserves this rank
 property at each compaction. Tied identities need not be unique.
-\Cref{sec:7-4} reports 64 grouped-scan comparisons with no non-tie primary
-differences and identical final outputs on the used queries. Those checks
-compare GPU implementations, rather than independently sorting every
-visited candidate on the CPU. An existing host checker accepts cutoff-tie
-substitutions and compares primary sets, so it does not certify the
-complete-key order. Strict CPU sorting of the same recorded score/position
-pairs remains a separate validation target; its exporter must first match
-the measured packed layout and LUT grouping. The proposition
-establishes a conditional selection property, not raw-space exact kNN or
-unconditional equivalence to every legacy tie policy.
+The strict CPU reference in \cref{sec:7-strict-selection} now checks the
+same computed score/position target: all 55,296 grouped query instances
+match its complete-key order. All 13,824 one-block instances satisfy the
+distance preorder; 56 choose different cutoff-tie members. This complements
+the conditional buffer/merge argument with finite-case implementation
+evidence. The reference sorts GPU-produced scores, rather than recomputing
+original-space distances on the CPU.

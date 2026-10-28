@@ -1325,7 +1325,7 @@
     {
       "repository": "8800_report",
       "path": "Makefile",
-      "sha256": "e8782136a6448e26b8a45dc4ea7da71ede654827112944ec934801c501fdc17d"
+      "sha256": "6c378cf2f5429720c923dbf6f31bc4347578015af69980aa3ec3223373b6973b"
     },
     {
       "repository": "8800_report",
@@ -1345,17 +1345,17 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "61bb7360b81e9bcacf5956e52ec41f18a68a7e04b6139c909a7639af111f181f"
+      "sha256": "404e839170d9542431287558f1fc7b58b9757f1078e53c69e8520a79d6d392be"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "81982d5d4240332bb3dd85206d5cff2ffbd1b893bed032d399b5138e9ee6df99"
+      "sha256": "716db0ddec49fc3946f83ac584cb5d8f0700accf1003196c87226a182748730b"
     },
     {
       "repository": "8800_report",
       "path": "appendices/a-reproducibility.tex",
-      "sha256": "23c780d2618332abfa60c81d4162a742d03a69f06788d2ace03f6c8249bbf442"
+      "sha256": "80e253d222b13353200c7cd0619125789a36aa1630153cfcb49280a38d0f66af"
     },
     {
       "repository": "8800_report",
@@ -1370,7 +1370,7 @@
     {
       "repository": "8800_report",
       "path": "assessment/ch7-pending-experiments.txt",
-      "sha256": "47bede51b3a64a3326f96c5ff96b329513def84434877c78a131e0834a3a6b51"
+      "sha256": "b51dc00df1111d4d07b545dfd8dc8617e70140a8d8227849bac63b037ef2425b"
     }
   ]
 }

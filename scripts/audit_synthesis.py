@@ -76,6 +76,11 @@ def main():
     assert len(matches)==4 and sum(x['ratio_interp']>1 for x in matches)==3
     assert abs(next(x['ratio_interp'] for x in matches if x['dataset']=='arxiv-768')-1)<.01
     supplement=json.loads(read(ROOT,'data/supplement/audit.json'))
+    followup=json.loads(read(ROOT,'data/t4-t5/audit.json'))
+    assert followup['t4']['path_counts']['complete_key']['order_equal']==55296
+    assert followup['t4']['path_counts']['distance_only']['tie_only']==56
+    small97=next(x for x in followup['t5']['ranges'] if x['batch']==8 and x['target']==.97)
+    assert small97['interp_wins']==small97['measured_wins']==0
     flags=dict(capacity_vectors=stella['N'],resident_gib=j['memory']['stella']['used_mib']/1024,
                original_cold_train_add_s=sum(j['build']['stella'].values())/1000,
                repeated_train_add_s=supplement['builds']['stella']['train_add_s'],
@@ -84,7 +89,8 @@ def main():
                fp32_sensitivity=supplement['precision'],
                lut_wins=22,lut_cells=24,batch8_gain=rates[8],batch1000_gain=rates[1000],
                full_quality_passes=12,full_max_loss=j['full_pool']['max_loss'],
-               worst_S128_crossings=40,full_distance_only_cells=10)
+               worst_S128_crossings=40,full_distance_only_cells=10,
+               strict_grouped_instances=55296,smallbatch8_recall97=small97)
     sigma_quantile=statistics.NormalDist().inv_cdf(.75)
     sigma_mean=math.sqrt(2/math.pi)
     model=dict(quantile_level=sigma_quantile,conditional_mean_level=sigma_mean,

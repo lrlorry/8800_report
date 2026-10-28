@@ -293,7 +293,7 @@ result = dict(date='2026-10-28', builds=build_summary, representation=representa
                 'Finite-pool risk uses fixed held-out GT arm losses after label-free acceptance.',
                 'Subset sums reproduce all traced curves; arbitrary per-query invariance is unproved.',
                 'Steady-rate break-even fits differ from directly observed cumulative crossings.',
-                'C2 CPU top-c and C3 Vogue cross-process diagnosis remain pending.'],
+                'Original A-D did not include C2; subsequent T4 is audited in data/t4-t5/audit.json. C3 remains pending.'],
               inputs=sorted({v['path']:v for v in ledger}.values(),key=lambda v:v['path'])+[local_ledger])
 (OUT/'audit.json').write_text(json.dumps(result,indent=2)+'\n')
 with (OUT/'risk-prediction.csv').open('w') as f:

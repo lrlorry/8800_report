@@ -9199,7 +9199,7 @@
     "Finite-pool risk uses fixed held-out GT arm losses after label-free acceptance.",
     "Subset sums reproduce all traced curves; arbitrary per-query invariance is unproved.",
     "Steady-rate break-even fits differ from directly observed cumulative crossings.",
-    "C2 CPU top-c and C3 Vogue cross-process diagnosis remain pending."
+    "Original A-D did not include C2; subsequent T4 is audited in data/t4-t5/audit.json. C3 remains pending."
   ],
   "inputs": [
     {
@@ -9960,7 +9960,7 @@
     {
       "repository": "JHQ_GPU",
       "path": "experiments/thesis_evidence/REPORT_CN.md",
-      "sha256": "381f07d316336c3ababeb2cb6bbd17e8e1c0ccde675da45174f077474dccbd67"
+      "sha256": "9b8544881e4f5602b7ca8f84bbe74af1ae230fbba9a09cff83ccd8791a07d47f"
     },
     {
       "repository": "JHQ_GPU",
@@ -9994,8 +9994,28 @@
     },
     {
       "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/analyze_t1.py",
+      "sha256": "9a8e18c2b3f4f108458629150bf2316a1207dfd6aaa736306ca47973f4e63c57"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/analyze_t2.py",
+      "sha256": "fc0fc473dbcaef10d74e0a3e6486addd2c2b32c1c246c6d3654f8bc5c1522f22"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/analyze_t5.py",
+      "sha256": "57417546c01f1d3d278f67a5363a3cc0f109534bd6e1b1dc6939f60dde47a473"
+    },
+    {
+      "repository": "JHQ_GPU",
       "path": "experiments/thesis_evidence/b_budget_trace.sh",
       "sha256": "462a2e2abee25778da887fd2898aadbc6dda0a77bc30021f5a14b0d0c9aa0414"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/bench_cuvs_smallbatch.py",
+      "sha256": "bf1a4beb4c9c2c1d7afd3101350ac427a4802a638c99c04a344a99f18b954e2a"
     },
     {
       "repository": "JHQ_GPU",
@@ -10006,6 +10026,41 @@
       "repository": "JHQ_GPU",
       "path": "experiments/thesis_evidence/d_tf32.sh",
       "sha256": "ef8e0a2d1477534237e9587b2fdfd8792aa090af11b6fb847e31e0f9d658de98"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t1_tf32_session.sh",
+      "sha256": "8a9428f0948dd9927b346f7fda704374008fa401c3458286fd57597aa5d26d1a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t2_center_data.py",
+      "sha256": "c24852a84df33134166c8cca8dfd1114034df873349ada2481dbc916c5970717"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t2_centering.sh",
+      "sha256": "452e0bb6500f125c2fedf0c0b7bde41fa0ea9ac0f3044122bbae7f51465207ba"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t3_hashes.sh",
+      "sha256": "502a1bfcc736758c753495efab83d198049a7373f0cb97b9b0adb694369108e8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t4_lut_compare.py",
+      "sha256": "8e6d74fb1ec1f708c3f4c0f86ba8933e73cc4151fbbf9b4d5d1d643f0857b175"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t4_topcref.sh",
+      "sha256": "3521757b307f70de9e4c4d081d5d7024a945dabbed74c362fdd771b51197d5d9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t5_smallbatch.sh",
+      "sha256": "737bbefae088968025a008fcf09e1e2ba715143d266701e267329277fe5d2501"
     },
     {
       "repository": "JHQ_GPU",
@@ -10020,7 +10075,7 @@
     {
       "repository": "8800_report",
       "path": "scripts/audit_supplement.py",
-      "sha256": "ce858c9cb496618f2888610a531043e182ea54cd5dcff61992ebd23308abc99d"
+      "sha256": "3ee82dfa9fb28b261fb35c770b8a415b00bfa8d6f2a83849508304fca72d2a5f"
     }
   ]
 }

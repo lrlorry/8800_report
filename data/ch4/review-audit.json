@@ -398,7 +398,7 @@
   "inputs": [
     {
       "path": "CMakeLists.txt",
-      "sha256": "34ec37f075d778f20aeafe386f83d515f50df2a8fe55505743c7055784462069"
+      "sha256": "a5a45e7438d6320ecafbec6b99a5db4282bbb44f6d229d05e835d416397fb679"
     },
     {
       "path": "examples/demo_jhq_v66_bound_pilot.cu",

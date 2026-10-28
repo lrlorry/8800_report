@@ -92,10 +92,10 @@ Boundary & Completed evidence and scope \\
 \midrule
 Representation & Four all-row offset/ID audits; sampled raw-input FP64
 recoding and stored-matrix geometry; TF32 deviations identified \\
-Cartesian LUTs & Real-arithmetic factorisation; 96 arms with recall spread
-at most $10^{-4}$; no per-candidate bitwise certificate \\
-Global selection & 64 archived checks; local-buffer and merge arguments
-with complete-key ordering premises \\
+Cartesian LUTs & Real-arithmetic factorisation; 96 timed arms; T4
+per-candidate FP32 error and ranking diagnostics across four table forms \\
+Global selection & T4: 270 configurations, 69,120 query instances;
+55,296 grouped instances match strict CPU complete-key sorting in order \\
 Shared bound & 48 paired checks; extracted scalar 64-bit PTX and toolkit
 SASS support whole-key access; actual driver SASS not captured \\
 Scheduling & 250 variant/configuration and 234,320 query comparisons,
@@ -112,11 +112,12 @@ The smaller representation-audit databases have identical primary and
 residual bytes across one-/two-pass builds when joined by ID.
 Corrections differ by at most $8.94\times10^{-8}$ and 1/\allowbreak{}1/\allowbreak{}40 rows change
 list assignment; Stella validates its natural two-pass path
-(\cref{sec:4-representation-audit}). A strict CPU reference for every
-actual GPU candidate score and the controlled same-model Vogue
-cross-process diagnosis were not performed. Archived processes with
-matching probe/primary dumps still report final recall 0.9642/\allowbreak{}0.9644.
-FP64 recoding and matching aggregate decisions do not replace those checks.
+(\cref{sec:4-representation-audit}). T4 now supplies the strict
+computed-score selection reference (\cref{sec:a-t4-t5}). The controlled
+same-model Vogue cross-process diagnosis remains unperformed: archived
+processes with matching probe/primary dumps still report final recall
+0.9642/\allowbreak{}0.9644. Within-run selection checks do not localise
+that separate anomaly.
 
 \section{Secondary Results and Evidence Status}
 \label{sec:b-secondary}
@@ -125,7 +126,10 @@ The scheduler's largest recorded regret is $1.217\times$ at batch 256.
 Scheduled/one-block throughput on Vogue spans 0.895--1.175 in E1:
 the skew rule enabling its recall-0.97 lead also adds overhead in some
 low-probe cells (\cref{sec:7-6}). These adverse results accompany the
-favourable small-batch findings.
+favourable internal scheduling findings. In T5's cross-system comparison,
+CAGRA fp32 leads on all four datasets at recall 0.97 and batch 8;
+batch-32 near ties depend on the recall estimator
+(\cref{sec:7-smallbatch}).
 
 \paragraph{Representation alternatives.}
 Mailman-style GPU scorers are isolated kernel measurements; their

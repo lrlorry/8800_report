@@ -18,14 +18,15 @@ sensitivity also changes add/query arithmetic under a common cached model.
 Claim at risk & Alternative or reversal & Control and remaining test \\
 \midrule
 Execution gain & Changed scores, ties or index state explain an apparent
-speedup & Paired state and output checks; independent complete-score
-reference and arithmetic diagnostics remain pending \\
+speedup & Strict T4 CPU sorting and table-form diagnostics; finite
+coverage, with candidate dumps no longer retained \\
 Budget quality & Finite-pool sampling or drift hides damaging queries
 & Disjoint GT evaluation, full traces, subset-sum checks and FULL
 enumeration; future-query and arbitrary-subset invariance remain untested \\
 Competitive margin & Grid density, call tails or API overhead changes
 the ordering & Both recall estimators, retained slow calls and int8
-baseline; TF32/FP32 sensitivity; small-batch and cross-device comparisons unmeasured \\
+baseline; TF32/FP32 sensitivity; T5 exposes small-batch reversals;
+cross-device comparisons remain unmeasured \\
 Capacity/build claim & Transient allocations exceed a resident sample
 & Phase bytes, repeated empty-cache builds and 20\,ms device peaks;
 sub-interval allocations and full retrained frontiers remain unmeasured \\
@@ -34,7 +35,10 @@ sub-interval allocations and full retrained frontiers remain unmeasured \\
 \end{minipage}\par\medskip
 
 External validity is limited by one GPU, squared-L2 top-10 search, six
-prepared embedding datasets and E1's full-batch comparison. Query removal
+prepared embedding datasets, E1 at batch 1,000 and T5 at 8/32. T5's
+high-recall reversal shows why E1's ordering cannot be transferred across
+batch regimes. Qualifying frontier endpoints must remain in a lower-target
+comparison, and measured-threshold results expose grid-sensitive rankings. Query removal
 by position does not certify the absence of near-duplicate embeddings.
 The exports are not a relevance-labelled retrieval benchmark. Database
 updates, concurrent traffic, deployment latency objectives and changing

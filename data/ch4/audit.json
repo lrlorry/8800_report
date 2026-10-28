@@ -16,7 +16,7 @@
     {
       "source": "8800_report",
       "path": "assessment/ch7-pending-experiments.txt",
-      "sha256": "47bede51b3a64a3326f96c5ff96b329513def84434877c78a131e0834a3a6b51"
+      "sha256": "b51dc00df1111d4d07b545dfd8dc8617e70140a8d8227849bac63b037ef2425b"
     },
     {
       "source": "8800_report",
@@ -51,7 +51,7 @@
     {
       "source": "8800_report",
       "path": "chapters/04-6-contracts.tex",
-      "sha256": "dd22fbd31c5af85e8c6763e793505a03eaa755309c01acd4517e1b3a653d9f0c"
+      "sha256": "40c153b90f3209109fa42c74c3a9e0b3f5fded02688234f2e8ebc47a9de1a32b"
     },
     {
       "source": "8800_report",
@@ -61,12 +61,12 @@
     {
       "source": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "61bb7360b81e9bcacf5956e52ec41f18a68a7e04b6139c909a7639af111f181f"
+      "sha256": "404e839170d9542431287558f1fc7b58b9757f1078e53c69e8520a79d6d392be"
     },
     {
       "source": "8800_report",
       "path": "data/ch4/review-audit.json",
-      "sha256": "ae306c58590db0b0314f7dc7b4f7539830fc11f986ec8114fbdac130e5068919"
+      "sha256": "de4dc8e13eca5a0a9299e8797de41219d571391c8a32e2581b3ca8170dba3b01"
     },
     {
       "source": "8800_report",
@@ -151,7 +151,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-6-contracts.tex",
-      "sha256": "f857e9840ead942c7fb34e0947684fdf08d0d4f2a91b8fcc518b9410a211eb14"
+      "sha256": "06341d4680c6792dea11da51e6b3088c47bdd56945a111c1f8a0c0991845d729"
     },
     {
       "source": "8800_report",
@@ -161,7 +161,7 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "81982d5d4240332bb3dd85206d5cff2ffbd1b893bed032d399b5138e9ee6df99"
+      "sha256": "716db0ddec49fc3946f83ac584cb5d8f0700accf1003196c87226a182748730b"
     },
     {
       "source": "8800_report",
@@ -171,7 +171,7 @@
     {
       "source": "JHQ_GPU",
       "path": "CMakeLists.txt",
-      "sha256": "34ec37f075d778f20aeafe386f83d515f50df2a8fe55505743c7055784462069"
+      "sha256": "a5a45e7438d6320ecafbec6b99a5db4282bbb44f6d229d05e835d416397fb679"
     },
     {
       "source": "JHQ_GPU",

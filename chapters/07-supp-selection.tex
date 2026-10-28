@@ -1,0 +1,37 @@
+\subsection{Strict CPU reference for computed-score selection}
+\label{sec:7-strict-selection}
+
+The supplementary T4 campaign sorts every visited candidate on the CPU
+under $(\primarydist,\mathrm{position})$, using GPU-produced FP32 scores.
+Its diagnostic exporter follows the packed scan layout and accumulation
+order; exported scores match all returned valid primary scores bit for
+bit. Source comparison confirms that the diagnostic version changes only
+export, relative to the table-sweep implementation.
+Vogue, arXiv and OpenAI-3072 are tested at 1/8/128 probes,
+$\alpha\in\{4,100,200\}$, $\gscan\in\{0,1,2,4,8\}$ and both shared-bound
+settings: 270 configurations of 256 queries, or 69,120 query instances
+(\cref{tab:7-strict-selection}).
+
+\suppressfloats[t]
+\begin{table}[htbp]
+\centering
+\caption[Strict computed-score selection checks]{T4 CPU-reference checks.
+Set and order equality use the complete primary key. Valid count checks
+$\min(c,n_c)$ survivors; final equality sorts retained computed refined
+scores by $(\refineddist,\mathrm{ID})$, including their FP32 bits. Counts
+are query instances, with queries reused across configurations.}
+\label{tab:7-strict-selection}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{tables/t4-t5/strict-selection}
+\end{table}
+
+All 55,296 grouped instances match the complete-key reference in order.
+The one-block path satisfies the distance preorder in all 13,824 instances;
+its 56 set differences are exclusively cutoff ties. There are 19,120
+underfull instances with the correct number of valid survivors, and all
+69,120 final selections match the retained-score reference.
+This directly tests the stage contracts of
+\cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}.
+The earlier 64 scan comparisons and 48 shared-bound comparisons provide
+separate paired-implementation evidence; archived sanitizer runs cover
+smaller subsets. Export and retention details are in \cref{sec:a-t4-t5}.

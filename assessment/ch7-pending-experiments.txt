@@ -1,7 +1,7 @@
 论文补证状态与剩余实验（沿用原文件名）
 最近更新：2026-10-28；已核对Claude完成的thesis_evidence结果。
 当前入口：JHQ_GPU/experiments/thesis_evidence/REPORT_CN.md。
-离线复算：python3 scripts/audit_supplement.py。
+离线复算：python3 scripts/audit_supplement.py；python3 scripts/audit_t4_t5.py。
 机器清单：data/supplement/audit.json；写作核对：assessment/supplement-integration.txt。
 补证整合未启动新GPU任务；报告与v71局部证据包已发布至报告仓库（1786e6e）。
 
@@ -50,20 +50,31 @@
     recall0.97对历史RaBitQ为1.086/1.079，对CAGRAfp32为1.679/1.629。
     同TF32训练缓存、只改add/query；不是完整FP32重新训练；基线没有同会话重测。
 
+[x] T4 / C2：270个配置、69,120个查询实例；v73除调试导出外与v71执行源码相同。
+    GPU产生全候选FP32分数，CPU按(score,position)完整排序；55,296个分组实例顺序全同。
+    G=0的13,824个实例均满足距离全预序；56个集合差异均为截断并列，非并列差异为0。
+    所有返回有效项的导出分数与选择器分数逐位一致；不是对每个被拒绝候选另加监测。
+    19,120个候选不足实例的有效数量正确；没有逐字节校验全部补位哨兵。
+    最终69,120个结果均精确选择保留的实际精排分数；不等于原空间精确kNN。
+    原始.topc已由实验脚本删除；保留JSONL/stdout与跨表比较摘要，当前离线复算检查这些记录。
+[x] T4 / LUT数值：full-vs-16+16的22.6--26.1%分数比特不同，最大相对误差4.53e-7。
+    纳入g=4/8为20.5--29.4%、4.64e-7；arXiv/OpenAI末端ID均不变，Vogue有2--4/256变化。
+    分组g=4的Vogue即使top-c集合相同也有4个末端差异，不能写FP32逐位等价。
+[x] T5：四数据集、batch8/32，JHQ调度与单block、CAGRAfp32/int8、IVF-RaBitQ共1,808点。
+    已用JSON数值复算两种recall估计；保留目标以下无法插值但更高recall已达标的前沿端点。
+    纠正原摘要低recall过强结论：OpenAI3072在0.90、b8从2.08改为1.032；b32从1.26改为0.866。
+    b8/0.97时CAGRAfp32在全部数据集领先；b32的边界需区分插值与严格实测阈值。
+    空调用中位0.012--0.072ms保留在搜索时间内，不据此声称Python/C++开销已消除。
+    E1的大batch优势不能外推至小batch；跨设备／并发服务尾延迟仍未测。
+
 仍需补充的实验／取证
 ==================
-[ ] C2 严格CPU primary top-c（原最高正确性补证，未完成）。
-    固定实际binary/index/LUT，导出所有候选的实际GPU scorer分数和position。
-    先适配word packing及g=1/2/4/8，避免旧dump导出器读错布局。
-    grouped按(score,position)完整排序核对数量／唯一性／成员／顺序；共享界开关均查。
-    G=0按距离全预序验证，允许cutoff并列任选，不强加grouped tie key。
-    覆盖全并列、集中优胜、短／空组、少于c；FP64重编码不替代此项。
 [ ] C3 Vogue跨进程诊断（原第二优先级，未完成）。
     固定训练状态、源码／binary身份、G=1/batch8/完整1000查询；多进程同binary对照。
     逐级保留rotation/probe/primary/refined/final输出，定位最早分歧。
     本轮五次重新训练不等于同模型跨进程复现，不能关闭此项。
-[ ] LUT数值／cutoff边界：同候选的完整256表与16+16表逐分数／并列检查，覆盖g=4/8。
-    当前recall差<=1e-4不能替代；保存共享内存设备上限和实际staging分支。
+[ ] LUT设备分支取证：仍可单独保存设备shared-memory属性及实际staging分支；
+    T4逐候选分数及排名检查已完成，不与这一设备记录混为一项。
 [~] C0/C1：存储矩阵几何、采样重编码及全行置换已有证据；仍缺导出IVF质心后的
     独立成员关系检查、GPU实际rotation输出误差、构造空列表／对抗尾批次。
 [~] 有限池不变性：所有已记录子集汇总计数一致；任意子集／位置的逐query不变性未证。
@@ -75,7 +86,7 @@
 [ ] 数据身份：完整历史base/query/GT及cache哈希、source-row ID／过滤映射；
     A3向量对应不是原entity ID的全库连接。历史binary身份仍按家族分别取证。
 [ ] 若要给CPU/GPU倍数，另做匹配nlist/编码/GT/查询池/线程数的官方CPU对照。
-    旧CPU记录不能与E1拼接倍数；小batch跨系统、其他GPU、漂移／在线更新仍未测。
+    旧CPU记录不能与E1拼接倍数；T5已补小batch跨系统，其他GPU、漂移／在线更新仍未测。
 [~] 可访问证据归档：209文件v71局部包已随报告发布；补证完整原始数据仍位于JHQ_GPU，
     report仓库的哈希和派生图表不等于所有raw、向量、cache、binary已发布。
 

@@ -190,7 +190,7 @@ def main():
                          'complete retrained frontiers and baseline-training distribution (fixed-point repeats now available)',
                          'arbitrary-subset per-query invariance beyond traced aggregate checks',
                          'new-traffic calibrated-stream timing beyond four replayed fixed pools',
-                         'matched cross-system small-batch experiments'],
+                         'small-batch comparisons beyond T5 batches 8/32, its four datasets and five variants'],
                 prose_word_estimate=dict(total=sum(words.values()),per_file=words,
                     method='prose/captions, excluding math/table bodies/labels/macros; not official course count'),
                 inputs=list(inputs.values()))

@@ -1,0 +1,1402 @@
+[
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 34092.12200625023,
+      "JHQ one block": 12895.736382168108,
+      "CAGRA fp32": 26497.1,
+      "CAGRA int8": 27055.880681591865,
+      "IVF-RaBitQ": 29525.04712760484
+    },
+    "measured_qps": {
+      "JHQ scheduled": 31805.8,
+      "JHQ one block": 11587.9,
+      "CAGRA fp32": 26497.1,
+      "CAGRA int8": 26830.2,
+      "IVF-RaBitQ": 29157.6
+    },
+    "best_interpolated_baseline": "IVF-RaBitQ",
+    "best_measured_baseline": "IVF-RaBitQ",
+    "ratio_interp": 1.1546847616841005,
+    "ratio_measured": 1.0908236617554257,
+    "ratio_old_missing_endpoint": 1.1546847616841005,
+    "scheduler_ratio_interp": 2.643673924149996
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 32175.917676031226,
+      "JHQ one block": 11796.277306129949,
+      "CAGRA fp32": 26497.1,
+      "CAGRA int8": 26764.22573228148,
+      "IVF-RaBitQ": 28380.046195450286
+    },
+    "measured_qps": {
+      "JHQ scheduled": 31805.8,
+      "JHQ one block": 11587.9,
+      "CAGRA fp32": 26497.1,
+      "CAGRA int8": 26564.0,
+      "IVF-RaBitQ": 24684.3
+    },
+    "best_interpolated_baseline": "IVF-RaBitQ",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.133751420080122,
+    "ratio_measured": 1.1973272097575667,
+    "ratio_old_missing_endpoint": 1.133751420080122,
+    "scheduler_ratio_interp": 2.7276332050375736
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 29539.666635343772,
+      "JHQ one block": 9570.026047572495,
+      "CAGRA fp32": 26486.750510190937,
+      "CAGRA int8": 24440.503857282467,
+      "IVF-RaBitQ": 26211.240855404754
+    },
+    "measured_qps": {
+      "JHQ scheduled": 28271.3,
+      "JHQ one block": 8979.7,
+      "CAGRA fp32": 26224.2,
+      "CAGRA int8": 22828.5,
+      "IVF-RaBitQ": 24684.3
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 1.1152620108675924,
+    "ratio_measured": 1.0780614851930659,
+    "ratio_old_missing_endpoint": 1.1152620108675924,
+    "scheduler_ratio_interp": 3.086686126924045
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 28271.3,
+      "JHQ one block": 8979.7,
+      "CAGRA fp32": 26357.72245511721,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 25189.805998807806
+    },
+    "measured_qps": {
+      "JHQ scheduled": 25689.9,
+      "JHQ one block": 8274.3,
+      "CAGRA fp32": 26224.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 24684.3
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 1.0726002615795538,
+    "ratio_measured": 0.9796256892488617,
+    "ratio_old_missing_endpoint": 1.0726002615795538,
+    "scheduler_ratio_interp": 3.148356849337951
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 26119.558476026144,
+      "JHQ one block": 7630.143225413467,
+      "CAGRA fp32": 26224.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 24536.818793334573
+    },
+    "measured_qps": {
+      "JHQ scheduled": 25689.9,
+      "JHQ one block": 7478.8,
+      "CAGRA fp32": 26224.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 24197.1
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.9960097343684896,
+    "ratio_measured": 0.9796256892488617,
+    "ratio_old_missing_endpoint": 0.9960097343684896,
+    "scheduler_ratio_interp": 3.423206839555854
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 23326.606367289554,
+      "JHQ one block": 6225.23045826787,
+      "CAGRA fp32": 26111.844822656753,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 24238.565186109696
+    },
+    "measured_qps": {
+      "JHQ scheduled": 22255.3,
+      "JHQ one block": 5752.0,
+      "CAGRA fp32": 26060.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 24197.1
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.8933342904615265,
+    "ratio_measured": 0.8539957483058457,
+    "ratio_old_missing_endpoint": 0.8933342904615265,
+    "scheduler_ratio_interp": 3.7471072795881732
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 8,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 19898.3,
+      "JHQ one block": 4786.7,
+      "CAGRA fp32": 25396.430749847885,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 23862.633926959963
+    },
+    "measured_qps": {
+      "JHQ scheduled": 16833.5,
+      "JHQ one block": 4578.6,
+      "CAGRA fp32": 24783.8,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 23827.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.7835077376028198,
+    "ratio_measured": 0.6792138412995586,
+    "ratio_old_missing_endpoint": 0.7835077376028198,
+    "scheduler_ratio_interp": 4.156997513944889
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 109990.7157215969,
+      "JHQ one block": 43717.59973152778,
+      "CAGRA fp32": 96798.4,
+      "CAGRA int8": 102886.4,
+      "IVF-RaBitQ": 85472.0491177935
+    },
+    "measured_qps": {
+      "JHQ scheduled": 102583.3,
+      "JHQ one block": 39173.9,
+      "CAGRA fp32": 96798.4,
+      "CAGRA int8": 102886.4,
+      "IVF-RaBitQ": 84968.1
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.0690500952662054,
+    "ratio_measured": 0.9970540324085594,
+    "ratio_old_missing_endpoint": 1.2868618087067616,
+    "scheduler_ratio_interp": 2.5159367485190414
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 103754.77772138028,
+      "JHQ one block": 39880.3406476141,
+      "CAGRA fp32": 96798.4,
+      "CAGRA int8": 101529.6,
+      "IVF-RaBitQ": 83678.91239908041
+    },
+    "measured_qps": {
+      "JHQ scheduled": 102583.3,
+      "JHQ one block": 39173.9,
+      "CAGRA fp32": 96798.4,
+      "CAGRA int8": 97842.8,
+      "IVF-RaBitQ": 77263.8
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.021916541790574,
+    "ratio_measured": 1.0484501670025796,
+    "ratio_old_missing_endpoint": 1.021916541790574,
+    "scheduler_ratio_interp": 2.601652243599568
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 94295.13470621765,
+      "JHQ one block": 32661.145655796998,
+      "CAGRA fp32": 95876.62183919591,
+      "CAGRA int8": 82542.71773417394,
+      "IVF-RaBitQ": 79996.2669832345
+    },
+    "measured_qps": {
+      "JHQ scheduled": 89679.3,
+      "JHQ one block": 30648.5,
+      "CAGRA fp32": 91027.2,
+      "CAGRA int8": 81929.2,
+      "IVF-RaBitQ": 77263.8
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.9835049764724635,
+    "ratio_measured": 0.9851923381143219,
+    "ratio_old_missing_endpoint": 0.9835049764724635,
+    "scheduler_ratio_interp": 2.88707370218905
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 89679.3,
+      "JHQ one block": 30648.5,
+      "CAGRA fp32": 93774.00566982101,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 78216.1739967991
+    },
+    "measured_qps": {
+      "JHQ scheduled": 81474.8,
+      "JHQ one block": 28436.2,
+      "CAGRA fp32": 91027.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 77263.8
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.9563343205766586,
+    "ratio_measured": 0.8950599381283837,
+    "ratio_old_missing_endpoint": 0.9563343205766586,
+    "scheduler_ratio_interp": 2.9260583715353117
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 82849.83264107845,
+      "JHQ one block": 26283.767998804564,
+      "CAGRA fp32": 91717.50079088262,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 74826.63005615193
+    },
+    "measured_qps": {
+      "JHQ scheduled": 81474.8,
+      "JHQ one block": 25771.5,
+      "CAGRA fp32": 91027.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 68975.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.9033154188313243,
+    "ratio_measured": 0.8950599381283837,
+    "ratio_old_missing_endpoint": 0.9033154188313243,
+    "scheduler_ratio_interp": 3.1521292017509293
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 73123.47815661255,
+      "JHQ one block": 21858.245008552574,
+      "CAGRA fp32": 84555.5920716328,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 69743.43586710538
+    },
+    "measured_qps": {
+      "JHQ scheduled": 69381.2,
+      "JHQ one block": 20410.1,
+      "CAGRA fp32": 82729.9,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 68975.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.8647976599189876,
+    "ratio_measured": 0.8386472121929315,
+    "ratio_old_missing_endpoint": 0.8647976599189876,
+    "scheduler_ratio_interp": 3.3453499184404416
+  },
+  {
+    "dataset": "vogue-768",
+    "batch": 32,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 61448.3,
+      "JHQ one block": 17213.9,
+      "CAGRA fp32": 70531.11413594976,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 57802.64690414825
+    },
+    "measured_qps": {
+      "JHQ scheduled": 51524.8,
+      "JHQ one block": 16464.5,
+      "CAGRA fp32": 64822.8,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 57603.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.8712225909484076,
+    "ratio_measured": 0.7948561308675343,
+    "ratio_old_missing_endpoint": 0.8712225909484076,
+    "scheduler_ratio_interp": 3.569690773154253
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 43701.82503376621,
+      "JHQ one block": 24727.366200946573,
+      "CAGRA fp32": 29133.439638904943,
+      "CAGRA int8": 29556.729173799962,
+      "IVF-RaBitQ": 28358.34951407819
+    },
+    "measured_qps": {
+      "JHQ scheduled": 42578.6,
+      "JHQ one block": 22522.5,
+      "CAGRA fp32": 28564.2,
+      "CAGRA int8": 29287.3,
+      "IVF-RaBitQ": 27825.3
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.4785744652863997,
+    "ratio_measured": 1.453824695345764,
+    "ratio_old_missing_endpoint": 1.4785744652863997,
+    "scheduler_ratio_interp": 1.7673465373798398
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 36755.79245235212,
+      "JHQ one block": 19082.11227229498,
+      "CAGRA fp32": 28914.011782844245,
+      "CAGRA int8": 29373.79613475984,
+      "IVF-RaBitQ": 27905.96027451509
+    },
+    "measured_qps": {
+      "JHQ scheduled": 32276.5,
+      "JHQ one block": 15436.4,
+      "CAGRA fp32": 28564.2,
+      "CAGRA int8": 29287.3,
+      "IVF-RaBitQ": 27825.3
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.2513123017442307,
+    "ratio_measured": 1.1020647174713956,
+    "ratio_old_missing_endpoint": 1.2513123017442307,
+    "scheduler_ratio_interp": 1.926190975498938
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 25253.732286454197,
+      "JHQ one block": 13461.827699696647,
+      "CAGRA fp32": 28696.236618144867,
+      "CAGRA int8": 29086.642573958623,
+      "IVF-RaBitQ": 26571.789414500727
+    },
+    "measured_qps": {
+      "JHQ scheduled": 24574.8,
+      "JHQ one block": 11347.6,
+      "CAGRA fp32": 28564.2,
+      "CAGRA int8": 29075.3,
+      "IVF-RaBitQ": 25239.6
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.8682243824546445,
+    "ratio_measured": 0.8452122592028285,
+    "ratio_old_missing_endpoint": 0.8682243824546445,
+    "scheduler_ratio_interp": 1.8759512340975268
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 24816.393211993654,
+      "JHQ one block": 12249.251384704054,
+      "CAGRA fp32": 28587.964901455165,
+      "CAGRA int8": 28888.36272739383,
+      "IVF-RaBitQ": 25835.332900798203
+    },
+    "measured_qps": {
+      "JHQ scheduled": 24574.8,
+      "JHQ one block": 11347.6,
+      "CAGRA fp32": 28564.2,
+      "CAGRA int8": 28870.0,
+      "IVF-RaBitQ": 25239.6
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.8590446418225403,
+    "ratio_measured": 0.8512227225493592,
+    "ratio_old_missing_endpoint": 0.8590446418225403,
+    "scheduler_ratio_interp": 2.025951826164863
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 21546.935029155182,
+      "JHQ one block": 10944.315055571657,
+      "CAGRA fp32": 28429.11699165713,
+      "CAGRA int8": 27719.36956500324,
+      "IVF-RaBitQ": 24939.88771690477
+    },
+    "measured_qps": {
+      "JHQ scheduled": 20121.4,
+      "JHQ one block": 9046.4,
+      "CAGRA fp32": 28289.0,
+      "CAGRA int8": 27226.6,
+      "IVF-RaBitQ": 21563.7
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.7579178430156094,
+    "ratio_measured": 0.7112800028279543,
+    "ratio_old_missing_endpoint": 0.7579178430156094,
+    "scheduler_ratio_interp": 1.9687787604566285
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 19746.5,
+      "JHQ one block": 9046.4,
+      "CAGRA fp32": 28333.07177355063,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 23247.53979595085
+    },
+    "measured_qps": {
+      "JHQ scheduled": 19746.5,
+      "JHQ one block": 9046.4,
+      "CAGRA fp32": 28289.0,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 21563.7
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.6969417279503619,
+    "ratio_measured": 0.6980275018558451,
+    "ratio_old_missing_endpoint": 0.6969417279503619,
+    "scheduler_ratio_interp": 2.1828019985850724
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 8,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 16380.413167630159,
+      "JHQ one block": 6092.735576545996,
+      "CAGRA fp32": 28179.934791728305,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 21670.02966087905
+    },
+    "measured_qps": {
+      "JHQ scheduled": 15215.0,
+      "JHQ one block": 5748.0,
+      "CAGRA fp32": 28147.7,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 21563.7
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.5812793141181549,
+    "ratio_measured": 0.5405415007265247,
+    "ratio_old_missing_endpoint": 0.5812793141181549,
+    "scheduler_ratio_interp": 2.6885153576476566
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 135695.06315254746,
+      "JHQ one block": 87519.78811060879,
+      "CAGRA fp32": 112025.73465424248,
+      "CAGRA int8": 116354.93952173287,
+      "IVF-RaBitQ": 77677.46365710878
+    },
+    "measured_qps": {
+      "JHQ scheduled": 132584.3,
+      "JHQ one block": 79872.6,
+      "CAGRA fp32": 107554.4,
+      "CAGRA int8": 115509.1,
+      "IVF-RaBitQ": 66002.3
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.1662166102299614,
+    "ratio_measured": 1.1478255825731478,
+    "ratio_old_missing_endpoint": 1.1662166102299614,
+    "scheduler_ratio_interp": 1.5504500877110678
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 114634.28332765524,
+      "JHQ one block": 68767.76700120198,
+      "CAGRA fp32": 110412.14439310282,
+      "CAGRA int8": 115792.99580673568,
+      "IVF-RaBitQ": 67618.17688852125
+    },
+    "measured_qps": {
+      "JHQ scheduled": 100093.6,
+      "JHQ one block": 56242.2,
+      "CAGRA fp32": 107554.4,
+      "CAGRA int8": 115509.1,
+      "IVF-RaBitQ": 66002.3
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.9899932420695429,
+    "ratio_measured": 0.8665429823277992,
+    "ratio_old_missing_endpoint": 0.9899932420695429,
+    "scheduler_ratio_interp": 1.666976962123135
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 77133.55339012138,
+      "JHQ one block": 49000.36437375074,
+      "CAGRA fp32": 108821.79587671814,
+      "CAGRA int8": 114634.5716866005,
+      "IVF-RaBitQ": 64093.17980926479
+    },
+    "measured_qps": {
+      "JHQ scheduled": 74312.6,
+      "JHQ one block": 41216.8,
+      "CAGRA fp32": 107554.4,
+      "CAGRA int8": 114206.0,
+      "IVF-RaBitQ": 62067.7
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.6728646712354527,
+    "ratio_measured": 0.6506891056511918,
+    "ratio_old_missing_endpoint": 0.6728646712354527,
+    "scheduler_ratio_interp": 1.5741424451823354
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 75306.69881569404,
+      "JHQ one block": 44525.96580797699,
+      "CAGRA fp32": 108035.23246857339,
+      "CAGRA int8": 112833.20554769845,
+      "IVF-RaBitQ": 62963.929814311654
+    },
+    "measured_qps": {
+      "JHQ scheduled": 74312.6,
+      "JHQ one block": 41216.8,
+      "CAGRA fp32": 107554.4,
+      "CAGRA int8": 112352.5,
+      "IVF-RaBitQ": 62067.7
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.6674161072545202,
+    "ratio_measured": 0.661423644333682,
+    "ratio_old_missing_endpoint": 0.6674161072545202,
+    "scheduler_ratio_interp": 1.6912984917713467
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 68611.91046889262,
+      "JHQ one block": 39803.62391090467,
+      "CAGRA fp32": 104523.12954679283,
+      "CAGRA int8": 94461.7,
+      "IVF-RaBitQ": 54569.579127110475
+    },
+    "measured_qps": {
+      "JHQ scheduled": 62260.9,
+      "JHQ one block": 33260.8,
+      "CAGRA fp32": 99054.9,
+      "CAGRA int8": 92782.6,
+      "IVF-RaBitQ": 52852.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.6564280151808551,
+    "ratio_measured": 0.6285494205738434,
+    "ratio_old_missing_endpoint": 0.6564280151808551,
+    "scheduler_ratio_interp": 1.7237603948442386
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 62192.4,
+      "JHQ one block": 33260.8,
+      "CAGRA fp32": 100011.06337226617,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 53727.11318121944
+    },
+    "measured_qps": {
+      "JHQ scheduled": 57655.6,
+      "JHQ one block": 28207.6,
+      "CAGRA fp32": 99054.9,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 52852.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.6218552018440634,
+    "ratio_measured": 0.5820570209045691,
+    "ratio_old_missing_endpoint": 0.6218552018440634,
+    "scheduler_ratio_interp": 1.8698407735231863
+  },
+  {
+    "dataset": "arxiv-768",
+    "batch": 32,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 54076.035973624625,
+      "JHQ one block": 23118.592357792782,
+      "CAGRA fp32": 92640.20229781109,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 52897.653545461995
+    },
+    "measured_qps": {
+      "JHQ scheduled": 51288.0,
+      "JHQ one block": 21947.1,
+      "CAGRA fp32": 91396.0,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 52852.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.5837210480152669,
+    "ratio_measured": 0.5611624141100267,
+    "ratio_old_missing_endpoint": 0.5837210480152669,
+    "scheduler_ratio_interp": 2.3390713040275894
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 36925.673816951734,
+      "JHQ one block": 17812.87058781318,
+      "CAGRA fp32": 25257.980049639238,
+      "CAGRA int8": 28067.584379853815,
+      "IVF-RaBitQ": 19257.492167869794
+    },
+    "measured_qps": {
+      "JHQ scheduled": 31696.8,
+      "JHQ one block": 12104.6,
+      "CAGRA fp32": 25153.0,
+      "CAGRA int8": 28019.8,
+      "IVF-RaBitQ": 18589.0
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.3155985679856377,
+    "ratio_measured": 1.1312286311822355,
+    "ratio_old_missing_endpoint": 1.3155985679856377,
+    "scheduler_ratio_interp": 2.072977156316104
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 33282.62242976346,
+      "JHQ one block": 13696.055199828868,
+      "CAGRA fp32": 25210.637617140655,
+      "CAGRA int8": 27946.71842111225,
+      "IVF-RaBitQ": 18471.14327671767
+    },
+    "measured_qps": {
+      "JHQ scheduled": 31696.8,
+      "JHQ one block": 12104.6,
+      "CAGRA fp32": 25153.0,
+      "CAGRA int8": 27682.0,
+      "IVF-RaBitQ": 16460.7
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.1909313261130587,
+    "ratio_measured": 1.1450328733473014,
+    "ratio_old_missing_endpoint": 1.1909313261130587,
+    "scheduler_ratio_interp": 2.4300882220582265
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 26832.065193432627,
+      "JHQ one block": 9558.994225237622,
+      "CAGRA fp32": 25163.383921188328,
+      "CAGRA int8": 27710.24232973623,
+      "IVF-RaBitQ": 17139.44339049791
+    },
+    "measured_qps": {
+      "JHQ scheduled": 22562.2,
+      "JHQ one block": 7019.7,
+      "CAGRA fp32": 25153.0,
+      "CAGRA int8": 27682.0,
+      "IVF-RaBitQ": 16460.7
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.9683085724818358,
+    "ratio_measured": 0.8150494906437397,
+    "ratio_old_missing_endpoint": 0.9683085724818358,
+    "scheduler_ratio_interp": 2.806996694546661
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 23305.413845868014,
+      "JHQ one block": 7436.917674718379,
+      "CAGRA fp32": 24997.909288764808,
+      "CAGRA int8": 27384.844307462783,
+      "IVF-RaBitQ": 16510.042164521736
+    },
+    "measured_qps": {
+      "JHQ scheduled": 22562.2,
+      "JHQ one block": 7019.7,
+      "CAGRA fp32": 24928.7,
+      "CAGRA int8": 27342.1,
+      "IVF-RaBitQ": 16460.7
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.8510332789993966,
+    "ratio_measured": 0.8251816795344908,
+    "ratio_old_missing_endpoint": 0.8510332789993966,
+    "scheduler_ratio_interp": 3.133746380586436
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 19475.820620327533,
+      "JHQ one block": 5876.741677698582,
+      "CAGRA fp32": 24953.804756375066,
+      "CAGRA int8": 26829.6,
+      "IVF-RaBitQ": 15768.896675015241
+    },
+    "measured_qps": {
+      "JHQ scheduled": 15052.9,
+      "JHQ one block": 3888.9,
+      "CAGRA fp32": 24928.7,
+      "CAGRA int8": 26560.8,
+      "IVF-RaBitQ": 15542.4
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.7259079755317833,
+    "ratio_measured": 0.5667336827204,
+    "ratio_old_missing_endpoint": 0.7259079755317833,
+    "scheduler_ratio_interp": 3.3140508275590137
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 15684.932916118238,
+      "JHQ one block": 4429.162886872793,
+      "CAGRA fp32": 24479.117378252322,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 15393.14702304804
+    },
+    "measured_qps": {
+      "JHQ scheduled": 15052.9,
+      "JHQ one block": 3888.9,
+      "CAGRA fp32": 24268.6,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 15303.0
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.6407474858571905,
+    "ratio_measured": 0.6202623966771879,
+    "ratio_old_missing_endpoint": 0.6407474858571905,
+    "scheduler_ratio_interp": 3.5412860887562823
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 8,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 11788.625713884216,
+      "JHQ one block": 2922.992418089566,
+      "CAGRA fp32": 23381.731890731437,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 14600.170975990448
+    },
+    "measured_qps": {
+      "JHQ scheduled": 9093.6,
+      "JHQ one block": 2106.0,
+      "CAGRA fp32": 23174.3,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 14249.4
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.5041810319686905,
+    "ratio_measured": 0.3924002019478474,
+    "ratio_old_missing_endpoint": 0.5041810319686905,
+    "scheduler_ratio_interp": 4.033067496490164
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 115546.33298884681,
+      "JHQ one block": 64942.39638340803,
+      "CAGRA fp32": 90651.6657852508,
+      "CAGRA int8": 107875.31824754513,
+      "IVF-RaBitQ": 51755.345118844154
+    },
+    "measured_qps": {
+      "JHQ scheduled": 98452.0,
+      "JHQ one block": 44780.3,
+      "CAGRA fp32": 85164.1,
+      "CAGRA int8": 107650.1,
+      "IVF-RaBitQ": 50327.0
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.0711100079788294,
+    "ratio_measured": 0.9145555833204057,
+    "ratio_old_missing_endpoint": 1.0711100079788294,
+    "scheduler_ratio_interp": 1.7792126472617733
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 103751.25430702722,
+      "JHQ one block": 50576.93891129014,
+      "CAGRA fp32": 87758.8260804696,
+      "CAGRA int8": 107674.92304821008,
+      "IVF-RaBitQ": 49831.545215425554
+    },
+    "measured_qps": {
+      "JHQ scheduled": 98452.0,
+      "JHQ one block": 44780.3,
+      "CAGRA fp32": 85164.1,
+      "CAGRA int8": 107650.1,
+      "IVF-RaBitQ": 38320.8
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.963560050658907,
+    "ratio_measured": 0.9145555833204057,
+    "ratio_old_missing_endpoint": 0.963560050658907,
+    "scheduler_ratio_interp": 2.0513549562381113
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 87957.45352326032,
+      "JHQ one block": 36475.07750159083,
+      "CAGRA fp32": 84258.66078671915,
+      "CAGRA int8": 104184.7,
+      "IVF-RaBitQ": 41948.29391929499
+    },
+    "measured_qps": {
+      "JHQ scheduled": 77207.9,
+      "JHQ one block": 27496.9,
+      "CAGRA fp32": 71870.5,
+      "CAGRA int8": 102702.9,
+      "IVF-RaBitQ": 38320.8
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.844245398059987,
+    "ratio_measured": 0.7517596874090215,
+    "ratio_old_missing_endpoint": 0.844245398059987,
+    "scheduler_ratio_interp": 2.411439798021653
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 79125.87135521782,
+      "JHQ one block": 28999.05494393941,
+      "CAGRA fp32": 78433.55334424564,
+      "CAGRA int8": 102702.9,
+      "IVF-RaBitQ": 38487.462283189954
+    },
+    "measured_qps": {
+      "JHQ scheduled": 77207.9,
+      "JHQ one block": 27496.9,
+      "CAGRA fp32": 71870.5,
+      "CAGRA int8": 102702.9,
+      "IVF-RaBitQ": 38320.8
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.7704346357816364,
+    "ratio_measured": 0.7517596874090215,
+    "ratio_old_missing_endpoint": 0.7704346357816364,
+    "scheduler_ratio_interp": 2.72856724152504
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 67834.81473997036,
+      "JHQ one block": 23004.166392195213,
+      "CAGRA fp32": 73011.15674952997,
+      "CAGRA int8": 80811.1,
+      "IVF-RaBitQ": 35372.2741645905
+    },
+    "measured_qps": {
+      "JHQ scheduled": 53666.9,
+      "JHQ one block": 15829.0,
+      "CAGRA fp32": 71870.5,
+      "CAGRA int8": 80811.1,
+      "IVF-RaBitQ": 34517.0
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.8394244694103948,
+    "ratio_measured": 0.6641030749488622,
+    "ratio_old_missing_endpoint": 0.8394244694103948,
+    "scheduler_ratio_interp": 2.948805602579242
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 55782.02574403728,
+      "JHQ one block": 16836.08793185021,
+      "CAGRA fp32": 59548.60324488243,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 33564.51976205924
+    },
+    "measured_qps": {
+      "JHQ scheduled": 53666.9,
+      "JHQ one block": 15829.0,
+      "CAGRA fp32": 58736.0,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 33027.2
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.9367478446915739,
+    "ratio_measured": 0.9136968809588668,
+    "ratio_old_missing_endpoint": 0.9367478446915739,
+    "scheduler_ratio_interp": 3.3132415303266414
+  },
+  {
+    "dataset": "openai3-1536",
+    "batch": 32,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 42064.81262432285,
+      "JHQ one block": 11887.464909911741,
+      "CAGRA fp32": 41761.576685471904,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 30985.40718273469
+    },
+    "measured_qps": {
+      "JHQ scheduled": 32677.0,
+      "JHQ one block": 8552.6,
+      "CAGRA fp32": 41433.6,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 30074.5
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 1.007261122853066,
+    "ratio_measured": 0.7886594454742045,
+    "ratio_old_missing_endpoint": 1.007261122853066,
+    "scheduler_ratio_interp": 3.5385856398406106
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 23405.544249219052,
+      "JHQ one block": 11684.679663371844,
+      "CAGRA fp32": 18373.2,
+      "CAGRA int8": 22682.5,
+      "IVF-RaBitQ": 11232.429385187766
+    },
+    "measured_qps": {
+      "JHQ scheduled": 21625.0,
+      "JHQ one block": 8737.4,
+      "CAGRA fp32": 18373.2,
+      "CAGRA int8": 22682.5,
+      "IVF-RaBitQ": 11060.2
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 1.031876744151617,
+    "ratio_measured": 0.9533781549652816,
+    "ratio_old_missing_endpoint": 2.0837472862356923,
+    "scheduler_ratio_interp": 2.0030967834393265
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 22058.65091527229,
+      "JHQ one block": 8938.642420593203,
+      "CAGRA fp32": 18373.2,
+      "CAGRA int8": 22682.5,
+      "IVF-RaBitQ": 10709.53662251008
+    },
+    "measured_qps": {
+      "JHQ scheduled": 21625.0,
+      "JHQ one block": 8737.4,
+      "CAGRA fp32": 18373.2,
+      "CAGRA int8": 22682.5,
+      "IVF-RaBitQ": 10060.1
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.9724964582948216,
+    "ratio_measured": 0.9533781549652816,
+    "ratio_old_missing_endpoint": 2.0597203868660214,
+    "scheduler_ratio_interp": 2.467785361281785
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 18658.17320979925,
+      "JHQ one block": 6207.081194746243,
+      "CAGRA fp32": 18373.2,
+      "CAGRA int8": 22376.5,
+      "IVF-RaBitQ": 10149.629292171208
+    },
+    "measured_qps": {
+      "JHQ scheduled": 17475.9,
+      "JHQ one block": 5334.9,
+      "CAGRA fp32": 18373.2,
+      "CAGRA int8": 22376.5,
+      "IVF-RaBitQ": 10060.1
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.8338289370455276,
+    "ratio_measured": 0.7809934529528747,
+    "ratio_old_missing_endpoint": 0.8338289370455276,
+    "scheduler_ratio_interp": 3.0059495960181377
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 17422.169267978454,
+      "JHQ one block": 5330.286380752379,
+      "CAGRA fp32": 18202.916279802743,
+      "CAGRA int8": 21828.91094494984,
+      "IVF-RaBitQ": 9843.869671448372
+    },
+    "measured_qps": {
+      "JHQ scheduled": 17392.1,
+      "JHQ one block": 5327.7,
+      "CAGRA fp32": 18039.3,
+      "CAGRA int8": 21800.3,
+      "IVF-RaBitQ": 9619.8
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.7981236128506496,
+    "ratio_measured": 0.797791773507704,
+    "ratio_old_missing_endpoint": 0.7981236128506496,
+    "scheduler_ratio_interp": 3.268524057335787
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 14758.578383789216,
+      "JHQ one block": 3642.9409962927925,
+      "CAGRA fp32": 18039.3,
+      "CAGRA int8": 21579.9,
+      "IVF-RaBitQ": 9524.434756106091
+    },
+    "measured_qps": {
+      "JHQ scheduled": 12233.9,
+      "JHQ one block": 3028.5,
+      "CAGRA fp32": 17896.8,
+      "CAGRA int8": 21579.9,
+      "IVF-RaBitQ": 9272.6
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.6839039283680284,
+    "ratio_measured": 0.5669118021862937,
+    "ratio_old_missing_endpoint": 0.6839039283680284,
+    "scheduler_ratio_interp": 4.051281203513358
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 12554.61767652359,
+      "JHQ one block": 3026.1151422445946,
+      "CAGRA fp32": 17416.5,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 9104.253501435289
+    },
+    "measured_qps": {
+      "JHQ scheduled": 12233.9,
+      "JHQ one block": 3025.5,
+      "CAGRA fp32": 17416.5,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 8411.7
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.7208461904816462,
+    "ratio_measured": 0.7024316022162891,
+    "ratio_old_missing_endpoint": 0.7208461904816462,
+    "scheduler_ratio_interp": 4.14875742871149
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 8,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 9102.740489655263,
+      "JHQ one block": 2063.027964846975,
+      "CAGRA fp32": 15468.6,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 8411.7
+    },
+    "measured_qps": {
+      "JHQ scheduled": 7702.6,
+      "JHQ one block": 1622.4,
+      "CAGRA fp32": 15468.6,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 7931.8
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.5884656975844784,
+    "ratio_measured": 0.49795068719858293,
+    "ratio_old_missing_endpoint": 0.5884656975844784,
+    "scheduler_ratio_interp": 4.412320455544799
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.9,
+    "interpolated_qps": {
+      "JHQ scheduled": 71440.85885353964,
+      "JHQ one block": 43965.203730695175,
+      "CAGRA fp32": 56857.036573891724,
+      "CAGRA int8": 82457.2,
+      "IVF-RaBitQ": 24192.418315657545
+    },
+    "measured_qps": {
+      "JHQ scheduled": 60564.5,
+      "JHQ one block": 32984.5,
+      "CAGRA fp32": 51034.9,
+      "CAGRA int8": 82457.2,
+      "IVF-RaBitQ": 23867.3
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.8663992817308815,
+    "ratio_measured": 0.7344961992403332,
+    "ratio_old_missing_endpoint": 1.2564998663040536,
+    "scheduler_ratio_interp": 1.6249409258090575
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.92,
+    "interpolated_qps": {
+      "JHQ scheduled": 61596.0153196835,
+      "JHQ one block": 33968.083088849075,
+      "CAGRA fp32": 53588.38457706034,
+      "CAGRA int8": 81560.14725624723,
+      "IVF-RaBitQ": 22811.12517065922
+    },
+    "measured_qps": {
+      "JHQ scheduled": 60564.5,
+      "JHQ one block": 32984.5,
+      "CAGRA fp32": 51034.9,
+      "CAGRA int8": 78974.8,
+      "IVF-RaBitQ": 20780.4
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.7552219728853599,
+    "ratio_measured": 0.7668838667524324,
+    "ratio_old_missing_endpoint": 0.7552219728853599,
+    "scheduler_ratio_interp": 1.8133497600841664
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.94,
+    "interpolated_qps": {
+      "JHQ scheduled": 49484.15860198919,
+      "JHQ one block": 24090.80456627271,
+      "CAGRA fp32": 48618.30865268823,
+      "CAGRA int8": 78793.091269153,
+      "IVF-RaBitQ": 21074.389046659497
+    },
+    "measured_qps": {
+      "JHQ scheduled": 44875.2,
+      "JHQ one block": 20612.1,
+      "CAGRA fp32": 38547.5,
+      "CAGRA int8": 76112.6,
+      "IVF-RaBitQ": 20780.4
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.628026617625065,
+    "ratio_measured": 0.5895896343049639,
+    "ratio_old_missing_endpoint": 0.628026617625065,
+    "scheduler_ratio_interp": 2.054068325773866
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.95,
+    "interpolated_qps": {
+      "JHQ scheduled": 44708.1884140748,
+      "JHQ one block": 20591.56220432115,
+      "CAGRA fp32": 43074.874560071796,
+      "CAGRA int8": 73486.99802258004,
+      "IVF-RaBitQ": 20005.460919857185
+    },
+    "measured_qps": {
+      "JHQ scheduled": 44578.7,
+      "JHQ one block": 20575.6,
+      "CAGRA fp32": 38547.5,
+      "CAGRA int8": 57817.4,
+      "IVF-RaBitQ": 19168.2
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.6083822936995944,
+    "ratio_measured": 0.7710256773912351,
+    "ratio_old_missing_endpoint": 0.6083822936995944,
+    "scheduler_ratio_interp": 2.1711897315247293
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.96,
+    "interpolated_qps": {
+      "JHQ scheduled": 37449.92923339556,
+      "JHQ one block": 16605.74884078563,
+      "CAGRA fp32": 37756.73704205026,
+      "CAGRA int8": 52129.1,
+      "IVF-RaBitQ": 18707.777590584403
+    },
+    "measured_qps": {
+      "JHQ scheduled": 29026.8,
+      "JHQ one block": 11836.5,
+      "CAGRA fp32": 30321.6,
+      "CAGRA int8": 52129.1,
+      "IVF-RaBitQ": 17419.9
+    },
+    "best_interpolated_baseline": "CAGRA int8",
+    "best_measured_baseline": "CAGRA int8",
+    "ratio_interp": 0.7184073623637385,
+    "ratio_measured": 0.5568252665018195,
+    "ratio_old_missing_endpoint": 0.7184073623637385,
+    "scheduler_ratio_interp": 2.255238808707875
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.97,
+    "interpolated_qps": {
+      "JHQ scheduled": 30218.3330783114,
+      "JHQ one block": 12486.461451367302,
+      "CAGRA fp32": 29986.2,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 17033.918904154507
+    },
+    "measured_qps": {
+      "JHQ scheduled": 29026.8,
+      "JHQ one block": 11836.5,
+      "CAGRA fp32": 21492.6,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 15235.9
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 1.0077413302889795,
+    "ratio_measured": 1.3505485609000307,
+    "ratio_old_missing_endpoint": 1.0077413302889795,
+    "scheduler_ratio_interp": 2.4200878043797114
+  },
+  {
+    "dataset": "openai3-3072",
+    "batch": 32,
+    "target": 0.98,
+    "interpolated_qps": {
+      "JHQ scheduled": 20943.68960547483,
+      "JHQ one block": 8184.864877807602,
+      "CAGRA fp32": 20983.035670814632,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 15235.9
+    },
+    "measured_qps": {
+      "JHQ scheduled": 17061.3,
+      "JHQ one block": 6409.0,
+      "CAGRA fp32": 20916.8,
+      "CAGRA int8": null,
+      "IVF-RaBitQ": 13749.6
+    },
+    "best_interpolated_baseline": "CAGRA fp32",
+    "best_measured_baseline": "CAGRA fp32",
+    "ratio_interp": 0.9981248630580879,
+    "ratio_measured": 0.8156744817562915,
+    "ratio_old_missing_endpoint": 0.9981248630580879,
+    "scheduler_ratio_interp": 2.5588314429308947
+  }
+]

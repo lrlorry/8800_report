@@ -23,8 +23,10 @@ explain the grouped path's selection conditions. Two-group tables lead in
 22/24 measured cells. Integrated scheduling achieves $2.727\times$
 geometric-mean throughput at batch 8 but only $1.015\times$ at batch 1,000
 against the lane-refinement reference (\cref{sec:7-3,sec:7-6}). Thus useful
-parallelism depends on batch and work distribution. Finite output checks
-complement the proofs; arithmetic, tie and memory assumptions remain explicit.
+parallelism depends on batch and work distribution. T4's strict CPU
+reference matches all 55,296 grouped instances in complete-key order;
+56 one-block set differences are exclusively cutoff ties
+(\cref{sec:7-strict-selection}).
 
 \paragraph{RQ3: Refinement budget and quality.}
 Unlabelled reference agreement selects workload-level survivor effort
@@ -45,9 +47,11 @@ in three datasets and near parity with IVF-RaBitQ on arXiv
 a same-session FP32 sensitivity still exceeds archived RaBitQ by
 7.9--8.6\% and CAGRA fp32 by $1.63$--$1.68\times$ at that target. CAGRA int8
 wins in lower-recall regions, and IVF-RaBitQ wins at some higher targets.
-The result supports a useful operating region on the measured device and
-grid, alongside separately reported memory use. It supplies no cross-system
-small-batch or cross-device ranking.
+T5 narrows that region: CAGRA fp32 leads on all four datasets at recall
+0.97 and batch 8; batch-32 borderlines depend on the recall estimator
+(\cref{sec:7-smallbatch}). Competitive rankings therefore depend on batch,
+quality and grid, alongside separately reported memory use. Cross-device
+rankings remain untested.
 
 \section{Closing Principle and Outlook}
 \label{sec:9-2}

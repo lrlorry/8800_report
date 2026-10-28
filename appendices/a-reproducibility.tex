@@ -336,7 +336,62 @@ totals provide the direct observation. First schedule calibration calls
 take 6.00--27.77\,ms, separate from 0.81--7.04\,ms pseudoquery gathering;
 five repeated calls give medians of 2.72--18.13\,ms.
 
-Strict CPU primary top-$c$ validation (C2) and the controlled Vogue
-cross-process diagnosis (C3) were not performed. Remaining work and the
-partially closed contracts are tracked in
-\path{assessment/ch7-pending-experiments.txt}.
+The later T4 campaign completes the finite-grid strict CPU selection
+reference (\cref{sec:a-t4-t5}). The controlled same-model Vogue
+cross-process diagnosis (C3) remains unperformed; T4 checks within-run
+selection rather than that cross-process anomaly. Remaining contracts
+are tracked in \path{assessment/ch7-pending-experiments.txt}.
+
+\section{Strict Selection and Small-Batch Follow-ups}
+\label{sec:a-t4-t5}
+
+T4 uses \path{examples/demo_jhq_topc_reference.cu} and
+\path{jhq_v73_topcref/search.cu}. Normalised source comparison of all ten
+CUDA source/header files with \path{jhq_v71_lutgroups/} finds no execution
+change after removing the two debug-export blocks. The dump follows the
+packed word layout and calls the same \texttt{jhq\_lut\_sum} in subspace
+order. CPU sorting consumes these GPU-produced primary scores, and the
+retained refined scores for final selection. The zero score-mismatch count
+compares exported scores against returned valid primary entries; it is
+not separate instrumentation of every rejected candidate. The padding
+counter verifies the number of valid entries, rather than the bytes of
+every unused sentinel. Cutoff ties occur in 352 grouped and 88 one-block
+query instances. Cases include natural short candidate pools; deliberately
+constructed empty/adversarial lists remain a separate test.
+
+The table-form comparison fixes 128 probes, $\alpha=100$, 256 queries,
+shared bounds enabled, $\gscan\in\{0,2\}$ and
+$\glut\in\{1,2,4,8\}$. It aligns candidate positions before comparing
+FP32 score bits. Full-table versus two-way maximum absolute error is
+$4.77\times10^{-7}$; the maximum over all forms is $5.97\times10^{-7}$.
+On Vogue, the grouped four-way table changes four final answers despite
+unchanged primary survivor sets: primary-score rounding can propagate
+into the refined score. Thus this evidence establishes small numerical
+error and measures its ranking effects, rather than FP32 identity.
+Temporary \path{.topc} dumps were deleted by the campaign. The report
+rechecks retained \path{RAW_T4/} JSONL tallies against stdout, and consumes
+\path{lut_compare.json}; it does not rerun those deleted comparisons.
+
+T5's launcher is \path{t5_smallbatch.sh}. Baseline harnesses are
+\path{bench_cuvs_smallbatch.py} for CAGRA and
+\path{bench_rabitq_smallbatch.cu} for RaBitQ, all under
+\path{experiments/thesis_evidence/}. JHQ/CAGRA reuse their E1 grids;
+RaBitQ uses 4/9-bit codes, two modes and eight probe counts.
+Search timing includes staging,
+transfers, int8 query quantisation when applicable, and synchronisation.
+JHQ captures its graph with an untimed call; baseline warm-up traverses
+the used query pool. Five round throughputs are reduced by their median.
+The report consumes numeric JSON, avoiding rounded stdout at strict recall
+thresholds. Null timing is a separate diagnostic and is not subtracted.
+It does not equalise Python/C++ binding overhead or establish a service
+latency guarantee.
+
+\path{scripts/audit_t4_t5.py} generates the matched-recall table and figure,
+normalised point registry and hashed input ledger under
+\path{data/t4-t5/}. Its interpolation estimate follows the archived
+near-target/log-QPS rule, retaining a qualifying measured endpoint below
+the minimum frontier recall. The original T5 summary omitted such
+competitors: OpenAI-3072 at recall 0.90 changes from about 2.08 to 1.032
+at batch 8, and from 1.26 to 0.866 at batch 32. Strict measured thresholds
+are reported separately, revealing the effect of finite grid spacing.
+These estimates leave the historical E1 campaign unchanged.

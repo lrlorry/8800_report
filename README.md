@@ -8,7 +8,9 @@
 
 - [本轮补证整合与边界](assessment/supplement-integration.txt)
 - [补证离线复算](scripts/audit_supplement.py) · [数值和输入哈希](data/supplement/audit.json)
-- [最新完成／待补清单](assessment/ch7-pending-experiments.txt)：C2严格CPU top-c与C3 Vogue诊断仍未完成。
+- [T4/T5 补证核对](assessment/t4-t5-integration.txt)：严格选择参考和小 batch 跨系统比较已纳入中英文稿。
+- [新补证离线复算](scripts/audit_t4_t5.py) · [结果与输入哈希](data/t4-t5/audit.json)
+- [最新完成／待补清单](assessment/ch7-pending-experiments.txt)：C2已在T4有限网格完成；C3 Vogue跨进程诊断仍未完成。
 - [上一轮章节迭代记录](assessment/synthesis-iteration.txt)
 
 个人分工、声明签署与最终工具披露仍需作者确认，见

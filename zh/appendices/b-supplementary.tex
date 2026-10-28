@@ -70,8 +70,8 @@ $\glut\in\{1,2,4,8\}$，共24单元、96计时臂。
 边界 & 已有证据与范围 \\
 \midrule
 表示 & 四库全行offset／ID审计，原始输入采样FP64重编码、存储矩阵几何，已识别TF32偏差 \\
-Cartesian LUT & 实数因子化；96臂recall差至多$10^{-4}$；没有逐候选逐位认证 \\
-全局选择 & 64份检查；完整key排序前提下的局部缓冲及合并论证 \\
+Cartesian LUT & 实数因子化；96 个计时臂；T4 覆盖四种表形式的逐候选 FP32 误差与排名诊断 \\
+全局选择 & T4：270 配置、69,120 查询实例；55,296 个分组实例与严格 CPU 完整键排序的顺序一致 \\
 共享界 & 48组配对；提取标量64位PTX及toolkit SASS支持完整key；未捕获驱动实际SASS \\
 调度 & 250个变体／配置及234,320次查询比较，区分ID集合与并列顺序 \\
 探针选择 & 1,792合成用例零失败；真实查询ID／offset检查，针对已计算路由分数 \\
@@ -82,16 +82,19 @@ Cartesian LUT & 实数因子化；96臂recall差至多$10^{-4}$；没有逐候�
 
 较小表示审计库在按ID关联的一遍／两遍构建中主码和残差字节相同，correction差至多
 $8.94\times10^{-8}$，列表分配有1、1、40行变化；Stella验证自然两遍路径
-（\cref{sec:4-representation-audit}）。没有执行针对全部实际GPU候选分数的严格CPU参考，
-也没有执行同模型Vogue跨进程受控诊断；已有进程即使probe／primary dump一致，
-最终recall仍有0.9642／0.9644。FP64重编码及汇总决策一致不能替代这些独立检查。
+（\cref{sec:4-representation-audit}）。T4 已提供计算分数选择的严格 CPU 参考
+（\cref{sec:a-t4-t5}）；同模型 Vogue 跨进程受控诊断仍未执行：归档进程即使
+probe／primary dump 一致，最终 recall 仍有 0.9642／0.9644。
+进程内选择检查并未定位这项独立异常。
 
 \section{次要结果与证据状态}
 \label{sec:b-secondary}
 \paragraph{不利运行区间。}
 调度器最大记录regret为batch 256的$1.217\times$；Vogue E1中调度／单block吞吐
 为0.895--1.175。使0.97 recall领先的偏斜规则也会在低探针单元增加开销
-（\cref{sec:7-6}），这些不利结果与有利的小batch结果一起保留。
+（\cref{sec:7-6}），这些不利结果与内部调度收益一起保留。T5 跨系统比较中，
+recall 0.97、batch 8 时四个数据集均由 CAGRA fp32 领先；batch 32 的边界依赖
+recall 估计（\cref{sec:7-smallbatch}）。
 
 \paragraph{表示替代方案。}
 Mailman式GPU评分器为独立kernel测量，端到端替换只是乐观模型。

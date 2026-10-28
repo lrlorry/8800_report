@@ -53,6 +53,9 @@ interpolates only inside the measured range. It extrapolates no segment.
 Both estimators are reported where comparisons are close: one selects an
 observed qualifying configuration, while the other reduces sensitivity to
 unequal grid spacing. Neither supplies an equal-storage comparison.
+T5 also retains the fastest qualifying measured endpoint when a target
+lies below a method's minimum frontier recall; interpolation being
+undefined does not make a more accurate configuration ineligible.
 
 The parser retains failures and invalid-output diagnostics outside the
 valid-point frontier. Repeat-call ID changes alone do not discard a point;

@@ -1,0 +1,1126 @@
+{
+  "scope": "Offline audit of retained T4/T5 records; no GPU experiment; temporary candidate dumps no longer retained.",
+  "t4": {
+    "configurations": 270,
+    "query_instances": 69120,
+    "path_counts": {
+      "complete_key": {
+        "queries": 55296,
+        "score_mismatch": 0,
+        "set_equal": 55296,
+        "order_equal": 55296,
+        "preorder_ok": 55296,
+        "tie_only": 0,
+        "nontie": 0,
+        "pad_ok": 55296,
+        "underfull": 15296,
+        "cutoff_ties": 352,
+        "final_ok": 55296,
+        "final_checked": 55296
+      },
+      "distance_only": {
+        "queries": 13824,
+        "score_mismatch": 0,
+        "set_equal": 13768,
+        "order_equal": 8758,
+        "preorder_ok": 13824,
+        "tie_only": 56,
+        "nontie": 0,
+        "pad_ok": 13824,
+        "underfull": 3824,
+        "cutoff_ties": 88,
+        "final_ok": 13824,
+        "final_checked": 13824
+      }
+    },
+    "source_correspondence": [
+      "encode.cu",
+      "encode.cuh",
+      "jhq_gpu_index.cu",
+      "jhq_gpu_index.cuh",
+      "search.cu",
+      "search.cuh",
+      "train_pq_gpu.cu",
+      "train_pq_gpu.cuh",
+      "train_res_gpu.cu",
+      "train_res_gpu.cuh"
+    ],
+    "lut": {
+      "full_split_fraction_range": [
+        0.2258527103641094,
+        0.26120465194709663
+      ],
+      "full_split_max_abs": 4.76837158203125e-07,
+      "full_split_max_rel": 4.530849557852515e-07,
+      "all_fraction_range": [
+        0.2053188949759655,
+        0.29353706846073874
+      ],
+      "all_max_abs": 5.960464477539062e-07,
+      "all_max_rel": 4.6337837309336017e-07
+    },
+    "score_equality_scope": "Bitwise comparison of exported versus selector-returned valid primary entries; source arithmetic matches all-candidate export.",
+    "padding_scope": "Correct valid-entry count, not a bytewise check of each unused sentinel.",
+    "final_scope": "CPU sort of retained computed refined scores under (score, ID); not original-space exact kNN."
+  },
+  "t5": {
+    "points": 1808,
+    "counts": [
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "JHQ one block",
+        "points": 29
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "JHQ scheduled",
+        "points": 29
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "JHQ one block",
+        "points": 29
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "JHQ scheduled",
+        "points": 29
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "JHQ one block",
+        "points": 37
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "JHQ scheduled",
+        "points": 37
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "JHQ one block",
+        "points": 37
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "JHQ scheduled",
+        "points": 37
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "JHQ one block",
+        "points": 39
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "JHQ scheduled",
+        "points": 39
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "JHQ one block",
+        "points": 39
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "JHQ scheduled",
+        "points": 39
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "JHQ one block",
+        "points": 27
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "JHQ scheduled",
+        "points": 27
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "points": 64
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "points": 64
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "points": 32
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "JHQ one block",
+        "points": 27
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "JHQ scheduled",
+        "points": 27
+      }
+    ],
+    "ranges": [
+      {
+        "batch": 8,
+        "target": 0.9,
+        "interp_range": [
+          1.031876744151617,
+          1.4785744652863997
+        ],
+        "measured_range": [
+          0.9533781549652816,
+          1.453824695345764
+        ],
+        "interp_wins": 4,
+        "measured_wins": 3
+      },
+      {
+        "batch": 8,
+        "target": 0.95,
+        "interp_range": [
+          0.7981236128506496,
+          1.0726002615795538
+        ],
+        "measured_range": [
+          0.797791773507704,
+          0.9796256892488617
+        ],
+        "interp_wins": 1,
+        "measured_wins": 0
+      },
+      {
+        "batch": 8,
+        "target": 0.97,
+        "interp_range": [
+          0.6407474858571905,
+          0.8933342904615265
+        ],
+        "measured_range": [
+          0.6202623966771879,
+          0.8539957483058457
+        ],
+        "interp_wins": 0,
+        "measured_wins": 0
+      },
+      {
+        "batch": 32,
+        "target": 0.9,
+        "interp_range": [
+          0.8663992817308815,
+          1.1662166102299614
+        ],
+        "measured_range": [
+          0.7344961992403332,
+          1.1478255825731478
+        ],
+        "interp_wins": 3,
+        "measured_wins": 1
+      },
+      {
+        "batch": 32,
+        "target": 0.95,
+        "interp_range": [
+          0.6083822936995944,
+          0.9563343205766586
+        ],
+        "measured_range": [
+          0.661423644333682,
+          0.8950599381283837
+        ],
+        "interp_wins": 0,
+        "measured_wins": 0
+      },
+      {
+        "batch": 32,
+        "target": 0.97,
+        "interp_range": [
+          0.6218552018440634,
+          1.0077413302889795
+        ],
+        "measured_range": [
+          0.5820570209045691,
+          1.3505485609000307
+        ],
+        "interp_wins": 1,
+        "measured_wins": 1
+      }
+    ],
+    "null_median_ms": [
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "latency": 0.0267
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "latency": 0.0266
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0122
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "latency": 0.0294
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "latency": 0.0294
+      },
+      {
+        "dataset": "arxiv-768",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0184
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "latency": 0.0266
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "latency": 0.0277
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0143
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "latency": 0.035
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "latency": 0.0363
+      },
+      {
+        "dataset": "openai3-1536",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0267
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "latency": 0.0348
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "latency": 0.0298
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0184
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "latency": 0.0723
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "latency": 0.0521
+      },
+      {
+        "dataset": "openai3-3072",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0492
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "CAGRA fp32",
+        "latency": 0.0263
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "CAGRA int8",
+        "latency": 0.0267
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 8,
+        "method": "IVF-RaBitQ",
+        "latency": 0.012150000000000001
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "CAGRA fp32",
+        "latency": 0.02895
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "CAGRA int8",
+        "latency": 0.0297
+      },
+      {
+        "dataset": "vogue-768",
+        "batch": 32,
+        "method": "IVF-RaBitQ",
+        "latency": 0.0179
+      }
+    ],
+    "estimation": "Strict measured recall threshold; separately log-QPS interpolation with archived 5e-4 snapping and qualifying endpoint below minimum frontier recall.",
+    "caveats": [
+      "Finite unequal grids; no IVF-PQ or brute-force baseline in T5.",
+      "CAGRA Python binding versus C++ JHQ/RaBitQ; measured null costs remain inside reported times.",
+      "Five within-build rounds; method-specific warm-up; no cross-device or concurrent-service measurements."
+    ]
+  },
+  "inputs": [
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/encode.cu",
+      "sha256": "f2ac28f90679362fc51ad2e7d42ba4e379f9bbe3f2bea2c7c5c7060ea5fed1b1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/encode.cu",
+      "sha256": "5abf105064f6816d8d0b4b0624d833dfe23fbf9410b3ff73c0edfb668605cc6a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/encode.cuh",
+      "sha256": "8db64204687e9171404d9e4513e21dc90dc93daeaf98782cb555f381a7f09c81"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/encode.cuh",
+      "sha256": "8db64204687e9171404d9e4513e21dc90dc93daeaf98782cb555f381a7f09c81"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/jhq_gpu_index.cu",
+      "sha256": "f938265fb787cfc0ebfcfee752d156612374c6302b39a90af8997e1222ccbfe3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/jhq_gpu_index.cu",
+      "sha256": "baa3ff54a364600cb51cd89c83e347958bfc94cbb7196720d4da22da33fd67f1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/jhq_gpu_index.cuh",
+      "sha256": "e5be38076207ca6d2105a439f560d0411d250a929d22ccc9507de02a63278c12"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/jhq_gpu_index.cuh",
+      "sha256": "28dac6700f141000ea794cd8350dceb7992edaa5c0f11afced4582c14a3f48dc"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/search.cu",
+      "sha256": "cc6a81db23cf7045590084e13f7201ba89231fa72b6d69d939808cdb60fc1ff7"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/search.cu",
+      "sha256": "3bbcf374038cfd0dcbd2b1e9f9048e0ad32becf82205d8b932d9531c35277a32"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/search.cuh",
+      "sha256": "5193a3af4d360bf7ba3668b10c233235a3034b834396128a198daf089b50174f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/search.cuh",
+      "sha256": "5193a3af4d360bf7ba3668b10c233235a3034b834396128a198daf089b50174f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/train_pq_gpu.cu",
+      "sha256": "563e08f7c1a04974fb17f766f542d342638656f339b51aa12f5e6c8ffb7fbe6e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/train_pq_gpu.cu",
+      "sha256": "e37e4be4bc1fcd16e89727c86a95381cfc565543ae38a05444b248dc733b5e7d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/train_pq_gpu.cuh",
+      "sha256": "ab1e2f738634f175cbc27ecddd4cf4e3e77a883f7a6a31b13e50822cb0464b68"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/train_pq_gpu.cuh",
+      "sha256": "ab1e2f738634f175cbc27ecddd4cf4e3e77a883f7a6a31b13e50822cb0464b68"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/train_res_gpu.cu",
+      "sha256": "75897de6bbe56f98ed5f3bf30c7d407d1d665d0ddb60a3dbeb9fecd3e7298c34"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/train_res_gpu.cu",
+      "sha256": "3a5111498e1c36c44513d045284bd39e6e0c88afc2293402a09b3c471860aa8f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v71_lutgroups/train_res_gpu.cuh",
+      "sha256": "270a9cdec183a98994013684e9ad68dd3465a87b98d927394154941a4c8c4296"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "jhq_v73_topcref/train_res_gpu.cuh",
+      "sha256": "270a9cdec183a98994013684e9ad68dd3465a87b98d927394154941a4c8c4296"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/REPORT_CN.md",
+      "sha256": "9b8544881e4f5602b7ca8f84bbe74af1ae230fbba9a09cff83ccd8791a07d47f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t4_topcref.sh",
+      "sha256": "3521757b307f70de9e4c4d081d5d7024a945dabbed74c362fdd771b51197d5d9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t4_lut_compare.py",
+      "sha256": "8e6d74fb1ec1f708c3f4c0f86ba8933e73cc4151fbbf9b4d5d1d643f0857b175"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/t5_smallbatch.sh",
+      "sha256": "737bbefae088968025a008fcf09e1e2ba715143d266701e267329277fe5d2501"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/analyze_t5.py",
+      "sha256": "57417546c01f1d3d278f67a5363a3cc0f109534bd6e1b1dc6939f60dde47a473"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/bench_cuvs_smallbatch.py",
+      "sha256": "bf1a4beb4c9c2c1d7afd3101350ac427a4802a638c99c04a344a99f18b954e2a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/bench_rabitq_smallbatch.cu",
+      "sha256": "dea12f5313f553583889dd396d613739df448809c10c42ba4b5c0d92db271daa"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/T5_SUMMARY.md",
+      "sha256": "7d11191ec4cdd72e2826645d4d56221ef9ef203b081ac15a6a462ed03ee7e59d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "CMakeLists.txt",
+      "sha256": "a5a45e7438d6320ecafbec6b99a5db4282bbb44f6d229d05e835d416397fb679"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_topc_reference.cu",
+      "sha256": "f0d0f237b572c6ef1c238dc6fbd87821ca11ae729d916df143afb275c248f870"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "examples/demo_jhq_batch_pipeline.cu",
+      "sha256": "ac13613c2f8ae7d8087fa5e7b0658a88824c1c5aa89dbc7eff8c3b01e2f52439"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/PROGRESS.log",
+      "sha256": "6b96318bff6da794c4e1e8e1ea9741e5ca546730eeadc04db7fe2bb1090119a0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/PROGRESS.log",
+      "sha256": "f313835403987b065a59e977cc17557f2a814bb83aa093fd7de667285596b10e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/arxiv-768_strict.jsonl",
+      "sha256": "dc0163fbd5c3af30b2c47c6515f8b1b95a46e7199a2cc467e839057a926616ea"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/arxiv-768_strict_np1.txt",
+      "sha256": "e7c65220f532c4dde427fc95c77b622b09d85cf30c3e56973f2bfc27e6758898"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/arxiv-768_strict_np8.txt",
+      "sha256": "ec47760db37115f444857398e1d78b63bed1fa24caec53361cae073961755a8c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/arxiv-768_strict_np128.txt",
+      "sha256": "5f4c7623bcec94d79f2f2cea10f0541b201db8c116c69bbfc864130bd1de3fac"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/openai3-3072_strict.jsonl",
+      "sha256": "e1afc92cc2ef2523c5d51f0947f65d4b68aeec1f2355b343667f599c9b535d49"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/openai3-3072_strict_np1.txt",
+      "sha256": "f843cfb97d7530180fc5e53bee55530ba1bd20402a38c78bf3ee69a4e8aead29"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/openai3-3072_strict_np8.txt",
+      "sha256": "e02ec62ab80b9ef7008672a1cb8f0a510828c1ae4b26fc00fcc17a2a7af40b2a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/openai3-3072_strict_np128.txt",
+      "sha256": "6a22a8611d3b59cd2b043d4f5cfde4afee43f72c5bbf37b51858a51493385fd6"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/vogue-768_strict.jsonl",
+      "sha256": "625bb03050147502639e75de59696417292d7f9ca53eaefdc684b74cdcd17d1a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/vogue-768_strict_np1.txt",
+      "sha256": "6d8a8051a7b074a99ff04f207447a65d34f1eb48575a91c9b95ca536bf56051c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/vogue-768_strict_np8.txt",
+      "sha256": "b957633d6afec5ead883c40fcad130c29fd2caadbe9ede314c6b81994aab61f4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/vogue-768_strict_np128.txt",
+      "sha256": "1292e3917bb1984d8bc28c946de00bd0490dafca587968cac2e6256c01cd9c59"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/lut_compare.json",
+      "sha256": "332962806055c255c387362a6c8e0707630db55381319139a25935f46346b519"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T4/lut_compare.md",
+      "sha256": "7784cd5f99c46efa11503a1b0201d4233957b05e9c76a210c3450c244dce4903"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np128.json",
+      "sha256": "437222f977b0fa0f7b00d4cfa49b68540af8ccafad67aa1e2efa589cfb742e0b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np16.json",
+      "sha256": "8c32f468b29f13190b086c6d750a0c73753fd6cb2c102155cb5d3e7a87fb269b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np192.json",
+      "sha256": "f0fe553ec0fb85601438f5c8a15362bf98da21efa40aa4197388bb3d8dfcda35"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np256.json",
+      "sha256": "574c55f9b0f5a58c45ec942140ab7ff73f81810e77d434fca65008b71c505974"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np32.json",
+      "sha256": "d4e62ba5a3c2da1b144853859dc94274bfe1b956fea81a73cb92f9f6a90d9dd3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np384.json",
+      "sha256": "9aafe02fd60df3a71c7020a31af402c94e47102c74cd7cf45d99a3385e2aef6a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np512.json",
+      "sha256": "f315903ae57e56beb563a35c790ea4b8ad11f8e3a86f9a6b38d0e898329bdc6a"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np64.json",
+      "sha256": "84ca6b83bb8bb8d37d8e7b2342257000410c5f0b8090e6b978607e138aa37b3d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_vogue-768_np96.json",
+      "sha256": "97b0bd9be21641259ac34b810c7846187c28c14a5b11d23e853354581329e08f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_vogue-768_cagra.jsonl",
+      "sha256": "5d8268b2709afd9bdc761cc83ae2c710587d12af70b6995fb8f6ca791e76da8f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_vogue-768_cagra-int8.jsonl",
+      "sha256": "d1db928a82b94cb19bba30c72ed01a3b97b70b7c931ef81cfef54f8f21c06096"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/rabitq_vogue-768.jsonl",
+      "sha256": "a023b6c1bb3a016052859f654052ffafae58753955e455a2442032680c269d2b"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np1024.json",
+      "sha256": "03a5894dc1aa5f88b1cd7048f048600722d70e7210f8b689a8275928c0e78a94"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np128.json",
+      "sha256": "65c8a6c901e3e25ec71af995ce422f5b99a3833cbc27ea9ad32f6f3e858a1223"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np16.json",
+      "sha256": "23285c98e2443cb0dcf727adb527f7b1e78bcb2c2063ec9ad40f9ef0ea75e48e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np192.json",
+      "sha256": "adf18bda9a46125a518f884433d120794578b5f0b95e3e3038a8dc3ab29bd400"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np256.json",
+      "sha256": "ace5160ad42ea886e48d53939a8a4d0d69fd7541071af447d219183bb0a78517"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np32.json",
+      "sha256": "45d8a988527893a09565444c4ff155fb074a77966a75c690cf4a9bc79f4d3e1f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np384.json",
+      "sha256": "0f7bed25c0c9dd2ee1d98a3ffec165cb39702dfb98cbfa6baa3dc9b759c6a252"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np512.json",
+      "sha256": "6b3ff70087f97a001be6718608e8d586f6ab3b19f95759587407eb530403da8f"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np64.json",
+      "sha256": "d8724adfdea2acc1c6f3c1c4b573e66f19d63b425cd11ff4bd09083bfc8050c1"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_arxiv-768_np96.json",
+      "sha256": "0de8408390b659096a6ddb03243c72de5fd332867a7ace916150b27a42221885"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_arxiv-768_cagra.jsonl",
+      "sha256": "190da57340301a5ab20611aef02e1b001dc3957f1c81201bc1d165098c2c46c8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_arxiv-768_cagra-int8.jsonl",
+      "sha256": "16968c64c4c42eb225c0486e136d87c3238b2aecffa67926a8d13146599597fa"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/rabitq_arxiv-768.jsonl",
+      "sha256": "11c9ac81f4e92b9e8b58a633addd272a7b9071bf0d9cdc2bc71a17ff2bd1cfbd"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-1536_np1024.json",
+      "sha256": "b00047d6a3749d1cfee6dd75a6d8f5f423c6de150e5d5254f7624d88f3008496"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-1536_np128.json",
+      "sha256": "ef465a5792354f82b931b03449ae40f9a09b71d8cb8bf5902d7a5663da20ff36"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-1536_np256.json",
+      "sha256": "8018df91c539008d49d171d6d2f6153891cdf4bfffd3e7a995b0734d4d69015d"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-1536_np32.json",
+      "sha256": "256341c5f1ff3ed9e66271dc687efd9eeea23f6279a022c68d3137c6a0f606f7"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-1536_np512.json",
+      "sha256": "d6f15c2d207b3dc33b4697977814f6ea4b4c39577c9046456d1fda2a8d7269d3"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-1536_np64.json",
+      "sha256": "98ff6e05e8dcdcc780b9a163e0f260534f0106c407965ccb85048382349496a0"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_openai3-1536_cagra.jsonl",
+      "sha256": "94c3300148a22f3ca537aa0974bf8bdae76a4cbd27af0c46e0bf4ee1468ac110"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_openai3-1536_cagra-int8.jsonl",
+      "sha256": "9d544374e36ab5ca8b4a366080f5172ccab2abdb4a85200fc9f595f688f53b27"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/rabitq_openai3-1536.jsonl",
+      "sha256": "7ed78ae06aff9439ad7d51b187c33f459b2369f641e2d597d8f3026310aa8502"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-3072_np1024.json",
+      "sha256": "e347a4539a4245ebb8aa53f55f877d12869a11728e87e38f8caa781750163d57"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-3072_np128.json",
+      "sha256": "64240e216cb2ba6d6cc7cdb607567d7624b0478a13b156c53bd7a211f61544a4"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-3072_np256.json",
+      "sha256": "ca00925edb9bd3f18701179fdd6664ba606e575552e6d68dc06634f5b091b21e"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-3072_np32.json",
+      "sha256": "462752233b9a61b28f16cb2233d6e8fd233becbad552ba14c8057831a7103363"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-3072_np512.json",
+      "sha256": "1739e6132f588efbb8a0a6de727d49d3113cb2b3823908252656b7ec9332f501"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/jhq_openai3-3072_np64.json",
+      "sha256": "edb6d7cc95d2f9b5facc997e8070fe455a8a1e684575e4684f0177a14388b4a9"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_openai3-3072_cagra.jsonl",
+      "sha256": "fe95dab624f1aa39f9eb0e157e2db18a81ef65aaf8080a3e4bdd2bdbbb29a28c"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/cuvs_openai3-3072_cagra-int8.jsonl",
+      "sha256": "0066187ce212a7e1bf7f691b9f3b201cdc568f2c6dd5bf8bbcc73ea42bdacea8"
+    },
+    {
+      "repository": "JHQ_GPU",
+      "path": "experiments/thesis_evidence/RAW_T5/rabitq_openai3-3072.jsonl",
+      "sha256": "d56133c2e2f8a1d96270a4bf5008721d88ddb9398d540be7879dfd42c6488ace"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-6-contracts.tex",
+      "sha256": "40c153b90f3209109fa42c74c3a9e0b3f5fded02688234f2e8ebc47a9de1a32b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-6-contracts.tex",
+      "sha256": "06341d4680c6792dea11da51e6b3088c47bdd56945a111c1f8a0c0991845d729"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-2-lut.tex",
+      "sha256": "7587fd52368fbff50b842c6dec9354f45b3f4e03222f5c07e1d39702e3c904e7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-2-lut.tex",
+      "sha256": "e64cc09586d02a8c97ad0ab8a44b872503e8b48719f6e0c5d202afd3b407b8c7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "8d6de7ce0bc99d68545b47bbb2274708d57e0002e075f965e7931ff5f664a94e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-4-global-selection.tex",
+      "sha256": "472e38a4634673a0afa31214707e37e88efcbc60be6070dc52cdc028444a9bef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "404e839170d9542431287558f1fc7b58b9757f1078e53c69e8520a79d6d392be"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "716db0ddec49fc3946f83ac584cb5d8f0700accf1003196c87226a182748730b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-selection.tex",
+      "sha256": "7c9e048ef49e1a900cfd7c2b460e052d191d718524a7c48418a781083483c664"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-selection.tex",
+      "sha256": "4b5e2e3b6a958a054d1acde73546ab43211944dec7598ea1cca152a53a4d1b78"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-smallbatch.tex",
+      "sha256": "14e293dea7038ebce2acc2ff811fd997feb176c96debd7f5695c07dbc6d7095b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-smallbatch.tex",
+      "sha256": "b2f2afe00d1810b6c675b3a65479e3c6e8b8bd96fc9b1785bdf420c4a2c6eb70"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "109ca315137fc3ebb9fcd8daaa62e4bdff670490683b5ed347aa15262d35f333"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "204a46faed4f6c149a70f70ed4c44a187ddd35648e985e427d89adef564eb887"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "31d9fd3fad974ac4d8f0ab6d75f31592eb575321f71fba00b22371002b5c214a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "c1e76c0958e1082c7bf83d68e4778387664596c6a3a76ad5637b32fecebc504f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/09-conclusion.tex",
+      "sha256": "200fa3681192b90fd20c79c25c9d644569b7c3d51defe444554f4ec3f7114337"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/09-conclusion.tex",
+      "sha256": "d8f7eb3f3acd2780b463ed7833241d16eafac3daa45c573cc2ef44d8faba8967"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/b-supplementary.tex",
+      "sha256": "6b7b85d6481dbbe6067f49c4e43a07b6c783b2659b63d5fc66ab8b5677ddd2c2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/appendices/b-supplementary.tex",
+      "sha256": "c203f4fc900cce9a550b891cb8195b8ca40629994477215f968027a1b40368e0"
+    },
+    {
+      "repository": "8800_report",
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "80e253d222b13353200c7cd0619125789a36aa1630153cfcb49280a38d0f66af"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/abstract.tex",
+      "sha256": "2fc317aa42944207847d28fb04c41955bdd2d0ccf7755c5b7c6bdf6ba091b1fa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/abstract.tex",
+      "sha256": "ef8fb934c7fe164c8839d27187c0ee1ea4933777aa54e69a71df9bb8372c7b1e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/t4-t5-integration.txt",
+      "sha256": "f705a3d5035d94adb0ab67d76ac084ee2269724bd5b3bfea3463ece57c9207cf"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_t4_t5.py",
+      "sha256": "7f2ce6cb648ac35a9c82902201ddbd6b7cd2241c0a6653cbb8f60df60abf92f1"
+    }
+  ]
+}

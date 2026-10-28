@@ -61,11 +61,17 @@ An arbitrary learned 256-centroid PQ subcodebook need not satisfy this
 condition: dividing its code labels into nibbles does not factor its
 centroid coordinates.
 
-FP32 accumulation order changes between the full and split tables.
-The archived grouping sweep checks end-to-end recall, whose observed
-spread is at most $10^{-4}$; it supplies no full-table versus split-table
-per-candidate score-error or cutoff-tie comparison. Those stronger
-numerical checks remain pending. All compared tables use FP32.
+T4 now measures the FP32 effect directly on the same candidates at 128
+probes and $\alpha=100$ on Vogue, arXiv and OpenAI-3072. Full versus
+$16+16$ tables differ in 22.6--26.1\% of score bit patterns, with maximum
+relative error $4.53\times10^{-7}$. Including four-/eight-way tables
+widens these ranges to 20.5--29.4\% and $4.64\times10^{-7}$.
+Across 256 queries, final IDs agree on arXiv/OpenAI but differ on 2--4
+Vogue queries. Even unchanged survivor sets can produce different final
+IDs because the rounded primary score enters refinement.
+Factorisation is therefore exact in real arithmetic and numerically
+close in this FP32 audit, with measured ranking differences
+(\cref{sec:7-strict-selection,sec:a-t4-t5}).
 
 \subsection{Grouping, construction work and resource cost}
 

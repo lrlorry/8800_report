@@ -1,0 +1,1809 @@
+dataset,batch,method,recall,qps,nused,nprobe,alpha,scheduled_groups,source
+vogue-768,8,JHQ one block,0.9622,7478.8,1000,128,32,8,jhq_vogue-768_np128.json
+vogue-768,8,JHQ scheduled,0.9622,25689.9,1000,128,32,8,jhq_vogue-768_np128.json
+vogue-768,32,JHQ one block,0.962198,25771.5,992,128,32,8,jhq_vogue-768_np128.json
+vogue-768,32,JHQ scheduled,0.962198,81474.8,992,128,32,8,jhq_vogue-768_np128.json
+vogue-768,8,JHQ one block,0.9644,6994.5,1000,128,64,8,jhq_vogue-768_np128.json
+vogue-768,8,JHQ scheduled,0.9644,21246.6,1000,128,64,8,jhq_vogue-768_np128.json
+vogue-768,32,JHQ one block,0.964415,24181.6,992,128,64,8,jhq_vogue-768_np128.json
+vogue-768,32,JHQ scheduled,0.964415,65516.9,992,128,64,8,jhq_vogue-768_np128.json
+vogue-768,8,JHQ one block,0.9646,5660.3,1000,128,128,8,jhq_vogue-768_np128.json
+vogue-768,8,JHQ scheduled,0.9646,13539.4,1000,128,128,8,jhq_vogue-768_np128.json
+vogue-768,32,JHQ one block,0.964617,19665.9,992,128,128,8,jhq_vogue-768_np128.json
+vogue-768,32,JHQ scheduled,0.964617,45025.8,992,128,128,8,jhq_vogue-768_np128.json
+vogue-768,8,JHQ one block,0.7714,28608.2,1000,16,16,8,jhq_vogue-768_np16.json
+vogue-768,8,JHQ scheduled,0.7714,51639.5,1000,16,16,8,jhq_vogue-768_np16.json
+vogue-768,32,JHQ one block,0.770867,92649.8,992,16,16,8,jhq_vogue-768_np16.json
+vogue-768,32,JHQ scheduled,0.770867,159349.6,992,16,16,8,jhq_vogue-768_np16.json
+vogue-768,8,JHQ one block,0.7743,24640.5,1000,16,32,8,jhq_vogue-768_np16.json
+vogue-768,8,JHQ scheduled,0.7743,44078.5,1000,16,32,8,jhq_vogue-768_np16.json
+vogue-768,32,JHQ one block,0.77369,81074.9,992,16,32,8,jhq_vogue-768_np16.json
+vogue-768,32,JHQ scheduled,0.77369,143854.5,992,16,32,8,jhq_vogue-768_np16.json
+vogue-768,8,JHQ one block,0.7747,20874.4,1000,16,64,8,jhq_vogue-768_np16.json
+vogue-768,8,JHQ scheduled,0.7747,33912.4,1000,16,64,8,jhq_vogue-768_np16.json
+vogue-768,32,JHQ one block,0.774093,70770.9,992,16,64,8,jhq_vogue-768_np16.json
+vogue-768,32,JHQ scheduled,0.774093,103641.9,992,16,64,8,jhq_vogue-768_np16.json
+vogue-768,8,JHQ one block,0.9738,5752.0,1000,192,32,8,jhq_vogue-768_np192.json
+vogue-768,8,JHQ scheduled,0.9738,22255.3,1000,192,32,8,jhq_vogue-768_np192.json
+vogue-768,32,JHQ one block,0.97379,20410.1,992,192,32,8,jhq_vogue-768_np192.json
+vogue-768,32,JHQ scheduled,0.97379,69381.2,992,192,32,8,jhq_vogue-768_np192.json
+vogue-768,8,JHQ one block,0.9766,5466.0,1000,192,64,8,jhq_vogue-768_np192.json
+vogue-768,8,JHQ scheduled,0.9766,18712.0,1000,192,64,8,jhq_vogue-768_np192.json
+vogue-768,32,JHQ one block,0.976613,19321.2,992,192,64,8,jhq_vogue-768_np192.json
+vogue-768,32,JHQ scheduled,0.976613,57283.0,992,192,64,8,jhq_vogue-768_np192.json
+vogue-768,8,JHQ one block,0.9769,4597.2,1000,192,128,8,jhq_vogue-768_np192.json
+vogue-768,8,JHQ scheduled,0.9769,12042.3,1000,192,128,8,jhq_vogue-768_np192.json
+vogue-768,32,JHQ one block,0.976915,16308.8,992,192,128,8,jhq_vogue-768_np192.json
+vogue-768,32,JHQ scheduled,0.976915,40306.7,992,192,128,8,jhq_vogue-768_np192.json
+vogue-768,8,JHQ one block,0.9795,4786.7,1000,256,32,8,jhq_vogue-768_np256.json
+vogue-768,8,JHQ scheduled,0.9795,19898.3,1000,256,32,8,jhq_vogue-768_np256.json
+vogue-768,32,JHQ one block,0.979536,17213.9,992,256,32,8,jhq_vogue-768_np256.json
+vogue-768,32,JHQ scheduled,0.979536,61448.3,992,256,32,8,jhq_vogue-768_np256.json
+vogue-768,8,JHQ one block,0.9826,4578.6,1000,256,64,8,jhq_vogue-768_np256.json
+vogue-768,8,JHQ scheduled,0.9826,16833.5,1000,256,64,8,jhq_vogue-768_np256.json
+vogue-768,32,JHQ one block,0.982661,16464.5,992,256,64,8,jhq_vogue-768_np256.json
+vogue-768,32,JHQ scheduled,0.982661,51524.8,992,256,64,8,jhq_vogue-768_np256.json
+vogue-768,8,JHQ one block,0.9829,3933.4,1000,256,128,8,jhq_vogue-768_np256.json
+vogue-768,8,JHQ scheduled,0.9829,11033.0,1000,256,128,8,jhq_vogue-768_np256.json
+vogue-768,32,JHQ one block,0.982964,14196.1,992,256,128,8,jhq_vogue-768_np256.json
+vogue-768,32,JHQ scheduled,0.982964,37259.8,992,256,128,8,jhq_vogue-768_np256.json
+vogue-768,8,JHQ one block,0.8566,19627.1,1000,32,16,8,jhq_vogue-768_np32.json
+vogue-768,8,JHQ scheduled,0.8566,45573.9,1000,32,16,8,jhq_vogue-768_np32.json
+vogue-768,32,JHQ one block,0.856351,64076.8,992,32,16,8,jhq_vogue-768_np32.json
+vogue-768,32,JHQ scheduled,0.856351,140523.3,992,32,16,8,jhq_vogue-768_np32.json
+vogue-768,8,JHQ one block,0.8611,17516.7,1000,32,32,8,jhq_vogue-768_np32.json
+vogue-768,8,JHQ scheduled,0.8611,38152.1,1000,32,32,8,jhq_vogue-768_np32.json
+vogue-768,32,JHQ one block,0.860786,58227.8,992,32,32,8,jhq_vogue-768_np32.json
+vogue-768,32,JHQ scheduled,0.860786,123326.3,992,32,32,8,jhq_vogue-768_np32.json
+vogue-768,8,JHQ one block,0.862,15274.9,1000,32,64,8,jhq_vogue-768_np32.json
+vogue-768,8,JHQ scheduled,0.862,29718.7,1000,32,64,8,jhq_vogue-768_np32.json
+vogue-768,32,JHQ one block,0.861694,52128.1,992,32,64,8,jhq_vogue-768_np32.json
+vogue-768,32,JHQ scheduled,0.861694,92674.0,992,32,64,8,jhq_vogue-768_np32.json
+vogue-768,8,JHQ one block,0.9853,3692.4,1000,384,32,8,jhq_vogue-768_np384.json
+vogue-768,8,JHQ scheduled,0.9853,16635.8,1000,384,32,8,jhq_vogue-768_np384.json
+vogue-768,32,JHQ one block,0.985282,13650.0,992,384,32,8,jhq_vogue-768_np384.json
+vogue-768,32,JHQ scheduled,0.985282,51099.9,992,384,32,8,jhq_vogue-768_np384.json
+vogue-768,8,JHQ one block,0.9884,3553.9,1000,384,64,8,jhq_vogue-768_np384.json
+vogue-768,8,JHQ scheduled,0.9884,14483.5,1000,384,64,8,jhq_vogue-768_np384.json
+vogue-768,32,JHQ one block,0.988407,13170.0,992,384,64,8,jhq_vogue-768_np384.json
+vogue-768,32,JHQ scheduled,0.988407,44146.3,992,384,64,8,jhq_vogue-768_np384.json
+vogue-768,8,JHQ one block,0.9887,3131.0,1000,384,128,8,jhq_vogue-768_np384.json
+vogue-768,8,JHQ scheduled,0.9887,9697.0,1000,384,128,8,jhq_vogue-768_np384.json
+vogue-768,32,JHQ one block,0.98871,11649.4,992,384,128,8,jhq_vogue-768_np384.json
+vogue-768,32,JHQ scheduled,0.98871,33309.3,992,384,128,8,jhq_vogue-768_np384.json
+vogue-768,8,JHQ one block,0.9873,3228.6,1000,512,32,8,jhq_vogue-768_np512.json
+vogue-768,8,JHQ scheduled,0.9873,14956.9,1000,512,32,8,jhq_vogue-768_np512.json
+vogue-768,32,JHQ one block,0.987298,12172.9,992,512,32,8,jhq_vogue-768_np512.json
+vogue-768,32,JHQ scheduled,0.987298,46371.1,992,512,32,8,jhq_vogue-768_np512.json
+vogue-768,8,JHQ one block,0.9904,3109.4,1000,512,64,8,jhq_vogue-768_np512.json
+vogue-768,8,JHQ scheduled,0.9904,13169.6,1000,512,64,8,jhq_vogue-768_np512.json
+vogue-768,32,JHQ one block,0.990423,11737.0,992,512,64,8,jhq_vogue-768_np512.json
+vogue-768,32,JHQ scheduled,0.990423,40503.9,992,512,64,8,jhq_vogue-768_np512.json
+vogue-768,8,JHQ one block,0.9907,2757.9,1000,512,128,8,jhq_vogue-768_np512.json
+vogue-768,8,JHQ scheduled,0.9907,8953.3,1000,512,128,8,jhq_vogue-768_np512.json
+vogue-768,32,JHQ one block,0.990726,10388.5,992,512,128,8,jhq_vogue-768_np512.json
+vogue-768,32,JHQ scheduled,0.990726,31126.9,992,512,128,8,jhq_vogue-768_np512.json
+vogue-768,8,JHQ one block,0.924,11587.9,1000,64,32,8,jhq_vogue-768_np64.json
+vogue-768,8,JHQ scheduled,0.924,31805.8,1000,64,32,8,jhq_vogue-768_np64.json
+vogue-768,32,JHQ one block,0.923891,39173.9,992,64,32,8,jhq_vogue-768_np64.json
+vogue-768,32,JHQ scheduled,0.923891,102583.3,992,64,32,8,jhq_vogue-768_np64.json
+vogue-768,8,JHQ one block,0.9257,10532.6,1000,64,64,8,jhq_vogue-768_np64.json
+vogue-768,8,JHQ scheduled,0.9257,25434.3,1000,64,64,8,jhq_vogue-768_np64.json
+vogue-768,32,JHQ one block,0.925605,35930.5,992,64,64,8,jhq_vogue-768_np64.json
+vogue-768,32,JHQ scheduled,0.925605,79637.9,992,64,64,8,jhq_vogue-768_np64.json
+vogue-768,8,JHQ one block,0.9259,7891.9,1000,64,128,8,jhq_vogue-768_np64.json
+vogue-768,8,JHQ scheduled,0.9259,16412.7,1000,64,128,8,jhq_vogue-768_np64.json
+vogue-768,32,JHQ one block,0.925806,27033.7,992,64,128,8,jhq_vogue-768_np64.json
+vogue-768,32,JHQ scheduled,0.925806,53473.6,992,64,128,8,jhq_vogue-768_np64.json
+vogue-768,8,JHQ one block,0.9495,8979.7,1000,96,32,8,jhq_vogue-768_np96.json
+vogue-768,8,JHQ scheduled,0.9495,28271.3,1000,96,32,8,jhq_vogue-768_np96.json
+vogue-768,32,JHQ one block,0.949597,30648.5,992,96,32,8,jhq_vogue-768_np96.json
+vogue-768,32,JHQ scheduled,0.949597,89679.3,992,96,32,8,jhq_vogue-768_np96.json
+vogue-768,8,JHQ one block,0.9511,8274.3,1000,96,64,8,jhq_vogue-768_np96.json
+vogue-768,8,JHQ scheduled,0.9511,23035.6,1000,96,64,8,jhq_vogue-768_np96.json
+vogue-768,32,JHQ one block,0.95121,28436.2,992,96,64,8,jhq_vogue-768_np96.json
+vogue-768,32,JHQ scheduled,0.95121,71032.2,992,96,64,8,jhq_vogue-768_np96.json
+vogue-768,8,JHQ one block,0.9513,6510.9,1000,96,128,8,jhq_vogue-768_np96.json
+vogue-768,8,JHQ scheduled,0.9513,14640.8,1000,96,128,8,jhq_vogue-768_np96.json
+vogue-768,32,JHQ one block,0.951411,22444.2,992,96,128,8,jhq_vogue-768_np96.json
+vogue-768,32,JHQ scheduled,0.951411,48106.5,992,96,128,8,jhq_vogue-768_np96.json
+vogue-768,8,CAGRA fp32,0.856,26305.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.854335,95894.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9392,26497.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.935685,96798.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9744,26060.2,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.972883,82298.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9898,23441.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989718,54089.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.939,26398.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.935484,96427.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.939,26415.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.935685,96737.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9735,25874.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.972681,82059.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9896,23498.7,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989516,54295.1,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9604,26224.2,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.963407,91027.2,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9605,26223.7,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.96371,90979.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9741,25933.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.971875,82729.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9897,23499.5,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989415,53961.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9736,25971.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.972782,82312.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9743,25988.9,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.97248,82160.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9738,25998.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.972581,82193.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9897,23492.5,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989718,54220.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9853,24783.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.985887,64194.2,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9849,24757.7,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.985786,64589.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.985,24717.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.985484,64430.2,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9897,23486.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989718,54398.3,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9896,23498.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989718,54112.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9899,23546.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989113,53983.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9894,23514.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.98881,54279.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9896,23531.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.989617,53997.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.994,21148.9,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.994254,38339.3,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9939,21205.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.994859,38167.7,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9934,21113.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.994153,38441.3,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9938,21157.2,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.994153,38120.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9959,18355.9,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995565,29754.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9956,18430.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995363,29862.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9957,18470.5,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996069,29626.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9961,18361.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995464,29846.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9364,20777.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.938508,75864.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9749,21155.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.975605,73876.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9912,20618.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.991835,55266.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9966,18422.0,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996371,32340.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9752,21150.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.975202,74021.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.975,21127.9,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.975202,73929.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9911,20574.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.992137,55501.3,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9964,18396.7,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996169,32478.3,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9878,20831.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.988004,64822.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9879,20793.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.988105,64664.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9914,20546.9,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.991633,55410.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9964,18382.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995867,32463.1,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9911,20585.2,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.991532,55311.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9909,20559.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.991633,55507.1,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9914,20574.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.991835,55318.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9962,18381.7,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996069,32403.2,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9945,19442.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995161,40370.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9944,19454.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.994758,40446.1,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9942,19470.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.994758,40315.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9964,18418.1,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995766,32419.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9966,18370.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996169,32365.1,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9962,18437.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996472,32471.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9961,18401.9,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.99627,32416.8,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9965,18367.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.995464,32518.5,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9976,15873.4,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.997984,22101.1,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9975,15872.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.996976,22074.0,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9975,15892.8,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.99748,22125.2,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9974,15824.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.99748,22142.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9983,13310.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.998085,16935.4,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9978,13347.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.998085,16969.6,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.9982,13266.3,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.998488,17035.2,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA fp32,0.998,13348.6,1000,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,32,CAGRA fp32,0.998286,16992.9,992,,,,cuvs_vogue-768_cagra.jsonl
+vogue-768,8,CAGRA int8,0.8317,27059.4,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.836694,100221.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.897,27091.5,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.900806,93413.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9292,24245.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.930242,97363.9,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9388,25088.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938206,77656.1,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.897,26747.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.900605,102886.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.8969,27123.6,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.900605,102593.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9291,26516.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93004,97842.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9388,25017.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93871,77968.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9191,26830.2,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.919456,100854.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9192,26781.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.919556,101529.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.929,26118.4,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.930343,97598.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.939,24922.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938508,77415.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.929,26460.8,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.929536,96923.3,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9291,26564.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93004,97154.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9292,26524.3,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.930242,97619.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9389,25009.3,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938508,78092.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9365,25667.2,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93619,83992.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9367,25630.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93619,84217.5,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9364,25746.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93629,84579.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9389,24927.8,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938508,78206.5,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9387,25006.7,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938206,78124.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.939,25043.4,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938407,78202.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9387,25016.2,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938508,78580.3,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9389,24973.2,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.938206,77566.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9427,22626.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.942137,60394.3,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9425,22810.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.942339,60795.5,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9428,22828.5,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.94244,60653.1,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9429,22731.2,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.94244,60711.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9441,20000.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.942742,51462.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9435,20143.3,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.942944,52098.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9438,20020.3,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.942843,50575.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9437,20025.3,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.943347,52505.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9023,22373.8,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.902117,82323.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9294,22823.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.928629,86741.3,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9413,22331.7,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.941028,81929.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9437,20849.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944153,61305.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9293,22762.8,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.92873,86564.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9292,22797.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.928831,86500.9,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9411,22325.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.941028,81102.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9439,20767.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944153,61567.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9356,22646.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.936391,84733.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9355,22699.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.93629,84399.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9411,22326.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.94123,81322.4,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9438,20834.5,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944052,60865.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9411,22318.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.940827,81452.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9412,22331.7,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.941129,81410.5,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9407,22364.7,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.941331,81382.9,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9438,20830.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944254,61326.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9431,21649.6,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944153,65921.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9431,21590.5,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.943952,65578.5,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9439,21589.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944153,65995.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9438,20831.8,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944052,61815.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9437,20796.4,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.943649,61285.2,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9439,20854.7,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.943851,61155.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.944,20818.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.943851,61568.3,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9441,20857.0,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944052,61648.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9449,18803.5,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944859,45158.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9448,18848.6,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944758,45625.8,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.945,18751.4,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944456,45383.0,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9451,18733.7,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944859,45381.9,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.945,16680.1,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.945161,39210.6,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.945,16623.5,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.944859,39369.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.9449,16771.9,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.94506,39178.7,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,CAGRA int8,0.945,16678.3,1000,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,32,CAGRA int8,0.945262,39363.5,992,,,,cuvs_vogue-768_cagra-int8.jsonl
+vogue-768,8,IVF-RaBitQ,0.7559,31884.1,1000,16,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.755645,106467.7,992,16,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.8444,31124.3,1000,32,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.844254,87632.5,992,32,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9132,29157.6,1000,64,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.913206,84968.1,992,64,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9551,24684.3,1000,128,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.955444,77263.8,992,128,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9714,24197.1,1000,192,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.971573,68975.9,992,192,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9809,23827.9,1000,256,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.980847,51271.2,992,256,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9887,21881.7,1000,384,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.989012,46977.5,992,384,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9921,21384.5,1000,512,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.992137,43415.5,992,512,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.7559,27172.9,1000,16,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.755544,92370.7,992,16,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.8448,26556.8,1000,32,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.844355,74494.9,992,32,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9132,25163.6,1000,64,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.913105,72384.1,992,64,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9551,20969.6,1000,128,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.95494,65103.8,992,128,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9714,20783.4,1000,192,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.971774,59245.7,992,192,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9809,20280.7,1000,256,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.981149,57603.9,992,256,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9895,18872.9,1000,384,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.989214,42266.0,992,384,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9926,18465.8,1000,512,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.992137,39471.6,992,512,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.7429,24882.6,1000,16,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.742944,86471.4,992,16,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.8297,24335.8,1000,32,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.830242,74125.5,992,32,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.8925,23105.5,1000,64,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.892843,69673.7,992,64,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9312,21500.3,1000,128,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.931351,60769.4,992,128,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9427,21260.5,1000,192,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.943044,56397.5,992,192,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9497,20883.2,1000,256,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.949496,43856.9,992,256,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9557,18533.3,1000,384,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.955343,40515.1,992,384,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9584,17920.1,1000,512,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.958266,37382.0,992,512,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.743,23184.5,1000,16,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.742742,79795.0,992,16,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.8298,22599.4,1000,32,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.830444,66723.1,992,32,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.8925,21280.1,1000,64,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.892742,62766.8,992,64,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9308,19387.1,1000,128,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.931149,55070.1,992,128,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9424,19060.7,1000,192,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.94254,51465.1,992,192,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9492,18811.7,1000,256,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.949395,50414.3,992,256,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9553,16957.9,1000,384,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.955141,37563.7,992,384,,,rabitq_vogue-768.jsonl
+vogue-768,8,IVF-RaBitQ,0.9581,15984.2,1000,512,,,rabitq_vogue-768.jsonl
+vogue-768,32,IVF-RaBitQ,0.958165,35384.5,992,512,,,rabitq_vogue-768.jsonl
+arxiv-768,8,JHQ one block,0.9833,1438.5,1000,1024,50,8,jhq_arxiv-768_np1024.json
+arxiv-768,8,JHQ scheduled,0.9833,5126.3,1000,1024,50,8,jhq_arxiv-768_np1024.json
+arxiv-768,32,JHQ one block,0.983266,5784.2,992,1024,50,8,jhq_arxiv-768_np1024.json
+arxiv-768,32,JHQ scheduled,0.983266,18723.3,992,1024,50,8,jhq_arxiv-768_np1024.json
+arxiv-768,8,JHQ one block,0.9903,1525.7,1000,1024,100,8,jhq_arxiv-768_np1024.json
+arxiv-768,8,JHQ scheduled,0.9903,6343.7,1000,1024,100,8,jhq_arxiv-768_np1024.json
+arxiv-768,32,JHQ one block,0.990222,6213.0,992,1024,100,8,jhq_arxiv-768_np1024.json
+arxiv-768,32,JHQ scheduled,0.990222,23402.2,992,1024,100,8,jhq_arxiv-768_np1024.json
+arxiv-768,8,JHQ one block,0.9726,6076.6,1000,128,50,8,jhq_arxiv-768_np128.json
+arxiv-768,8,JHQ scheduled,0.9726,16964.8,1000,128,50,8,jhq_arxiv-768_np128.json
+arxiv-768,32,JHQ one block,0.972379,22540.6,992,128,50,8,jhq_arxiv-768_np128.json
+arxiv-768,32,JHQ scheduled,0.972379,54481.6,992,128,50,8,jhq_arxiv-768_np128.json
+arxiv-768,8,JHQ one block,0.9766,7580.7,1000,128,100,8,jhq_arxiv-768_np128.json
+arxiv-768,8,JHQ scheduled,0.9766,17761.5,1000,128,100,8,jhq_arxiv-768_np128.json
+arxiv-768,32,JHQ one block,0.976411,28207.6,992,128,100,8,jhq_arxiv-768_np128.json
+arxiv-768,32,JHQ scheduled,0.976411,57655.6,992,128,100,8,jhq_arxiv-768_np128.json
+arxiv-768,8,JHQ one block,0.9777,6361.8,1000,128,200,8,jhq_arxiv-768_np128.json
+arxiv-768,8,JHQ scheduled,0.9777,13185.6,1000,128,200,8,jhq_arxiv-768_np128.json
+arxiv-768,32,JHQ one block,0.97752,24146.7,992,128,200,8,jhq_arxiv-768_np128.json
+arxiv-768,32,JHQ scheduled,0.97752,41024.9,992,128,200,8,jhq_arxiv-768_np128.json
+arxiv-768,8,JHQ one block,0.8635,30723.9,1000,16,25,8,jhq_arxiv-768_np16.json
+arxiv-768,8,JHQ scheduled,0.8635,46429.0,1000,16,25,8,jhq_arxiv-768_np16.json
+arxiv-768,32,JHQ one block,0.864012,107744.9,992,16,25,8,jhq_arxiv-768_np16.json
+arxiv-768,32,JHQ scheduled,0.864012,143042.8,992,16,25,8,jhq_arxiv-768_np16.json
+arxiv-768,8,JHQ one block,0.8673,18720.5,1000,16,50,8,jhq_arxiv-768_np16.json
+arxiv-768,8,JHQ scheduled,0.8673,39382.0,1000,16,50,8,jhq_arxiv-768_np16.json
+arxiv-768,32,JHQ one block,0.867742,67226.2,992,16,50,8,jhq_arxiv-768_np16.json
+arxiv-768,32,JHQ scheduled,0.867742,121657.2,992,16,50,8,jhq_arxiv-768_np16.json
+arxiv-768,8,JHQ one block,0.8686,19941.0,1000,16,100,8,jhq_arxiv-768_np16.json
+arxiv-768,8,JHQ scheduled,0.8686,30505.5,1000,16,100,8,jhq_arxiv-768_np16.json
+arxiv-768,32,JHQ one block,0.869052,72676.7,992,16,100,8,jhq_arxiv-768_np16.json
+arxiv-768,32,JHQ scheduled,0.869052,101791.9,992,16,100,8,jhq_arxiv-768_np16.json
+arxiv-768,8,JHQ one block,0.9784,4783.9,1000,192,50,8,jhq_arxiv-768_np192.json
+arxiv-768,8,JHQ scheduled,0.9784,13591.3,1000,192,50,8,jhq_arxiv-768_np192.json
+arxiv-768,32,JHQ one block,0.978226,18005.4,992,192,50,8,jhq_arxiv-768_np192.json
+arxiv-768,32,JHQ scheduled,0.978226,45689.3,992,192,50,8,jhq_arxiv-768_np192.json
+arxiv-768,8,JHQ one block,0.9831,5748.0,1000,192,100,8,jhq_arxiv-768_np192.json
+arxiv-768,8,JHQ scheduled,0.9831,15215.0,1000,192,100,8,jhq_arxiv-768_np192.json
+arxiv-768,32,JHQ one block,0.982964,21947.1,992,192,100,8,jhq_arxiv-768_np192.json
+arxiv-768,32,JHQ scheduled,0.982964,51288.0,992,192,100,8,jhq_arxiv-768_np192.json
+arxiv-768,8,JHQ one block,0.9841,4980.9,1000,192,200,8,jhq_arxiv-768_np192.json
+arxiv-768,8,JHQ scheduled,0.9841,11068.6,1000,192,200,8,jhq_arxiv-768_np192.json
+arxiv-768,32,JHQ one block,0.983972,19126.7,992,192,200,8,jhq_arxiv-768_np192.json
+arxiv-768,32,JHQ scheduled,0.983972,37210.3,992,192,200,8,jhq_arxiv-768_np192.json
+arxiv-768,8,JHQ one block,0.9798,3972.0,1000,256,50,8,jhq_arxiv-768_np256.json
+arxiv-768,8,JHQ scheduled,0.9798,11470.6,1000,256,50,8,jhq_arxiv-768_np256.json
+arxiv-768,32,JHQ one block,0.979738,15171.8,992,256,50,8,jhq_arxiv-768_np256.json
+arxiv-768,32,JHQ scheduled,0.979738,39614.6,992,256,50,8,jhq_arxiv-768_np256.json
+arxiv-768,8,JHQ one block,0.9856,4665.9,1000,256,100,8,jhq_arxiv-768_np256.json
+arxiv-768,8,JHQ scheduled,0.9856,13611.0,1000,256,100,8,jhq_arxiv-768_np256.json
+arxiv-768,32,JHQ one block,0.985484,18121.8,992,256,100,8,jhq_arxiv-768_np256.json
+arxiv-768,32,JHQ scheduled,0.985484,46834.4,992,256,100,8,jhq_arxiv-768_np256.json
+arxiv-768,8,JHQ one block,0.9865,4139.1,1000,256,200,8,jhq_arxiv-768_np256.json
+arxiv-768,8,JHQ scheduled,0.9865,10244.7,1000,256,200,8,jhq_arxiv-768_np256.json
+arxiv-768,32,JHQ one block,0.986391,16145.5,992,256,200,8,jhq_arxiv-768_np256.json
+arxiv-768,32,JHQ scheduled,0.986391,34645.8,992,256,200,8,jhq_arxiv-768_np256.json
+arxiv-768,8,JHQ one block,0.9157,22522.5,1000,32,25,8,jhq_arxiv-768_np32.json
+arxiv-768,8,JHQ scheduled,0.9157,42578.6,1000,32,25,8,jhq_arxiv-768_np32.json
+arxiv-768,32,JHQ one block,0.915827,79872.6,992,32,25,8,jhq_arxiv-768_np32.json
+arxiv-768,32,JHQ scheduled,0.915827,132584.3,992,32,25,8,jhq_arxiv-768_np32.json
+arxiv-768,8,JHQ one block,0.9238,13040.3,1000,32,50,8,jhq_arxiv-768_np32.json
+arxiv-768,8,JHQ scheduled,0.9238,32276.5,1000,32,50,8,jhq_arxiv-768_np32.json
+arxiv-768,32,JHQ one block,0.923891,46736.0,992,32,50,8,jhq_arxiv-768_np32.json
+arxiv-768,32,JHQ scheduled,0.923891,100093.6,992,32,50,8,jhq_arxiv-768_np32.json
+arxiv-768,8,JHQ one block,0.9255,15436.4,1000,32,100,8,jhq_arxiv-768_np32.json
+arxiv-768,8,JHQ scheduled,0.9255,25901.6,1000,32,100,8,jhq_arxiv-768_np32.json
+arxiv-768,32,JHQ one block,0.925605,56242.2,992,32,100,8,jhq_arxiv-768_np32.json
+arxiv-768,32,JHQ scheduled,0.925605,79841.4,992,32,100,8,jhq_arxiv-768_np32.json
+arxiv-768,8,JHQ one block,0.9819,3012.1,1000,384,50,8,jhq_arxiv-768_np384.json
+arxiv-768,8,JHQ scheduled,0.9819,9019.1,1000,384,50,8,jhq_arxiv-768_np384.json
+arxiv-768,32,JHQ one block,0.981855,11694.5,992,384,50,8,jhq_arxiv-768_np384.json
+arxiv-768,32,JHQ scheduled,0.981855,32251.2,992,384,50,8,jhq_arxiv-768_np384.json
+arxiv-768,8,JHQ one block,0.9879,3404.2,1000,384,100,8,jhq_arxiv-768_np384.json
+arxiv-768,8,JHQ scheduled,0.9879,11157.5,1000,384,100,8,jhq_arxiv-768_np384.json
+arxiv-768,32,JHQ one block,0.987802,13561.5,992,384,100,8,jhq_arxiv-768_np384.json
+arxiv-768,32,JHQ scheduled,0.987802,39886.6,992,384,100,8,jhq_arxiv-768_np384.json
+arxiv-768,8,JHQ one block,0.9892,3102.6,1000,384,200,8,jhq_arxiv-768_np384.json
+arxiv-768,8,JHQ scheduled,0.9892,8699.4,1000,384,200,8,jhq_arxiv-768_np384.json
+arxiv-768,32,JHQ one block,0.989113,12427.5,992,384,200,8,jhq_arxiv-768_np384.json
+arxiv-768,32,JHQ scheduled,0.989113,30194.0,992,384,200,8,jhq_arxiv-768_np384.json
+arxiv-768,8,JHQ one block,0.982,2456.2,1000,512,50,8,jhq_arxiv-768_np512.json
+arxiv-768,8,JHQ scheduled,0.982,7670.8,1000,512,50,8,jhq_arxiv-768_np512.json
+arxiv-768,32,JHQ one block,0.981956,9701.6,992,512,50,8,jhq_arxiv-768_np512.json
+arxiv-768,32,JHQ scheduled,0.981956,27539.0,992,512,50,8,jhq_arxiv-768_np512.json
+arxiv-768,8,JHQ one block,0.9885,2714.7,1000,512,100,8,jhq_arxiv-768_np512.json
+arxiv-768,8,JHQ scheduled,0.9885,9587.8,1000,512,100,8,jhq_arxiv-768_np512.json
+arxiv-768,32,JHQ one block,0.988407,10957.2,992,512,100,8,jhq_arxiv-768_np512.json
+arxiv-768,32,JHQ scheduled,0.988407,34881.3,992,512,100,8,jhq_arxiv-768_np512.json
+arxiv-768,8,JHQ one block,0.9899,2520.9,1000,512,200,8,jhq_arxiv-768_np512.json
+arxiv-768,8,JHQ scheduled,0.9899,7604.3,1000,512,200,8,jhq_arxiv-768_np512.json
+arxiv-768,32,JHQ one block,0.989819,10184.9,992,512,200,8,jhq_arxiv-768_np512.json
+arxiv-768,32,JHQ scheduled,0.989819,27231.9,992,512,200,8,jhq_arxiv-768_np512.json
+arxiv-768,8,JHQ one block,0.9556,9058.6,1000,64,50,8,jhq_arxiv-768_np64.json
+arxiv-768,8,JHQ scheduled,0.9556,24574.8,1000,64,50,8,jhq_arxiv-768_np64.json
+arxiv-768,32,JHQ one block,0.955544,32719.0,992,64,50,8,jhq_arxiv-768_np64.json
+arxiv-768,32,JHQ scheduled,0.955544,74312.6,992,64,50,8,jhq_arxiv-768_np64.json
+arxiv-768,8,JHQ one block,0.9581,11347.6,1000,64,100,8,jhq_arxiv-768_np64.json
+arxiv-768,8,JHQ scheduled,0.9581,21963.0,1000,64,100,8,jhq_arxiv-768_np64.json
+arxiv-768,32,JHQ one block,0.958065,41216.8,992,64,100,8,jhq_arxiv-768_np64.json
+arxiv-768,32,JHQ scheduled,0.958065,70553.9,992,64,100,8,jhq_arxiv-768_np64.json
+arxiv-768,8,JHQ one block,0.9591,8895.5,1000,64,200,8,jhq_arxiv-768_np64.json
+arxiv-768,8,JHQ scheduled,0.9591,15726.9,1000,64,200,8,jhq_arxiv-768_np64.json
+arxiv-768,32,JHQ one block,0.959073,33092.2,992,64,200,8,jhq_arxiv-768_np64.json
+arxiv-768,32,JHQ scheduled,0.959073,47369.4,992,64,200,8,jhq_arxiv-768_np64.json
+arxiv-768,8,JHQ one block,0.9668,7240.6,1000,96,50,8,jhq_arxiv-768_np96.json
+arxiv-768,8,JHQ scheduled,0.9668,20121.4,1000,96,50,8,jhq_arxiv-768_np96.json
+arxiv-768,32,JHQ one block,0.966734,26448.8,992,96,50,8,jhq_arxiv-768_np96.json
+arxiv-768,32,JHQ scheduled,0.966734,62260.9,992,96,50,8,jhq_arxiv-768_np96.json
+arxiv-768,8,JHQ one block,0.97,9046.4,1000,96,100,8,jhq_arxiv-768_np96.json
+arxiv-768,8,JHQ scheduled,0.97,19746.5,1000,96,100,8,jhq_arxiv-768_np96.json
+arxiv-768,32,JHQ one block,0.96996,33260.8,992,96,100,8,jhq_arxiv-768_np96.json
+arxiv-768,32,JHQ scheduled,0.96996,62192.4,992,96,100,8,jhq_arxiv-768_np96.json
+arxiv-768,8,JHQ one block,0.9713,7417.3,1000,96,200,8,jhq_arxiv-768_np96.json
+arxiv-768,8,JHQ scheduled,0.9713,13956.0,1000,96,200,8,jhq_arxiv-768_np96.json
+arxiv-768,32,JHQ one block,0.97127,27844.6,992,96,200,8,jhq_arxiv-768_np96.json
+arxiv-768,32,JHQ scheduled,0.97127,42658.5,992,96,200,8,jhq_arxiv-768_np96.json
+arxiv-768,8,CAGRA fp32,0.8915,29227.2,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.888206,112988.3,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9522,28564.2,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.956149,107200.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9813,28096.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.981754,91232.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9959,26103.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994859,57595.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9525,28498.5,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.956351,106219.8,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9526,28500.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.956149,107554.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9816,28028.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.982661,91310.8,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9956,26107.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994355,57631.9,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9744,28249.3,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.972177,99054.9,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9746,28289.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.97248,98912.9,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9816,28147.7,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.982056,91188.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9957,26032.6,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994657,57122.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9816,28146.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.982157,91328.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9815,28114.7,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.982661,90324.0,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9814,28054.3,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.981552,91396.0,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9956,26109.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994556,57627.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.991,27024.5,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.991734,68884.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9907,27057.7,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.990726,69110.8,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9909,27010.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.990927,69065.6,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9959,26082.3,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994355,57624.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9959,26109.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994657,57766.9,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.996,26129.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994859,57646.8,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9959,26134.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994859,57601.1,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9956,25735.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994758,57525.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9975,24570.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997782,40265.0,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9978,24619.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997883,40240.6,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9979,24646.6,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997782,40157.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9978,24598.5,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997379,40168.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9988,22778.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998589,31490.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9987,22784.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99869,31301.3,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9988,22830.7,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99869,31440.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9988,22774.7,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998488,31467.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9542,22761.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.954738,88372.3,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.985,22443.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.984073,76890.1,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9946,21734.5,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.995161,57096.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9987,19999.6,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998589,32884.8,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9849,22443.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.984274,77126.9,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.985,22469.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.984073,77246.6,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9944,21784.6,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994859,57213.9,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9984,20014.7,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99869,32879.6,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9921,22309.2,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.993044,65651.1,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9923,22301.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.993044,65679.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9946,21705.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99506,57074.3,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9985,19998.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998589,32868.1,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9947,21722.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99496,57215.3,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9947,21728.8,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.995262,57153.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9946,21743.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.994859,57176.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9985,19938.8,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998589,32904.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9973,20970.8,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997379,41643.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9973,20949.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997278,41578.6,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9975,20964.1,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.997278,41547.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9985,19992.5,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99869,32902.8,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9985,19966.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99869,32837.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9984,19994.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998589,32917.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9986,19984.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.998488,32877.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9984,20001.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.99879,32922.5,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9993,17618.6,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999294,22108.1,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9992,17631.0,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999194,22100.1,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9993,17623.4,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999395,22080.3,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9992,17603.2,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999194,22074.7,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9997,15316.8,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999496,16968.4,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9994,15279.8,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999496,16944.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9997,15260.2,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999496,16957.6,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA fp32,0.9996,15309.9,1000,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,32,CAGRA fp32,0.999395,16968.2,992,,,,cuvs_arxiv-768_cagra.jsonl
+arxiv-768,8,CAGRA int8,0.8754,29783.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.878831,116952.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9295,29287.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.930141,115509.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9519,28870.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.951815,112300.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9591,27823.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959778,94461.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9295,29161.7,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.930141,115021.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9296,29108.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.930141,115464.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9517,28843.8,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.951915,112150.4,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9591,27843.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959476,94127.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9454,29075.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.944859,114206.0,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9455,28931.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.945161,107839.6,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9516,28851.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.951815,112098.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9592,27742.8,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959476,94097.5,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9517,28824.1,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.951815,112352.5,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9518,28859.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.952016,111975.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9518,28830.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.952117,112079.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9592,27813.6,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959577,94043.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9572,27995.7,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.956653,95166.0,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9577,28125.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.956452,95730.9,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9573,27864.7,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.956552,95881.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9591,27734.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959476,94086.6,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9591,27806.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959476,94116.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9591,27885.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959476,94004.0,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9594,27949.8,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.958972,94204.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9593,28011.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959778,93962.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9613,27226.6,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,75760.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9613,27165.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,75804.0,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9613,27158.8,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,75917.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9613,27216.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961593,75988.9,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9615,26343.6,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961593,71649.0,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9616,26345.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,71806.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9615,26329.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,72000.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9615,26356.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,71988.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9287,24800.7,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.928629,98212.5,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9536,24562.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.954032,97005.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9595,23961.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959879,92901.9,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9619,23149.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.962097,71193.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9534,24621.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.954032,97255.6,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9537,24606.1,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.953931,97213.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9596,23916.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959778,93028.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9617,23152.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,70917.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9582,24117.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.958972,94890.4,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9584,24090.1,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.958972,94727.5,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9596,23923.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.960081,92782.6,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.962,23125.5,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,70669.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9596,23888.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959577,93132.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9596,23967.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.95998,92848.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9596,23903.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.959778,93202.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9618,23121.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,71127.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.961,23626.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.960282,72990.9,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9611,23678.3,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.960685,72946.5,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9612,23651.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.960484,73049.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.962,23091.1,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,70996.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9621,23150.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,71078.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.962,23166.9,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961895,71135.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9621,23117.8,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,71144.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9619,23090.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961895,71062.6,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9617,22341.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,52919.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9618,22301.0,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,52982.2,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9618,22341.7,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,52895.0,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9617,22123.4,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,52663.6,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9617,21476.8,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,49205.8,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9617,21341.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,48890.1,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9617,21408.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961694,49029.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,CAGRA int8,0.9618,21455.2,1000,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,32,CAGRA int8,0.961794,48947.7,992,,,,cuvs_arxiv-768_cagra-int8.jsonl
+arxiv-768,8,IVF-RaBitQ,0.8731,28978.4,1000,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.873387,93420.5,992,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9236,27825.3,1000,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.92379,57058.4,992,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9583,25239.6,1000,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.958165,54725.6,992,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9807,21563.7,1000,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.980544,52852.9,992,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9867,20084.9,1000,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.986593,47503.4,992,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9905,19847.1,1000,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.990423,41136.7,992,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9932,18725.6,1000,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.993145,37186.3,992,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9941,18415.4,1000,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.994153,39833.2,992,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.873,23747.8,1000,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.873286,79216.0,992,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9233,23134.8,1000,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.923488,66002.3,992,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9582,21197.0,1000,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.958065,62067.7,992,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9806,18448.1,1000,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.980343,46679.0,992,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9866,17456.8,1000,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.986492,42246.3,992,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9905,17324.1,1000,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.990323,36856.7,992,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9932,16468.2,1000,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.993044,33264.7,992,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9942,16153.0,1000,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.994052,36899.7,992,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.8502,21559.6,1000,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.850202,74048.6,992,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9004,20567.3,1000,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.900403,49247.8,992,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9305,19652.6,1000,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.930645,45064.2,992,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9497,18225.8,1000,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.95,42098.8,992,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.954,17121.9,1000,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.954335,38694.0,992,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9569,16515.2,1000,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.957258,33825.9,992,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.96,15305.3,1000,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.960383,31029.8,992,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9617,14797.1,1000,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.962097,33786.6,992,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.8502,19989.2,1000,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.850202,67492.7,992,16,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9004,19321.2,1000,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.900403,56973.6,992,32,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9306,18056.6,1000,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.930645,51409.4,992,64,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9498,16606.1,1000,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.95,38729.0,992,128,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9541,15657.6,1000,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.954335,35640.5,992,192,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.957,15066.8,1000,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.957258,31353.7,992,256,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.96,14036.7,1000,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.960383,29216.5,992,384,,,rabitq_arxiv-768.jsonl
+arxiv-768,8,IVF-RaBitQ,0.9617,13312.1,1000,512,,,rabitq_arxiv-768.jsonl
+arxiv-768,32,IVF-RaBitQ,0.962097,31588.2,992,512,,,rabitq_arxiv-768.jsonl
+openai3-1536,8,JHQ one block,0.9862,2106.0,1000,1024,8,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,9093.6,1000,1024,8,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,8552.6,992,1024,8,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,32677.0,992,1024,8,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9862,2092.9,1000,1024,16,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,8873.5,1000,1024,16,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,8512.4,992,1024,16,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,31865.5,992,1024,16,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9862,2063.0,1000,1024,32,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,8417.2,1000,1024,32,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,8410.2,992,1024,32,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,30664.6,992,1024,32,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9862,2005.1,1000,1024,64,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,7472.1,1000,1024,64,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,8171.2,992,1024,64,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,26939.7,992,1024,64,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9862,1873.7,1000,1024,128,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,5870.9,1000,1024,128,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,7625.0,992,1024,128,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,22148.8,992,1024,128,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9862,1707.9,1000,1024,256,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,4512.4,1000,1024,256,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,6953.3,992,1024,256,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,13680.0,992,1024,256,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9862,1426.2,1000,1024,512,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ scheduled,0.9862,2977.2,1000,1024,512,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ one block,0.98619,5772.2,992,1024,512,8,jhq_openai3-1536_np1024.json
+openai3-1536,32,JHQ scheduled,0.98619,9610.6,992,1024,512,8,jhq_openai3-1536_np1024.json
+openai3-1536,8,JHQ one block,0.9294,12104.6,1000,128,4,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ scheduled,0.9294,31696.8,1000,128,4,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ one block,0.929738,44780.3,992,128,4,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ scheduled,0.929738,98452.0,992,128,4,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ one block,0.9312,11922.0,1000,128,8,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ scheduled,0.9312,30374.4,1000,128,8,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ one block,0.931552,44274.0,992,128,8,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ scheduled,0.931552,96182.2,992,128,8,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ one block,0.9312,11415.1,1000,128,16,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ scheduled,0.9312,28469.4,1000,128,16,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ one block,0.931552,43023.5,992,128,16,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ scheduled,0.931552,91043.5,992,128,16,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ one block,0.9312,10670.0,1000,128,32,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ scheduled,0.9312,23762.7,1000,128,32,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ one block,0.931552,40212.4,992,128,32,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ scheduled,0.931552,80271.8,992,128,32,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ one block,0.9312,9225.9,1000,128,64,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ scheduled,0.9312,17722.7,1000,128,64,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ one block,0.931552,35203.8,992,128,64,8,jhq_openai3-1536_np128.json
+openai3-1536,32,JHQ scheduled,0.931552,58416.7,992,128,64,8,jhq_openai3-1536_np128.json
+openai3-1536,8,JHQ one block,0.9523,7019.7,1000,256,4,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9523,22562.2,1000,256,4,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.952319,27496.9,992,256,4,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.952319,77207.9,992,256,4,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,6865.7,1000,256,8,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,21938.3,1000,256,8,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,27282.2,992,256,8,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,75487.3,992,256,8,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,6779.2,1000,256,16,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,20996.0,1000,256,16,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,26829.0,992,256,16,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,72354.4,992,256,16,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,6501.5,1000,256,32,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,18057.1,1000,256,32,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,25748.2,992,256,32,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,65331.0,992,256,32,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,5925.8,1000,256,64,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,14430.3,1000,256,64,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,23433.9,992,256,64,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,50214.5,992,256,64,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,4902.7,1000,256,128,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,10119.8,1000,256,128,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,19616.6,992,256,128,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,37351.3,992,256,128,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,3922.4,1000,256,256,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,6823.7,1000,256,256,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,15603.0,992,256,256,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,22498.7,992,256,256,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.9545,2739.9,1000,256,512,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ scheduled,0.9545,4086.7,1000,256,512,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ one block,0.954536,10893.8,992,256,512,8,jhq_openai3-1536_np256.json
+openai3-1536,32,JHQ scheduled,0.954536,13939.0,992,256,512,8,jhq_openai3-1536_np256.json
+openai3-1536,8,JHQ one block,0.8456,28395.6,1000,32,4,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ scheduled,0.8456,43180.7,1000,32,4,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ one block,0.847077,103408.2,992,32,4,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ scheduled,0.847077,140162.9,992,32,4,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ one block,0.8468,27523.9,1000,32,8,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ scheduled,0.8468,42204.2,1000,32,8,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ one block,0.848286,100118.8,992,32,8,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ scheduled,0.848286,135322.4,992,32,8,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ one block,0.8468,25982.0,1000,32,16,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ scheduled,0.8468,38153.1,1000,32,16,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ one block,0.848286,93583.7,992,32,16,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ scheduled,0.848286,125387.4,992,32,16,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ one block,0.8468,21985.5,1000,32,32,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ scheduled,0.8468,31487.7,1000,32,32,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ one block,0.848286,79200.7,992,32,32,8,jhq_openai3-1536_np32.json
+openai3-1536,32,JHQ scheduled,0.848286,105185.3,992,32,32,8,jhq_openai3-1536_np32.json
+openai3-1536,8,JHQ one block,0.9719,3885.0,1000,512,4,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9719,15052.9,1000,512,4,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.971976,15829.0,992,512,4,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.971976,53666.9,992,512,4,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,3888.9,1000,512,8,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,14779.0,1000,512,8,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,15760.4,992,512,8,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,52223.0,992,512,8,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,3852.5,1000,512,16,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,14264.7,1000,512,16,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,15503.4,992,512,16,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,50605.6,992,512,16,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,3755.3,1000,512,32,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,13049.4,1000,512,32,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,15198.9,992,512,32,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,47094.7,992,512,32,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,3560.3,1000,512,64,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,10973.3,1000,512,64,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,14453.6,992,512,64,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,39297.5,992,512,64,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,3161.9,1000,512,128,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,8017.7,1000,512,128,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,12816.7,992,512,128,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,30210.2,992,512,128,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,2713.9,1000,512,256,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,5750.4,1000,512,256,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,10972.1,992,512,256,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,18438.2,992,512,256,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.9746,2078.6,1000,512,512,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ scheduled,0.9746,3560.1,1000,512,512,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ one block,0.974698,8310.9,992,512,512,8,jhq_openai3-1536_np512.json
+openai3-1536,32,JHQ scheduled,0.974698,11703.6,992,512,512,8,jhq_openai3-1536_np512.json
+openai3-1536,8,JHQ one block,0.8934,19505.5,1000,64,4,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ scheduled,0.8934,40022.4,1000,64,4,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ one block,0.894052,70282.0,992,64,4,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ scheduled,0.894052,121798.6,992,64,4,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ one block,0.8948,19072.6,1000,64,8,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ scheduled,0.8948,37936.5,1000,64,8,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ one block,0.895464,68731.1,992,64,8,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ scheduled,0.895464,118402.8,992,64,8,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ one block,0.8948,18140.8,1000,64,16,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ scheduled,0.8948,34334.0,1000,64,16,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ one block,0.895464,65613.9,992,64,16,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ scheduled,0.895464,109096.0,992,64,16,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ one block,0.8948,16111.1,1000,64,32,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ scheduled,0.8948,29119.4,1000,64,32,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ one block,0.895464,58734.4,992,64,32,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ scheduled,0.895464,94167.5,992,64,32,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ one block,0.8948,13144.1,1000,64,64,8,jhq_openai3-1536_np64.json
+openai3-1536,8,JHQ scheduled,0.8948,21524.4,1000,64,64,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ one block,0.895464,48664.2,992,64,64,8,jhq_openai3-1536_np64.json
+openai3-1536,32,JHQ scheduled,0.895464,72729.0,992,64,64,8,jhq_openai3-1536_np64.json
+openai3-1536,8,CAGRA fp32,0.8683,25333.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.871472,94943.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9444,25153.0,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.938004,84737.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.972,24196.1,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.971573,58423.2,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9842,21770.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.98619,32038.7,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9444,25145.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.938508,85164.1,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9445,25022.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.938105,85029.3,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9718,24216.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.971472,58718.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9843,21995.8,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.985988,32342.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9657,24928.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.962298,71815.1,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.966,24928.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.962198,71870.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9721,24219.4,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.971774,58693.7,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9843,22008.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.986089,32270.4,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.972,24243.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.970565,58736.0,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9719,24268.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.970968,58645.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9721,24206.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.970766,58645.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9844,21927.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.985988,32306.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.982,23174.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.98246,41077.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.982,22967.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.982661,41269.2,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9822,23122.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.982863,41433.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.984,21993.1,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.985887,32303.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9843,21888.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.985685,32251.1,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9848,21970.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.985786,32313.0,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9846,21985.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.985685,32321.2,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9842,22032.0,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.986089,32286.0,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9892,19092.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.990927,22422.9,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.989,19136.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.990827,22431.4,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9896,19145.1,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.990827,22402.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9894,19103.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.990726,22381.3,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9925,16119.4,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993347,17173.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9925,16140.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993548,17224.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9925,16154.9,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993347,17238.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9926,16100.9,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993347,17209.0,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9226,18812.0,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.925302,68993.2,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9625,18558.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.961996,53683.2,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9785,17724.1,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.978931,33684.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9907,14529.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989113,17684.0,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.961,18556.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.963004,53536.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9619,18544.8,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.962198,53609.4,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9787,17698.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.979133,33698.4,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9902,14549.4,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989415,17690.9,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9751,18184.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.97379,42548.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.975,18183.0,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.973992,42458.3,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9787,17676.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.979133,33669.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9902,14532.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989315,17656.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9787,17596.4,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.979234,33599.9,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9784,17614.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.979335,33624.3,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9786,17650.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.979133,33540.7,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9898,14507.9,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989214,17695.1,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9853,16335.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.984577,23079.0,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9843,16343.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.98498,23044.1,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9854,16328.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.984879,22994.7,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.99,14503.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.98871,17669.6,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9899,14550.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989315,17596.3,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.99,14469.3,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989012,17624.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.99,14480.7,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989113,17649.2,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9903,14524.9,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.989919,17679.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9931,11549.9,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993649,12084.4,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9924,11537.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993347,12079.9,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9931,11527.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993145,12063.1,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9932,11554.6,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.993246,12060.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9942,9463.2,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.995464,9200.8,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9945,9455.4,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.995665,9197.5,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9946,9439.8,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.995565,9192.3,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA fp32,0.9947,9473.5,1000,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,32,CAGRA fp32,0.995464,9200.9,992,,,,cuvs_openai3-1536_cagra.jsonl
+openai3-1536,8,CAGRA int8,0.8565,28183.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.85746,108302.8,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9182,27968.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.922782,107647.8,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9512,26996.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.950403,102392.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9619,26447.7,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960988,80541.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.918,28019.8,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.922681,107357.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.918,27968.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.92248,107650.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9511,27342.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.950403,102568.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9619,26486.3,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960585,80750.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9423,27579.2,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.939315,104245.4,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9424,27682.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.939617,104184.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9513,27226.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.950302,102702.9,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9619,26488.2,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960585,80727.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9512,27246.8,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.950302,102345.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9512,27249.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.950302,102660.3,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9511,27252.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.950504,102274.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9616,26503.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960685,80653.3,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9598,26797.6,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.957258,84225.3,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9598,26829.6,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.95756,84011.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9596,26808.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.957661,83661.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9617,26435.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960585,80755.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9616,26472.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960585,80532.8,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9619,26446.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960484,80707.8,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.962,26439.7,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960383,80811.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9619,26560.8,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960887,80642.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9654,25582.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.965827,61901.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9655,25338.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.96623,62249.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9652,25483.6,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.965827,62219.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9653,25524.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.965827,62194.2,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9672,24387.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.968044,57204.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9672,24448.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.968246,57186.8,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.967,24418.7,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.967944,57088.8,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9672,24449.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.967944,57220.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9088,22633.3,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.906855,88023.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9421,22329.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.942742,86191.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9571,22021.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.955444,79926.4,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9627,21160.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964516,57185.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9424,20506.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.943145,70557.4,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9422,21738.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.942843,84662.9,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9564,21692.7,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.955645,79148.4,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9627,21123.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964617,57138.3,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9534,22084.6,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.952621,83100.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9536,22129.8,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.952218,82946.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9571,21950.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.955847,79358.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.963,21039.3,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964919,57004.9,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9574,21917.2,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.955847,79148.6,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9569,21904.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.955746,79383.6,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.957,21917.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.955847,79180.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.963,21130.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964415,57222.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9611,21451.3,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.96129,60021.3,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9611,21449.9,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960887,60240.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.961,21442.8,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.960988,60303.9,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9629,21056.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964315,56943.1,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9629,21090.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964718,57264.6,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9629,21093.0,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964718,57245.0,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9628,20989.3,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964415,57204.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9628,21024.6,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.964415,57165.3,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9658,20159.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.966431,41333.4,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.966,20176.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.966431,41318.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9656,20170.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.966331,41275.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9657,20147.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.96623,41294.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.968,19172.8,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.967944,36206.7,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9679,19199.4,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.967843,36223.4,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.968,19129.5,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.967944,36233.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,CAGRA int8,0.9681,19177.1,1000,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,32,CAGRA int8,0.967843,36261.5,992,,,,cuvs_openai3-1536_cagra-int8.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8187,21307.0,1000,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.819859,63848.4,992,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8722,20319.3,1000,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.872883,53881.4,992,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9183,18589.0,1000,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.918851,50327.0,992,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9508,16460.7,1000,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.950504,38320.8,992,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9631,15542.4,1000,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.962903,34517.0,992,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9742,15303.0,1000,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.974093,33027.2,992,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.983,14249.4,1000,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.982762,30074.5,992,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9871,13846.2,1000,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.986895,27939.2,992,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8187,15991.6,1000,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.819859,51068.9,992,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8722,15427.8,1000,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.872883,42565.9,992,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9183,14432.4,1000,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.918851,39526.6,992,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9507,12385.4,1000,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.950504,36209.6,992,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.963,12000.8,1000,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.962903,32812.2,992,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9741,11600.0,1000,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.974093,27019.6,992,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9829,10827.1,1000,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.982863,23728.3,992,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.987,10509.4,1000,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.986996,23661.6,992,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8158,14551.0,1000,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.81744,47260.9,992,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8643,13946.9,1000,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.865625,38897.5,992,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9081,13285.7,1000,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.908569,36982.2,992,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9379,12022.8,1000,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.938004,28662.9,992,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9493,11377.1,1000,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.949294,26471.8,992,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9568,11069.2,1000,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.956653,25296.6,992,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9661,10279.6,1000,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.965927,21350.4,992,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9691,10004.3,1000,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.968952,22431.4,992,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8158,13437.7,1000,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.81744,43650.1,992,16,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.8643,13055.0,1000,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.865625,35662.7,992,32,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9081,12079.7,1000,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.908569,33384.8,992,64,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9379,10812.6,1000,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.938004,29501.6,992,128,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9492,10059.5,1000,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.949194,27294.9,992,192,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.9567,9914.5,1000,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.956552,22874.8,992,256,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.966,9302.1,1000,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.965827,21850.9,992,384,,,rabitq_openai3-1536.jsonl
+openai3-1536,8,IVF-RaBitQ,0.969,8890.8,1000,512,,,rabitq_openai3-1536.jsonl
+openai3-1536,32,IVF-RaBitQ,0.968851,20962.8,992,512,,,rabitq_openai3-1536.jsonl
+openai3-3072,8,JHQ one block,0.9853,1622.4,1000,1024,8,8,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ scheduled,0.9853,7702.6,1000,1024,8,8,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ one block,0.985484,6409.0,992,1024,8,4,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ scheduled,0.985484,17061.3,992,1024,8,4,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ one block,0.9853,1609.1,1000,1024,16,8,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ scheduled,0.9853,7527.7,1000,1024,16,8,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ one block,0.985484,6386.6,992,1024,16,4,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ scheduled,0.985484,16837.7,992,1024,16,4,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ one block,0.9853,1599.8,1000,1024,32,8,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ scheduled,0.9853,7169.8,1000,1024,32,8,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ one block,0.985484,6336.0,992,1024,32,4,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ scheduled,0.985484,16510.2,992,1024,32,4,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ one block,0.9853,1559.6,1000,1024,64,8,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ scheduled,0.9853,6414.3,1000,1024,64,8,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ one block,0.985484,6167.8,992,1024,64,4,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ scheduled,0.985484,15428.9,992,1024,64,4,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ one block,0.9853,1480.1,1000,1024,128,8,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ scheduled,0.9853,5216.6,1000,1024,128,8,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ one block,0.985484,5836.8,992,1024,128,4,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ scheduled,0.985484,13327.6,992,1024,128,4,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ one block,0.9853,1325.2,1000,1024,256,8,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ scheduled,0.9853,3634.0,1000,1024,256,8,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ one block,0.985484,5131.8,992,1024,256,4,jhq_openai3-3072_np1024.json
+openai3-3072,32,JHQ scheduled,0.985484,9832.2,992,1024,256,4,jhq_openai3-3072_np1024.json
+openai3-3072,8,JHQ one block,0.9217,8737.4,1000,128,2,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9217,21567.9,1000,128,2,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.922278,32984.5,992,128,2,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.922278,60564.5,992,128,2,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,8732.3,1000,128,4,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,21625.0,1000,128,4,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,32859.5,992,128,4,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,60114.5,992,128,4,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,8556.7,1000,128,8,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,20549.4,1000,128,8,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,32264.6,992,128,8,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,57968.2,992,128,8,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,8346.3,1000,128,16,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,19406.2,1000,128,16,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,31479.7,992,128,16,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,55516.4,992,128,16,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,7936.0,1000,128,32,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,17243.3,1000,128,32,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,30018.2,992,128,32,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,50993.1,992,128,32,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,7038.2,1000,128,64,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,13866.8,1000,128,64,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,26791.9,992,128,64,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,42163.1,992,128,64,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,5693.6,1000,128,128,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,9772.1,1000,128,128,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,21176.2,992,128,128,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,29434.9,992,128,128,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9267,3985.7,1000,128,256,8,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ scheduled,0.9267,6039.6,1000,128,256,8,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ one block,0.927319,14204.4,992,128,256,4,jhq_openai3-3072_np128.json
+openai3-3072,32,JHQ scheduled,0.927319,18249.7,992,128,256,4,jhq_openai3-3072_np128.json
+openai3-3072,8,JHQ one block,0.9459,5334.9,1000,256,2,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9459,17475.9,1000,256,2,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.946371,20612.1,992,256,2,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.946371,44875.2,992,256,2,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9523,5327.7,1000,256,4,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9523,17392.1,1000,256,4,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952823,20575.6,992,256,4,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952823,44578.7,992,256,4,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9524,5271.1,1000,256,8,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9524,16688.9,1000,256,8,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952923,20318.2,992,256,8,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952923,43590.8,992,256,8,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9524,5152.7,1000,256,16,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9524,15792.0,1000,256,16,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952923,20007.8,992,256,16,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952923,42152.7,992,256,16,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9524,5019.2,1000,256,32,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9524,14408.6,1000,256,32,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952923,19390.0,992,256,32,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952923,39391.3,992,256,32,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9524,4640.6,1000,256,64,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9524,11586.6,1000,256,64,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952923,17998.2,992,256,64,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952923,33814.9,992,256,64,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9524,4001.1,1000,256,128,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9524,8259.5,1000,256,128,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952923,15324.7,992,256,128,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952923,25517.7,992,256,128,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.9524,3043.3,1000,256,256,8,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ scheduled,0.9524,5379.0,1000,256,256,8,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ one block,0.952923,11147.3,992,256,256,4,jhq_openai3-3072_np256.json
+openai3-3072,32,JHQ scheduled,0.952923,15748.7,992,256,256,4,jhq_openai3-3072_np256.json
+openai3-3072,8,JHQ one block,0.8423,18525.1,1000,32,2,8,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ scheduled,0.8423,30762.1,1000,32,2,8,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ one block,0.843548,66972.3,992,32,2,4,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ scheduled,0.843548,87409.7,992,32,2,4,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ one block,0.8456,18467.7,1000,32,4,8,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ scheduled,0.8456,30731.3,1000,32,4,8,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ one block,0.846875,66367.2,992,32,4,4,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ scheduled,0.846875,87397.1,992,32,4,4,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ one block,0.8456,17711.9,1000,32,8,8,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ scheduled,0.8456,28217.5,1000,32,8,8,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ one block,0.846875,64244.7,992,32,8,4,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ scheduled,0.846875,83030.6,992,32,8,4,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ one block,0.8456,16791.9,1000,32,16,8,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ scheduled,0.8456,25968.9,1000,32,16,8,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ one block,0.846875,61117.6,992,32,16,4,jhq_openai3-3072_np32.json
+openai3-3072,32,JHQ scheduled,0.846875,78001.1,992,32,16,4,jhq_openai3-3072_np32.json
+openai3-3072,8,JHQ one block,0.9638,3028.5,1000,512,2,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9638,12128.3,1000,512,2,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.964012,11788.5,992,512,2,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.964012,28562.1,992,512,2,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9716,3025.5,1000,512,4,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9716,12233.9,1000,512,4,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971875,11836.5,992,512,4,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971875,29026.8,992,512,4,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9717,3005.5,1000,512,8,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9717,11824.0,1000,512,8,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971976,11706.6,992,512,8,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971976,28270.6,992,512,8,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9717,2982.0,1000,512,16,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9717,11532.2,1000,512,16,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971976,11548.5,992,512,16,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971976,28205.0,992,512,16,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9717,2924.2,1000,512,32,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9717,10719.1,1000,512,32,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971976,11406.7,992,512,32,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971976,26600.7,992,512,32,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9717,2790.2,1000,512,64,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9717,9027.1,1000,512,64,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971976,10812.9,992,512,64,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971976,24205.8,992,512,64,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9717,2545.4,1000,512,128,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9717,6883.8,1000,512,128,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971976,9834.4,992,512,128,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971976,19330.8,992,512,128,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.9717,2114.8,1000,512,256,8,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ scheduled,0.9717,4567.4,1000,512,256,8,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ one block,0.971976,7963.8,992,512,256,4,jhq_openai3-3072_np512.json
+openai3-3072,32,JHQ scheduled,0.971976,12808.9,992,512,256,4,jhq_openai3-3072_np512.json
+openai3-3072,8,JHQ one block,0.886,13298.5,1000,64,2,8,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ scheduled,0.886,24016.1,1000,64,2,8,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ one block,0.886895,49409.0,992,64,2,4,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ scheduled,0.886895,77386.3,992,64,2,4,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ one block,0.8903,13305.9,1000,64,4,8,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ scheduled,0.8903,24088.1,1000,64,4,8,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ one block,0.89123,49230.9,992,64,4,4,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ scheduled,0.89123,76240.1,992,64,4,4,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ one block,0.8903,12922.1,1000,64,8,8,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ scheduled,0.8903,23066.5,1000,64,8,8,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ one block,0.89123,47824.0,992,64,8,4,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ scheduled,0.89123,73673.6,992,64,8,4,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ one block,0.8903,12457.6,1000,64,16,8,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ scheduled,0.8903,21572.6,1000,64,16,8,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ one block,0.89123,46185.9,992,64,16,4,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ scheduled,0.89123,69758.7,992,64,16,4,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ one block,0.8903,11573.7,1000,64,32,8,jhq_openai3-3072_np64.json
+openai3-3072,8,JHQ scheduled,0.8903,18997.8,1000,64,32,8,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ one block,0.89123,42968.7,992,64,32,4,jhq_openai3-3072_np64.json
+openai3-3072,32,JHQ scheduled,0.89123,62715.1,992,64,32,4,jhq_openai3-3072_np64.json
+openai3-3072,8,CAGRA fp32,0.8658,18348.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.862198,63589.5,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9401,18284.2,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.936694,50603.6,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9695,17086.5,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.968952,30225.0,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9834,13530.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.984375,15993.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9398,18294.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.936492,51034.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9401,18373.2,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.936593,50668.0,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9697,17240.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.969052,30003.3,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9833,13672.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.98498,16115.0,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9601,17896.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.958367,38455.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9596,18039.3,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.959173,38547.5,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9699,17226.5,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.969153,29802.3,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9835,13031.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.984879,16146.7,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9704,17416.5,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.969254,30259.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9698,17396.0,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.96875,30321.6,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9695,17319.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.969556,29986.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9828,13615.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.985081,15990.0,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9804,15457.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.980847,20802.1,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9802,15238.0,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.980948,20916.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.98,15468.6,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.980242,20880.1,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9832,13719.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.984879,16053.6,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9832,13603.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.98498,16017.1,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9834,13759.2,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.984879,16134.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9831,13649.3,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.985081,15991.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.983,13613.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.98498,16103.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9889,10570.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.989919,11015.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9887,10494.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.989819,11130.0,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9889,10598.7,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.989516,11165.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9892,10541.0,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.989617,11173.7,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.992,8123.2,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.99375,8479.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9922,8123.6,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.99375,8515.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9925,8262.6,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.99375,8484.7,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.992,8169.3,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.993851,8507.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9188,12450.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.913609,42860.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9596,12256.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.9625,29514.3,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9786,11301.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.97631,16571.5,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9884,7973.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987198,8637.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9591,12200.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.962198,29426.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9592,12273.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.962298,29611.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9786,11400.2,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.976109,16681.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9879,7881.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987601,8638.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9738,11909.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.972984,21479.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9738,11913.3,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.972681,21492.6,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9786,11306.7,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.975806,16548.7,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9884,7962.7,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987399,8582.5,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9783,11287.6,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.976512,16551.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9786,11313.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.976512,16587.8,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9784,11304.9,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.975806,16533.3,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9882,7869.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.986996,8633.6,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9842,9541.5,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.985081,11309.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9849,9532.5,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.984778,11308.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9844,9528.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.984173,11299.5,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9887,7936.3,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987601,8634.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9881,7981.0,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987802,8656.2,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9884,7985.2,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.986996,8631.6,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9879,7966.6,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987298,8626.7,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9884,7975.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.987802,8643.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9917,5871.0,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.991935,5878.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9915,5895.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.991935,5873.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9914,5925.7,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.992137,5902.9,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9916,5912.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.99244,5899.3,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9935,4565.4,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.993851,4494.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9935,4565.6,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.993851,4493.7,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9931,4561.8,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.994052,4494.4,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA fp32,0.9934,4555.1,1000,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,32,CAGRA fp32,0.99375,4478.3,992,,,,cuvs_openai3-3072_cagra.jsonl
+openai3-3072,8,CAGRA int8,0.8525,22069.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.852218,82250.3,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9219,22522.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.913206,81866.5,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9483,21836.4,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.948589,73948.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.961,21046.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960786,51536.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9215,22298.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.913407,82457.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9218,22682.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.913407,82409.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.948,22322.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.94879,76112.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9602,21579.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960383,52035.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9401,22356.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.939415,78974.8,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9402,22376.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.938911,78895.0,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9482,22074.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.948488,75008.8,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9604,21388.7,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960383,52075.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9477,22060.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.948488,75403.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9482,22081.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.948488,75042.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9481,21889.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.948589,69867.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9609,21338.4,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960383,52129.1,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9569,21778.4,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.958569,57733.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9566,21712.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.958266,57817.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9565,21800.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.958367,57793.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9603,21392.2,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960282,51831.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.961,21336.1,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960484,51802.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.961,21358.1,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.95998,51766.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9605,21200.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960383,50669.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9605,21521.0,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.960282,51168.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9659,20595.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.966129,37835.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9658,20579.0,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.965726,37677.0,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9657,20317.2,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.965625,37534.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9659,20448.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.965927,37623.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.967,19369.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.967843,31368.8,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9668,19246.2,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968145,30934.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9673,19546.7,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968448,31565.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.967,19516.7,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968952,31356.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.907,16720.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.905746,63488.1,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9405,16531.7,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.941431,61169.5,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9568,16320.0,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.95625,50541.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9641,15791.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964516,32219.3,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9406,16656.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.941633,61184.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9406,16633.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.941431,60324.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.957,16141.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.956754,50894.3,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.964,15928.0,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964214,32429.1,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9523,16424.1,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.95121,57156.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9527,16401.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.951411,56959.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9571,16218.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.956552,50298.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9642,15741.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964315,32033.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.957,16283.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.956653,50092.8,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9566,16229.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.956351,49297.1,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9574,16227.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.956149,50801.1,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9644,15900.1,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964113,32206.8,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9625,16075.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.961996,37175.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9626,16055.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.961794,37313.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.963,16071.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.962097,37328.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9641,15728.9,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964617,31891.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9639,15966.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964415,32354.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9641,15719.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964415,32224.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9645,15873.0,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964819,32281.9,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9643,15866.8,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.964819,32262.6,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9669,15046.5,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.967238,22197.2,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9675,15043.4,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.967137,22102.4,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9673,15060.4,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.967137,22141.3,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.967,15036.7,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.967137,22166.8,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9692,13900.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968851,17791.5,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9694,14049.3,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968952,17845.7,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9693,13943.6,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968851,17576.3,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,CAGRA int8,0.9692,14054.1,1000,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,32,CAGRA int8,0.968851,17882.0,992,,,,cuvs_openai3-3072_cagra-int8.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8065,12489.8,1000,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.807661,28493.2,992,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8619,12090.2,1000,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.863004,25647.7,992,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.908,11060.2,1000,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.908569,23867.3,992,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9433,10060.1,1000,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.943548,20780.4,992,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9571,9619.8,1000,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.957258,19168.2,992,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9678,9272.6,1000,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.968044,17419.9,992,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9795,8411.7,1000,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.979738,15235.9,992,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9838,7931.8,1000,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.984073,13133.4,992,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8064,9007.2,1000,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.80756,27774.7,992,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8619,8670.3,1000,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.863004,22979.1,992,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.908,8052.3,1000,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.908569,21906.4,992,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9433,7033.9,1000,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.943548,19938.1,992,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9571,6872.2,1000,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.957258,16784.7,992,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9678,6709.5,1000,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.968044,16251.2,992,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9795,6401.0,1000,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.979738,14887.8,992,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9838,6288.8,1000,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.984073,13749.6,992,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8022,7803.2,1000,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.803226,19569.2,992,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8566,7636.2,1000,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.857359,17747.7,992,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8999,7003.3,1000,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.900202,15662.6,992,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9306,6369.5,1000,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.930746,13817.1,992,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9456,6012.0,1000,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.945766,12808.3,992,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9536,5832.3,1000,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.95373,12229.8,992,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.964,5382.6,1000,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.964214,10927.3,992,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9695,5123.5,1000,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.969657,9984.6,992,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8022,7369.6,1000,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.803226,23889.6,992,16,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8566,7172.1,1000,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.857359,19486.9,992,32,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.8998,6710.7,1000,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.900101,17834.3,992,64,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9305,6136.3,1000,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.930645,16057.4,992,128,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9455,5796.4,1000,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.945665,14000.1,992,192,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9535,5611.3,1000,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.953629,13154.3,992,256,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9639,5359.0,1000,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.964113,12504.5,992,384,,,rabitq_openai3-3072.jsonl
+openai3-3072,8,IVF-RaBitQ,0.9693,5206.0,1000,512,,,rabitq_openai3-3072.jsonl
+openai3-3072,32,IVF-RaBitQ,0.969456,11772.5,992,512,,,rabitq_openai3-3072.jsonl

@@ -14,8 +14,9 @@ Stella采样构建峰值22.58\,GiB，BGE在add入口达到26.08\,GiB。
 继承Cartesian编码允许实数精确拆表，完整键保留／合并及共享界论证说明分组选择
 条件。两组表在22/24单元领先；相对lane精排参考，集成调度在batch 8的吞吐几何
 平均为$2.727\times$，batch 1,000只有$1.015\times$
-（\cref{sec:7-3,sec:7-6}）。有效并行因batch和工作分布而变；有限输出检查补充证明，
-算术、并列与内存假设仍明确保留。
+（\cref{sec:7-3,sec:7-6}）。有效并行因 batch 和工作分布而变；T4 严格 CPU 参考
+与全部 55,296 个分组实例完整键顺序一致，56 个单 block 集合差异全部是截断并列
+（\cref{sec:7-strict-selection}）。
 
 \paragraph{RQ3：精排预算与质量。}
 无标签参考一致性无需学习预测器即可选择工作负载survivor工作量。
@@ -30,7 +31,9 @@ $S=128$一个单元则有40/64次越阈（\cref{sec:7-5}）。
 接近平手（\cref{sec:7-2}）；Vogue领先依赖分组路径。OpenAI E1使用TF32；同会话FP32敏感性在该目标仍领先归档
 RaBitQ 7.9--8.6\%，为CAGRA fp32的$1.63$--$1.68\times$。
 低recall由CAGRA int8领先，部分高目标由IVF-RaBitQ领先。
-结果支持所测设备和网格内有用区间，显存另行报告；没有提供跨系统小batch或跨设备排名。
+T5 收窄该区间：recall 0.97、batch 8 下，四个数据集均由 CAGRA fp32 领先；
+batch 32 的边界依赖 recall 估计（\cref{sec:7-smallbatch}）。排名因此依赖 batch、
+质量和网格，显存另行报告；跨设备排名仍未测。
 
 \section{系统原则与展望}
 \label{sec:9-2}

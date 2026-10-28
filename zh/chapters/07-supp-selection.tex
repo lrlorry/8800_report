@@ -1,0 +1,31 @@
+\subsection{计算分数选择的严格 CPU 参考}
+\label{sec:7-strict-selection}
+
+补证 T4 使用 GPU 生成的 FP32 分数，在 CPU 上按
+$(\primarydist,\mathrm{position})$ 对每条查询的全部已访问候选排序。
+诊断导出器遵循打包扫描布局和累加顺序；所有返回有效主码项的导出分数与选择器
+分数逐位一致。源码对照确认，诊断版本相对拆表实验实现只改变导出部分。
+Vogue、arXiv、OpenAI-3072 采用 1/8/128 探针、
+$\alpha\in\{4,100,200\}$、$\gscan\in\{0,1,2,4,8\}$ 及共享界开／关，
+共 270 个配置，每个配置 256 条查询，即 69,120 个查询实例
+（\cref{tab:7-strict-selection}）。
+
+\suppressfloats[t]
+\begin{table}[htbp]
+\centering
+\caption[严格计算分数选择检查]{T4 CPU 参考检查。集合及顺序一致使用完整主码键。
+有效数量检查 $\min(c,n_c)$ 个 survivor；末端一致性按
+$(\refineddist,\mathrm{ID})$ 排序已保留的计算精排分数，包含 FP32 比特比较。
+计数为查询实例，同一查询在配置间重复使用。}
+\label{tab:7-strict-selection}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{zh/tables/t4-t5/strict-selection}
+\end{table}
+
+55,296 个分组实例全部与完整键参考的顺序一致。
+单 block 的 13,824 个实例全部满足距离全预序，56 个集合差异全部位于截断并列。
+19,120 个候选不足实例均返回正确数量的有效 survivor；全部 69,120 个末端选择
+均与保留分数参考一致。这直接检查
+\cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} 的阶段契约。
+此前 64 个扫描对照及 48 个共享界对照仍提供独立的实现间配对证据；归档 sanitizer
+覆盖较小子集。导出与归档边界见\cref{sec:a-t4-t5}。

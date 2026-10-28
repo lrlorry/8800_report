@@ -1,9 +1,16 @@
 JHQ-GPU merits evaluation when a compressed resident hierarchy fits the
-device, batches provide useful parallel work, and the required recall lies
-within its measured competitive region. The recorded FULL policy is the
-quality-first calibration starting point, followed by validation on the
-deployment's own queries and direct reuse timing. At lower recall, int8
-CAGRA is a strong alternative; at some higher targets, IVF-RaBitQ wins.
-Applications requiring small-request latency, updates or a population recall
-guarantee need additional evidence. The deployment choice should compare
-quality, total time and memory together under the actual service workload.
+device and the required recall lies within its measured competitive region.
+E1 supports high-recall throughput at batch 1,000; T5 instead favours
+CAGRA fp32 at recall 0.97 and batch 8 on all four datasets. At batch 32,
+OpenAI-3072 is close under interpolation and favourable to JHQ under the
+measured threshold; the other three favour CAGRA. Lower-recall JHQ
+advantages also depend on dataset and grid. Grouped scheduling helps
+JHQ internally without guaranteeing a cross-system lead
+(\cref{sec:7-smallbatch}).
+
+The recorded FULL policy is the quality-first calibration starting point,
+followed by validation on the deployment's queries and direct reuse timing.
+Compare quality, total time and resident memory under the actual batch
+regime. The single-client synchronous experiment does not establish
+concurrent-service tail latency, online-update performance or a population
+recall guarantee.

@@ -19,7 +19,8 @@ direct calibrated-reuse timings close the finite-grid and net-cost checks.
 For \textbf{RQ4} (competitive operating regions), at recall 0.97 JHQ is
 fastest in three historical E1 datasets and numerically close to
 IVF-RaBitQ on arXiv under interpolation. The OpenAI results use TF32;
-the FP32 sensitivity retains smaller leads. CAGRA int8 leads at lower recall.
+the FP32 sensitivity retains smaller leads. T5 shows a different small-batch
+region: CAGRA fp32 leads on all four datasets at recall 0.97 and batch 8.
 
 \section{Final Experiment Manifest and Comparison Families}
 \label{sec:7-1}
@@ -60,6 +61,7 @@ Probe & v69 exact computed-score probe selection & 1,792 synthetic cases \\
 Budget & v69 sampled, full-pool and oracle budgets & 12 cells; 64 draws per $S$ \\
 Scale & v69 search, cold builds and resident memory & BGE and Stella extensions \\
 Supplement & Repeated builds; PTX; pairing; budget traces; precision & 30 builds; 12 budget cells; 76 precision pairs \\
+T4/T5 & Strict selection reference; small-batch frontiers & 270 checks; 1,808 timing points \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -117,8 +119,9 @@ search; PQ and RaBitQ represent compressed inverted-file alternatives
 ($932{,}328\times768$), arXiv ($2{,}253{,}000\times768$), and the
 999,000-vector OpenAI datasets at 1,536 and 3,072 dimensions. Each uses
 1,000 queries in one batch ($b=1{,}000$), with the same ground-truth
-file across methods. Cross-system comparisons at batches 8--32 are
-absent; the small-batch gains in \cref{sec:7-6} are internal ablations.
+file across methods. The separate T5 campaign evaluates cross-system
+small-batch behaviour in \cref{sec:7-smallbatch}; the component gains in
+\cref{sec:7-6} retain their internal-ablation scope.
 
 The recorded schedule uses $\gscan=0$ for all 105 arXiv/OpenAI
 run--budget cells and $\gscan=4$ for all 27 Vogue cells, triggered by
@@ -279,6 +282,8 @@ controlled. These effects are relevant to small margins. Five rounds
 characterize repeated execution of the built indexes; they do not estimate
 variation across independent index builds or independent machines.
 
+\input{chapters/07-supp-smallbatch}
+
 \section{Cartesian LUT, Packed Loads and Lane Refinement}
 \label{sec:7-3}
 
@@ -329,6 +334,10 @@ work can outweigh storage savings. The measurements establish the net
 trade-off; without a separate occupancy or instruction-counter experiment,
 they do not identify one hardware effect as the sole cause. The maximum
 reported recall spread within any four-arm cell is $10^{-4}$.
+T4 additionally compares all candidate scores across table forms:
+20.5--29.4\% differ in FP32 bits, with maximum relative error
+$4.64\times10^{-7}$. Vogue has 2--4/256 final-ID differences, while
+arXiv/OpenAI have none (\cref{sec:a-t4-t5}).
 
 \subsection{Packed access and cooperative residual scoring}
 
@@ -412,73 +421,29 @@ codebook structure, all-row corrections and sampled returned scores.
 Those checks complement the query-selection comparisons below; neither
 substitutes for original-input re-encoding or a full placement reference.
 
-\subsection{Global primary selection before performance}
-
-The grouped-scan experiment addresses a correctness requirement that
-cannot be evaluated through recall alone. Dividing a query's candidates
-among blocks must preserve the global primary top-$c$; assigning each
-block only $c/\gscan$ survivors can discard a globally competitive
-candidate from a disproportionately productive group. JHQ's grouped-scan path
-instead retains up to $c$ candidates in every group and merges the local
-lists. Selection uses the complete key $(\primarydist,\mathrm{position})$,
-where position breaks primary-distance ties deterministically.
-
-\Cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} establish
-local retention and global recovery for this primary-score target. The
-experiment checks those outputs on the visited candidates.
-
-The grouped-scan checker covers four workloads, batches 8/32/256/1,000 and group
-counts 1/2/4/8, giving 64 comparisons. It reports no non-tie primary
-selection differences from the original one-block path, zero change in
-compared primary distances, and bit-identical final top-10 identifiers
-and distances for every used query. The original path sorts on distance
-alone, so its primary cutoff can select a different member of a tie;
-these differences do not violate the new complete-key specification.
-They also did not change final outputs in this particular experiment.
-
-The harness uses complete batches: 992 queries at batch 32, 768 at
-256 and 1,000 at 8/1,000. Recorded memcheck, racecheck and synccheck
-runs separately cover smaller subsets of the scan/merge kernels.
+\input{chapters/07-supp-selection}
 
 \subsection{Shared bounds preserve the selection target}
 
-Keeping a full local top-$c$ is safe but potentially expensive. With the shared-bound component (v63),
-groups of one query publish a shared bound using the same complete key.
-Once any group has established $c$ keys no greater than a bound, a
-candidate worse than that bound cannot enter the global top-$c$. A
-stale, looser bound can cause extra admissions, but cannot legitimately
-exclude a better candidate. This requires that a published bound be
-backed by enough valid candidates and that atomic updates preserve the
-complete-key ordering; an approximate distance threshold alone would
-not establish the same tie behaviour.
+The shared-bound component reduces admissions using complete-key bounds
+backed by $c$ valid witnesses. Stale whole-key reads allow extra work
+while preserving the selection target (\cref{prop:5-shared-bound}). Every
+primary score is still computed; savings concern selection, compaction
+and merging rather than distance pruning.
 
-The implementation still computes every scanned candidate's complete
-primary score before deciding admission. The bound reduces selection,
-compaction, sorting and downstream merging work; it does not prune primary
-distance evaluation or avoid reading every rejected primary code. This
-scope matters when interpreting an apparent scan-stage speedup. A faster
-scan stage need not mean fewer evaluated distances.
+Across four workloads and four batch sizes, all 48 shared-bound versus
+independent-bound comparisons agree on primary and final outputs.
+Five-round paired throughput ratios span $0.994$--$1.562\times$.
+On arXiv at $\alpha=200$, batch 1,000 and eight groups, the paired
+profile reduces merge time from about 2,629 to 471\,$\mu$s and scan
+from 7,968 to 5,513\,$\mu$s. Sharing therefore reduces intermediate work
+in suitable workloads, with small regressions elsewhere.
 
-The shared-bound checks compare shared-bound groups 2/4/8 with their
-independent-bound counterparts across the four workloads and four batch
-sizes. All 48 comparisons report identical primary top-$c$ and final
-outputs. Five-round paired throughput measurements range from about
-$0.994$ to $1.562\times$ relative to independent bounds. Thus sharing
-substantially helps some expensive cases but is not uniformly faster.
-On arXiv at $\alpha=200$, batch 1,000 and eight groups, the profiled
-merge cost falls from approximately 2,629 to 471\,$\mu$s, while scan
-falls from 7,968 to 5,513\,$\mu$s in the same paired profile. The result
-supports reducing excess intermediate work rather than claiming that
-more scan groups are always beneficial.
-
-A rejected alternative was to allocate smaller static local quotas.
-The campaign's distribution measurements place 46--81\% of the global
-survivors in the first candidate group for the pilot workloads. Equal
-quotas would frequently require a correctness fallback, and calibrated
-unequal quotas still leave the dominant group on the critical path.
-These observations motivated the exact shared bound. They are pilot
-measurements of those workloads, not a theorem that every possible quota
-policy is inferior.
+The rejected static-quota design faces concentrated winners: the first
+candidate group holds 46--81\% of global survivors in the pilot workloads.
+Equal quotas would require a correctness fallback; calibrated unequal
+quotas leave the dominant group on the critical path. These observations
+motivate shared bounds within that pilot's scope.
 
 \subsection{Exact probe selection and the limits of pipeline identity}
 
@@ -1207,14 +1172,14 @@ RQ & Evidence & Answer & Boundary \\
 \midrule
 RQ1 & Cold build; resident components; large searches & 17.78M vectors
 on one GPU; 20.44\,GiB; repeated train+add 10.54--10.65\,s & Sampled peak 22.58\,GiB; no multi-GPU scaling \\
-RQ2 & Paired LUT, refinement, scan, bound and probe tests & Exact tested
-primary selection; scheduling $2.727\times$ at batch 8 & Ties and numerical paths;
-full-batch gains much smaller \\
+RQ2 & Strict CPU reference; paired execution checks & 55,296 complete-key
+instances match in order; scheduling $2.727\times$ at batch 8 & Finite T4 grid;
+FP32 table forms can change final IDs; full-batch gains smaller \\
 RQ3 & Disjoint queries; fixed 64/100; full pool; oracle; enumeration & Full pool meets 12/12 quality targets; maximum loss 0.0006 & Retrospective working point; $S=128$ has up to 40/64 loss crossings; net cost directly measured on four cells \\
-RQ4 & Six-method E1 sweeps; matched recall; memory & Three leads and
-arXiv near parity at 0.97; Vogue's lead uses grouped scanning; allocation
-below fp32 CAGRA and comparable to int8 & OpenAI E1 uses TF32; FP32 retains smaller leads; batch 1,000 only; int8 wins
-at low recall; no cross-system small-batch comparison \\
+RQ4 & E1 and T5 frontiers; both recall estimators; memory & E1: three
+leads at 0.97; T5: CAGRA leads at batch 8 and 0.97; allocation below
+fp32 CAGRA, comparable to int8 & OpenAI E1 uses TF32; smaller FP32 leads;
+finite unequal grids and interface costs; batch-32 near ties depend on estimator \\
 \bottomrule
 \end{tabularx}
 \end{minipage}\par\medskip

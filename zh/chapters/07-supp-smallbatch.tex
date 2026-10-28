@@ -1,0 +1,44 @@
+\subsection{小批次改变竞争区间}
+\label{sec:7-smallbatch}
+
+T5 在四个 E1 数据集、batch 8/32 下比较调度 JHQ、CAGRA fp32/int8 和 IVF-RaBitQ。
+五轮同步主机到主机调用分别使用 1,000/992 条查询。1,808 个点包含 JHQ 单 block
+对照；本实验不含 IVF-PQ 和暴力搜索。
+\Cref{fig:7-smallbatch,tab:7-smallbatch}比较所得到的工作区间。
+
+\suppressfloats[t]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{t4-t5/smallbatch.pdf}
+\caption[小批次竞争区间]{T5 包含达标实测端点的插值估计下，JHQ／最快对手 QPS。
+大于一表示 JHQ 更快。严格实测阈值见\cref{tab:7-smallbatch}。}
+\label{fig:7-smallbatch}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption[小批次同召回率吞吐比]{T5 QPS 比值，依次为“包含达标端点的插值／严格实测阈值”。
+每种估计独立选择最快对手；更高 recall 的达标端点保留，无外推。}
+\label{tab:7-smallbatch}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{zh/tables/t4-t5/smallbatch}
+\end{table}
+
+recall 0.97、batch 8 下，两种估计均显示 CAGRA fp32 在四个数据集领先，
+JHQ 插值比为 0.641--0.893。batch 32 的插值比为 0.622--1.008；
+OpenAI-3072 在插值下接近平手，但实测阈值有利于 JHQ。
+recall 0.95 时，Vogue 的 batch-8 领先同样只出现在插值估计。
+因此，边界排名受网格分辨率影响。
+
+较低 recall 更有利于 JHQ，但必须保留最快前沿点已经超过目标的竞争者。
+0.90 处，修正后的插值比为 batch 8 的 1.032--1.479 和 batch 32 的
+0.866--1.166；严格实测阈值分别给出三个和一个 JHQ 领先。
+排除这些达标端点会夸大低 recall 优势。
+调度仍然有用：0.95 处相对单 block 的插值提速为 1.7--3.3$\times$。
+内部执行提速因此未必转化为跨系统领先。
+
+按数据集、方法与 batch 汇总的基线空调用中位数为 0.012--0.072\,ms，
+该开销仍包含在搜索计时内。
+CAGRA 使用 Python 绑定，JHQ／RaBitQ 使用 C++，预热策略也有差别。
+证据支持有限网格、单客户端的工作区间，协议见\cref{sec:a-t4-t5}。
+E1 在 batch 1,000 的高 recall 领先不能推广到小批次。

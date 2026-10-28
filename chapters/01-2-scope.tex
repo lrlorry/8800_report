@@ -18,8 +18,9 @@ or an absolute-recall certificate.
 
 The main cross-system experiments use one RTX 5090, squared-L2 top-10 and
 batches of 1,000 queries on four datasets. Six datasets support component
-and budget studies, with separate large-index measurements. Small-batch
-results concern internal JHQ comparisons. The implemented compressed index
+and budget studies, with separate large-index measurements. T5 adds
+cross-system batches 8/32 alongside internal scheduling ablations
+(\cref{sec:7-smallbatch}). The implemented compressed index
 resides on one GPU; CPU model preparation and host-query transfers remain
 part of its actual architecture. Multi-GPU distribution, online updates,
 host-backed residual paging and billion-scale deployment are outside the

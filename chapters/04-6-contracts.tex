@@ -132,8 +132,8 @@ representable counts, and reserves invalid sentinel positions.
 
 The audit consumes the exported rotation and codebooks, rather than a
 matrix regenerated from its seed. Remaining work is narrower: independently
-verify membership against exported IVF centroids, test deliberately empty
-lists and adversarial tails, and obtain a strict CPU reference for actual
-GPU primary scores. The latter is separate from FP64 recoding and remains
-in the shared experiment register. Chapter 5 conditions selection on the
+verify membership against exported IVF centroids and test deliberately
+empty lists and adversarial tails. The strict computed-score CPU selection
+reference has now been completed on the T4 grid
+(\cref{sec:7-strict-selection}); it is separate from FP64 input recoding. Chapter 5 conditions selection on the
 resulting objects; Chapter 7 evaluates quality and cost.
