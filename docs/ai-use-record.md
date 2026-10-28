@@ -106,6 +106,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model versi
 
 Codex removed printed repository paths, script and JSON filenames, pending-list references and editing narration across the chapters, front matter and appendices. Necessary access links use descriptive labels; scientific caveats and attribution remain. Exact replacements are recorded in [internal-reference-edits.json](../assessment/internal-reference-edits.json), with the [source patch](../evidence/editorial/2d9d2aa/internal-reference-cleanup.patch).
 
+### P13 — 补充提交前复核
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> 还有其他的要改吗 再审核一下
+
+Codex checked references, placeholders, scientific consistency and submission actions, then shortened residual process narration and clarified the capacity summary. Personal contribution and missing original interaction records remain author actions. The [applied patch](../evidence/editorial/f8dbf87/submission-polish.patch) records the edits.
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:

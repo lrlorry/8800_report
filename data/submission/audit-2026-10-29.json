@@ -18,7 +18,7 @@
     "english_pages": 83,
     "english_chapters_pages": 67,
     "chinese_pages": 80,
-    "english_prose_and_abstract_estimate": 24124,
+    "english_prose_and_abstract_estimate": 24033,
     "abstract_estimate": 186,
     "figures": 26,
     "tables": 31,
@@ -29,8 +29,8 @@
       "type3": 0
     },
     "words_outside_page": 0,
-    "english_sha256": "192983af31b2953bb83188775354a0e97140ee032ce1f95310c652ee4874768b",
-    "chinese_sha256": "75a171e6385f19f9144efaf2ef422a1a1f455bc3c0fae7626f20a69a47fd8a95"
+    "english_sha256": "be244a0a6449b20ee4b15ec8ec5289b814699a1f4bfbff952985377571c4ed3b",
+    "chinese_sha256": "51e58e2cfd0f299ca57a7c30dddd6578e7e27811e6857c1adefb8c5cd7f86286"
   },
   "code": {
     "local_commit": "19135c965a2cfccf469efb6b75029a268c7c3b5b",
@@ -251,7 +251,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "同口径工具估算24,124词；九章及摘要文字／图注，排除表体和数学。",
+      "evidence": "同口径工具估算24,033词；九章及摘要文字／图注，排除表体和数学。",
       "action": "这不是课程官方字数认证；若Canvas有独立计数规则，须按其重计。"
     },
     {
@@ -321,7 +321,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "docs/ai-use-record.md及JSON已保存12条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
+      "evidence": "docs/ai-use-record.md及JSON已保存13条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
       "action": "作者补可恢复的原始交互和使用位置；未知日期／版本如实标未知；不编造prompt。"
     },
     {
@@ -1178,7 +1178,7 @@
     }
   ],
   "checks": {
-    "local_input_hashes": 1848,
+    "local_input_hashes": 1883,
     "v71_bundle_files": 209,
     "review_bundle_files": 131,
     "cited_keys": 39,
@@ -1188,7 +1188,7 @@
     ],
     "undefined_refs": [],
     "duplicate_labels": [],
-    "visual_scope": "Full compiled-text scan for internal workflow references in both PDFs; readable checks of changed front matter, Chapter 3, bibliography and appendix pages; retained proof-layout checks; not full sentence proofreading or student-personal verification",
+    "visual_scope": "Readable checks of revised introduction, comparison design, capacity discussion and conclusion; full compiled-text, reference, font, boundary and proof-alignment checks; not full student-personal verification",
     "isolated_checks": [
       "evidence/review/check.py --run-audits",
       "evidence/ch5/v71/check.py",
@@ -1202,14 +1202,21 @@
       "audit_synthesis.py"
     ],
     "isolated_numeric_table_changes": [],
-    "candidate_file_fingerprints": 188,
+    "candidate_file_fingerprints": 190,
     "candidate_fonts_type3": 0,
     "identical_scientific_assets": 86,
     "font_only_pdf_exports": 1,
     "hash_count_scope": "All current data/* inputs entries, including the refreshed candidate fingerprints and compression audit",
     "compression_audit": "scripts/audit_compression.py --check-copies; data/compression/audit.json",
     "mathematical_typography": "12 statement/proof pairs retained verbatim; six per language kept on one page with headings and first proof lines within 1pt of the 27mm left margin",
-    "internal_workflow_paths_visible": 0
+    "internal_workflow_paths_visible": 0,
+    "course_cover_identity": {
+      "checked_on": "2026-10-29",
+      "course": "Advanced Computing Research Project",
+      "school": "School of Computing",
+      "source": "https://programsandcourses.anu.edu.au/2026/course/COMP8800",
+      "retrieval": "Official course search index; direct page retrieval restricted by robots"
+    }
   },
   "inputs": [
     {
@@ -1218,7 +1225,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "2ee9cba73ead75028a5dde74c8c984be4d76a24a91ed8980c4b08fdea89ed2c0"
+      "sha256": "6d0505a6e6dd60112613de6331e5e4b23945dc37e8ebf1dcade5c7d9c3dc1d5d"
     },
     {
       "path": "appendices/a-reproducibility.tex",
@@ -1246,7 +1253,7 @@
     },
     {
       "path": "assessment/compression-edits.json",
-      "sha256": "6b6603efb75456095d1544843c56dc11f81e461b8186253c4179748f7a54d747"
+      "sha256": "fa0e9de59aca07de79db7608665690232821a5bd026d7e0855e8e6a0f97a868a"
     },
     {
       "path": "assessment/compression-review-response.txt",
@@ -1270,7 +1277,7 @@
     },
     {
       "path": "assessment/internal-reference-edits.json",
-      "sha256": "a118fa12dbc98bad144ae976337d65944261f75aeb5f845b7d916b750c8f0994"
+      "sha256": "6002bac4fadffe526d58b287cee035e3f5f099dc4ef96c11bee3ef1967b6de33"
     },
     {
       "path": "assessment/layout-reflow-2026-10-29.txt",
@@ -1282,11 +1289,11 @@
     },
     {
       "path": "assessment/submission-audit-2026-10-29.txt",
-      "sha256": "750306c303503a397f0157632b50bd6e85e363bef80c9eab10e00bf940a0d526"
+      "sha256": "4048b4babef7b16573f6605307fc082ed7b3cf67c9bf2230052bfd4599cd3214"
     },
     {
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "c661be95d41e37f8fff5e02cd43a407ff8cd7f813386c5a2a23e4b40c6fcb00a"
+      "sha256": "691d430bb6a32dbba64fcfea81c988158857129a431bf67d031d3b367d1f3135"
     },
     {
       "path": "assessment/targeted-curation-review.md",
@@ -1310,7 +1317,7 @@
     },
     {
       "path": "chapters/01-3-challenges.tex",
-      "sha256": "68788c9d3e6fc1778211b8644bfef3f89265dc3008484ef642708863f24f4d47"
+      "sha256": "317184ae14263419161b298a52390e81bef107e76bffd4f15a2780baa0b4bd4b"
     },
     {
       "path": "chapters/01-4-questions.tex",
@@ -1350,7 +1357,7 @@
     },
     {
       "path": "chapters/02-7-gap.tex",
-      "sha256": "99a5f77f9949be6ae1a9f9697e496308542f33d32e474e2a341b2464bf5eee9a"
+      "sha256": "884c7c1850ef2d3006a3d5ef57739fff0e28d21ccc09b240d60f677f9c0753a1"
     },
     {
       "path": "chapters/02-background.tex",
@@ -1358,7 +1365,7 @@
     },
     {
       "path": "chapters/03-1-comparisons.tex",
-      "sha256": "e103ea1aa65046714ab0f912e4b4c8f7ea0a2db94e2080314f6bba7cad6e349b"
+      "sha256": "d53c8bd16623c87d88a3de1fe87890c06f780ad3e0be7c9a707049861a66f285"
     },
     {
       "path": "chapters/03-2-data.tex",
@@ -1386,7 +1393,7 @@
     },
     {
       "path": "chapters/04-1-boundaries.tex",
-      "sha256": "1ea3a67fee49c32592e8e36d362a401021dbae2f7114b7aa058afde3b311adfe"
+      "sha256": "5850439ffaaf549c27432942ca2fbe7059f0ba90d077057b13ce70909557e0d1"
     },
     {
       "path": "chapters/04-2-training.tex",
@@ -1418,7 +1425,7 @@
     },
     {
       "path": "chapters/05-2-lut.tex",
-      "sha256": "ff629614eb48614f5e4ce39841ab072a7f8c07ab4cc63f3d6b3165033fbec43d"
+      "sha256": "6ca4d38c963ff19f295f5d8f406d5b6221917fb4133805e5bfe46c9673fe0a19"
     },
     {
       "path": "chapters/05-3-packed-access.tex",
@@ -1474,7 +1481,7 @@
     },
     {
       "path": "chapters/07-evaluation.tex",
-      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
+      "sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
     },
     {
       "path": "chapters/07-supp-budget.tex",
@@ -1518,7 +1525,7 @@
     },
     {
       "path": "chapters/09-conclusion.tex",
-      "sha256": "305e80d910105258a095e6f05d83244b137706c03c9fdf471ee804e8c06bb8fe"
+      "sha256": "e57941221550827e5e692d800f3ef86d58d16f1ffec47d6d83994d113f3dcf06"
     },
     {
       "path": "config/layout.tex",
@@ -1534,19 +1541,19 @@
     },
     {
       "path": "data/ch3/audit.json",
-      "sha256": "9dc402d2f6b01717279fe0faae7187cab85f2d749547dbe3d8abab8e1322200c"
+      "sha256": "7035060562c8c6ad46d7191a297c77beb9ff99b1eba5e65f1e8503b04e08734f"
     },
     {
       "path": "data/ch4/audit.json",
-      "sha256": "49b9184c09bc0ddfbf17fd0dee3ef1957e19894f97c6de3c5b5eeba10f1e0349"
+      "sha256": "19476693644ff41dec5330f245316cbe38ff441e69127d3479e4e8f341c429fd"
     },
     {
       "path": "data/ch6/audit.json",
-      "sha256": "32cb4989cc0418c1d1024272d77ff9f376fb5f3a6e7a0e97b207b778b995e70b"
+      "sha256": "dae2577183dcf9432b6a66c1acc0faef09ac514894142a7aeb6b5c862f33c39e"
     },
     {
       "path": "data/ch7/round2-audit.json",
-      "sha256": "e1a5d2e1c4f9a5cba82b791f770dfb710eec639c3817f683ca32c8820e0cfaba"
+      "sha256": "96638de1847e68a5e4c7ac3a99e4f328dafcce94aeb2ddea88c748bc9af47cea"
     },
     {
       "path": "data/ch8/audit.json",
@@ -1554,23 +1561,23 @@
     },
     {
       "path": "data/compression/audit.json",
-      "sha256": "b285c6eaf30c6dee04752e19e0fd012f6d155ce02a4ec6d611870241edc5008a"
+      "sha256": "3353bf2790e5301b9498405fdcaa376657eba0904eed5364607abb35f7d87184"
     },
     {
       "path": "data/deduplication/audit.json",
-      "sha256": "39591210118e3362449ada363845271cb7399edabf2828cd59a45f141b24b45a"
+      "sha256": "cfb43b981d3153bf3effe0ccce899f8419d7f37b3a58d36c48abf2fa6fbff5dc"
     },
     {
       "path": "data/full-review/audit.json",
-      "sha256": "dee9596cfa19fd999ad925ecc4111006c972e0a19b139e79c5fdc3e2dc71fc17"
+      "sha256": "7c3eec4c4562d5206d16b5202d722da0f30355bf3dda290f032061102e56f03e"
     },
     {
       "path": "data/submission/ai-use-record.json",
-      "sha256": "bdb80fd06415f5b6f0e9530bcfd8b5f03db53e3fae8588ff899287e7d9a42caf"
+      "sha256": "a9488cf0601492dcd25f34cf6bae30d69e81c8637eca59c92ab79716b667ea07"
     },
     {
       "path": "data/synthesis/audit.json",
-      "sha256": "0c665e114e07d0f69c5c9f037f8a3d4b25da08ffbf6436490fadb2a913303ea5"
+      "sha256": "1ee95ae2cd0237adcb789d5189d9347106bb981dcbe65d236b35437bacc2b736"
     },
     {
       "path": "data/synthesis/primary-sources.json",
@@ -1578,11 +1585,11 @@
     },
     {
       "path": "data/t4-t5/audit.json",
-      "sha256": "80f3c8adb8582e2f2395a32fd540a6015b35ec77c7898d99d46fc789289f22db"
+      "sha256": "6f8fbbdbe4c254313a8e4f2e0d46d357ac503b2181346e8d4e45816deea6e5d2"
     },
     {
       "path": "docs/ai-use-record.md",
-      "sha256": "0e953bf8099b53496f23819aba83167b8d9364bceecfc6dcf6a46506e93bb632"
+      "sha256": "fb5f101ba60524fd038df5c709520d13575485d2dd9c8bf7b8f9fee1b0410f13"
     },
     {
       "path": "docs/artifact-access.md",
@@ -1669,6 +1676,14 @@
       "sha256": "f3a664605719a1689c113cc04c891b38b0ff028f77df9654aa7005e4c314abd3"
     },
     {
+      "path": "evidence/editorial/f8dbf87/compression-from-03775b7.patch",
+      "sha256": "61eb5bba98754aed975f2ce51fad5ce44b90608cf31e6dc1761fe869ffa6cfe9"
+    },
+    {
+      "path": "evidence/editorial/f8dbf87/submission-polish.patch",
+      "sha256": "a355c22710ed4655952b3e94d276cc23928921c6a62ca7ca94dd9542b2025fef"
+    },
+    {
       "path": "figures/t4-t5/smallbatch.pdf",
       "sha256": "197c8108cdeffa9a09d5f174175f28b5267fe5aeab797538ac421ac4d645e81c"
     },
@@ -1706,7 +1721,7 @@
     },
     {
       "path": "scripts/audit_compression.py",
-      "sha256": "1edf78ff5336143249211842385a8f5fb79ebf4b48ad9b54622e011752b428e9"
+      "sha256": "49ccfdbb9fad73f970f351b5cdb82b69dc1350de0de10b226b8052511a645d62"
     },
     {
       "path": "scripts/audit_deduplication.py",
@@ -1722,11 +1737,11 @@
     },
     {
       "path": "thesis-zh.pdf",
-      "sha256": "75a171e6385f19f9144efaf2ef422a1a1f455bc3c0fae7626f20a69a47fd8a95"
+      "sha256": "51e58e2cfd0f299ca57a7c30dddd6578e7e27811e6857c1adefb8c5cd7f86286"
     },
     {
       "path": "thesis.pdf",
-      "sha256": "192983af31b2953bb83188775354a0e97140ee032ce1f95310c652ee4874768b"
+      "sha256": "be244a0a6449b20ee4b15ec8ec5289b814699a1f4bfbff952985377571c4ed3b"
     },
     {
       "path": "zh/acknowledgements.tex",
@@ -1746,7 +1761,7 @@
     },
     {
       "path": "zh/chapters/01-3-challenges.tex",
-      "sha256": "9b4c2085db917e476cda14433c96649a7f8b8efa1fad40008db4fb2623a8f65f"
+      "sha256": "67d03bfb84957d3f38944b241251fdb1ced0a70535329196fceb0b50b51a1534"
     },
     {
       "path": "zh/chapters/01-4-questions.tex",
@@ -1786,7 +1801,7 @@
     },
     {
       "path": "zh/chapters/02-7-gap.tex",
-      "sha256": "c9ee3045957253b708e01926080525b8d0820d4e0c20836d008312f19dc76bfb"
+      "sha256": "206306fd28e6526e86e83c6cda5baf5ca905099a9f6a917ea657f5387c704f9c"
     },
     {
       "path": "zh/chapters/02-background.tex",
@@ -1794,7 +1809,7 @@
     },
     {
       "path": "zh/chapters/03-1-comparisons.tex",
-      "sha256": "06c41e79a3712a904f30e9c46d24c600b602e19fcdf618f5cc1ab9cf01b5ac3b"
+      "sha256": "a6842068c2c61c3b8b98b617364992bab1f8bb803e9592fe32c5cf0d3b832460"
     },
     {
       "path": "zh/chapters/03-2-data.tex",
@@ -1822,7 +1837,7 @@
     },
     {
       "path": "zh/chapters/04-1-boundaries.tex",
-      "sha256": "3fc03235a055c30aa876c3a9c8068686f16edf3f1a14437403d97f6ab00c4666"
+      "sha256": "0751ec16ae142ebe3d1e5282dd5f27825b38517f87deb2ac626c080f8c4b743c"
     },
     {
       "path": "zh/chapters/04-2-training.tex",
@@ -1854,7 +1869,7 @@
     },
     {
       "path": "zh/chapters/05-2-lut.tex",
-      "sha256": "470734032705149724239ab7bf143f2ecb6b9b0d3f2c3330b2445f8cd7ea7e30"
+      "sha256": "b184278724445acd6f17201472743071a9ae22780d6ab6ebb2066485afedb347"
     },
     {
       "path": "zh/chapters/05-3-packed-access.tex",
@@ -1910,7 +1925,7 @@
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
+      "sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
     },
     {
       "path": "zh/chapters/07-supp-budget.tex",
@@ -1954,7 +1969,7 @@
     },
     {
       "path": "zh/chapters/09-conclusion.tex",
-      "sha256": "c95901e2616c009d470b5adc9214e0a124bc0c61fdebe6515730d154e26cb120"
+      "sha256": "bd8d81b0fa395402818884db380f5eaa861c62ead1e6163ab29e64e27246ef3a"
     },
     {
       "path": "zh/declaration.tex",
@@ -1967,10 +1982,11 @@
   ],
   "initial_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
   "audited_base_commit": "682ef939ee41e3a9b9c9ec984604c62008406744",
-  "revision_scope": "Remove internal workflow paths and editing narration across chapters, captions, front matter, bibliography and appendices; retain scientific content and descriptive artifact links",
+  "revision_scope": "Additional submission review: remove residual process narration and clarify capacity/measurement language; numerical results, proofs and assets preserved; personal contribution, interaction completeness and Canvas actions remain pending",
   "compression_baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
   "adc_revision_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4",
   "layout_baseline": "f39bf756dbd5f3b9708a6f2919de7c124af7cdf1",
   "proof_layout_baseline": "cc696f2f98f29ebe794d930f08d2d5ab4add994e",
-  "internal_reference_cleanup_baseline": "2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab"
+  "internal_reference_cleanup_baseline": "2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab",
+  "submission_polish_baseline": "f8dbf87d023fa77f3903c09d44f585beafa02120"
 }

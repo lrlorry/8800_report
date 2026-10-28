@@ -1,0 +1,192 @@
+diff --git a/chapters/01-3-challenges.tex b/chapters/01-3-challenges.tex
+index ecc9333..3d625ad 100644
+--- a/chapters/01-3-challenges.tex
++++ b/chapters/01-3-challenges.tex
+@@ -23,9 +23,7 @@ while a small multiplier can remove a true neighbour too early. Agreement
+ with a large-budget reference is available without GT, but agreement does
+ not repair the reference's own errors or guarantee future-query recall.
+ Choosing a sample and budget also consumes time. The challenge is to evaluate
+-selection quality, calibration cost and reuse together. These are questions
+-organised around an iterative project record; observed benefits are not
+-presented as preregistered predictions.
++selection quality, calibration cost and reuse together.
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+diff --git a/chapters/02-7-gap.tex b/chapters/02-7-gap.tex
+index d7d94cc..3c1dad1 100644
+--- a/chapters/02-7-gap.tex
++++ b/chapters/02-7-gap.tex
+@@ -47,5 +47,4 @@ execution and effort. More expressive learned codes and graph navigation
+ remain meaningful alternatives, but changing them simultaneously would
+ obscure the component questions. The thesis evaluates this constrained
+ design through mathematical contracts, paired experiments and competitive
+-frontiers. Its unresolved distribution, tie and calibration assumptions
+-remain visible, making the resulting claims narrower and testable.
++frontiers.
+diff --git a/chapters/03-1-comparisons.tex b/chapters/03-1-comparisons.tex
+index 7909447..b715e7c 100644
+--- a/chapters/03-1-comparisons.tex
++++ b/chapters/03-1-comparisons.tex
+@@ -46,10 +46,7 @@ algorithm and implementation; it cannot isolate one kernel's contribution.
+ \Cref{sec:7-6} provides an integrated scheduling comparison so that component
+ ratios need not be multiplied across incompatible baselines.
+ 
+-The research questions organise an iterative development record. They are
+-not a preregistered test plan: the E1 grid was extended after observing
+-incomplete recall coverage, and the interpretation of workload-dependent
+-refinement emerged from budget sweeps. Low-recall losses, high-recall
++The E1 grid was extended where recall coverage was incomplete. Low-recall losses, high-recall
+ reversals and unsuccessful alternatives remain part of the evaluation.
+ Output agreement with a quantised reference and recall against raw-vector
+ GT are separate quantities by definition. The budget rule uses the former;
+diff --git a/chapters/04-1-boundaries.tex b/chapters/04-1-boundaries.tex
+index 25e4276..3a994ac 100644
+--- a/chapters/04-1-boundaries.tex
++++ b/chapters/04-1-boundaries.tex
+@@ -34,7 +34,7 @@ scores, probe offsets, LUTs and survivor buffers are overwritten on the
+ next batch, although their allocations are retained. A captured CUDA graph
+ belongs to this execution state and references the existing arrays.
+ 
+-The audited API builds a fixed snapshot with one successful \texttt{add}
++The API builds a fixed snapshot with one successful \texttt{add}
+ call; it rejects a subsequent add. Physical positions remain fixed while
+ searching that snapshot. Changes are handled by building a replacement snapshot. This gives a
+ simple bulk-rebuild lifecycle; mutable insert/delete operations and
+diff --git a/chapters/05-2-lut.tex b/chapters/05-2-lut.tex
+index 568016d..6c0d560 100644
+--- a/chapters/05-2-lut.tex
++++ b/chapters/05-2-lut.tex
+@@ -124,9 +124,8 @@ the full-table footprint exceeds capacity even at $M=96$
+ ($114{,}696$ bytes in the query-centric path), whereas the largest
+ two-group footprint is $65{,}560$ bytes in the grouped path.
+ Thus the source-level placement rule sends full tables to global memory
+-and two-group tables to shared memory in these configurations. This is
+-a deduction from the launch rule and published limit; a device-attribute
+-printout was not retained in the reviewed records.
++and two-group tables to shared memory in these configurations. This placement is inferred from the launch rule and published limit.
++The measurement records do not include a device-attribute query.
+ 
+ Four and eight groups both store 16 entries per subspace but perform
+ more lookups and combinations. Extraction, lookup dependencies, staging,
+diff --git a/chapters/07-evaluation.tex b/chapters/07-evaluation.tex
+index 3cd9e74..114a321 100644
+--- a/chapters/07-evaluation.tex
++++ b/chapters/07-evaluation.tex
+@@ -798,11 +798,11 @@ higher-recall region has no int8 coverage, and JHQ's highest-recall
+ points trade throughput for quality. Corrected-run exclusions and
+ harness diagnostics are recorded in Appendix~\ref{app:reproducibility}.
+ 
+-The result is evidence of tested scale and useful high-recall operating
+-regions, rather than arbitrary-size scalability. The largest completed
+-search uses 17.78 million vectors on one GPU; there is no multi-GPU
+-experiment, no scaling curve holding data distribution fixed and only sampled construction peaks, rather than an allocation-exact proof
+-near the card's capacity. Stella's searches use its actual 999-query pool.
++The experiments demonstrate single-GPU search over 17.78 million vectors
++and useful high-recall operating regions. Multi-GPU execution and
++scaling at a fixed data distribution remain untested. Construction
++memory samples leave shorter allocation transients unresolved near
++device capacity. Stella uses its actual 999-query pool.
+ 
+ \section{Numerical Robustness, Anomalies and Recall Attribution}
+ \label{sec:7-8}
+diff --git a/chapters/09-conclusion.tex b/chapters/09-conclusion.tex
+index d15c82c..028cc32 100644
+--- a/chapters/09-conclusion.tex
++++ b/chapters/09-conclusion.tex
+@@ -9,8 +9,7 @@ searchable resident hierarchy. The largest tested database contains
+ 17.78 million vectors at 20.44\,GiB resident device memory; the corresponding
+ supplementary train-plus-add range is 10.54--10.65\,s
+ (\cref{sec:7-7}). Its sampled construction peak is 22.58\,GiB, while
+-BGE reaches 26.08\,GiB at add entry. Repeated independent builds and
+-startup intervals establish the measured capacity boundary more fully.
++BGE reaches 26.08\,GiB at add entry.
+ 
+ \paragraph{RQ2: Correct and efficient execution.}
+ The inherited Cartesian code admits exact real-arithmetic table
+diff --git a/zh/chapters/01-3-challenges.tex b/zh/chapters/01-3-challenges.tex
+index 4ab9b7e..7baf205 100644
+--- a/zh/chapters/01-3-challenges.tex
++++ b/zh/chapters/01-3-challenges.tex
+@@ -13,7 +13,6 @@
+ 第三，固定倍率可能反复精排无关向量，小倍率则可能过早删除真近邻。
+ 大预算参考一致性无需GT，却不能修复参考自身错误或保证未来查询recall。
+ 样本与预算选择也耗时，必须联合评估质量、校准成本及复用。
+-这些问题组织迭代项目记录，不把观察收益包装成预注册预测。
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+diff --git a/zh/chapters/02-7-gap.tex b/zh/chapters/02-7-gap.tex
+index 9ed938e..80fd83a 100644
+--- a/zh/chapters/02-7-gap.tex
++++ b/zh/chapters/02-7-gap.tex
+@@ -35,4 +35,4 @@ GT recall、选中臂吞吐与净节省。
+ 
+ 这些问题推动固定继承表示、改变执行与工作量。更强学习编码和图导航仍是有意义的
+ 替代，但同时改动它们会掩盖组件问题。本文以数学契约、配对实验和竞争前沿评估
+-该受约束设计，并保留分布、并列和校准假设，使结论具体而可检验。
++该受约束设计。
+diff --git a/zh/chapters/03-1-comparisons.tex b/zh/chapters/03-1-comparisons.tex
+index 3a1b51c..e89225e 100644
+--- a/zh/chapters/03-1-comparisons.tex
++++ b/zh/chapters/03-1-comparisons.tex
+@@ -36,7 +36,6 @@ RQ4：工作区间 & 独立调优的JHQ、CAGRA、IVF-PQ和IVF-RaBitQ
+ 识别某个内核的贡献。\Cref{sec:7-6}提供集成调度比较，避免把不同基线上的
+ 组件提速比直接相乘。
+ 
+-这些研究问题组织的是迭代开发记录，并非预注册方案：E1发现recall覆盖不足后
+-扩展了网格，工作负载精排需求的解释也来自预算扫描。低recall失利、高recall
++E1在recall覆盖不足处扩展了网格。低recall失利、高recall
+ 反转和失败方案同样进入评估。与量化参考的输出一致性、相对原始向量GT的recall，
+ 按定义就是不同的量；预算规则使用前者，留出评估检验后者。
+diff --git a/zh/chapters/04-1-boundaries.tex b/zh/chapters/04-1-boundaries.tex
+index ce93b59..d72b15d 100644
+--- a/zh/chapters/04-1-boundaries.tex
++++ b/zh/chapters/04-1-boundaries.tex
+@@ -11,7 +11,7 @@
+ 
+ 模型状态包含变换、主码码本、残差码本和 IVF 中心。数据库状态进一步包含列表偏移、原始行 ID、主码、残差码及修正项。搜索工作区的逻辑寿命更短：旋转查询、中心分数、探针偏移、LUT 和保留候选缓冲区在下一批被覆盖，但分配的内存保留复用。捕获的 CUDA graph 属于执行状态，引用这些现有数组。
+ 
+-已核对的 API 通过一次成功的 \texttt{add} 构造固定快照，并拒绝后续 add。搜索该快照时物理位置保持固定。数据变更通过重建替代快照处理，形成简单的批量重建生命周期；可变插入／删除及快照的事务发布还需要额外索引管理。
++API 通过一次成功的 \texttt{add} 构造固定快照，并拒绝后续 add。搜索该快照时物理位置保持固定。数据变更通过重建替代快照处理，形成简单的批量重建生命周期；可变插入／删除及快照的事务发布还需要额外索引管理。
+ 
+ 搜索接收主机查询并返回主机ID及计算分数。分数中的查询常数及其对范围阈值的影响
+ 见\cref{eq:5-refined-constant}，实测主机到主机调用边界见\cref{sec:3-3}。
+diff --git a/zh/chapters/05-2-lut.tex b/zh/chapters/05-2-lut.tex
+index 7ac5f47..56a6d9e 100644
+--- a/zh/chapters/05-2-lut.tex
++++ b/zh/chapters/05-2-lut.tex
+@@ -75,7 +75,7 @@ $\glut$ & 表项 & FP32 字节 & 查表次数 & 合并加法 & 建表坐标项 \
+ \end{equation}
+ 这些公式适用于被测扫描，不包含可选融合精排或提前终止的额外工作区。代码恰在对应占用不超过 $S_{\max}$ 时选择共享内存查表。
+ 
+-分组表实验中 $c=1{,}000$，block 为 512 或 1,024 线程，$C_{\rm buf}=2{,}048$。完整表为 96--384\,KiB，两组表为 12--48\,KiB。NVIDIA 对 compute capability 12.0 给出的每 block 上限为 99\,KiB\cite{blackwell_tuning}。按该上限，即使 $M=96$，完整表加查询级缓冲区也需要 $114{,}696$ 字节，超过容量；最大的两组表加分组缓冲区仅需 $65{,}560$ 字节。因此，按源码放置规则，这些配置的完整表走全局内存、两组表走共享内存。这是依据启动规则与公开上限作出的推导；本次检查的记录未保留设备属性打印。
++分组表实验中 $c=1{,}000$，block 为 512 或 1,024 线程，$C_{\rm buf}=2{,}048$。完整表为 96--384\,KiB，两组表为 12--48\,KiB。NVIDIA 对 compute capability 12.0 给出的每 block 上限为 99\,KiB\cite{blackwell_tuning}。按该上限，即使 $M=96$，完整表加查询级缓冲区也需要 $114{,}696$ 字节，超过容量；最大的两组表加分组缓冲区仅需 $65{,}560$ 字节。因此，按源码放置规则，这些配置的完整表走全局内存、两组表走共享内存。这一放置方式由启动规则与公开上限推导；测量记录未包含设备属性查询。
+ 
+ 四组和八组都只存每子空间 16 项，却增加查表和合并。位提取、查表依赖、搬运、同步和驻留共同决定实测权衡。不同扫描组可能各自搬运同一查询的表。
+ 
+diff --git a/zh/chapters/07-evaluation.tex b/zh/chapters/07-evaluation.tex
+index e20615e..0da8c67 100644
+--- a/zh/chapters/07-evaluation.tex
++++ b/zh/chapters/07-evaluation.tex
+@@ -432,7 +432,7 @@ BGE 含 10,091,524 个向量，Stella 含 17,776,615 个向量，均为 1,024 
+ 
+ Stella 上一个具体高端比较为：JHQ 在召回率 0.978679 时达到 185.4 kQPS，int8 在 0.978278 时为 66.3 kQPS，速率比为 $2.80\times$，两者召回率略有不同。这是一对明确的实测点，不是统一的匹配召回率优势：JHQ 很多更高召回率区间没有 int8 覆盖，而且其最高召回率点也以吞吐量换取质量。附录~\ref{app:reproducibility}记录修正运行的排除规则与测试程序诊断。
+ 
+-结果证明的是已测试规模和有价值的高召回率区间，而不是任意规模的可扩展性。最大已完成搜索是在单 GPU 上处理 17.78 百万个向量；本章没有多 GPU 实验，没有保持数据分布不变的扩展曲线，只有采样构建峰值，没有逐分配精确的容量证明。Stella 搜索使用实际的 999 条查询池。
++实验展示了单 GPU 上 17.78 百万个向量的搜索，以及有价值的高召回率区间。多 GPU 执行和固定数据分布下的扩展性尚未测试。构建显存采样仍未解析接近设备容量时、更短时间尺度上的分配瞬态。Stella 使用实际的 999 条查询池。
+ 
+ \section{数值稳健性、异常与召回率归因}
+ \label{sec:7-8}
+diff --git a/zh/chapters/09-conclusion.tex b/zh/chapters/09-conclusion.tex
+index 5452344..276f80a 100644
+--- a/zh/chapters/09-conclusion.tex
++++ b/zh/chapters/09-conclusion.tex
+@@ -7,7 +7,6 @@
+ GPU训练、batch编码、IVF放置及packed数组形成可搜索常驻层次。
+ 最大被测数据库为17.78百万向量、常驻20.44\,GiB，补证train+add为10.54--10.65\,s（\cref{sec:7-7}）。
+ Stella采样构建峰值22.58\,GiB，BGE在add入口达到26.08\,GiB。
+-独立重复构建和启动区间更完整地说明了已测容量边界。
+ 
+ \paragraph{RQ2：正确高效的执行。}
+ 继承Cartesian编码允许实数精确拆表，完整键保留／合并及共享界论证说明分组选择

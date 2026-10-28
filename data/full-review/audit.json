@@ -350,7 +350,7 @@
     {
       "repository": "8800_report",
       "path": "data/t4-t5/audit.json",
-      "sha256": "80f3c8adb8582e2f2395a32fd540a6015b35ec77c7898d99d46fc789289f22db"
+      "sha256": "6f8fbbdbe4c254313a8e4f2e0d46d357ac503b2181346e8d4e45816deea6e5d2"
     },
     {
       "repository": "8800_report",
@@ -365,12 +365,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/09-conclusion.tex",
-      "sha256": "305e80d910105258a095e6f05d83244b137706c03c9fdf471ee804e8c06bb8fe"
+      "sha256": "e57941221550827e5e692d800f3ef86d58d16f1ffec47d6d83994d113f3dcf06"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/09-conclusion.tex",
-      "sha256": "c95901e2616c009d470b5adc9214e0a124bc0c61fdebe6515730d154e26cb120"
+      "sha256": "bd8d81b0fa395402818884db380f5eaa861c62ead1e6163ab29e64e27246ef3a"
     },
     {
       "repository": "8800_report",

@@ -371,6 +371,38 @@
       "output_sha256": null,
       "output_status": "Applied source patch retained; full model response not separately exported",
       "verification": "Compiled-text scan, source preservation checks and PDF inspection recorded by Codex; student-personal verification not inferred"
+    },
+    {
+      "id": "P13",
+      "tool": "OpenAI Codex",
+      "source": "Original user request in the current conversation",
+      "interaction_date": "2026-10-29",
+      "model_version": null,
+      "task": "Additional submission review: language, consistency, references and unresolved author actions",
+      "prompt": "还有其他的要改吗 再审核一下",
+      "prompt_sha256": "663ba38eb6db4b3ecf5cb6e678caf1d4bb6a913ad0e0e0784cce9b0f57b397f9",
+      "artifact_mapping": [
+        "chapters/01-3-challenges.tex",
+        "zh/chapters/01-3-challenges.tex",
+        "chapters/03-1-comparisons.tex",
+        "zh/chapters/03-1-comparisons.tex",
+        "chapters/02-7-gap.tex",
+        "zh/chapters/02-7-gap.tex",
+        "chapters/04-1-boundaries.tex",
+        "zh/chapters/04-1-boundaries.tex",
+        "chapters/05-2-lut.tex",
+        "zh/chapters/05-2-lut.tex",
+        "chapters/07-evaluation.tex",
+        "zh/chapters/07-evaluation.tex",
+        "chapters/09-conclusion.tex",
+        "zh/chapters/09-conclusion.tex"
+      ],
+      "used_as": "Bilingual editorial clarification and verification; no numerical result or proof rewrite",
+      "retained_patch": "evidence/editorial/f8dbf87/submission-polish.patch",
+      "retained_patch_sha256": "a355c22710ed4655952b3e94d276cc23928921c6a62ca7ca94dd9542b2025fef",
+      "output_sha256": null,
+      "output_status": "Applied source patch retained; full model response not separately exported",
+      "verification": "Reference, scientific-content and PDF checks recorded by Codex; student-personal verification and submission completion not inferred"
     }
   ]
 }

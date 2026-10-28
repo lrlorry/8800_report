@@ -34,7 +34,7 @@ scores, probe offsets, LUTs and survivor buffers are overwritten on the
 next batch, although their allocations are retained. A captured CUDA graph
 belongs to this execution state and references the existing arrays.
 
-The audited API builds a fixed snapshot with one successful \texttt{add}
+The API builds a fixed snapshot with one successful \texttt{add}
 call; it rejects a subsequent add. Physical positions remain fixed while
 searching that snapshot. Changes are handled by building a replacement snapshot. This gives a
 simple bulk-rebuild lifecycle; mutable insert/delete operations and

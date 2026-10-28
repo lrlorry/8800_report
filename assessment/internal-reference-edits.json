@@ -403,6 +403,90 @@
       "before": "  note = {Project manuscript source at a fixed public revision; its historical measurement versions are distinguished in this thesis}",
       "after": "  note = {Project manuscript}",
       "reason": "Use a descriptive manuscript citation rather than printing the internal source filename"
+    },
+    {
+      "path": "chapters/01-3-challenges.tex",
+      "before": " These are questions\norganised around an iterative project record; observed benefits are not\npresented as preregistered predictions.",
+      "after": "",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/01-3-challenges.tex",
+      "before": "这些问题组织迭代项目记录，不把观察收益包装成预注册预测。\n",
+      "after": "",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "chapters/03-1-comparisons.tex",
+      "before": "The research questions organise an iterative development record. They are\nnot a preregistered test plan: the E1 grid was extended after observing\nincomplete recall coverage, and the interpretation of workload-dependent\nrefinement emerged from budget sweeps.",
+      "after": "The E1 grid was extended where recall coverage was incomplete.",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/03-1-comparisons.tex",
+      "before": "这些研究问题组织的是迭代开发记录，并非预注册方案：E1发现recall覆盖不足后\n扩展了网格，工作负载精排需求的解释也来自预算扫描。",
+      "after": "E1在recall覆盖不足处扩展了网格。",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "chapters/02-7-gap.tex",
+      "before": " Its unresolved distribution, tie and calibration assumptions\nremain visible, making the resulting claims narrower and testable.",
+      "after": "",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/02-7-gap.tex",
+      "before": "该受约束设计，并保留分布、并列和校准假设，使结论具体而可检验。",
+      "after": "该受约束设计。",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "chapters/04-1-boundaries.tex",
+      "before": "The audited API builds",
+      "after": "The API builds",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/04-1-boundaries.tex",
+      "before": "已核对的 API 通过",
+      "after": "API 通过",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "chapters/05-2-lut.tex",
+      "before": "This is\na deduction from the launch rule and published limit; a device-attribute\nprintout was not retained in the reviewed records.",
+      "after": "This placement is inferred from the launch rule and published limit.\nThe measurement records do not include a device-attribute query.",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/05-2-lut.tex",
+      "before": "这是依据启动规则与公开上限作出的推导；本次检查的记录未保留设备属性打印。",
+      "after": "这一放置方式由启动规则与公开上限推导；测量记录未包含设备属性查询。",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before": "The result is evidence of tested scale and useful high-recall operating\nregions, rather than arbitrary-size scalability. The largest completed\nsearch uses 17.78 million vectors on one GPU; there is no multi-GPU\nexperiment, no scaling curve holding data distribution fixed and only sampled construction peaks, rather than an allocation-exact proof\nnear the card's capacity. Stella's searches use its actual 999-query pool.",
+      "after": "The experiments demonstrate single-GPU search over 17.78 million vectors\nand useful high-recall operating regions. Multi-GPU execution and\nscaling at a fixed data distribution remain untested. Construction\nmemory samples leave shorter allocation transients unresolved near\ndevice capacity. Stella uses its actual 999-query pool.",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "结果证明的是已测试规模和有价值的高召回率区间，而不是任意规模的可扩展性。最大已完成搜索是在单 GPU 上处理 17.78 百万个向量；本章没有多 GPU 实验，没有保持数据分布不变的扩展曲线，只有采样构建峰值，没有逐分配精确的容量证明。Stella 搜索使用实际的 999 条查询池。",
+      "after": "实验展示了单 GPU 上 17.78 百万个向量的搜索，以及有价值的高召回率区间。多 GPU 执行和固定数据分布下的扩展性尚未测试。构建显存采样仍未解析接近设备容量时、更短时间尺度上的分配瞬态。Stella 使用实际的 999 条查询池。",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "chapters/09-conclusion.tex",
+      "before": " Repeated independent builds and\nstartup intervals establish the measured capacity boundary more fully.",
+      "after": "",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
+    },
+    {
+      "path": "zh/chapters/09-conclusion.tex",
+      "before": "独立重复构建和启动区间更完整地说明了已测容量边界。\n",
+      "after": "",
+      "reason": "Submission review: remove editing narration and clarify scientific scope without changing results"
     }
   ],
   "files": [
@@ -474,12 +558,12 @@
     {
       "path": "chapters/07-evaluation.tex",
       "before_sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c",
-      "after_sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
+      "after_sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
       "before_sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd",
-      "after_sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
+      "after_sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
     },
     {
       "path": "chapters/07-supp-budget.tex",
@@ -550,6 +634,66 @@
       "path": "chapters/05-4-global-selection.tex",
       "before_sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f",
       "after_sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4"
+    },
+    {
+      "path": "chapters/01-3-challenges.tex",
+      "before_sha256": "68788c9d3e6fc1778211b8644bfef3f89265dc3008484ef642708863f24f4d47",
+      "after_sha256": "317184ae14263419161b298a52390e81bef107e76bffd4f15a2780baa0b4bd4b"
+    },
+    {
+      "path": "zh/chapters/01-3-challenges.tex",
+      "before_sha256": "9b4c2085db917e476cda14433c96649a7f8b8efa1fad40008db4fb2623a8f65f",
+      "after_sha256": "67d03bfb84957d3f38944b241251fdb1ced0a70535329196fceb0b50b51a1534"
+    },
+    {
+      "path": "chapters/03-1-comparisons.tex",
+      "before_sha256": "e103ea1aa65046714ab0f912e4b4c8f7ea0a2db94e2080314f6bba7cad6e349b",
+      "after_sha256": "d53c8bd16623c87d88a3de1fe87890c06f780ad3e0be7c9a707049861a66f285"
+    },
+    {
+      "path": "zh/chapters/03-1-comparisons.tex",
+      "before_sha256": "06c41e79a3712a904f30e9c46d24c600b602e19fcdf618f5cc1ab9cf01b5ac3b",
+      "after_sha256": "a6842068c2c61c3b8b98b617364992bab1f8bb803e9592fe32c5cf0d3b832460"
+    },
+    {
+      "path": "chapters/02-7-gap.tex",
+      "before_sha256": "99a5f77f9949be6ae1a9f9697e496308542f33d32e474e2a341b2464bf5eee9a",
+      "after_sha256": "884c7c1850ef2d3006a3d5ef57739fff0e28d21ccc09b240d60f677f9c0753a1"
+    },
+    {
+      "path": "zh/chapters/02-7-gap.tex",
+      "before_sha256": "c9ee3045957253b708e01926080525b8d0820d4e0c20836d008312f19dc76bfb",
+      "after_sha256": "206306fd28e6526e86e83c6cda5baf5ca905099a9f6a917ea657f5387c704f9c"
+    },
+    {
+      "path": "chapters/04-1-boundaries.tex",
+      "before_sha256": "1ea3a67fee49c32592e8e36d362a401021dbae2f7114b7aa058afde3b311adfe",
+      "after_sha256": "5850439ffaaf549c27432942ca2fbe7059f0ba90d077057b13ce70909557e0d1"
+    },
+    {
+      "path": "zh/chapters/04-1-boundaries.tex",
+      "before_sha256": "3fc03235a055c30aa876c3a9c8068686f16edf3f1a14437403d97f6ab00c4666",
+      "after_sha256": "0751ec16ae142ebe3d1e5282dd5f27825b38517f87deb2ac626c080f8c4b743c"
+    },
+    {
+      "path": "chapters/05-2-lut.tex",
+      "before_sha256": "ff629614eb48614f5e4ce39841ab072a7f8c07ab4cc63f3d6b3165033fbec43d",
+      "after_sha256": "6ca4d38c963ff19f295f5d8f406d5b6221917fb4133805e5bfe46c9673fe0a19"
+    },
+    {
+      "path": "zh/chapters/05-2-lut.tex",
+      "before_sha256": "470734032705149724239ab7bf143f2ecb6b9b0d3f2c3330b2445f8cd7ea7e30",
+      "after_sha256": "b184278724445acd6f17201472743071a9ae22780d6ab6ebb2066485afedb347"
+    },
+    {
+      "path": "chapters/09-conclusion.tex",
+      "before_sha256": "305e80d910105258a095e6f05d83244b137706c03c9fdf471ee804e8c06bb8fe",
+      "after_sha256": "e57941221550827e5e692d800f3ef86d58d16f1ffec47d6d83994d113f3dcf06"
+    },
+    {
+      "path": "zh/chapters/09-conclusion.tex",
+      "before_sha256": "c95901e2616c009d470b5adc9214e0a124bc0c61fdebe6515730d154e26cb120",
+      "after_sha256": "bd8d81b0fa395402818884db380f5eaa861c62ead1e6163ab29e64e27246ef3a"
     }
   ]
 }

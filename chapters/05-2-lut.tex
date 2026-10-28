@@ -124,9 +124,8 @@ the full-table footprint exceeds capacity even at $M=96$
 ($114{,}696$ bytes in the query-centric path), whereas the largest
 two-group footprint is $65{,}560$ bytes in the grouped path.
 Thus the source-level placement rule sends full tables to global memory
-and two-group tables to shared memory in these configurations. This is
-a deduction from the launch rule and published limit; a device-attribute
-printout was not retained in the reviewed records.
+and two-group tables to shared memory in these configurations. This placement is inferred from the launch rule and published limit.
+The measurement records do not include a device-attribute query.
 
 Four and eight groups both store 16 entries per subspace but perform
 more lookups and combinations. Extraction, lookup dependencies, staging,

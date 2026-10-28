@@ -798,11 +798,11 @@ higher-recall region has no int8 coverage, and JHQ's highest-recall
 points trade throughput for quality. Corrected-run exclusions and
 harness diagnostics are recorded in Appendix~\ref{app:reproducibility}.
 
-The result is evidence of tested scale and useful high-recall operating
-regions, rather than arbitrary-size scalability. The largest completed
-search uses 17.78 million vectors on one GPU; there is no multi-GPU
-experiment, no scaling curve holding data distribution fixed and only sampled construction peaks, rather than an allocation-exact proof
-near the card's capacity. Stella's searches use its actual 999-query pool.
+The experiments demonstrate single-GPU search over 17.78 million vectors
+and useful high-recall operating regions. Multi-GPU execution and
+scaling at a fixed data distribution remain untested. Construction
+memory samples leave shorter allocation transients unresolved near
+device capacity. Stella uses its actual 999-query pool.
 
 \section{Numerical Robustness, Anomalies and Recall Attribution}
 \label{sec:7-8}

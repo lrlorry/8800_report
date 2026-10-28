@@ -403,9 +403,9 @@
     "small-batch comparisons beyond T5 batches 8/32, its four datasets and five variants"
   ],
   "prose_word_estimate": {
-    "total": 1648,
+    "total": 1623,
     "per_file": {
-      "chapters/03-1-comparisons.tex": 242,
+      "chapters/03-1-comparisons.tex": 217,
       "chapters/03-2-data.tex": 386,
       "chapters/03-3-measurement.tex": 500,
       "chapters/03-4-frontiers.tex": 306,
@@ -844,12 +844,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "c2a053d8b79ddb0835fa4d91ee09aab2920c8d1d692b3479b31ba0199fe965be"
+      "sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "e9999ea3c5a1b63d9d108aa1e06065e33cfe4b978e8b672a24cf76e5665e8087"
+      "sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
     },
     {
       "repository": "8800_report",
@@ -884,17 +884,17 @@
     {
       "repository": "8800_report",
       "path": "data/ch4/audit.json",
-      "sha256": "49b9184c09bc0ddfbf17fd0dee3ef1957e19894f97c6de3c5b5eeba10f1e0349"
+      "sha256": "19476693644ff41dec5330f245316cbe38ff441e69127d3479e4e8f341c429fd"
     },
     {
       "repository": "8800_report",
       "path": "data/ch6/audit.json",
-      "sha256": "32cb4989cc0418c1d1024272d77ff9f376fb5f3a6e7a0e97b207b778b995e70b"
+      "sha256": "dae2577183dcf9432b6a66c1acc0faef09ac514894142a7aeb6b5c862f33c39e"
     },
     {
       "repository": "8800_report",
       "path": "data/ch7/round2-audit.json",
-      "sha256": "e1a5d2e1c4f9a5cba82b791f770dfb710eec639c3817f683ca32c8820e0cfaba"
+      "sha256": "96638de1847e68a5e4c7ac3a99e4f328dafcce94aeb2ddea88c748bc9af47cea"
     },
     {
       "repository": "8800_report",
@@ -904,7 +904,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/03-1-comparisons.tex",
-      "sha256": "e103ea1aa65046714ab0f912e4b4c8f7ea0a2db94e2080314f6bba7cad6e349b"
+      "sha256": "d53c8bd16623c87d88a3de1fe87890c06f780ad3e0be7c9a707049861a66f285"
     },
     {
       "repository": "8800_report",
@@ -939,7 +939,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/03-1-comparisons.tex",
-      "sha256": "06c41e79a3712a904f30e9c46d24c600b602e19fcdf618f5cc1ab9cf01b5ac3b"
+      "sha256": "a6842068c2c61c3b8b98b617364992bab1f8bb803e9592fe32c5cf0d3b832460"
     },
     {
       "repository": "8800_report",

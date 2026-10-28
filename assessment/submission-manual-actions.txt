@@ -20,7 +20,7 @@ P0-1 个人研究贡献
 
 P0-2 补全实际AI交互记录
 ----------------------
-已有：docs/ai-use-record.md及data/submission/ai-use-record.json，保留当前会话的12条真实Codex用户指令摘录。
+已有：docs/ai-use-record.md及data/submission/ai-use-record.json，保留当前会话的13条真实Codex用户指令摘录。
 致谢内简短披露已经引用该记录，并明确它是部分记录。较早指令无可核实时间戳或模型版本，未编造。
 需要你补：ChatGPT／Claude原始prompt与相应输出或可追溯导出；其他有实质用途但未覆盖的交互。
 记录字段建议：工具、实际日期（如可取得）、实际版本（如可取得）、原始prompt、输出用途、你本人采取的验证。

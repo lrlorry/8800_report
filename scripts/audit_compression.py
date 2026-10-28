@@ -143,7 +143,7 @@ def main():
                                all_nonwhitespace_characters_preserved=True))
 
     records = json.loads(read('data/submission/ai-use-record.json'))['records']
-    assert len(records) == 12 and records[-1]['id'] == 'P12'
+    assert len(records) == 13 and records[-1]['id'] == 'P13'
     for record in records:
         assert digest(record['prompt'].encode()) == record['prompt_sha256']
         for steering in record.get('steering_messages', []):
