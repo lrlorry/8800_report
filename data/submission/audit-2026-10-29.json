@@ -15,8 +15,8 @@
     "NA": 4
   },
   "pdf": {
-    "english_pages": 83,
-    "english_chapters_pages": 67,
+    "english_pages": 84,
+    "english_chapters_pages": 68,
     "chinese_pages": 81,
     "english_prose_and_abstract_estimate": 24293,
     "abstract_estimate": 186,
@@ -29,8 +29,8 @@
       "type3": 0
     },
     "words_outside_page": 0,
-    "english_sha256": "edef10db1f32a1553e11c04f9cb2f3afc130b19e867c3fd8164dd341fcdbcfc2",
-    "chinese_sha256": "7dbc3ec48527a316cb6be05e17b656f01d9bc71701ce87d366cf73ac0156c1b9"
+    "english_sha256": "9d1ca9e9ca905677d759015b9ce4e5b2cac24323377be43e562a2ba9cca53aef",
+    "chinese_sha256": "ef15f496adad0fbd376ffe86b8a4e2466d607950965413d51ca7095a6ca07b8d"
   },
   "code": {
     "local_commit": "19135c965a2cfccf469efb6b75029a268c7c3b5b",
@@ -266,7 +266,7 @@
         "S05",
         "S09"
       ],
-      "evidence": "英文83页，其中九章67页、前置7页、书目3页、附录6页；未发现强制页数上限。",
+      "evidence": "英文84页，其中九章68页、前置7页、书目3页、附录6页；未发现强制页数上限。",
       "action": "第一章三行尾页已处理；保留正常章节尾页，不为60页删独有证据。"
     },
     {
@@ -321,7 +321,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "docs/ai-use-record.md及JSON已保存10条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
+      "evidence": "docs/ai-use-record.md及JSON已保存11条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
       "action": "作者补可恢复的原始交互和使用位置；未知日期／版本如实标未知；不编造prompt。"
     },
     {
@@ -909,7 +909,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "bbox检查0词越物理页；83页缩略图巡查无明显裁切／空图／重叠。",
+      "evidence": "bbox检查0词越物理页；84页缩略图及数学页巡查无明显裁切／空图／重叠。",
       "action": "缩略图巡查不是逐句语言校对或正式可访问性认证。"
     },
     {
@@ -1178,7 +1178,7 @@
     }
   ],
   "checks": {
-    "local_input_hashes": 1777,
+    "local_input_hashes": 1792,
     "v71_bundle_files": 209,
     "review_bundle_files": 131,
     "cited_keys": 39,
@@ -1188,7 +1188,7 @@
     ],
     "undefined_refs": [],
     "duplicate_labels": [],
-    "visual_scope": "83-page contact-sheet overview plus readable revised front matter, chapter 4, proof, frontier float page and conclusion; not full sentence proofreading or student-personal verification",
+    "visual_scope": "84-page contact-sheet overview and readable checks of all six statement/proof pairs in each language; not full sentence proofreading or student-personal verification",
     "isolated_checks": [
       "evidence/review/check.py --run-audits",
       "evidence/ch5/v71/check.py",
@@ -1202,21 +1202,22 @@
       "audit_synthesis.py"
     ],
     "isolated_numeric_table_changes": [],
-    "candidate_file_fingerprints": 180,
+    "candidate_file_fingerprints": 183,
     "candidate_fonts_type3": 0,
     "identical_scientific_assets": 86,
     "font_only_pdf_exports": 1,
     "hash_count_scope": "All current data/* inputs entries, including the refreshed candidate fingerprints and compression audit",
-    "compression_audit": "scripts/audit_compression.py --check-copies; data/compression/audit.json"
+    "compression_audit": "scripts/audit_compression.py --check-copies; data/compression/audit.json",
+    "mathematical_typography": "12 statement/proof pairs retained verbatim; six per language kept on one page with headings and first proof lines within 1pt of the 27mm left margin"
   },
   "inputs": [
     {
       "path": "FORMAT_NOTES.txt",
-      "sha256": "807d1119e3cf26fd0a2571cda8a077eae930c0114a2532d73db1a8b9e249dba4"
+      "sha256": "b5885ea82ee05097a6cef76e1770e1acd19019b7022973c7877ad439910dc866"
     },
     {
       "path": "README.md",
-      "sha256": "34e27695b83174a1ff831b29a7375663f9ec59cf1a6eef487d99c0e889847f6d"
+      "sha256": "bee5c5cc49b090fef37fbff0b42cc50b1b499a362bc55f7aeab8b8665b332cde"
     },
     {
       "path": "appendices/a-reproducibility.tex",
@@ -1244,7 +1245,7 @@
     },
     {
       "path": "assessment/compression-edits.json",
-      "sha256": "967353ac7c3743d36e47514027c49235a6f93f1569ae415d4a7418d955057668"
+      "sha256": "757b783b20ab4917b9d33dee8385d569fe8efe468e3c6f0ec9aa9311a788df29"
     },
     {
       "path": "assessment/compression-review-response.txt",
@@ -1271,12 +1272,16 @@
       "sha256": "d0e3190e0890746303f2aa4211dcbb9660b2eb9c831989d7d3b8a4a7de961cdf"
     },
     {
+      "path": "assessment/proof-layout-review-2026-10-29.txt",
+      "sha256": "8335a9887a02da40cf6a0b74a4bfca9f54af7106c6fa749d636eeeb42726c5a7"
+    },
+    {
       "path": "assessment/submission-audit-2026-10-29.txt",
-      "sha256": "afd276e511c52b75c01a66d4348f51b19c3c7e03cfc87a0f37c959c5e591822f"
+      "sha256": "c1b81bd7ce07078e78172c247b1ca090d002b98e7bb2bfb186870a0893d06bb5"
     },
     {
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "f5eeedd0a70d7e79738779ea175652c4808afe45d36cd7cbad3ec4876908445f"
+      "sha256": "fd23e679fc29b6171a6fc43524030606a21c717d1750d04ef0556c41e0ee35d8"
     },
     {
       "path": "assessment/targeted-curation-review.md",
@@ -1380,7 +1385,7 @@
     },
     {
       "path": "chapters/04-2-training.tex",
-      "sha256": "e879ba23a2fde202a993f4dd368f3047b610cffb53ae5480e2c6d73af20ff754"
+      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
     },
     {
       "path": "chapters/04-3-layout.tex",
@@ -1416,11 +1421,11 @@
     },
     {
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "b4f5f113259341e7d52540e40ba96f15371d0216e61a184a9dd480454c6cb0d7"
+      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
     },
     {
       "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "00396e0629f695d1feca35e5b17efcda12b66acbb41df156199f2efae2102052"
+      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
     },
     {
       "path": "chapters/05-6-refinement.tex",
@@ -1512,7 +1517,7 @@
     },
     {
       "path": "config/layout.tex",
-      "sha256": "52bb2eb41c4eb2351f42fde3aa4436170f2b37e1c0afc7d9f85ae674fb696e17"
+      "sha256": "fdb9e9239ecfa28e97e42979eaccbd5903bc1676feb7ef201ecd4c03ff57e3fe"
     },
     {
       "path": "config/metadata.tex",
@@ -1520,19 +1525,19 @@
     },
     {
       "path": "config/preamble.tex",
-      "sha256": "a31dc2d5074a2b857ff3b5714e4f0624a12f2d5d30d4e97690ca520f68a62227"
+      "sha256": "193e2ef338a717d96a5d4f488aad33c03f3142c738228a0a893845d02d6f8ca3"
     },
     {
       "path": "data/ch3/audit.json",
-      "sha256": "131cc60582da947fed67f8d75420d6e965bc2791a87d5b32ddbe4eafb9f24483"
+      "sha256": "1bf66c7b53ddf7a8f5c0457fd936231de130547fd0787682b010067e28c53fcd"
     },
     {
       "path": "data/ch4/audit.json",
-      "sha256": "9bd308334ee90b5c4bf758b6201c7721860ff90c454da6936a6d1e686599b885"
+      "sha256": "162f79987b90efd3c8f9f3227933a25c48d6e2317a43baa1f1def554e659a27f"
     },
     {
       "path": "data/ch6/audit.json",
-      "sha256": "30d2b36e38e017220add69cbdaae1272a4f5185f9619b8524a65a7ab8f1621db"
+      "sha256": "f68ba775c966dd7e1834ec8c8020a7a66e643827fab6af08ba7365e7d8208bf0"
     },
     {
       "path": "data/ch7/round2-audit.json",
@@ -1544,23 +1549,23 @@
     },
     {
       "path": "data/compression/audit.json",
-      "sha256": "3647f83ccb0b6dcdd4d8a2e2995dc4435b10086f6ade7be507c8c84ebef34e60"
+      "sha256": "fb161f31c87ef3f6455ffa2270f8dc8cb3225db6675fb722ab40f8a2a6c98bbc"
     },
     {
       "path": "data/deduplication/audit.json",
-      "sha256": "e5656edadc94c9f448130cb6e1495e4d4ac1f6604c028bd4398d3a3c702ab049"
+      "sha256": "58be87574794af7083d06bf5eb75d109d8ec053f56629d0087399f4aa6d09e3e"
     },
     {
       "path": "data/full-review/audit.json",
-      "sha256": "a209f29653c663bb0c4dd5b971834c1e2961ce28ca5e2d9d2d77408b983fe352"
+      "sha256": "2293c9c11b7f92d8c043da4174da5e0218f966eefd91c70c9b45d0b3befd04bf"
     },
     {
       "path": "data/submission/ai-use-record.json",
-      "sha256": "58f4b0b20515ac01cfb11855665066d666a68c8113d2470e1421e71a574c77e2"
+      "sha256": "f0733b88324709d2590ff659c5a9a3b34a179991c5347e1bae3a9037749ff220"
     },
     {
       "path": "data/synthesis/audit.json",
-      "sha256": "a59340441559d00e0feb6f516700bd481dbc06f9877db0fe03da0a89a39607bf"
+      "sha256": "4cbaa348d498a468d04871c1f3ce5c02229cce5829748eb24ff0b21aafffa261"
     },
     {
       "path": "data/synthesis/primary-sources.json",
@@ -1568,11 +1573,11 @@
     },
     {
       "path": "data/t4-t5/audit.json",
-      "sha256": "6c33f34568f04fce38d52c757ce16fef456dcddb6207c91a90539e541d421063"
+      "sha256": "eb9c8147a2b088435d617dcfd025ecbee9cabede53d19f619aac21d03f56081a"
     },
     {
       "path": "docs/ai-use-record.md",
-      "sha256": "b56d39aa75bf2698152088f9b5c17406ca4d222bcb985baff7b8144d8d28ce0a"
+      "sha256": "1f3ed403c92459983549d808e1eaf9f393d73820b0aeb840b4711b383e6e88f4"
     },
     {
       "path": "docs/artifact-access.md",
@@ -1625,6 +1630,14 @@
     {
       "path": "evidence/editorial/a047ee8/revision.patch",
       "sha256": "09c6f14f9735037704dd4590bab0ce74746a61a950f92d167d5411f57aa066a6"
+    },
+    {
+      "path": "evidence/editorial/cc696f2/compression-from-03775b7.patch",
+      "sha256": "4cb8b0bd46cff73e23dead245edc5614898b2d8a80856310048b549b0b54fa80"
+    },
+    {
+      "path": "evidence/editorial/cc696f2/proof-layout.patch",
+      "sha256": "a615cd952f94de72f19cbf0a24cc88e262f26b125db56927fbc35da8db394f5a"
     },
     {
       "path": "evidence/editorial/f39bf75/compression-from-03775b7.patch",
@@ -1680,11 +1693,11 @@
     },
     {
       "path": "scripts/audit_compression.py",
-      "sha256": "a95cd1f5eef01b4c13914da3f1dafbc9371d3ce7f29d434946a18bde3c58f4ce"
+      "sha256": "bb5d18370e5fb4dba297e8fcd1a758d9a129de8fbde67bf407d9aeee19f2547b"
     },
     {
       "path": "scripts/audit_deduplication.py",
-      "sha256": "180f7df12b92af43e919fce07fd861adb0ec1ba98bc4609626b036506e4f0536"
+      "sha256": "6d380e5a0634e333f47aa5d538e140f25d210ad79dc7aa8293953209bac02d95"
     },
     {
       "path": "scripts/audit_synthesis.py",
@@ -1696,11 +1709,11 @@
     },
     {
       "path": "thesis-zh.pdf",
-      "sha256": "7dbc3ec48527a316cb6be05e17b656f01d9bc71701ce87d366cf73ac0156c1b9"
+      "sha256": "ef15f496adad0fbd376ffe86b8a4e2466d607950965413d51ca7095a6ca07b8d"
     },
     {
       "path": "thesis.pdf",
-      "sha256": "edef10db1f32a1553e11c04f9cb2f3afc130b19e867c3fd8164dd341fcdbcfc2"
+      "sha256": "9d1ca9e9ca905677d759015b9ce4e5b2cac24323377be43e562a2ba9cca53aef"
     },
     {
       "path": "zh/acknowledgements.tex",
@@ -1796,7 +1809,7 @@
     },
     {
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "3158e3f91794ce25cbdfc1605675e2c8c38796db970167a45ce2935a9d39bc37"
+      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
     },
     {
       "path": "zh/chapters/04-3-layout.tex",
@@ -1832,11 +1845,11 @@
     },
     {
       "path": "zh/chapters/05-4-global-selection.tex",
-      "sha256": "7102b80b87a5f828cd898cf679c8482d837db8cac095e44489adf37956eada6d"
+      "sha256": "ba12faedbc8ccbda20adeb938da837604721995022f83423cb976691bcb76122"
     },
     {
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "121e2b4d496ca220391aa30fbc4e274fa1942e16d1b9afe282115bd9369de70b"
+      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
     },
     {
       "path": "zh/chapters/05-6-refinement.tex",
@@ -1928,13 +1941,14 @@
     },
     {
       "path": "zh/preamble.tex",
-      "sha256": "d2e17347227bb9e88565e512aaf921aacef99e5eb5e29f3575f17a57df7cfcca"
+      "sha256": "fc2bfe414a63bbab3d6d6546c168ff01f7408ce1d183e6d259283a4c1b55603e"
     }
   ],
   "initial_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
   "audited_base_commit": "682ef939ee41e3a9b9c9ec984604c62008406744",
-  "revision_scope": "Low-impact bilingual prose consolidation and compact KOMA layout; mathematical/scientific assets preserved; personal/Canvas requirements remain pending",
+  "revision_scope": "Mathematical typography: upright statements, separate headings, flush-left proofs and same-page short pairs; proof and formula text preserved; personal/Canvas requirements remain pending",
   "compression_baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
   "adc_revision_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4",
-  "layout_baseline": "f39bf756dbd5f3b9708a6f2919de7c124af7cdf1"
+  "layout_baseline": "f39bf756dbd5f3b9708a6f2919de7c124af7cdf1",
+  "proof_layout_baseline": "cc696f2f98f29ebe794d930f08d2d5ab4add994e"
 }

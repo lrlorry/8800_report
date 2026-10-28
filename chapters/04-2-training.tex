@@ -79,6 +79,7 @@ The source offers FP32 and accelerated assignment paths; under its usual
 dimensional constraints, the default uses int8 products to filter choices
 and FP32 recomputation to resolve ambiguity.
 
+\begin{resultblock}
 \begin{lemma}[Assignment with certified score intervals]
 \label{lem:4-assignment-bound}
 Let $\widetilde y,\widetilde\mu_\ell$ be dequantised approximations,
@@ -101,6 +102,7 @@ and apply Cauchy--Schwarz. A discarded score exceeds an upper bound on
 some retained score, so it cannot attain the minimum. Keeping interval
 equality preserves possible ties.
 \end{proof}
+\end{resultblock}
 
 The implementation uses conservative norm bounds and FP32 headroom
 constants in this filter-and-refine pattern. The lemma explains why a

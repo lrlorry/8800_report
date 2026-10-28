@@ -9,6 +9,35 @@
 % Preserve the existing, scoped roman math subscripts without rewriting equations.
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 
+% Mathematical statements and proofs share the body-text margins. Their
+% headings occupy a separate line; upright statements distinguish prose from
+% the mathematical symbols without switching whole paragraphs to italics.
+\newtheoremstyle{thesis}
+  {6pt plus 1pt minus 1pt}{4pt plus 1pt minus 1pt}
+  {\normalfont\setlength{\parindent}{0pt}}{0pt}
+  {\normalfont\bfseries}{.}{\newline}{}
+\theoremstyle{thesis}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont
+  \setlength{\parindent}{0pt}\setlength{\listparindent}{0pt}%
+  \setlength{\parskip}{2pt plus .5pt}%
+  \topsep4\p@\@plus\p@\@minus\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\normalfont\bfseries #1\@addpunct{.}]%
+  \leavevmode\par\nobreak\noindent\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+% Each current statement/proof pair fits comfortably on one page. Keep the
+% short pairs together so floats and page breaks cannot separate their parts.
+\newenvironment{resultblock}{%
+  \par\addvspace{6pt}\noindent\begin{minipage}[t]{\linewidth}%
+}{%
+  \end{minipage}\par\addvspace{6pt}%
+}
+
 \KOMAoptions{chapterprefix=false,headings=normal,numbers=noendperiod}
 \setkomafont{disposition}{\normalfont\bfseries}
 \setkomafont{chapter}{\normalfont\Large\bfseries}

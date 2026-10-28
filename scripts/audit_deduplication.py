@@ -59,6 +59,17 @@ def main():
     assert hashlib.sha256(patch).hexdigest() == compression['patch_sha256']
     subprocess.run(['git', 'apply', '--check', '--reverse', compression['patch']],
                    cwd=ROOT, check=True, capture_output=True)
+    # The proof-layout round may add only transparent containers to chapters.
+    wrappers = compression['formatting_only_wrappers']
+    assert wrappers['baseline'] == 'cc696f2f98f29ebe794d930f08d2d5ab4add994e'
+    assert wrappers['environment'] == 'resultblock' and len(wrappers['source_files']) == 6
+    wrapper_count = 0
+    for rel in wrappers['source_files']:
+        actual = current(rel).decode()
+        wrapper_count += actual.count('\\begin{resultblock}')
+        stripped = actual.replace('\\begin{resultblock}\n', '').replace('\n\\end{resultblock}', '')
+        assert stripped == git('show', wrappers['baseline'] + ':' + rel).decode(), rel
+    assert wrapper_count == wrappers['statement_proof_pairs'] == 8
     new_curation = json.loads(current('evidence/editorial/03775b7/manifest.json'))
     assert new_curation['baseline'] == compression['baseline']
     assert len(new_curation['entries']) == 6

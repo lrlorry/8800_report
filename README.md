@@ -1,7 +1,7 @@
 # COMP8800 / JHQ-GPU Thesis
 
 按形式化／精简审计继续合并重复说明：英文正文与摘要同口径估算为24,293词，
-PDF为83页（九章正文67页），中文阅读稿81页。正式PDF保留26幅图、31张表；
+PDF为84页（九章正文68页），中文阅读稿81页。正式PDF保留26幅图、31张表；
 移出的13张辅助表、1张估算图及2处重复公式完整保存在[仓库补充材料](docs/supplementary-evidence.md)，不增加PDF附录。
 相对03775b7，正文与摘要减少2,639词；本轮另压缩前置说明282词。核心证明、T4/T5、预算风险、直接复用、规模结果和负案例均保留。
 本轮科学图表资产未改动；相对较早基线86项保持字节一致，T5图仅曾重导出字体，数值不变。
@@ -10,6 +10,7 @@ PDF为83页（九章正文67页），中文阅读稿81页。正式PDF保留26幅
 及[历史文字去重](assessment/deduplication-rounds.md)。本轮未复测AI比例。
 前轮[ADC原稿及合并修订](assessment/adc-revision-response.txt)：摘要307→186词，独立来源／工具页取消，74词说明并入致谢。
 最新[紧凑排版与低影响精简](assessment/layout-reflow-2026-10-29.txt)：删重复导语与作者名单旁白，缩短章名，英文96→83页，正文仍为11pt。
+最新[数学排版复核](assessment/proof-layout-review-2026-10-29.txt)：6处证明统一左边界，命题标题独立成行，短陈述与证明保持同页；英文正文68页，字数不变。
 
 提交前修订见[处理记录](assessment/final-review-response.txt)，作者仍需完成
 [手动清单](assessment/submission-manual-actions.txt)。已整理[真实AI提示词摘录](docs/ai-use-record.md)

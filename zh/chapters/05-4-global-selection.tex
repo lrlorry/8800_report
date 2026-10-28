@@ -24,6 +24,7 @@
 
 用 $\operatorname{Top}_c(V)$ 表示将 $V$ 按 $K_q$ 排序后最前面的 $\min(c,|V|)$ 个候选，其中 $c=\max\{k,\lceil\alpha k\rceil\}$。每个独立组保留完整的局部 top-$c$，而不是分得一个 $c/\gscan$ 配额。这一区别不可省略：当 $c=4$、组数为二时，四个全局优胜候选可能全在同一组。如果每组只保留两个，即使总容量为四，仍会丢掉全局优胜候选。
 
+\begin{resultblock}
 \begin{lemma}[局部缓冲区保留]
 \label{lem:5-buffer}
 设 $V_t$ 为一个 block 截至 chunk $t$ 已评分的候选，$B_t$ 为该时刻完成压缩或过滤后的有效缓冲区。假设完整 key 固定、追加容量充足、压缩精确保留 top-$c$。令 $\beta_t$ 为截至该时刻读到的全部完整共享界的最小值，包含初始顶哨兵，则
@@ -37,7 +38,9 @@
 \begin{proof}
 空前缀满足不变量。新候选若未通过局部准入阈值，则已有 $c$ 个保留 key 排在它之前；这些前驱在之后的前缀中仍存在。共享界拒绝的候选均在 $\beta_t$ 之后。旧候选若已不属于前缀 top-$c$，前缀增长也不会改善其名次。因此，每个符合界的新前缀优胜候选，要么已经保留，要么获准追加。精确压缩不会丢弃它：在整个前缀中排在它之前的成员少于 $c$，缓冲区内也如此。过滤仅删除读到的界之后的 key。对追加、压缩及过滤归纳即得结论。若读取可能返回不同的旧发布值，必须使用历史读取的最小值表述不变量。
 \end{proof}
+\end{resultblock}
 
+\begin{resultblock}
 \begin{proposition}[覆盖与截断合并]
 \label{prop:5-local-coverage}
 在固定 key 和共同全序下，设 $U$ 为已访问候选全集，$V$ 为任一保留子集。若 $\operatorname{Top}_c(U)\subseteq V\subseteq U$，则 $\operatorname{Top}_c(V)=\operatorname{Top}_c(U)$。有序列表两两合并且每轮截取前 $c$ 项保持这一结论。特别地，对互不相交的分组，有
@@ -54,6 +57,7 @@
 
 对于合并，两个有序列表的前 $c$ 项就是二者并集的 top-$c$。被截去的候选在该并集中已经有至少 $c$ 个前驱，不可能再进入任何更大并集的 top-$c$。对合并树的各轮归纳即可得到结论。
 \end{proof}
+\end{resultblock}
 
 \begin{figure}[tbp]
 \centering

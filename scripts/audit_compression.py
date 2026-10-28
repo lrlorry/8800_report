@@ -70,19 +70,45 @@ def main():
             text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', '', path.read_text())
             tree = ET.fromstring(text)
             outside = []
+            proof_margins = []
+            statement_pages, proof_pages = collections.Counter(), collections.Counter()
             for i, page in enumerate(tree.findall('.//{*}page'), 1):
                 w, h = float(page.attrib['width']), float(page.attrib['height'])
                 for word in page.findall('.//{*}word'):
                     a = word.attrib
                     if min(float(a['xMin']), float(a['yMin'])) < -0.1 or float(a['xMax']) > w + .1 or float(a['yMax']) > h + .1:
                         outside.append((i, word.text))
+                lines = page.findall('.//{*}line')
+                for j, line in enumerate(lines):
+                    words_on_line = line.findall('{*}word')
+                    label = ''.join(word.text or '' for word in words_on_line)
+                    if re.match(r'^(?:Lemma|Proposition|Corollary|引理|命题|推论)\d+\.\d+\(', label):
+                        statement_pages[i] += 1
+                    if label not in ['Proof.', '证明.']:
+                        continue
+                    proof_pages[i] += 1
+                    left = float(words_on_line[0].attrib['xMin'])
+                    # Poppler may split one visual line into several flows
+                    # around inline math. Read their geometric order together.
+                    following = [entry for entry in lines
+                                 if float(entry.attrib['yMin']) > float(line.attrib['yMax'])]
+                    next_y = min(float(entry.attrib['yMin']) for entry in following)
+                    body_left = min(float(entry.attrib['xMin']) for entry in following
+                                    if float(entry.attrib['yMin']) < next_y + 6)
+                    assert next_y - float(line.attrib['yMax']) < 12, (pdf, i, 'detached proof heading')
+                    assert abs(left - 27 * 72 / 25.4) < 1, (pdf, i, left)
+                    assert abs(left - body_left) < 1, (pdf, i, left, body_left)
+                    proof_margins.append(dict(page=i, heading_x=left, first_line_x=body_left))
             assert not outside, (pdf, outside)
+            assert sum(proof_pages.values()) == 6, (pdf, proof_pages)
+            assert statement_pages == proof_pages, (pdf, statement_pages, proof_pages)
         figures = (ROOT / 'build' / (name + '.lof')).read_text().count('contentsline {figure}')
         tables = (ROOT / 'build' / (name + '.lot')).read_text().count('contentsline {table}')
         assert (figures, tables) == (26, 31)
         pdfs[pdf] = dict(pages=pages, sha256=digest(b), bytes=len(b),
                          figures=figures, tables=tables, fonts=len(fonts),
-                         all_fonts_embedded=True, type3_fonts=0, words_outside_page=0)
+                         all_fonts_embedded=True, type3_fonts=0, words_outside_page=0,
+                         proof_alignment=proof_margins, statement_proof_pairs_same_page=6)
 
     toc = (ROOT / 'build/main.toc').read_text()
     chapter = lambda n: int(re.search(r'\\contentsline \{chapter\}\{\\numberline \{' + str(n) + r'\}[^\n]*?\}\{(\d+)\}\{chapter\.', toc)[1])
@@ -96,7 +122,11 @@ def main():
     if args.check_copies:
         for filename, first, last in [('thesis-no-refs.pdf', 1, end),
                                       ('thesis-check-1.pdf', 1, split - 1),
-                                      ('thesis-check-2.pdf', split, end)]:
+                                      ('thesis-check-2.pdf', split, end),
+                                      ('thesis-body.pdf', front + 1, end)]:
+            if not (ROOT / filename).is_file():
+                assert filename != 'thesis-body.pdf', 'Requested body PDF is missing'
+                continue
             pages = run('pdftotext', filename, '-').split('\f')[:-1]
             assert len(pages) == last - first + 1, filename
             for offset, text in enumerate(pages):
@@ -108,7 +138,7 @@ def main():
                                all_nonwhitespace_characters_preserved=True))
 
     records = json.loads(read('data/submission/ai-use-record.json'))['records']
-    assert len(records) == 10 and records[-1]['id'] == 'P10'
+    assert len(records) == 11 and records[-1]['id'] == 'P11'
     for record in records:
         assert digest(record['prompt'].encode()) == record['prompt_sha256']
         for steering in record.get('steering_messages', []):
@@ -121,6 +151,7 @@ def main():
                 'docs/supplementary-evidence.md', 'docs/ai-use-record.md',
                 'assessment/adc-revision-response.txt','assessment/adc-revision-source.json',
                 'assessment/layout-reflow-2026-10-29.txt',
+                'assessment/proof-layout-review-2026-10-29.txt',
                 'scripts/audit_compression.py']:
         read(rel)
     result = dict(date='2026-10-29', timezone='Australia/Sydney',

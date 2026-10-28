@@ -4,7 +4,7 @@
   "editorial_review": "assessment/deduplication-rounds.md; assessment/targeted-curation-review.md; assessment/compression-review-response.txt; semantic retention requires source review",
   "compression_round": {
     "baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
-    "source_edits": 55,
+    "source_edits": 57,
     "archive_manifest": "evidence/editorial/03775b7/manifest.json",
     "removed_tables_per_language": 1,
     "removed_duplicate_equations_per_language": 2,
@@ -287,7 +287,7 @@
     {
       "repository": "8800_report",
       "path": "assessment/compression-edits.json",
-      "sha256": "967353ac7c3743d36e47514027c49235a6f93f1569ae415d4a7418d955057668"
+      "sha256": "757b783b20ab4917b9d33dee8385d569fe8efe468e3c6f0ec9aa9311a788df29"
     },
     {
       "repository": "8800_report",
@@ -326,6 +326,11 @@
     },
     {
       "repository": "8800_report",
+      "path": "chapters/04-2-training.tex",
+      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
+    },
+    {
+      "repository": "8800_report",
       "path": "chapters/04-4-lifecycle.tex",
       "sha256": "b08de0a9122d78c355a0f1b93f213878757423249e31a28f06b3898a89f399e8"
     },
@@ -352,12 +357,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "b4f5f113259341e7d52540e40ba96f15371d0216e61a184a9dd480454c6cb0d7"
+      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
     },
     {
       "repository": "8800_report",
       "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "00396e0629f695d1feca35e5b17efcda12b66acbb41df156199f2efae2102052"
+      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
     },
     {
       "repository": "8800_report",
@@ -402,12 +407,12 @@
     {
       "repository": "8800_report",
       "path": "config/layout.tex",
-      "sha256": "52bb2eb41c4eb2351f42fde3aa4436170f2b37e1c0afc7d9f85ae674fb696e17"
+      "sha256": "fdb9e9239ecfa28e97e42979eaccbd5903bc1676feb7ef201ecd4c03ff57e3fe"
     },
     {
       "repository": "8800_report",
       "path": "config/preamble.tex",
-      "sha256": "a31dc2d5074a2b857ff3b5714e4f0624a12f2d5d30d4e97690ca520f68a62227"
+      "sha256": "193e2ef338a717d96a5d4f488aad33c03f3142c738228a0a893845d02d6f8ca3"
     },
     {
       "repository": "8800_report",
@@ -481,6 +486,11 @@
     },
     {
       "repository": "8800_report",
+      "path": "zh/chapters/04-2-training.tex",
+      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+    },
+    {
+      "repository": "8800_report",
       "path": "zh/chapters/04-4-lifecycle.tex",
       "sha256": "b227d4c1391c6348e08ffc558b8e31b2b49112a6424b982ee9d6a02f9a4c95c1"
     },
@@ -507,12 +517,12 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-4-global-selection.tex",
-      "sha256": "7102b80b87a5f828cd898cf679c8482d837db8cac095e44489adf37956eada6d"
+      "sha256": "ba12faedbc8ccbda20adeb938da837604721995022f83423cb976691bcb76122"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "121e2b4d496ca220391aa30fbc4e274fa1942e16d1b9afe282115bd9369de70b"
+      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
     },
     {
       "repository": "8800_report",
@@ -562,12 +572,42 @@
     {
       "repository": "8800_report",
       "path": "zh/preamble.tex",
-      "sha256": "d2e17347227bb9e88565e512aaf921aacef99e5eb5e29f3575f17a57df7cfcca"
+      "sha256": "fc2bfe414a63bbab3d6d6546c168ff01f7408ce1d183e6d259283a4c1b55603e"
     },
     {
       "repository": "8800_report",
-      "path": "evidence/editorial/f39bf75/compression-from-03775b7.patch",
-      "sha256": "c79acaaef757b8a019b11d24116938fe0c3a06f021a6a3694158fadd53444dcf"
+      "path": "evidence/editorial/cc696f2/compression-from-03775b7.patch",
+      "sha256": "4cb8b0bd46cff73e23dead245edc5614898b2d8a80856310048b549b0b54fa80"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/04-2-training.tex",
+      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/04-2-training.tex",
+      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-4-global-selection.tex",
+      "sha256": "ba12faedbc8ccbda20adeb938da837604721995022f83423cb976691bcb76122"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
     },
     {
       "repository": "8800_report",
@@ -877,7 +917,7 @@
     {
       "repository": "8800_report",
       "path": "chapters/04-2-training.tex",
-      "sha256": "e879ba23a2fde202a993f4dd368f3047b610cffb53ae5480e2c6d73af20ff754"
+      "sha256": "cc660113d39804833f96e6cfd2882f182972a5850587c0a5ede431da9e5ee3de"
     },
     {
       "repository": "8800_report",
@@ -922,12 +962,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/05-4-global-selection.tex",
-      "sha256": "b4f5f113259341e7d52540e40ba96f15371d0216e61a184a9dd480454c6cb0d7"
+      "sha256": "f690b93f16df0ee02b706c764bcc7aed505506f7e5ca25dc88594edd5c1be48f"
     },
     {
       "repository": "8800_report",
       "path": "chapters/05-5-bound-scheduling.tex",
-      "sha256": "00396e0629f695d1feca35e5b17efcda12b66acbb41df156199f2efae2102052"
+      "sha256": "ccb3a0234b77bb71e86f4583e1a16fe9fab302dcd5c55478c4aac82eaef51ba5"
     },
     {
       "repository": "8800_report",
@@ -1152,7 +1192,7 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/04-2-training.tex",
-      "sha256": "3158e3f91794ce25cbdfc1605675e2c8c38796db970167a45ce2935a9d39bc37"
+      "sha256": "ae2f1dc963fb83dbb4173cc847352dabfaab9ce881927d91aa9fac5af0f7d275"
     },
     {
       "repository": "8800_report",
@@ -1197,12 +1237,12 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-4-global-selection.tex",
-      "sha256": "7102b80b87a5f828cd898cf679c8482d837db8cac095e44489adf37956eada6d"
+      "sha256": "ba12faedbc8ccbda20adeb938da837604721995022f83423cb976691bcb76122"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/05-5-bound-scheduling.tex",
-      "sha256": "121e2b4d496ca220391aa30fbc4e274fa1942e16d1b9afe282115bd9369de70b"
+      "sha256": "e8a9b71db7662f162c9e50f47a2fce9f8c9167e1c1633e4034dce5f7cb1e9383"
     },
     {
       "repository": "8800_report",
@@ -1787,7 +1827,7 @@
     {
       "repository": "8800_report",
       "path": "scripts/audit_deduplication.py",
-      "sha256": "180f7df12b92af43e919fce07fd861adb0ec1ba98bc4609626b036506e4f0536"
+      "sha256": "6d380e5a0634e333f47aa5d538e140f25d210ad79dc7aa8293953209bac02d95"
     },
     {
       "repository": "8800_report",
@@ -1822,7 +1862,7 @@
     {
       "repository": "8800_report",
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "f5eeedd0a70d7e79738779ea175652c4808afe45d36cd7cbad3ec4876908445f"
+      "sha256": "fd23e679fc29b6171a6fc43524030606a21c717d1750d04ef0556c41e0ee35d8"
     },
     {
       "repository": "8800_report",
@@ -1837,12 +1877,12 @@
     {
       "repository": "8800_report",
       "path": "docs/ai-use-record.md",
-      "sha256": "b56d39aa75bf2698152088f9b5c17406ca4d222bcb985baff7b8144d8d28ce0a"
+      "sha256": "1f3ed403c92459983549d808e1eaf9f393d73820b0aeb840b4711b383e6e88f4"
     },
     {
       "repository": "8800_report",
       "path": "data/submission/ai-use-record.json",
-      "sha256": "58f4b0b20515ac01cfb11855665066d666a68c8113d2470e1421e71a574c77e2"
+      "sha256": "f0733b88324709d2590ff659c5a9a3b34a179991c5347e1bae3a9037749ff220"
     },
     {
       "repository": "8800_report",
@@ -1857,7 +1897,7 @@
     {
       "repository": "8800_report",
       "path": "FORMAT_NOTES.txt",
-      "sha256": "807d1119e3cf26fd0a2571cda8a077eae930c0114a2532d73db1a8b9e249dba4"
+      "sha256": "b5885ea82ee05097a6cef76e1770e1acd19019b7022973c7877ad439910dc866"
     },
     {
       "repository": "8800_report",
@@ -1872,17 +1912,17 @@
     {
       "repository": "8800_report",
       "path": "config/layout.tex",
-      "sha256": "52bb2eb41c4eb2351f42fde3aa4436170f2b37e1c0afc7d9f85ae674fb696e17"
+      "sha256": "fdb9e9239ecfa28e97e42979eaccbd5903bc1676feb7ef201ecd4c03ff57e3fe"
     },
     {
       "repository": "8800_report",
       "path": "config/preamble.tex",
-      "sha256": "a31dc2d5074a2b857ff3b5714e4f0624a12f2d5d30d4e97690ca520f68a62227"
+      "sha256": "193e2ef338a717d96a5d4f488aad33c03f3142c738228a0a893845d02d6f8ca3"
     },
     {
       "repository": "8800_report",
       "path": "zh/preamble.tex",
-      "sha256": "d2e17347227bb9e88565e512aaf921aacef99e5eb5e29f3575f17a57df7cfcca"
+      "sha256": "fc2bfe414a63bbab3d6d6546c168ff01f7408ce1d183e6d259283a4c1b55603e"
     }
   ]
 }

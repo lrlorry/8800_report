@@ -2292,12 +2292,12 @@
     {
       "repository": "8800_report",
       "path": "config/preamble.tex",
-      "sha256": "a31dc2d5074a2b857ff3b5714e4f0624a12f2d5d30d4e97690ca520f68a62227"
+      "sha256": "193e2ef338a717d96a5d4f488aad33c03f3142c738228a0a893845d02d6f8ca3"
     },
     {
       "repository": "8800_report",
       "path": "zh/preamble.tex",
-      "sha256": "d2e17347227bb9e88565e512aaf921aacef99e5eb5e29f3575f17a57df7cfcca"
+      "sha256": "fc2bfe414a63bbab3d6d6546c168ff01f7408ce1d183e6d259283a4c1b55603e"
     },
     {
       "repository": "8800_report",

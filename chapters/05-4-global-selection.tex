@@ -49,6 +49,7 @@ This distinction is necessary: with $c=4$ and two groups, all four
 global winners may belong to one group. Retaining only two from each
 group loses winners even though the combined capacity is four.
 
+\begin{resultblock}
 \begin{lemma}[Local-buffer retention]
 \label{lem:5-buffer}
 Let $V_t$ be the candidates scored by a block through chunk $t$, and
@@ -77,7 +78,9 @@ Filtering removes only keys above an observed bound. Induction over
 appends, compactions and filtering proves the claim. The running minimum
 is essential if reads may return different stale published values.
 \end{proof}
+\end{resultblock}
 
+\begin{resultblock}
 \begin{proposition}[Coverage and truncated merging]
 \label{prop:5-local-coverage}
 For fixed keys under a common total order, let $U$ be the visited
@@ -110,6 +113,7 @@ top-$c$. A discarded candidate already has at least $c$ predecessors
 within that union and cannot enter the top-$c$ of any larger union.
 Induction over the merge tree establishes the claim.
 \end{proof}
+\end{resultblock}
 
 \begin{figure}[tbp]
 \centering

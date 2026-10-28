@@ -62,3 +62,6 @@ https://www.overleaf.com/latex/templates/anu-honours-thesis-template/tfvndzkjrpt
 预留声明与工具使用记录，不捏造署名、核验或签署事实。
 
 该模板不是 HDR/PhD thesis 提交模板，未宣称符合 HDR 装订、PDF/A 或存档要求。
+
+2026-10-29数学排版复核：陈述和证明标题独立成行；陈述正体、证明各段不缩进；
+短陈述与证明同页。数学内容保持原样，见assessment/proof-layout-review-2026-10-29.txt。

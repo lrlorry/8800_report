@@ -39,6 +39,7 @@ OpenAI各319,488行，BGE与Stella各1,277,952行，均为$39n_{\rm list}$。
 
 IVF 中心从变换样本的等距行初始化，执行配置的八轮更新。分配按 $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$ 排序。源码提供 FP32 与加速分配路径；满足通常的维数约束时，默认用 int8 乘积过滤，再用 FP32 重算有歧义的选择。
 
+\begin{resultblock}
 \begin{lemma}[具有认证分数区间的分配]
 \label{lem:4-assignment-bound}
 令 $\widetilde y,\widetilde\mu_\ell$ 为反量化近似，$e=y-\widetilde y$，$f_\ell=\mu_\ell-\widetilde\mu_\ell$。保持中心范数精确时，近似分数
@@ -53,6 +54,7 @@ $\widetilde s_\ell=\|\mu_\ell\|^2-2\langle\widetilde y,\widetilde\mu_\ell\rangle
 \begin{proof}
 将内积误差展开为 $\langle y,f_\ell\rangle+\langle e,\widetilde\mu_\ell\rangle$，应用 Cauchy--Schwarz。被丢弃分数大于某个保留分数的上界，因此不能取得最小值；保留区间相等情形则不会丢失可能的并列者。
 \end{proof}
+\end{resultblock}
 
 实现用保守范数界与 FP32 余量常数实现这一过滤与精算模式。引理说明有效界为何允许精确排除；若要求与每种 FP32 累加顺序逐位一致，还需要覆盖相应算术误差的界。已归档诊断对比 FP16 路径，在 Vogue、BGE、Stella 尾批次分别记录 0/14,838、6/31,748、3/16,359 个分配差异。这是有限实现证据，不是完整 FP32 参考认证；冷建日志也未追踪实际执行的分配精度。
 

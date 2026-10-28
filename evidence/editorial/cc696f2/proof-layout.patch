@@ -1,0 +1,206 @@
+diff --git a/chapters/04-2-training.tex b/chapters/04-2-training.tex
+index 43b70a6..42cbf5d 100644
+--- a/chapters/04-2-training.tex
++++ b/chapters/04-2-training.tex
+@@ -79,6 +79,7 @@ The source offers FP32 and accelerated assignment paths; under its usual
+ dimensional constraints, the default uses int8 products to filter choices
+ and FP32 recomputation to resolve ambiguity.
+ 
++\begin{resultblock}
+ \begin{lemma}[Assignment with certified score intervals]
+ \label{lem:4-assignment-bound}
+ Let $\widetilde y,\widetilde\mu_\ell$ be dequantised approximations,
+@@ -101,6 +102,7 @@ and apply Cauchy--Schwarz. A discarded score exceeds an upper bound on
+ some retained score, so it cannot attain the minimum. Keeping interval
+ equality preserves possible ties.
+ \end{proof}
++\end{resultblock}
+ 
+ The implementation uses conservative norm bounds and FP32 headroom
+ constants in this filter-and-refine pattern. The lemma explains why a
+diff --git a/chapters/05-4-global-selection.tex b/chapters/05-4-global-selection.tex
+index 4050934..f311293 100644
+--- a/chapters/05-4-global-selection.tex
++++ b/chapters/05-4-global-selection.tex
+@@ -49,6 +49,7 @@ This distinction is necessary: with $c=4$ and two groups, all four
+ global winners may belong to one group. Retaining only two from each
+ group loses winners even though the combined capacity is four.
+ 
++\begin{resultblock}
+ \begin{lemma}[Local-buffer retention]
+ \label{lem:5-buffer}
+ Let $V_t$ be the candidates scored by a block through chunk $t$, and
+@@ -77,7 +78,9 @@ Filtering removes only keys above an observed bound. Induction over
+ appends, compactions and filtering proves the claim. The running minimum
+ is essential if reads may return different stale published values.
+ \end{proof}
++\end{resultblock}
+ 
++\begin{resultblock}
+ \begin{proposition}[Coverage and truncated merging]
+ \label{prop:5-local-coverage}
+ For fixed keys under a common total order, let $U$ be the visited
+@@ -110,6 +113,7 @@ top-$c$. A discarded candidate already has at least $c$ predecessors
+ within that union and cannot enter the top-$c$ of any larger union.
+ Induction over the merge tree establishes the claim.
+ \end{proof}
++\end{resultblock}
+ 
+ \begin{figure}[tbp]
+ \centering
+diff --git a/chapters/05-5-bound-scheduling.tex b/chapters/05-5-bound-scheduling.tex
+index dbbbc75..3ee1791 100644
+--- a/chapters/05-5-bound-scheduling.tex
++++ b/chapters/05-5-bound-scheduling.tex
+@@ -20,6 +20,7 @@ No bound is published from fewer than $c$ valid candidates. If the entire
+ universe has fewer than $c$, no group can publish such a bound and all
+ valid candidates remain eligible.
+ 
++\begin{resultblock}
+ \begin{proposition}[Safe rejection by a witnessed bound]
+ \label{prop:5-shared-bound}
+ Assume fixed keys, publications backed by $c$ distinct candidates, and
+@@ -36,6 +37,7 @@ made after earlier safe rejections remain valid: any $c$ retained
+ distinct candidates still supply $c$ witnesses, whether or not they are
+ the best $c$ of their group.
+ \end{proof}
++\end{resultblock}
+ 
+ Sharing may remove local winners certified as globally uncompetitive;
+ the retained union still satisfies \Cref{prop:5-local-coverage}.
+diff --git a/config/layout.tex b/config/layout.tex
+index a01ab1f..4aa773f 100644
+--- a/config/layout.tex
++++ b/config/layout.tex
+@@ -9,6 +9,35 @@
+ % Preserve the existing, scoped roman math subscripts without rewriting equations.
+ \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+ 
++% Mathematical statements and proofs share the body-text margins. Their
++% headings occupy a separate line; upright statements distinguish prose from
++% the mathematical symbols without switching whole paragraphs to italics.
++\newtheoremstyle{thesis}
++  {6pt plus 1pt minus 1pt}{4pt plus 1pt minus 1pt}
++  {\normalfont\setlength{\parindent}{0pt}}{0pt}
++  {\normalfont\bfseries}{.}{\newline}{}
++\theoremstyle{thesis}
++\makeatletter
++\renewenvironment{proof}[1][\proofname]{%
++  \par\pushQED{\qed}\normalfont
++  \setlength{\parindent}{0pt}\setlength{\listparindent}{0pt}%
++  \setlength{\parskip}{2pt plus .5pt}%
++  \topsep4\p@\@plus\p@\@minus\p@\relax
++  \trivlist
++  \item[\hskip\labelsep\normalfont\bfseries #1\@addpunct{.}]%
++  \leavevmode\par\nobreak\noindent\ignorespaces
++}{%
++  \popQED\endtrivlist\@endpefalse
++}
++\makeatother
++% Each current statement/proof pair fits comfortably on one page. Keep the
++% short pairs together so floats and page breaks cannot separate their parts.
++\newenvironment{resultblock}{%
++  \par\addvspace{6pt}\noindent\begin{minipage}[t]{\linewidth}%
++}{%
++  \end{minipage}\par\addvspace{6pt}%
++}
++
+ \KOMAoptions{chapterprefix=false,headings=normal,numbers=noendperiod}
+ \setkomafont{disposition}{\normalfont\bfseries}
+ \setkomafont{chapter}{\normalfont\Large\bfseries}
+diff --git a/config/preamble.tex b/config/preamble.tex
+index 5eece8c..f0cc7a2 100644
+--- a/config/preamble.tex
++++ b/config/preamble.tex
+@@ -55,7 +55,7 @@
+ \newtheorem{corollary}[proposition]{Corollary}
+ \crefname{corollary}{corollary}{corollaries}
+ \Crefname{corollary}{Corollary}{Corollaries}
+-\theoremstyle{definition}
++\theoremstyle{thesis}
+ \newtheorem{definition}[proposition]{Definition}
+ 
+ \newcommand{\frontchapter}[1]{%
+diff --git a/zh/chapters/04-2-training.tex b/zh/chapters/04-2-training.tex
+index 2b91716..8df7d0e 100644
+--- a/zh/chapters/04-2-training.tex
++++ b/zh/chapters/04-2-training.tex
+@@ -39,6 +39,7 @@ OpenAI各319,488行，BGE与Stella各1,277,952行，均为$39n_{\rm list}$。
+ 
+ IVF 中心从变换样本的等距行初始化，执行配置的八轮更新。分配按 $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$ 排序。源码提供 FP32 与加速分配路径；满足通常的维数约束时，默认用 int8 乘积过滤，再用 FP32 重算有歧义的选择。
+ 
++\begin{resultblock}
+ \begin{lemma}[具有认证分数区间的分配]
+ \label{lem:4-assignment-bound}
+ 令 $\widetilde y,\widetilde\mu_\ell$ 为反量化近似，$e=y-\widetilde y$，$f_\ell=\mu_\ell-\widetilde\mu_\ell$。保持中心范数精确时，近似分数
+@@ -53,6 +54,7 @@ $\widetilde s_\ell=\|\mu_\ell\|^2-2\langle\widetilde y,\widetilde\mu_\ell\rangle
+ \begin{proof}
+ 将内积误差展开为 $\langle y,f_\ell\rangle+\langle e,\widetilde\mu_\ell\rangle$，应用 Cauchy--Schwarz。被丢弃分数大于某个保留分数的上界，因此不能取得最小值；保留区间相等情形则不会丢失可能的并列者。
+ \end{proof}
++\end{resultblock}
+ 
+ 实现用保守范数界与 FP32 余量常数实现这一过滤与精算模式。引理说明有效界为何允许精确排除；若要求与每种 FP32 累加顺序逐位一致，还需要覆盖相应算术误差的界。已归档诊断对比 FP16 路径，在 Vogue、BGE、Stella 尾批次分别记录 0/14,838、6/31,748、3/16,359 个分配差异。这是有限实现证据，不是完整 FP32 参考认证；冷建日志也未追踪实际执行的分配精度。
+ 
+diff --git a/zh/chapters/05-4-global-selection.tex b/zh/chapters/05-4-global-selection.tex
+index 8488a75..7e926a0 100644
+--- a/zh/chapters/05-4-global-selection.tex
++++ b/zh/chapters/05-4-global-selection.tex
+@@ -24,6 +24,7 @@
+ 
+ 用 $\operatorname{Top}_c(V)$ 表示将 $V$ 按 $K_q$ 排序后最前面的 $\min(c,|V|)$ 个候选，其中 $c=\max\{k,\lceil\alpha k\rceil\}$。每个独立组保留完整的局部 top-$c$，而不是分得一个 $c/\gscan$ 配额。这一区别不可省略：当 $c=4$、组数为二时，四个全局优胜候选可能全在同一组。如果每组只保留两个，即使总容量为四，仍会丢掉全局优胜候选。
+ 
++\begin{resultblock}
+ \begin{lemma}[局部缓冲区保留]
+ \label{lem:5-buffer}
+ 设 $V_t$ 为一个 block 截至 chunk $t$ 已评分的候选，$B_t$ 为该时刻完成压缩或过滤后的有效缓冲区。假设完整 key 固定、追加容量充足、压缩精确保留 top-$c$。令 $\beta_t$ 为截至该时刻读到的全部完整共享界的最小值，包含初始顶哨兵，则
+@@ -37,7 +38,9 @@
+ \begin{proof}
+ 空前缀满足不变量。新候选若未通过局部准入阈值，则已有 $c$ 个保留 key 排在它之前；这些前驱在之后的前缀中仍存在。共享界拒绝的候选均在 $\beta_t$ 之后。旧候选若已不属于前缀 top-$c$，前缀增长也不会改善其名次。因此，每个符合界的新前缀优胜候选，要么已经保留，要么获准追加。精确压缩不会丢弃它：在整个前缀中排在它之前的成员少于 $c$，缓冲区内也如此。过滤仅删除读到的界之后的 key。对追加、压缩及过滤归纳即得结论。若读取可能返回不同的旧发布值，必须使用历史读取的最小值表述不变量。
+ \end{proof}
++\end{resultblock}
+ 
++\begin{resultblock}
+ \begin{proposition}[覆盖与截断合并]
+ \label{prop:5-local-coverage}
+ 在固定 key 和共同全序下，设 $U$ 为已访问候选全集，$V$ 为任一保留子集。若 $\operatorname{Top}_c(U)\subseteq V\subseteq U$，则 $\operatorname{Top}_c(V)=\operatorname{Top}_c(U)$。有序列表两两合并且每轮截取前 $c$ 项保持这一结论。特别地，对互不相交的分组，有
+@@ -54,6 +57,7 @@
+ 
+ 对于合并，两个有序列表的前 $c$ 项就是二者并集的 top-$c$。被截去的候选在该并集中已经有至少 $c$ 个前驱，不可能再进入任何更大并集的 top-$c$。对合并树的各轮归纳即可得到结论。
+ \end{proof}
++\end{resultblock}
+ 
+ \begin{figure}[tbp]
+ \centering
+diff --git a/zh/chapters/05-5-bound-scheduling.tex b/zh/chapters/05-5-bound-scheduling.tex
+index e34ce6f..831101c 100644
+--- a/zh/chapters/05-5-bound-scheduling.tex
++++ b/zh/chapters/05-5-bound-scheduling.tex
+@@ -9,6 +9,7 @@
+ \end{equation}
+ 不足 $c$ 个有效候选时不得发布界。如果整个候选集合不足 $c$，任何组都无法发布这样的界，所有有效候选保持可接纳。
+ 
++\begin{resultblock}
+ \begin{proposition}[由见证界安全排除候选]
+ \label{prop:5-shared-bound}
+ 假设 key 固定，每次发布都有 $c$ 个互不相同的候选作为见证，每次读取返回初始哨兵或某个完整的已发布 key。仅在 $K_q(x)\succ\tau$ 时排除候选，不会删除任何全局 top-$c$ 成员，与发布时序无关。
+@@ -16,6 +17,7 @@
+ \begin{proof}
+ 每个已发布界都不小于 $K_{(c)}$，这些界的最小值也不小于 $K_{(c)}$。全局优胜候选满足 $K_q(x)\preceq K_{(c)}\preceq\tau$，因此不会被排除。较旧的界仍是上界，只会允许更多工作。此前的安全排除也不破坏后续发布的有效性：任意保留的 $c$ 个互不相同候选仍提供 $c$ 个见证，无论它们是否是该组最好的 $c$ 项。
+ \end{proof}
++\end{resultblock}
+ 
+ 共享可以删除已获证的全局非优胜局部候选，保留并集仍满足\Cref{prop:5-local-coverage}。
+ 与共享界相等的候选仍可接纳，实际条件为
+diff --git a/zh/preamble.tex b/zh/preamble.tex
+index db3e9ef..87c0b38 100644
+--- a/zh/preamble.tex
++++ b/zh/preamble.tex
+@@ -79,7 +79,7 @@
+ \newtheorem{corollary}[proposition]{推论}
+ \crefname{corollary}{推论}{推论}
+ \Crefname{corollary}{推论}{推论}
+-\theoremstyle{definition}
++\theoremstyle{thesis}
+ \newtheorem{definition}[proposition]{定义}
+ \renewcommand{\proofname}{证明}
+ 

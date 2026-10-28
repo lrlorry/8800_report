@@ -20,6 +20,7 @@ No bound is published from fewer than $c$ valid candidates. If the entire
 universe has fewer than $c$, no group can publish such a bound and all
 valid candidates remain eligible.
 
+\begin{resultblock}
 \begin{proposition}[Safe rejection by a witnessed bound]
 \label{prop:5-shared-bound}
 Assume fixed keys, publications backed by $c$ distinct candidates, and
@@ -36,6 +37,7 @@ made after earlier safe rejections remain valid: any $c$ retained
 distinct candidates still supply $c$ witnesses, whether or not they are
 the best $c$ of their group.
 \end{proof}
+\end{resultblock}
 
 Sharing may remove local winners certified as globally uncompetitive;
 the retained union still satisfies \Cref{prop:5-local-coverage}.

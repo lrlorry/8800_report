@@ -884,12 +884,12 @@
     {
       "repository": "8800_report",
       "path": "data/ch4/audit.json",
-      "sha256": "9bd308334ee90b5c4bf758b6201c7721860ff90c454da6936a6d1e686599b885"
+      "sha256": "162f79987b90efd3c8f9f3227933a25c48d6e2317a43baa1f1def554e659a27f"
     },
     {
       "repository": "8800_report",
       "path": "data/ch6/audit.json",
-      "sha256": "30d2b36e38e017220add69cbdaae1272a4f5185f9619b8524a65a7ab8f1621db"
+      "sha256": "f68ba775c966dd7e1834ec8c8020a7a66e643827fab6af08ba7365e7d8208bf0"
     },
     {
       "repository": "8800_report",

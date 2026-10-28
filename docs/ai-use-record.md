@@ -90,6 +90,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model versi
 
 The subsequent requests to remove the coauthor-name narration, shorten wrapped chapter titles and limit cuts to low-impact material are retained verbatim in the machine-readable record. Repeated introductions, navigation and scope summaries were shortened; numerical assets, proofs and unique mathematical blocks were retained. See the [applied source patch](../evidence/editorial/f39bf75/layout.patch) and [layout record](../assessment/layout-reflow-2026-10-29.txt).
 
+### P11 — 证明与命题排版复核
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> 感觉里面有些排版 比如证明的 都不对齐 有点错乱 你重新审核一下呢
+
+Codex made theorem headings separate from upright statement text, aligned proof headings and paragraphs with the text margin, and kept each short statement/proof pair together. Mathematical expressions and proof text were retained unchanged. The [source patch](../evidence/editorial/cc696f2/proof-layout.patch) and [inspection record](../assessment/proof-layout-review-2026-10-29.txt) identify the formatting work.
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:
