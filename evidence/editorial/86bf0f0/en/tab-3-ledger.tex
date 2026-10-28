@@ -1,0 +1,26 @@
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Claim-to-evidence record]{Claim-to-evidence record and available provenance. Appendix A
+maps implementation names, executable names and result-to-figure paths.}
+\label{tab:3-ledger}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Field group & Recorded identity / condition & Interpretation \\
+\midrule
+Claim and intervention & RQ, mechanism, control, metric, result location
+and figure/table & Scope identifies what the comparison tests \\
+Execution & Run-head or report version, harness, compiler flags,
+GPU/driver/toolkit & Current analysis checkout is separate from run source;
+complete executable hashes are missing \\
+Index and queries & Shape, metric, training request, cache path,
+split/seed, $k$, probes, $\alpha$, batch & Cache names and dimensions
+are recorded; complete historical data/state fingerprints are missing \\
+Measurement & Timing scope, warm-up, round/call counts,
+reference semantics and diagnostics & Family-specific protocols remain
+attached to their records \\
+Analysis & Raw relative path and SHA-256, parser, generated output,
+validity status & Supports offline regeneration of reported quantities \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

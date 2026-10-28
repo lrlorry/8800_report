@@ -5,13 +5,15 @@
 This chapter evaluates construction and capacity (RQ1), execution correctness
 and cost (RQ2), held-out budget quality and reuse cost (RQ3), and competitive
 search regions (RQ4). The experiment families below retain their own
-controls; \cref{tab:7-rq-answers} consolidates the resulting answers.
+controls; \cref{sec:9-1} synthesises the answers to the research questions.
 
 \section{Final Experiment Manifest and Comparison Families}
 \label{sec:7-1}
 
-\Cref{tab:7-manifest} groups the evidence by intervention;
-\cref{app:reproducibility} records implementation and run provenance.
+The evidence comprises system frontiers, component ablations,
+selection checks, budget calibration and construction/scale measurements.
+\Cref{app:reproducibility} records implementation and run provenance;
+the repository supplement retains the full family manifest.
 
 
 \subsection{Evidence families and measurement boundaries}
@@ -21,31 +23,6 @@ retain the family-specific boundaries defined in \cref{sec:3-5}. Their
 ratios are interpreted within each comparison, as required by
 \cref{sec:3-1}.
 
-
-\begin{table}[tbp]
-\centering
-\caption[Experiment and evidence families]{Evidence families. Counts denote measured configurations or checks,
-not independent index builds. All use the RTX 5090; timing protocols differ.}
-\label{tab:7-manifest}
-\small
-\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{.30\linewidth}@{}}
-\toprule
-Family & Purpose and implementation & Coverage \\
-\midrule
-E1 & v69 versus cuVS graph, PQ, RaBitQ and brute force & 1,590 points; 4 datasets \\
-LUT & v71 table grouping, $\glut\in\{1,2,4,8\}$ & 24 cells; 96 arms \\
-Packing & Historical byte/word access factorial & 48 paired cells \\
-Refinement & v61 scalar/load/lane ablation & 13 configurations \\
-Scan/bound & v62 global selection; v63 shared bound & 64 / 48 correctness checks \\
-Scheduling & Integrated v65 execution policy & 50 workload--batch cells \\
-Probe & v69 exact computed-score probe selection & 1,792 synthetic cases \\
-Budget & v69 sampled, full-pool and oracle budgets & 12 cells; 64 draws per $S$ \\
-Scale & v69 search, cold builds and resident memory & BGE and Stella extensions \\
-Supplement & Repeated builds; PTX; pairing; budget traces; precision & 30 builds; 12 budget cells; 76 precision pairs \\
-T4/T5 & Strict selection reference; small-batch frontiers & 270 checks; 1,808 timing points \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
 \Cref{sec:3-2,sec:3-3} define the dataset manifest, environment and
 measurement protocol. The main system comparison uses host-to-host
@@ -152,21 +129,14 @@ the measurement supports.
 
 The paired E1 one-block measurements connect RQ2 to this RQ4 result.
 Rebuilding Vogue's frontier with $\gscan=0$ reduces its 0.97 ratio to
-RaBitQ from $1.059$ to $0.933$ (\cref{tab:7-e1-paths}). The favourable
+RaBitQ from $1.059$ to $0.933$; at 0.96 the corresponding ratios are
+$1.250$ and $1.072$. Both use the same run--budget grid and log-QPS
+interpolation at batch 1,000. The favourable
 direction therefore depends on the scheduled grouped path in this grid.
 The comparison holds the index, probes, budget and final outputs fixed
 within each pair; it measures the integrated path, rather than isolating
 the shared bound's contribution alone.
 
-\begin{table}[tbp]
-\centering
-\caption[Vogue E1 scan-path sensitivity]{Vogue E1 path sensitivity at batch 1,000. Both frontiers use
-the same run--budget grid and log-QPS interpolation rule against RaBitQ;
-each paired run has bit-identical final outputs.}
-\label{tab:7-e1-paths}
-\small\setlength{\tabcolsep}{5pt}
-\input{tables/ch7/e1_paths}
-\end{table}
 
 Across targets 0.90--0.985, JHQ's interpolated advantage over CAGRA fp32
 is approximately $1.10$--$2.44\times$ in the covered comparisons.
@@ -561,10 +531,11 @@ ties and agree with enumeration empirically. Path changes in eight cells
 concern calibration-to-evaluation transfer, separately from this check.
 
 
-A fixed budget is also imperfect. \Cref{tab:7-fixed-budget} evaluates all
-eight fixed choices against the diagnostic quality target. Fixed
-$\alpha=100$ qualifies in ten of twelve cells; $\alpha=200$ qualifies
-in all twelve but can sacrifice substantial throughput. Full-pool
+Across the eight fixed choices, $\alpha=64$ and 100 each qualify in
+ten of twelve cells against the diagnostic quality target; $\alpha=200$
+qualifies in all twelve. Among qualifying cells, their maximum QPS deficits
+to the diagnostic oracle are 26.6\%, 40.9\% and 57.1\%, respectively.
+The complete eight-arm comparison is retained in the repository supplement. Full-pool
 calibration is not identical to the oracle either: on Vogue it selects
 100 at both probe depths while the oracle selects 64. Agreement-based
 selection and fastest quality-constrained selection solve different
@@ -578,16 +549,6 @@ as timing variation and establish a low-budget plateau
 (\cref{sec:7-budget-trace}). A minimum accepted budget remains a quality
 decision, rather than a guarantee of the fastest measured arm.
 
-\begin{table}[tbp]
-\centering
-\caption[Fixed-budget quality and throughput controls]{Fixed-budget controls over twelve held-out cells. Qualifying means
-within $10^{-3}$ of the best tested recall at printed precision. Worst
-recall loss uses all cells; QPS deficit uses only cells where that arm
-qualifies. A dash means no qualifying cells.}
-\label{tab:7-fixed-budget}
-\small
-\input{tables/ch7/fixed_budgets}
-\end{table}
 
 \subsection{Estimated throughput and calibration economics}
 
@@ -644,18 +605,9 @@ $S=128$ break-even estimates correspond to 0.54\,s versus fixed 100
 and 2.72\,s versus fixed 64 (about 27.7K and 202.2K queries).
 Full-pool positive cases reach at most 1.52/2.25\,s and 64.9K/78.7K
 queries against those controls, using their own calibration costs.
-The short modelled horizons favour reuse on long stable jobs;
-\Cref{fig:7-budget-payback} retains the actual held-out counts.
+These short modelled horizons favour reuse on long stable jobs. The
+estimates use 500 queries per held-out batch, or 499 for Stella.
 
-\begin{figure}[tbp]
-\centering
-\includegraphics[width=\linewidth]{ch7/budget_payback.pdf}
-\caption[Estimated calibration payback]{Estimated calibration payback relative to fixed budgets 100 and
-64. Filled circles denote 128 probes and open triangles 512 probes.
-Top-row points have no throughput payback. Estimates invert mean
-selected-arm QPS and use 500 queries, or 499 for Stella.}
-\label{fig:7-budget-payback}
-\end{figure}
 
 These estimates inherit the mean-rate inversion and stationary-reuse
 assumptions analysed in \cref{sec:6-5}. Direct execution below checks
@@ -757,7 +709,7 @@ from 0.895 to 1.175. It loses at $(n_{\rm probe},\alpha)=(16,16)$,
 $(16,64)$ and $(32,64)$, with ratios 0.955, 0.895 and 0.955.
 Candidate-count dispersion alone does not encode absolute per-query work;
 the rule can add overhead to these low-probe cases while enabling Vogue's
-0.97 cross-system lead in \cref{tab:7-e1-paths}. This complements the
+0.97 cross-system lead in \cref{sec:7-2}. This complements the
 BGE batch-256 regret: balancing work and paying for decomposition are
 distinct scheduling decisions.
 
@@ -783,8 +735,9 @@ with an empty trained-state cache and then encode/add the database;
 \cref{tab:7-build-memory} reports their recorded training and add times.
 The supplementary repetitions use the same empty-cache construction
 boundary; \cref{tab:7-build-memory} now reports the medians of three
-normal runs per dataset. \Cref{tab:7-build-repeat} preserves their range,
-the broader startup interval and the sampled device peak.
+normal runs per dataset. The complete six-dataset repetition record is
+retained in the repository supplement; the ranges and sampled peaks below
+explain the construction boundary.
 Vogue's training is 298--303\,ms, so its normal total is about 0.56\,s;
 the archived 1.33\,s total (including 1.056\,s training) is an unusually slow single observation.
 Stella's normal totals are 10.54--10.65\,s, close to the historical
@@ -803,9 +756,8 @@ measured used total, not the fraction read per query.}
 \input{tables/ch7/build_memory}
 \end{table}
 
-The construction and startup intervals follow the lifecycle boundary
-in \cref{sec:3-3,sec:a-e1-protocol}; \cref{tab:7-build-repeat} keeps
-those intervals separate.
+Construction and startup intervals follow the distinct lifecycle
+boundaries in \cref{sec:3-3,sec:a-e1-protocol}.
 
 
 \Cref{fig:7-build} contrasts JHQ's normal-build repetitions with
@@ -835,20 +787,10 @@ reported boundaries, but does not establish a universally fastest builder
 or equal downstream recall. Construction speed, searchable quality and
 resident cost are separate deployment dimensions.
 
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\captionof{table}[Repeated empty-cache construction]{Supplementary empty-cache construction. Train+add and Start
-give ranges over three normal warm-input runs; First read is this session's
-first-read startup observation. Start ends at add completion, before
-schedule calibration/search. Peak is the maximum 20\,ms device sample
-over the normal runs, including context. Recall spans five independent
-builds at fixed 128-probe operating points, including the phase diagnostic.}
-\label{tab:7-build-repeat}
-\scriptsize\setlength{\tabcolsep}{3pt}
-\input{tables/supplement/build}
-\end{minipage}\par\medskip
 
-The broader startup boundary is material: Stella takes 18.2--18.6\,s
+Across five independent builds per dataset at fixed 128-probe points,
+the largest recall range is 0.0012 on arXiv; normal timing ranges use
+only the three uninstrumented builds. The broader startup boundary is material: Stella takes 18.2--18.6\,s
 with warm input pages and 129.9\,s on its session-first read. The
 phase diagnostic synchronises stages and changes the pipeline to one
 buffer, so its timing is excluded from normal-build ranges. Twenty-millisecond
@@ -862,7 +804,7 @@ show why resident memory alone understates construction capacity.
 
 \Cref{fig:7-memory} combines the component model in \cref{sec:4-4}
 with measured resident totals. Its unattributed remainder is retained,
-and construction peaks are reported separately in \cref{tab:7-build-repeat}.
+and the preceding construction measurements give the sampled peaks.
 
 
 \begin{figure}[tbp]
@@ -871,8 +813,8 @@ and construction peaks are reported separately in \cref{tab:7-build-repeat}.
 \caption[Resident-memory decomposition]{Resident-memory decomposition at two-group tables, 128 probes
 and $\alpha=100$. Component sizes are modelled, markers are measured used
 totals, and hatching is the unattributed remainder. The totals include
-context and workspace. Separate construction samples are in
-\cref{tab:7-build-repeat}; these resident markers are not peaks.}
+context and workspace. The preceding construction measurements give sampled peaks; these
+resident markers are not peaks.}
 \label{fig:7-memory}
 \end{figure}
 
@@ -1038,33 +980,11 @@ routing from representation requires additional stage-wise GT coverage.
 
 \subsection{Scope of the research findings}
 
-\Cref{tab:7-rq-answers} closes the evidence chain for RQ1--RQ4.
-The results favour a small set of representation-aware execution modes
-and workload-specific refinement effort, with independent evidence for
-correctness, speed and quality.
+The results support representation-aware execution and workload-specific
+refinement effort, with separate evidence for correctness, speed and
+quality. Chapter 8 develops the cross-layer implications and negative
+cases; \cref{sec:9-1} brings together the answers to RQ1--RQ4.
 
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\captionof{table}[Answers to the research questions]{Answers to the four research questions, supported by this chapter.}
-\label{tab:7-rq-answers}
-\small
-\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
-\toprule
-RQ & Evidence & Answer & Boundary \\
-\midrule
-RQ1 & Cold build; resident components; large searches & 17.78M vectors
-on one GPU; 20.44\,GiB; repeated train+add 10.54--10.65\,s & Sampled peak 22.58\,GiB; no multi-GPU scaling \\
-RQ2 & Strict CPU reference; paired execution checks & 55,296 complete-key
-instances match in order; scheduling $2.727\times$ at batch 8 & Finite T4 grid;
-FP32 table forms can change final IDs; full-batch gains smaller \\
-RQ3 & Disjoint queries; fixed 64/100; full pool; oracle; enumeration & Full pool meets 12/12 quality targets; maximum loss 0.0006 & Retrospective working point; $S=128$ has up to 40/64 loss crossings; net cost directly measured on four cells \\
-RQ4 & E1 and T5 frontiers; both recall estimators; memory & E1: three
-leads at 0.97; T5: CAGRA leads at batch 8 and 0.97; allocation below
-fp32 CAGRA, comparable to int8 & OpenAI E1 uses TF32; smaller FP32 leads;
-finite unequal grids and interface costs; batch-32 near ties depend on estimator \\
-\bottomrule
-\end{tabularx}
-\end{minipage}\par\medskip
 
 The claims apply to squared-L2 top-10 search, the recorded query pools
 and the tested RTX 5090 environment. Cross-device behaviour, changing

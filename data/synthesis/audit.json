@@ -305,12 +305,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/08-1-insights.tex",
-      "sha256": "976e6a72a20cadb96488530a9f8a4ef4a7544696807166b8ecb190365c922075"
+      "sha256": "375848b7d9436273649d57ddd72aa03b9915b7b2c91b355e46c5c675f7abbda8"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-1-insights.tex",
-      "sha256": "c73205ab0ee668a4cff620b414cd6c4d9012e48ca2f4adbe9be14a8fd31e5104"
+      "sha256": "013853dcf8763f35d1875444d0d03ec6061650e81d5d1fbc496a8e31dd36401b"
     },
     {
       "repository": "8800_report",
@@ -395,17 +395,17 @@
     {
       "repository": "8800_report",
       "path": "data/ch6/audit.json",
-      "sha256": "c7ab3233fc85c546c22a78dd45f682eaa6f84494dc1d4b9b91b10644504c1c31"
+      "sha256": "dea1b481607283a1a7ed9358aa405a52e1ca4b677c81ce1e72f540d7b84b85ca"
     },
     {
       "repository": "8800_report",
       "path": "data/ch3/audit.json",
-      "sha256": "eb0f2c46c33fdce9de86620590a7a487c8b86d864cf44ceba039d96d61702aa6"
+      "sha256": "503ff54e124fed515acb45925b9817d94645bf617720b81c705761d6852a2a00"
     },
     {
       "repository": "8800_report",
       "path": "data/ch8/audit.json",
-      "sha256": "b4bd40f849810acbc8fdeb60e4562b2e3f9541ac693c0bc7fa87118795d6e6a3"
+      "sha256": "e28b0be936481f4a5f1029b83dc42f81fe947b6c0445f36e233bf6acf08aed7c"
     },
     {
       "repository": "8800_report",
@@ -415,12 +415,12 @@
     {
       "repository": "8800_report",
       "path": "data/t4-t5/audit.json",
-      "sha256": "dbde559b869268e04ac511a359fb0150ea8c545044c6f3e108dae3bdfc4290cb"
+      "sha256": "9e7c655d0459b4f10db0d42e7d0ba7671b43992779cf630e7085527e98097536"
     },
     {
       "repository": "8800_report",
       "path": "data/full-review/audit.json",
-      "sha256": "530e5eb080321bc454f06c1740d9e96b679b337f0daf8cfd8b642246260060a8"
+      "sha256": "2d2c3a2c334c4cb7efbf97f6936551d88bea3e0d5eef2d059f9e2068a029056a"
     },
     {
       "repository": "8800_report",
@@ -485,7 +485,7 @@
     {
       "repository": "8800_report",
       "path": "docs/experiment-protocol.md",
-      "sha256": "4c30fd455630e4f9e3df516bf95886a91c725f0fb94ac0c549e2fe0183b3f71e"
+      "sha256": "90eb692e10a28fc80dda9a42caee062cb9837ac6e04e3b2d112b34782dda9bf5"
     },
     {
       "repository": "8800_report",
@@ -495,12 +495,27 @@
     {
       "repository": "8800_report",
       "path": "assessment/deduplication-rounds.md",
-      "sha256": "f405ca2902d13f0782f515633fee9840fe8132b86ca5976c01a4faae1399d0b9"
+      "sha256": "ac910ee1bdfe44165498dcbd5c47b56609e7907fae901be01ecbe0bcb77218a3"
     },
     {
       "repository": "8800_report",
       "path": "assessment/template-sources.json",
       "sha256": "b395dfcecf3e00520458ae5f640674d5a607602eb3710e59b083f1e5557dc4ec"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/targeted-curation-review.md",
+      "sha256": "048508682b693ba778188ce057856d5a942edaf6bbb5b3acbba17f01453fab58"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/targeted-curation-source.json",
+      "sha256": "62df71ffa04c13e84608551ac0ebacd0b68e80e95eee5e7ac1cdb2d2a1634a5b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "docs/supplementary-evidence.md",
+      "sha256": "e12d9c8be9b7b4bcbed7be3bd4ddbd456d40ea2db40d2c5c5cbacbc2f1c5d92f"
     },
     {
       "repository": "8800_report",
@@ -540,7 +555,7 @@
     {
       "repository": "8800_report",
       "path": "README.md",
-      "sha256": "ceb36a1c60216821cc11e814bd3e45930114de91d70ce6ac68788c82eead696d"
+      "sha256": "74268e7a4d4a9f7df7506b824789dffa5833e0783dcf371cc36b6109053bb036"
     },
     {
       "repository": "8800_report",
@@ -550,7 +565,7 @@
     {
       "repository": "8800_report",
       "path": "scripts/audit_synthesis.py",
-      "sha256": "108b719bb2cdc1f62d7f3d30d56724c794edfe8d55298159f40a5da337df39c7"
+      "sha256": "b44f845f7db8cfcb6834a9c405d2ee66f18a2a766748a768946d68b535394392"
     },
     {
       "repository": "8800_report",

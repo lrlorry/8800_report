@@ -109,6 +109,8 @@ def main():
                 'appendices/a-reproducibility.tex','appendices/b-supplementary.tex',
                 'docs/experiment-protocol.md','assessment/backmatter-streamlining.txt',
                 'assessment/deduplication-rounds.md','assessment/template-sources.json',
+                'assessment/targeted-curation-review.md','assessment/targeted-curation-source.json',
+                'docs/supplementary-evidence.md',
                 'config/layout.tex','config/preamble.tex','zh/preamble.tex',
                 'config/metadata.tex','frontmatter/title.tex','zh/title.tex',
                 'frontmatter/notation.tex','README.md','FORMAT_NOTES.txt',

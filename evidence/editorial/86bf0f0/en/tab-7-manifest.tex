@@ -1,0 +1,24 @@
+\begin{table}[tbp]
+\centering
+\caption[Experiment and evidence families]{Evidence families. Counts denote measured configurations or checks,
+not independent index builds. All use the RTX 5090; timing protocols differ.}
+\label{tab:7-manifest}
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{.30\linewidth}@{}}
+\toprule
+Family & Purpose and implementation & Coverage \\
+\midrule
+E1 & v69 versus cuVS graph, PQ, RaBitQ and brute force & 1,590 points; 4 datasets \\
+LUT & v71 table grouping, $\glut\in\{1,2,4,8\}$ & 24 cells; 96 arms \\
+Packing & Historical byte/word access factorial & 48 paired cells \\
+Refinement & v61 scalar/load/lane ablation & 13 configurations \\
+Scan/bound & v62 global selection; v63 shared bound & 64 / 48 correctness checks \\
+Scheduling & Integrated v65 execution policy & 50 workload--batch cells \\
+Probe & v69 exact computed-score probe selection & 1,792 synthetic cases \\
+Budget & v69 sampled, full-pool and oracle budgets & 12 cells; 64 draws per $S$ \\
+Scale & v69 search, cold builds and resident memory & BGE and Stella extensions \\
+Supplement & Repeated builds; PTX; pairing; budget traces; precision & 30 builds; 12 budget cells; 76 precision pairs \\
+T4/T5 & Strict selection reference; small-batch frontiers & 270 checks; 1,808 timing points \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -1,0 +1,23 @@
+\begin{table}[tbp]
+\centering
+\caption[实验与证据分组]{实验与证据分组。数量表示测量配置或检查次数，不代表独立索引构建次数。所有实验均使用 RTX 5090，但计时协议有所不同。}
+\label{tab:7-manifest}
+\small
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{.30\linewidth}@{}}
+\toprule
+实验组 & 目的与实现 & 覆盖范围 \\
+\midrule
+E1 & v69 与 cuVS 图索引、PQ、RaBitQ、暴力搜索比较 & 1,590 个点；4 个数据集 \\
+LUT & v71 查找表分组，$\glut\in\{1,2,4,8\}$ & 24 个单元；96 个变体 \\
+打包访存 & 历史字节/机器字访存析因对照 & 48 个配对单元 \\
+精排 & v61 标量、加载方式与 lane 数消融 & 13 个配置 \\
+扫描/共享界 & v62 全局选择；v63 共享界 & 64 / 48 个正确性比较 \\
+调度 & 集成后的 v65 执行策略 & 50 个工作负载—批大小单元 \\
+探针选择 & v69 已算分数的精确探针选择 & 1,792 个合成用例 \\
+预算 & v69 抽样、全校准池与 oracle 预算 & 12 个单元；每个 $S$ 抽样 64 次 \\
+规模 & v69 搜索、冷构建与常驻显存 & BGE 与 Stella 扩展实验 \\
+补证 & 重复构建、PTX、配对、预算轨迹及精度 & 30次构建、12预算单元、76精度配对 \\
+T4/T5 & 严格选择参考及小批次前沿 & 270 个检查；1,808 个计时点 \\
+\bottomrule
+\end{tabularx}
+\end{table}

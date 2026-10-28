@@ -1,0 +1,16 @@
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[研究问题的答案]{本章证据支持的四个研究问题答案。}
+\label{tab:7-rq-answers}
+\small
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+研究问题 & 证据 & 答案 & 边界 \\
+\midrule
+RQ1 & 冷构建、常驻组件、大规模搜索 & 单卡 17.78M 向量；20.44\,GiB；重复训练加添加10.54--10.65\,s & 采样峰值22.58\,GiB；无多GPU扩展 \\
+RQ2 & 严格 CPU 参考及配对执行检查 & 55,296 个完整键实例顺序一致；batch 8 调度为 $2.727\times$ & T4 有限网格；FP32 表形式可改变末端 ID；大batch收益更小 \\
+RQ3 & 互斥查询、固定 64/100、全池、oracle、枚举 & 全池 12/12 质量达标，最大损失 0.0006 & 回顾性工作点；$S=128$ 最多 40/64 越阈；四单元直接测量净成本 \\
+RQ4 & E1、T5 前沿、两种 recall 估计与显存 & E1：0.97 处三个领先；T5：batch 8、0.97 时 CAGRA 领先；分配低于 fp32 CAGRA、与 int8 相近 & OpenAI E1 使用 TF32，FP32 领先更小；有限不等网格与接口成本；batch 32 边界依估计而变 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

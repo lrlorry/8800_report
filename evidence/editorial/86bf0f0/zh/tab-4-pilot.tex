@@ -1,0 +1,15 @@
+\begin{table}[tbp]
+\centering
+\caption[已归档的 pilot 诊断]{已归档 pilot 诊断。修正项误差覆盖全部索引行；返回分数误差覆盖采样查询的 GPU top-10 比较。相对分数误差为 $|s_{\rm GPU}-s_{64}|/s_{64}$，参考包含查询范数常数。}
+\label{tab:4-pilot}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+数据集 & 索引行数 & \shortstack{最大修正项\\绝对误差} & \shortstack{最大返回分数\\相对误差} \\
+\midrule
+Vogue & 932,328 & $1.28\times10^{-7}$ & $2.66\times10^{-7}$ \\
+arXiv & 2,253,000 & $1.35\times10^{-7}$ & $2.38\times10^{-7}$ \\
+OpenAI-3072 & 999,000 & $2.77\times10^{-7}$ & $4.85\times10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{table}

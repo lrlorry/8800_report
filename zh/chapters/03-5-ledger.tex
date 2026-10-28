@@ -1,28 +1,8 @@
 每项主要实证主张都关联实验族、指标和实际读取记录。机器可读登记为
 \path{data/ch3/audit.json}；第4--7章audit文件提供详细数值重算。
-\Cref{tab:3-ledger}规定身份与缺失字段的解释：文件哈希验证分析读取的输入，
-无法恢复从未归档的可执行文件或训练状态。
+记录包含干预、执行、索引／查询配置、测量边界及分析输入。文件哈希验证分析读取的输入，
+无法恢复从未归档的可执行文件或训练状态。附录A提供复现入口，仓库补充材料保留完整字段定义。\footnote{仓库补充材料：\path{docs/supplementary-evidence.md}。}
 
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\captionof{table}[论点与证据对应]{主张与证据记录及现有来源。附录A映射实现名称、可执行程序和结果到图路径。}
-\label{tab:3-ledger}
-\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}p{.24\linewidth}XX@{}}
-\toprule
-字段组 & 记录的身份／条件 & 解释 \\
-\midrule
-主张与干预 & RQ、机制、对照、指标、结果位置、图／表 & 范围明确比较所检验的问题 \\
-执行 & run-head或报告版本、harness、编译选项、GPU／驱动／toolkit
-& 分析checkout与运行源码分开；完整可执行哈希缺失 \\
-索引与查询 & 形状、距离、训练请求、cache路径、划分／seed、$k$、probe、
-$\alpha$、batch & 记录cache名称和形状；完整历史数据／状态指纹缺失 \\
-测量 & 计时范围、预热、轮数／调用数、参考语义、诊断 & 每个实验族保留自身协议 \\
-分析 & 原始相对路径与SHA-256、parser、生成产物、有效性状态
-& 支持离线重新生成报告数值 \\
-\bottomrule
-\end{tabularx}
-\end{minipage}\par\medskip
 
 E1系统前沿、新版表分组、预算及大型数据扩展与ADC论文的旧测量分开。
 历史packing和精排记录回答其原有配对问题。海报在视觉上连接这些机制，

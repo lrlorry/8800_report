@@ -1,0 +1,15 @@
+\begin{table}[tbp]
+\centering
+\caption[残差训练迭代诊断]{历史残差迭代诊断（100K 样本）。Recall@10 从 25 到 2,000 轮明显提升，此后变化较小且不单调；这些不是第七章最终基准点。}
+\label{tab:4-lloyd}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+数据集 & 上限 25 & 上限 2,000 & 上限 5,000 & 上限 40,000 \\
+\midrule
+Vogue & 0.9770 & 0.9846 & 0.9843 & 0.9845 \\
+BGE & 0.9514 & 0.9585 & 0.9592 & 0.9586 \\
+Stella & 0.9852 & 0.9915 & 0.9921 & 0.9916 \\
+\bottomrule
+\end{tabular}
+\end{table}

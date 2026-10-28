@@ -21,28 +21,14 @@ The codebook audit found zero separability mismatches, scalar-level
 mismatches and unsorted residual-codebook pairs. Independently decoding
 the exported primary/residual codes, an FP64 loop checked
 $\gamma=2\langle\widehat p,\widehat r\rangle$ over every indexed row.
-\Cref{tab:4-pilot} reports the worst recorded errors across each dataset's
-workloads. These are checks of the exported representation, not
-re-encoding from the original input vectors.
+Across the three databases, maximum absolute correction errors range
+from $1.28\times10^{-7}$ to $2.77\times10^{-7}$. Sampled GPU-returned
+top-10 scores have maximum relative errors from $2.38\times10^{-7}$ to
+$4.85\times10^{-5}$, using $|s_{\rm GPU}-s_{64}|/s_{64}$ with the
+query-norm constant included. These are checks of the exported
+representation, not re-encoding from the original input vectors. The
+repository supplement retains the per-dataset diagnostics.
 
-\begin{table}[tbp]
-\centering
-\caption[Archived pilot diagnostics]{Archived pilot diagnostics. Correction error covers all indexed
-rows; returned-score error covers the GPU top-10 comparison for sampled
-queries. Relative score error is $|s_{\rm GPU}-s_{64}|/s_{64}$, where the
-reference includes the query-norm constant.}
-\label{tab:4-pilot}
-\small\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrr@{}}
-\toprule
-Dataset & Indexed rows & \shortstack{Max correction\\absolute error} & \shortstack{Max returned-score\\relative error} \\
-\midrule
-Vogue & 932,328 & $1.28\times10^{-7}$ & $2.66\times10^{-7}$ \\
-arXiv & 2,253,000 & $1.35\times10^{-7}$ & $2.38\times10^{-7}$ \\
-OpenAI-3072 & 999,000 & $2.77\times10^{-7}$ & $4.85\times10^{-5}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 Across seven workloads and 896 query instances, the pilot additionally
 checked the proposed residual bounds against FP64 reconstructed distances
@@ -115,7 +101,7 @@ Coverage separates stored geometry, sampled arithmetic and row placement.}
 Boundary & Required property & Evidence / remaining check \\
 \midrule
 C0:\newline geometry & Common transform with bounded floating-point isometry error & Stored-matrix orthogonality checked on four datasets; TF32 GPU arithmetic distinguished \\
-C1:\newline codebooks / correction & Cartesian levels, sorted residual codebooks, correction matches decoded codes & Pilot checks completed on three databases; all-row correction errors in \cref{tab:4-pilot} \\
+C1:\newline codebooks / correction & Cartesian levels, sorted residual codebooks, correction matches decoded codes & Pilot checks completed on three databases; all-row correction errors in \cref{sec:4-6} \\
 C1:\newline input encoding & Stored codes encode the intended original input row & FP64 original-input recoding on four samples; boundary and TF32 discrepancies quantified \\
 C1:\newline placement & Offsets cover rows; IDs form a permutation; all fields follow it & All-row offsets/ID checks; three ID-joined path comparisons; centroid membership unverified \\
 Execution & Valid indexing, synchronisation and score-order contracts & Archived query and sanitizer checks; finite coverage, detailed in \cref{sec:7-4} \\

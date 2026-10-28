@@ -31,7 +31,6 @@ $c=\max\{k,\lceil\alpha k\rceil\}$个候选进行残差评分。
 第7章分别检查保留集合、有序输出及原始空间召回率。
 
 
-
 \begin{table}[tbp]
 \centering
 \caption[查询阶段的选择契约]{逐阶段契约。$c_v=\min(c,n_c)$ 为有效主码保留数。“精确”针对约定的计算分数；路由与量化重建决定原空间近似性。}
@@ -53,22 +52,6 @@ LUT & $q'\to$ 表 & 主码本 & $MD_s2^{8/\glut}$ 坐标项 & 实数分解精确
 \end{tabularx}
 \end{table}
 
-\begin{table}[tbp]
-\centering
-\caption[库默认值与评测设置]{库默认值与被测流水线配置。环境变量或 setter 可以覆盖默认值。策略参数 $-1$ 请求调度，并不强制执行分组 kernel。}
-\label{tab:5-evaluation-settings}
-\small\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}l*{2}{>{\raggedright\arraybackslash}X}@{}}
-\toprule
-控制项 & 未配置的库 & E1／预算流水线 \\
-\midrule
-精排 lane & 0：标量逐字节路径 & 16：协作 word 路径 \\
-扫描策略 & 0：查询级 & $-1$：调度器选择 0/2/4/8 \\
-共享界 & 开启，$\gscan=0$ 时不使用 & 开启，仅在 $\gscan>1$ 时使用 \\
-调度统计 & 不自动校准 & 512 个数据库伪查询 \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
-\Cref{tab:5-query-stages,tab:5-evaluation-settings}区分阶段契约与显式配置的评测路径。
+\Cref{tab:5-query-stages}给出阶段契约。E1／预算程序显式设置16个精排lane与扫描策略$-1$（调度选择0/2/4/8），库默认则是标量精排及策略0。共享界开启，仅在$\gscan>1$时使用；程序用512个数据库伪查询校准调度，这一步并非库自动执行。
 组件消融保留各自开关，\cref{tab:a-components}对应机制及归档实现。

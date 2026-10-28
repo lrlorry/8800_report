@@ -9,16 +9,8 @@
 2,304条采样不一致曲线均单调，选择全部与枚举一致；十二条全池曲线也通过两项
 检查。进一步，将全池逐查询计数按各次实际样本ID求和，18,432个网格计数全部
 复现。这比只核对最终预算更强，支持在这些观测中使用\cref{eq:6-finite-pool}，
-包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。\Cref{tab:7-budget-tails}报告观测尾部大小。
+包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。十二单元的逐抽样最大损失完整矩阵保留在仓库补充材料。
 
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\captionof{table}[实测最坏留出召回率损失]{每个样本量64次抽取中的最大留出recall损失，相对最佳被测预算。
-十二个FULL选择均与枚举一致；最大值补充之前的均值、p95与越阈率。}
-\label{tab:7-budget-tails}
-\footnotesize\setlength{\tabcolsep}{4pt}
-\input{zh/tables/supplement/budget_tails}
-\end{minipage}\par\medskip
 
 $S=128$时，arXiv/512最大损失0.0050、BGE/512为0.0046；$S=32$最大达0.0294。
 因此较小平均损失可以伴随少数明显更差的选择。十二个FULL单元的最大损失仍为0.0006。

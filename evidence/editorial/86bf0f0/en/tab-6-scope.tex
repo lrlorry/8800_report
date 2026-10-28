@@ -1,0 +1,20 @@
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Conditions for interpreting and reusing a budget]{Conditions to check before interpreting or reusing a calibrated
+budget. Measured net cost and representation checks have stated finite coverage;
+future drift handling remains separate work.}
+\label{tab:6-scope}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Failure mode & Evidence or condition needed \\
+\midrule
+Reference misses true neighbours & Held-out GT quality alongside agreement \\
+Sample misses difficult queries & Crossing frequency and tail loss over the stated pool \\
+Non-nested ties or changed paths & Common ordering, or matched finite-grid enumeration \\
+Noisy arm timing or short job & Repeated timing and direct total cost including calibration \\
+Changed index, route or query mix & Fresh validation before reusing the chosen multiplier \\
+Underfull or invalid outputs & Valid-ID counts and uniqueness before applying set agreement \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

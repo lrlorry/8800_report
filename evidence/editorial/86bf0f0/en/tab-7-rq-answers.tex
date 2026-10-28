@@ -1,0 +1,22 @@
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Answers to the research questions]{Answers to the four research questions, supported by this chapter.}
+\label{tab:7-rq-answers}
+\small
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+RQ & Evidence & Answer & Boundary \\
+\midrule
+RQ1 & Cold build; resident components; large searches & 17.78M vectors
+on one GPU; 20.44\,GiB; repeated train+add 10.54--10.65\,s & Sampled peak 22.58\,GiB; no multi-GPU scaling \\
+RQ2 & Strict CPU reference; paired execution checks & 55,296 complete-key
+instances match in order; scheduling $2.727\times$ at batch 8 & Finite T4 grid;
+FP32 table forms can change final IDs; full-batch gains smaller \\
+RQ3 & Disjoint queries; fixed 64/100; full pool; oracle; enumeration & Full pool meets 12/12 quality targets; maximum loss 0.0006 & Retrospective working point; $S=128$ has up to 40/64 loss crossings; net cost directly measured on four cells \\
+RQ4 & E1 and T5 frontiers; both recall estimators; memory & E1: three
+leads at 0.97; T5: CAGRA leads at batch 8 and 0.97; allocation below
+fp32 CAGRA, comparable to int8 & OpenAI E1 uses TF32; smaller FP32 leads;
+finite unequal grids and interface costs; batch-32 near ties depend on estimator \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

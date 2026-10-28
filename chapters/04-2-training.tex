@@ -121,25 +121,8 @@ of $K_r=2^{B_r}$ entries shared by its $D_s$ coordinates. The GPU
 estimator sorts residual values and applies one-dimensional Lloyd updates
 with a 2,000-iteration cap in the evaluated configuration.
 
-\begin{table}[tbp]
-\centering
-\caption[Residual-iteration diagnostic]{Historical residual-iteration diagnostic (100K sample). Recall@10
-improves markedly from 25 to 2,000 updates; subsequent gains are small and
-nonmonotonic. These are not the final Chapter 7 benchmark points.}
-\label{tab:4-lloyd}
-\small
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-Dataset & Cap 25 & Cap 2,000 & Cap 5,000 & Cap 40,000 \\
-\midrule
-Vogue & 0.9770 & 0.9846 & 0.9843 & 0.9845 \\
-BGE & 0.9514 & 0.9585 & 0.9592 & 0.9586 \\
-Stella & 0.9852 & 0.9915 & 0.9921 & 0.9916 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
-\Cref{tab:4-lloyd} motivates a fixed budget with diminishing quality
+A historical 100K-sample diagnostic motivates a fixed budget with diminishing quality
 returns: 2,000 versus 25 updates gains $0.0063$--$0.0076$ recall.
 The later changes can exceed the two-run variability reported for BGE
 and Stella, so the diagnostic does not establish a statistically exact

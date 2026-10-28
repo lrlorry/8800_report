@@ -16,17 +16,8 @@ than checking the selected budget alone, and supports using
 \cref{eq:6-finite-pool} for these observations despite the scan-path
 changes. It checks aggregate counts on the traced subsets, rather than
 per-query invariance on every possible subset.
-\Cref{tab:7-budget-tails} reports the observed tail sizes.
+The repository supplement retains all twelve cells of per-draw maxima.
 
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\captionof{table}[Worst observed held-out recall losses]{Maximum held-out recall loss over the 64 draws at each sample
-size, relative to the best tested arm. All twelve FULL selections match
-enumeration. Maxima complement the earlier means, p95 and crossing rates.}
-\label{tab:7-budget-tails}
-\footnotesize\setlength{\tabcolsep}{4pt}
-\input{tables/supplement/budget_tails}
-\end{minipage}\par\medskip
 
 At $S=128$, maxima reach 0.0050 for arXiv/512 and 0.0046 for BGE/512;
 at $S=32$ the largest is 0.0294. A low mean loss therefore coexists

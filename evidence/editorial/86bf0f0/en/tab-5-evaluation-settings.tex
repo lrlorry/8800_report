@@ -1,0 +1,18 @@
+\begin{table}[tbp]
+\centering
+\caption[Library defaults and evaluation settings]{Library defaults and measured pipeline settings. Environment
+variables or setters can override library defaults. The policy parameter
+$-1$ requests scheduling; it does not force a grouped kernel.}
+\label{tab:5-evaluation-settings}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Control & Unconfigured library & E1 / budget pipeline \\
+\midrule
+Refinement lanes & 0: scalar byte path & 16: cooperative word path \\
+Scan policy & 0: query-centric & $-1$: scheduler chooses 0/2/4/8 \\
+Shared bound & Enabled, inactive at $\gscan=0$ & Enabled, used only when $\gscan>1$ \\
+Schedule statistic & Not calibrated automatically & 512 database pseudoqueries \\
+\bottomrule
+\end{tabularx}
+\end{table}

@@ -785,11 +785,11 @@
       "chapters/06-2-agreement.tex": 422,
       "chapters/06-3-search.tex": 650,
       "chapters/06-4-controls.tex": 179,
-      "chapters/06-5-economics.tex": 275,
+      "chapters/06-5-economics.tex": 277,
       "chapters/06-6-scope.tex": 235,
       "chapters/06-refinement.tex": 104
     },
-    "total": 2364,
+    "total": 2366,
     "method": "prose/captions only; table bodies, math, labels, citations and macro names excluded; not an official count"
   },
   "limitations": [
@@ -2242,12 +2242,12 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "678364c0a6c5f7098df0dfad508a2006429d61de166c247400089dd913c4dd58"
+      "sha256": "7061b0bfb1e946fb770a90b17314b464a2c279f1a6072dfc5c6962305ef2e23d"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "98e0858fff510cc5ef27f1471db0aa85c4820c3cdfda06df5b3393ede7691716"
+      "sha256": "35d9c2719c2f2bdb6746dbeb764b0e93a4b5d6fd339c1ccac1afd9d2504f5699"
     },
     {
       "repository": "8800_report",
@@ -2357,17 +2357,17 @@
     {
       "repository": "8800_report",
       "path": "chapters/06-4-controls.tex",
-      "sha256": "1cf630b19baa5d123177cc713d2bbb47f0a3429c5a8f86dea9f1f17cd7482769"
+      "sha256": "4c3ca9e57768298f4a0ce997654af22c1cc8da5f646464f5763926d0748df7fe"
     },
     {
       "repository": "8800_report",
       "path": "chapters/06-5-economics.tex",
-      "sha256": "3beb90ca1b074aed770085f3c3c33b5477cd6ade35993d65a539b52f6eb39571"
+      "sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295"
     },
     {
       "repository": "8800_report",
       "path": "chapters/06-6-scope.tex",
-      "sha256": "7e62a4398bffebb77f948461f18629e5c1f14475678db4cbb1ee798d7cc75864"
+      "sha256": "a5cd9fec9834b358cda1a77ec54b644ba2e90ad44945767ce3b3d2b401c9d480"
     },
     {
       "repository": "8800_report",
@@ -2392,17 +2392,17 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-4-controls.tex",
-      "sha256": "03c0b0cdf3a01cb2bea33ae31b46866e73a8a75ecfd6d436b54f46899f64bdf8"
+      "sha256": "98b529e157ecd6756325e3aab568aa23f95451f095966ecfa62ac31bfd8c7a73"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-5-economics.tex",
-      "sha256": "86f6e665e65bd6a2c4400200f5a0c97f9802e64c6890719cadd739c2c3b085c6"
+      "sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/06-6-scope.tex",
-      "sha256": "7a1e589eca1200439a53ff0b28591c6aa0186274b1595ea4bca7c33e51f5ee11"
+      "sha256": "e004df9dc0e8c196d4c5da3e2acce212ea06e63b29a1ce2a876c562294988619"
     },
     {
       "repository": "8800_report",

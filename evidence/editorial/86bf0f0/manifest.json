@@ -1,0 +1,306 @@
+{
+  "baseline": "86bf0f0c2b048f2ec6ebb44634ffc7165b1a9f90",
+  "scope": "13 explicit display removals per language; originals preserved outside both PDFs; scientific assets unchanged",
+  "entries": [
+    {
+      "label": "tab:3-ledger",
+      "language": "en",
+      "source": "chapters/03-5-ledger.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/en/tab-3-ledger.tex",
+      "sha256": "31a8ae16ca8841990ed232aca024241efe70cd3678b0eff43cf9d66ef6f6d1ea",
+      "replacement_reference": "sec:3-5",
+      "inputs": []
+    },
+    {
+      "label": "tab:3-evidence",
+      "language": "en",
+      "source": "chapters/03-6-validity.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/en/tab-3-evidence.tex",
+      "sha256": "20198915c632bbacd340419be42f70663248ea3cfa4db4797c1b44d87304d288",
+      "replacement_reference": "sec:3-6",
+      "inputs": []
+    },
+    {
+      "label": "tab:4-lloyd",
+      "language": "en",
+      "source": "chapters/04-2-training.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/en/tab-4-lloyd.tex",
+      "sha256": "158bb9749cba3da9b8b180b54c76a94d1c56f61286870584865f5d13626d34fa",
+      "replacement_reference": "sec:4-2",
+      "inputs": []
+    },
+    {
+      "label": "tab:4-pilot",
+      "language": "en",
+      "source": "chapters/04-6-contracts.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/en/tab-4-pilot.tex",
+      "sha256": "e37f4ad450f1c512de87a5fe3f3d90456439557b50f843bf717882a4064b09cc",
+      "replacement_reference": "sec:4-6",
+      "inputs": []
+    },
+    {
+      "label": "tab:5-evaluation-settings",
+      "language": "en",
+      "source": "chapters/05-1-query-path.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/en/tab-5-evaluation-settings.tex",
+      "sha256": "2de2151c70416f2c50951c16d18c511285b81fa596b26f4ee5632872fd24d45f",
+      "replacement_reference": "sec:5-1",
+      "inputs": []
+    },
+    {
+      "label": "tab:6-scope",
+      "language": "en",
+      "source": "chapters/06-6-scope.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/en/tab-6-scope.tex",
+      "sha256": "4d33f487d49a184e9991a5fe6c80c5b0908d7825379b98b45630fc1b4d63e33c",
+      "replacement_reference": "sec:6-6",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-manifest",
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/en/tab-7-manifest.tex",
+      "sha256": "4ebbddcf8007414f800d679a6d589c42888e5188ec01cc4c7d890a4942e2a6ad",
+      "replacement_reference": "sec:7-1",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-e1-paths",
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/en/tab-7-e1-paths.tex",
+      "sha256": "2fe9204e860c78fb06732545aa582a381c7c36b9771cfa7ec3dd8cb6ccb48067",
+      "replacement_reference": "sec:7-2",
+      "inputs": [
+        {
+          "path": "tables/ch7/e1_paths.tex",
+          "sha256": "4ce33f2364b7a22bf83b349724109abc982e1b872c22d455b63d637f538b0265"
+        }
+      ]
+    },
+    {
+      "label": "tab:7-fixed-budget",
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/en/tab-7-fixed-budget.tex",
+      "sha256": "4e3c7121047b1bdf5711b916a6c1f57d7ddc8843c2e74a870e7fbac3b795b6e0",
+      "replacement_reference": "sec:7-5",
+      "inputs": [
+        {
+          "path": "tables/ch7/fixed_budgets.tex",
+          "sha256": "00e0a0dcf94e0a02cd04540c5861dd02f34644772744038355b5caf3078a1e58"
+        }
+      ]
+    },
+    {
+      "label": "fig:7-budget-payback",
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "environment": "figure",
+      "archive": "evidence/editorial/86bf0f0/en/fig-7-budget-payback.tex",
+      "sha256": "bbcc753798194d7d7139cae3297c89a79ee97ea24bcf6542f5dedfbf0591e96c",
+      "replacement_reference": "tab:7-budget-cost",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-build-repeat",
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/en/tab-7-build-repeat.tex",
+      "sha256": "ca919b71381d5d746bfffc11759faf52b5bea4e94f09ea32b5066a16ad09670d",
+      "replacement_reference": "sec:7-7",
+      "inputs": [
+        {
+          "path": "tables/supplement/build.tex",
+          "sha256": "3241ae86d4a835d7e94cd4faa81e59350af31c90d46223d3230732cdc3c69931"
+        }
+      ]
+    },
+    {
+      "label": "tab:7-rq-answers",
+      "language": "en",
+      "source": "chapters/07-evaluation.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/en/tab-7-rq-answers.tex",
+      "sha256": "1985e642d43ad00a0ea9df1c0b23aa9c34066cdfa14f84dc6c8e5ae2cad4d788",
+      "replacement_reference": "sec:9-1",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-budget-tails",
+      "language": "en",
+      "source": "chapters/07-supp-budget.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/en/tab-7-budget-tails.tex",
+      "sha256": "6b1ab7ececf75223c872315c54b1f5aabec1746c9b2984b4359e3f61a53712ff",
+      "replacement_reference": "sec:7-budget-trace",
+      "inputs": [
+        {
+          "path": "tables/supplement/budget_tails.tex",
+          "sha256": "e274cc26d81c76d89a1b43b16def17d859351e044d53acc6c66c43b5b10065b8"
+        }
+      ]
+    },
+    {
+      "label": "tab:3-ledger",
+      "language": "zh",
+      "source": "zh/chapters/03-5-ledger.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-3-ledger.tex",
+      "sha256": "bf014d725d132857d9ae734bcda8e29ddc95f5778bfe7e51e848eeb9906a1b71",
+      "replacement_reference": "sec:3-5",
+      "inputs": []
+    },
+    {
+      "label": "tab:3-evidence",
+      "language": "zh",
+      "source": "zh/chapters/03-6-validity.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-3-evidence.tex",
+      "sha256": "38fe19890e603402dd40a5106a4b4ad9ab4cf30e2de45a2290e9b3aa25eb219b",
+      "replacement_reference": "sec:3-6",
+      "inputs": []
+    },
+    {
+      "label": "tab:4-lloyd",
+      "language": "zh",
+      "source": "zh/chapters/04-2-training.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-4-lloyd.tex",
+      "sha256": "25c2bb82a5f42efbec4324141de4891fdd178fc6b3b9d340a7e2d47ede1290e9",
+      "replacement_reference": "sec:4-2",
+      "inputs": []
+    },
+    {
+      "label": "tab:4-pilot",
+      "language": "zh",
+      "source": "zh/chapters/04-6-contracts.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-4-pilot.tex",
+      "sha256": "d75556eeb09dc77c4103e193eda343097bea588275384fadea9a8220829eb263",
+      "replacement_reference": "sec:4-6",
+      "inputs": []
+    },
+    {
+      "label": "tab:5-evaluation-settings",
+      "language": "zh",
+      "source": "zh/chapters/05-1-query-path.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-5-evaluation-settings.tex",
+      "sha256": "2dd5fa887fce9bd62d4f387f43736e8c71449241b67c832ece88593a0b227840",
+      "replacement_reference": "sec:5-1",
+      "inputs": []
+    },
+    {
+      "label": "tab:6-scope",
+      "language": "zh",
+      "source": "zh/chapters/06-6-scope.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-6-scope.tex",
+      "sha256": "31d905fb33a8f061f852fcaebbf9848a92c55517f84777ad49daecb09ecfc0b8",
+      "replacement_reference": "sec:6-6",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-manifest",
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-7-manifest.tex",
+      "sha256": "84ddd63e07ba9f7481e069efc05cf9828c766c7dcdebf2396e1666411ca502c0",
+      "replacement_reference": "sec:7-1",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-e1-paths",
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-7-e1-paths.tex",
+      "sha256": "1e2733421909a226882263f0cea48bb7ffdeb8df065fb1c8eede86d60164c282",
+      "replacement_reference": "sec:7-2",
+      "inputs": [
+        {
+          "path": "zh/tables/e1_paths.tex",
+          "sha256": "28cf9a998d2c3e5343e3f0f1c8ecbaa2dd361d7c40a38546326c457c4ce5d4a3"
+        }
+      ]
+    },
+    {
+      "label": "tab:7-fixed-budget",
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "environment": "table",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-7-fixed-budget.tex",
+      "sha256": "bb96cf3555d15e889bfb96758098e8a198ec657c26fa56ad26227bca2412d207",
+      "replacement_reference": "sec:7-5",
+      "inputs": [
+        {
+          "path": "zh/tables/fixed_budgets.tex",
+          "sha256": "cdd455f7db8e016f23a05f40806bb65c11d20d8df99e63d512884b01586d2b7e"
+        }
+      ]
+    },
+    {
+      "label": "fig:7-budget-payback",
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "environment": "figure",
+      "archive": "evidence/editorial/86bf0f0/zh/fig-7-budget-payback.tex",
+      "sha256": "d18775504eb1fb58a657134e03ede846e74b4876a17a086f7cf9b7367bd8bc78",
+      "replacement_reference": "tab:7-budget-cost",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-build-repeat",
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-7-build-repeat.tex",
+      "sha256": "8186e4e6a121d1e5b0aca2657af0338fca3461ce0540f3d2b4a464eba6fea106",
+      "replacement_reference": "sec:7-7",
+      "inputs": [
+        {
+          "path": "zh/tables/supplement/build.tex",
+          "sha256": "89ebae5fd3ba1016dbefad32a8994a0e03fd61bf4a07a966a8797e1f1f32cd30"
+        }
+      ]
+    },
+    {
+      "label": "tab:7-rq-answers",
+      "language": "zh",
+      "source": "zh/chapters/07-evaluation.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-7-rq-answers.tex",
+      "sha256": "4a76e9ca4d1f8d41dd5fc0977b352828079d0b6d672314aeb328c094ecc5dcdc",
+      "replacement_reference": "sec:9-1",
+      "inputs": []
+    },
+    {
+      "label": "tab:7-budget-tails",
+      "language": "zh",
+      "source": "zh/chapters/07-supp-budget.tex",
+      "environment": "minipage",
+      "archive": "evidence/editorial/86bf0f0/zh/tab-7-budget-tails.tex",
+      "sha256": "ee57ec16de9fd47ae73ae6052911dee6bdc684f53db6b618bccfc28b511107a0",
+      "replacement_reference": "sec:7-budget-trace",
+      "inputs": [
+        {
+          "path": "zh/tables/supplement/budget_tails.tex",
+          "sha256": "ca2226774c2cc2c09bf824b439485ab404fe4f89057bcc22ae3cbb40a0f3b8aa"
+        }
+      ]
+    }
+  ]
+}

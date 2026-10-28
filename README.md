@@ -1,8 +1,11 @@
 # COMP8800 / JHQ-GPU Thesis
 
-当前稿已完成三轮重复内容合并：英文正文与摘要同口径估算为27,096词，PDF为104页，
-中文阅读稿89页。公式、证明、27幅图、44张表及表格数据全部保留；采用学院长论文模板的
-KOMA-Script结构及有记录的电子稿适配。详见[全文去重记录](assessment/deduplication-rounds.md)。
+三轮文字去重后，按新审计完成辅助图表精简：英文正文与摘要同口径估算为26,975词，
+PDF为101页（九章正文82页），中文阅读稿87页。正式PDF保留26幅图、32张表；
+移出的12张辅助表及1张估算图完整保存在[仓库补充材料](docs/supplementary-evidence.md)，不增加PDF附录。
+核心公式与证明、T4/T5、预算风险及直接复用、规模结果和负案例均保留；原有87项科学图表资产未改。
+采用学院长论文模板的KOMA-Script结构及有记录的电子稿适配。
+见[本轮审计处理](assessment/targeted-curation-review.md)及[历史文字去重](assessment/deduplication-rounds.md)。
 
 九章正文和摘要均有中英文总稿。本轮已把Claude于2026-10-28完成的
 `JHQ_GPU/experiments/thesis_evidence` 补证核对后纳入第3--9章、引言与摘要。
@@ -22,7 +25,8 @@ KOMA-Script结构及有记录的电子稿适配。详见[全文去重记录](ass
 - [独立复核材料入口](evidence/review/README.md)：T4/T5、T1及A2所用的原始记录和源文件子集。
 - [实验协议详细清单](docs/experiment-protocol.md)：从附录A移出的完整程序／路径和诊断细节。
 - [附录精简记录](assessment/backmatter-streamlining.txt)：保留A/B，原附录C合并至前置来源与工具披露页。
-- [三轮全文去重记录](assessment/deduplication-rounds.md)：仅合并重复说明，保留全部公式、证明和图表。
+- [三轮全文去重记录](assessment/deduplication-rounds.md)：历史提交86bf0f0的纯文字去重，当时保留全部图表。
+- [精准精简记录](assessment/targeted-curation-review.md) · [移出PDF的完整辅助证据](docs/supplementary-evidence.md)：本轮明确选择展示层级，核心证明与结论保留。
 - [去重保留核查](scripts/audit_deduplication.py) · [机器核查结果](data/deduplication/audit.json) · [学院模板来源](assessment/template-sources.json)
 
 个人分工、声明签署与最终工具披露仍需作者确认，见

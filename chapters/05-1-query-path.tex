@@ -46,7 +46,6 @@ attach each claim to its score and tie rule. Chapter 7 tests survivor
 sets, ordered outputs and raw-space recall separately.
 
 
-
 \begin{table}[tbp]
 \centering
 \caption[Query-stage selection contracts]{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
@@ -70,26 +69,12 @@ Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\
 \end{tabularx}
 \end{table}
 
-\begin{table}[tbp]
-\centering
-\caption[Library defaults and evaluation settings]{Library defaults and measured pipeline settings. Environment
-variables or setters can override library defaults. The policy parameter
-$-1$ requests scheduling; it does not force a grouped kernel.}
-\label{tab:5-evaluation-settings}
-\small\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}l*{2}{>{\raggedright\arraybackslash}X}@{}}
-\toprule
-Control & Unconfigured library & E1 / budget pipeline \\
-\midrule
-Refinement lanes & 0: scalar byte path & 16: cooperative word path \\
-Scan policy & 0: query-centric & $-1$: scheduler chooses 0/2/4/8 \\
-Shared bound & Enabled, inactive at $\gscan=0$ & Enabled, used only when $\gscan>1$ \\
-Schedule statistic & Not calibrated automatically & 512 database pseudoqueries \\
-\bottomrule
-\end{tabularx}
-\end{table}
 
-\Cref{tab:5-query-stages,tab:5-evaluation-settings} distinguish the
-stage contracts and explicitly configured evaluation path. Component
+\Cref{tab:5-query-stages} gives the stage contracts. The E1/budget
+harness explicitly selects 16 refinement lanes and scan policy $-1$
+(scheduling among 0/2/4/8), versus library defaults of scalar refinement
+and policy 0. Shared bounds are enabled but used only at $\gscan>1$;
+the harness calibrates scheduling with 512 database pseudoqueries,
+a step the library does not perform automatically. Component
 ablations retain their stated overrides; \cref{tab:a-components} maps
 mechanisms to recorded implementations.

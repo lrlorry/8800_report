@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Check thesis consolidation against its pre-edit commit; no GPU or network.
 
-Protected proofs, displayed mathematics, figures, tables and labels must
-remain intact. This is a preservation check, not an automatic judgement
-that two prose passages have the same meaning; see the editorial record.
+Proofs and displayed mathematics remain intact. Explicit display removals
+are checked against archived originals, and all scientific figure/table
+assets remain unchanged. This is not an automatic judgement of prose.
 """
 import argparse
 import collections
@@ -38,6 +38,51 @@ def main():
     def old(rel):
         return git('show', baseline + ':' + rel)
 
+    manifest_path = 'evidence/editorial/86bf0f0/manifest.json'
+    curation = json.loads(current(manifest_path))
+    assert curation['baseline'] == '86bf0f0c2b048f2ec6ebb44634ffc7165b1a9f90'
+    assert len(curation['entries']) == 26
+    expected_labels = {
+        'tab:3-ledger', 'tab:3-evidence', 'tab:4-lloyd', 'tab:4-pilot',
+        'tab:5-evaluation-settings', 'tab:6-scope', 'tab:7-manifest',
+        'tab:7-e1-paths', 'tab:7-fixed-budget', 'fig:7-budget-payback',
+        'tab:7-build-repeat', 'tab:7-rq-answers', 'tab:7-budget-tails',
+    }
+    for language in ['en', 'zh']:
+        selected = [e for e in curation['entries'] if e['language'] == language]
+        assert len(selected) == 13 and {e['label'] for e in selected} == expected_labels
+    by_source = collections.defaultdict(list)
+    ref_map = {}
+    for entry in curation['entries']:
+        data = current(entry['archive'])
+        assert hashlib.sha256(data).hexdigest() == entry['sha256']
+        block = data.decode().removesuffix('\n')
+        archived_source = git('show', curation['baseline'] + ':' + entry['source']).decode()
+        assert archived_source.count(block) == 1, ('archive differs from curation baseline', entry)
+        assert old(entry['source']).decode().count(block) == 1, ('archive differs from original baseline', entry)
+        assert '\\label{' + entry['label'] + '}' in block
+        assert '\\label{' + entry['label'] + '}' not in (ROOT / entry['source']).read_text()
+        for item in entry['inputs']:
+            assert hashlib.sha256((ROOT / item['path']).read_bytes()).hexdigest() == item['sha256']
+        by_source[entry['source']].append(block)
+        ref_map[entry['label']] = entry['replacement_reference']
+
+    def remap_refs(s):
+        def replace(m):
+            return m[1] + ','.join(ref_map.get(k, k) for k in m[2].split(',')) + '}'
+        return re.sub(r'(\\(?:[Cc]ref|[Ee]qref|ref)\{)([^}]+)\}', replace, s)
+
+    # The retained memory figure's caption now points to the immediately
+    # preceding construction measurements instead of the relocated table.
+    caption_edits = {
+        'chapters/07-evaluation.tex': (
+            'Separate construction samples are in\n\\cref{sec:7-7}; these resident markers are not peaks.',
+            'The preceding construction measurements give sampled peaks; these\nresident markers are not peaks.'),
+        'zh/chapters/07-evaluation.tex': (
+            '另行构建采样见\\cref{sec:7-7}，这里的常驻标记不是峰值。',
+            '前文构建测量另报采样峰值，这里的常驻标记不是峰值。'),
+    }
+
     protected = collections.Counter()
     envs = ['equation', 'align', 'lemma', 'proposition', 'proof',
             'corollary', 'definition', 'figure', 'table', 'minipage']
@@ -48,6 +93,13 @@ def main():
         for p in sorted((ROOT / folder).glob('*.tex')):
             rel = str(p.relative_to(ROOT))
             a, b = old(rel).decode(), current(rel).decode()
+            for block in by_source[rel]:
+                a = a.replace(block, '')
+            a = remap_refs(a)
+            if rel in caption_edits:
+                before, after = caption_edits[rel]
+                assert a.count(before) == 1 and b.count(after) == 1
+                a = a.replace(before, after)
             for env in envs:
                 pat = r'\\begin\{' + env + r'\*?\}[\s\S]*?\\end\{' + env + r'\*?\}'
                 before, after = re.findall(pat, a), re.findall(pat, b)
@@ -80,13 +132,22 @@ def main():
 
     for rel in ['scripts/audit_deduplication.py', 'scripts/audit_synthesis.py',
                 'assessment/deduplication-rounds.md', 'assessment/template-sources.json',
+                'assessment/targeted-curation-review.md', 'assessment/targeted-curation-source.json',
+                'docs/supplementary-evidence.md',
                 'FORMAT_NOTES.txt', 'main.tex', 'main-zh.tex',
                 'config/layout.tex', 'config/preamble.tex', 'zh/preamble.tex']:
         current(rel)
     result = dict(
         baseline=baseline,
-        scope='Three bilingual rounds of prose consolidation; preserved unique evidence and protected blocks; no GPU run.',
-        editorial_review='assessment/deduplication-rounds.md; semantic retention is a human/source review, not inferred from word counts',
+        scope='Three prose-consolidation rounds followed by explicit bilingual display curation; no GPU run.',
+        editorial_review='assessment/deduplication-rounds.md; assessment/targeted-curation-review.md; semantic retention requires source review',
+        display_curation=dict(baseline=curation['baseline'],
+                              archived_blocks=len(curation['entries']),
+                              removed_tables_per_language=12,
+                              removed_figures_per_language=1,
+                              archive_manifest=manifest_path,
+                              reference_remapping=ref_map,
+                              retained_caption_edits=caption_edits),
         checked_chapter_files=checked,
         protected_blocks=dict(protected),
         identical_figure_and_table_assets=len(assets),
