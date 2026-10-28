@@ -1,0 +1,120 @@
+{
+  "record_compiled": "2026-10-29",
+  "timezone": "Australia/Sydney",
+  "coverage": "Selected original user task messages, not the complete interaction history or all generated outputs",
+  "missing": [
+    "Complete original ChatGPT prompts and outputs",
+    "Complete original Claude prompts and outputs",
+    "Earlier interaction timestamps and model versions",
+    "Author confirmation of personal decisions and verification"
+  ],
+  "records": [
+    {
+      "id": "P01",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": null,
+      "model_version": null,
+      "task": "研究框架",
+      "prompt": "你作为导师 和 评分人 结合我的代码 还有adc论文 还有我的海报 还有实验结果 先给个满分框架",
+      "prompt_sha256": "9256570d01caeb2e4161463b9b1d7b884f6d07d82c26d14ffab929345cc2d3dc",
+      "artifact_mapping": [
+        "chapters/01-introduction.tex",
+        "chapters/03-methodology.tex"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P02",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": null,
+      "model_version": null,
+      "task": "第七章撰写与证据核查",
+      "prompt": "我们一点点来做吧 你按照骨架 先实现并核对ch7 作为顶尖大学教授。和 ANN算法研究员 数据库专家 结合我的实验结果 和已经完成的图",
+      "prompt_sha256": "5bfb7f725c06f6669cb9b6705aaa89883d7395765b2e210fd13d609b96dec90d",
+      "artifact_mapping": [
+        "chapters/07-evaluation.tex",
+        "data/ch7/audit.json"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P03",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": null,
+      "model_version": null,
+      "task": "中文阅读对照",
+      "prompt": "再对应生成个中文版本 我看看写了啥",
+      "prompt_sha256": "83cb9f8187c376d86e4a83d3f674b7bac57c4d0d9ac8cd4077e6f0350958e435",
+      "artifact_mapping": [
+        "main-zh.tex",
+        "zh/chapters/07-evaluation.tex"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P04",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": null,
+      "model_version": null,
+      "task": "综合章节与摘要",
+      "prompt": "我去睡一觉 你去按照满分标准 分几轮迭代依次完成 ch8 ch2 ch1 ch9 Abstract 作为顶尖大学教授。和 ANN算法研究员 数据库专家 结合我的实验结果 和已经完成的图 海报 ADC 论文",
+      "prompt_sha256": "f532ad9f541c7191a8793b9201efe55e217a4ed7f9e0331bb12e473fd5d7e71c",
+      "artifact_mapping": [
+        "chapters/08-discussion.tex",
+        "chapters/02-background.tex",
+        "chapters/01-introduction.tex",
+        "chapters/09-conclusion.tex",
+        "frontmatter/abstract.tex"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P05",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": null,
+      "model_version": null,
+      "task": "限制精简范围",
+      "prompt": "只压缩重复的目前哦",
+      "prompt_sha256": "d8e6cb03ef7a5d2592078fd00c71d10ece4c873255c7ec98d33214088ea93eff",
+      "artifact_mapping": [
+        "assessment/deduplication-rounds.md"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P06",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": "2026-10-29",
+      "model_version": null,
+      "task": "提交要求审计",
+      "prompt": "在审核一下 还有如果提交 还有哪些不符合要求或者需要修改的 建议你先罗列出所有要求 然后一一核对 不要等我交了 再说漏了",
+      "prompt_sha256": "b7c3db52f5bdad525e85ff39949d181f400baa814400b6d97d42dcc5975e6ebc",
+      "artifact_mapping": [
+        "assessment/submission-audit-2026-10-29.txt",
+        "data/submission/audit-2026-10-29.json"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    },
+    {
+      "id": "P07",
+      "tool": "OpenAI Codex",
+      "source": "User task messages retained in the current Codex conversation",
+      "interaction_date": "2026-10-29",
+      "model_version": null,
+      "task": "本轮审稿处理",
+      "prompt": "结合这个 能改的先改一下 不能改的列出来 我手动去改",
+      "prompt_sha256": "f9f50225799393325ff8baf0c5414776ebd5915157110441dc3cfa5c973409c3",
+      "artifact_mapping": [
+        "assessment/final-review-edits.json",
+        "assessment/submission-manual-actions.txt"
+      ],
+      "verification": "Artifact/source mapping and retained automated checks; no claim of author-personal verification"
+    }
+  ]
+}

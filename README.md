@@ -1,11 +1,15 @@
 # COMP8800 / JHQ-GPU Thesis
 
-三轮文字去重后，按新审计完成辅助图表精简：英文正文与摘要同口径估算为26,975词，
-PDF为101页（九章正文82页），中文阅读稿87页。正式PDF保留26幅图、32张表；
+三轮文字去重后，按新审计完成辅助图表精简：英文正文与摘要同口径估算为26,932词，
+PDF为101页（九章正文81页），中文阅读稿87页。正式PDF保留26幅图、32张表；
 移出的12张辅助表及1张估算图完整保存在[仓库补充材料](docs/supplementary-evidence.md)，不增加PDF附录。
-核心公式与证明、T4/T5、预算风险及直接复用、规模结果和负案例均保留；原有87项科学图表资产未改。
+核心公式与证明、T4/T5、预算风险及直接复用、规模结果和负案例均保留；86项原有科学图表资产保持字节一致，T5图仅重导出字体，数值不变。
 采用学院长论文模板的KOMA-Script结构及有记录的电子稿适配。
 见[本轮审计处理](assessment/targeted-curation-review.md)及[历史文字去重](assessment/deduplication-rounds.md)。
+
+提交前修订见[处理记录](assessment/final-review-response.txt)，作者仍需完成
+[手动清单](assessment/submission-manual-actions.txt)。已整理[真实AI提示词摘录](docs/ai-use-record.md)
+及[固定材料入口](docs/artifact-access.md)；个人分工和其他工具原始交互仍待补充。
 
 九章正文和摘要均有中英文总稿。本轮已把Claude于2026-10-28完成的
 `JHQ_GPU/experiments/thesis_evidence` 补证核对后纳入第3--9章、引言与摘要。

@@ -2,8 +2,9 @@
 """Check thesis consolidation against its pre-edit commit; no GPU or network.
 
 Proofs and displayed mathematics remain intact. Explicit display removals
-are checked against archived originals, and all scientific figure/table
-assets remain unchanged. This is not an automatic judgement of prose.
+are checked against archived originals. Numeric assets remain unchanged;
+one explicitly archived PDF font export is permitted. This is not an
+automatic judgement of prose.
 """
 import argparse
 import collections
@@ -37,6 +38,21 @@ def main():
 
     def old(rel):
         return git('show', baseline + ':' + rel)
+
+    final_review = json.loads(current('assessment/final-review-edits.json'))
+    assert final_review['baseline'] == '682ef939ee41e3a9b9c9ec984604c62008406744'
+    # Explicitly recorded prose/source replacements; scientific blocks below
+    # are still checked independently against the original baseline.
+    expected_sources = {}
+    for edit in final_review['source_edits']:
+        rel = edit['path']
+        expected = expected_sources.get(rel)
+        if expected is None:
+            expected = git('show', final_review['baseline'] + ':' + rel).decode()
+        assert expected.count(edit['before']) == 1, ('invalid declared edit', rel)
+        expected_sources[rel] = expected.replace(edit['before'], edit['after'])
+    for rel, expected in expected_sources.items():
+        assert (ROOT / rel).read_text() == expected, ('undeclared final-review edit', rel)
 
     manifest_path = 'evidence/editorial/86bf0f0/manifest.json'
     curation = json.loads(current(manifest_path))
@@ -114,11 +130,27 @@ def main():
 
     assets = git('ls-tree', '-r', '--name-only', baseline, '--',
                  'figures', 'tables', 'zh/tables').decode().splitlines()
+    font_asset = final_review['cosmetic_asset']
+    assert font_asset['path'] == 'figures/t4-t5/smallbatch.pdf'
+    assert font_asset['numerical_audit_unchanged'] is True
+    assert hashlib.sha256((ROOT / 'data/t4-t5/smallbatch-matched.json').read_bytes()).hexdigest() == font_asset['numeric_input_sha256']
+    assert current(font_asset['before_archive']) == old(font_asset['path'])
+    assert hashlib.sha256(old(font_asset['path'])).hexdigest() == font_asset['before_sha256']
     for rel in assets:
-        assert current(rel) == old(rel), ('changed scientific figure/table asset', rel)
+        data = current(rel)
+        if rel == font_asset['path']:
+            assert hashlib.sha256(data).hexdigest() == font_asset['after_sha256']
+        else:
+            assert data == old(rel), ('changed scientific figure/table asset', rel)
     for rel in ['frontmatter/abstract.tex', 'zh/abstract.tex',
                 'appendices/b-supplementary.tex', 'zh/appendices/b-supplementary.tex']:
-        assert current(rel) == old(rel), ('changed retained material', rel)
+        data = current(rel)
+        suffix = ''
+        if rel.endswith('b-supplementary.tex'):
+            edits = [e for e in final_review['source_edits'] if e['path'] == rel]
+            assert len(edits) == 1 and edits[0]['after'].startswith(edits[0]['before'])
+            suffix = edits[0]['after'][len(edits[0]['before']):]
+        assert data == old(rel) + suffix.encode(), ('changed retained material', rel)
 
     word_rows = []
     for chapter in range(1, 10):
@@ -133,13 +165,15 @@ def main():
     for rel in ['scripts/audit_deduplication.py', 'scripts/audit_synthesis.py',
                 'assessment/deduplication-rounds.md', 'assessment/template-sources.json',
                 'assessment/targeted-curation-review.md', 'assessment/targeted-curation-source.json',
+                'assessment/final-review-response.txt', 'assessment/submission-manual-actions.txt',
+                'docs/ai-use-record.md', 'data/submission/ai-use-record.json', 'docs/artifact-access.md',
                 'docs/supplementary-evidence.md',
                 'FORMAT_NOTES.txt', 'main.tex', 'main-zh.tex',
                 'config/layout.tex', 'config/preamble.tex', 'zh/preamble.tex']:
         current(rel)
     result = dict(
         baseline=baseline,
-        scope='Three prose-consolidation rounds followed by explicit bilingual display curation; no GPU run.',
+        scope='Prose consolidation, explicit display curation and declared final-review edits; no GPU run.',
         editorial_review='assessment/deduplication-rounds.md; assessment/targeted-curation-review.md; semantic retention requires source review',
         display_curation=dict(baseline=curation['baseline'],
                               archived_blocks=len(curation['entries']),
@@ -150,7 +184,8 @@ def main():
                               retained_caption_edits=caption_edits),
         checked_chapter_files=checked,
         protected_blocks=dict(protected),
-        identical_figure_and_table_assets=len(assets),
+        identical_figure_and_table_assets=len(assets)-1,
+        font_only_asset_update=font_asset,
         retained_citation_keys=sorted(citations_after),
         chapter_words=word_rows,
         chapters_and_abstract=dict(before=sum(r['before'] for r in word_rows)+abstract,

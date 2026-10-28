@@ -1,25 +1,24 @@
 {
   "date": "2026-10-29",
   "timezone": "Australia/Sydney",
-  "audited_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
   "verdict": "NOT_READY_FOR_UNQUALIFIED_SIGNOFF",
-  "meaning": "已查材料范围内的逐项核对；P0仍需关闭，个人Canvas任务细则未取得，不能声称穷尽未公开要求。",
-  "paper_changed": false,
+  "meaning": "已落实可从记录核实的修订；个人分工、其他工具原始交互及提交系统手续仍需作者完成。",
+  "paper_changed": true,
   "gpu_executed": false,
   "requirements_count": 73,
   "status_counts": {
-    "PASS": 45,
+    "PASS": 48,
     "MANUAL": 8,
     "UNSPECIFIED": 3,
-    "PARTIAL": 11,
-    "MISSING": 2,
+    "PARTIAL": 9,
+    "MISSING": 1,
     "NA": 4
   },
   "pdf": {
     "english_pages": 101,
-    "english_chapters_pages": 82,
+    "english_chapters_pages": 81,
     "chinese_pages": 87,
-    "english_prose_and_abstract_estimate": 26975,
+    "english_prose_and_abstract_estimate": 26932,
     "abstract_estimate": 307,
     "figures": 26,
     "tables": 32,
@@ -27,7 +26,7 @@
     "fonts": {
       "entries": 48,
       "all_embedded": true,
-      "type3": 1
+      "type3": 0
     },
     "words_outside_page": 0
   },
@@ -250,7 +249,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "同口径工具估算26,975词；包含九章和摘要文字／图注，排除表体和数学。",
+      "evidence": "同口径工具估算26,932词；九章及摘要文字／图注，排除表体和数学。",
       "action": "这不是课程官方字数认证；若Canvas有独立计数规则，须按其重计。"
     },
     {
@@ -265,8 +264,8 @@
         "S05",
         "S09"
       ],
-      "evidence": "英文101页，其中九章82页，前置9页、书目3页、附录7页；不满足典型页数但未发现强制上限。",
-      "action": "优先修孤行和少量元说明；不为60页删掉独有证明或实验。"
+      "evidence": "英文101页，其中九章81页、前置9页、书目4页、附录7页；未发现强制页数上限。",
+      "action": "第一章三行尾页已处理；保留正常章节尾页，不为60页删独有证据。"
     },
     {
       "id": "A12",
@@ -293,8 +292,8 @@
         "S03",
         "S05"
       ],
-      "evidence": "01-5:49–54称个人贡献已另记；声明页只列项目与工具；author-confirmation仍让作者自己补。",
-      "action": "作者写明主导的设计／实验、亲自验证与取舍、导师和AI支持；同步修改已记录的说法。"
+      "evidence": "Ch1已删去个人分工已另行记录的完成式表述；实际个人贡献仍由作者填写。",
+      "action": "按assessment/submission-manual-actions.txt补实际个人设计、执行、核查与取舍，再同步中英文。"
     },
     {
       "id": "B02",
@@ -314,14 +313,14 @@
       "id": "B03",
       "group": "个人贡献与AI",
       "kind": "official",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "priority": 0,
       "requirement": "提供实际prompts及其与作业的对应",
       "source_ids": [
         "S03"
       ],
-      "evidence": "在当前提交PDF及报告仓库中未找到作为AI使用记录提交的prompts；review日志不是prompt原文。",
-      "action": "整理实际提示词／可追溯会话导出，关联正文、代码、图和检查；说明摘录覆盖，补齐其余工具记录。"
+      "evidence": "docs/ai-use-record.md及JSON已保存7条真实Codex指令摘录与产物映射；ChatGPT／Claude原始记录及其余实质交互尚未补全。",
+      "action": "作者补可恢复的原始交互和使用位置；未知日期／版本如实标未知；不编造prompt。"
     },
     {
       "id": "B04",
@@ -334,8 +333,8 @@
         "S03",
         "S04"
       ],
-      "evidence": "前置页有功能披露；37条BibTeX记录中无AI交互条目，正文也未指向prompts。",
-      "action": "按课程／图书馆合适格式引用真实交互；列真实日期、工具、可确认版本及记录位置，不编造模型版本。"
+      "evidence": "已新增3项AI使用记录引用并链接partial prompt记录；其他工具原始prompts及作者核对仍待补。",
+      "action": "补原始交互后按真实覆盖更新记录／引用，核对本届所需附交方式。"
     },
     {
       "id": "B05",
@@ -544,8 +543,8 @@
         "S05",
         "S09"
       ],
-      "evidence": "编译清洁且图表完整；来源页identify...maps有语法错误，Ch1末尾出现仅三行的独占页。",
-      "action": "进行一次语言与孤行复查；这些是编辑质量问题，不是额外实验要求。"
+      "evidence": "两稿编译清洁；来源页语法及第一章三行尾页已修正；BANG改正式期刊引用。",
+      "action": "作者最后审读英文表达，并完成个人贡献确认。"
     },
     {
       "id": "C01",
@@ -843,7 +842,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "36个被引键均在37条BibTeX内；没有未定义引用、重复label；nist_signtest未引用，不输出到书目。",
+      "evidence": "39个被引键均在40条BibTeX内；无未定义引用、重复标签；nist_signtest未引用，不输出到书目。",
       "action": ""
     },
     {
@@ -895,8 +894,8 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "PDF1.7、A4、无加密／表单／JavaScript；48个字体条目全部嵌入。",
-      "action": "1个图件Type3字体无Unicode映射，可作为非阻断的导出优化；无PDF/A硬要求证据。"
+      "evidence": "PDF1.7、A4、无加密／表单／JavaScript；48个字体条目全嵌入，Type3已消除。",
+      "action": "没有PDF/A硬要求证据，不据此另造存档格式要求。"
     },
     {
       "id": "D08",
@@ -915,28 +914,28 @@
       "id": "D09",
       "group": "PDF与文件质量",
       "kind": "quality",
-      "status": "PARTIAL",
+      "status": "PASS",
       "priority": 2,
       "requirement": "分页与浮动位置适合专业阅读",
       "source_ids": [
         "S05",
         "S09"
       ],
-      "evidence": "第1章末尾印刷页5（PDF14）只剩3行；结论印刷页82（PDF91）为短尾页；部分表提前浮到所属小节前。",
-      "action": "优先压缩roadmap收尾／调节局部浮动，保持字号和关键证据；不是强制违规。"
+      "evidence": "第一章roadmap收尾已精简，原印刷页5三行独占页消失；核心证明与图表数据保留。",
+      "action": "正常章节尾页与局部浮动可继续优化，但不是已核实的提交缺项。"
     },
     {
       "id": "D10",
       "group": "PDF与文件质量",
       "kind": "quality",
-      "status": "PARTIAL",
+      "status": "PASS",
       "priority": 2,
       "requirement": "来源页语言和贡献交叉说明精确",
       "source_ids": [
         "S05"
       ],
-      "evidence": "declaration.tex:14–15的复数主语identify与maps不一致；01-5:50–52有尚未闭合的贡献记录定位。",
-      "action": "语法改为平行谓语；个人说明实际落地后再更新定位。"
+      "evidence": "来源页identify...map语法已修正；个人贡献已另记的误导定位已移除。",
+      "action": "真正的个人贡献仍见B01，由作者补充。"
     },
     {
       "id": "E01",
@@ -948,8 +947,8 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "报告候选版本5003f08已经发布；本地PDF与编译字节一致。",
-      "action": "本审计按该固定版本，不将之后的修改静默判为已检查。"
+      "evidence": "论文与本轮审稿处理将一起发布；候选以当前inputs指纹和已声明修订识别。",
+      "action": "提交后保存实际上传回执与下载PDF。"
     },
     {
       "id": "E02",
@@ -961,21 +960,21 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "GitHub JHQ_GPU/main为70da383；本地19135c9，领先20提交。v72/v73及补证不完整存在公开main。",
-      "action": "在作者选定范围后发布固定代码revision或可交付包；不能只给当前旧main链接。"
+      "evidence": "docs/artifact-access.md给出固定公开手稿、v71、v73/T4/T5/T1/A2子集链接与命令；完整JHQ_GPU公开main仍落后20提交。",
+      "action": "如需完整工程，作者选定发布版本或评审访问方式；不把局部证据包当独立GPU构建包。"
     },
     {
       "id": "E03",
       "group": "材料与可复现性",
       "kind": "quality",
-      "status": "PARTIAL",
+      "status": "PASS",
       "priority": 1,
       "requirement": "共同ADC手稿参考文献能被定位",
       "source_ids": [
         "S05"
       ],
-      "evidence": "adc_artifact有作者／标题／年份及未推断发表状态；BibTeX无URL／归档定位。",
-      "action": "如允许分享，给稳定定位；若未公开，明确作者可提供的访问方式。"
+      "evidence": "adc_artifact新增固定公开70da383 manuscript源码URL；该文件与本地HEAD源码hash一致，实际公开链接已读取。",
+      "action": "保留其项目手稿身份和历史数字，不推断发表状态。"
     },
     {
       "id": "E04",
@@ -987,8 +986,8 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "1345个inputs哈希通过；隔离副本重跑相关离线审计，数值表未变。",
-      "action": "这核查保留记录与报告，不等于重新执行GPU实验。"
+      "evidence": "既有输入账本重新核查；局部相关审计通过，图中数据及核心数学不变；当前候选指纹见本JSON inputs。",
+      "action": "固定历史审计与本轮候选修改范围，结果按后续实际验证更新。"
     },
     {
       "id": "E05",
@@ -1026,7 +1025,7 @@
       "source_ids": [
         "S05"
       ],
-      "evidence": "12表1图中英文26块精确归档；原87科学资产未变；docs/supplementary-evidence.md可读。",
+      "evidence": "12表1图原件继续完整归档；86项原科学图表文件字节一致，T5 PDF仅TrueType字体导出改变，数值审计相同。",
       "action": ""
     },
     {
@@ -1091,7 +1090,7 @@
         "B01",
         "G02"
       ],
-      "title": "个人贡献没有真正落地，且正文已有完成式表述",
+      "title": "个人贡献尚待作者填写；误导完成式已修正",
       "locations": [
         "chapters/01-5-contributions.tex:49",
         "frontmatter/declaration.tex:6",
@@ -1106,7 +1105,7 @@
         "B03",
         "B04"
       ],
-      "title": "AI用途披露已有，但prompts和可追溯交互引用未提供",
+      "title": "Codex真实prompt摘录与引用已补；其他工具原始交互仍待补",
       "locations": [
         "frontmatter/declaration.tex:17",
         "references.bib"
@@ -1134,7 +1133,7 @@
         "E06",
         "A07"
       ],
-      "title": "提交材料的完整代码入口尚未与本地补证版本一致",
+      "title": "固定局部材料入口已补；完整工程的评审交付范围仍待作者确定",
       "action": "当前公开main落后20提交；准备固定、可访问的代码／材料包。是否硬性上传代码未获当前课程明文确认，2022其他课程不能代替。"
     },
     {
@@ -1145,8 +1144,8 @@
         "D10",
         "G08"
       ],
-      "title": "可明确修正的语言与版面尾页",
-      "action": "修identify/maps，个人记录定位；优化第一章三行尾页及结论短尾页。对小图字体和Type3导出作可选检查。"
+      "title": "本轮语言、BANG引用、首章尾页和T5字体修正已完成",
+      "action": "保持常规最终校对，不需要为尾页或典型页数进行大改。"
     }
   ],
   "remaining_experiments": [
@@ -1177,17 +1176,17 @@
     }
   ],
   "checks": {
-    "local_input_hashes": 1345,
+    "local_input_hashes": 1497,
     "v71_bundle_files": 209,
     "review_bundle_files": 131,
-    "cited_keys": 36,
-    "bib_entries": 37,
+    "cited_keys": 39,
+    "bib_entries": 40,
     "uncited_keys": [
       "nist_signtest"
     ],
     "undefined_refs": [],
     "duplicate_labels": [],
-    "visual_scope": "All 101 English pages inspected as contact-sheet overview; selected revised pages previously inspected at readable scale; not a line-by-line language copyedit",
+    "visual_scope": "Prior 101-page contact-sheet overview plus readable inspections of changed English/Chinese provenance, first-chapter end, T5 plot and final artifact page; not author-personal verification",
     "isolated_checks": [
       "evidence/review/check.py --run-audits",
       "evidence/ch5/v71/check.py",
@@ -1201,9 +1200,11 @@
       "audit_synthesis.py"
     ],
     "isolated_numeric_table_changes": [],
-    "hash_count_scope": "1345 existing ledger entries plus 130 candidate-source fingerprints added by this audit",
-    "candidate_file_fingerprints": 130,
-    "total_input_hash_entries_after_audit": 1475
+    "candidate_file_fingerprints": 139,
+    "candidate_fonts_type3": 0,
+    "identical_scientific_assets": 86,
+    "font_only_pdf_exports": 1,
+    "hash_count_scope": "All current data/* inputs entries, including 139 candidate fingerprints in this audit"
   },
   "inputs": [
     {
@@ -1212,15 +1213,27 @@
     },
     {
       "path": "appendices/b-supplementary.tex",
-      "sha256": "c3fda9f9a7db43207eac427e605691d5e24035ec4192dc4f1568eb83a37d084f"
+      "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
     },
     {
       "path": "assessment/author-confirmation.txt",
-      "sha256": "64c96c1fb8fbf3b0b37293c742157f1bf725a130bc44c360ca81a4dcfecfa40f"
+      "sha256": "2ac1422f9cd90aea17c5ed24f01fbc0b33b899fb3c2211ddaf852f16ac74bf43"
     },
     {
       "path": "assessment/ch7-pending-experiments.txt",
       "sha256": "7a1e564b1b25f7f3c27fb8b96ba6aed89f173b39b07d38182d2b2b919946a729"
+    },
+    {
+      "path": "assessment/final-review-edits.json",
+      "sha256": "7155996cc676dd1bc9d3191e709e7b91a239524e5a783ff6edc3a99899d818a2"
+    },
+    {
+      "path": "assessment/final-review-response.txt",
+      "sha256": "69630b472ff5b4e269a1dc50de8dc868ddd207c4d07269923464c798a7114584"
+    },
+    {
+      "path": "assessment/submission-manual-actions.txt",
+      "sha256": "4f1cd6bcca954447bfad72016af2465973279e312bec1eccfd6239bc34507ee1"
     },
     {
       "path": "assessment/targeted-curation-review.md",
@@ -1248,11 +1261,11 @@
     },
     {
       "path": "chapters/01-5-contributions.tex",
-      "sha256": "ba8aceca02a4bb481fd8620da480b5537fea566c498c4617ed41da9a3722e626"
+      "sha256": "ab4175a773399b512a6caf66b651f4a4e95e4d58938d33b09e621b5dbd3f923b"
     },
     {
       "path": "chapters/01-introduction.tex",
-      "sha256": "9553e77c7d077f8c528adea4413fae8d31bf61f777a7f78ea2c83aebe9da738c"
+      "sha256": "44d3eae771e9df936e758e5a1d56b44b3b08797b7ddd31a35727e341da2d5279"
     },
     {
       "path": "chapters/02-1-objective.tex",
@@ -1463,8 +1476,24 @@
       "sha256": "2701f51a3c0370d7a3736ced00f8fca0050d58058afe98a10db47a2cb72bb1c2"
     },
     {
+      "path": "data/submission/ai-use-record.json",
+      "sha256": "c967567ff055909b017521abe43fee9d80daa9b2593fdf2cf31f7efaaa53b163"
+    },
+    {
       "path": "data/synthesis/primary-sources.json",
-      "sha256": "ca2c69d9bd6bad275fe2e58cc5ad58d1a966d1242503980d099e3d41eaad2f72"
+      "sha256": "5a822bbea587d4386acc4a6863f06cc28f6c08502bfeb27dde006deb38d07e58"
+    },
+    {
+      "path": "docs/ai-use-record.md",
+      "sha256": "96681dcf8a0f656e7c73dcb504ac6bb84d8d26e868b935127b15c47ddb4331dc"
+    },
+    {
+      "path": "docs/artifact-access.md",
+      "sha256": "6dc1039208d12af6b03533397ab62762ca1f2f4acb87d3f762e97114c7a66ffc"
+    },
+    {
+      "path": "figures/t4-t5/smallbatch.pdf",
+      "sha256": "197c8108cdeffa9a09d5f174175f28b5267fe5aeab797538ac421ac4d645e81c"
     },
     {
       "path": "frontmatter/abstract.tex",
@@ -1476,7 +1505,7 @@
     },
     {
       "path": "frontmatter/declaration.tex",
-      "sha256": "a0061607d7dc22806526ca0b64965edccf80c6d549bb4579b9d22d113bb23573"
+      "sha256": "7bbad473711a37facb8ff005b92ae4432a0c6f0e490aec8d88b2edd4701520f9"
     },
     {
       "path": "frontmatter/notation.tex",
@@ -1496,15 +1525,23 @@
     },
     {
       "path": "references.bib",
-      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+      "sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265"
+    },
+    {
+      "path": "scripts/audit_deduplication.py",
+      "sha256": "fb43877cb677d2dc40b6b33ad20c4cc38ecaceb77a517bd33d82433ea4be5123"
+    },
+    {
+      "path": "scripts/audit_t4_t5.py",
+      "sha256": "c5f574816d6996b4a5b21940aea01508b4838c267e5e2af06c1d3b5aea31a60f"
     },
     {
       "path": "thesis-zh.pdf",
-      "sha256": "723372a138817bfb907ac80381f78b71574f41b59864ae32dd8fa292340adf1d"
+      "sha256": "949e5f8bff1182af8ae1e514dd2c3a750552c595ecd80e2f02627a21ce7b9cbe"
     },
     {
       "path": "thesis.pdf",
-      "sha256": "bb394073e50e4e808e36cfb2b2d5002400521074b45b00fe3d72f28185fa76d4"
+      "sha256": "38bb1bbe22e5f620c3996871f40e6e975c46d34acf675c950cea3161709f91af"
     },
     {
       "path": "zh/chapters/01-1-context.tex",
@@ -1524,11 +1561,11 @@
     },
     {
       "path": "zh/chapters/01-5-contributions.tex",
-      "sha256": "8a28248126d685a376d19545c992fea2e1c72b4cc92529a0f63343364926fc24"
+      "sha256": "3f1d58a915cd760ba7e725fda664a08d42e707ef13848d3033a492b9ef20cc8a"
     },
     {
       "path": "zh/chapters/01-introduction.tex",
-      "sha256": "21422d078cebaaf34a344f872b2bd2c61ca30a3f65a438dfeed06b6e89098d39"
+      "sha256": "65e9f3a6aa9fb8dafb075e2d66fadfc23164527fa9256390eb65f9945638661a"
     },
     {
       "path": "zh/chapters/02-1-objective.tex",
@@ -1726,5 +1763,8 @@
       "path": "zh/chapters/09-conclusion.tex",
       "sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05"
     }
-  ]
+  ],
+  "initial_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
+  "audited_base_commit": "682ef939ee41e3a9b9c9ec984604c62008406744",
+  "revision_scope": "Base commit plus declared final-review edits; candidate file hashes identify the reviewed working tree"
 }

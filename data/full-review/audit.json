@@ -335,7 +335,7 @@
     {
       "repository": "8800_report",
       "path": "scripts/audit_t4_t5.py",
-      "sha256": "e9470e1cd4e468a3f05c95c787a367ba60a6d7255dbc8f191bfd6a9f933f874f"
+      "sha256": "c5f574816d6996b4a5b21940aea01508b4838c267e5e2af06c1d3b5aea31a60f"
     },
     {
       "repository": "8800_report",
@@ -350,7 +350,7 @@
     {
       "repository": "8800_report",
       "path": "data/t4-t5/audit.json",
-      "sha256": "9e7c655d0459b4f10db0d42e7d0ba7671b43992779cf630e7085527e98097536"
+      "sha256": "9275a6f0a2a545b8c60a8dd3997a6c8091446b762d2a4a00fc4a90ff337dfa11"
     },
     {
       "repository": "8800_report",
@@ -425,12 +425,12 @@
     {
       "repository": "8800_report",
       "path": "appendices/b-supplementary.tex",
-      "sha256": "c3fda9f9a7db43207eac427e605691d5e24035ec4192dc4f1568eb83a37d084f"
+      "sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0"
     },
     {
       "repository": "8800_report",
       "path": "zh/appendices/b-supplementary.tex",
-      "sha256": "0a46723fcdb229bb3aff0b272df0d6c50f8680f8b4bd8cff392cf7b34ee8d23e"
+      "sha256": "c924c8743cbb6a718cdfe7ee35211d45e6f446b07b33c86c1b3f48c4b6193b82"
     }
   ]
 }

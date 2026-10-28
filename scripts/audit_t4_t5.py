@@ -237,7 +237,7 @@ def main():
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
-        plt.rcParams.update({'font.size':9,'axes.spines.top':False,'axes.spines.right':False})
+        plt.rcParams.update({'font.size':9,'pdf.fonttype':42,'axes.spines.top':False,'axes.spines.right':False})
         fig,axes=plt.subplots(1,2,figsize=(7,2.65),sharey=True)
         for ax,b in zip(axes,[8,32]):
             for ds in DATASETS:
