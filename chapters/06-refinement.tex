@@ -1,14 +1,9 @@
 % Structure follows 6.pdf; all six sections use audited implementation/evidence.
-\chapter[Workload-Level Refinement-Budget Calibration]{Workload-Level\\Refinement-Budget Calibration}
+\chapter{Workload-Level Budget Calibration}
 \label{ch:refinement}
-
-Chapters 4 and 5 establish a compressed index and its GPU execution.
-This chapter addresses RQ3: how much refinement work a workload needs,
-and whether selecting that budget repays its calibration cost. The
-policy compares unlabelled query outputs with a larger-budget reference
-and reuses one selected multiplier across batches. The method is analysed
-through its acceptance rule, conditional selection theorem, experimental
-controls and amortisation model. Chapter 7 reports the measured outcomes.
+The policy selects one workload-level refinement multiplier through
+unlabelled agreement with a larger-budget reference, then reuses it across
+batches. Quality and calibration cost constrain that reuse.
 
 \section{Why Fixed Refinement Budgets Can Be Wasteful}
 \label{sec:6-1}

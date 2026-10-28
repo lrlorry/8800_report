@@ -48,7 +48,8 @@ def main():
         rel = edit['path']
         assert (rel.startswith(('chapters/', 'zh/chapters/')) and rel.endswith('.tex')) or rel in [
             'frontmatter/abstract.tex', 'zh/abstract.tex', 'frontmatter/declaration.tex', 'zh/declaration.tex',
-            'frontmatter/acknowledgements.tex', 'zh/acknowledgements.tex', 'main.tex', 'main-zh.tex']
+            'frontmatter/acknowledgements.tex', 'zh/acknowledgements.tex', 'main.tex', 'main-zh.tex',
+            'config/layout.tex', 'config/preamble.tex', 'zh/preamble.tex']
         before = git('show', compression['baseline'] + ':' + rel)
         after = current(rel)
         assert hashlib.sha256(before).hexdigest() == edit['before_sha256']
@@ -89,6 +90,20 @@ def main():
         assert '\\label{eq:8-refinement-sensitivity}' in block
         additions[item['source']].append(block)
     assert sum(map(len, additions.values())) == 2
+
+    # The unreferenced roadmap is editorial navigation, not scientific content.
+    # Permit only its two exact, archived language versions to lose a label.
+    section_removals = collections.defaultdict(list)
+    for item in compression.get('approved_section_removals', []):
+        assert item['source'] in ['chapters/01-introduction.tex', 'zh/chapters/01-introduction.tex']
+        block = current(item['archive'])
+        assert hashlib.sha256(block).hexdigest() == item['sha256']
+        block = block.decode().removesuffix('\n')
+        assert pre_compression[item['source']].count(block) == 1
+        assert re.findall(r'\\label\{([^}]+)\}', block) == ['sec:1-6']
+        assert not re.search(r'\\(?:cite|input|begin|includegraphics)\b', block)
+        section_removals[item['source']].append(block)
+    assert sum(map(len, section_removals.values())) == 2
 
     final_review = json.loads(current('assessment/final-review-edits.json'))
     assert final_review['baseline'] == '682ef939ee41e3a9b9c9ec984604c62008406744'
@@ -182,6 +197,8 @@ def main():
             for block in new_blocks[rel]:
                 restored = restored.replace(block, '')
             restored = remap_new_refs(restored)
+            for block in section_removals[rel]:
+                restored = restored.replace(block, '')
             compared_actual = actual
             for block in additions[rel]:
                 compared_actual = compared_actual.replace(block, '')
@@ -195,7 +212,18 @@ def main():
                 for group in re.findall(r'\\(?:cite|citep|citet)\{([^}]+)\}', text):
                     keys.update(k.strip() for k in group.split(','))
             checked.append(rel)
-    assert citations_before == citations_after, ('changed cited-source set', citations_before ^ citations_after)
+    relocated = set(compression.get('relocated_body_citations', []))
+    assert relocated == {'adc_artifact'}
+    assert citations_before - citations_after == relocated
+    assert not citations_after - citations_before
+    # The ADC source remains cited in the actual acknowledgement disclosure.
+    for rel in ['frontmatter/declaration.tex', 'zh/declaration.tex']:
+        front_cites = {k.strip() for group in re.findall(r'\\cite\{([^}]+)\}', current(rel).decode())
+                       for k in group.split(',')}
+        assert relocated <= front_cites
+    for folder in ['chapters', 'zh/chapters', 'frontmatter', 'appendices']:
+        for p in (ROOT / folder).glob('*.tex'):
+            assert not re.search(r'\\(?:[Cc]ref|ref)\{[^}]*sec:1-6[^}]*\}', p.read_text())
 
     assets = git('ls-tree', '-r', '--name-only', baseline, '--',
                  'figures', 'tables', 'zh/tables').decode().splitlines()
@@ -263,7 +291,9 @@ def main():
         protected_blocks=dict(protected),
         identical_figure_and_table_assets=len(assets)-1,
         font_only_asset_update=font_asset,
-        retained_citation_keys=sorted(citations_after),
+        retained_citation_keys=sorted(citations_after | relocated),
+        relocated_body_citations=sorted(relocated),
+        removed_editorial_sections=len(compression['approved_section_removals']),
         chapter_words=word_rows,
         chapters_and_abstract=dict(before=sum(r['before'] for r in word_rows)+prose_count(old('frontmatter/abstract.tex').decode()),
                                    after=sum(r['after'] for r in word_rows)+abstract),

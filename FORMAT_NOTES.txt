@@ -44,9 +44,11 @@ ANU的Overleaf机构页还列出标为Official的Honours模板：
 https://www.overleaf.com/edu/anu
 https://www.overleaf.com/latex/templates/anu-honours-thesis-template/tfvndzkjrptm
 
-本稿采用学院长论文模板的KOMA-Script框架：A4 / scrbook / 11pt / 半行段间距，
+本稿采用学院长论文模板的KOMA-Script框架：A4 / scrbook / 11pt，
 正文、章节及页眉使用KOMA原生命令；Latin Modern及配套数学字体保持不变。
-英文恢复模板的正常单倍leading；parskip=half-保留半行段间距，允许固定宽度图表占满末行。
+英文采用正常单倍leading及首行1.2em缩进，不再另加半行段间距；图表仍可占满版心。
+2026-10-29适配：缩短章名，取消独立Chapter前缀行；收紧标题、图注和浮动体间距。
+短致谢与摘要合页；书目用10pt，正文保持11pt。详情见assessment/layout-reflow-2026-10-29.txt。
 中文阅读稿仍保留1.25倍行距及原两字缩进、无额外段间空白的阅读方式。
 保留原来的左右27mm、上下28mm页边距，不通过缩字号或缩版心空白来取得去重收益。
 电子提交使用oneside/openany，避免双面装订才需要的空白页；使用黑色超链接及数字引用。

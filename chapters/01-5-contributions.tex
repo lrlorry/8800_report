@@ -29,22 +29,4 @@ smaller samples expose risk; four cells directly measure calibrated reuse \\
 \end{tabularx}
 \end{minipage}\par\medskip
 
-On the full-batch E1 grid near recall 0.97, JHQ leads in three datasets and is
-near parity with RaBitQ on arXiv under the interpolated comparison. Other
-recall regions favour competitors. FULL's maximum observed held-out loss is
-0.0006 relative to the best tested arm, while $S=128$ reaches 40/64 loss
-crossings in one cell. These are empirical quality results; ten FULL cells
-retain conditional nestedness coverage, while all twelve FULL
-finite-grid choices now match enumeration (\cref{sec:7-budget-trace}).
-The OpenAI E1 results use TF32 GEMMs; a separate FP32 sensitivity
-retains smaller favourable margins (\cref{sec:7-precision}).
-
-This COMP8800 project is presented by Rui Luo under Dr Mengxuan Zhang's
-supervision. The coauthored ADC manuscript names Rui Luo and Mengxuan Zhang
-and shares the JHQ-GPU implementation and measurement artifacts
-\cite{adc_artifact}. The thesis
-expands the correctness contracts, newer experiment analysis and treatment
-of failed designs; historical manuscript numbers retain their own versions.
-Technical contribution labels describe the project scope. The acknowledgements
-identify joint work and AI assistance.
-The thesis author is responsible for the submitted claims and attribution.
+Performance depends on batch size and quality target; Chapters 7--8 report the unfavourable regions and numerical limits.

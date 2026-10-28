@@ -56,12 +56,12 @@
     {
       "source": "8800_report",
       "path": "chapters/04-architecture.tex",
-      "sha256": "1d452fa40ad440eae66aa263c1ab1439e891f685c9cb66ffbe718c6946192498"
+      "sha256": "5f9486fc99e62dfec46ce6366f7d63725e710f1fab61e5ea9ec6689c51242e91"
     },
     {
       "source": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "0b8f9a7940093b96c23ec08a6e306eeb531baf3aecccb46665ca73bca90f9fdb"
+      "sha256": "8450c05cbd248c6bb0df591f438ef86ef5533686f6b540cabe2b63d092364b4c"
     },
     {
       "source": "8800_report",
@@ -156,12 +156,12 @@
     {
       "source": "8800_report",
       "path": "zh/chapters/04-architecture.tex",
-      "sha256": "604003d787125af8fbe3284f6d6e1268d3afc2fb5dec80078eefa27ac30328f0"
+      "sha256": "7464998e696f05592e08e95e7edb09cc1117038c66ce8708ec6d2a9a40525de5"
     },
     {
       "source": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "4868cb8f7131c5ebf06ca741ad35903a7d3497b3e0a904f41ecbe954d6a95264"
+      "sha256": "ff8bddb4586cde65b0c2a5578707187628d88e183f1234ee3f8ae781cbf150bd"
     },
     {
       "source": "8800_report",

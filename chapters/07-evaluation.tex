@@ -1,18 +1,12 @@
-\chapter[Experimental Evaluation and Research Findings]{Experimental Evaluation\\and Research Findings}
+\chapter{Experimental Evaluation}
 \label{ch:evaluation}
 \chaptermark{Experimental Evaluation}
 
 The experiments address construction and capacity (RQ1), execution (RQ2),
 budget quality and reuse cost (RQ3), and competitive search regions (RQ4).
 
-\section{Final Experiment Manifest and Comparison Families}
+\section{Experimental Protocol}
 \label{sec:7-1}
-
-The evidence comprises system frontiers, component ablations,
-selection checks, budget calibration and construction/scale measurements.
-\Cref{app:reproducibility} records implementation and run provenance;
-the repository supplement retains the full family manifest.
-
 
 \subsection{Comparison protocol and reproducibility}
 
@@ -882,10 +876,3 @@ the seven arms include two budgets on one dataset--probe workload.
 FP64 reconstructed scoring also differs from the GPU arithmetic, so the
 pilot does not isolate a pure budget effect in every arm. Separating
 routing from representation requires additional stage-wise GT coverage.
-
-\subsection{Scope of the research findings}
-
-The findings concern squared-L2 top-10 on the recorded query pools and
-RTX 5090. \Cref{tab:8-threats} consolidates transfer limits; Chapter 8
-develops the systems implications and negative cases, and \cref{sec:9-1}
-answers RQ1--RQ4.

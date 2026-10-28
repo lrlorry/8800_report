@@ -82,6 +82,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model versi
 
 The two subsequent steering messages requesting a shorter disclosure and prioritising highlighted text are retained verbatim in the machine-readable record. Codex adapted the ADC abstract, merged exposition, added a conditional latency derivation, and reduced the standalone disclosure to an acknowledgement paragraph. The [applied round patch](../evidence/editorial/a047ee8/revision.patch) is retained separately from P08. See [revision response](../assessment/adc-revision-response.txt); no new detector score or author-personal verification is inferred.
 
+### P10 — 紧凑排版与低影响精简
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> 重新排版啊 现在好多空白
+
+The subsequent requests to remove the coauthor-name narration, shorten wrapped chapter titles and limit cuts to low-impact material are retained verbatim in the machine-readable record. Repeated introductions, navigation and scope summaries were shortened; numerical assets, proofs and unique mathematical blocks were retained. See the [applied source patch](../evidence/editorial/f39bf75/layout.patch) and [layout record](../assessment/layout-reflow-2026-10-29.txt).
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:

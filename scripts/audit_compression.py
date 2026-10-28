@@ -88,8 +88,8 @@ def main():
     chapter = lambda n: int(re.search(r'\\contentsline \{chapter\}\{\\numberline \{' + str(n) + r'\}[^\n]*?\}\{(\d+)\}\{chapter\.', toc)[1])
     bib = int(re.search(r'\\contentsline \{chapter\}\{\\nonumberline Bibliography\}\{(\d+)\}', toc)[1])
     source_pages = run('pdftotext', 'thesis.pdf', '-').split('\f')[:-1]
-    front = next(i for i, text in enumerate(source_pages)
-                 if re.search(r'(?m)^Chapter 1\s*$', text) and 'Introduction' in text)
+    destinations = run('pdfinfo', '-dests', 'thesis.pdf')
+    front = int(re.search(r'^\s*(\d+)\s+.*"chapter\.1"\s*$', destinations, re.M)[1]) - 1
     end = front + bib - 1
     split = front + chapter(6)
     copies = []
@@ -108,16 +108,19 @@ def main():
                                all_nonwhitespace_characters_preserved=True))
 
     records = json.loads(read('data/submission/ai-use-record.json'))['records']
-    assert len(records) == 9 and records[-1]['id'] == 'P09'
+    assert len(records) == 10 and records[-1]['id'] == 'P10'
     for record in records:
         assert digest(record['prompt'].encode()) == record['prompt_sha256']
-    for record in records[-2:]:
-        assert digest(read(record['retained_patch'])) == record['retained_patch_sha256']
+        for steering in record.get('steering_messages', []):
+            assert digest(steering['prompt'].encode()) == steering['prompt_sha256']
+        if 'retained_patch' in record:
+            assert digest(read(record['retained_patch'])) == record['retained_patch_sha256']
     assert records[-1]['retained_patch_sha256'] == manifest['round_patch_sha256']
     for rel in ['assessment/compression-review-source.json', 'assessment/compression-review-response.txt',
                 'evidence/editorial/03775b7/manifest.json', manifest['patch'],
                 'docs/supplementary-evidence.md', 'docs/ai-use-record.md',
                 'assessment/adc-revision-response.txt','assessment/adc-revision-source.json',
+                'assessment/layout-reflow-2026-10-29.txt',
                 'scripts/audit_compression.py']:
         read(rel)
     result = dict(date='2026-10-29', timezone='Australia/Sydney',
@@ -126,7 +129,7 @@ def main():
                   words=dict(before=manifest['chapters_and_abstract']['before'], after=words,
                              removed=manifest['chapters_and_abstract']['before'] - words,
                              scope=manifest['word_count_scope']),
-                  english_body_pages=bib - chapter(1), pdfs=pdfs,
+                  english_body_pages=bib - chapter(1), english_front_pages=front, pdfs=pdfs,
                   unchanged_scientific_assets=len(assets), retained_proof_blocks=12,
                   detector_score=None, derived_copies=copies,
                   visual_scope='Contact-sheet overview plus readable changed-page inspections; not full sentence proofreading or student-personal verification',

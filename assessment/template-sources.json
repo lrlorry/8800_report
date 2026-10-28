@@ -56,6 +56,7 @@
       "sha256": "afbc57cffa33ed98e6694c057cd4b3db26d246a293938271f951ad8f9e2353e5"
     }
   ],
-  "implementation": "Independent KOMA-Script scrbook long-thesis configuration; 11pt Latin Modern, normal English leading, half-line paragraph separation (parskip=half- for full-width boxes); existing 27/28mm margins retained; oneside/openany for electronic copy; native KOMA headings and page styles; Chinese reading-copy leading and two-character paragraph indentation retained.",
-  "source_distribution": "The template header permits personal use and requests no sharing of its source; original files are inspected outside this repository and are not redistributed."
+  "implementation": "Independent KOMA-Script scrbook long-thesis configuration; 11pt Latin Modern, normal English leading and indented paragraphs with no extra paragraph gap; existing 27/28mm margins retained; oneside/openany for electronic copy; compact native KOMA headings, captions and float spacing; single-line chapter titles; abstract and short acknowledgements share a page; 10pt bibliography; Chinese reading-copy leading and two-character paragraph indentation retained.",
+  "source_distribution": "The template header permits personal use and requests no sharing of its source; original files are inspected outside this repository and are not redistributed.",
+  "adapted_on": "2026-10-29"
 }

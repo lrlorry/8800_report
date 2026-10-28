@@ -1,15 +1,9 @@
 % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
-\chapter[Representation-Aware GPU Search Execution]{Representation-Aware\\GPU Search Execution}
+\chapter{Representation-Aware GPU Search}
 \label{ch:gpu-execution}
-This chapter addresses RQ2: how JHQ's compressed representation can support
-correct and efficient GPU execution. The transform, Cartesian primary
-codebook and residual hierarchy are inherited from JHQ \cite{jhq}; the
-focus here is their execution. The argument follows the query path from
-routing through primary selection to residual scoring. For each mechanism,
-it separates the mathematical target, implementation conditions and
-resource trade-offs, with the corresponding measurements in
-\Cref{ch:evaluation}. Workload-level refinement-budget selection is
-developed separately in \Cref{ch:refinement}.
+The transform and primary/residual hierarchy follow JHQ \cite{jhq}.
+This chapter develops their GPU scoring and computed-score selection;
+\Cref{ch:evaluation,ch:refinement} cover measurement and budget choice.
 
 \section{Query Path and Four Distinct Ranking Objects}
 \label{sec:5-1}

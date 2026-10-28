@@ -4,19 +4,23 @@
 \geometry{a4paper,left=27mm,right=27mm,top=28mm,bottom=28mm,
   headheight=18pt,headsep=7mm,footskip=12mm}
 \setstretch{1.0}
+% Classic thesis paragraphs: indent instead of a half-line blank between them.
+\setparsizes{1.2em}{0pt plus .5pt}{0pt plus 1fil}
 % Preserve the existing, scoped roman math subscripts without rewriting equations.
 \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
 
-\KOMAoptions{chapterprefix=true,headings=normal,numbers=noendperiod}
+\KOMAoptions{chapterprefix=false,headings=normal,numbers=noendperiod}
 \setkomafont{disposition}{\normalfont\bfseries}
-\setkomafont{chapter}{\normalfont\LARGE\bfseries}
+\setkomafont{chapter}{\normalfont\Large\bfseries}
 \setkomafont{chapterprefix}{\normalfont\large\bfseries}
-\RedeclareSectionCommand[beforeskip=2ex plus .5ex minus .2ex,
-  afterskip=1ex plus .2ex]{chapter}
-\RedeclareSectionCommand[beforeskip=2.1ex plus .5ex minus .2ex,
-  afterskip=.9ex plus .2ex]{section}
-\RedeclareSectionCommand[beforeskip=1.7ex plus .4ex minus .2ex,
-  afterskip=.7ex plus .2ex]{subsection}
+\RedeclareSectionCommand[beforeskip=1.5ex plus .3ex minus .2ex,
+  afterskip=.8ex plus .2ex]{chapter}
+\RedeclareSectionCommand[beforeskip=1.8ex plus .4ex minus .2ex,
+  afterskip=.7ex plus .2ex]{section}
+\RedeclareSectionCommand[beforeskip=1.4ex plus .3ex minus .2ex,
+  afterskip=.6ex plus .2ex]{subsection}
+\RedeclareSectionCommand[runin=true,beforeskip=.9ex plus .3ex minus .1ex,
+  afterskip=.75em]{paragraph}
 
 \clearpairofpagestyles
 \automark[chapter]{chapter}
@@ -26,16 +30,36 @@
 \setkomafont{pagenumber}{\normalfont\small\color{black}}
 \pagestyle{scrheadings}
 
-\captionsetup{font={small,stretch=1.1},labelfont=bf,labelsep=period,
-  justification=raggedright,singlelinecheck=false,skip=7pt}
-\captionsetup[table]{position=top,skip=6pt}
-\setlength{\textfloatsep}{16pt plus 3pt minus 3pt}
-\setlength{\floatsep}{12pt plus 3pt minus 3pt}
-\setlength{\intextsep}{14pt plus 3pt minus 3pt}
-\setlength{\abovecaptionskip}{7pt}
+\captionsetup{font={small,stretch=1.0},labelfont=bf,labelsep=period,
+  justification=raggedright,singlelinecheck=false,skip=5pt}
+\captionsetup[table]{position=top,skip=4pt}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+% Keep neighbouring floats together on float-only pages.
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{12pt plus 2pt minus 2pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+\setlength{\abovecaptionskip}{5pt}
 \setlength{\belowcaptionskip}{0pt}
 \setlist{itemsep=.15em,topsep=.35em,parsep=0pt}
-\setlength{\bibsep}{.4em}
+\setlength{\bibsep}{.3em}
+\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{4pt plus 1pt}
+\setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}%
+  \setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}%
+  \setlength{\abovedisplayshortskip}{4pt plus 1pt}%
+  \setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}}
+
+% Short preliminary sections may share a page; numbered chapters stay separate.
+\newcommand{\frontsection}[1]{%
+  \section*{#1}\phantomsection\addcontentsline{toc}{chapter}{#1}%
+  \markboth{#1}{#1}}
 
 % Native KOMA contents/list styles and appendix terminology.
 \DeclareTOCStyleEntry[beforeskip=.5em plus .1em]{chapter}{chapter}

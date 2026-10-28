@@ -21,14 +21,4 @@ C3 & 候选扩张和输出一致性思路 & 工作负载预算规则、有条件
 \end{tabularx}
 \end{minipage}\par\medskip
 
-E1大batch的0.97附近插值比较中，JHQ在三个数据集
-领先，arXiv与RaBitQ接近平手，其他recall区间有对手领先。
-FULL最大实测留出损失相对最佳被测臂为0.0006，$S=128$一个单元有40/64次越阈。
-这些是经验质量结果；10个FULL单元一般嵌套仍有条件，但十二个FULL有限网格选择均与枚举一致（\cref{sec:7-budget-trace}）。
-OpenAI E1使用TF32 GEMM；独立FP32敏感性仍保留较小领先（\cref{sec:7-precision}）。
-
-本COMP8800项目由Rui Luo在Dr Mengxuan Zhang指导下呈现。
-ADC合著稿列Rui Luo与Mengxuan Zhang，复用JHQ-GPU实现及测量产物\cite{adc_artifact}。
-论文扩展正确性契约、新版实验分析与失败方案讨论，历史稿数字保留各自版本。
-技术贡献标签界定项目范围；致谢简要说明共同工作与AI协助。
-论文作者对提交的主张与归属标注负责。
+性能依赖批大小与质量目标；第七、八章报告不利区间和数值边界。

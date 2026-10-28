@@ -1,17 +1,7 @@
-每项主要实证主张都关联实验族、指标和实际读取记录。机器可读登记为
-\path{data/ch3/audit.json}；第4--7章audit文件提供详细数值重算。
-记录包含干预、执行、索引／查询配置、测量边界及分析输入。文件哈希验证分析读取的输入，
-无法恢复从未归档的可执行文件或训练状态。附录A提供复现入口，仓库补充材料保留完整字段定义。\footnote{仓库补充材料：\path{docs/supplementary-evidence.md}。}
+证据登记 \path{data/ch3/audit.json} 标识配置、测量边界和分析输入，各实验族保留
+独立版本及对照。哈希标识已读取文件，历史可执行文件和训练状态身份仍不完整。
+附录 A 列出可获得的复现输入，仓库补充材料给出登记字段。\footnote{\path{docs/supplementary-evidence.md}。}
 
-
-E1系统前沿、新版表分组、预算及大型数据扩展与ADC论文的旧测量分开。
-历史packing和精排记录回答其原有配对问题。海报在视觉上连接这些机制，
-但不能替代运行元数据或扩展比较范围。版本名说明来源，机制名说明科学干预。
-
-\path{scripts/build_ch7.py}读取归档测量并重新生成实证图和主要数字表，
-包括\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}。
-source ledger与实验族audit保留原始路径及哈希；
-\path{scripts/audit_ch3.py}对照这些记录检查统一协议。
-源码检查与离线重算建立归档记录和报告数值之间的对应关系。
-重复GPU测量还需要相应binary、数据和训练状态；各项结果注明缺失的诊断覆盖。
-附录A提供实现与产物细节，并明确可获得的复现实验输入。
+\path{scripts/build_ch7.py} 重新生成主要图表，包括
+\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}；\path{scripts/audit_ch3.py} 核查统一协议。
+这些是离线重算，重复 GPU 测量还需所列二进制程序、数据和训练状态。

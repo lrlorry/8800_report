@@ -1,29 +1,12 @@
-Every main empirical claim is associated with an experiment family, a
-metric and consumed records. The machine-readable registry is
-\path{data/ch3/audit.json}; detailed numeric reconstruction is in the
-Chapter 4--7 audit files. Records identify the intervention, execution,
-index/query configuration, measurement boundary and analysis inputs.
-A file hash verifies the input consumed by analysis; it cannot recover
-an executable or trained state that was never archived. Appendix A gives
-the reproduction entry points; the repository's supplementary evidence
-retains the complete field definitions.\footnote{Repository supplement: \path{docs/supplementary-evidence.md}.}
+The evidence ledger \path{data/ch3/audit.json} identifies configurations,
+measurement boundaries and analysis inputs. Family-specific versions and
+controls remain separate. Hashes identify consumed files; historical
+executable and trained-state identities are incomplete. Appendix A lists
+available reproduction inputs, and the repository supplement gives the
+registry fields.\footnote{\path{docs/supplementary-evidence.md}.}
 
-
-The E1 system frontier, newer table sweep, budget campaign and large-data
-extensions remain separate from the ADC paper's older measurements.
-Historical packing and refinement records answer their original paired
-questions. The poster links these mechanisms visually, but does not replace
-run metadata or extend a comparison's coverage. Version names therefore
-describe provenance; mechanism names describe the scientific intervention.
-
-\path{scripts/build_ch7.py} reads archived measurements and regenerates
-the empirical plots and principal numeric tables, including
-\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}.
-The source ledger and family audits retain original paths and hashes;
-\path{scripts/audit_ch3.py} checks the common protocol against them.
-Source inspection and offline reconstruction establish correspondence
-between archived records and reported quantities. Repeating GPU measurements
-additionally requires the relevant binaries, datasets and trained states;
-missing diagnostic coverage is identified with each result. Appendix A
-supplies implementation and artifact details and specifies which reproduction
-inputs are available.
+\path{scripts/build_ch7.py} regenerates the principal plots and tables,
+including \cref{fig:7-frontiers,fig:7-lut,fig:7-memory};
+\path{scripts/audit_ch3.py} checks the common protocol.
+These are offline reconstructions. Repeating GPU measurements additionally
+requires the listed binaries, datasets and trained states.

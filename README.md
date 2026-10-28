@@ -1,14 +1,15 @@
 # COMP8800 / JHQ-GPU Thesis
 
-按形式化／精简审计继续合并重复说明：英文正文与摘要同口径估算为25,012词，
-PDF为96页（九章正文77页），中文阅读稿84页。正式PDF保留26幅图、31张表；
+按形式化／精简审计继续合并重复说明：英文正文与摘要同口径估算为24,293词，
+PDF为83页（九章正文67页），中文阅读稿81页。正式PDF保留26幅图、31张表；
 移出的13张辅助表、1张估算图及2处重复公式完整保存在[仓库补充材料](docs/supplementary-evidence.md)，不增加PDF附录。
-相对03775b7，正文与摘要减少1,920词；本轮另压缩前置说明282词。核心证明、T4/T5、预算风险、直接复用、规模结果和负案例均保留。
+相对03775b7，正文与摘要减少2,639词；本轮另压缩前置说明282词。核心证明、T4/T5、预算风险、直接复用、规模结果和负案例均保留。
 本轮科学图表资产未改动；相对较早基线86项保持字节一致，T5图仅曾重导出字体，数值不变。
 采用学院长论文模板的KOMA-Script结构及有记录的电子稿适配。
 见[本轮审计处理](assessment/compression-review-response.txt)、[精确正文补丁与计数](assessment/compression-edits.json)
 及[历史文字去重](assessment/deduplication-rounds.md)。本轮未复测AI比例。
-最新[ADC原稿及合并修订](assessment/adc-revision-response.txt)：摘要307→186词，独立来源／工具页取消，74词说明并入致谢。
+前轮[ADC原稿及合并修订](assessment/adc-revision-response.txt)：摘要307→186词，独立来源／工具页取消，74词说明并入致谢。
+最新[紧凑排版与低影响精简](assessment/layout-reflow-2026-10-29.txt)：删重复导语与作者名单旁白，缩短章名，英文96→83页，正文仍为11pt。
 
 提交前修订见[处理记录](assessment/final-review-response.txt)，作者仍需完成
 [手动清单](assessment/submission-manual-actions.txt)。已整理[真实AI提示词摘录](docs/ai-use-record.md)
@@ -31,7 +32,7 @@ PDF为96页（九章正文77页），中文阅读稿84页。正式PDF保留26幅
 - [全文审核离线复算](scripts/audit_full_review.py) · [输入与结果](data/full-review/audit.json)
 - [独立复核材料入口](evidence/review/README.md)：T4/T5、T1及A2所用的原始记录和源文件子集。
 - [实验协议详细清单](docs/experiment-protocol.md)：从附录A移出的完整程序／路径和诊断细节。
-- [附录精简记录](assessment/backmatter-streamlining.txt)：保留A/B，原附录C合并至前置来源与工具披露页。
+- [附录精简记录](assessment/backmatter-streamlining.txt)：保留A/B，原附录C内容先并入前置说明，现压缩为致谢内简短披露。
 - [三轮全文去重记录](assessment/deduplication-rounds.md)：历史提交86bf0f0的纯文字去重，当时保留全部图表。
 - [精准精简记录](assessment/targeted-curation-review.md) · [移出PDF的完整辅助证据](docs/supplementary-evidence.md)：本轮明确选择展示层级，核心证明与结论保留。
 - [去重保留核查](scripts/audit_deduplication.py) · [机器核查结果](data/deduplication/audit.json) · [学院模板来源](assessment/template-sources.json)
@@ -60,7 +61,7 @@ PDF为96页（九章正文77页），中文阅读稿84页。正式PDF保留26幅
 - [第 8 章：讨论与未来研究](chapters/08-discussion.tex) · [负结果审计](data/ch8/audit.json)
 - [第 9 章：结论](chapters/09-conclusion.tex) · [摘要](frontmatter/abstract.tex)
 - [新五部分综合审计](data/synthesis/audit.json) · [相关工作原始来源](data/synthesis/primary-sources.json)
-- [第 4 章：系统架构与 GPU 索引构建](chapters/04-architecture.tex) · [源码与证据核对](assessment/ch4-evidence.txt)
+- [第 4 章：GPU 索引设计与构建](chapters/04-architecture.tex) · [源码与证据核对](assessment/ch4-evidence.txt)
 - [第 5.1 节：查询路径与排序对象](chapters/05-1-query-path.tex)
 - [第 5.1 节核对与命题排版说明](assessment/ch5-section-1-evidence.txt)
 - [第 5.2 节：LUT](chapters/05-2-lut.tex)、[5.3：packed access](chapters/05-3-packed-access.tex)、[5.6：精排](chapters/05-6-refinement.tex)、[5.7：probe selection](chapters/05-7-probe.tex)
@@ -117,7 +118,7 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 
 - A4，KOMA-Script `scrbook` 长论文结构，单面单栏，11pt Latin Modern 正文及配套数学字体。
 - 保留左右 27mm、上下 28mm 页边距；英文正常单倍 leading，中文阅读稿 1.25 倍。
-- 英文半行段间距（`parskip=half-`）；中文保留两字缩进；KOMA 原生章节和页眉；黑白封面、数字引用及黑色链接。
+- 英文首行缩进、无额外半行段间距；中文保留两字缩进；KOMA 原生章节和页眉；黑白封面、数字引用及黑色链接。
 - 图表目录使用简短标题，完整图注保留在正文；目录采用单倍行距。
 - 前置部分罗马页码，正文阿拉伯页码，附录字母编号。
 - 自动目录、图目录、表目录、PDF 书签和可点击交叉引用。

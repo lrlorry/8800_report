@@ -7,7 +7,7 @@
 
 P0-1 个人研究贡献
 ----------------
-编辑位置：chapters/01-5-contributions.tex最后一段；必要时frontmatter/declaration.tex。
+编辑位置：chapters/01-5-contributions.tex贡献表附近；必要时frontmatter/declaration.tex。
 中文对应：zh/chapters/01-5-contributions.tex、zh/declaration.tex。
 已删除“个人分工已经另行记录”的不准确说法；真实个人分工仍须你填写。
 请按每项写实际事实，而不是把项目贡献表直接改称全部由你独立完成：
@@ -20,8 +20,8 @@ P0-1 个人研究贡献
 
 P0-2 补全实际AI交互记录
 ----------------------
-已有：docs/ai-use-record.md及data/submission/ai-use-record.json，保留当前会话的9条真实Codex用户指令摘录。
-论文披露页已经引用该记录，并明确它是部分记录。较早指令无可核实时间戳或模型版本，未编造。
+已有：docs/ai-use-record.md及data/submission/ai-use-record.json，保留当前会话的10条真实Codex用户指令摘录。
+致谢内简短披露已经引用该记录，并明确它是部分记录。较早指令无可核实时间戳或模型版本，未编造。
 需要你补：ChatGPT／Claude原始prompt与相应输出或可追溯导出；其他有实质用途但未覆盖的交互。
 记录字段建议：工具、实际日期（如可取得）、实际版本（如可取得）、原始prompt、输出用途、你本人采取的验证。
 不知道的日期／版本如实写未知；不要把这次整理日期当成历史交互日期，也不要编造prompt。

@@ -1,8 +1,6 @@
 \chapter{引言}
 \label{ch:introduction}
-搜索大型嵌入数据库需要同时决定信息与工作：每向量压缩多少、检查哪些向量、
-为它们投入多少精度。GPU可以并行执行许多操作，却不会使这些决策免费。
-本文以JHQ-GPU研究这种相互作用，包括JHQ主码／残差层次的GPU实现与实验分析。
+
 \section{背景与实际目标}
 \label{sec:1-1}
 \input{zh/chapters/01-1-context}
@@ -15,11 +13,6 @@
 \section{研究问题与可反驳主张}
 \label{sec:1-4}
 \input{zh/chapters/01-4-questions}
-\section{贡献与研究归属}
+\section{研究贡献}
 \label{sec:1-5}
 \input{zh/chapters/01-5-contributions}
-\section{论文结构}
-\label{sec:1-6}
-第2--3章建立背景与测量设计，第4--6章发展索引构建、GPU执行及工作负载校准。
-第7章评估正确性、质量、成本与竞争区间，第8章讨论负结果、限制及可检验扩展，
-第9章回答研究问题。附录A--B记录复现契约与补充证据。

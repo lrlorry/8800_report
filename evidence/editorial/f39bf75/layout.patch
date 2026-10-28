@@ -1,0 +1,665 @@
+diff --git a/chapters/01-5-contributions.tex b/chapters/01-5-contributions.tex
+index f3f4deb..456f273 100644
+--- a/chapters/01-5-contributions.tex
++++ b/chapters/01-5-contributions.tex
+@@ -29,22 +29,4 @@ smaller samples expose risk; four cells directly measure calibrated reuse \\
+ \end{tabularx}
+ \end{minipage}\par\medskip
+ 
+-On the full-batch E1 grid near recall 0.97, JHQ leads in three datasets and is
+-near parity with RaBitQ on arXiv under the interpolated comparison. Other
+-recall regions favour competitors. FULL's maximum observed held-out loss is
+-0.0006 relative to the best tested arm, while $S=128$ reaches 40/64 loss
+-crossings in one cell. These are empirical quality results; ten FULL cells
+-retain conditional nestedness coverage, while all twelve FULL
+-finite-grid choices now match enumeration (\cref{sec:7-budget-trace}).
+-The OpenAI E1 results use TF32 GEMMs; a separate FP32 sensitivity
+-retains smaller favourable margins (\cref{sec:7-precision}).
+-
+-This COMP8800 project is presented by Rui Luo under Dr Mengxuan Zhang's
+-supervision. The coauthored ADC manuscript names Rui Luo and Mengxuan Zhang
+-and shares the JHQ-GPU implementation and measurement artifacts
+-\cite{adc_artifact}. The thesis
+-expands the correctness contracts, newer experiment analysis and treatment
+-of failed designs; historical manuscript numbers retain their own versions.
+-Technical contribution labels describe the project scope. The acknowledgements
+-identify joint work and AI assistance.
+-The thesis author is responsible for the submitted claims and attribution.
++Performance depends on batch size and quality target; Chapters 7--8 report the unfavourable regions and numerical limits.
+diff --git a/chapters/01-introduction.tex b/chapters/01-introduction.tex
+index 96bbb56..45a15c1 100644
+--- a/chapters/01-introduction.tex
++++ b/chapters/01-introduction.tex
+@@ -1,11 +1,5 @@
+ \chapter{Introduction}
+ \label{ch:introduction}
+-Searching a large embedding database requires decisions about both
+-information and work: how compactly to represent each vector, which vectors
+-to inspect, and how much precision to spend on them. A GPU makes many
+-operations parallel, but it does not make these decisions free. This thesis
+-studies their interaction in JHQ-GPU, a GPU implementation and experimental
+-analysis of JHQ's primary/residual quantisation hierarchy.
+ 
+ \section{Context and Practical Objectives}
+ \label{sec:1-1}
+@@ -23,15 +17,6 @@ analysis of JHQ's primary/residual quantisation hierarchy.
+ \label{sec:1-4}
+ \input{chapters/01-4-questions}
+ 
+-\section{Contributions and Research Ownership}
++\section{Research Contributions}
+ \label{sec:1-5}
+ \input{chapters/01-5-contributions}
+-
+-\section{Thesis Roadmap}
+-\label{sec:1-6}
+-Chapters 2--3 establish the background and measurement design.
+-Chapters 4--6 develop index construction, GPU execution and workload-level
+-calibration. Chapter 7 evaluates their correctness, quality, cost and
+-competitive regions. Chapter 8 discusses negative results, limitations
+-and testable extensions; Chapter 9 answers the research questions.
+-Appendices A--B record reproduction contracts and supplementary evidence.
+diff --git a/chapters/02-background.tex b/chapters/02-background.tex
+index 832f917..1d68547 100644
+--- a/chapters/02-background.tex
++++ b/chapters/02-background.tex
+@@ -1,4 +1,4 @@
+-\chapter{Background and Critical Related Work}
++\chapter{Background and Related Work}
+ \label{ch:background}
+ \chaptermark{Background and Related Work}
+ An ANN system combines a candidate-access strategy, a representation and a
+diff --git a/chapters/03-5-ledger.tex b/chapters/03-5-ledger.tex
+index d7842b6..0965964 100644
+--- a/chapters/03-5-ledger.tex
++++ b/chapters/03-5-ledger.tex
+@@ -1,29 +1,12 @@
+-Every main empirical claim is associated with an experiment family, a
+-metric and consumed records. The machine-readable registry is
+-\path{data/ch3/audit.json}; detailed numeric reconstruction is in the
+-Chapter 4--7 audit files. Records identify the intervention, execution,
+-index/query configuration, measurement boundary and analysis inputs.
+-A file hash verifies the input consumed by analysis; it cannot recover
+-an executable or trained state that was never archived. Appendix A gives
+-the reproduction entry points; the repository's supplementary evidence
+-retains the complete field definitions.\footnote{Repository supplement: \path{docs/supplementary-evidence.md}.}
++The evidence ledger \path{data/ch3/audit.json} identifies configurations,
++measurement boundaries and analysis inputs. Family-specific versions and
++controls remain separate. Hashes identify consumed files; historical
++executable and trained-state identities are incomplete. Appendix A lists
++available reproduction inputs, and the repository supplement gives the
++registry fields.\footnote{\path{docs/supplementary-evidence.md}.}
+ 
+-
+-The E1 system frontier, newer table sweep, budget campaign and large-data
+-extensions remain separate from the ADC paper's older measurements.
+-Historical packing and refinement records answer their original paired
+-questions. The poster links these mechanisms visually, but does not replace
+-run metadata or extend a comparison's coverage. Version names therefore
+-describe provenance; mechanism names describe the scientific intervention.
+-
+-\path{scripts/build_ch7.py} reads archived measurements and regenerates
+-the empirical plots and principal numeric tables, including
+-\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}.
+-The source ledger and family audits retain original paths and hashes;
+-\path{scripts/audit_ch3.py} checks the common protocol against them.
+-Source inspection and offline reconstruction establish correspondence
+-between archived records and reported quantities. Repeating GPU measurements
+-additionally requires the relevant binaries, datasets and trained states;
+-missing diagnostic coverage is identified with each result. Appendix A
+-supplies implementation and artifact details and specifies which reproduction
+-inputs are available.
++\path{scripts/build_ch7.py} regenerates the principal plots and tables,
++including \cref{fig:7-frontiers,fig:7-lut,fig:7-memory};
++\path{scripts/audit_ch3.py} checks the common protocol.
++These are offline reconstructions. Repeating GPU measurements additionally
++requires the listed binaries, datasets and trained states.
+diff --git a/chapters/03-6-validity.tex b/chapters/03-6-validity.tex
+index ed6f762..3cc1249 100644
+--- a/chapters/03-6-validity.tex
++++ b/chapters/03-6-validity.tex
+@@ -1,14 +1,7 @@
+-Proofs establish properties under their stated assumptions; independent
+-references test implementation agreement on finite cases. Paired benchmarks
+-measure an intervention within a fixed workload, and system measurements
+-locate operating regions on the tested device and grids. Byte and payback
+-models retain their accounting assumptions; proposed explanations require
+-separate tests. Exact primary selection concerns the computed primary score,
+-whereas raw-vector recall also depends on routing and reconstruction.
+-
+-
+-Shared-index dependence, finite pools, grid selection, interface
+-asymmetry and one-device coverage motivate the controls above.
+-The population and ordering assumptions are analysed in
+-\cref{sec:6-2,sec:6-3}; \cref{sec:8-3} consolidates the resulting limits
+-to interpretation and deployment.
++Exactness claims name the computed score and ordering assumptions;
++raw-vector recall also depends on routing and reconstruction. Independent
++references have finite coverage, paired timings retain their workload
++controls, and byte/payback models retain their accounting assumptions.
++Population and ordering conditions are analysed in
++\cref{sec:6-2,sec:6-3}; \cref{sec:8-3} consolidates the limits arising
++from shared indexes, finite pools, tuning grids, interfaces and one device.
+diff --git a/chapters/03-methodology.tex b/chapters/03-methodology.tex
+index c5cc283..38e2cc5 100644
+--- a/chapters/03-methodology.tex
++++ b/chapters/03-methodology.tex
+@@ -1,5 +1,5 @@
+ % Six-section design follows 6.pdf; records audited offline in data/ch3/audit.json.
+-\chapter[Research Design and Measurement Methodology]{Research Design and\\Measurement Methodology}
++\chapter{Research Design and Measurement}
+ \label{ch:methodology}
+ \chaptermark{Research Design and Measurement}
+ The evaluation connects a systems intervention to an observable cost or
+diff --git a/chapters/04-architecture.tex b/chapters/04-architecture.tex
+index d5158a9..6b33e17 100644
+--- a/chapters/04-architecture.tex
++++ b/chapters/04-architecture.tex
+@@ -1,14 +1,9 @@
+ % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+-\chapter[System Architecture and GPU Index Construction]{System Architecture and\\GPU Index Construction}
++\chapter{GPU Index Design and Construction}
+ \label{ch:architecture}
+-This chapter addresses RQ1: how to construct a searchable, GPU-resident
+-JHQ index from high-dimensional vectors. JHQ supplies the transform and
+-primary/residual representation \cite{jhq}. The systems problem is to
+-train that representation, encode a database larger than its available
+-full-precision device storage, and expose consistent list-ordered arrays
+-to the query path. The discussion follows training, placement, allocation and validation. Detailed query
+-kernels follow in \Cref{ch:gpu-execution}; measured comparisons are in
+-\Cref{sec:7-7}.
++GPU construction trains and encodes JHQ's representation into list-ordered
++arrays with bounded temporary storage \cite{jhq}. Query kernels and measured
++construction costs are in \Cref{ch:gpu-execution,sec:7-7}.
+ 
+ \section{End-to-End Build and Search Boundaries}
+ \label{sec:4-1}
+diff --git a/chapters/05-gpu-execution.tex b/chapters/05-gpu-execution.tex
+index a07760a..0debd9f 100644
+--- a/chapters/05-gpu-execution.tex
++++ b/chapters/05-gpu-execution.tex
+@@ -1,15 +1,9 @@
+ % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+-\chapter[Representation-Aware GPU Search Execution]{Representation-Aware\\GPU Search Execution}
++\chapter{Representation-Aware GPU Search}
+ \label{ch:gpu-execution}
+-This chapter addresses RQ2: how JHQ's compressed representation can support
+-correct and efficient GPU execution. The transform, Cartesian primary
+-codebook and residual hierarchy are inherited from JHQ \cite{jhq}; the
+-focus here is their execution. The argument follows the query path from
+-routing through primary selection to residual scoring. For each mechanism,
+-it separates the mathematical target, implementation conditions and
+-resource trade-offs, with the corresponding measurements in
+-\Cref{ch:evaluation}. Workload-level refinement-budget selection is
+-developed separately in \Cref{ch:refinement}.
++The transform and primary/residual hierarchy follow JHQ \cite{jhq}.
++This chapter develops their GPU scoring and computed-score selection;
++\Cref{ch:evaluation,ch:refinement} cover measurement and budget choice.
+ 
+ \section{Query Path and Four Distinct Ranking Objects}
+ \label{sec:5-1}
+diff --git a/chapters/06-refinement.tex b/chapters/06-refinement.tex
+index 112320b..100208b 100644
+--- a/chapters/06-refinement.tex
++++ b/chapters/06-refinement.tex
+@@ -1,14 +1,9 @@
+ % Structure follows 6.pdf; all six sections use audited implementation/evidence.
+-\chapter[Workload-Level Refinement-Budget Calibration]{Workload-Level\\Refinement-Budget Calibration}
++\chapter{Workload-Level Budget Calibration}
+ \label{ch:refinement}
+-
+-Chapters 4 and 5 establish a compressed index and its GPU execution.
+-This chapter addresses RQ3: how much refinement work a workload needs,
+-and whether selecting that budget repays its calibration cost. The
+-policy compares unlabelled query outputs with a larger-budget reference
+-and reuses one selected multiplier across batches. The method is analysed
+-through its acceptance rule, conditional selection theorem, experimental
+-controls and amortisation model. Chapter 7 reports the measured outcomes.
++The policy selects one workload-level refinement multiplier through
++unlabelled agreement with a larger-budget reference, then reuses it across
++batches. Quality and calibration cost constrain that reuse.
+ 
+ \section{Why Fixed Refinement Budgets Can Be Wasteful}
+ \label{sec:6-1}
+diff --git a/chapters/07-evaluation.tex b/chapters/07-evaluation.tex
+index d476e10..3a1f7d7 100644
+--- a/chapters/07-evaluation.tex
++++ b/chapters/07-evaluation.tex
+@@ -1,19 +1,13 @@
+-\chapter[Experimental Evaluation and Research Findings]{Experimental Evaluation\\and Research Findings}
++\chapter{Experimental Evaluation}
+ \label{ch:evaluation}
+ \chaptermark{Experimental Evaluation}
+ 
+ The experiments address construction and capacity (RQ1), execution (RQ2),
+ budget quality and reuse cost (RQ3), and competitive search regions (RQ4).
+ 
+-\section{Final Experiment Manifest and Comparison Families}
++\section{Experimental Protocol}
+ \label{sec:7-1}
+ 
+-The evidence comprises system frontiers, component ablations,
+-selection checks, budget calibration and construction/scale measurements.
+-\Cref{app:reproducibility} records implementation and run provenance;
+-the repository supplement retains the full family manifest.
+-
+-
+ \subsection{Comparison protocol and reproducibility}
+ 
+ Datasets, timing and comparison families follow
+@@ -882,10 +876,3 @@ the seven arms include two budgets on one dataset--probe workload.
+ FP64 reconstructed scoring also differs from the GPU arithmetic, so the
+ pilot does not isolate a pure budget effect in every arm. Separating
+ routing from representation requires additional stage-wise GT coverage.
+-
+-\subsection{Scope of the research findings}
+-
+-The findings concern squared-L2 top-10 on the recorded query pools and
+-RTX 5090. \Cref{tab:8-threats} consolidates transfer limits; Chapter 8
+-develops the systems implications and negative cases, and \cref{sec:9-1}
+-answers RQ1--RQ4.
+diff --git a/chapters/08-discussion.tex b/chapters/08-discussion.tex
+index 33741f5..296d3ac 100644
+--- a/chapters/08-discussion.tex
++++ b/chapters/08-discussion.tex
+@@ -1,9 +1,6 @@
+-\chapter[Discussion, Limitations and Future Research]{Discussion, Limitations\\and Future Research}
++\chapter{Discussion and Future Work}
+ \label{ch:discussion}
+-\chaptermark{Discussion and Future Research}
+-This chapter relates code structure, execution cost and refinement effort,
+-then uses the negative results to identify deployment limits and further
+-tests. Interpretations follow the evidence distinctions in \cref{sec:3-6}.
++\chaptermark{Discussion and Future Work}
+ 
+ \section{Three Cross-Layer Insights}
+ \label{sec:8-1}
+diff --git a/chapters/09-conclusion.tex b/chapters/09-conclusion.tex
+index b61d84d..d15c82c 100644
+--- a/chapters/09-conclusion.tex
++++ b/chapters/09-conclusion.tex
+@@ -1,9 +1,5 @@
+ \chapter{Conclusion}
+ \label{ch:conclusion}
+-JHQ-GPU demonstrates how a structured quantised hierarchy can be translated
+-into a useful GPU search pipeline, and why its execution and refinement
+-effort must be evaluated together. The four research questions now have
+-concrete, bounded answers.
+ 
+ \section{Answers to the Four Research Questions}
+ \label{sec:9-1}
+diff --git a/config/layout.tex b/config/layout.tex
+index fddd8b1..a01ab1f 100644
+--- a/config/layout.tex
++++ b/config/layout.tex
+@@ -4,19 +4,23 @@
+ \geometry{a4paper,left=27mm,right=27mm,top=28mm,bottom=28mm,
+   headheight=18pt,headsep=7mm,footskip=12mm}
+ \setstretch{1.0}
++% Classic thesis paragraphs: indent instead of a half-line blank between them.
++\setparsizes{1.2em}{0pt plus .5pt}{0pt plus 1fil}
+ % Preserve the existing, scoped roman math subscripts without rewriting equations.
+ \DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+ 
+-\KOMAoptions{chapterprefix=true,headings=normal,numbers=noendperiod}
++\KOMAoptions{chapterprefix=false,headings=normal,numbers=noendperiod}
+ \setkomafont{disposition}{\normalfont\bfseries}
+-\setkomafont{chapter}{\normalfont\LARGE\bfseries}
++\setkomafont{chapter}{\normalfont\Large\bfseries}
+ \setkomafont{chapterprefix}{\normalfont\large\bfseries}
+-\RedeclareSectionCommand[beforeskip=2ex plus .5ex minus .2ex,
+-  afterskip=1ex plus .2ex]{chapter}
+-\RedeclareSectionCommand[beforeskip=2.1ex plus .5ex minus .2ex,
+-  afterskip=.9ex plus .2ex]{section}
+-\RedeclareSectionCommand[beforeskip=1.7ex plus .4ex minus .2ex,
+-  afterskip=.7ex plus .2ex]{subsection}
++\RedeclareSectionCommand[beforeskip=1.5ex plus .3ex minus .2ex,
++  afterskip=.8ex plus .2ex]{chapter}
++\RedeclareSectionCommand[beforeskip=1.8ex plus .4ex minus .2ex,
++  afterskip=.7ex plus .2ex]{section}
++\RedeclareSectionCommand[beforeskip=1.4ex plus .3ex minus .2ex,
++  afterskip=.6ex plus .2ex]{subsection}
++\RedeclareSectionCommand[runin=true,beforeskip=.9ex plus .3ex minus .1ex,
++  afterskip=.75em]{paragraph}
+ 
+ \clearpairofpagestyles
+ \automark[chapter]{chapter}
+@@ -26,16 +30,36 @@
+ \setkomafont{pagenumber}{\normalfont\small\color{black}}
+ \pagestyle{scrheadings}
+ 
+-\captionsetup{font={small,stretch=1.1},labelfont=bf,labelsep=period,
+-  justification=raggedright,singlelinecheck=false,skip=7pt}
+-\captionsetup[table]{position=top,skip=6pt}
+-\setlength{\textfloatsep}{16pt plus 3pt minus 3pt}
+-\setlength{\floatsep}{12pt plus 3pt minus 3pt}
+-\setlength{\intextsep}{14pt plus 3pt minus 3pt}
+-\setlength{\abovecaptionskip}{7pt}
++\captionsetup{font={small,stretch=1.0},labelfont=bf,labelsep=period,
++  justification=raggedright,singlelinecheck=false,skip=5pt}
++\captionsetup[table]{position=top,skip=4pt}
++\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
++\setlength{\floatsep}{10pt plus 2pt minus 2pt}
++\setlength{\intextsep}{10pt plus 2pt minus 2pt}
++% Keep neighbouring floats together on float-only pages.
++\makeatletter
++\setlength{\@fptop}{0pt}
++\setlength{\@fpsep}{12pt plus 2pt minus 2pt}
++\setlength{\@fpbot}{0pt plus 1fil}
++\makeatother
++\setlength{\abovecaptionskip}{5pt}
+ \setlength{\belowcaptionskip}{0pt}
+ \setlist{itemsep=.15em,topsep=.35em,parsep=0pt}
+-\setlength{\bibsep}{.4em}
++\setlength{\bibsep}{.3em}
++\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}
++\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
++\setlength{\abovedisplayshortskip}{4pt plus 1pt}
++\setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}
++\AtBeginDocument{%
++  \setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}%
++  \setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}%
++  \setlength{\abovedisplayshortskip}{4pt plus 1pt}%
++  \setlength{\belowdisplayshortskip}{5pt plus 1pt minus 1pt}}
++
++% Short preliminary sections may share a page; numbered chapters stay separate.
++\newcommand{\frontsection}[1]{%
++  \section*{#1}\phantomsection\addcontentsline{toc}{chapter}{#1}%
++  \markboth{#1}{#1}}
+ 
+ % Native KOMA contents/list styles and appendix terminology.
+ \DeclareTOCStyleEntry[beforeskip=.5em plus .1em]{chapter}{chapter}
+diff --git a/config/preamble.tex b/config/preamble.tex
+index 4d1d5aa..5eece8c 100644
+--- a/config/preamble.tex
++++ b/config/preamble.tex
+@@ -25,7 +25,7 @@
+ \usepackage{tikz}
+ \usetikzlibrary{arrows.meta,positioning,decorations.pathreplacing}
+ \usepackage[numbers,sort&compress]{natbib}
+-\renewcommand{\bibfont}{\raggedright}
++\renewcommand{\bibfont}{\small\raggedright}
+ \usepackage[automark,headsepline]{scrlayer-scrpage}
+ \input{config/layout}
+ \setcounter{secnumdepth}{2}
+@@ -35,10 +35,10 @@
+ \clubpenalty=10000
+ \raggedbottom
+ % Keep result figures with nearby text; align forced float pages at the top.
+-\renewcommand{\topfraction}{0.90}
+-\renewcommand{\bottomfraction}{0.85}
+-\renewcommand{\textfraction}{0.10}
+-\renewcommand{\floatpagefraction}{0.75}
++\renewcommand{\topfraction}{0.95}
++\renewcommand{\bottomfraction}{0.90}
++\renewcommand{\textfraction}{0.05}
++\renewcommand{\floatpagefraction}{0.70}
+ \setcounter{topnumber}{3}
+ \setcounter{totalnumber}{4}
+ \makeatletter
+diff --git a/frontmatter/acknowledgements.tex b/frontmatter/acknowledgements.tex
+index c6d67aa..247bf17 100644
+--- a/frontmatter/acknowledgements.tex
++++ b/frontmatter/acknowledgements.tex
+@@ -1,4 +1,4 @@
+-\frontchapter{Acknowledgements}
++\frontsection{Acknowledgements}
+ I thank Dr Mengxuan Zhang for supervising this project and acknowledge the
+ JHQ authors and open-source ANN/GPU software cited throughout this thesis.
+ 
+diff --git a/zh/acknowledgements.tex b/zh/acknowledgements.tex
+index 44d9e0f..6de2a61 100644
+--- a/zh/acknowledgements.tex
++++ b/zh/acknowledgements.tex
+@@ -1,4 +1,4 @@
+-\frontchapter{致谢}
++\frontsection{致谢}
+ 感谢 Mengxuan Zhang 博士指导本项目，并感谢本文引用的 JHQ 作者及开源 ANN/GPU 软件贡献者。
+ 
+ \input{zh/declaration}
+diff --git a/zh/chapters/01-5-contributions.tex b/zh/chapters/01-5-contributions.tex
+index 6f7da1b..26c3df6 100644
+--- a/zh/chapters/01-5-contributions.tex
++++ b/zh/chapters/01-5-contributions.tex
+@@ -21,14 +21,4 @@ C3 & 候选扩张和输出一致性思路 & 工作负载预算规则、有条件
+ \end{tabularx}
+ \end{minipage}\par\medskip
+ 
+-E1大batch的0.97附近插值比较中，JHQ在三个数据集
+-领先，arXiv与RaBitQ接近平手，其他recall区间有对手领先。
+-FULL最大实测留出损失相对最佳被测臂为0.0006，$S=128$一个单元有40/64次越阈。
+-这些是经验质量结果；10个FULL单元一般嵌套仍有条件，但十二个FULL有限网格选择均与枚举一致（\cref{sec:7-budget-trace}）。
+-OpenAI E1使用TF32 GEMM；独立FP32敏感性仍保留较小领先（\cref{sec:7-precision}）。
+-
+-本COMP8800项目由Rui Luo在Dr Mengxuan Zhang指导下呈现。
+-ADC合著稿列Rui Luo与Mengxuan Zhang，复用JHQ-GPU实现及测量产物\cite{adc_artifact}。
+-论文扩展正确性契约、新版实验分析与失败方案讨论，历史稿数字保留各自版本。
+-技术贡献标签界定项目范围；致谢简要说明共同工作与AI协助。
+-论文作者对提交的主张与归属标注负责。
++性能依赖批大小与质量目标；第七、八章报告不利区间和数值边界。
+diff --git a/zh/chapters/01-introduction.tex b/zh/chapters/01-introduction.tex
+index e0cfb8e..e5d341b 100644
+--- a/zh/chapters/01-introduction.tex
++++ b/zh/chapters/01-introduction.tex
+@@ -1,8 +1,6 @@
+ \chapter{引言}
+ \label{ch:introduction}
+-搜索大型嵌入数据库需要同时决定信息与工作：每向量压缩多少、检查哪些向量、
+-为它们投入多少精度。GPU可以并行执行许多操作，却不会使这些决策免费。
+-本文以JHQ-GPU研究这种相互作用，包括JHQ主码／残差层次的GPU实现与实验分析。
++
+ \section{背景与实际目标}
+ \label{sec:1-1}
+ \input{zh/chapters/01-1-context}
+@@ -15,11 +13,6 @@
+ \section{研究问题与可反驳主张}
+ \label{sec:1-4}
+ \input{zh/chapters/01-4-questions}
+-\section{贡献与研究归属}
++\section{研究贡献}
+ \label{sec:1-5}
+ \input{zh/chapters/01-5-contributions}
+-\section{论文结构}
+-\label{sec:1-6}
+-第2--3章建立背景与测量设计，第4--6章发展索引构建、GPU执行及工作负载校准。
+-第7章评估正确性、质量、成本与竞争区间，第8章讨论负结果、限制及可检验扩展，
+-第9章回答研究问题。附录A--B记录复现契约与补充证据。
+diff --git a/zh/chapters/02-background.tex b/zh/chapters/02-background.tex
+index fa3f2bb..a52d911 100644
+--- a/zh/chapters/02-background.tex
++++ b/zh/chapters/02-background.tex
+@@ -1,4 +1,4 @@
+-\chapter{背景与批判性相关工作}
++\chapter{背景与相关工作}
+ \label{ch:background}
+ \chaptermark{背景与相关工作}
+ ANN系统结合候选访问、数据表示与选择过程。三者成本互相影响：紧凑编码可能需要
+diff --git a/zh/chapters/03-5-ledger.tex b/zh/chapters/03-5-ledger.tex
+index f1a2091..edd7615 100644
+--- a/zh/chapters/03-5-ledger.tex
++++ b/zh/chapters/03-5-ledger.tex
+@@ -1,17 +1,7 @@
+-每项主要实证主张都关联实验族、指标和实际读取记录。机器可读登记为
+-\path{data/ch3/audit.json}；第4--7章audit文件提供详细数值重算。
+-记录包含干预、执行、索引／查询配置、测量边界及分析输入。文件哈希验证分析读取的输入，
+-无法恢复从未归档的可执行文件或训练状态。附录A提供复现入口，仓库补充材料保留完整字段定义。\footnote{仓库补充材料：\path{docs/supplementary-evidence.md}。}
++证据登记 \path{data/ch3/audit.json} 标识配置、测量边界和分析输入，各实验族保留
++独立版本及对照。哈希标识已读取文件，历史可执行文件和训练状态身份仍不完整。
++附录 A 列出可获得的复现输入，仓库补充材料给出登记字段。\footnote{\path{docs/supplementary-evidence.md}。}
+ 
+-
+-E1系统前沿、新版表分组、预算及大型数据扩展与ADC论文的旧测量分开。
+-历史packing和精排记录回答其原有配对问题。海报在视觉上连接这些机制，
+-但不能替代运行元数据或扩展比较范围。版本名说明来源，机制名说明科学干预。
+-
+-\path{scripts/build_ch7.py}读取归档测量并重新生成实证图和主要数字表，
+-包括\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}。
+-source ledger与实验族audit保留原始路径及哈希；
+-\path{scripts/audit_ch3.py}对照这些记录检查统一协议。
+-源码检查与离线重算建立归档记录和报告数值之间的对应关系。
+-重复GPU测量还需要相应binary、数据和训练状态；各项结果注明缺失的诊断覆盖。
+-附录A提供实现与产物细节，并明确可获得的复现实验输入。
++\path{scripts/build_ch7.py} 重新生成主要图表，包括
++\cref{fig:7-frontiers,fig:7-lut,fig:7-memory}；\path{scripts/audit_ch3.py} 核查统一协议。
++这些是离线重算，重复 GPU 测量还需所列二进制程序、数据和训练状态。
+diff --git a/zh/chapters/03-6-validity.tex b/zh/chapters/03-6-validity.tex
+index fb42ccd..1878c1f 100644
+--- a/zh/chapters/03-6-validity.tex
++++ b/zh/chapters/03-6-validity.tex
+@@ -1,8 +1,4 @@
+-证明在明确前提下建立性质，独立参考检验有限样例中的实现一致性。
+-配对基准测量固定工作负载内的干预效果，系统测量定位被测设备与网格中的竞争区间。
+-字节与回本模型保留各自核算假设，解释候选需要另行检验。
+-精确primary选择针对实际算出的primary分数，原始向量recall还受路由和重建影响。
+-
+-
+-共享索引依赖、有限池、网格选择、接口不对称及单设备范围构成上述对照设计的动机。
+-总体与排序假设见\cref{sec:6-2,sec:6-3}，\cref{sec:8-3}统一讨论其对解释和部署的限制。
++精确性声明指明计算分数与排序前提，原始向量 recall 还受路由和重建影响。
++独立参考的覆盖有限，配对计时保留工作负载对照，字节／回本模型保留核算前提。
++总体与排序条件见\cref{sec:6-2,sec:6-3}；\cref{sec:8-3}汇总共享索引、有限查询池、
++调参网格、接口及单设备带来的限制。
+diff --git a/zh/chapters/03-methodology.tex b/zh/chapters/03-methodology.tex
+index 16b97dd..2c75975 100644
+--- a/zh/chapters/03-methodology.tex
++++ b/zh/chapters/03-methodology.tex
+@@ -1,4 +1,4 @@
+-\chapter{研究设计与测量方法}
++\chapter{研究设计与测量}
+ \label{ch:methodology}
+ \chaptermark{研究设计与测量方法}
+ 评估需要把系统干预与可观测的成本或质量变化联系起来。本文结合配对执行消融、
+diff --git a/zh/chapters/04-architecture.tex b/zh/chapters/04-architecture.tex
+index 577ae0d..82b5646 100644
+--- a/zh/chapters/04-architecture.tex
++++ b/zh/chapters/04-architecture.tex
+@@ -1,6 +1,7 @@
+-\chapter{系统架构与 GPU 索引构建}
++\chapter{GPU 索引设计与构建}
+ \label{ch:architecture}
+-本章回答 RQ1：如何从高维向量构造可搜索的 GPU 常驻 JHQ 索引。变换与主码／残差表示继承自 JHQ\cite{jhq}。系统问题在于训练这一表示、编码完整 FP32 数据超出可用设备空间的数据库，并为查询路径提供一致的列表顺序数组。本章依次讨论训练、放置、分配与验证；查询 kernel 细节见\Cref{ch:gpu-execution}，实测比较见\Cref{sec:7-7}。
++GPU 构建训练并编码 JHQ 表示，以有界临时存储生成列表顺序数组\cite{jhq}。
++查询内核与构建实测见\Cref{ch:gpu-execution,sec:7-7}。
+ 
+ \section{端到端建库与搜索边界}
+ \label{sec:4-1}
+diff --git a/zh/chapters/05-gpu-execution.tex b/zh/chapters/05-gpu-execution.tex
+index a55a66d..ebd3962 100644
+--- a/zh/chapters/05-gpu-execution.tex
++++ b/zh/chapters/05-gpu-execution.tex
+@@ -1,7 +1,8 @@
+ % Chinese reading copy of the completed Chapter 5.
+-\chapter{面向表示的 GPU 搜索执行}
++\chapter{面向表示的 GPU 搜索}
+ \label{ch:gpu-execution}
+-本章回答 RQ2：如何使 JHQ 的压缩表示支持正确且高效的 GPU 执行。变换、Cartesian 主码码本及残差层次继承自 JHQ\cite{jhq}；这里关注它们的执行方式。论证沿查询路径，从路由到主码选择，再到残差评分。对每种机制，分别讨论数学目标、实现条件和资源权衡，对应测量见\Cref{ch:evaluation}。工作负载级精排预算选择则在\Cref{ch:refinement}单独展开。
++变换与主码／残差层次继承自 JHQ\cite{jhq}。本章发展 GPU 评分及计算分数选择；
++测量与预算选择见\Cref{ch:evaluation,ch:refinement}。
+ 
+ \section{查询路径与四种不同的排序对象}
+ \label{sec:5-1}
+diff --git a/zh/chapters/06-refinement.tex b/zh/chapters/06-refinement.tex
+index fbe18db..cdb2901 100644
+--- a/zh/chapters/06-refinement.tex
++++ b/zh/chapters/06-refinement.tex
+@@ -1,7 +1,7 @@
+-\chapter{工作负载级精排预算校准}
++\chapter{工作负载级预算校准}
+ \label{ch:refinement}
+-
+-第四、五章确立压缩索引及其 GPU 执行。本章回答 RQ3：一个工作负载需要多少精排工作，选择该预算能否收回校准成本。策略将无标签查询输出与较大预算参考比较，并跨批复用选定的乘数。本章分析接纳规则、有条件的选择定理、实验对照和摊销模型；第七章报告实测结果。
++策略通过无标签输出与大预算参考的一致性选择工作负载级精排倍率，并跨批复用。
++质量与校准成本约束这一复用。
+ 
+ \section{固定精排预算为何可能浪费}
+ \label{sec:6-1}
+diff --git a/zh/chapters/07-evaluation.tex b/zh/chapters/07-evaluation.tex
+index 6fcc910..d8b7be4 100644
+--- a/zh/chapters/07-evaluation.tex
++++ b/zh/chapters/07-evaluation.tex
+@@ -1,16 +1,13 @@
+ % 中文阅读译稿；对应 chapters/07-evaluation.tex，不增加实验或结论。
+-\chapter{实验评估与研究发现}
++\chapter{实验评估}
+ \label{ch:evaluation}
+ \chaptermark{实验评估}
+ 
+ 实验考察构建与容量（RQ1）、执行（RQ2）、预算质量及复用成本（RQ3），以及搜索竞争区间（RQ4）。
+ 
+-\section{最终实验清单与对照实验组}
++\section{实验协议}
+ \label{sec:7-1}
+ 
+-证据涵盖系统前沿、组件消融、选择检查、预算校准以及构建／规模测量。\Cref{app:reproducibility}记录实现及运行来源，仓库补充材料保留完整实验分组清单。
+-
+-
+ \subsection{比较协议与可复现性}
+ 
+ 数据、计时与比较分组沿用\cref{sec:3-2,sec:3-3,sec:3-5}。RTX 5090 主比较测量
+@@ -466,9 +463,3 @@ arXiv与LUT接近平手的结论仍保持较窄解释。
+ 
+ 
+ 归档重建 pilot 测量了相对全探针重建评分的剩余差距。七个工作负载—预算变体各用 128 条查询，全部 probe 候选的 FP64 评分相对所选预算的 GPU 输出，recall 增益为 0--0.002344。在 arXiv 的 128 探针配置，$\alpha=200$ 与全 IVF 重建答案集合在全部 128 条查询上一致；100 时 recall 为 0.9734375，全 IVF 为 0.9750，即在联合路由／重建缺口 0.0250 之外，再有 0.0015625 的预算缺口（\cref{sec:6-2}）。这些是 pilot 特定的总体差异，七个变体包含同一数据集—探针工作负载的两个预算。FP64 重建评分也不同于 GPU 运算，因而不能在每个变体中单独隔离纯预算效应。进一步分开路由与表示，需要逐阶段 GT 覆盖检查。
+-
+-\subsection{研究发现的适用范围}
+-
+-发现针对记录查询池及 RTX 5090 上的平方 L2 top-10。
+-\Cref{tab:8-threats}集中列出迁移边界；第八章发展系统认识与负结果，
+-\cref{sec:9-1}回答 RQ1--RQ4。
+diff --git a/zh/chapters/08-discussion.tex b/zh/chapters/08-discussion.tex
+index 1dbd937..6708b00 100644
+--- a/zh/chapters/08-discussion.tex
++++ b/zh/chapters/08-discussion.tex
+@@ -1,8 +1,7 @@
+-\chapter{讨论、局限与未来研究}
++\chapter{讨论与未来工作}
+ \label{ch:discussion}
+-\chaptermark{讨论与未来研究}
+-本章关联编码结构、执行成本与精排工作量，并以负结果确定部署边界和后续检验。
+-解释沿用\cref{sec:3-6}的证据分类。
++\chaptermark{讨论与未来工作}
++
+ \section{三项跨层认识}
+ \label{sec:8-1}
+ \input{zh/chapters/08-1-insights}
+diff --git a/zh/chapters/09-conclusion.tex b/zh/chapters/09-conclusion.tex
+index fce66af..5452344 100644
+--- a/zh/chapters/09-conclusion.tex
++++ b/zh/chapters/09-conclusion.tex
+@@ -1,7 +1,6 @@
+ \chapter{结论}
+ \label{ch:conclusion}
+-JHQ-GPU展示如何把结构化量化层次转化为有用的GPU搜索流水线，
+-以及为什么执行与精排工作量需要联合评估。四个研究问题得到具体且有边界的答案。
++
+ \section{四个研究问题的答案}
+ \label{sec:9-1}
+ \paragraph{RQ1：构建与容量。}
+diff --git a/zh/preamble.tex b/zh/preamble.tex
+index 32a2ae3..db3e9ef 100644
+--- a/zh/preamble.tex
++++ b/zh/preamble.tex
+@@ -59,10 +59,10 @@
+ \clubpenalty=10000
+ \raggedbottom
+ % Match the English thesis's result-figure placement.
+-\renewcommand{\topfraction}{0.90}
+-\renewcommand{\bottomfraction}{0.85}
+-\renewcommand{\textfraction}{0.10}
+-\renewcommand{\floatpagefraction}{0.75}
++\renewcommand{\topfraction}{0.95}
++\renewcommand{\bottomfraction}{0.90}
++\renewcommand{\textfraction}{0.05}
++\renewcommand{\floatpagefraction}{0.70}
+ \setcounter{topnumber}{3}
+ \setcounter{totalnumber}{4}
+ \makeatletter
+@@ -113,7 +113,7 @@
+ \newcommand{\lrefine}{\ell_{\mathrm{ref}}}
+ 
+ % Chinese reading-copy names; labels and numbering follow the English draft.
+-\renewcommand{\bibfont}{\raggedright}
++\renewcommand{\bibfont}{\small\raggedright}
+ \crefname{figure}{图}{图}
+ \Crefname{figure}{图}{图}
+ \crefname{table}{表}{表}

@@ -1,11 +1,5 @@
 \chapter{Introduction}
 \label{ch:introduction}
-Searching a large embedding database requires decisions about both
-information and work: how compactly to represent each vector, which vectors
-to inspect, and how much precision to spend on them. A GPU makes many
-operations parallel, but it does not make these decisions free. This thesis
-studies their interaction in JHQ-GPU, a GPU implementation and experimental
-analysis of JHQ's primary/residual quantisation hierarchy.
 
 \section{Context and Practical Objectives}
 \label{sec:1-1}
@@ -23,15 +17,6 @@ analysis of JHQ's primary/residual quantisation hierarchy.
 \label{sec:1-4}
 \input{chapters/01-4-questions}
 
-\section{Contributions and Research Ownership}
+\section{Research Contributions}
 \label{sec:1-5}
 \input{chapters/01-5-contributions}
-
-\section{Thesis Roadmap}
-\label{sec:1-6}
-Chapters 2--3 establish the background and measurement design.
-Chapters 4--6 develop index construction, GPU execution and workload-level
-calibration. Chapter 7 evaluates their correctness, quality, cost and
-competitive regions. Chapter 8 discusses negative results, limitations
-and testable extensions; Chapter 9 answers the research questions.
-Appendices A--B record reproduction contracts and supplementary evidence.
