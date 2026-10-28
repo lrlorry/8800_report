@@ -1,0 +1,1730 @@
+{
+  "date": "2026-10-29",
+  "timezone": "Australia/Sydney",
+  "audited_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
+  "verdict": "NOT_READY_FOR_UNQUALIFIED_SIGNOFF",
+  "meaning": "已查材料范围内的逐项核对；P0仍需关闭，个人Canvas任务细则未取得，不能声称穷尽未公开要求。",
+  "paper_changed": false,
+  "gpu_executed": false,
+  "requirements_count": 73,
+  "status_counts": {
+    "PASS": 45,
+    "MANUAL": 8,
+    "UNSPECIFIED": 3,
+    "PARTIAL": 11,
+    "MISSING": 2,
+    "NA": 4
+  },
+  "pdf": {
+    "english_pages": 101,
+    "english_chapters_pages": 82,
+    "chinese_pages": 87,
+    "english_prose_and_abstract_estimate": 26975,
+    "abstract_estimate": 307,
+    "figures": 26,
+    "tables": 32,
+    "word_scope": "九章及摘要文字／图注；表体和数学除外；不是学校官方计数",
+    "fonts": {
+      "entries": 48,
+      "all_embedded": true,
+      "type3": 1
+    },
+    "words_outside_page": 0
+  },
+  "code": {
+    "local_commit": "19135c965a2cfccf469efb6b75029a268c7c3b5b",
+    "github_main": "70da383056b50f4e9b8e9a8030bc9b92281ba537",
+    "unpublished_commits": 20,
+    "source": "GitHub connector main-ref plus local git history; untracked files not included"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "kind": "current_course",
+      "title": "COMP8800 2026课程及五项学习成果",
+      "url": "https://programsandcourses.anu.edu.au/2026/course/COMP8800",
+      "scope": "个人研究、正式论文、presentation；年度12+12学分；学习成果"
+    },
+    {
+      "id": "S02",
+      "kind": "current_class",
+      "title": "COMP8800 2026 S2 / 8721",
+      "url": "https://programsandcourses.anu.edu.au/2026/course/COMP8800/Second%20Semester/8721",
+      "scope": "Thesis 90%，2026-10-30；Poster 10%及draft title/abstract在10-16；细则交给Canvas",
+      "retrieval": "官方搜索索引返回课程班级完整摘要；直接open超时，未取得个人Canvas任务"
+    },
+    {
+      "id": "S03",
+      "kind": "current_shared_class",
+      "title": "COMP4550 2026 S2 / 8720，共同覆盖COMP8800的说明",
+      "url": "https://programsandcourses.anu.edu.au/2026/course/COMP4550/Second%20Semester/8720",
+      "scope": "页面明确覆盖24-unit COMP4550和COMP8800；AI引用、prompts和用途；典型篇幅；提交声明及Turnitin"
+    },
+    {
+      "id": "S04",
+      "kind": "library_guidance",
+      "title": "ANU Library：Referencing and generative AI",
+      "url": "https://libguides.anu.edu.au/generative-ai",
+      "scope": "使用其Referencing and generative AI部分；不把页面旧版产品隐私／检测器信息当当前事实"
+    },
+    {
+      "id": "S05",
+      "kind": "local_grading_guidance",
+      "title": "Honours theses: Marking guide",
+      "path": "assessment/thesis-marking-guide.txt",
+      "scope": "用户保留的质量分档；本次未取得另一份2026 COMP8800专用Canvas rubric，不臆造分项权重",
+      "local_sha256": {
+        "assessment/thesis-marking-guide.txt": "ad6676136be5892d0db85943d0b3b9c365bb34088ea9a45ee5e3eb6b1e89f1a1"
+      }
+    },
+    {
+      "id": "S06",
+      "kind": "template_guidance",
+      "title": "学院长论文模板及来源记录",
+      "path": "assessment/template-sources.json",
+      "url": "https://bercher.net/phd-students/thesiswriting",
+      "scope": "提供模板、允许适配；不等于强制使用或固定版式参数",
+      "local_sha256": {
+        "assessment/template-sources.json": "b395dfcecf3e00520458ae5f640674d5a607602eb3710e59b083f1e5557dc4ec"
+      }
+    },
+    {
+      "id": "S07",
+      "kind": "historical_other_courses",
+      "title": "Individual Computing Projects - Supervision and Marking Guide, 16 February 2022",
+      "path": "/Users/apple/Documents/26 s1/COMP8800/canvas/Individual Computing Projects - Supervision and Marking Guide.pdf",
+      "scope": "课程表列COMP3740/3770/4560/6715/8755/8604；不含COMP8800；报告／slides／artefact repo条款不直接套用",
+      "local_sha256": {
+        "/Users/apple/Documents/26 s1/COMP8800/canvas/Individual Computing Projects - Supervision and Marking Guide.pdf": "85145d4e1957a315b65a78f2cfb450ba3a73554a558b5d17dc346d22cd96e4c0"
+      }
+    },
+    {
+      "id": "S08",
+      "kind": "historical_same_course",
+      "title": "COMP8800 2022官方课程页",
+      "url": "https://programsandcourses.anu.edu.au/2022/course/COMP8800",
+      "scope": "个人研究、literature survey、thesis、seminar和当年Independent Study contract；未见明确代码上传条款，2022班级详情为N/A"
+    },
+    {
+      "id": "S09",
+      "kind": "workshop_guidance",
+      "title": "2023 CECC写作与编辑讲义",
+      "paths": [
+        "/Users/apple/Documents/26 s1/COMP8800/canvas/2023 CECC Hons Report writing.pdf",
+        "/Users/apple/Documents/26 s1/COMP8800/canvas/Editing your work_ 2023 cecc hons.pdf"
+      ],
+      "scope": "结构、证据、清晰表达及图表建议；不提升为本届提交硬规则",
+      "local_sha256": {
+        "/Users/apple/Documents/26 s1/COMP8800/canvas/2023 CECC Hons Report writing.pdf": "c1404b9334dd5377b593a5ca219555d30bb0582e683868e96a0479a97d8ab21a",
+        "/Users/apple/Documents/26 s1/COMP8800/canvas/Editing your work_ 2023 cecc hons.pdf": "408b2a44f48e774dc0a5ca65d243b91d5b4b7d1db11b347a1847ff0b90fd4b49"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "id": "A01",
+      "group": "官方提交与行政",
+      "kind": "official",
+      "status": "PASS",
+      "priority": 2,
+      "requirement": "完成个人研究项目并形成正式论文",
+      "source_ids": [
+        "S01"
+      ],
+      "evidence": "九章论文具备问题、方法、证明、实验、讨论与结论；个人归属另见B01。",
+      "action": ""
+    },
+    {
+      "id": "A02",
+      "group": "官方提交与行政",
+      "kind": "official",
+      "status": "MANUAL",
+      "priority": 0,
+      "requirement": "本届Thesis为90%，公开日期为2026-10-30",
+      "source_ids": [
+        "S02"
+      ],
+      "evidence": "S02日期与用户周五交的计划一致；尚无上传回执。",
+      "action": "在本人任务核对最终截止时刻与提交回执；不默认23:59。"
+    },
+    {
+      "id": "A03",
+      "group": "官方提交与行政",
+      "kind": "task_detail",
+      "status": "UNSPECIFIED",
+      "priority": 0,
+      "requirement": "精确截止时间、时区及个人延期",
+      "source_ids": [
+        "S02"
+      ],
+      "evidence": "公开班级页只有日期；用户未看到额外Canvas说明。",
+      "action": "查任务Due/Until及个人延期记录。2022资料不能补出2026时刻。"
+    },
+    {
+      "id": "A04",
+      "group": "官方提交与行政",
+      "kind": "official",
+      "status": "MANUAL",
+      "priority": 0,
+      "requirement": "经课程指定入口提交，通常为Turnitin，例外须获批",
+      "source_ids": [
+        "S03"
+      ],
+      "evidence": "公开共同课程页规定Turnitin；本次未执行实际上传。",
+      "action": "按本人Canvas任务上传英文最终PDF，并保存submission ID／receipt。"
+    },
+    {
+      "id": "A05",
+      "group": "官方提交与行政",
+      "kind": "official",
+      "status": "MANUAL",
+      "priority": 0,
+      "requirement": "完成电子提交声明并保留自己的副本",
+      "source_ids": [
+        "S03"
+      ],
+      "evidence": "PDF研究来源页不是提交系统的电子签署；本地和GitHub已有副本。",
+      "action": "由作者在提交页面阅读并签署实际声明；不能代签。"
+    },
+    {
+      "id": "A06",
+      "group": "官方提交与行政",
+      "kind": "task_detail",
+      "status": "UNSPECIFIED",
+      "priority": 1,
+      "requirement": "文件名、文件类型、大小上限及额外封面要求",
+      "source_ids": [
+        "S02"
+      ],
+      "evidence": "未取得个人任务细则；当前thesis.pdf为A4、PDF1.7、约1.1MB。",
+      "action": "不把缺学号／非特定文件名直接判为违规；上传时按实际入口规则办理。"
+    },
+    {
+      "id": "A07",
+      "group": "官方提交与行政",
+      "kind": "task_detail",
+      "status": "UNSPECIFIED",
+      "priority": 1,
+      "requirement": "是否必须另交代码／artefact／slides／仓库链接",
+      "source_ids": [
+        "S02",
+        "S07",
+        "S08"
+      ],
+      "evidence": "2026公开COMP8800班级摘要未列单独代码任务；2022同课程页也未见代码上传规定。",
+      "action": "保留可交付代码入口；不能依据另一组课程的2022指南断言一定交或一定不用交。"
+    },
+    {
+      "id": "A08",
+      "group": "官方提交与行政",
+      "kind": "official",
+      "status": "MANUAL",
+      "priority": 0,
+      "requirement": "未经批准的迟交不被允许；需延期时按程序申请",
+      "source_ids": [
+        "S03"
+      ],
+      "evidence": "共同课程页列迟交／延期条款；没有个人延期状态证据。",
+      "action": "若需延期，按课程规则在截止前申请；当前不能视为已经获批。"
+    },
+    {
+      "id": "A09",
+      "group": "官方提交与行政",
+      "kind": "official",
+      "status": "MANUAL",
+      "priority": 1,
+      "requirement": "Poster 10%及draft title/abstract任务",
+      "source_ids": [
+        "S02"
+      ],
+      "evidence": "公开日期为2026-10-16；本地有海报证据，不等于已提交回执。",
+      "action": "核对这两项历史提交状态；不据此重新给当前Thesis增加一份poster文件。"
+    },
+    {
+      "id": "A10",
+      "group": "官方提交与行政",
+      "kind": "guidance",
+      "status": "PASS",
+      "priority": 2,
+      "requirement": "典型25k–30k英文词，允许合理浮动",
+      "source_ids": [
+        "S03"
+      ],
+      "evidence": "同口径工具估算26,975词；包含九章和摘要文字／图注，排除表体和数学。",
+      "action": "这不是课程官方字数认证；若Canvas有独立计数规则，须按其重计。"
+    },
+    {
+      "id": "A11",
+      "group": "官方提交与行政",
+      "kind": "guidance",
+      "status": "PARTIAL",
+      "priority": 2,
+      "requirement": "典型50–60页并允许合理变化；表达应简洁",
+      "source_ids": [
+        "S03",
+        "S05",
+        "S09"
+      ],
+      "evidence": "英文101页，其中九章82页，前置9页、书目3页、附录7页；不满足典型页数但未发现强制上限。",
+      "action": "优先修孤行和少量元说明；不为60页删掉独有证明或实验。"
+    },
+    {
+      "id": "A12",
+      "group": "官方提交与行政",
+      "kind": "guidance",
+      "status": "PASS",
+      "priority": 2,
+      "requirement": "采用适合长论文的正式版式",
+      "source_ids": [
+        "S06"
+      ],
+      "evidence": "A4、11pt scrbook、27/28mm页边距、单栏及正常leading；学院模板允许适配。",
+      "action": "没有证据要求强制双栏、Times、双倍行距、PDF/A或只能用某个模板。"
+    },
+    {
+      "id": "B01",
+      "group": "个人贡献与AI",
+      "kind": "official",
+      "status": "MISSING",
+      "priority": 0,
+      "requirement": "清楚呈现学生个人研究贡献及与导师／共同工作／AI的分工",
+      "source_ids": [
+        "S01",
+        "S03",
+        "S05"
+      ],
+      "evidence": "01-5:49–54称个人贡献已另记；声明页只列项目与工具；author-confirmation仍让作者自己补。",
+      "action": "作者写明主导的设计／实验、亲自验证与取舍、导师和AI支持；同步修改已记录的说法。"
+    },
+    {
+      "id": "B02",
+      "group": "个人贡献与AI",
+      "kind": "official",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "披露AI产品及其功能性用途",
+      "source_ids": [
+        "S03",
+        "S04"
+      ],
+      "evidence": "frontmatter/declaration.tex:17–29已列Codex、ChatGPT、Claude及写作／实现／实验／检查范围。",
+      "action": "用途说明应经作者逐项确认；不得缩写成仅润色。"
+    },
+    {
+      "id": "B03",
+      "group": "个人贡献与AI",
+      "kind": "official",
+      "status": "MISSING",
+      "priority": 0,
+      "requirement": "提供实际prompts及其与作业的对应",
+      "source_ids": [
+        "S03"
+      ],
+      "evidence": "在当前提交PDF及报告仓库中未找到作为AI使用记录提交的prompts；review日志不是prompt原文。",
+      "action": "整理实际提示词／可追溯会话导出，关联正文、代码、图和检查；说明摘录覆盖，补齐其余工具记录。"
+    },
+    {
+      "id": "B04",
+      "group": "个人贡献与AI",
+      "kind": "official",
+      "status": "PARTIAL",
+      "priority": 0,
+      "requirement": "AI生成内容应有合适引用，而不仅列出产品名",
+      "source_ids": [
+        "S03",
+        "S04"
+      ],
+      "evidence": "前置页有功能披露；37条BibTeX记录中无AI交互条目，正文也未指向prompts。",
+      "action": "按课程／图书馆合适格式引用真实交互；列真实日期、工具、可确认版本及记录位置，不编造模型版本。"
+    },
+    {
+      "id": "B05",
+      "group": "个人贡献与AI",
+      "kind": "official",
+      "status": "MANUAL",
+      "priority": 0,
+      "requirement": "作者核查生成内容、引用、结论并承担责任",
+      "source_ids": [
+        "S03",
+        "S04"
+      ],
+      "evidence": "已有责任说明及大量离线核对；无法由脚本证明作者本人逐项理解和采纳。",
+      "action": "作者审读最终英文稿，能解释核心推导、实验协议、取舍和限制。"
+    },
+    {
+      "id": "B06",
+      "group": "个人贡献与AI",
+      "kind": "quality",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "清楚区分继承方法与项目贡献",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch1/Ch2、来源页及相关文献明确JHQ层次、IVF/PQ、GPU选择等前人成果。",
+      "action": ""
+    },
+    {
+      "id": "B07",
+      "group": "个人贡献与AI",
+      "kind": "quality",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "交代共同ADC手稿与论文版本关系",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "adc_artifact注明项目手稿；来源页不推断投稿／录用状态，历史数字有分组边界。",
+      "action": "可访问定位仍见E03。"
+    },
+    {
+      "id": "L01",
+      "group": "学习成果与评分",
+      "kind": "official",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "LO1：明确研究问题并设计研究计划",
+      "source_ids": [
+        "S01"
+      ],
+      "evidence": "Ch1.2–1.4定义问题及RQ1–4，Ch3.1对应对照。",
+      "action": ""
+    },
+    {
+      "id": "L02",
+      "group": "学习成果与评分",
+      "kind": "official",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "LO2：有效检索并批判性评价文献",
+      "source_ids": [
+        "S01"
+      ],
+      "evidence": "Ch2讨论JHQ/PQ/OPQ、FastScan、图方法、RaBitQ及自适应工作量的替代与取舍。",
+      "action": ""
+    },
+    {
+      "id": "L03",
+      "group": "学习成果与评分",
+      "kind": "official",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "LO3：选用适当研究方法、工具与技术形成研究发现",
+      "source_ids": [
+        "S01"
+      ],
+      "evidence": "Ch3对照／计量，Ch4–6技术，Ch7结果，Ch8解释与负例。",
+      "action": ""
+    },
+    {
+      "id": "L04",
+      "group": "学习成果与评分",
+      "kind": "official",
+      "status": "PARTIAL",
+      "priority": 1,
+      "requirement": "LO4：文字、图形与口头沟通研究",
+      "source_ids": [
+        "S01"
+      ],
+      "evidence": "论文文字及图表具备；海报成稿与实验存在，实际presentation评分／提交状态未核实。",
+      "action": "书面与图形可核对，口头完成由课程记录确认。"
+    },
+    {
+      "id": "L05",
+      "group": "学习成果与评分",
+      "kind": "official",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "LO5：结构化论文体现领域的深入理解",
+      "source_ids": [
+        "S01"
+      ],
+      "evidence": "九章结构、明确算法契约、系统内存模型、实验边界及研究方向完整。",
+      "action": ""
+    },
+    {
+      "id": "G01",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "HD：批判性分析文献，说明工作在领域中的定位",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch2.6–2.7比较机制而非仅罗列论文，GPU集成与预算问题定位明确。",
+      "action": ""
+    },
+    {
+      "id": "G02",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PARTIAL",
+      "priority": 0,
+      "requirement": "HD及90+：个人有用想法、独立研究与技术掌握可归属",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "文本显示完整技术与项目层面的贡献；B01个人归属缺失。",
+      "action": "个人贡献与导师过程证据需要作者确认，不能用共同作者顺序或Git提交替代。"
+    },
+    {
+      "id": "G03",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "HD：理解实验限制并提出可行后续研究",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch8.3–8.4列内部／外部有效性、风险控制和容量扩展及失败判据。",
+      "action": ""
+    },
+    {
+      "id": "G04",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "MANUAL",
+      "priority": 1,
+      "requirement": "HD：独立推进、适时求助、坚持、快速学习和协作",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "这类标准部分依赖导师评价，论文或自动审计无法单独认证。",
+      "action": "无需编写虚构自述；由真实贡献说明和导师过程评价支持。"
+    },
+    {
+      "id": "G05",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "90+：理解替代技术与选择理由",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch2方案表，Ch5资源取舍，Ch6对照控制和Ch8负结果均支持。",
+      "action": "这是文本证据，不是分数保证。"
+    },
+    {
+      "id": "G06",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "90+：批判性评价自己的想法并据此行动",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Mailman与rank-oriented未普遍采用，保留T5高召回反例与质量失败。",
+      "action": "实际个人决策归属仍由B01补证。"
+    },
+    {
+      "id": "G07",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PARTIAL",
+      "priority": 1,
+      "requirement": "90+：独立获得概念／程序与具有原创性的后续方向",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "风险控制+复用成本、残差分层具可检验计划；独立性和原创程度需学术评价。",
+      "action": "不自动等同于达到90+或可发表。"
+    },
+    {
+      "id": "G08",
+      "group": "学习成果与评分",
+      "kind": "grading",
+      "status": "PARTIAL",
+      "priority": 2,
+      "requirement": "写作准确清晰、结果简洁、专业图表",
+      "source_ids": [
+        "S05",
+        "S09"
+      ],
+      "evidence": "编译清洁且图表完整；来源页identify...maps有语法错误，Ch1末尾出现仅三行的独占页。",
+      "action": "进行一次语言与孤行复查；这些是编辑质量问题，不是额外实验要求。"
+    },
+    {
+      "id": "C01",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "区分原空间距离、primary距离、refined排序分数与query常数",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch1.2/2.3/5.1/5.6一致，选择精确性未混同原空间精确kNN。",
+      "action": ""
+    },
+    {
+      "id": "C02",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "局部缓冲区、全局覆盖和截断合并证明形成完整链",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch5.4保留lemma、coverage命题及实现容量条件；T4为有限经验检查。",
+      "action": ""
+    },
+    {
+      "id": "C03",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "共享界契约与整64位读前提准确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch5.5及附录A明确PTX／toolkit SASS和未捕获driver JIT，未把C++ volatile作为保证。",
+      "action": ""
+    },
+    {
+      "id": "C04",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "单block并列与分组完整键范围准确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "分组55,296次完整键顺序全同；单block 56次差异均为截断并列；命题域单独说明。",
+      "action": ""
+    },
+    {
+      "id": "C05",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "预算二分与枚举、单调性定理及FULL范围准确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "2,176/2,304抽样在分组推论域；2,304抽样+12 FULL枚举一致；10 FULL距离路径仍无一般完整键保证。",
+      "action": ""
+    },
+    {
+      "id": "C06",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "无标签一致性、GT评估与概率假设分开",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch6.2区分sample/reference界、query-iid与独立slot模型及有限池；不输出总体GT证书。",
+      "action": ""
+    },
+    {
+      "id": "C07",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "查询划分、训练／cache、归一化／GT和实际数量清楚",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch3.2记录偶奇校准／留出及Stella 999查询，prep审查与完整历史hash缺失分开。",
+      "action": ""
+    },
+    {
+      "id": "C08",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "FULL与S=128质量风险完整而不择优展示",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "12/12、最大0.0006；40/64、32/64越阈及p95/最大损失保留。",
+      "action": ""
+    },
+    {
+      "id": "C09",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "固定64、100、200及oracle对照定义正确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "固定64强对照保留；GT oracle只作离线诊断，FULL不是事前保证。",
+      "action": ""
+    },
+    {
+      "id": "C10",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "区分selected-arm lookup、模型回本与直接复用",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch6成本公式、Ch7十二cell估算和四cell直接流计时分别保留，质量及重复池边界明确。",
+      "action": ""
+    },
+    {
+      "id": "C11",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "OpenAI实际TF32与FP32干预身份准确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "v69 TF32；v72 D复用TF32训练cache；D基线来自历史；T1同会话锚点独列。",
+      "action": ""
+    },
+    {
+      "id": "C12",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "T4严格参考陈述与保留证据相符",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "CPU排序GPU生成分数；不是全被拒绝候选监测；原.topc已删除及padding计数范围公开。",
+      "action": ""
+    },
+    {
+      "id": "C13",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "小batch竞争反例与插值／实测阈值完整",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "T5 batch8/R=.97 CAGRA全部领先；batch32边界依估计器与网格；低recall端点纠正保留。",
+      "action": ""
+    },
+    {
+      "id": "C14",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "LUT实数等价与FP32数值／ID差异分开",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch5/7区分256与16+16的代数、22.6–26.1%比特差异及Vogue 2–4/256末端差异。",
+      "action": ""
+    },
+    {
+      "id": "C15",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "实际调度路径、偏斜触发和regret清楚",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "E1非Vogue单block、Vogue四组；CV范围、0.97路径依赖及1.217 regret均保留。",
+      "action": ""
+    },
+    {
+      "id": "C16",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "resident、train/add、startup与build peak不混用",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "Ch4–7独立assignment行数／12GiB总缓冲、BGE26.08与Stella22.58采样峰值及20ms范围。",
+      "action": ""
+    },
+    {
+      "id": "C17",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "配对测试与重训波动不冒充独立统计保证",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "固定点五次构建range≤0.0012；22/24非独立符号检验，单点不外推完整前沿置信区间。",
+      "action": ""
+    },
+    {
+      "id": "C18",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "各baseline、精度、内存与接口比较范围真实",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "包括CAGRA int8、两种recall估计、H2H／Python/C++差异、不同内存预算和缺失覆盖。",
+      "action": ""
+    },
+    {
+      "id": "C19",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "无配置不匹配的CPU/GPU倍数或普适优越结论",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "CPU旧版配置不匹配已解释；全文限定一张GPU、平方L2 top10、固定查询池及有限网格。",
+      "action": ""
+    },
+    {
+      "id": "C20",
+      "group": "科学论证与实验",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "负结果、未完成诊断与未来工作如实呈现",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "两项负设计、C3未知根因、未测试漂移／并发／跨设备均公开。",
+      "action": "见本审计末尾，未完成扩展不自动成为提交阻碍。"
+    },
+    {
+      "id": "D01",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "英文与中文正式编译成功",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "make pdf、make pdf-zh完成；两稿均无LaTeX警告、溢出、缺字和未定义引用。",
+      "action": ""
+    },
+    {
+      "id": "D02",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "交付PDF对应当前编译产物",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "根目录与build目录PDF字节一致；本轮正文未改。",
+      "action": ""
+    },
+    {
+      "id": "D03",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "所有文献键与交叉引用有效",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "36个被引键均在37条BibTeX内；没有未定义引用、重复label；nist_signtest未引用，不输出到书目。",
+      "action": ""
+    },
+    {
+      "id": "D04",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "无草稿角标、占位段落或TODO输出",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "全文抽取未见Draft only／TO WRITE／TODO／FIXME／TBD；正式build拒绝占位命令。",
+      "action": ""
+    },
+    {
+      "id": "D05",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "封面、摘要、目录、图表目录、符号、书目和附录齐全",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "PDF含上述内容；摘要307词；附录A/B；26图32表，两稿结构一致。",
+      "action": ""
+    },
+    {
+      "id": "D06",
+      "group": "PDF与文件质量",
+      "kind": "task_detail",
+      "status": "MANUAL",
+      "priority": 1,
+      "requirement": "姓名、导师、课程、月份及可选学号与本人信息一致",
+      "source_ids": [
+        "S02"
+      ],
+      "evidence": "metadata为Rui Luo、Dr Mengxuan Zhang、COMP8800、October 2026；学号空白。",
+      "action": "作者核对拼写及Canvas是否要求学号／专用封面；不擅自填学号。"
+    },
+    {
+      "id": "D07",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "PDF可读取且字体嵌入",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "PDF1.7、A4、无加密／表单／JavaScript；48个字体条目全部嵌入。",
+      "action": "1个图件Type3字体无Unicode映射，可作为非阻断的导出优化；无PDF/A硬要求证据。"
+    },
+    {
+      "id": "D08",
+      "group": "PDF与文件质量",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "无文字越出页面或明显裁切",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "bbox检查0词越物理页；101页缩略图巡查无明显裁切／空图／重叠。",
+      "action": "缩略图巡查不是逐句语言校对或正式可访问性认证。"
+    },
+    {
+      "id": "D09",
+      "group": "PDF与文件质量",
+      "kind": "quality",
+      "status": "PARTIAL",
+      "priority": 2,
+      "requirement": "分页与浮动位置适合专业阅读",
+      "source_ids": [
+        "S05",
+        "S09"
+      ],
+      "evidence": "第1章末尾印刷页5（PDF14）只剩3行；结论印刷页82（PDF91）为短尾页；部分表提前浮到所属小节前。",
+      "action": "优先压缩roadmap收尾／调节局部浮动，保持字号和关键证据；不是强制违规。"
+    },
+    {
+      "id": "D10",
+      "group": "PDF与文件质量",
+      "kind": "quality",
+      "status": "PARTIAL",
+      "priority": 2,
+      "requirement": "来源页语言和贡献交叉说明精确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "declaration.tex:14–15的复数主语identify与maps不一致；01-5:50–52有尚未闭合的贡献记录定位。",
+      "action": "语法改为平行谓语；个人说明实际落地后再更新定位。"
+    },
+    {
+      "id": "E01",
+      "group": "材料与可复现性",
+      "kind": "recommended",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "论文与图表版本可定位并有备份",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "报告候选版本5003f08已经发布；本地PDF与编译字节一致。",
+      "action": "本审计按该固定版本，不将之后的修改静默判为已检查。"
+    },
+    {
+      "id": "E02",
+      "group": "材料与可复现性",
+      "kind": "recommended",
+      "status": "PARTIAL",
+      "priority": 1,
+      "requirement": "评审能取得对应补证的完整源码／记录",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "GitHub JHQ_GPU/main为70da383；本地19135c9，领先20提交。v72/v73及补证不完整存在公开main。",
+      "action": "在作者选定范围后发布固定代码revision或可交付包；不能只给当前旧main链接。"
+    },
+    {
+      "id": "E03",
+      "group": "材料与可复现性",
+      "kind": "quality",
+      "status": "PARTIAL",
+      "priority": 1,
+      "requirement": "共同ADC手稿参考文献能被定位",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "adc_artifact有作者／标题／年份及未推断发表状态；BibTeX无URL／归档定位。",
+      "action": "如允许分享，给稳定定位；若未公开，明确作者可提供的访问方式。"
+    },
+    {
+      "id": "E04",
+      "group": "材料与可复现性",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "本地输入身份和离线结果一致",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "1345个inputs哈希通过；隔离副本重跑相关离线审计，数值表未变。",
+      "action": "这核查保留记录与报告，不等于重新执行GPU实验。"
+    },
+    {
+      "id": "E05",
+      "group": "材料与可复现性",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "已发布的最小证据包能独立离线检查",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "209-file v71包全部哈希通过；131-file review包通过，使用随包输入完成T4/T5及T1/A2审计。",
+      "action": ""
+    },
+    {
+      "id": "E06",
+      "group": "材料与可复现性",
+      "kind": "recommended",
+      "status": "PARTIAL",
+      "priority": 1,
+      "requirement": "完整数据／cache／binary及可重演候选记录的可获得性明确",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "完整向量、训练状态及历史binary并未打包，T4.topc已删除；正文已说明。",
+      "action": "给取得途径与权限；若要求独立重排T4，补跑并保留数组。不能把摘要计数当原数组。"
+    },
+    {
+      "id": "E07",
+      "group": "材料与可复现性",
+      "kind": "technical",
+      "status": "PASS",
+      "priority": 1,
+      "requirement": "移出PDF的详细证据仍能追溯",
+      "source_ids": [
+        "S05"
+      ],
+      "evidence": "12表1图中英文26块精确归档；原87科学资产未变；docs/supplementary-evidence.md可读。",
+      "action": ""
+    },
+    {
+      "id": "H01",
+      "group": "2022版本适用性",
+      "kind": "historical",
+      "status": "NA",
+      "priority": 2,
+      "requirement": "2022 Individual Computing Projects：报告、slides及全部artefact仓库链接",
+      "source_ids": [
+        "S07"
+      ],
+      "evidence": "原指南第4节确有此要求，但课程代码列表不含COMP8800。",
+      "action": "作为可交付材料准备建议，不声明为2026 COMP8800已证实的硬规则。"
+    },
+    {
+      "id": "H02",
+      "group": "2022版本适用性",
+      "kind": "historical",
+      "status": "NA",
+      "priority": 2,
+      "requirement": "2022另一组课程的45–60%报告／30–45%artefact及50页建议",
+      "source_ids": [
+        "S07"
+      ],
+      "evidence": "与当前COMP8800 Thesis90%不符。",
+      "action": "不套用其评分权重或页数建议。"
+    },
+    {
+      "id": "H03",
+      "group": "2022版本适用性",
+      "kind": "historical",
+      "status": "NA",
+      "priority": 2,
+      "requirement": "2022 COMP8800的seminar、literature survey及thesis",
+      "source_ids": [
+        "S08",
+        "S02"
+      ],
+      "evidence": "当年公开页可核对，但现届已明确poster与thesis任务。",
+      "action": "不从旧seminar条款推导当前另交slides／codewalk的要求。"
+    },
+    {
+      "id": "H04",
+      "group": "2022版本适用性",
+      "kind": "historical",
+      "status": "NA",
+      "priority": 2,
+      "requirement": "2022 Independent Study contract",
+      "source_ids": [
+        "S08"
+      ],
+      "evidence": "当年是开题／注册前置条件，不是本轮生成的论文声明模板。",
+      "action": "不伪造合同或把其签署视为本届新交件。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F01",
+      "priority": 0,
+      "items": [
+        "B01",
+        "G02"
+      ],
+      "title": "个人贡献没有真正落地，且正文已有完成式表述",
+      "locations": [
+        "chapters/01-5-contributions.tex:49",
+        "frontmatter/declaration.tex:6",
+        "assessment/author-confirmation.txt:6"
+      ],
+      "action": "作者据实说明个人设计、执行、核查和取舍；将导师／共同工作／AI分开；再更新正文指向。"
+    },
+    {
+      "id": "F02",
+      "priority": 0,
+      "items": [
+        "B03",
+        "B04"
+      ],
+      "title": "AI用途披露已有，但prompts和可追溯交互引用未提供",
+      "locations": [
+        "frontmatter/declaration.tex:17",
+        "references.bib"
+      ],
+      "action": "提供实际交互记录与对应使用位置；按课程方式引用；不把产品名、审稿汇总或代码日志等同于prompts。"
+    },
+    {
+      "id": "F03",
+      "priority": 0,
+      "items": [
+        "A02",
+        "A03",
+        "A04",
+        "A05"
+      ],
+      "title": "最终时刻／入口／电子声明／回执尚未核实或执行",
+      "action": "截止日期已查到10月30日，具体时刻不猜。须本人检查任务Due/Until、上传并保存回执。"
+    },
+    {
+      "id": "F04",
+      "priority": 1,
+      "items": [
+        "E02",
+        "E03",
+        "E06",
+        "A07"
+      ],
+      "title": "提交材料的完整代码入口尚未与本地补证版本一致",
+      "action": "当前公开main落后20提交；准备固定、可访问的代码／材料包。是否硬性上传代码未获当前课程明文确认，2022其他课程不能代替。"
+    },
+    {
+      "id": "F05",
+      "priority": 2,
+      "items": [
+        "D09",
+        "D10",
+        "G08"
+      ],
+      "title": "可明确修正的语言与版面尾页",
+      "action": "修identify/maps，个人记录定位；优化第一章三行尾页及结论短尾页。对小图字体和Type3导出作可选检查。"
+    }
+  ],
+  "remaining_experiments": [
+    {
+      "item": "C3同模型Vogue跨进程根因",
+      "submission_effect": "已限定为未解释差异；不推断根因，不自动阻止当前有限结果提交",
+      "action_if_strengthened": "同binary/cache分阶段导出定位最早分歧"
+    },
+    {
+      "item": "T4原始.topc重新归档",
+      "submission_effect": "保留JSONL/stdout可核对计数，不能独立重做已删除数组排序",
+      "action_if_strengthened": "如评审要求完整重排证据，补跑固定case并保留原数组"
+    },
+    {
+      "item": "driver JIT SASS、质心成员、空列表／对抗尾批次",
+      "submission_effect": "当前论证明确PTX及有限输入范围，未声称更强覆盖",
+      "action_if_strengthened": "相应取证／参考检查"
+    },
+    {
+      "item": "一般逐query子集不变性、风险证书、FP32预算校准",
+      "submission_effect": "当前不宣称一般GT证书或FP32预算推荐",
+      "action_if_strengthened": "目标执行制度下逐query核对及重新校准"
+    },
+    {
+      "item": "跨设备、完整重训前沿、CPU匹配对照、漂移／并发服务",
+      "submission_effect": "当前已明确排除普适外推",
+      "action_if_strengthened": "新匹配实验；不临时拼接旧数值"
+    }
+  ],
+  "checks": {
+    "local_input_hashes": 1345,
+    "v71_bundle_files": 209,
+    "review_bundle_files": 131,
+    "cited_keys": 36,
+    "bib_entries": 37,
+    "uncited_keys": [
+      "nist_signtest"
+    ],
+    "undefined_refs": [],
+    "duplicate_labels": [],
+    "visual_scope": "All 101 English pages inspected as contact-sheet overview; selected revised pages previously inspected at readable scale; not a line-by-line language copyedit",
+    "isolated_checks": [
+      "evidence/review/check.py --run-audits",
+      "evidence/ch5/v71/check.py",
+      "audit_supplement.py",
+      "audit_ch4_review.py",
+      "audit_ch5_review.py",
+      "audit_ch6.py",
+      "audit_ch7_round2.py",
+      "audit_ch8.py --no-plot",
+      "audit_ch3.py",
+      "audit_synthesis.py"
+    ],
+    "isolated_numeric_table_changes": [],
+    "hash_count_scope": "1345 existing ledger entries plus 130 candidate-source fingerprints added by this audit",
+    "candidate_file_fingerprints": 130,
+    "total_input_hash_entries_after_audit": 1475
+  },
+  "inputs": [
+    {
+      "path": "appendices/a-reproducibility.tex",
+      "sha256": "e1719f401b185962532eda4a0c443d6e1b9588d3e58dc82ade6cd8d4527960fd"
+    },
+    {
+      "path": "appendices/b-supplementary.tex",
+      "sha256": "c3fda9f9a7db43207eac427e605691d5e24035ec4192dc4f1568eb83a37d084f"
+    },
+    {
+      "path": "assessment/author-confirmation.txt",
+      "sha256": "64c96c1fb8fbf3b0b37293c742157f1bf725a130bc44c360ca81a4dcfecfa40f"
+    },
+    {
+      "path": "assessment/ch7-pending-experiments.txt",
+      "sha256": "7a1e564b1b25f7f3c27fb8b96ba6aed89f173b39b07d38182d2b2b919946a729"
+    },
+    {
+      "path": "assessment/targeted-curation-review.md",
+      "sha256": "048508682b693ba778188ce057856d5a942edaf6bbb5b3acbba17f01453fab58"
+    },
+    {
+      "path": "assessment/thesis-marking-guide.txt",
+      "sha256": "ad6676136be5892d0db85943d0b3b9c365bb34088ea9a45ee5e3eb6b1e89f1a1"
+    },
+    {
+      "path": "chapters/01-1-context.tex",
+      "sha256": "239b02d7b0060c904b3a9194bb0c94af54430af48eb35d2ba6c42fc61aeedaf4"
+    },
+    {
+      "path": "chapters/01-2-scope.tex",
+      "sha256": "6f4a8ee3c537d762097bcb91aa5ce32d1a058971375aaf6ef195cc5cb01af765"
+    },
+    {
+      "path": "chapters/01-3-challenges.tex",
+      "sha256": "68788c9d3e6fc1778211b8644bfef3f89265dc3008484ef642708863f24f4d47"
+    },
+    {
+      "path": "chapters/01-4-questions.tex",
+      "sha256": "a043d2f4f43cd0f7a29f28ab12d763785d3d0fef6916180ee7d56e73a2491f25"
+    },
+    {
+      "path": "chapters/01-5-contributions.tex",
+      "sha256": "ba8aceca02a4bb481fd8620da480b5537fea566c498c4617ed41da9a3722e626"
+    },
+    {
+      "path": "chapters/01-introduction.tex",
+      "sha256": "9553e77c7d077f8c528adea4413fae8d31bf61f777a7f78ea2c83aebe9da738c"
+    },
+    {
+      "path": "chapters/02-1-objective.tex",
+      "sha256": "d74393329775084ec0256911f47d6d63bcc4ae7ab6559f5a1bd80b9fc20a73bd"
+    },
+    {
+      "path": "chapters/02-2-hierarchy.tex",
+      "sha256": "35eb3adbd46f92dfe30cbdd8efa55bf651bc81948a65569ce93334a1a2a18dab"
+    },
+    {
+      "path": "chapters/02-3-jhq.tex",
+      "sha256": "70487af553f0f1c8bda00c13e0f2db44f4f405a5da98b064bf7dfff77144ab68"
+    },
+    {
+      "path": "chapters/02-4-gpu.tex",
+      "sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5"
+    },
+    {
+      "path": "chapters/02-5-graphs.tex",
+      "sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458"
+    },
+    {
+      "path": "chapters/02-6-quantised.tex",
+      "sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f"
+    },
+    {
+      "path": "chapters/02-7-gap.tex",
+      "sha256": "99a5f77f9949be6ae1a9f9697e496308542f33d32e474e2a341b2464bf5eee9a"
+    },
+    {
+      "path": "chapters/02-background.tex",
+      "sha256": "1565808b5066866b1a73236e883d8436860eac9df4419d44d5e353cce63f96d0"
+    },
+    {
+      "path": "chapters/03-1-comparisons.tex",
+      "sha256": "e103ea1aa65046714ab0f912e4b4c8f7ea0a2db94e2080314f6bba7cad6e349b"
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "sha256": "d4098eb45fd144f04cf41d7982fc13df445237bed9a24d64e6de72175ffa17c0"
+    },
+    {
+      "path": "chapters/03-3-measurement.tex",
+      "sha256": "461d8fd57a1f32818d862ab79577ed9579bf7b125c096834b4ec314d157eb746"
+    },
+    {
+      "path": "chapters/03-4-frontiers.tex",
+      "sha256": "520986eda1b5b24dbaa550e7944398402e2e785c48720b6ab1df29e68bd270a1"
+    },
+    {
+      "path": "chapters/03-5-ledger.tex",
+      "sha256": "de942b4613b1acdbe27d037df8bc1c74229e50fd9f58a0572e658e9718a6409e"
+    },
+    {
+      "path": "chapters/03-6-validity.tex",
+      "sha256": "d4823eef51bed50c0b0dfbfd48580b76a649f345e3ec4aad697811bfc9d92624"
+    },
+    {
+      "path": "chapters/03-methodology.tex",
+      "sha256": "5d5476a1bf6800dd89920bb50c6129748e72ccd73ddb277889045853d78e1be4"
+    },
+    {
+      "path": "chapters/04-1-boundaries.tex",
+      "sha256": "1ea3a67fee49c32592e8e36d362a401021dbae2f7114b7aa058afde3b311adfe"
+    },
+    {
+      "path": "chapters/04-2-training.tex",
+      "sha256": "e879ba23a2fde202a993f4dd368f3047b610cffb53ae5480e2c6d73af20ff754"
+    },
+    {
+      "path": "chapters/04-3-layout.tex",
+      "sha256": "3c30bea567f39198a663b7f8613b55dc6a13d5be92fbac4732cd8f3ab1581420"
+    },
+    {
+      "path": "chapters/04-4-lifecycle.tex",
+      "sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e"
+    },
+    {
+      "path": "chapters/04-5-construction.tex",
+      "sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72"
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "sha256": "9585272384890fb1cdfd1247546ac3af37e842fcd14fa0d2c75308032bc8eecd"
+    },
+    {
+      "path": "chapters/04-architecture.tex",
+      "sha256": "1d452fa40ad440eae66aa263c1ab1439e891f685c9cb66ffbe718c6946192498"
+    },
+    {
+      "path": "chapters/05-1-query-path.tex",
+      "sha256": "31734b5cff20970ed7d161f55e7eb0717bba6fff4d56920b3fcf054b8c952345"
+    },
+    {
+      "path": "chapters/05-2-lut.tex",
+      "sha256": "ff629614eb48614f5e4ce39841ab072a7f8c07ab4cc63f3d6b3165033fbec43d"
+    },
+    {
+      "path": "chapters/05-3-packed-access.tex",
+      "sha256": "8cfc9974f9828574b7546f29df2e1161f2a25f7f0c692ed52a41595968f6c897"
+    },
+    {
+      "path": "chapters/05-4-global-selection.tex",
+      "sha256": "8d6de7ce0bc99d68545b47bbb2274708d57e0002e075f965e7931ff5f664a94e"
+    },
+    {
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "sha256": "1eb53d5401bf5d4a4315134f1026e74dde87039a162f14496761668d528c9aa3"
+    },
+    {
+      "path": "chapters/05-6-refinement.tex",
+      "sha256": "3600e0334d80553fcfaa0bf85237b167b0993925d5dd39a34e2aebe0dba5a6c0"
+    },
+    {
+      "path": "chapters/05-7-probe.tex",
+      "sha256": "2d7d6b519683172b1d85e009e99100c31b35d3a8c13083d9456bdf3d342dfec1"
+    },
+    {
+      "path": "chapters/05-gpu-execution.tex",
+      "sha256": "352fc492c8c4df331c51e2ff3e9f4c5747292581d7f13617bb51d23fd07355a1"
+    },
+    {
+      "path": "chapters/06-1-motivation.tex",
+      "sha256": "c04806492af142c14bd22858f6eee90e7643f022a4b8d248459bf6835a0b19aa"
+    },
+    {
+      "path": "chapters/06-2-agreement.tex",
+      "sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205"
+    },
+    {
+      "path": "chapters/06-3-search.tex",
+      "sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e"
+    },
+    {
+      "path": "chapters/06-4-controls.tex",
+      "sha256": "4c3ca9e57768298f4a0ce997654af22c1cc8da5f646464f5763926d0748df7fe"
+    },
+    {
+      "path": "chapters/06-5-economics.tex",
+      "sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295"
+    },
+    {
+      "path": "chapters/06-6-scope.tex",
+      "sha256": "a5cd9fec9834b358cda1a77ec54b644ba2e90ad44945767ce3b3d2b401c9d480"
+    },
+    {
+      "path": "chapters/06-refinement.tex",
+      "sha256": "edf300459ccada3fd21a5b37284f7d242c9b6e2259af0b1f0fee2cc86adf2a51"
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "7061b0bfb1e946fb770a90b17314b464a2c279f1a6072dfc5c6962305ef2e23d"
+    },
+    {
+      "path": "chapters/07-supp-budget.tex",
+      "sha256": "a8e8aad088e789d765e638c3a37730a8ac47f24fb6b14b71202a76f699c358a9"
+    },
+    {
+      "path": "chapters/07-supp-precision.tex",
+      "sha256": "ea23f7c00dc95009f311545ff1bbbc21e6e79075966d6c18b64edfb2766759ef"
+    },
+    {
+      "path": "chapters/07-supp-selection.tex",
+      "sha256": "7c9e048ef49e1a900cfd7c2b460e052d191d718524a7c48418a781083483c664"
+    },
+    {
+      "path": "chapters/07-supp-smallbatch.tex",
+      "sha256": "14e293dea7038ebce2acc2ff811fd997feb176c96debd7f5695c07dbc6d7095b"
+    },
+    {
+      "path": "chapters/08-1-insights.tex",
+      "sha256": "375848b7d9436273649d57ddd72aa03b9915b7b2c91b355e46c5c675f7abbda8"
+    },
+    {
+      "path": "chapters/08-2-negative.tex",
+      "sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85"
+    },
+    {
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd"
+    },
+    {
+      "path": "chapters/08-4-directions.tex",
+      "sha256": "bde5ca43042620cbb9cbb6e966f814606d4d3b2cf4ea6152f5516d549b96d97f"
+    },
+    {
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2"
+    },
+    {
+      "path": "chapters/08-discussion.tex",
+      "sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434"
+    },
+    {
+      "path": "chapters/09-conclusion.tex",
+      "sha256": "88bd7983a7e5c2fc61a6285011116b234aefd284b2717dfcc184cd747e39c984"
+    },
+    {
+      "path": "config/layout.tex",
+      "sha256": "e85235570d216a6bcc6ad816f48cbc60942b291a5ce52bb99d5c97347ba434d3"
+    },
+    {
+      "path": "config/metadata.tex",
+      "sha256": "5185da7e71ee42072b31896310028a67ff6fe0f07122e0448fcef5f21eb011b7"
+    },
+    {
+      "path": "config/preamble.tex",
+      "sha256": "2701f51a3c0370d7a3736ced00f8fca0050d58058afe98a10db47a2cb72bb1c2"
+    },
+    {
+      "path": "data/synthesis/primary-sources.json",
+      "sha256": "ca2c69d9bd6bad275fe2e58cc5ad58d1a966d1242503980d099e3d41eaad2f72"
+    },
+    {
+      "path": "frontmatter/abstract.tex",
+      "sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f"
+    },
+    {
+      "path": "frontmatter/acknowledgements.tex",
+      "sha256": "80e83bfb88e3880fb72ba5c088875bfb8680616a6fbd15dd16724ab1baec2fd6"
+    },
+    {
+      "path": "frontmatter/declaration.tex",
+      "sha256": "a0061607d7dc22806526ca0b64965edccf80c6d549bb4579b9d22d113bb23573"
+    },
+    {
+      "path": "frontmatter/notation.tex",
+      "sha256": "f4c49e0fed14bd8d4b00aaae3535f05d036aafd535e898d7e383c5b74bd86ae3"
+    },
+    {
+      "path": "frontmatter/title.tex",
+      "sha256": "4314793582491bf65054aca2402557a1817e42e48c3f78f2679218c2994f7b7e"
+    },
+    {
+      "path": "main-zh.tex",
+      "sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b"
+    },
+    {
+      "path": "main.tex",
+      "sha256": "3dac948d776c617d448201b98541c1d8d542d360c3531dc4484572e95fb5d8ba"
+    },
+    {
+      "path": "references.bib",
+      "sha256": "9cab7b9991213bc9d8cf8d095f63b074cc0136c1dcbe412db92bfd2a1b7347c5"
+    },
+    {
+      "path": "thesis-zh.pdf",
+      "sha256": "723372a138817bfb907ac80381f78b71574f41b59864ae32dd8fa292340adf1d"
+    },
+    {
+      "path": "thesis.pdf",
+      "sha256": "bb394073e50e4e808e36cfb2b2d5002400521074b45b00fe3d72f28185fa76d4"
+    },
+    {
+      "path": "zh/chapters/01-1-context.tex",
+      "sha256": "1fad6266421bf437fb071002407d99191396900b4fa6d6b1c44833924f5b75d1"
+    },
+    {
+      "path": "zh/chapters/01-2-scope.tex",
+      "sha256": "4b834a055713090c4403815c56026afb4cc79015638060fc1130310dd215d2c9"
+    },
+    {
+      "path": "zh/chapters/01-3-challenges.tex",
+      "sha256": "9b4c2085db917e476cda14433c96649a7f8b8efa1fad40008db4fb2623a8f65f"
+    },
+    {
+      "path": "zh/chapters/01-4-questions.tex",
+      "sha256": "d2069a961c0f17dc815110ae6a2356223b7d1ae7914e135ff6f768c96df1e509"
+    },
+    {
+      "path": "zh/chapters/01-5-contributions.tex",
+      "sha256": "8a28248126d685a376d19545c992fea2e1c72b4cc92529a0f63343364926fc24"
+    },
+    {
+      "path": "zh/chapters/01-introduction.tex",
+      "sha256": "21422d078cebaaf34a344f872b2bd2c61ca30a3f65a438dfeed06b6e89098d39"
+    },
+    {
+      "path": "zh/chapters/02-1-objective.tex",
+      "sha256": "1f50afadfb38aa9d5219dad5578226485d69da6cd0d6cc30dc51b30b61615805"
+    },
+    {
+      "path": "zh/chapters/02-2-hierarchy.tex",
+      "sha256": "89ff4ead3ef173d3eef314994bc2c6d9853fc1255ad228adc0f64dc3890be4c6"
+    },
+    {
+      "path": "zh/chapters/02-3-jhq.tex",
+      "sha256": "3adf63742bcf0c14b6d8e9a91a06e8c5f835f46adde899a60bf78c314ccca00e"
+    },
+    {
+      "path": "zh/chapters/02-4-gpu.tex",
+      "sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d"
+    },
+    {
+      "path": "zh/chapters/02-5-graphs.tex",
+      "sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086"
+    },
+    {
+      "path": "zh/chapters/02-6-quantised.tex",
+      "sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350"
+    },
+    {
+      "path": "zh/chapters/02-7-gap.tex",
+      "sha256": "c9ee3045957253b708e01926080525b8d0820d4e0c20836d008312f19dc76bfb"
+    },
+    {
+      "path": "zh/chapters/02-background.tex",
+      "sha256": "97f2e13b1581824537fd2198684060d86973ba1355207f354dcd7c00fccf9188"
+    },
+    {
+      "path": "zh/chapters/03-1-comparisons.tex",
+      "sha256": "06c41e79a3712a904f30e9c46d24c600b602e19fcdf618f5cc1ab9cf01b5ac3b"
+    },
+    {
+      "path": "zh/chapters/03-2-data.tex",
+      "sha256": "d295f7573038b3c04faf76db58d3fc63a8e4171aff9e8f7fbdc6cfacb4ea605e"
+    },
+    {
+      "path": "zh/chapters/03-3-measurement.tex",
+      "sha256": "4cbdc831a8e80aec11d3f46f600000e2f2b303e10f61ebea419a063177f4df42"
+    },
+    {
+      "path": "zh/chapters/03-4-frontiers.tex",
+      "sha256": "f0ec837bdd5f16b47e9809c45ceaefad683ea388e2968c134e29f35b840931f7"
+    },
+    {
+      "path": "zh/chapters/03-5-ledger.tex",
+      "sha256": "c9a482cf4386cbd540bbbd4c79c9b8945269592ea8f47730733dadc025a89ff0"
+    },
+    {
+      "path": "zh/chapters/03-6-validity.tex",
+      "sha256": "141576f49ef3e9883ea493643a0c01308f8d08f295541bf76e40955f376c9878"
+    },
+    {
+      "path": "zh/chapters/03-methodology.tex",
+      "sha256": "dbae06970aa2d8808911fb4f301b2bc5bc0a3ed01d6a2535682cdca1cb63bd4a"
+    },
+    {
+      "path": "zh/chapters/04-1-boundaries.tex",
+      "sha256": "3fc03235a055c30aa876c3a9c8068686f16edf3f1a14437403d97f6ab00c4666"
+    },
+    {
+      "path": "zh/chapters/04-2-training.tex",
+      "sha256": "3158e3f91794ce25cbdfc1605675e2c8c38796db970167a45ce2935a9d39bc37"
+    },
+    {
+      "path": "zh/chapters/04-3-layout.tex",
+      "sha256": "263c43a99894db3922a031fdcc3703f00aa899113c49d593892a2927969f9a2d"
+    },
+    {
+      "path": "zh/chapters/04-4-lifecycle.tex",
+      "sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f"
+    },
+    {
+      "path": "zh/chapters/04-5-construction.tex",
+      "sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60"
+    },
+    {
+      "path": "zh/chapters/04-6-contracts.tex",
+      "sha256": "850e40e734d4968c3836cf97dbbb59cb2a01a38b499201cd2f0295c3f9caee76"
+    },
+    {
+      "path": "zh/chapters/04-architecture.tex",
+      "sha256": "604003d787125af8fbe3284f6d6e1268d3afc2fb5dec80078eefa27ac30328f0"
+    },
+    {
+      "path": "zh/chapters/05-1-query-path.tex",
+      "sha256": "b601a9b5d5fbe3b474a368b383ccf2a1bfbca831b0508ebeee7429f6f24b4cc2"
+    },
+    {
+      "path": "zh/chapters/05-2-lut.tex",
+      "sha256": "470734032705149724239ab7bf143f2ecb6b9b0d3f2c3330b2445f8cd7ea7e30"
+    },
+    {
+      "path": "zh/chapters/05-3-packed-access.tex",
+      "sha256": "3c2cdecc73ab7b519a9e0d28f6d6e6d6bfde1d169be48c05fccde74f4a531e69"
+    },
+    {
+      "path": "zh/chapters/05-4-global-selection.tex",
+      "sha256": "472e38a4634673a0afa31214707e37e88efcbc60be6070dc52cdc028444a9bef"
+    },
+    {
+      "path": "zh/chapters/05-5-bound-scheduling.tex",
+      "sha256": "5dd2f64a0977156d20bbca9fd9523dea343d34863172131af68a125484616239"
+    },
+    {
+      "path": "zh/chapters/05-6-refinement.tex",
+      "sha256": "75a4fd9792628d91d4c3eb6193e3ef8a4585742ca7c4cf0d618096fa01bc5c40"
+    },
+    {
+      "path": "zh/chapters/05-7-probe.tex",
+      "sha256": "4802a67528251fae53faba048a4ac51e8e3cb3197a66e9a5d62f1ac7ca619cac"
+    },
+    {
+      "path": "zh/chapters/05-gpu-execution.tex",
+      "sha256": "7a429d77c64616d412f0e5c76891f7889c2d0872368f0b7f082055b8ebdea46a"
+    },
+    {
+      "path": "zh/chapters/06-1-motivation.tex",
+      "sha256": "d31b8eba967b6d7c3c65f9f6531b652abaaef011487cfbe11a91ab22a4bc2f3b"
+    },
+    {
+      "path": "zh/chapters/06-2-agreement.tex",
+      "sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914"
+    },
+    {
+      "path": "zh/chapters/06-3-search.tex",
+      "sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef"
+    },
+    {
+      "path": "zh/chapters/06-4-controls.tex",
+      "sha256": "98b529e157ecd6756325e3aab568aa23f95451f095966ecfa62ac31bfd8c7a73"
+    },
+    {
+      "path": "zh/chapters/06-5-economics.tex",
+      "sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6"
+    },
+    {
+      "path": "zh/chapters/06-6-scope.tex",
+      "sha256": "e004df9dc0e8c196d4c5da3e2acce212ea06e63b29a1ce2a876c562294988619"
+    },
+    {
+      "path": "zh/chapters/06-refinement.tex",
+      "sha256": "1e781a970986ac6064146f10733bc36c0f5cb9cc83e9a96ef535953711b7e67c"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "35d9c2719c2f2bdb6746dbeb764b0e93a4b5d6fd339c1ccac1afd9d2504f5699"
+    },
+    {
+      "path": "zh/chapters/07-supp-budget.tex",
+      "sha256": "ca80ce1ca9a22b8f9b10a90ac754d6651702b877d9315d7c8b69306092947a0e"
+    },
+    {
+      "path": "zh/chapters/07-supp-precision.tex",
+      "sha256": "f9e5b8dcfb4ab6403f981e7edf5b2f0067d87b74467eeb090ce836cb6eeb141d"
+    },
+    {
+      "path": "zh/chapters/07-supp-selection.tex",
+      "sha256": "4b5e2e3b6a958a054d1acde73546ab43211944dec7598ea1cca152a53a4d1b78"
+    },
+    {
+      "path": "zh/chapters/07-supp-smallbatch.tex",
+      "sha256": "b2f2afe00d1810b6c675b3a65479e3c6e8b8bd96fc9b1785bdf420c4a2c6eb70"
+    },
+    {
+      "path": "zh/chapters/08-1-insights.tex",
+      "sha256": "013853dcf8763f35d1875444d0d03ec6061650e81d5d1fbc496a8e31dd36401b"
+    },
+    {
+      "path": "zh/chapters/08-2-negative.tex",
+      "sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f"
+    },
+    {
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22"
+    },
+    {
+      "path": "zh/chapters/08-4-directions.tex",
+      "sha256": "83106d1dc10c37db4cd4be8558ab0479382f15eaead3547e5d1c53c598d8e833"
+    },
+    {
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9"
+    },
+    {
+      "path": "zh/chapters/08-discussion.tex",
+      "sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c"
+    },
+    {
+      "path": "zh/chapters/09-conclusion.tex",
+      "sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05"
+    }
+  ]
+}
