@@ -104,7 +104,10 @@ def main():
     assert model['quantile_mse']>model['optimal_zero_threshold_mse']
     for rel in ['data/synthesis/primary-sources.json','assessment/synthesis-iteration.txt',
                 'assessment/author-confirmation.txt','assessment/ch7-pending-experiments.txt',
-                'appendices/c-author-tools.tex','main.tex','main-zh.tex',
+                'frontmatter/declaration.tex','zh/declaration.tex','main.tex','main-zh.tex',
+                'frontmatter/acknowledgements.tex','zh/acknowledgements.tex',
+                'appendices/a-reproducibility.tex','appendices/b-supplementary.tex',
+                'docs/experiment-protocol.md','assessment/backmatter-streamlining.txt',
                 'config/layout.tex','config/preamble.tex','zh/preamble.tex',
                 'config/metadata.tex','frontmatter/title.tex','zh/title.tex',
                 'frontmatter/notation.tex','README.md','FORMAT_NOTES.txt',

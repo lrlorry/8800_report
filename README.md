@@ -4,7 +4,7 @@
 `JHQ_GPU/experiments/thesis_evidence` 补证核对后纳入第3--9章、引言与摘要。
 新增TF32/FP32敏感性、重复空缓存构建与采样峰值、表示审计、完整预算决策及直接复用计时。
 补证基线已发布为 [lrlorry/8800_report@1786e6e](https://github.com/lrlorry/8800_report/commit/1786e6ec227ce54b657a605d9bfa11dbf3c89923)，
-这个提交属于报告仓库，不能在 `lrlorry/JHQ_GPU` 中查询它。后续已补全Conclusion后的附录B/C，整理前置页，
+这个提交属于报告仓库，不能在 `lrlorry/JHQ_GPU` 中查询它。后续已补全Conclusion后的补充材料，整理前置页，
 移除示例附录及草稿文字，并默认启用正式编译。核对过程没有启动GPU实验。
 
 - [本轮补证整合与边界](assessment/supplement-integration.txt)
@@ -16,9 +16,11 @@
 - [全文审稿逐项核对](assessment/full-review-response.txt)：修正构建容量符号、D/T1会话口径及负结果图短标题。
 - [全文审核离线复算](scripts/audit_full_review.py) · [输入与结果](data/full-review/audit.json)
 - [独立复核材料入口](evidence/review/README.md)：T4/T5、T1及A2所用的原始记录和源文件子集。
+- [实验协议详细清单](docs/experiment-protocol.md)：从附录A移出的完整程序／路径和诊断细节。
+- [附录精简记录](assessment/backmatter-streamlining.txt)：保留A/B，原附录C合并至前置来源与工具披露页。
 
 个人分工、声明签署与最终工具披露仍需作者确认，见
-[作者确认项](assessment/author-confirmation.txt)。研究来源页及附录B/C已写入正式内容；个人课程签署由作者按实际任务办理。
+[作者确认项](assessment/author-confirmation.txt)。研究来源与工具披露已合并至前置页；个人课程签署由作者按实际任务办理。
 
 第 3 章已按 `6.pdf` 的六节骨架完成中英文正文；统一研究对照、数据／GT／划分、
 计时与显存口径、基线前沿和证据等级。见
@@ -60,7 +62,7 @@
 
 审核重点：结论是否得到实验支持、跨系统比较是否公平、精确性声明是否限定到相应阶段，以及校准的质量风险和回本估计是否表述准确。原始实验输入来自本地同级 `JHQ_GPU` 工作区，路径见证据清单；本报告仓库提供分析脚本和衍生数据，但不包含全部原始输入。重新生成分析需要另外取得清单中的文件及相关历史源码，不能将哈希清单本身视为原始文件已公开或 GPU 实验已独立重现的证明。
 
-当前审核应覆盖第一至九章、摘要及附录A/B/C。原E1历史测量保留v69身份，
+当前审核应覆盖第一至九章、摘要、前置披露及附录A/B。原E1历史测量保留v69身份，
 OpenAI旋转／质心GEMM明确为TF32；v72是在同一TF32训练缓存下修改add/query算术的
 FP32敏感性，基线未同会话重跑。A2支持已提取PTX的完整64位读取契约，toolkit SASS
 不冒充驱动JIT实码；C1的矩阵几何与输入重编码证据区分TF32误差和量化边界。
@@ -87,8 +89,9 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 2. `chapters/`：九章正文及各节源文件。修改或合并标题不会影响模板运行。
 3. `figures/`：放论文图件；优先使用矢量 PDF。用相对路径引用，避免依赖本机绝对路径。
 4. `references.bib`：项目参考文献与官方技术文档，提交前核对元数据。
-5. `appendices/`：来源与复现、完整参数／正确性补充、贡献及工具使用记录。
+5. `appendices/`：精简复现协议和参数／正确性补充；详细清单见 `docs/experiment-protocol.md`。
 6. `data/appendix/e1-configurations.csv`：1,590个E1点的精确参数、质量、吞吐及来源。
+7. `frontmatter/declaration.tex`：研究来源、贡献范围、工具使用与责任；个人实际分工由作者核对。
 
 模板示例附录已移除，前置页及附录不再包含写作填空提示。
 
@@ -111,7 +114,7 @@ Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **
 `config/metadata.tex` 默认使用 `\draftthesisfalse`。封面和页脚不显示草稿标识，
 示例附录已移除。未解决的写作／图件占位命令会使编译失败，避免提示被静默隐藏。
 附录A说明原始记录、补证和运行身份，附录B给出参数覆盖／正确性证据及次要结果，
-附录C说明研究角色、继承工作、AI协助及责任。
+研究角色、继承工作、AI协助及责任合并在前置来源与工具披露页，不再单设附录C。
 
 研究来源页没有伪造个人签名或独立完成承诺，实际课程声明手续由作者按任务办理。
 

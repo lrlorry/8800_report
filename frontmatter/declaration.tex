@@ -1,18 +1,42 @@
 \frontchapter{Research Provenance and Tool Disclosure}
+\label{front:provenance}
 This thesis presents the JHQ-GPU project undertaken by \thesisauthor{} for
 \thesiscourse{} under the supervision of \thesissupervisor{}.
 
 The underlying JHQ representation and primary/residual hierarchy are
-attributed to the original authors \cite{jhq}. The project develops and
-evaluates GPU execution, index construction and refinement-budget
-selection. Its relationship to the joint manuscript by Rui Luo and
-Mengxuan Zhang is identified in \cref{sec:1-5,app:author-tools}; shared
-material and historical measurements retain their stated provenance.
+attributed to Jiabao Han, Mengxuan Zhang and Goce Trajcevski \cite{jhq}.
+IVF, product quantisation, existing GPU selection/merge techniques and
+baseline software retain their cited authorship. Rui Luo and Mengxuan
+Zhang are coauthors of the associated project manuscript
+\cite{adc_artifact}; their author order does not establish individual
+task allocation. The thesis expands the correctness arguments,
+measurements, supplementary checks and discussion of unsuccessful designs.
+\Cref{sec:1-5,tab:1-contributions} identify the project's relationship
+to that manuscript and maps its technical contributions.
 
-Generative-AI assistance contributed to implementation, experiment
-automation, analysis, review and thesis preparation.
-Appendix~\ref{app:author-tools} records the tools and activities supported
-by project records. Experimental conclusions are tied to the source,
-measurement and analysis artifacts in Appendices~\ref{app:reproducibility}
-and \ref{app:supplementary}. Responsibility for the submitted text,
-attribution and interpretation remains with the thesis author.
+\paragraph{Generative-AI assistance.}
+Project records document the following uses, identified by product name
+without inferring model versions:
+\textbf{OpenAI Codex} assisted with English/Chinese writing and revision,
+LaTeX, diagrams, analysis scripts, source/log inspection, offline numerical
+checks and PDF compilation. \textbf{ChatGPT} supplied frameworks and
+chapter reviews concerning evidence, scope and experimental design.
+\textbf{Anthropic Claude} assisted with implementation, experiment
+automation and review; supplementary records cover construction,
+representation/precision checks, budget traces, strict selection and
+small-batch baselines. The joint manuscript separately discloses
+Claude/ChatGPT assistance with implementation, harnesses, figures and
+writing, retaining that manuscript's versioned scope.
+
+\paragraph{Traceability and responsibility.}
+Source histories, run records and analysis ledgers establish artifact
+provenance. \path{scripts/} retains analysis code;
+\path{assessment/} records accepted and corrected review recommendations;
+the code repository's \path{experiments/thesis_evidence/} retains
+supplementary experiment records. Appendices~\ref{app:reproducibility}
+and \ref{app:supplementary} identify the experimental contracts and
+supporting evidence. Bibliographic citations acknowledge inherited
+methods. These records describe the retained workflow, rather than a
+complete interaction export or a signed personal attestation.
+Responsibility for the submitted text, attribution and interpretation
+remains with the thesis author.

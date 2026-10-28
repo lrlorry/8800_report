@@ -1,11 +1,25 @@
 \frontchapter{研究来源与工具使用说明}
+\label{front:provenance}
 本论文呈现\thesisauthor{}在\thesissupervisor{}指导下开展的COMP8800 JHQ-GPU项目。
 
-底层JHQ表示及主码／残差层次归属于原始作者\cite{jhq}；本项目研究其GPU执行、
-索引构建与精排预算选择。与Rui Luo及Mengxuan Zhang共同手稿的关系见
-\cref{sec:1-5,app:author-tools}，共享材料及历史测量保留明确来源。
+底层JHQ表示及主码／残差层次归属于Jiabao Han、Mengxuan Zhang和Goce Trajcevski
+\cite{jhq}。IVF、乘积量化、已有GPU选择／合并技术和基线软件保留所引作者归属。
+Rui Luo与Mengxuan Zhang为相关项目手稿的共同作者\cite{adc_artifact}；
+作者顺序不表示具体个人分工。本论文扩展正确性论证、测量、补证核查及失败设计讨论。
+\Cref{sec:1-5,tab:1-contributions}说明本项目与手稿的关系并对应技术贡献。
 
-生成式AI协助涉及实现、实验自动化、分析、审阅和论文准备。
-附录\ref{app:author-tools}依据项目记录说明所用工具及活动，
-附录\ref{app:reproducibility}和\ref{app:supplementary}将实验结论对应至源码、测量及分析材料。
+\paragraph{生成式AI协助。}
+项目记录支持以下用途；工具按产品名标识，不据此推断具体模型版本。
+\textbf{OpenAI Codex}协助中英文写作修改、LaTeX、图件、分析脚本、源码／日志核查、
+离线数值检查和PDF编译。\textbf{ChatGPT}提供涉及证据、范围和实验设计的框架及章节审阅。
+\textbf{Anthropic Claude}协助实现、实验自动化和审阅；补证记录涉及构建、表示／精度核查、
+预算轨迹、严格选择及小批次基线。共同手稿另行披露Claude／ChatGPT对实现、实验程序、
+图件和写作的协助，保留该手稿的版本范围。
+
+\paragraph{可追溯性与责任。}
+源码历史、运行记录和分析清单说明材料来源。\path{scripts/}保留分析代码，
+\path{assessment/}记录接受及纠正的审阅建议，代码仓库的
+\path{experiments/thesis_evidence/}保留补证记录。
+附录\ref{app:reproducibility}和\ref{app:supplementary}说明实验契约及支撑证据，
+参考文献标注继承方法。这些材料描述保留的工作流程，不等于完整交互导出或个人签署。
 提交文本、归属标注与结论解释的责任由论文作者承担。
