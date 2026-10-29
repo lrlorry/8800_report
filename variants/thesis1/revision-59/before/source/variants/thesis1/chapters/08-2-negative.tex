@@ -1,0 +1,29 @@
+\subsection{Mailman-style shared sums: arithmetic reuse meets scatter cost}
+\label{sec:8-mailman}
+
+Mailman reuses finite-alphabet matrix--vector sums \cite{mailman}. We test atomic buckets, private histograms and widths 4/6/8 against packed two-table scoring on frozen Vogue/arXiv/OpenAI-3072 streams, 128 probes, batches 8/1,000. Codes and mathematical scores stay fixed.
+
+The best alternatives reach only 0.187--0.581 of baseline throughput (\cref{fig:8-negative}). Profiles spend most cycles in bucket accumulation: list-local bias repeats destinations; private histograms trade atomics for larger state and shared updates. Narrower groups help some variants, but none wins. This stopped these implementations, not all finite-alphabet reuse.
+
+The pilot emits scores, not neighbours. FP32/FP64 cutoff differences therefore do not establish pipeline equivalence. With scorer ratio $s$ and replaceable fraction $f$, $1/[(1-f)+f/s]$ is only a replacement model: integration stopped before end-to-end testing. A lossless-dictionary study also stopped at structural statistics. Neither supplies a measured system-frontier point.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\includegraphics[width=\linewidth]{ch8/negative-evidence.pdf}
+\captionof{figure}[Mailman and rank-oriented coding]{Two distinct evidence boundaries. Left: best measured
+Mailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,
+arXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below
+one. Right: minimum survivor
+counts meeting the original JHQ recall target on arXiv's 400-query FP64
+offline test split. The candidate reduction is not a GPU speedup.}
+\label{fig:8-negative}
+\end{minipage}\par\medskip
+
+\subsection{Rank-oriented coding: a local gain is not a general replacement}
+\label{sec:8-rank}
+
+The ranking study replays exported candidates in FP64 with 400/200/400 calibration/validation/test queries. It tests weighted scores, median/list thresholds, learned losses and linear-MMSE decoding. Better reconstruction or inner-product MSE can still worsen nearest-candidate order; changing primary levels also changes residual reference points.
+
+On arXiv test queries, median thresholds cut the minimum tested qualifying survivor count from 875 to 375; the other two workloads fail the same strict criterion. Rotation preserves corpus-mean norm, so Gaussian intuition does not remove bias. Centring may help, but must also preserve the refined-score ceiling. The improvement is workload-specific.
+
+A separate GPU follow-up imports median thresholds/levels and retrains residuals. At arXiv's original $\alpha=100$ target, gains are about 1.40/1.21 at batches 8/1,000. Vogue stops at recall 0.9630, below target 0.9644; OpenAI-3072 is tied. These three-round results use separate states/queries and are excluded from E1.

@@ -1,0 +1,4 @@
+Warps have 32 threads with bounded block resources \cite{cuda_programming_guide}. JHQ scans candidates and refines coordinates in parallel; extra blocks duplicate state.
+
+Faiss uses warp selection \cite{johnson_gpu}; bitonic/radix/merge choices trade state for work, alongside global selectors AIR/GridSelect \cite{gpu_topk}.
+

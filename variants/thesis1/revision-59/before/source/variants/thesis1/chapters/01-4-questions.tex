@@ -1,0 +1,19 @@
+\paragraph{RQ1: Construction and capacity.}
+How can JHQ become a GPU-resident searchable index, and what construction cost and capacity are demonstrated (\cref{sec:7-7})? Resident size and construction peak are measured separately.
+
+\paragraph{RQ2: Correct and efficient execution.}
+Which scoring, selection and scheduling choices improve speed while preserving the specified scores and tie rules? Paired experiments and reference checks answer this in \cref{sec:7-3,sec:7-4,sec:7-6}.
+
+\paragraph{RQ3: Budget quality and total cost.}
+Can unlabelled agreement choose a useful survivor budget and repay calibration? Held-out tests compare fixed budgets, sampled/FULL rules and enumeration (\cref{sec:7-5}). The GT-labelled oracle is an evaluation control.
+
+\paragraph{RQ4: Competitive operating regions.}
+Where does JHQ compete with modern GPU ANN methods at matched recall and a common host-to-host boundary?
+The answer uses independently tuned E1 frontiers and explicit memory
+definitions (\cref{sec:7-2}). Int8 graph competitors, high-recall reversals
+and absent coverage are part of the answer.
+
+Chapter 3 turns these questions into controlled comparisons. Together they
+separate what was built, whether its execution is correct, what effort a
+workload requires, and whether the resulting system has useful operating
+regions.

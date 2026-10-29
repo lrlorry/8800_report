@@ -1,0 +1,37 @@
+\Cref{tab:2-position} compares the alternatives by the constraint they
+address. The literature already provides GPU graph search, compressed
+distance computation, register-oriented lookup, fast selection and adaptive
+effort. A useful contribution must therefore specify the representation
+contract, the integration decision and the evidence for it. ``A GPU version''
+alone does not identify that contribution.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Design alternatives and research gap]{Design alternatives and the thesis's narrower research gap.
+This is a mechanism comparison; measured rankings follow in Chapter 7.}
+\label{tab:2-position}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.20\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Alternative & Useful structure & Principal trade-off & JHQ-GPU question \\
+\midrule
+IVF-PQ / OPQ & Learned subspace codes; ADC & Distortion and training;
+arbitrary subcodebooks couple coordinates & What does an internally
+Cartesian primary code permit in GPU scoring? \\
+Fast Scan / Quicker ADC & Small tables and SIMD lookup & Table precision,
+shape and ISA constraints & Does exact splitting repay extra GPU lookups? \\
+SONG / CAGRA & Selective graph navigation & Dependent access, graph
+storage and construction & Where does a resident hierarchical scan compete? \\
+BANG & Compressed GPU scoring with host graph & Capacity versus
+communication & What can complete compressed residency achieve? \\
+IVF-RaBitQ & GPU code construction and fused search & Bit budget,
+estimator and probe effort & Which recall regions justify the residual hierarchy? \\
+Adaptive effort & Refine ratios, autotuning, learned or declarative stopping
+& Labels, reference fidelity, prediction or calibration cost & Can unlabelled
+workload agreement select useful effort at an acceptable risk and total cost? \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The open questions are practical: can this hierarchy support fast, correct GPU execution; when does extra scan parallelism pay; and does unlabelled budget calibration preserve enough quality to repay its cost? We keep the inherited representation fixed to study those choices.
+

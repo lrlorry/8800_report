@@ -1,0 +1,60 @@
+\subsection{What is inherited}
+
+JHQ combines an orthogonal transformation, an analytical Cartesian primary
+code and a higher-precision residual layer \cite{jhq}. Here the transform
+is square: $\Pi\in\mathbb R^{d\times d}$, $\Pi^\top\Pi=I$,
+$y=\Pi x$ and $q'=\Pi q$. Therefore
+\begin{equation}
+ \|q-x\|^2=\|\Pi(q-x)\|^2.
+ \label{eq:2-isometry}
+\end{equation}
+Although the prior work calls this an orthogonal JL transformation, this
+configuration does not reduce dimension. It preserves real-arithmetic
+distance exactly; quantisation subsequently introduces approximation.
+Actual FP32 orthogonality and GEMM error are separate implementation checks.
+
+Partition $y$ into $M$ subspaces of dimension $D_s=d/M$. With $B$ bits per
+primary subspace, $K=2^B$ labels are formed from $L=2^{B/D_s}$ scalar levels,
+requiring the implemented Cartesian parameters to make $L$ an integer.
+Writing $\Phi$ for the standard normal CDF, the constructor uses
+\begin{equation}
+ a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
+ i=1,\ldots,L,\qquad
+ \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
+ \label{eq:2-cartesian}
+\end{equation}
+At the evaluated $B=D_s=8$, $L=2$ and $\mathcal C_m=\{-a,+a\}^8$,
+with $a\simeq0.67449\sigma$. Each byte records eight coordinate signs.
+The implementation estimates $\sigma$ from vector energy; unit-normalised
+inputs motivate the scale $1/\sqrt d$. This representation is prior art,
+not an invention of the GPU execution layer.
+
+Residuals are $r=y-\widehat p$, giving reconstruction $\widehat y=\widehat p+\widehat r$. The evaluated codes use $d/8$ primary bytes and $d$ residual bytes per vector, before metadata. Refining fewer rows reduces reads, not stored residual size.
+
+\subsection{Model assumptions and score semantics}
+
+Random rotation can spread coordinate energy, motivating a shared
+Gaussian-inspired scalar model. It does not force an arbitrary realised
+database to have independent, zero-mean Gaussian coordinates. For a fixed
+rotation and empirical database mean $\mu$, the transformed mean is
+$\Pi\mu$ and $\|\Pi\mu\|=\|\mu\|$. Averaging over random rotations is
+different from centring one fixed corpus. Even a uniformly random point on
+a sphere has dependent coordinates through its fixed norm. Consequently,
+isometry is an algebraic guarantee; the distributional approximation is a
+modelling assumption. Chapter 8's centred-coding pilot examines one practical
+consequence of that distinction.
+
+The inherited primary levels are Gaussian mid-quantiles. Under an exact Gaussian model, zero-threshold one-bit MSE-optimal levels would instead be $\pm\sigma\sqrt{2/\pi}\simeq\pm0.79788\sigma$. For fixed signs and positive scale, however,
+\begin{equation}
+ \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
+ \qquad s\in\{-1,+1\}^d.
+ \label{eq:2-sign-order}
+\end{equation}
+Thus scale cancels from primary ordering but still affects residual reconstruction. Our design uses separability and measured quality, without claiming optimal quantisation.
+
+$\rawdist$ uses original vectors; $\primarydist=\|q'-\widehat p\|^2$ uses primary reconstructions. The refined score is
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+Its query-only term changes distance values, not ranking. Routing and reconstruction errors remain after exact computed-score selection.

@@ -1,0 +1,15 @@
+For $\mathcal X\subset\mathbb R^d$, query $q$ and selected IVF lists $\mathcal L(q)$, the valid-pool pipeline is
+\[
+ \begin{aligned}
+ q'&=\Pi q,&
+ U(q)&=\bigcup_{\ell\in\mathcal L(q)}\mathrm{list}_\ell,\\
+ c&=\max\{k,\lceil\alpha k\rceil\},&
+ C_\alpha(q)&=\operatorname{Top}^{\rm P}_{\min(c,|U(q)|)}U(q),\\
+ &&\mathcal R_\alpha(q)&=\operatorname{Top}^{\rm H}_k C_\alpha(q).
+ \end{aligned}
+\]
+Top selection uses each computed score and its tie rule. The refined score includes a query-only constant (\cref{sec:2-3}); GT measures raw-neighbour recovery.
+
+GPU construction, layout and search retain JHQ's square rotation and Cartesian primary/residual codes. One unlabelled-agreement multiplier is reused on a stable workload; it is neither per-query learning nor an absolute-recall certificate.
+
+E1 tests squared-L2 top-10 on one RTX 5090, four datasets and batch 1,000. Six datasets support component/budget tests; T5 adds batches 8/32 (\cref{sec:7-smallbatch}). Search stays GPU-resident with host preparation/transfers. Updates, host paging, multi-GPU and billion-scale search are untested.

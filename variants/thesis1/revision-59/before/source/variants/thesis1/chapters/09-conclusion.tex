@@ -1,0 +1,36 @@
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+\section{Answers to the Four Research Questions}
+\label{sec:9-1}
+\paragraph{RQ1: Construction and capacity.}
+GPU training, batched encoding, IVF placement and packed arrays produce a
+searchable resident hierarchy. The largest tested database contains
+17.78 million vectors at 20.44\,GiB resident device memory; the corresponding
+supplementary train-plus-add range is 10.54--10.65\,s
+(\cref{sec:7-7}). Its sampled construction peak is 22.58\,GiB, while
+BGE reaches 26.08\,GiB at add entry.
+
+\paragraph{RQ2: Correct and efficient execution.}
+The inherited Cartesian code admits exact real-arithmetic table
+factorisation, and complete-key retention/merge and shared-bound arguments
+explain the grouped path's selection conditions. Two-group tables lead in
+22/24 measured cells. Integrated scheduling achieves $2.727\times$
+geometric-mean throughput at batch 8 but only $1.015\times$ at batch 1,000
+against the lane-refinement reference (\cref{sec:7-3,sec:7-6}). Thus useful
+parallelism depends on batch and work distribution. T4's strict CPU
+reference matches all 55,296 grouped instances in complete-key order;
+56 one-block set differences are exclusively cutoff ties
+(\cref{sec:7-strict-selection}).
+
+\paragraph{RQ3: Refinement budget and quality.}
+FULL calibration meets the tested relative
+recall-loss target in 12/12 cells, with maximum observed loss 0.0006.
+At $S=128$ reaches 40/64 crossings in one cell (\cref{sec:7-5}). All FULL choices match enumeration, but ten distance-only cells lack a general nesting guarantee. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.
+
+\paragraph{RQ4: Competitive operating regions.}
+At recall 0.97 and batch 1,000, JHQ leads on three datasets and is near RaBitQ on arXiv; Vogue needs grouping (\cref{sec:7-2}). OpenAI E1 uses TF32. Cached-model FP32 checks retain advantages over archived D baselines and contemporaneous T1 anchors, without FP32 retraining (\cref{sec:b-precision-anchors}). Int8 wins lower targets; RaBitQ wins some higher ones. CAGRA fp32 wins all batch-8 datasets; batch-32 near ties depend on the estimator (\cref{sec:7-smallbatch}).
+
+\section{Closing Principle and Outlook}
+\label{sec:9-2}
+Representation, execution and effort must share a quality target. Next steps are reusable risk-controlled calibration and capacity-aware residual placement (\cref{sec:8-4}).

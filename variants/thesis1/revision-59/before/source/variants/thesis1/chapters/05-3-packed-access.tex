@@ -1,0 +1,41 @@
+Neighbouring scan lanes process neighbouring candidates. Subspace-major
+storage makes their code accesses adjacent; LUT factorisation separately
+reduces the query-specific table.
+
+\subsection{Address mapping and four-byte packing}
+
+For list $\ell$, row $r$ has position $p=o_\ell+r$. Code $Z[m,p]$ lies at byte offset $mN+p$, rather than candidate-major $pM+m$. Adjacent lanes then read adjacent candidates at fixed subspace $m$. A warp crossing lists can still jump in memory.
+
+Four subspace bytes from one candidate form one word:
+\begin{equation}
+ \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
+ \label{eq:5-packed-layout}
+\end{equation}
+Shifts and masks recover each byte exactly: $(\mathsf w[j,p]\gg(8t))\mathbin{\&}255$. Its nibbles index \cref{eq:5-lut-factorisation}. This packs subspaces of one vector, not four candidates.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/packed-access}
+\caption[Packed candidate-parallel access]{Packed candidate-parallel access, showing a subset of warp lanes.
+At fixed word group $j$, consecutive positions access adjacent four-byte
+words. Each word contains four subspace codes of one candidate. Unpacking
+preserves each code byte; LUT splitting happens afterwards. The diagram
+illustrates addresses, not a measured number of memory transactions.}
+\label{fig:5-packed-access}
+\end{figure}
+
+The build path explicitly repacks the $[M,N]$ byte array into
+$[M/4,N]$ words. Merely reinterpreting the original byte array as
+\texttt{uint32\_t} would combine consecutive candidate bytes rather
+than the required subspaces. The implementation requires $M$ divisible
+by four and rejects a partial final word. The repack reads and writes
+$NM$ code bytes once at construction, with old and new storage briefly
+coexisting; it is outside the search timing boundary.
+
+\subsection{What packed access saves, and what it preserves}
+
+One word load replaces four byte loads, followed by register unpacking. For 32 positions the logical window is 128 bytes; alignment and active lanes determine transactions. Payload remains $M$ bytes per candidate. Since both alternatives are subspace-major, the experiment isolates neither transpose nor cache effects.
+
+\Cref{sec:7-3} evaluates the packed path's throughput, recall and
+variability against the byte path.

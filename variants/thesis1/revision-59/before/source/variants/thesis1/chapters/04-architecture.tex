@@ -1,0 +1,30 @@
+% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+\chapter{GPU Index Design and Construction}
+\label{ch:architecture}
+GPU construction trains and encodes JHQ's representation into list-ordered
+arrays with bounded temporary storage \cite{jhq}. Query kernels and measured
+construction costs are in \Cref{ch:gpu-execution,sec:7-7}.
+
+\section{End-to-End Build and Search Boundaries}
+\label{sec:4-1}
+\input{variants/thesis1/chapters/04-1-boundaries}
+
+\section{Training, Rotation and Codebook Generation}
+\label{sec:4-2}
+\input{variants/thesis1/chapters/04-2-training}
+
+\section{IVF Assignment, IDs and Physical Memory Layout}
+\label{sec:4-3}
+\input{variants/thesis1/chapters/04-3-layout}
+
+\section{Resident Storage, Workspace and Index Lifecycle}
+\label{sec:4-4}
+\input{variants/thesis1/chapters/04-4-lifecycle}
+
+\section{Construction Cost and Tested Scale}
+\label{sec:4-5}
+\input{variants/thesis1/chapters/04-5-construction}
+
+\section{Index Representation and Safety Contracts}
+\label{sec:4-6}
+\input{variants/thesis1/chapters/04-6-contracts}

@@ -1,0 +1,10 @@
+For database $\mathcal X=\{x_i\}_{i=0}^{N-1}\subset\mathbb R^d$ with stable IDs, exact top-$k$ selects the smallest distances
+\begin{equation}
+ \rawdist(q,x)=\|q-x\|_2^2.
+ \label{eq:2-raw}
+\end{equation}
+We use the stored GT top-10 set, including its tie choices. Recall@10 measures how many of those IDs ANN recovers (\cref{eq:3-recall}); it is not a worst-case distance guarantee.
+
+We measure query throughput, batch-call latency, construction cost and storage. These are separate costs: faster batch processing does not establish concurrent-request tail latency, and resident index bytes exclude some workspace and temporary allocations. Chapter 3 gives the boundaries.
+
+Tuning gives a finite recall--throughput frontier. A measured threshold chooses a qualifying configuration; interpolation estimates between points. Missing coverage proves neither a win nor an impossibility. \Cref{sec:3-4} fixes both estimators and endpoint tolerance.

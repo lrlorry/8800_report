@@ -1,0 +1,41 @@
+IVF partitions the database around coarse centroids and stores a list of
+vectors assigned to each centroid. A query chooses $n_{\rm probe}$ lists,
+producing a routed universe $U(q)$ of $n_c$ candidates. Visiting fewer lists
+reduces access work but can exclude a true neighbour before any fine scoring.
+The centroids are a routing device; their distance ordering is a different
+selection problem from choosing database vectors.
+
+Product quantisation divides a vector into $M$ coordinate subspaces and
+represents each with a label into a small learned codebook \cite{pq}.
+If $\widehat x_m=\mathcal C_m[z_m]$, asymmetric distance computation (ADC)
+keeps the query unquantised and scores
+\begin{equation}
+ \|q-\widehat x\|^2=\sum_{m=0}^{M-1}\|q_m-\mathcal C_m[z_m]\|^2.
+ \label{eq:2-adc}
+\end{equation}
+A query-specific table precomputes each subspace distance. Scanning then
+uses code loads, table lookups and accumulation. The product is between
+subspaces; the centroids \emph{within} a learned subcodebook need not have a
+further coordinate product. This distinction determines whether Chapter 5's
+exact internal table factorisation is valid.
+
+IVF-PQ often encodes $x-\mu_{\ell(x)}$. JHQ instead uses a residual relative to the primary reconstruction after rotation. Adding the IVF centroid during JHQ reconstruction would therefore add a term the encoder never removed. Candidate expansion and more accurate refinement are established ideas \cite{johnson_gpu,faiss_refine}.
+
+With at least $k$ valid routed candidates, the survivor cap is $c(\alpha)=\max\{k,\lceil\alpha k\rceil\}$. The output and survivor sets satisfy
+\begin{equation}
+ \mathcal R_\alpha(q)\subseteq C_\alpha(q)\subseteq U(q)\subseteq\mathcal X.
+ \label{eq:2-cascade}
+\end{equation}
+Refinement can reorder retained vectors, but cannot recover excluded IDs. Stage-wise GT coverage bounds final recall; measuring each stage's loss needs counterfactual scoring over a fixed universe.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}[Candidate and precision cascade]{Candidate and precision cascade. IVF selects lists;
+primary scoring selects vectors; only survivors read residuals. The hierarchy
+is inherited. This diagram defines logical sets and score fidelity,
+not measured recall losses or GPU kernel boundaries.}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+Broad scoring takes $O(n_cM)$ lookups; refinement takes $O(cd)$ coordinate work. Actual latency also includes access and selection. Probes change the routed universe $U$; $\alpha$ changes retention within it. They control different losses.

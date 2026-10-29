@@ -1,0 +1,13 @@
+\subsection{Learning a representation versus exploiting its structure}
+
+OPQ may lose Cartesian separability \cite{opq}; ScaNN targets inner-product error \cite{scann}. Reconstruction error and neighbour order can disagree.
+
+\subsection{Small lookup tables have substantial prior art}
+
+Fast Scan/Quicker ADC use CPU register tables \cite{fastscan,quickeradc}. JHQ splits GPU Cartesian tables and checks FP32 ties.
+
+RaBitQ's estimator \cite{rabitq} and multi-bit extension \cite{rabitq_multi} have their own guarantees. GPU IVF-RaBitQ provides the fused-search baseline \cite{ivfrabitq}.
+
+\subsection{Refinement effort and adaptive stopping}
+
+Faiss/cuVS expose refinement effort \cite{faiss_refine,cuvs_refinement}. Other policies use GT \cite{faiss_autotune}, learned stopping \cite{li_termination} or recall targets \cite{darth}; ours compares workload outputs.

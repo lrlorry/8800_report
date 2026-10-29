@@ -1,0 +1,44 @@
+The measured interval is the host search call:
+\[
+ t_{\rm call}=t_{\rm return}-t_{\rm entry},
+ \quad
+ \begin{cases}
+ \text{entry: FP32 queries in host memory},\\
+ \text{return: host IDs/scores after stream completion}.
+ \end{cases}
+\]
+It includes staging, transfers, query work and int8 query quantisation; fitting/build are excluded (\cref{fig:3-boundary}).
+Resource handles and output buffers are reused. Output/API differences remain: JHQ pageable/C++; CAGRA/PQ pinned/Python; RaBitQ pinned/C++. Small margins include these costs.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
+\captionof{figure}[Host and device timing boundaries]{Timing boundaries. The host interval includes transfers and
+query-specific computation. Device-stage profiles explain parts of that
+interval; separate profiling and synchronisation can change execution, so
+their sum is not an interchangeable end-to-end latency.}
+\label{fig:3-boundary}
+\end{minipage}\par\medskip
+
+With $t$ in seconds,
+\begin{equation}
+ \bar t_r=\frac1{m_r}\sum_{i=1}^{m_r}t_{ri},
+ \qquad Q_r=\frac b{\bar t_r},
+ \qquad Q=\operatorname{median}_r Q_r.
+ \label{eq:3-throughput}
+\end{equation}
+E1 uses batch 1,000, five rounds and normally 24 calls. JHQ warms once per variant/round; baselines warm three times initially. Slow baseline points use fewer calls. Warm-up excludes JIT/capture; percentiles describe batch calls, not concurrent requests.
+
+Slow valid calls stay. Mean-call and median-call rates differ; for an illustrative $(1,1,10)$\,ms sequence,
+\[
+ \bar t=4\,\mathrm{ms}\ne\operatorname{median}(t)=1\,\mathrm{ms},
+ \qquad b/\bar t\ne b/\operatorname{median}(t).
+\]
+Shared indexes/pools are not independent training replications.
+
+Runs use RTX 5090/32,607\,MiB, driver 595.71.05, CUDA 13.0 and cuVS 26.08.01. OpenMP uses 16 threads within 25 CPUs; E1 records 575\,W. Locks do not fix clocks/load. JHQ JIT-compiles compute\_80 PTX \cite{cuda_platform}; library builds and device profiles remain separate.
+
+Resident totals include models, workspace and context; CAGRA's index deltas differ from JHQ's context-subtracted totals (\cref{sec:4-4,sec:7-7}). Later pools and build scratch prevent peak-matched comparison. Build peaks use 20\,ms sampling; train/add excludes input loading and host setup.
+
+\paragraph{Supplementary evidence boundary.}
+Supplementary sessions are separate (\cref{sec:a-supplement}). Precision changes and cached-model reuse follow \cref{sec:4-2,sec:7-precision}; historical baseline ratios remain cross-session.

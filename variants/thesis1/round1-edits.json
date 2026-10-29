@@ -1,0 +1,1152 @@
+{
+  "B001": {
+    "after": "ANN avoids scoring every full-precision vector. Graph search uses navigation; compressed IVF scans selected lists with cheap scores \\cite{cagra,johnson_gpu,ivfrabitq}. Here the data reach 17.78 million vectors and 3,072 dimensions. Stella's FP32 vectors alone need 67.81\\,GiB (\\cref{sec:7-7}). Compact codes save space; their search cost still depends on tables, memory access and selection.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B002": {
+    "after": "JHQ screens with primary codes, then refines a shortlist using residuals \\cite{jhq}. This leaves two questions: how to run the scan and how many candidates to refine. Reusing the trained index lets us vary each choice. We measure recall, host-visible speed, resident memory and construction cost, including cases where JHQ loses.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B003": {
+    "after": "The target is raw squared-L2 top-$k$ for query $q$ over $\\mathcal X\\subset\\mathbb R^d$. IVF routes the query; primary score $\\primarydist$ selects up to $c=\\max\\{k,\\lceil\\alpha k\\rceil\\}$ survivors; residual score $\\refineddist$ selects the final results. These reconstructed scores differ from raw distance. The extra query-only term in $\\refineddist$ preserves ranking (\\cref{sec:2-3}). Selection is exact for its computed score and tie rule; GT measures ANN quality.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B004": {
+    "after": "We retain JHQ's square rotation, Cartesian primary codes and primary-relative residuals. The work covers GPU construction, layout, execution and one workload-level refinement multiplier. Unlabelled output agreement selects the multiplier for reuse on a stable workload. It supplies neither a per-query predictor nor an absolute-recall guarantee.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B005": {
+    "after": "E1 uses one RTX 5090, squared-L2 top-10 and batch 1,000 on four datasets. Component and budget studies use six datasets; T5 adds batches 8/32 (\\cref{sec:7-smallbatch}). The compressed index stays on the GPU, with host preparation and query transfers. Updates, multi-GPU search, host-backed residuals and billion-scale deployment are untested.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B006": {
+    "after": "Second, all global winners might lie in one part of a query's routed pool. Dividing the required survivor count between groups can therefore lose answers. Local retention and merging preserve coverage; shared bounds reduce extra work. These operations add overhead, so batch size and skew must guide the choice. IVF-list selection remains separate from database-candidate retention.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B007": {
+    "after": "Third, a large survivor budget wastes refinement, while a small one can discard neighbours. Reference agreement needs no GT, but inherits reference errors. Calibration also costs time. We test quality and total cost over subsequent batches.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B008": {
+    "after": "\\paragraph{RQ1: Construction and capacity.}\nHow can JHQ become a GPU-resident searchable index, and what construction cost and capacity are demonstrated (\\cref{sec:7-7})? Resident size and construction peak are measured separately.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B009": {
+    "after": "\\paragraph{RQ2: Correct and efficient execution.}\nWhich scoring, selection and scheduling choices improve speed while preserving the specified scores and tie rules? Paired experiments and reference checks answer this in \\cref{sec:7-3,sec:7-4,sec:7-6}.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B010": {
+    "after": "\\paragraph{RQ3: Budget quality and total cost.}\nCan unlabelled agreement choose a useful survivor budget and repay calibration? Held-out tests compare fixed budgets, sampled/FULL rules and enumeration (\\cref{sec:7-5}). The GT-labelled oracle is an evaluation control.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B011": {
+    "after": "\\paragraph{RQ4: Competitive operating regions.}\nWhere does JHQ compete with modern GPU ANN methods at matched recall and a common host-to-host boundary?\nThe answer uses independently tuned E1 frontiers and explicit memory\ndefinitions (\\cref{sec:7-2}). Int8 graph competitors, high-recall reversals\nand absent coverage are part of the answer.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B012": {
+    "after": "For database $\\mathcal X=\\{x_i\\}_{i=0}^{N-1}\\subset\\mathbb R^d$ with stable IDs, exact top-$k$ selects the smallest distances\n\\begin{equation}\n \\rawdist(q,x)=\\|q-x\\|_2^2.\n \\label{eq:2-raw}\n\\end{equation}\nWe use the stored GT top-10 set, including its tie choices. Recall@10 measures how many of those IDs ANN recovers (\\cref{eq:3-recall}); it is not a worst-case distance guarantee.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B013": {
+    "after": "We measure query throughput, batch-call latency, construction cost and storage. These are separate costs: faster batch processing does not establish concurrent-request tail latency, and resident index bytes exclude some workspace and temporary allocations. Chapter 3 gives the boundaries.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B014": {
+    "after": "Tuning gives a finite recall--throughput frontier. A measured threshold chooses a qualifying configuration; interpolation estimates between points. Missing coverage proves neither a win nor an impossibility. \\Cref{sec:3-4} fixes both estimators and endpoint tolerance.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B015": {
+    "after": "IVF-PQ often encodes $x-\\mu_{\\ell(x)}$. JHQ instead uses a residual relative to the primary reconstruction after rotation. Adding the IVF centroid during JHQ reconstruction would therefore add a term the encoder never removed. Candidate expansion and more accurate refinement are established ideas \\cite{johnson_gpu,faiss_refine}.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B016": {
+    "after": "With at least $k$ valid routed candidates, the survivor cap is $c(\\alpha)=\\max\\{k,\\lceil\\alpha k\\rceil\\}$. The output and survivor sets satisfy\n\\begin{equation}\n \\mathcal R_\\alpha(q)\\subseteq C_\\alpha(q)\\subseteq U(q)\\subseteq\\mathcal X.\n \\label{eq:2-cascade}\n\\end{equation}\nRefinement can reorder retained vectors, but cannot recover excluded IDs. Stage-wise GT coverage bounds final recall; measuring each stage's loss needs counterfactual scoring over a fixed universe.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B017": {
+    "after": "Broad scoring takes $O(n_cM)$ lookups; refinement takes $O(cd)$ coordinate work. Actual latency also includes access and selection. Probes change the routed universe $U$; $\\alpha$ changes retention within it. They control different losses.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B018": {
+    "after": "Residuals are $r=y-\\widehat p$, giving reconstruction $\\widehat y=\\widehat p+\\widehat r$. The evaluated codes use $d/8$ primary bytes and $d$ residual bytes per vector, before metadata. Refining fewer rows reduces reads, not stored residual size.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B019": {
+    "after": "The inherited primary levels are Gaussian mid-quantiles. Under an exact Gaussian model, zero-threshold one-bit MSE-optimal levels would instead be $\\pm\\sigma\\sqrt{2/\\pi}\\simeq\\pm0.79788\\sigma$. For fixed signs and positive scale, however,\n\\begin{equation}\n \\primarydist=\\|q'\\|^2+da^2-2a\\langle q',s\\rangle,\n \\qquad s\\in\\{-1,+1\\}^d.\n \\label{eq:2-sign-order}\n\\end{equation}\nThus scale cancels from primary ordering but still affects residual reconstruction. Our design uses separability and measured quality, without claiming optimal quantisation.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B020": {
+    "after": "$\\rawdist$ uses original vectors; $\\primarydist=\\|q'-\\widehat p\\|^2$ uses primary reconstructions. The refined score is\n\\begin{equation}\n \\refineddist=\\|q'-\\widehat p-\\widehat r\\|^2+\\|q'\\|^2.\n \\label{eq:2-refined}\n\\end{equation}\nIts query-only term changes distance values, not ranking. Routing and reconstruction errors remain after exact computed-score selection.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B021": {
+    "after": "CUDA uses 32-thread warps and blocks with limited registers and shared memory \\cite{cuda_programming_guide}. JHQ spreads scanning across candidates and refinement across coordinates of one survivor. More blocks can hide latency, but also duplicate tables and buffers.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B022": {
+    "after": "Faiss uses warp selection \\cite{johnson_gpu}; bitonic, radix and merge primitives trade work for state. AIR top-$k$ and GridSelect study global selection \\cite{gpu_topk}. JHQ adapts these existing tools.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B023": {
+    "after": "CUDA Graph replay saves launch setup. Capture, workspace changes and shared-key access still follow the lifecycle and correctness contracts in Chapter 5.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B024": {
+    "after": "SONG exposes distance parallelism in GPU graph search \\cite{song}. CAGRA designs GPU construction and navigation, tuned by connectivity and search width \\cite{cagra}. We test both fp32 and quantised-vector CAGRA because their speed and storage differ.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B025": {
+    "after": "BANG pairs GPU compressed vectors with a host-resident graph \\cite{bang}. This trades transfer costs for capacity. JHQ's index remains device-resident.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B026": {
+    "after": "E1 compares graph navigation with regular scans at batch 1,000; T5 tests their small-batch behaviour (\\cref{sec:7-smallbatch}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B027": {
+    "after": "OPQ learns rotation and subspace codebooks \\cite{opq}; this can remove the Cartesian structure needed for JHQ's exact split. ScaNN weights error for inner-product ranking \\cite{scann}. Both show why reconstruction error alone is insufficient; Chapter 8 tests this within JHQ.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B028": {
+    "after": "PQ Fast Scan and Quicker ADC already shape tables for CPU register lookup \\cite{fastscan,quickeradc}. JHQ exploits Cartesian structure on a GPU, with separate checks for FP32 rounding and cutoff ties.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B029": {
+    "after": "RaBitQ analyses a randomised compact-code estimator \\cite{rabitq}; multi-bit variants trade storage for accuracy \\cite{rabitq_multi}. Its guarantees do not transfer to JHQ's primary/residual hierarchy. GPU IVF-RaBitQ supplies fused GPU search \\cite{ivfrabitq} and is a direct baseline.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B030": {
+    "after": "Faiss and cuVS expose refinement controls \\cite{faiss_refine,cuvs_refinement}. Alternatives include GT-based autotuning \\cite{faiss_autotune}, learned termination \\cite{li_termination} and recall-targeted DARTH \\cite{darth}. Chapter 6 instead selects one reusable budget from unlabelled reference agreement.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B031": {
+    "after": "The open questions are practical: can this hierarchy support fast, correct GPU execution; when does extra scan parallelism pay; and does unlabelled budget calibration preserve enough quality to repay its cost? We keep the inherited representation fixed to study those choices.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B032": {
+    "after": "",
+    "reason": "Repeated design positioning already stated by the preceding gap paragraph and contribution table",
+    "round": 1
+  },
+  "B033": {
+    "after": "\\chapter{Background and Related Work}\n\\label{ch:background}\n\\chaptermark{Background and Related Work}\nThis chapter covers candidate access, quantisation and selection, then places JHQ's execution and budget choices against existing GPU ANN methods.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B034": {
+    "after": "Paired ablations measure an implementation change. Explaining it through cache misses or occupancy would need hardware counters. Cross-system frontiers compare whole systems; the integrated scheduling test in \\cref{sec:7-6} avoids multiplying gains from different baselines.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B035": {
+    "after": "The E1 grid was extended where recall coverage was incomplete. Low-recall losses, high-recall\nreversals and unsuccessful alternatives remain part of the evaluation.\nThe rule uses reference agreement; held-out evaluation measures raw-vector GT recall.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B036": {
+    "after": "Preparation removes non-finite rows, normalises norms above $10^{-12}$ and samples query positions without replacement using seed 42. Stella supplies 999 corpus-sampled queries, not its separate 65-query benchmark. These exports test vector neighbours, not relevance labels. The OpenAI exports share the sampling rule; checks support row alignment on all queries and 10,299 base rows, without original-ID joins (\\cref{sec:7-precision,sec:7-2}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B037": {
+    "after": "JHQ uses $M=d/8$, $B=B_r=8$, eight coarse iterations and 100,000 residual-training rows. Sweeps reuse trained states but re-encode the database; cold builds start afresh. Training uses database rows. Even/odd query positions give calibration/held-out pools of 500/500, or 500/499 for Stella.\nSeeded subsamples of sizes\n32, 64 and 128 are drawn 64 times per cell; FULL uses all 500 calibration\nqueries. GT labels enter the offline oracle and held-out assessment, while\nthe deployable agreement rule uses search outputs\n(\\cref{sec:6-2,sec:a-budget-contract}).",
+    "reason": "Compress highlighted setup sentences; keep unhighlighted sampling and GT paragraphs exact",
+    "round": 1
+  },
+  "B038": {
+    "after": "With $t$ in seconds, round throughput and its summary are\n\\begin{equation}\nQ_r=\\frac{m_rb}{\\sum_{i=1}^{m_r}t_{ri}},\\qquad\nQ=\\operatorname{median}_r Q_r,\n\\label{eq:3-throughput}\n\\end{equation}\nE1 uses batch 1,000 and five rounds. JHQ warms up once per variant/round; baselines warm up three times initially. Normally each round has 24 timed calls, fewer for slow baseline points. Warm-up excludes JIT and capture. Latency percentiles describe repeated batch calls, not individual or concurrent requests.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B039": {
+    "after": "We retain slow valid calls and both round-QPS and call-latency summaries. Their medians need not be reciprocal. Shared indexes and query pools measure timing or sampling variation, not independent training replications; sweep cells receive no independence-based significance claim.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B040": {
+    "after": "Runs use an RTX 5090 (32,607\\,MiB), driver 595.71.05, CUDA 13.0 and cuVS 26.08.01. OpenMP uses 16 threads within a 25-CPU quota; E1 records 575\\,W. A cooperative lock and snapshots do not fix clocks or host load. JHQ JIT-compiles Release compute\\_80 PTX \\cite{cuda_platform}; baselines use installed builds. Device profiles are reported separately.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B041": {
+    "after": "Resident memory includes encoded arrays, models, workspace and context. E1's context-subtracted JHQ totals and CAGRA's index deltas therefore differ in scope (\\cref{sec:4-4,sec:7-7}). Later-created search pools and build temporaries prevent an equal-peak-memory comparison. Separate 20\\,ms samples estimate build peaks. Cold train/add excludes input loading and preceding host setup.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B042": {
+    "after": "\\paragraph{Supplementary evidence boundary.}\nSupplementary checks (\\cref{sec:a-supplement}) use separate sessions. Precision changes and cached-model reuse follow \\cref{sec:4-2,sec:7-precision}; historical baseline ratios remain cross-session.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B043": {
+    "after": "A point dominates another if recall and QPS are both no worse and one is better. The frontier can span index configurations. At target $r$, the measured estimate is\n\\begin{equation}\nQ_{\\rm meas}(r)=\\max\\{Q_i:R_i\\geq r\\}.\n\\label{eq:3-measured-frontier}\n\\end{equation}\nIt is undefined without a qualifying point. For adjacent frontier points, interpolation uses\n\\begin{equation}\n\\log Q_{\\rm int}(r)=(1-\\lambda)\\log Q_a+\\lambda\\log Q_b,\n\\qquad \\lambda=\\frac{r-R_a}{R_b-R_a}.\n\\label{eq:3-interpolated-frontier}\n\\end{equation}\nThe parser first accepts a point within $5\\times10^{-4}$ of the target; otherwise it interpolates inside the measured range only. T5 also keeps qualifying measured endpoints below a method's minimum frontier recall. We report both estimates near ties; neither matches storage budgets.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B044": {
+    "after": "Failures and invalid outputs stay outside the valid frontier. Repeat-call set and order changes are logged separately. Isolated reruns replace contaminated builds; skipped Stella batch-1,000 runs supply no points (\\cref{sec:a-e1-protocol}). Current frontiers include int8 CAGRA (\\cref{fig:7-frontiers}); historical ADC/poster plots retain their original scope.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B045": {
+    "after": "Each family records version, index/query settings, timing and outputs. Paired tests share trained states; state or precision changes define a new family. Missing historical executable/model fingerprints limit exact reproduction (\\cref{app:reproducibility}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B046": {
+    "after": "Correctness refers to stated computed scores and tie rules. Raw recall also depends on routing and reconstruction. Sampling/order conditions are in \\cref{sec:6-2,sec:6-3}; \\cref{sec:8-3} covers finite pools, shared indexes, tuning grids, interfaces and hardware limits.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B047": {
+    "after": "% Six-section design follows 6.pdf; records audited offline in data/ch3/audit.json.\n\\chapter{Research Design and Measurement}\n\\label{ch:methodology}\n\\chaptermark{Research Design and Measurement}\nWe use paired execution tests, held-out calibration and tuned system frontiers. Each needs different controls. This chapter defines them; Chapters 4--6 describe the methods and Chapter 7 reports results.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B048": {
+    "after": "Training creates reusable models; add encodes rows and builds lists; search uses the completed index. A cache hit skips fitting, not database encoding. Cold train-plus-add and cached-state search therefore measure different work.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B049": {
+    "after": "The host prepares samples, the square transform and primary codebook. GPU products apply rotation; device training fits IVF centroids and residual codebooks. Add then transfers bounded batches, encodes both levels and writes list-ordered arrays.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B050": {
+    "after": "Model state holds the transform, codebooks and centroids. Database state adds offsets, IDs, codes and corrections. Queries overwrite workspace but reuse its allocations; a captured graph references those existing arrays.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B051": {
+    "after": "One successful \\texttt{add} creates a fixed snapshot; another add is rejected. Updates require a replacement snapshot. Physical positions stay fixed during search; mutable insert/delete and transactional publication are unimplemented.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B052": {
+    "after": "Search maps host queries to host IDs and computed scores. \\Cref{eq:5-refined-constant} explains the query-only score term; \\cref{sec:3-3} defines timing.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B053": {
+    "after": "",
+    "reason": "Resident construction/search distinction already stated in this section and scope",
+    "round": 1
+  },
+  "B054": {
+    "after": "The harness selects database rows at a fixed stride. The primary/IVF\nsample has 159,744 rows for Vogue, 319,488 for arXiv and both OpenAI\ndatasets, and 1,277,952 for BGE and Stella: exactly $39n_{\\rm list}$ in\neach case. The $39n_{\\rm list}$ rule matches FAISS's warning threshold \\cite{faiss_clustering}, without guaranteeing fit quality. A separate 100,000-row strided sample bounds residual-training cost.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B055": {
+    "after": "An earlier sweep fixed primary/IVF models and varied residual samples on Vogue/OpenAI-3072 ($B_r\\in\\{4,8\\}$, 32/128/256 probes). Across twelve configurations, 100K rather than all rows lowered recall in eleven cases and tied once; the largest gap was 0.0018. Intermediate sizes were non-monotone. This 25-Lloyd-iteration study motivates a bounded sample, not the later six-dataset result.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B056": {
+    "after": "The constructor estimates scale as\n\\begin{equation}\n \\sigma^2=\\frac{1}{n_t d}\\sum_{i=0}^{n_t-1}\\|x_i\\|_2^2,\n \\qquad D_s=d/M,\\qquad K=2^B.\n \\label{eq:4-scale}\n\\end{equation}\nFor $B=D_s=8$, levels are $\\{-a,+a\\}$ with $a=0.674\\sigma$: one byte stores eight signs. JHQ's analytical structure \\cite{jhq} allows $O(d)$ encoding and exact small-LUT factorisation (\\cref{sec:5-2}). Arbitrary Lloyd-refined codewords need not remain separable.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B057": {
+    "after": "For fixed signs $\\widehat p=a s$, $s_j\\in\\{-1,+1\\}$,\n\\begin{equation}\n \\|q'-a s\\|^2=\\|q'\\|^2+da^2-2a\\langle q',s\\rangle.\n \\label{eq:4-sign-ranking}\n\\end{equation}\nPositive $a$ does not change real-arithmetic primary order, without a Gaussian assumption. It does change residuals and refined ranking. Zero scale is degenerate; FP32 ties still matter.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B058": {
+    "after": "On historical Vogue ($M=96$, $B_r=4$, 128 probes), earlier/analytical-primary builds gave primary recall 0.6618/0.6342 and full recall 0.9452/0.9409. Refinement narrowed the gap. Residual training also changed, so this is not a primary-codebook-only experiment. Chapter 7 tests the complete frontier.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B059": {
+    "after": "Eight IVF iterations update centroids seeded from spaced rotated rows. Assignment ranks $s_\\ell=\\|\\mu_\\ell\\|^2-2\\langle y,\\mu_\\ell\\rangle$. Under supported dimensions, the default filters with int8 products and resolves ambiguity in FP32; other precision paths also exist.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B061": {
+    "after": "The filter uses conservative norm bounds and FP32 headroom. A bitwise FP32 guarantee would also need accumulation-error bounds. The archived FP16 comparison differs on 0/14,838 Vogue, 6/31,748 BGE and 3/16,359 Stella tail assignments. This is finite evidence; cold logs do not identify the executed assignment precision.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B062": {
+    "after": "Residual fitting follows IVF but uses $r=\\Pi x-\\widehat p(x)$, not an IVF-centroid residual. Each subspace shares a sorted $K_r=2^{B_r}$ scalar codebook across its coordinates. GPU sorting and one-dimensional Lloyd updates fit it, capped at 2,000 iterations.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B063": {
+    "after": "At the historical 100K sample, 2,000 rather than 25 updates gained 0.0063--0.0076 recall. Later changes exceeded reported two-run variation in BGE/Stella, and sparse tail bins kept changing. These FP32 observations do not refute exact Lloyd descent. Cold runs reach the cap, so fitting is budgeted, not claimed converged. At 20,000 updates, historical Stella all-row/100K recall was 0.9921/0.9920.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B065": {
+    "after": "Resident IDs map positions $p$ back to input rows $\\rho(p)$. Two-pass add builds the inverse temporarily for scatter; search needs no permanent inverse. Primary ties use positions, final ties use database IDs.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B066": {
+    "after": "With one-byte primary subspace codes, resident row and offset bytes are\n\\begin{equation}\n S_{\\rm rows}=N\\left(M+\\left\\lceil\\frac{dB_r}{8}\\right\\rceil+8\\right),\n \\qquad S_{\\rm offsets}=4(n_{\\rm list}+1).\n \\label{eq:4-row-storage}\n\\end{equation}\nIDs and FP32 corrections add eight bytes per row. At $M=d/8$, $B_r=8$, codes take $9d/8$ bytes, 12.5\\% above SQ8. Graph-free storage is not a unique compression advantage over int8.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B067": {
+    "after": "Degree-$d_g$ CAGRA uses $d+4d_g$ bytes per row. For Stella at $d_g=32$, JHQ's 19.20\\,GiB payload nearly equals CAGRA int8's recorded 19,656\\,MiB, despite different accounting scopes. JHQ instead offers graph-free construction and adjustable residual access; $\\alpha$ does not shrink the stored array.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B068": {
+    "after": "Basic FP32 arrays take $4d^2$ transform bytes, $4MKD_s$ primary-codebook bytes, $4MK_r$ residual-codebook bytes and $4n_{\\rm list}(d+1)$ centroid/norm bytes. The selected path adds derived arrays. Workspace holds two query matrices $[b_{\\rm cap},d]$, centroid scores, LUTs, probes and survivors. Optional residual LUTs add $4b_{\\rm cap}dK_r$ bytes; defaults score directly. Group scratch (\\cref{eq:5-group-workspace}) reserves about 93.8\\,MiB at 128 probes, even on the query-centric path.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B069": {
+    "after": "Caller-owned input needs $4n_ba_{\\rm in}d$ pinned staging bytes. Order/inverse arrays each take $4N$ device bytes. Assignment scratch is freed before gather (\\cref{eq:4-staging-rows,eq:4-assignment-scratch}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B070": {
+    "after": "The cache stores rotation, codebooks and centroids. Its key omits code version and full database hashing, so changed code/data require explicit invalidation and model provenance. Sweeps reuse states; cold builds create new ones. Similar recall does not imply identical models.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B071": {
+    "after": "A cache hit still performs constructor QR, warm-up, model upload and add. Stella's 6.67\\,s add record includes initial workspace allocation, but excludes schedule calibration and search warm-up. It is not a restart-time measurement.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B072": {
+    "after": "Changing $\\alpha$ needs no retraining. Before capture, search grows workspace as needed; changes to batch, survivors, probes, lanes, groups or bounds trigger recapture. Calibration can bypass capture. The index owns and reuses buffers across sequential calls, then releases them with its graph.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B073": {
+    "after": "One-pass add encodes input-order arrays, then gathers them into list order, temporarily keeping both copies. Two-pass add assigns/sorts IDs first, then revisits input to encode and scatter directly. It trades another read/rotation for lower simultaneous storage. Raw-input assignment against back-transformed centroids uses the real-arithmetic orthogonality identity.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B074": {
+    "after": "The one-pass capacity estimate is\n\\begin{equation}\n H_{\\rm single}=N(2b_r+3M+20)+2^{30}\\quad\\text{bytes}.\n \\label{eq:4-peak-heuristic}\n\\end{equation}\nTen live gather/transpose arrays contribute $3NM+2Nb_r+20N$ bytes: three primary copies, two residual/correction copies, assignments, sort order and IDs. The extra 1\\,GiB is heuristic headroom, not a full peak model.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B075": {
+    "after": "At final two-pass repack, IDs, residuals, corrections and both primary layouts occupy\n\\begin{equation}\n S_{\\rm repack,2}=N(b_r+2M+8).\n \\label{eq:4-two-pass-repack}\n\\end{equation}\nThis counts that phase only. Whole-build peak also considers earlier pipeline/inverse scratch, model, sort, context and later workspace allocations.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B076": {
+    "after": "",
+    "reason": "Measurement boundaries and results are already cross-referenced at the start of Chapter 4 and in Chapter 7",
+    "round": 1
+  },
+  "B077": {
+    "after": "A historical 32-bit $n_td$ overflow at $2^{31}$ zeroed the primary scale; a later process reloaded it from a version-blind cache. Chunked norms with double accumulation fixed it. Routing alone therefore cannot validate representation.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B078": {
+    "after": "The 13 October pilot exported cached models and decoded layouts for full Vogue (932,328), arXiv (2,253,000) and OpenAI-3072 (999,000) databases.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B079": {
+    "after": "Codebooks passed separability, scalar-level and sorting checks. An FP64 loop checked $\\gamma=2\\langle\\widehat p,\\widehat r\\rangle$ on every exported row; maximum absolute error was $1.28\\times10^{-7}$--$2.77\\times10^{-7}$. Sampled GPU-returned\ntop-10 scores have maximum relative errors from $2.38\\times10^{-7}$ to\n$4.85\\times10^{-5}$, using $|s_{\\rm GPU}-s_{64}|/s_{64}$ with the\nquery-norm constant included. These are checks of the exported\nrepresentation, not re-encoding from the original input vectors.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B080": {
+    "after": "At 768/1,024 dimensions, recoding mismatches fall within $1.12\\times10^{-7}$ of boundaries. OpenAI-3072 instead differs on 2.68\\% of residual coordinates, up to $2.67\\times10^{-5}$ from boundaries, consistent with TF32 rotation. Residual checks condition on stored primary digits to avoid double-counting flips.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B081": {
+    "after": "ID-joined one-/two-pass builds have identical codes on the three smaller databases. Correction differences reach $8.94\\times10^{-8}$; assignments differ on 1 Vogue, 1 arXiv and 40 OpenAI rows. Stella covers only its natural two-pass build. Exported centroids are absent, leaving membership decisions unchecked.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B082": {
+    "after": "Construction requires $M\\mid d$, $D_s\\mid B$ and $M\\bmod4=0$. It also needs finite inputs, representable counts and reserved sentinels. IDs/positions are signed 32-bit; address products use wider arithmetic.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B083": {
+    "after": "T4 checks selection separately (\\cref{sec:7-strict-selection}). Export audits do not certify centroid membership, empty lists or adversarial tails.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B084": {
+    "after": "A query follows rotation $q'=\\Pi q$, IVF routing, primary screening and residual refinement. Final selection returns $k$ IDs and computed scores. \\Cref{fig:5-query-path} distinguishes the\nthree runtime selection decisions; the ground-truth ordering is an\nexternal evaluation object.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B085": {
+    "after": "Primary ADC keeps $q'$ in FP32 and reconstructs stored codes \\cite{pq,jhq}:\n\\begin{equation}\n T_m[z]=\\|q'_m-\\mathcal C_m[z]\\|_2^2,\\qquad\n \\primarydist(q,x)=\\sum_{m=0}^{M-1}T_m[z_m(x)].\n \\label{eq:5-primary-lut}\n\\end{equation}\nAn eight-bit label normally needs 256 entries. The useful extra structure is inside each Cartesian subcodebook, beyond the PQ subspace partition.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B086": {
+    "after": "At $K=256$, $D_s=8$, the analytical codebook is\n\\begin{equation}\n \\begin{aligned}\n a&=\\sigma\\Phi^{-1}(3/4)\\simeq0.67449\\sigma,\\qquad\n \\mathcal C_m=\\{-a,+a\\}^{8},\\\\\n \\primarydist(q,x)&=\\|q'\\|_2^2+da^2\n       -2a\\sum_{j=0}^{d-1}s_j(x)q'_j.\n \\end{aligned}\n \\label{eq:5-sign-codebook}\n\\end{equation}\n$\\Phi$ is the standard normal CDF. Each byte stores eight signs, higher bits first. For $a>0$, primary order equals sign-vector inner-product order. Cartesian structure also permits exact four-/eight-way splits; a learned replacement needs compatibility checks.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B087": {
+    "after": "The high nibble selects the first four coordinates and the low nibble selects the last four: $\\mathcal C_m[16h+l]=(A_m[h],B_m[l])$. Their tables are\n\\begin{equation}\n T_m^{\\rm hi}[h]=\\|q'_{m,\\rm hi}-A_m[h]\\|_2^2,\\qquad\n T_m^{\\rm lo}[l]=\\|q'_{m,\\rm lo}-B_m[l]\\|_2^2.\n \\label{eq:5-lut-halves}\n\\end{equation}\nDisjoint squared-L2 sums give\n\\begin{equation}\n T_m[z]=T_m^{\\rm hi}[z\\!\\gg\\!4]\n        +T_m^{\\rm lo}[z\\mathbin{\\&}15].\n \\label{eq:5-lut-factorisation}\n\\end{equation}\nThis stores 32 entries instead of 256, without changing real-arithmetic scores, codes or candidates.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B088": {
+    "after": "The builder takes coordinate slices from codewords $16h$ and $l$. This requires all codewords sharing a nibble to share that slice. \\texttt{verify\\_split\\_lut} rejects incompatible tables.\nAn arbitrary learned 256-centroid PQ subcodebook need not satisfy this\ncondition: dividing its code labels into nibbles does not factor its\ncentroid coordinates.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B089": {
+    "after": "Nibble LUTs have precedents in Fast Scan, Quicker ADC and IVF-RaBitQ \\cite{fastscan,quickeradc,ivfrabitq}; JHQ retains its own two-level score. Our contribution is their GPU integration with retention and refinement. Two groups lead in 22/24 measured cells; other margins are below 1\\% (\\cref{sec:7-3}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B090": {
+    "after": "For list $\\ell$, row $r$ has position $p=o_\\ell+r$. Code $Z[m,p]$ lies at byte offset $mN+p$, rather than candidate-major $pM+m$. Adjacent lanes then read adjacent candidates at fixed subspace $m$. A warp crossing lists can still jump in memory.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B091": {
+    "after": "Four subspace bytes from one candidate form one word:\n\\begin{equation}\n \\mathsf{w}[j,p]=\\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\\qquad\n \\operatorname{offset}_{\\rm bytes}(\\mathsf{w}[j,p])=4(jN+p).\n \\label{eq:5-packed-layout}\n\\end{equation}\nShifts and masks recover each byte exactly: $(\\mathsf w[j,p]\\gg(8t))\\mathbin{\\&}255$. Its nibbles index \\cref{eq:5-lut-factorisation}. This packs subspaces of one vector, not four candidates.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B092": {
+    "after": "One word load replaces four byte loads, followed by register unpacking. For 32 positions the logical window is 128 bytes; alignment and active lanes determine transactions. Payload remains $M$ bytes per candidate. Since both alternatives are subspace-major, the experiment isolates neither transpose nor cache effects.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B093": {
+    "after": "Grouped scanning adds blocks within each query, then merges survivors \\cite{johnson_gpu}. It preserves computed-primary selection, not exact raw-vector neighbours.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B094": {
+    "after": "$\\operatorname{Top}_c(V)$ is the first $\\min(c,|V|)$ elements under $K_q$, with $c=\\max\\{k,\\lceil\\alpha k\\rceil\\}$. Each group needs its full local top-$c$: all global winners could lie in one group. A $c/\\gscan$ quota can lose them.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B096": {
+    "after": "Materialising all $n_c$ score/position pairs needs $O(n_c)$ writes/storage. Fused scoring instead repeatedly sorts bounded local buffers and emits $O(\\gscan c)$ entries. Register selection is another established option \\cite{johnson_gpu}; the experiments test the chosen scan variants.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B097": {
+    "after": "For $\\gscan>1$, one 256-thread block merges each query over $\\log_2\\gscan$ rounds. Each pair emits $\\min(c,a+b)$ entries. Merge Path finds thread slices by binary search, then each thread merges its slice \\cite{gpu_merge_path}.\nAll comparisons use \\cref{eq:5-primary-key}; block barriers separate\nrounds. \\Cref{fig:5-global-selection} illustrates the truncation invariant.\nThe tree emits at most $c(\\gscan-1)$ key pairs across its internal nodes,\nin addition to the partition searches and synchronisation work.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B099": {
+    "after": "Valid counts delimit each local prefix. Sort padding uses $(+\\infty,\\mathrm{INT\\_MAX})$; valid positions must be smaller. Empty groups have count zero. Output padding instead uses $(+\\infty,-1)$, which refinement skips and merging must not treat as valid. $\\gscan=1$ writes survivors directly, without merging.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B100": {
+    "after": "$\\gscan=0$ labels one block per query. Its default selector is exact by distance but can choose different cutoff-tie IDs from the complete-key path. The lossy \\texttt{K\\_LOCAL=4} alternative requires \\texttt{JHQ\\_EXACT\\_TOPCK=0}; paper-faithful builds disable it.\n\nFor distance-only compaction, every rejected score has $c$ retained witnesses no larger than it. The final buffer therefore contains all scores below the cutoff and enough equal scores, without fixing tied IDs. T4 checks this preorder and complete-key grouped selection (\\cref{sec:7-strict-selection}) by sorting GPU-computed scores, not CPU raw distances.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B102": {
+    "after": "Nonnegative FP32 squared-sum scores and positions are packed as\n\\begin{equation}\n \\kappa(D,p)=2^{32}\\operatorname{uintbits}_{32}(D)+p.\n \\label{eq:5-packed-key}\n\\end{equation}\nUnsigned comparison matches lexicographic order for positive-zero, non-NaN scores and valid nonnegative positions. Infinity follows finite scores; the initial all-one word follows valid keys. Invalid positions cannot publish bounds.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B103": {
+    "after": "One thread polls the bound per chunk. After compaction, $c$ valid entries permit publishing the local $c$th key with 64-bit \\texttt{atomicMin}. A final publication and binary search trim the sorted prefix. Groups never wait for one another: stale bounds leave extra entries for exact merging. Each search resets bounds in-stream; merging follows scan completion.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B104": {
+    "after": "Extracted PTX uses aligned \\path{ld.volatile.global.u64} and \\path{atom.global.min.u64}. PTX's single-copy atomicity for compatible same-size strong accesses supplies the whole-key premise \\cite{ptx_isa}. CUDA 13.0 \\texttt{ptxas} for \\texttt{sm\\_120} corroborates this (\\cref{sec:a-supplement}); actual driver-JIT SASS was not captured. The argument does not rely on C++ \\texttt{volatile} alone \\cite{cuda_programming_guide}.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B105": {
+    "after": "Bounds are checked after full primary scoring (\\cref{fig:5-shared-bound}). They save buffer/merge work, not distance arithmetic, and add polling/atomics. \\Cref{sec:7-4} includes a slowdown.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B106": {
+    "after": "Grouping launches $b\\gscan$ blocks rather than $b$, adding parallelism but duplicating staging/selection and requiring merging. Smaller static quotas\nwould reduce intermediate storage, but require a certificate or fallback\nto preserve coverage; the pilot's concentrated survivor distribution\nmotivated using witnessed thresholds instead (\\Cref{sec:7-4}).",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B107": {
+    "after": "A chosen group count of one dispatches $\\gscan=0$, keeping index, probes and budget fixed but inheriting distance-only cutoff ties. Identical survivors thus require a common-order check. Integrated checks, gains and regret appear in \\cref{sec:7-6}.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B108": {
+    "after": "On the 170-SM RTX 5090, 48 warps/SM gives $0.6H=156{,}672$ threads \\cite{blackwell_tuning}. At batch 1,000 and $T_{\\rm blk}=512$, two groups need a 1,024,000-thread proxy. Fill therefore chooses one; skew can force four.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B109": {
+    "after": "Nine of 38 E1 run records cross $v=0.3$, all Vogue (0.338--0.622).\nTheir 132\nrun--budget cells contain 27 Vogue cells scheduled to four groups and\n105 arXiv/OpenAI cells scheduled to the query-centric path.\nNon-Vogue full-batch gains therefore use LUTs, packed access, lane refinement and probe selection, without grouped retention or shared bounds.",
+    "reason": "Keep unhighlighted dispatch counts exact; shorten highlighted explanation",
+    "round": 1
+  },
+  "B110": {
+    "after": "Vogue checks find 3--15 tie-only primary differences per 1,000 queries, zero non-tie differences and identical final outputs. The 7--11 range applies only at 128 probes.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B111": {
+    "after": "Held-out budget tests use one block in ten cells and four groups in two Vogue cells. At $S=128$, eight use two groups, two use four and two use one block: 8/12 change paths. Grouping mainly serves smaller/skewed workloads, without a fixed batch-256 cutoff.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B112": {
+    "after": "The heuristic omits register/shared-memory residency, compaction and merge costs, and its pseudoqueries can become stale. Its worst recorded regret is 1.217 at batch 256. Measurements hold the refinement budget fixed; \\cref{sec:5-6} processes the resulting survivors.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B113": {
+    "after": "With primary reconstruction $\\widehat p$, residual $\\widehat r$ and stored correction $\\gamma=2\\langle\\widehat p,\\widehat r\\rangle$, refinement computes\n\\begin{align}\n \\refineddist(q,x)\n &=\\primarydist(q,x)+\\|q'-\\widehat r(x)\\|_2^2+\\gamma(x)\n \\label{eq:5-refined-score}\\\\\n &=\\|q'-\\widehat p(x)-\\widehat r(x)\\|_2^2+\\|q'\\|_2^2.\n \\label{eq:5-refined-constant}\n\\end{align}\nNorm expansion gives the second equality. The query-only constant preserves ranking, while reconstruction error remains \\cite{jhq}.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B114": {
+    "after": "The scalar path sums coordinate-wise residual differences from $q'$, staging queries and, when possible, codebooks in shared memory. It then adds the primary score and correction.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B115": {
+    "after": "At $L\\in\\{1,8,16,32\\}$, adjacent lanes share one candidate. A residual word holds $d_{\\rm word}=32/B_R$ codes: four for eight-bit, eight for four-bit. Lane $a$ reads words $a,a+L,\\ldots$; butterfly shuffles sum partials and lane zero writes the score.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B116": {
+    "after": "Rows must be word-aligned and $d_{\\rm word}\\mid D_s$, keeping words within a codebook. All lanes join shuffles; invalid slots contribute zero, then receive infinite output scores. At $L=16$, each warp handles two candidates.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B117": {
+    "after": "L0 uses scalar byte loads; L1 packs word loads but keeps one lane and the accumulation order. L8/L16/L32 divide coordinate work, shortening each walk at the cost of shuffles and fewer concurrent candidates. Larger $L$ need not win; survivor locality and codebook placement still matter.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B118": {
+    "after": "Given $k$ finite valid survivors with unique IDs, one block selects exact top-$k$ under $(\\refineddist,\\mathrm{ID})$. Each round scans all $c$ slots, emits the minimum and sets its score to infinity. There is no per-thread quota. If finite entries run out, a valid smallest ID can repeat with infinity; an entirely invalid pool returns invalid IDs. Evaluated pools satisfy the finite-entry contract.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B119": {
+    "after": "Final ties use database IDs; primary ties use positions. Refinement cannot restore excluded candidates or remove quantisation error. Lane reductions change FP32 association and may move near ties.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B120": {
+    "after": "OpenAI rotation and centroid GEMMs use TF32 inputs with FP32 accumulation in v69. Probe selection is exact for those computed scores; later FP32 \\texttt{fma} cannot undo GEMM rounding (\\cref{sec:7-precision}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B121": {
+    "after": "The radix replacement uses one block per query and four most-significant-byte-first passes. Each histogram includes the chosen prefix only. Selecting its next bin updates the remaining rank; four passes determine the cutoff and required equal-key count.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B122": {
+    "after": "Signed zeros first map to positive zero; then float bits $u$ map to\n\\begin{equation}\n F(u)=\\begin{cases}\n       \\mathop{\\sim}u,&\\text{if the sign bit is set},\\\\\n       u\\mathbin{|}2^{31},&\\text{otherwise}.\n      \\end{cases}\n \\label{eq:5-probe-key}\n\\end{equation}\nThis orders non-NaN values, including negatives and infinities, unlike \\cref{eq:5-packed-key}. Equal zeros share a key. Every pass uses the same rounded \\texttt{fma}, keeping recomputed keys fixed.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B123": {
+    "after": "The 256-bin histogram has 32 lane replicas: 32\\,KiB of counters. This separates same-warp updates but leaves inter-warp contention, trading shared storage and reduction for less concentrated atomics.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B124": {
+    "after": "Collection takes all keys below cutoff. Ballots and prefix counts rescan cutoff ties in list-ID order, so atomic arrival cannot choose the tied subset. Each selected entry then counts its predecessors under $(s_i,i)$ and writes to that rank, avoiding a full centroid sort.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B125": {
+    "after": "A block prefix scan converts selected list lengths into offsets. Excess probes repeat the last ID with zero length, so they do not rescan its list. Centroid sets and requested probe count must be nonempty/positive.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B126": {
+    "after": "Histogram/collection passes reread scores; ranking costs $O(n_{\\rm sel}^2)$. Larger selections also need more shared storage, while small ones still pay histogram allocation. We evaluate this existing radix method's deterministic integration, not a uniformly linear replacement.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B127": {
+    "after": "Tests include cutoff ties, signed zeros, infinities, extreme values and excess probes (\\cref{sec:7-4}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B128": {
+    "after": "For routed universe $U(q)$, JHQ's refinement multiplier sets \\cite{jhq}\n\\begin{equation}\n c(\\alpha)=\\max\\{k,\\lceil\\alpha k\\rceil\\},\\qquad\n C_\\alpha(q)=\\operatorname{Top}^{\\rm primary}_{\\min\\{c(\\alpha),|U(q)|\\}}U(q).\n \\label{eq:6-budget}\n\\end{equation}\n$C_\\alpha$ contains valid survivors; underfull output slots receive sentinels. Analysis requires at least $k$ valid candidates. $\\alpha$ changes retention within $U$, while probes change $U$ itself.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B129": {
+    "after": "Too much refinement wastes residual reads; too little can lose neighbours. The grid spans 20--2,000 survivors at $k=10$ without retraining. Smaller budgets do not release stored residuals or necessarily shrink previously grown workspace.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B130": {
+    "after": "For fixed batch and routing, the cost split is\n\\begin{equation}\n T(\\alpha)=T_{\\rm base}+T_{\\rm select}(c(\\alpha))+\n T_{\\rm refine}(c(\\alpha))+T_{\\rm final}(c(\\alpha)).\n \\label{eq:6-cost-model}\n\\end{equation}\n$T_{\\rm base}$ covers transfers, rotation, routing and primary scores; survivor-dependent work follows \\cref{fig:6-budget-scope}. Capacity/resource thresholds prevent a monotone-latency claim. The rule minimises accepted budget, not noisy QPS (\\cref{sec:7-budget-trace}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B131": {
+    "after": "\\paragraph{Position among adaptive ANN methods.}\n$\\alpha$ serves the candidate-expansion role of Faiss's \\texttt{k\\_factor} and cuVS refinement \\cite{faiss_refine,cuvs_refinement}. Alternatives use GT tuning \\cite{faiss_autotune}, learned per-query stopping \\cite{li_termination} or predicted recall \\cite{darth}. Here unlabelled agreement chooses one reusable workload budget. Scores still use reconstructed vectors, unlike the cuVS source-vector refinement example.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B132": {
+    "after": "At $k=10$, the normalised allowance $\\epsilon/(Sk)$ is 0.003125,\n0.0015625 and 0.00078125 for $S=32,64,128$, and 0.0002 at $S=500$.\nLarger $S$ changes coverage and strictness. Disjoint held-out queries assess draws from one finite calibration pool (\\cref{sec:7-5}).",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B134": {
+    "after": "Monotone disagreement makes accepted indices a prefix. Valid per-arm tests can then use fixed-sequence error control \\cite{learn_then_test}. Our one-slot threshold tests stability; it does not certify GT risk.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B135": {
+    "after": "\\paragraph{A finite-pool extension.}\nAssume each query has fixed $X_q(\\alpha)$ at the intended execution regime, independent of subset membership/position. For pool size $N_{\\rm cal}$ and counts $n_j=|\\{q:X_q=j\\}|$, uniform sampling without replacement accepts only all-zero samples or one single-count query \\cite{nist_hypergeometric}:\n\\begin{equation}\n \\Pr\\{D_S(\\alpha)\\leq1\\}\n =\\frac{\\binom{n_0}{S}+n_1\\binom{n_0}{S-1}}{\\binom{N_{\\rm cal}}{S}}.\n \\label{eq:6-finite-pool}\n\\end{equation}\nOut-of-range binomial coefficients are zero. Predicting GT risk also needs the grid acceptance structure and held-out fixed-arm quality. Recorded subset sums test count invariance (\\cref{sec:7-budget-trace}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B136": {
+    "after": "Enumeration reruns the reference and all seven budgets on the same sample. Both timers include a fresh reference. Enumeration handles acceptance holes; bisection matches its minimum only when accepted indices form a prefix.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B137": {
+    "after": "Fixed-key exact primary top-$c$ gives nesting; fixed-key refinement then gives monotone agreement. This supports bisection, without making GT recall or runtime monotone as the pool grows.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B138": {
+    "after": "Within a draw, $S$, routing and scan threads are fixed; \\texttt{scheduled\\_groups(S)} ignores $c$. Grouped budgets use the same LUT sums. Fixed $B_r$, 16 refinement lanes and final $(\\refineddist,\\mathrm{ID})$ order preserve each candidate's scoring.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B140": {
+    "after": "The corollary covers 2,176/2,304 draws. The other 128 are OpenAI-3072, $S=128$, distance-only. All recorded curves are monotone and choices match enumeration (\\cref{sec:7-budget-trace}); that check remains finite.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B141": {
+    "after": "\\paragraph{Full-pool coverage.}\nTwo FULL cells group Vogue; ten use $\\gscan=0$. All twelve choices match enumeration. The ten distance-only cells remain outside \\cref{cor:6-grouped-calibration}. A common cutoff order, or no tie crossing any grid/reference cutoff, suffices for general nesting. Matching held-out execution does not prove that condition.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B142": {
+    "after": "\\paragraph{A rank-based extension.}\nWith the same nesting/fixed-score conditions and one-based primary rank,\n\\begin{equation}\n D_S(\\alpha)=\\sum_{q\\in\\mathcal Q_S}\\sum_{x\\in\\mathcal R_{\\rm ref}(q)}\n \\mathbf1\\{\\operatorname{rank}_{\\rm P}(x)>c(\\alpha)\\}.\n \\label{eq:6-rank-curve}\n\\end{equation}\nExported reference ranks could recover the whole curve from one search. The current harness instead reruns every budget; rank extraction remains future work.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B143": {
+    "after": "Let $\\widehat r,\\widehat Q$ denote held-out recall/QPS and $\\widehat r^*=\\max_{\\alpha\\in A}\\widehat r(\\alpha)$. The diagnostic oracle is\n\\begin{equation}\n \\alpha_{\\rm oracle}\\in\\operatorname*{arg\\,max}_{\\alpha\\in A}\n \\left\\{\\widehat Q(\\alpha):\n \\widehat r(\\alpha)\\geq\\widehat r^*-\\delta\\right\\},\\qquad\\delta=10^{-3}.\n \\label{eq:6-oracle}\n\\end{equation}\nIt uses labels and timings. Its recall slack $\\delta$ differs from agreement's slot allowance $\\epsilon$.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B144": {
+    "after": "FULL remains label-free bisection and tightens $\\epsilon/(Sk)$. Same-sample enumeration checks the search procedure. Agreement minimises an accepted multiplier; the oracle maximises quality-constrained speed, so their choices can differ.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B145": {
+    "after": "Fixed 64 tests a smaller default; fixed 200 tests a high budget (\\cref{sec:7-5,tab:7-budget-quality}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B146": {
+    "after": "FULL's held-out quality appears in \\cref{tab:7-budget-full}; sampled risks appear in \\cref{fig:7-budget-risk}. Under the strong independent-slot model, $4.74/(Sk)\\approx10^{-3}$ suggests $S\\approx500$ at $k=10$. This concerns reference disagreement, not a GT guarantee (\\cref{sec:6-2}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B147": {
+    "after": "Reuse assumes a stable index, $k$, routing and queries. Ordering and batch-path conditions follow \\cref{sec:6-3}; quality, tails and total cost follow \\cref{sec:6-5}. Drift detection is unimplemented.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B148": {
+    "after": "The caller must explicitly install $\\alpha$ before reuse.",
+    "reason": "Remove repeated FULL-versus-sampled results; keep the API requirement",
+    "round": 1
+  },
+  "B149": {
+    "after": "Budget tests and their trace rerun use v69, including OpenAI TF32. FP32 frontier sensitivity does not validate or recalibrate those budget decisions.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B150": {
+    "after": "Protocol follows \\cref{sec:3-2,sec:3-3,sec:3-5}. Construction/calibration are separate from host-to-host search; each ablation keeps its own baseline.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B151": {
+    "after": "CPU JHQ records use unmatched configurations or legacy recall protocols. For example, October Vogue uses 1,024 lists and $[8,4]$ bits, versus E1's 4,096 lists. They cannot supply a matched CPU/GPU speedup.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B152": {
+    "after": "Storage is unmatched: nine-bit RaBitQ has JHQ's nominal $9d/8$ payload; 4/8-bit variants use less.\n\\Cref{tab:4-bytes,sec:7-7} give representation costs and measured\nallocations alongside this performance envelope.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B153": {
+    "after": "",
+    "reason": "All ratios and estimator discrepancy are already in the immediately preceding matched-recall table and its caption",
+    "round": 1
+  },
+  "B154": {
+    "after": "At batch 1,000 and recall 0.97, Vogue's JHQ/RaBitQ ratio falls from 1.059 to 0.933 without grouping. The index, probes, budget and final outputs stay fixed. This identifies an integrated-path benefit, not a shared-bound-only effect.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B155": {
+    "after": "CAGRA int8 is $1.20$--$1.98\\times$ faster at recall 0.90--0.92, but never reaches 0.97 in these grids. RaBitQ regains some 0.98+ targets; CAGRA fp32 wins near 0.99 on arXiv (\\cref{fig:7-frontiers}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B156": {
+    "after": "The OpenAI exports are paired widths of Qdrant DBpedia embeddings \\cite{data_openai1536,data_openai3072}. After truncation/renormalisation, all 1,000 query rows and 10,299 sampled base rows have cosine at least 0.9980 (median 1.000000); mean GT overlap is 9.046/10. This supports row alignment without original entity IDs. Doubling width keeps the CAGRA ratio at 1.747 and moves RaBitQ's from 1.130 to 1.157. Within this pair, dimension alone does not explain the gain.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B157": {
+    "after": "Larger gains accompany smaller 128-probe budget anchors: 4--8 on OpenAI, 64 on Vogue, 100 on arXiv (FULL later selects 200). These are workload associations, not causally isolated or matched-frontier parameters.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B158": {
+    "after": "\\Cref{fig:7-lut} tests six datasets, four probe counts and $\\glut\\in\\{1,2,4,8\\}$ at $\\alpha=100$, with five rounds and batch 1,000 (Stella 999). Two groups lead in 22/24 cells. Exceptions are near ties: arXiv/128 favours one group by 0.23\\%; OpenAI-3072/8 favours four by 0.84\\%. Paired two-versus-one wins are 23/24; all dataset geometric means exceed one (1.021--1.318). Shared-index cells are not independent trials.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B159": {
+    "after": "Packing wins $1.012$--$1.658\\times$ across 48 matched pairs (six datasets, four probe counts, $\\glut\\in\\{1,2\\}$), with recall differences at most $10^{-4}$. Both layouts are subspace-major. This tests packing/load/unpack together; one aggregate rate per arm gives less timing evidence than v71's five rounds.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B160": {
+    "after": "Using refinement's baseline wall-time fraction $f$ and kernel speedup $s$, Amdahl's estimate is $1/(1-f+f/s)$. For arXiv/OpenAI-3072, $f=0.529/0.168$ predicts $1.787/1.175\\times$, versus $1.789/1.171\\times$ measured. Separate profiling makes these explanatory estimates.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B161": {
+    "after": "Lane reductions change FP32 association: reported relative distance error reaches about $1.6\\times10^{-6}$, with occasional ranking changes. Sanitizer checks cover small recorded subsets; scoring is not generally bit-identical.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B162": {
+    "after": "All 48 paired bound comparisons agree on primary/final output; throughput spans $0.994$--$1.562\\times$. At arXiv $\\alpha=200$, batch 1,000 and eight groups, sharing cuts merge 2,629→471\\,$\\mu$s and scan 7,968→5,513\\,$\\mu$s. Other cells include slight regressions.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B163": {
+    "after": "The pilot's first group holds 46--81\\% of winners. Equal quotas need fallback; unequal quotas leave a dominant group. Shared bounds avoid that fixed-quota choice.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B164": {
+    "after": "The radix probe selector keeps prior score arithmetic, including OpenAI TF32 (\\cref{sec:7-precision}). Its 1,792 synthetic cases pass. On all 1,000 arXiv/Vogue/OpenAI-3072 queries, probes and primary positions/distances match the previous selector.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B165": {
+    "after": "ArXiv has 40/64 and 32/64 loss crossings at 128/512 probes, despite mean loss 0.0009. Fixed 100 loses 0.0012/0.0016: better than default need not meet the target. BGE/512 has 24 crossings and $L_{95}=0.0014$; Stella reaches 0.0030; OpenAI-3072 has none (\\cref{tab:7-budget-quality}). Four losses can coexist with reported $L_{95}=0$ (\\cref{sec:a-budget-contract}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B166": {
+    "after": "",
+    "reason": "Sampling allowance and structural path counts already stated in Chapter 6 and the risk figure caption",
+    "round": 1
+  },
+  "B167": {
+    "after": "",
+    "reason": "Fixed-arm quality and Vogue oracle choices are already visible in the budget tables; the objective distinction is stated in Chapter 6",
+    "round": 1
+  },
+  "B168": {
+    "after": "Against fixed 64, sampled-arm QPS wins 9/12 cells: geometric mean $1.054\\times$, range $0.821$--$1.367\\times$ (OpenAI $1.052$--$1.367\\times$). Both fixed controls fail arXiv quality, so these are not uniformly quality-matched gains.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B169": {
+    "after": "Calibration takes 3.9--21.3\\,ms. Under \\cref{sec:6-5}'s reuse assumptions, \\cref{eq:6-payback,tab:7-budget-cost} give maximum positive paybacks of 0.54/2.72\\,s versus fixed 100/64; FULL gives 1.52/2.25\\,s. ArXiv controls fail quality. Direct reuse below checks total cost and recall together.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B170": {
+    "after": "",
+    "reason": "Unreferenced accounting identity repeats the plotted phase costs without adding an inference",
+    "round": 1
+  },
+  "B171": {
+    "after": "At batch 8, eight groups raise throughput $2.06$--$2.76\\times$: arXiv scan drops 849→216\\,$\\mu$s, with 16.7\\,$\\mu$s merging. At batch 1,000 and $\\alpha=200$, independent grouping instead raises scan 3,530→7,652\\,$\\mu$s plus 2,624\\,$\\mu$s merging, reaching only $0.46\\times$ one-block QPS. Shared bounds reduce work, without removing this regime change.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B172": {
+    "after": "The means use thirteen small-batch configurations and eleven full-batch ones (Stella has 999 queries); held-out subsets use nine/seven (\\cref{tab:7-scheduling}). Fixed eight groups fall to $0.886\\times$ at batch 1,000. Worst scheduling regret is 1.217 on BGE/batch 256.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B173": {
+    "after": "Vogue's CV 0.338--0.622 forces four groups at batch 1,000. Scheduled/one-block QPS spans 0.895--1.175; $(n_{\\rm probe},\\alpha)=(16,16),(16,64),(32,64)$ lose at 0.955, 0.895, 0.955. CV captures dispersion, not absolute work: the same rule enables the 0.97 lead but wastes work at low probes (\\cref{sec:7-2}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B174": {
+    "after": "Across 250 variant/configuration pairs and 234,320 query comparisons, there are no non-tie primary differences or final-ID-set differences. Tied output order can differ. These are sequential synchronous throughput tests, not open-loop tail-latency tests.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B175": {
+    "after": "Three empty-cache repeats give Vogue training 298--303\\,ms and total about 0.56\\,s; its archived 1.33\\,s run was slow. Stella takes 10.54--10.65\\,s, near the archived 10.40\\,s (\\cref{tab:7-build-memory}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B176": {
+    "after": "Stella builds take 74.55/82.45\\,s for isolated CAGRA int8 (including quantisation) and a three-configuration median 86.59\\,s for IVF-PQ, versus JHQ's 10.54--10.65\\,s. Quality and resident memory remain separate comparisons.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B177": {
+    "after": "Five builds show up to 0.0012 recall range on arXiv. Stella startup is 18.2--18.6\\,s with warm pages, 129.9\\,s on first read. At 20\\,ms resolution, peaks are BGE 26.08\\,GiB and Stella 22.58\\,GiB. BGE's 12\\,GiB assignment buffers precede its 23.05\\,GiB gather payload; summing them would overstate simultaneous memory (\\cref{eq:4-assignment-scratch}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B178": {
+    "after": "Residuals occupy 80.7\\% of BGE's 11.93\\,GiB and 82.9\\% of Stella's 20.44\\,GiB totals, including context/workspace. Raw vectors need 38.50/67.81\\,GiB. Smaller $\\alpha$ saves reads, not stored residual bytes (\\cref{sec:4-4}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B179": {
+    "after": "",
+    "reason": "Reserved workspace and measurement-boundary warning repeat Chapters 3–4 and the memory caption",
+    "round": 1
+  },
+  "B180": {
+    "after": "CAGRA int8 fits Stella. On BGE it is $1.35$--$2.96\\times$ faster at recall 0.88--0.95; JHQ is $1.086\\times$ faster at int8's maximum 0.9579. Maximum BGE/Stella recalls are int8 0.9579/0.9783, JHQ 0.9663/0.9952 and PQ 0.9525/0.9896.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B181": {
+    "after": "On Stella, JHQ gives 185.4 kQPS at recall 0.978679; int8 gives 66.3 kQPS at 0.978278. That $2.80\\times$ measured-point ratio uses different recalls. Int8 has no coverage for much of JHQ's upper region (\\cref{app:reproducibility}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B182": {
+    "after": "",
+    "reason": "Scale, device limits, sampling resolution and Stella query count are already stated in the data/protocol and validity sections",
+    "round": 1
+  },
+  "B183": {
+    "after": "One GT hit changes Recall@10 by $10^{-4}$ over 1,000 queries or $2\\times10^{-4}$ over 500 (slightly more over Stella's 499). This resolution is not an uncertainty interval.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B184": {
+    "after": "Near 0.97, local frontier slopes imply 1.01--3.17\\% QPS change per $10^{-3}$ recall before snapping. Five-build recall ranges are Vogue 0.0008, arXiv 0.0012, OpenAI-1536 0.0004 and OpenAI-3072 0.0002. They suggest few-percent local sensitivity, not a bound from retraining whole frontiers/baselines. FP32 sensitivity retains the OpenAI advantage within its cached-model scope (\\cref{sec:7-precision}); arXiv and LUT near ties remain inconclusive.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B185": {
+    "after": "RaBitQ's median five-round ranges are 3.79\\%, 3.34\\%, 2.87\\% and 5.25\\% of median QPS on Vogue, arXiv and the two OpenAI datasets. These are descriptive spreads, not ratio confidence intervals. Traces include occasional 30--60\\,ms calls. As a sensitivity check, recomputing QPS as\n$10^6/\\operatorname{median}(\\text{call latency in ms})$ for a\n1,000-query call reduces the influence of long calls.\nAt recall 0.97, the resulting JHQ/RaBitQ ratios are 1.063, 0.995,\n1.118 and 1.100. The three favourable directions and arXiv near parity\nremain, so the result is not solely a consequence of long calls.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B186": {
+    "after": "All 2,304 sampled and twelve FULL curves are monotone and match enumeration. Recorded subset sums reproduce 18,432 grid counts (\\cref{eq:6-finite-pool}). This checks those aggregates, not arbitrary subset/position invariance or the distance-only cases' general nesting (\\cref{sec:6-3}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B187": {
+    "after": "Maximum sampled loss reaches 0.0050 (arXiv/512) and 0.0046 (BGE/512) at $S=128$, and 0.0294 at $S=32$. FULL stays within 0.0006.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B188": {
+    "after": "ArXiv/128 predicted/observed crossing rates are 0.965/0.984, 0.875/0.875 and 0.620/0.625 for $S=32,64,128$ (\\cref{fig:7-finite-pool}). Across 36 comparisons, the largest gap is BGE/512's 0.144 (0.519/0.375). Prediction assumes stable counts and uses held-out fixed-arm quality to map choices to GT loss; calibration remains label-free.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B189": {
+    "after": "Ten alternating repeats support a low-budget timing plateau, without implying generally monotone runtime.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B190": {
+    "after": "Four cells run fixed 64/100, sampled and FULL policies over five rotated rounds of 500 repeated held-out batches. Timing includes gathering, calibration, budget installation and first-batch graph setup; build, warm-up and scan calibration are excluded (\\cref{tab:7-stream-cost}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B191": {
+    "after": "OpenAI-3072/128 always selects 4: sampled/FULL totals are 1,769/1,783\\,ms versus fixed-100's 2,757\\,ms, all at recall 0.9252. OpenAI-1536 FULL gives 860 versus 1,491\\,ms at recall 0.9280; sampling gives 852\\,ms at 0.9276.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B192": {
+    "after": "Direct cumulative savings begin at 4/6 batches (OpenAI-1536) and 4/9 (OpenAI-3072) versus fixed 100/64 (\\cref{fig:7-stream-cost}); fractional fits are separate estimates. BGE sampling gives 4,921 versus 5,185\\,ms but recall 0.9658 versus 0.9670; FULL gives 5,062\\,ms and 0.9664. ArXiv FULL selects slower 200 for quality; fixed controls fail the target.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B193": {
+    "after": "At equal configuration, FP32 reduces throughput by about 5\\% and increases\nrecall by 0--0.0005. At recall 0.97, FP32 is about 3\\% slower than same-session TF32, yet $1.086/1.079\\times$ archived RaBitQ and $1.679/1.629\\times$ archived CAGRA fp32. New-session v69 measurements give 1.118/1.114\nagainst archived E1 RaBitQ, versus historical 1.130/1.157. D's baseline ratios remain cross-session; only v69/v72 are contemporaneous. \\Cref{fig:7-precision}\nshows the two JHQ frontiers with their archived comparators.\nA later T1 campaign remeasures baseline anchors in the same session;\n\\cref{sec:b-precision-anchors} reports those separate, grid-sensitive results.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B194": {
+    "after": "T4 CPU-sorts GPU-produced primary scores under $(\\primarydist,\\mathrm{position})$. Its exporter follows scan layout/accumulation and matches returned valid scores bitwise; source differences are export-only. The 270 configurations cover Vogue/arXiv/OpenAI-3072, 1/8/128 probes, $\\alpha\\in\\{4,100,200\\}$, $\\gscan\\in\\{0,1,2,4,8\\}$ and both bound settings: 69,120 query instances (\\cref{tab:7-strict-selection}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B195": {
+    "after": "All 55,296 grouped instances match complete-key order. All 13,824 one-block instances satisfy distance order, with 56 cutoff-tie set differences. Underfull valid counts pass in 19,120 cases; all 69,120 final selections match retained-score references. These test \\cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}; separate scan/bound and sanitizer checks have their own coverage (\\cref{sec:a-t4-t5}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B196": {
+    "after": "Lower-recall comparisons must retain competitors whose fastest frontier\npoint already exceeds the target.\nAt recall 0.90, batch-8/32 ratios are 1.032--1.479/0.866--1.166; strict thresholds give three/one JHQ wins. Omitting qualifying endpoints would\noverstate these low-recall leads.\nScheduling gains 1.7--3.3$\\times$ over one block at recall 0.95, without guaranteeing a cross-system win.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B197": {
+    "after": "Null-call medians are 0.012--0.072\\,ms and remain included. CAGRA uses Python, JHQ/RaBitQ C++; warm-ups differ (\\cref{sec:a-t4-t5}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B198": {
+    "after": "Mailman loses despite more reuse; two-group LUTs usually win (\\cref{fig:7-lut}). Reuse must fit table placement and access (\\cref{sec:5-2,sec:5-3}), so codebook quality and attainable scorer cost need joint evaluation.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B199": {
+    "after": "Once query parallelism is sufficient, staging/selection/merge overhead can dominate (\\cref{fig:7-batch}). Vogue and BGE expose missing absolute-work and decomposition features (\\cref{sec:7-2,sec:7-6}). A richer scheduler must also repay calibration; integrated results do not isolate shared bounds.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B200": {
+    "after": "Mailman reuses finite-alphabet matrix--vector sums \\cite{mailman}. We test atomic buckets, private histograms and widths 4/6/8 against packed two-table scoring on frozen Vogue/arXiv/OpenAI-3072 streams, 128 probes, batches 8/1,000. Codes and mathematical scores stay fixed.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B201": {
+    "after": "The best alternatives reach only 0.187--0.581 of baseline throughput (\\cref{fig:8-negative}). Profiles spend most cycles in bucket accumulation: list-local bias repeats destinations; private histograms trade atomics for larger state and shared updates. Narrower groups help some variants, but none wins. This stopped these implementations, not all finite-alphabet reuse.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B202": {
+    "after": "The pilot emits scores, not neighbours. FP32/FP64 cutoff differences therefore do not establish pipeline equivalence. With scorer ratio $s$ and replaceable fraction $f$, $1/[(1-f)+f/s]$ is only a replacement model: integration stopped before end-to-end testing. A lossless-dictionary study also stopped at structural statistics; neither adds a measured system-frontier point.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B203": {
+    "after": "The ranking study replays exported candidates in FP64 with 400/200/400 calibration/validation/test queries. It tests weighted scores, median/list thresholds, learned losses and linear-MMSE decoding. Better reconstruction or inner-product MSE can still worsen nearest-candidate order; changing primary levels also changes residual reference points.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B204": {
+    "after": "On arXiv test queries, median thresholds cut the minimum tested qualifying survivor count from 875 to 375; the other two workloads fail the same strict criterion. Rotation preserves corpus-mean norm, so Gaussian intuition does not remove bias. Centring may help, but must also preserve the refined-score ceiling. The improvement is workload-specific.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B205": {
+    "after": "A separate GPU follow-up imports median thresholds/levels and retrains residuals. At arXiv's original $\\alpha=100$ target, gains are about 1.40/1.21 at batches 8/1,000. Vogue stops at recall 0.9630, below target 0.9644; OpenAI-3072 is tied. These three-round results use separate states/queries and are excluded from E1.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B206": {
+    "after": "\\Cref{tab:8-threats} consolidates threats to the main interpretations.\nChapter 3 gives controls; \\cref{sec:7-8} checks repeats, rebuilding and precision.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B207": {
+    "after": "Coverage is one GPU, squared-L2 top-10 and six prepared datasets (\\cref{sec:7-smallbatch}). Query removal does not exclude near duplicates; relevance labels are absent. Updates, concurrency, drift, service latency, billion-scale and multi-device capacity remain untested.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B208": {
+    "after": "A future policy could minimise calibration-plus-reuse time with valid query-level reference-agreement bounds. It needs matched-regime counts, a fixed reference, explicit sampling/order assumptions and drift-triggered renewal. An absolute GT target additionally needs labels or justified reference-to-GT assumptions.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B209": {
+    "after": "Compare fixed sampling, reusable rank curves and cost-aware selection on held-out pools, measuring total time and tail agreement. An older four-cell sequential controller lost because extra launches outweighed sample savings. Success must therefore save total time against a quality-matched control while satisfying the stated risk bound.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B210": {
+    "after": "A residual cache could keep primary codes on-device and fetch missed residual blocks from host memory under a fixed device cap. Hold codes, routing, survivors and arithmetic fixed; vary cap, batch and locality. Measure transfer bytes, hits, overlap, tail latency and throughput. It must extend usable capacity at acceptable cost. This placement study is unimplemented; lowering $\\alpha$ does not provide it.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B211": {
+    "after": "For recall 0.97, E1 supports batch-1,000 throughput; T5 favours CAGRA fp32 on every batch-8 dataset. At batch 32, only OpenAI-3072's near tie changes with the estimator (\\cref{sec:7-smallbatch}). Start with FULL, then validate deployment quality, reuse cost and memory (\\cref{sec:8-3}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B212": {
+    "after": "\\paragraph{RQ3: Refinement budget and quality.}\nFULL meets the tested relative-loss target in 12/12 cells, maximum 0.0006; $S=128$ reaches 40/64 crossings in one cell (\\cref{sec:7-5}). All FULL choices match enumeration, but ten distance-only cells lack a general nesting guarantee. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B213": {
+    "after": "\\paragraph{RQ4: Competitive operating regions.}\nAt recall 0.97 and batch 1,000, JHQ leads on three datasets and is near RaBitQ on arXiv; Vogue needs grouping (\\cref{sec:7-2}). OpenAI E1 uses TF32. Cached-model FP32 checks retain advantages over archived D baselines and contemporaneous T1 anchors, without FP32 retraining (\\cref{sec:b-precision-anchors}). Int8 wins lower targets; RaBitQ wins some higher ones. CAGRA fp32 wins all batch-8 datasets; batch-32 near ties depend on the estimator (\\cref{sec:7-smallbatch}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B214": {
+    "after": "\\section{Closing Principle and Outlook}\n\\label{sec:9-2}\nRepresentation, execution and effort must share a quality target. Next steps are reusable risk-controlled calibration and capacity-aware residual placement (\\cref{sec:8-4}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B215": {
+    "after": "\\Cref{tab:a-components} lists run-header/report versions. Environment and JIT settings follow Chapter 3; historical executable and model fingerprints remain incomplete.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B216": {
+    "after": "Data/GT follow \\cref{tab:3-data}. Sweeps reuse trained caches; cold builds do not. Isolated large-baseline reruns replace contaminated builds. Corrected Stella search uses 999 queries; skipped batch-1,000 runs supply no points.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B217": {
+    "after": "E1 takes the median of five round QPS values, normally 24 calls each. Warm-up classification reduces calls at 274 points; its first-call conversion/validation interval differs from steady-state timing. Host staging, int8 quantisation and transfers are timed; API/output-memory differences remain. Device-only times are auxiliary.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B218": {
+    "after": "The 369 repeat-ID flags include tie-order changes; 401 also counts cross-protocol disagreement. Flags alone do not exclude points, and JHQ lacks the same flag. Cold timers exclude constructor/host QR/warm-up. Build sampling includes context at 20\\,ms; synchronised one-buffer diagnostics are separate.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B219": {
+    "after": "The campaign overrides the fallback grid starting at 100 with one starting at 200. Pools/draws follow Chapter 3. Initial warm-up visits all queries but supplies neither GT nor outputs to agreement; scan calibration uses separate database pseudoqueries.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B220": {
+    "after": "Fixed arms use one warm-up and three timed calls. Calibration times searches plus $O(Sk^2)$ host comparison, bypassing graph capture; gathering and scan calibration are excluded. p95 uses index $\\lfloor0.95(64-1)\\rfloor$. The helper returns an index, so callers must apply \\texttt{set\\_alpha(A[index])}. Original selected-arm rates reuse fixed-arm timings.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B221": {
+    "after": "Original enumeration covers 2,304 draws; supplementary checks add twelve FULL decisions. All choices and 18,432 subset-sum grid counts match. General ordering/invariance conditions remain those of \\cref{sec:6-3,eq:6-finite-pool}; GT-risk mapping uses held-out labels.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B222": {
+    "after": "A1 separates first-read, warm-input and synchronised builds. C1 checks four layouts and sampled recoding; FP64 norms use stored rotations, not GPU rotation outputs. A3 checks all OpenAI queries and 10,299 base rows without original entity IDs.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B223": {
+    "after": "A2 reassembles extracted sm\\_80 PTX with CUDA 13.0.88 \\texttt{ptxas} for sm\\_120. Aligned eight-byte key accesses support the PTX contract; toolkit SASS is not captured driver-JIT code.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B224": {
+    "after": "D varies add/query GEMMs on TF32-trained caches against archived baselines. T1 supplies separate same-session anchors (\\cref{sec:b-precision-anchors}); neither retrains FP32 models.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B225": {
+    "after": "B reproduces \\texttt{srand(12345)} decisions. Direct reuse instead uses a separate seed, five rotated-policy rounds and 500 repeated batches. Its timer includes gathering, calibration, budget installation and first-graph setup, but excludes build, scan calibration and warm-up. Schedule startup is reported separately.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B226": {
+    "after": "T4 v73 differs from v71 by two export blocks. GPU-produced scores feed CPU sorting; bitwise equality covers returned valid primary entries, and padding checks cover valid counts. Table-form checks fix 128 probes, $\\alpha=100$, 256 queries, shared bounds, $\\gscan\\in\\{0,2\\}$ and $\\glut\\in\\{1,2,4,8\\}$. Candidate dumps were deleted; summaries retain finite counts. Empty/adversarial lists and the unexplained cross-process Vogue discrepancy are separate questions.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B227": {
+    "after": "T5 uses fixed small synchronous batches and five host-to-host rounds, including null-call costs and int8 query quantisation. JHQ/CAGRA reuse E1 grids; RaBitQ has a separate sweep. Both threshold estimators retain qualifying endpoints. APIs/warm-ups differ; service concurrency is untested.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B228": {
+    "after": "\\chapter[Supplementary Results and Correctness Checks]{Supplementary Results\\\\and Correctness Checks}\n\\label{app:supplementary}\nParameter coverage and secondary checks follow below; protocol is in Appendix~\\ref{app:reproducibility}.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B229": {
+    "after": "\\paragraph{IVF-RaBitQ and brute force.}\nRaBitQ sweeps 4/8/9 bits and probes 16/32/64/96/128/192/256/384/512/768/1,024. Modes are LUT16/LUT32/QUANT4/QUANT8 except OpenAI-3072 omits LUT16. OpenAI adds 4,096-list indexes to default 8,192-list coverage; exact combinations remain in the registry. Each dataset has one FP32 squared-L2 brute-force point. Missing coverage is not failure.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B230": {
+    "after": "\\paragraph{Auxiliary grids.}\nLUT sweeps six datasets, four probe counts (8/32/128/512) and $\\glut\\in\\{1,2,4,8\\}$ at $\\alpha=100$: 24 cells, 96 arms.\nBudget evaluation uses probes 128/\\allowbreak{}512 and\n$A=(200,100,64,32,16,8,4,2)$ on the same six datasets, with 64 draws\nat each $S\\in\\{32,64,128\\}$ and $\\epsilon=1$. FULL separately uses\nall 500 calibration queries. Held-out counts are 500, or 499 for\nStella.  Boundaries are specified in\n\\cref{sec:a-budget-contract,sec:a-supplement}.",
+    "reason": "Change only highlighted sentences; retain adjacent unhighlighted wording",
+    "round": 1
+  },
+  "B231": {
+    "after": "\\section{Secondary Results and Evidence Status}\n\\label{sec:b-secondary}\n\\paragraph{Adverse regimes.}\nWorst scheduling regret is 1.217 at batch 256; Vogue E1 ratios span 0.895--1.175 (\\cref{sec:7-6}). T5 CAGRA fp32 wins every batch-8 dataset at recall 0.97; batch-32 ties depend on the estimator (\\cref{sec:7-smallbatch}).",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B232": {
+    "after": "",
+    "reason": "Secondary alternative results duplicate the two retained Chapter 8 case studies and GPU follow-up",
+    "round": 1
+  },
+  "B233": {
+    "after": "",
+    "reason": "Calibration/precision scope is already stated in their protocol sections and main results",
+    "round": 1
+  },
+  "B234": {
+    "after": "\\Cref{tab:b-scratch} separates staging from assignment scratch. Defaults use three buffers, 65,536 add rows and 128\\,MiB per input/rotation array; these are capacities, not current batch sizes or process peaks.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B235": {
+    "after": "T1 remeasures JHQ and baselines near recall 0.97 in one session with E1 pools. Twelve configuration pairs per OpenAI dataset bracket baselines with two five-round JHQ repetitions; QPS combines their medians geometrically. FP32/TF32 means are 0.956/0.964. Both reuse TF32-trained caches and change add/query arithmetic.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B236": {
+    "after": "Both estimators retain numerical FP32 advantages. OpenAI-3072's RaBitQ bracket (0.9669--0.9796 recall) exposes grid sensitivity. These anchors neither replace E1 nor retrain FP32 models.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  },
+  "B237": {
+    "after": "\\section{Artifact Access}\n\\label{sec:b-artifacts}\nThe \\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project artifact archive} provides source/measurement snapshots and selected T4/T5, T1 and A2 inputs. Complete vectors, model states and historical executables are absent; GPU reproduction needs those plus the matching environment.",
+    "reason": "Keep the result or mechanism; remove repeated explanation",
+    "round": 1
+  }
+}

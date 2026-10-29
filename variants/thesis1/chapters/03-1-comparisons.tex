@@ -1,0 +1,45 @@
+\Cref{tab:3-design} defines the comparison unit and what would challenge
+each research claim. A \emph{cell} fixes a dataset, index configuration and
+workload setting; arms are alternative implementations or budgets within
+that cell. For paired execution measurements, the index state, queries,
+probe count, refinement budget and scoring representation are held fixed
+unless the named treatment changes them. The recorded paired ratio is
+$Q_{\rm treatment}/Q_{\rm control}$. Across $J$ stated cells, equal weighting gives
+\[
+ G=\exp\!\left(\frac1J\sum_{j=1}^{J}
+ \log\frac{Q_{{\rm treatment},j}}{Q_{{\rm control},j}}\right).
+\]
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Research questions and experimental controls]{Research questions as testable comparisons. A capacity observation
+has a different control from a paired execution intervention.}
+\label{tab:3-design}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.11\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Question & Intervention / comparison & Held fixed or accounted for & Measure and counter-evidence \\
+\midrule
+RQ1: build and capacity & GPU construction; cached versus cold lifecycle;
+compressed versus raw storage & $N,d$, representation, routing and timed
+construction boundary & Train/add time and resident bytes; failed builds
+or model--allocation gaps delimit feasibility \\
+RQ2: execution & LUT grouping, word access, refinement lanes, grouped scan,
+shared bound and probe selection & Paired state, workload and score;
+reference output semantics & Wall QPS, stage time and output checks;
+slowdowns or non-tie mismatches challenge the mechanism \\
+RQ3: budget & Sampled / full-pool rule versus fixed 64, 100, 200,
+enumeration and GT oracle & One index and route; disjoint calibration
+and held-out query positions & Held-out recall loss, selected-arm QPS
+and calibration cost; threshold crossings challenge reliability \\
+RQ4: operating region & Independently tuned JHQ, CAGRA, IVF-PQ and
+IVF-RaBitQ & Exported vectors, GT, $k$, device and host-to-host boundary;
+memory reported separately & Matched-recall QPS and coverage; stronger
+competitors at other recall targets challenge broad superiority \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+Ablations measure speed changes; cache/occupancy claims need counters. Complete systems require separate comparisons (\cref{sec:7-6}).
+
+E1 retains extended grids, losses and rejected alternatives. Agreement measures reference stability; held-out GT measures raw-neighbour recall.

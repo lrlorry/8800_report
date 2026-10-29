@@ -1,0 +1,22 @@
+\frontchapter{Abstract}
+Reducing approximate nearest-neighbour (ANN) query time requires efficient
+screening and selective refinement. This thesis presents JHQ-GPU, which
+implements JHQ through representation-aware execution, GPU index construction
+and workload-level budget calibration. Cartesian codebook factorisation
+replaces each 256-entry distance table with two 16-entry tables, preserving
+the real-arithmetic represented distance while reducing table storage
+eightfold. Candidate-parallel scanning, packed access and lane-cooperative
+refinement complement this design. Refinement budgets are calibrated through
+sampled top-$k$ agreement with a larger reference budget, without ground-truth
+labels or a learned predictor.
+
+Experiments on an RTX 5090 cover six datasets. Two-group tables lead in
+22/24 configurations; the largest index searches 17.78 million vectors at
+20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
+recall-loss target relative to the best tested budget in 12/12 cells, with
+maximum loss 0.0006; smaller samples expose workload-dependent quality risk.
+At recall 0.97 and batch 1,000, JHQ leads in three of four datasets and is
+near parity with IVF-RaBitQ on arXiv. OpenAI runs use TF32; FP32 checks
+retain favourable comparisons under a TF32-trained cache. At batch 8 and
+the same recall, CAGRA fp32 leads on all four datasets. These results
+locate the execution, quality and capacity trade-offs of GPU JHQ.

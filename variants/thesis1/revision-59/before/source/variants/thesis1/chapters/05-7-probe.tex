@@ -1,0 +1,46 @@
+Probe selection precedes primary scanning and selects inverted lists,
+not database-vector survivors. For IVF centroid $\mu_i$, the selector
+orders the FP32-valued computed routing scores
+\begin{equation}
+ s_i=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+ \qquad (s_i,i)\ \text{ordered lexicographically}.
+ \label{eq:5-probe-score}
+\end{equation}
+Omitting the common query norm preserves centroid ordering. In contrast
+to primary squared-distance tables, these scores can be negative. The
+required output is the first $n_{\rm sel}=\min(n_{\rm probe},n_{\rm list})$
+centroid IDs in score order, using the smaller list ID at a tie, plus
+the prefix offsets of their list lengths.
+
+OpenAI rotation and centroid GEMMs use TF32 inputs with FP32 accumulation in v69. Probe selection is exact for those computed scores; later FP32 \texttt{fma} cannot undo GEMM rounding (\cref{sec:7-precision}).
+
+\subsection{Radix selection followed by deterministic ordering}
+
+The radix replacement uses one block per query and four most-significant-byte-first passes. Each histogram includes the chosen prefix only. Selecting its next bin updates the remaining rank; four passes determine the cutoff and required equal-key count.
+
+Signed zeros first map to positive zero; then float bits $u$ map to
+\begin{equation}
+ F(u)=\begin{cases}
+       \mathop{\sim}u,&\text{if the sign bit is set},\\
+       u\mathbin{|}2^{31},&\text{otherwise}.
+      \end{cases}
+ \label{eq:5-probe-key}
+\end{equation}
+This orders non-NaN values, including negatives and infinities, unlike \cref{eq:5-packed-key}. Equal zeros share a key. Every pass uses the same rounded \texttt{fma}, keeping recomputed keys fixed.
+
+The 256-bin histogram has 32 lane replicas: 32\,KiB of counters. This separates same-warp updates but leaves inter-warp contention, trading shared storage and reduction for less concentrated atomics.
+
+Collection takes all keys below cutoff. Ballots and prefix counts rescan cutoff ties in list-ID order, so atomic arrival cannot choose the tied subset. Each selected entry then counts its predecessors under $(s_i,i)$ and writes to that rank, avoiding a full centroid sort.
+
+A block prefix scan converts selected list lengths into offsets. Excess probes repeat the last ID with zero length, so they do not rescan its list. Centroid sets and requested probe count must be nonempty/positive.
+
+\subsection{Costs and separate correctness contracts}
+
+Histogram/collection passes reread scores; ranking costs $O(n_{\rm sel}^2)$. Larger selections also need more shared storage, while small ones still pay histogram allocation. We evaluate this existing radix method's deterministic integration, not a uniformly linear replacement.
+
+Tests include cutoff ties, signed zeros, infinities, extreme values and excess probes (\cref{sec:7-4}).
+
+
+The optional FP16 routing changes score precision and is evaluated as
+a separate approximation in \cref{sec:7-4}, alongside the cross-process
+pipeline-identity checks.

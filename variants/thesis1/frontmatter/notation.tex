@@ -1,0 +1,50 @@
+\frontchapter{Notation and Abbreviations}
+\begingroup\small\setstretch{1.0}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$N,d$ & Number of database vectors and original dimension \\
+$M,D_s$ & Number of primary subspaces and dimensions per subspace \\
+$a_{\rm add},a_{\rm in},a_{\rm assign}$ & Configured add, staged input, and independently allocated assignment rows \\
+$n_b,S_{\rm stage}$ & Pipeline buffer count and byte budget per input/rotated array \\
+$\Pi$ & Square orthogonal transform; $q'=\Pi q$ \\
+$B,B_r$ & Primary bits per subspace and residual bits per coordinate \\
+$\rho(p),o_\ell$ & Input ID at physical position $p$, and start of IVF list $\ell$ \\
+$k$ & Number of returned neighbours \\
+$n_c,c$ & Routed candidates and primary survivors receiving refinement \\
+$\alpha$ & Refinement multiplier, with $c=\max\{k,\lceil\alpha k\rceil\}$ \\
+$S,\epsilon$ & Sample count; allowed missing-reference slots \\
+$C_\alpha,\mathcal R_\alpha$ & Valid survivors; returned IDs at budget $\alpha$ \\
+$\alpha_{\rm ref},B_{\rm reuse}$ & Reference refinement budget and number of subsequent reuse batches \\
+$\glut$ & Number of groups in a factorised lookup table \\
+$\gscan$ & Number of scan groups per query; zero labels the one-block path \\
+$C_{\rm buf},T_{\rm blk}$ & Buffer capacity; threads per block \\
+$n_{\rm LUT}(\glut)$ & LUT entries per primary subspace \\
+$\kappa(D,p)$ & Packed full key for bounds \\
+$\lrefine$ & Lanes cooperating on one survivor \\
+$\rawdist$ & $\|q-x\|_2^2$ \\
+$\primarydist$ & $\|q'-\widehat p\|_2^2$ \\
+$\refineddist$ & $\|q'-\widehat p-\widehat r\|_2^2+\|q'\|_2^2$ \\
+\bottomrule
+\end{longtable}
+
+\bigskip
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
+\toprule
+Abbreviation & Meaning \\
+\midrule
+ANN & Approximate nearest neighbour \\
+ADC & Asymmetric distance computation \\
+IVF & Inverted file \\
+JHQ & Johnson--Lindenstrauss enhanced hierarchical quantisation \\
+LUT & Lookup table \\
+PQ & Product quantisation \\
+QPS & Queries per second \\
+GT & Ground truth \\
+FP32 & IEEE binary32; GEMM mode stated separately \\
+TF32 & Reduced-precision Tensor Core inputs; FP32 accumulation \\
+CV & $\operatorname{sd}(n_c)/\operatorname{mean}(n_c)$ \\
+\bottomrule
+\end{longtable}
+\endgroup

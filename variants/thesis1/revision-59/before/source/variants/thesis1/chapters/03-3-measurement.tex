@@ -1,0 +1,36 @@
+The principal comparison starts with FP32 queries in host memory and ends
+when top-10 IDs and scores are available in host memory after stream
+completion (\cref{fig:3-boundary}). It includes pinned staging, H2D,
+query preprocessing, search and D2H. CAGRA int8 query quantisation is inside
+this boundary; quantiser training and index construction are outside it.
+Resource handles and output buffers are reused. JHQ returns to pageable
+host arrays and the baselines to pinned arrays; CAGRA/PQ use Python APIs,
+whereas JHQ/RaBitQ use C++. These interface differences remain visible when
+interpreting small margins.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
+\captionof{figure}[Host and device timing boundaries]{Timing boundaries. The host interval includes transfers and
+query-specific computation. Device-stage profiles explain parts of that
+interval; separate profiling and synchronisation can change execution, so
+their sum is not an interchangeable end-to-end latency.}
+\label{fig:3-boundary}
+\end{minipage}\par\medskip
+
+With $t$ in seconds, round throughput and its summary are
+\begin{equation}
+Q_r=\frac{m_rb}{\sum_{i=1}^{m_r}t_{ri}},\qquad
+Q=\operatorname{median}_r Q_r,
+\label{eq:3-throughput}
+\end{equation}
+E1 uses batch 1,000 and five rounds. JHQ warms up once per variant/round; baselines warm up three times initially. Normally each round has 24 timed calls, fewer for slow baseline points. Warm-up excludes JIT and capture. Latency percentiles describe repeated batch calls, not individual or concurrent requests.
+
+We retain slow valid calls and both round-QPS and call-latency summaries. Their medians need not be reciprocal. Shared indexes and query pools do not provide independent training replications, so sweep cells receive no independence-based significance claim.
+
+Runs use an RTX 5090 (32,607\,MiB), driver 595.71.05, CUDA 13.0 and cuVS 26.08.01. OpenMP uses 16 threads within a 25-CPU quota; E1 records 575\,W. A cooperative lock and snapshots do not fix clocks or host load. JHQ JIT-compiles Release compute\_80 PTX \cite{cuda_platform}; baselines use installed builds. Device profiles are reported separately.
+
+Resident memory includes encoded arrays, models, workspace and context. E1's context-subtracted JHQ totals and CAGRA's index deltas therefore differ in scope (\cref{sec:4-4,sec:7-7}). Later-created search pools and build temporaries prevent an equal-peak-memory comparison. Separate 20\,ms samples estimate build peaks. Cold train/add excludes input loading and preceding host setup.
+
+\paragraph{Supplementary evidence boundary.}
+Supplementary checks (\cref{sec:a-supplement}) use separate sessions. Precision changes and cached-model reuse follow \cref{sec:4-2,sec:7-precision}; historical baseline ratios remain cross-session.

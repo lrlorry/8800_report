@@ -1,0 +1,34 @@
+% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+\chapter{Representation-Aware GPU Search}
+\label{ch:gpu-execution}
+The transform and primary/residual hierarchy follow JHQ \cite{jhq}.
+This chapter develops their GPU scoring and computed-score selection;
+\Cref{ch:evaluation,ch:refinement} cover measurement and budget choice.
+
+\section{Query Path and Four Distinct Ranking Objects}
+\label{sec:5-1}
+\input{variants/thesis1/chapters/05-1-query-path}
+
+\section{Exact Cartesian LUT Factorisation}
+\label{sec:5-2}
+\input{variants/thesis1/chapters/05-2-lut}
+
+\section{Packed Codes and Candidate-Parallel Memory Access}
+\label{sec:5-3}
+\input{variants/thesis1/chapters/05-3-packed-access}
+
+\section{Exact Global Primary Top-c via Multi-Block Scanning}
+\label{sec:5-4}
+\input{variants/thesis1/chapters/05-4-global-selection}
+
+\section{Shared Complete-Key Thresholds and Execution Scheduling}
+\label{sec:5-5}
+\input{variants/thesis1/chapters/05-5-bound-scheduling}
+
+\section{Lane-Cooperative Residual Scoring and Final Top-k}
+\label{sec:5-6}
+\input{variants/thesis1/chapters/05-6-refinement}
+
+\section{IVF Probe Selection as an Independent Primitive}
+\label{sec:5-7}
+\input{variants/thesis1/chapters/05-7-probe}

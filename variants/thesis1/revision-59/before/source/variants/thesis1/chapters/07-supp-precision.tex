@@ -1,0 +1,41 @@
+\subsection{Precision sensitivity on the OpenAI datasets}
+\label{sec:7-precision}
+
+Supplementary source inspection establishes that the E1 implementation
+uses TF32 multiplication with FP32 accumulation for OpenAI rotation and
+centroid GEMMs, despite FP32 input/storage and a misleading source comment
+(\cref{sec:4-2}). The main E1 frontier remains the historical measurement
+of that implementation. In campaign D, a separate FP32 variant changes the cuBLAS
+math-mode switch and replays 37/39 OpenAI configurations at batch 1,000,
+five rounds each. Execution order alternates between variants across
+probe settings. Both reuse the same TF32-trained model; the intervention
+changes add/query arithmetic, including database encoding and routing.
+It is not a comparison of independently FP32-trained models.
+\Cref{tab:7-precision} summarises the paired changes.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[FP32 sensitivity at matched configurations]{FP32 sensitivity. QPS ratio is FP32/TF32 at equal configuration
+(geometric mean); recall differences have the same direction. The last
+two columns compare the FP32 frontier at recall 0.97 with archived E1
+IVF-RaBitQ and CAGRA fp32 frontiers. Campaign D does not remeasure the baselines.}
+\label{tab:7-precision}
+\scriptsize\setlength{\tabcolsep}{3pt}
+\input{tables/supplement/precision}
+\end{minipage}\par\medskip
+
+At equal configuration, FP32 reduces throughput by about 5\% and increases
+recall by 0--0.0005. At recall 0.97, FP32 is about 3\% slower than same-session TF32, yet $1.086/1.079\times$ archived RaBitQ and $1.679/1.629\times$ archived CAGRA fp32. New-session v69 measurements give 1.118/1.114
+against archived E1 RaBitQ, versus historical 1.130/1.157. D's baseline ratios remain cross-session; only v69/v72 are contemporaneous. \Cref{fig:7-precision}
+shows the two JHQ frontiers with their archived comparators.
+A later T1 campaign remeasures baseline anchors in the same session;
+\cref{sec:b-precision-anchors} reports those separate, grid-sensitive results.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/precision.pdf}
+\caption[TF32 and FP32 precision frontiers]{Campaign D precision frontiers. Solid curves are same-session
+JHQ variants; dashed/dotted baselines are historical E1 measurements.
+All use the chapter's frontier and interpolation rules.}
+\label{fig:7-precision}
+\end{figure}

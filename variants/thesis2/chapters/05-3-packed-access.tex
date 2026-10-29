@@ -1,0 +1,43 @@
+Subspace-major codes align neighbouring lanes/candidates; splitting reduces LUT storage.
+
+\subsection{Address mapping and four-byte packing}
+
+For list $\ell$, row $r$ maps to
+\[
+ p=o_\ell+r,\qquad \operatorname{offset}(Z[m,p])=mN+p.
+\]
+At fixed $m$, $\Delta\operatorname{offset}=\Delta p$. List boundaries can break adjacency.
+
+Pack four subspace bytes per candidate:
+\begin{equation}
+ \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
+ \label{eq:5-packed-layout}
+\end{equation}
+For $0\leq t<4$ and eight-bit $Z$,
+\[
+ (\mathsf w[j,p]\gg8t)\mathbin{\&}255=Z[4j+t,p].
+\]
+Nibbles index \cref{eq:5-lut-factorisation}.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/packed-access}
+\caption[Packed candidate-parallel access]{Packed candidate-parallel access, showing a subset of warp lanes.
+At fixed word group $j$, consecutive positions access adjacent four-byte
+words. Each word contains four subspace codes of one candidate. Unpacking
+preserves each code byte; LUT splitting happens afterwards. The diagram
+illustrates addresses, not a measured number of memory transactions.}
+\label{fig:5-packed-access}
+\end{figure}
+
+Construction maps $[M,N]$ bytes to $[M/4,N]$ words ($4\mid M$). Casting would combine candidate bytes. Code-byte costs:
+\[
+ R=W=NM,\qquad S_{\rm old+new}=2NM.
+\]
+Repacking is outside search timing.
+
+\subsection{What packed access saves, and what it preserves}
+
+One word load/unpack replaces four byte loads. The logical warp window is $32\times4=128$ bytes; transactions depend on alignment/active lanes. Payload stays $M$ bytes per candidate. Both arms are subspace-major, so transpose/cache effects are not isolated.
+

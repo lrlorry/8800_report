@@ -1,0 +1,19 @@
+\subsection{Strict CPU reference for computed-score selection}
+\label{sec:7-strict-selection}
+
+T4 CPU-sorts GPU-produced primary scores under $(\primarydist,\mathrm{position})$. Its exporter follows scan layout/accumulation and matches returned valid scores bitwise. Source comparison confirms that the diagnostic version changes only export, relative to the table-sweep implementation. The 270 configurations cover Vogue/arXiv/OpenAI-3072, 1/8/128 probes, $\alpha\in\{4,100,200\}$, $\gscan\in\{0,1,2,4,8\}$ and both bound settings: 69,120 query instances (\cref{tab:7-strict-selection}).
+
+\suppressfloats[t]
+\begin{table}[htbp]
+\centering
+\caption[Strict computed-score selection checks]{T4 CPU-reference checks.
+Set and order equality use the complete primary key. Valid count checks
+$\min(c,n_c)$ survivors; final equality sorts retained computed refined
+scores by $(\refineddist,\mathrm{ID})$, including their FP32 bits. Counts
+are query instances, with queries reused across configurations.}
+\label{tab:7-strict-selection}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{tables/t4-t5/strict-selection}
+\end{table}
+
+All 55,296 grouped instances match complete-key order. All 13,824 one-block instances satisfy distance order, with 56 cutoff-tie set differences. Underfull valid counts pass in 19,120 cases; all 69,120 final selections match retained-score references. These test \cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}; separate scan/bound and sanitizer checks have their own coverage (\cref{sec:a-t4-t5}).

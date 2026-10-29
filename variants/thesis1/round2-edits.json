@@ -1,0 +1,104 @@
+[
+  {
+    "id": "B003",
+    "before": "The target is raw squared-L2 top-$k$ for query $q$ over $\\mathcal X\\subset\\mathbb R^d$. IVF routes the query; primary score $\\primarydist$ selects up to $c=\\max\\{k,\\lceil\\alpha k\\rceil\\}$ survivors; residual score $\\refineddist$ selects the final results. These reconstructed scores differ from raw distance. The extra query-only term in $\\refineddist$ preserves ranking (\\cref{sec:2-3}). Selection is exact for its computed score and tie rule; GT measures ANN quality.",
+    "after": "The target is raw squared-L2 top-$k$ for query $q$ over $\\mathcal X\\subset\\mathbb R^d$. IVF routes the query; primary score $\\primarydist$ selects up to $c=\\max\\{k,\\lceil\\alpha k\\rceil\\}$ survivors; residual score $\\refineddist$ selects the final results. These reconstructed scores differ from raw distance. The refined value additionally contains a query-only constant, as defined in \\cref{sec:2-3}. Selection is exact for its computed score and tie rule; GT measures ANN quality.",
+    "reason": "Restore the unhighlighted sentence verbatim"
+  },
+  {
+    "id": "B089",
+    "before": "Nibble LUTs have precedents in Fast Scan, Quicker ADC and IVF-RaBitQ \\cite{fastscan,quickeradc,ivfrabitq}; JHQ retains its own two-level score. Our contribution is their GPU integration with retention and refinement. Two groups lead in 22/24 measured cells; other margins are below 1\\% (\\cref{sec:7-3}).",
+    "after": "The $16+16$ representation is a nibble LUT for an eight-bit sign code.\nSmall LUTs have precedents in Fast Scan, Quicker ADC and IVF-RaBitQ \\cite{fastscan,quickeradc,ivfrabitq}; JHQ retains its own two-level score. Our contribution is their GPU integration with retention and refinement. Two groups lead in 22/24 measured cells; other margins are below 1\\% (\\cref{sec:7-3}).",
+    "reason": "Preserve the unhighlighted lead sentence"
+  },
+  {
+    "id": "B100",
+    "before": "$\\gscan=0$ labels one block per query. Its default selector is exact by distance but can choose different cutoff-tie IDs from the complete-key path. The lossy \\texttt{K\\_LOCAL=4} alternative requires \\texttt{JHQ\\_EXACT\\_TOPCK=0}; paper-faithful builds disable it.\n\nFor distance-only compaction, every rejected score has $c$ retained witnesses no larger than it. The final buffer therefore contains all scores below the cutoff and enough equal scores, without fixing tied IDs. T4 checks this preorder and complete-key grouped selection (\\cref{sec:7-strict-selection}) by sorting GPU-computed scores, not CPU raw distances.",
+    "after": "$\\gscan=0$ labels one block per query. Its default selector is exact by distance but can choose different cutoff-tie IDs from the complete-key path. The lossy \\texttt{K\\_LOCAL=4} alternative requires \\texttt{JHQ\\_EXACT\\_TOPCK=0}; paper-faithful builds disable it.\n\nFor distance-only compaction, every rejected score has $c$ retained witnesses no larger than it. The final buffer therefore contains all scores below the cutoff and enough equal scores, without fixing tied IDs. T4 checks this preorder and complete-key grouped selection (\\cref{sec:7-strict-selection}) The reference sorts GPU-produced scores, rather than recomputing original-space distances on the CPU.",
+    "reason": "Preserve the unhighlighted CPU-reference sentence"
+  },
+  {
+    "id": "B100",
+    "before": "$\\gscan=0$ labels one block per query. Its default selector is exact by distance but can choose different cutoff-tie IDs from the complete-key path. The lossy \\texttt{K\\_LOCAL=4} alternative requires \\texttt{JHQ\\_EXACT\\_TOPCK=0}; paper-faithful builds disable it.\n\nFor distance-only compaction, every rejected score has $c$ retained witnesses no larger than it. The final buffer therefore contains all scores below the cutoff and enough equal scores, without fixing tied IDs. T4 checks this preorder and complete-key grouped selection (\\cref{sec:7-strict-selection}) The reference sorts GPU-produced scores, rather than recomputing original-space distances on the CPU.",
+    "after": "$\\gscan=0$ labels one block per query. Its default selector is exact by distance but can choose different cutoff-tie IDs from the complete-key path. The lossy \\texttt{K\\_LOCAL=4} alternative requires \\texttt{JHQ\\_EXACT\\_TOPCK=0}; paper-faithful builds disable it.\n\nFor distance-only compaction, every rejected score has $c$ retained witnesses no larger than it. The final buffer therefore contains all scores below the cutoff and enough equal scores, without fixing tied IDs. T4 checks this preorder and complete-key grouped selection (\\cref{sec:7-strict-selection}). The reference sorts GPU-produced scores, rather than recomputing original-space distances on the CPU.",
+    "reason": "Sentence boundary only"
+  },
+  {
+    "id": "B158",
+    "before": "\\Cref{fig:7-lut} tests six datasets, four probe counts and $\\glut\\in\\{1,2,4,8\\}$ at $\\alpha=100$, with five rounds and batch 1,000 (Stella 999). Two groups lead in 22/24 cells. Exceptions are near ties: arXiv/128 favours one group by 0.23\\%; OpenAI-3072/8 favours four by 0.84\\%. Paired two-versus-one wins are 23/24; all dataset geometric means exceed one (1.021--1.318). Shared-index cells are not independent trials.",
+    "after": "\\Cref{fig:7-lut} compares Cartesian table grouping on six datasets,\nprobe counts 8/32/128/512,\nfixed $\\alpha=100$, and $\\glut\\in\\{1,2,4,8\\}$. Five rounds use batch 1,000 (Stella 999). Two groups lead in 22/24 cells. Exceptions are near ties: arXiv/128 favours one group by 0.23\\%; OpenAI-3072/8 favours four by 0.84\\%. Paired two-versus-one wins are 23/24; all dataset geometric means exceed one (1.021--1.318). Shared-index cells are not independent trials.",
+    "reason": "Keep unhighlighted experiment-grid description exact"
+  },
+  {
+    "id": "B191",
+    "before": "OpenAI-3072/128 always selects 4: sampled/FULL totals are 1,769/1,783\\,ms versus fixed-100's 2,757\\,ms, all at recall 0.9252. OpenAI-1536 FULL gives 860 versus 1,491\\,ms at recall 0.9280; sampling gives 852\\,ms at 0.9276.",
+    "after": "OpenAI-3072/128 always selects 4: sampling takes 1,769 versus fixed-100's 2,757\\,ms, both at recall 0.9252.\nFULL selects the same budget and takes 1,783\\,ms including its larger calibration cost. OpenAI-1536 FULL gives 860 versus 1,491\\,ms at recall 0.9280; sampling gives 852\\,ms at 0.9276.",
+    "reason": "Keep the unhighlighted FULL timing sentence exact"
+  },
+  {
+    "id": "B194",
+    "before": "T4 CPU-sorts GPU-produced primary scores under $(\\primarydist,\\mathrm{position})$. Its exporter follows scan layout/accumulation and matches returned valid scores bitwise; source differences are export-only. The 270 configurations cover Vogue/arXiv/OpenAI-3072, 1/8/128 probes, $\\alpha\\in\\{4,100,200\\}$, $\\gscan\\in\\{0,1,2,4,8\\}$ and both bound settings: 69,120 query instances (\\cref{tab:7-strict-selection}).",
+    "after": "T4 CPU-sorts GPU-produced primary scores under $(\\primarydist,\\mathrm{position})$. Its exporter follows scan layout/accumulation and matches returned valid scores bitwise. Source comparison confirms that the diagnostic version changes only export, relative to the table-sweep implementation. The 270 configurations cover Vogue/arXiv/OpenAI-3072, 1/8/128 probes, $\\alpha\\in\\{4,100,200\\}$, $\\gscan\\in\\{0,1,2,4,8\\}$ and both bound settings: 69,120 query instances (\\cref{tab:7-strict-selection}).",
+    "reason": "Preserve unhighlighted source-comparison statement"
+  },
+  {
+    "id": "B212",
+    "before": "\\paragraph{RQ3: Refinement budget and quality.}\nFULL meets the tested relative-loss target in 12/12 cells, maximum 0.0006; $S=128$ reaches 40/64 crossings in one cell (\\cref{sec:7-5}). All FULL choices match enumeration, but ten distance-only cells lack a general nesting guarantee. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.",
+    "after": "\\paragraph{RQ3: Refinement budget and quality.}\nFULL calibration meets the tested relative\nrecall-loss target in 12/12 cells, with maximum observed loss 0.0006.\n $S=128$ reaches 40/64 crossings in one cell (\\cref{sec:7-5}). All FULL choices match enumeration, but ten distance-only cells lack a general nesting guarantee. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.",
+    "reason": "Preserve the unhighlighted FULL statement"
+  },
+  {
+    "id": "B212",
+    "before": "\\paragraph{RQ3: Refinement budget and quality.}\nFULL calibration meets the tested relative\nrecall-loss target in 12/12 cells, with maximum observed loss 0.0006.\n $S=128$ reaches 40/64 crossings in one cell (\\cref{sec:7-5}). All FULL choices match enumeration, but ten distance-only cells lack a general nesting guarantee. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.",
+    "after": "\\paragraph{RQ3: Refinement budget and quality.}\nFULL calibration meets the tested relative\nrecall-loss target in 12/12 cells, with maximum observed loss 0.0006.\nAt $S=128$ reaches 40/64 crossings in one cell (\\cref{sec:7-5}). All FULL choices match enumeration, but ten distance-only cells lack a general nesting guarantee. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.",
+    "reason": "Grammar after sentence restoration"
+  },
+  {
+    "id": "B036",
+    "before": "Preparation removes non-finite rows, normalises norms above $10^{-12}$ and samples query positions without replacement using seed 42. Stella supplies 999 corpus-sampled queries, not its separate 65-query benchmark. These exports test vector neighbours, not relevance labels. The OpenAI exports share the sampling rule; checks support row alignment on all queries and 10,299 base rows, without original-ID joins (\\cref{sec:7-precision,sec:7-2}).",
+    "after": "OpenAI/BGE/Stella preparation removes non-finite rows, normalises norms above $10^{-12}$ and samples queries without replacement using seed 42. Stella supplies 999 corpus-sampled queries, not its separate 65-query benchmark. These exports test vector neighbours, not relevance labels. The OpenAI exports share the sampling rule; checks support row alignment on all queries and 10,299 base rows, without original-ID joins (\\cref{sec:7-precision,sec:7-2}).",
+    "reason": "Do not extend the three-streamed-dataset filtering claim to every dataset"
+  },
+  {
+    "id": "B069",
+    "before": "Caller-owned input needs $4n_ba_{\\rm in}d$ pinned staging bytes. Order/inverse arrays each take $4N$ device bytes. Assignment scratch is freed before gather (\\cref{eq:4-staging-rows,eq:4-assignment-scratch}).",
+    "after": "Input remains caller-owned. Build staging uses $4n_ba_{\\rm in}d$ pinned-host bytes. Order/inverse arrays each take $4N$ device bytes. Assignment scratch is freed before gather (\\cref{eq:4-staging-rows,eq:4-assignment-scratch}).",
+    "reason": "Distinguish caller input from bounded build staging"
+  },
+  {
+    "id": "B115",
+    "before": "At $L\\in\\{1,8,16,32\\}$, adjacent lanes share one candidate. A residual word holds $d_{\\rm word}=32/B_R$ codes: four for eight-bit, eight for four-bit. Lane $a$ reads words $a,a+L,\\ldots$; butterfly shuffles sum partials and lane zero writes the score.",
+    "after": "At $\\lrefine=L\\in\\{1,8,16,32\\}$, adjacent lanes share one candidate. A residual word holds $d_{\\rm word}=32/B_R$ codes: four for eight-bit, eight for four-bit. Lane $a$ reads words $a,a+L,\\ldots$; butterfly shuffles sum partials and lane zero writes the score.",
+    "reason": "Keep the existing refinement-lane symbol definition"
+  },
+  {
+    "id": "B095",
+    "before": "\\begin{resultblock}\n\\begin{lemma}[Local-buffer retention]\n\\label{lem:5-buffer}\nLet $V_t$ be the candidates scored by a block through chunk $t$, and\n$B_t$ its valid buffer after any compaction or filtering at that point.\nAssume fixed complete keys, sufficient append capacity and exact\ntop-$c$ compaction. Let $\\beta_t$ be the minimum of the complete shared\nbounds observed so far, including the initial top sentinel. Then\n\\begin{equation}\n \\operatorname{Top}_c(V_t)\\cap\\{x:K_q(x)\\preceq\\beta_t\\}\n \\subseteq B_t.\n \\label{eq:5-buffer-invariant}\n\\end{equation}\nWith sharing disabled, the bound is the sentinel and the buffer contains\nthe whole prefix top-$c$.\n\\end{lemma}\n\\begin{proof}\nThe empty prefix satisfies the invariant. A new candidate can fail the\nlocal admission threshold only if $c$ previously retained keys precede\nit; those keys remain predecessors in every later prefix. Rejection by\nan observed shared bound excludes only keys above $\\beta_t$. An old\ncandidate outside a prefix top-$c$ cannot improve its rank when the\nprefix grows. Thus every eligible new prefix winner is either retained\nalready or admitted. Exact compaction preserves it: fewer than $c$\nmembers of the whole prefix, and hence of the buffer, precede it.\nFiltering removes only keys above an observed bound. Induction over\nappends, compactions and filtering proves the claim. The running minimum\nis essential if reads may return different stale published values.\n\\end{proof}\n\\end{resultblock}",
+    "after": "\\begin{resultblock}\n\\begin{lemma}[Local-buffer retention]\n\\label{lem:5-buffer}\nLet $V_t$ be the candidates scored by a block through chunk $t$, and\n$B_t$ its valid buffer after any compaction or filtering at that point.\nAssume fixed complete keys, sufficient append capacity and exact\ntop-$c$ compaction. Let $\\beta_t$ be the minimum of the complete shared\nbounds observed so far, including the initial top sentinel. Then\n\\begin{equation}\n \\operatorname{Top}_c(V_t)\\cap\\{x:K_q(x)\\preceq\\beta_t\\}\n \\subseteq B_t.\n \\label{eq:5-buffer-invariant}\n\\end{equation}\nWith sharing disabled, the bound is the sentinel and the buffer contains\nthe whole prefix top-$c$.\n\\end{lemma}\n\\begin{proof}\nThe empty prefix satisfies the invariant. Local rejection has $c$ earlier witnesses, so the rejected key cannot become a later prefix winner. Shared rejection excludes only keys above $\\beta_t$. Every other eligible winner is already retained or appended. Exact compaction keeps it because fewer than $c$ prefix keys precede it; filtering removes only keys above an observed bound. Induction over these operations proves the claim. The running minimum handles stale reads of previously published bounds.\n\\end{proof}\n\\end{resultblock}",
+    "reason": "Shorten the highlighted induction without changing its invariant, assumptions or operations"
+  },
+  {
+    "id": "B039",
+    "before": "We retain slow valid calls and both round-QPS and call-latency summaries. Their medians need not be reciprocal. Shared indexes and query pools measure timing or sampling variation, not independent training replications; sweep cells receive no independence-based significance claim.",
+    "after": "We retain slow valid calls and both round-QPS and call-latency summaries. Their medians need not be reciprocal. Shared indexes and query pools do not provide independent training replications, so sweep cells receive no independence-based significance claim.",
+    "reason": "Shorten the highlighted explanation without adding a new argument"
+  },
+  {
+    "id": "B063",
+    "before": "At the historical 100K sample, 2,000 rather than 25 updates gained 0.0063--0.0076 recall. Later changes exceeded reported two-run variation in BGE/Stella, and sparse tail bins kept changing. These FP32 observations do not refute exact Lloyd descent. Cold runs reach the cap, so fitting is budgeted, not claimed converged. At 20,000 updates, historical Stella all-row/100K recall was 0.9921/0.9920.",
+    "after": "At the historical 100K sample, 2,000 rather than 25 updates gained 0.0063--0.0076 recall. Later changes exceeded reported two-run variation in BGE/Stella, and sparse tail bins kept changing. Cold runs hit the cap. This is budgeted FP32 fitting, not a claimed convergence result or a counterexample to exact Lloyd descent. At 20,000 updates, historical Stella all-row/100K recall was 0.9921/0.9920.",
+    "reason": "Use direct sentences while retaining the convergence distinction"
+  },
+  {
+    "id": "B202",
+    "before": "The pilot emits scores, not neighbours. FP32/FP64 cutoff differences therefore do not establish pipeline equivalence. With scorer ratio $s$ and replaceable fraction $f$, $1/[(1-f)+f/s]$ is only a replacement model: integration stopped before end-to-end testing. A lossless-dictionary study also stopped at structural statistics; neither adds a measured system-frontier point.",
+    "after": "The pilot emits scores, not neighbours. FP32/FP64 cutoff differences therefore do not establish pipeline equivalence. With scorer ratio $s$ and replaceable fraction $f$, $1/[(1-f)+f/s]$ is only a replacement model: integration stopped before end-to-end testing. A lossless-dictionary study also stopped at structural statistics. Neither supplies a measured system-frontier point.",
+    "reason": "Prefer a direct sentence boundary"
+  },
+  {
+    "id": "B229",
+    "before": "\\paragraph{IVF-RaBitQ and brute force.}\nRaBitQ sweeps 4/8/9 bits and probes 16/32/64/96/128/192/256/384/512/768/1,024. Modes are LUT16/LUT32/QUANT4/QUANT8 except OpenAI-3072 omits LUT16. OpenAI adds 4,096-list indexes to default 8,192-list coverage; exact combinations remain in the registry. Each dataset has one FP32 squared-L2 brute-force point. Missing coverage is not failure.",
+    "after": "\\paragraph{IVF-RaBitQ and brute force.}\nRaBitQ sweeps 4/8/9 bits and probes 16/\\allowbreak{}32/\\allowbreak{}64/\\allowbreak{}96/\\allowbreak{}128/\\allowbreak{}192/\\allowbreak{}256/\\allowbreak{}384/\\allowbreak{}512/\\allowbreak{}768/\\allowbreak{}1,024. Modes are LUT16/LUT32/QUANT4/QUANT8 except OpenAI-3072 omits LUT16. OpenAI adds 4,096-list indexes to default 8,192-list coverage; exact combinations remain in the registry. Each dataset has one FP32 squared-L2 brute-force point. Missing coverage is not failure.",
+    "reason": "Allow the retained probe grid to break across lines"
+  }
+]

@@ -1,0 +1,5 @@
+The target is raw squared-L2 top-$k$ for query $q$ over $\mathcal X\subset\mathbb R^d$. IVF routes the query; primary score $\primarydist$ selects up to $c=\max\{k,\lceil\alpha k\rceil\}$ survivors; residual score $\refineddist$ selects the final results. These reconstructed scores differ from raw distance. The refined value additionally contains a query-only constant, as defined in \cref{sec:2-3}. Selection is exact for its computed score and tie rule; GT measures ANN quality.
+
+We retain JHQ's square rotation, Cartesian primary codes and primary-relative residuals. The work covers GPU construction, layout, execution and one workload-level refinement multiplier. Unlabelled output agreement selects the multiplier for reuse on a stable workload. It supplies neither a per-query predictor nor an absolute-recall guarantee.
+
+E1 uses one RTX 5090, squared-L2 top-10 and batch 1,000 on four datasets. Component and budget studies use six datasets; T5 adds batches 8/32 (\cref{sec:7-smallbatch}). The compressed index stays on the GPU, with host preparation and query transfers. Updates, multi-GPU search, host-backed residuals and billion-scale deployment are untested.

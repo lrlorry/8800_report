@@ -1,0 +1,3 @@
+ANN avoids scoring every full-precision vector. Graph search uses navigation; compressed IVF scans selected lists with cheap scores \cite{cagra,johnson_gpu,ivfrabitq}. Here the data reach 17.78 million vectors and 3,072 dimensions. Stella's FP32 vectors alone need 67.81\,GiB (\cref{sec:7-7}). Compact codes save space; their search cost still depends on tables, memory access and selection.
+
+JHQ screens with primary codes, then refines a shortlist using residuals \cite{jhq}. This leaves two questions: how to run the scan and how many candidates to refine. Reusing the trained index lets us vary each choice. We measure recall, host-visible speed, resident memory and construction cost, including cases where JHQ loses.

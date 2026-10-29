@@ -1,0 +1,23 @@
+\Cref{fig:1-challenges} connects three challenges to the mechanisms and
+evidence used to address them.
+
+First, the primary codebook has useful mathematical structure that a direct
+GPU port can overlook. Each eight-bit subspace code indexes 256 distances.
+Its Cartesian coordinates permit an exact 16+16 factorisation, but more
+aggressive splitting adds lookups and arithmetic. The challenge is to exploit
+separability without assuming that the smallest table gives the fastest
+scan. Candidate-parallel word access and residual lane cooperation also need
+different data mappings.
+
+Second, all global winners might lie in one part of a query's routed pool. Dividing the required survivor count between groups can therefore lose answers. Local retention and merging preserve coverage; shared bounds reduce extra work. These operations add overhead, so batch size and skew must guide the choice. IVF-list selection remains separate from database-candidate retention.
+
+Third, a large survivor budget wastes refinement, while a small one can discard neighbours. Reference agreement needs no GT, but inherits reference errors. Calibration also costs time. We test quality and total cost over subsequent batches.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch1/challenges}}
+\captionof{figure}[Problem, mechanism and evidence]{Problem, mechanism and evidence. The arrows organise
+research questions; they do not imply that independently measured speedups
+multiply or that an unlabelled agreement rule guarantees GT recall.}
+\label{fig:1-challenges}
+\end{minipage}\par\medskip

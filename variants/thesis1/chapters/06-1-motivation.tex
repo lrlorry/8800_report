@@ -1,0 +1,36 @@
+For routed $U(q)$, the refinement multiplier sets \cite{jhq}
+\begin{equation}
+ c(\alpha)=\max\{k,\lceil\alpha k\rceil\},\qquad
+ C_\alpha(q)=\operatorname{Top}^{\rm primary}_{\min\{c(\alpha),|U(q)|\}}U(q).
+ \label{eq:6-budget}
+\end{equation}
+Require $|C_\alpha|\geq k$ for the analysis. Underfull slots are sentinels. Budgets change retention; probes change $U$.
+
+The $k=10$ grid retains 20--2,000 survivors without retraining, trading residual reads against missed neighbours. Stored residuals and previously grown workspace remain allocated.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch6/budget-scope}
+\caption[Work affected by the refinement budget]{The refinement budget changes work after primary-score
+production. With a fixed query, index and probe count, it leaves the
+routed candidate universe unchanged. The highlighted stages depend on
+survivor capacity; this is a logical work decomposition, not a measured
+latency breakdown. The scan kernel also performs budget-dependent
+admission and compaction. Padding applies when fewer than $c$ candidates exist.}
+\label{fig:6-budget-scope}
+\end{figure}
+
+At fixed batch/routing, write
+\begin{equation}
+ T(\alpha)=T_{\rm base}+T_{\rm select}(c(\alpha))+
+ T_{\rm refine}(c(\alpha))+T_{\rm final}(c(\alpha)).
+ \label{eq:6-cost-model}
+\end{equation}
+$T_{\rm base}$ covers transfers, rotation, routing and primary arithmetic; budget-dependent selection/compaction follows \cref{fig:6-budget-scope}. Capacity/resource thresholds prevent a monotone-latency claim. The rule minimises accepted budget, not noisy QPS (\cref{sec:7-budget-trace}).
+
+Every trial reruns rotation, probes and primary scoring. Index reuse avoids training/building, rather than caching query intermediates. Calibration therefore counts complete searches.
+
+One budget serves the index, route, $k$ and workload. It is not a per-query predictor. Scan scheduling remains separate (\cref{sec:5-5}) and can change the calibration path.
+
+\paragraph{Position among adaptive ANN methods.}
+$\alpha$ serves the candidate-expansion role of Faiss's \texttt{k\_factor} and cuVS refinement \cite{faiss_refine,cuvs_refinement}. Alternatives use GT tuning \cite{faiss_autotune}, learned per-query stopping \cite{li_termination} or predicted recall \cite{darth}. Here unlabelled agreement chooses one reusable workload budget. Scores still use reconstructed vectors, unlike the cuVS source-vector refinement example.

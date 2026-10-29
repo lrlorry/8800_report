@@ -1,0 +1,36 @@
+For routed $U(q)$, the refinement multiplier sets \cite{jhq}
+\begin{equation}
+ c(\alpha)=\max\{k,\lceil\alpha k\rceil\},\qquad
+ C_\alpha(q)=\operatorname{Top}^{\rm primary}_{\min\{c(\alpha),|U(q)|\}}U(q).
+ \label{eq:6-budget}
+\end{equation}
+Analysis requires $|C_\alpha|\geq k$; underfull slots are sentinels. Budgets change retention, probes $U$.
+
+At $k=10$, the grid retains 20--2,000 survivors without retraining. Lower budgets save reads, not residual storage or previously reserved workspace.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch6/budget-scope}
+\caption[Work affected by the refinement budget]{The refinement budget changes work after primary-score
+production. With a fixed query, index and probe count, it leaves the
+routed candidate universe unchanged. The highlighted stages depend on
+survivor capacity; this is a logical work decomposition, not a measured
+latency breakdown. The scan kernel also performs budget-dependent
+admission and compaction. Padding applies when fewer than $c$ candidates exist.}
+\label{fig:6-budget-scope}
+\end{figure}
+
+At fixed batch/routing, write
+\begin{equation}
+ T(\alpha)=T_{\rm base}+T_{\rm select}(c(\alpha))+
+ T_{\rm refine}(c(\alpha))+T_{\rm final}(c(\alpha)).
+ \label{eq:6-cost-model}
+\end{equation}
+$T_{\rm base}$ covers transfers/rotation/routing/primary arithmetic (\cref{fig:6-budget-scope}). Selection/resource transitions make latency non-monotone; the rule minimises accepted budget (\cref{sec:7-budget-trace}).
+
+Trials reuse the index but rerun full searches, including rotation/probing/primary scoring; calibration costs more than residual work alone.
+
+
+
+\paragraph{Position among adaptive ANN methods.}
+$\alpha$ serves the candidate-expansion role of Faiss's \texttt{k\_factor} and cuVS refinement \cite{faiss_refine,cuvs_refinement}. Alternatives use GT tuning \cite{faiss_autotune}, learned per-query stopping \cite{li_termination} or predicted recall \cite{darth}. Here unlabelled agreement chooses one reusable workload budget. Scores still use reconstructed vectors, unlike the cuVS source-vector refinement example.

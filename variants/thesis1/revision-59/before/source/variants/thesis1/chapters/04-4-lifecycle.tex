@@ -1,0 +1,43 @@
+\subsection{Stored bytes and allocated bytes}
+
+With one-byte primary subspace codes, resident row and offset bytes are
+\begin{equation}
+ S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
+ \qquad S_{\rm offsets}=4(n_{\rm list}+1).
+ \label{eq:4-row-storage}
+\end{equation}
+IDs and FP32 corrections add eight bytes per row. At $M=d/8$, $B_r=8$, codes take $9d/8$ bytes, 12.5\% above SQ8. Graph-free storage is not a unique compression advantage over int8.
+
+\begin{table}[tbp]
+\centering
+\caption[Per-vector storage model]{Per-vector bytes. JHQ includes codes, ID and correction; SQ8 is
+vector codes alone; CAGRA int8 models vector codes plus 32 four-byte
+neighbours. Offsets, model parameters, workspace and other runtime
+allocations are excluded. These components are not complete process totals.}
+\label{tab:4-bytes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrrrrrrr@{}}
+\toprule
+$d$ & Primary & Residual & ID + corr. & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP32 \\
+\midrule
+768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\
+1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\
+1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\
+3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Degree-$d_g$ CAGRA uses $d+4d_g$ bytes per row. For Stella at $d_g=32$, JHQ's 19.20\,GiB payload nearly equals CAGRA int8's recorded 19,656\,MiB, despite different accounting scopes. JHQ instead offers graph-free construction and adjustable residual access; $\alpha$ does not shrink the stored array.
+
+Basic FP32 arrays take $4d^2$ transform bytes, $4MKD_s$ primary-codebook bytes, $4MK_r$ residual-codebook bytes and $4n_{\rm list}(d+1)$ centroid/norm bytes. The selected path adds derived arrays. Workspace holds two query matrices $[b_{\rm cap},d]$, centroid scores, LUTs, probes and survivors. Optional residual LUTs add $4b_{\rm cap}dK_r$ bytes; defaults score directly. Group scratch (\cref{eq:5-group-workspace}) reserves about 93.8\,MiB at 128 probes, even on the query-centric path.
+
+Input remains caller-owned. Build staging uses $4n_ba_{\rm in}d$ pinned-host bytes. Order/inverse arrays each take $4N$ device bytes. Assignment scratch is freed before gather (\cref{eq:4-staging-rows,eq:4-assignment-scratch}).
+
+\subsection{Reuse, recovery and invalidation}
+
+The cache stores rotation, codebooks and centroids. Its key omits code version and full database hashing, so changed code/data require explicit invalidation and model provenance. Sweeps reuse states; cold builds create new ones. Similar recall does not imply identical models.
+
+A cache hit still performs constructor QR, warm-up, model upload and add. Stella's 6.67\,s add record includes initial workspace allocation, but excludes schedule calibration and search warm-up. It is not a restart-time measurement.
+
+Changing $\alpha$ needs no retraining. Before capture, search grows workspace as needed; changes to batch, survivors, probes, lanes, groups or bounds trigger recapture. Calibration can bypass capture. The index owns and reuses buffers across sequential calls, then releases them with its graph.

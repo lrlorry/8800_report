@@ -1,0 +1,31 @@
+\Cref{tab:8-threats} consolidates threats to the main interpretations.
+Chapter 3 gives controls; \cref{sec:7-8} checks repeats, rebuilding and precision.
+
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Threats to validity]{Threats that can reverse or narrow a conclusion.}
+\label{tab:8-threats}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Claim at risk & Alternative or reversal & Control and remaining test \\
+\midrule
+Execution gain & Changed scores, ties or index state explain an apparent
+speedup & Strict T4 CPU sorting and table-form diagnostics; finite
+coverage, with candidate dumps no longer retained \\
+Budget quality & Finite-pool sampling or drift hides damaging queries
+& Disjoint GT evaluation, full traces, subset-sum checks and FULL
+enumeration; future-query and arbitrary-subset invariance remain untested \\
+Competitive margin & Grid density, call tails or API overhead changes
+the ordering & Both recall estimators, retained slow calls and int8
+baseline; TF32/FP32 sensitivity; T5 exposes small-batch reversals;
+cross-device comparisons remain unmeasured \\
+Capacity/build claim & Transient allocations exceed a resident sample
+& Phase bytes, repeated empty-cache builds and 20\,ms device peaks;
+sub-interval allocations and full retrained frontiers remain unmeasured \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+Coverage is one GPU, squared-L2 top-10 and six prepared datasets (\cref{sec:7-smallbatch}). Query removal does not exclude near duplicates; relevance labels are absent. Updates, concurrency, drift, service latency, billion-scale and multi-device capacity remain untested.

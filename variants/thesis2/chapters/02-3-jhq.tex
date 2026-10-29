@@ -1,0 +1,81 @@
+\subsection{What is inherited}
+
+JHQ uses square $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}:
+\begin{equation}
+ \begin{aligned}
+ \Pi^\top\Pi=I
+ &\Longrightarrow
+ \|\Pi(q-x)\|^2\\
+ &=(q-x)^\top\Pi^\top\Pi(q-x)=\|q-x\|^2.
+ \end{aligned}
+ \label{eq:2-isometry}
+\end{equation}
+Dimension stays $d$. Finite-precision geometry, GEMMs and quantisation are checked separately.
+
+Partition $y$ into $M$ subspaces of dimension $D_s=d/M$. With $B$ bits per
+primary subspace, $K=2^B$ labels are formed from $L=2^{B/D_s}$ scalar levels,
+requiring the implemented Cartesian parameters to make $L$ an integer.
+Writing $\Phi$ for the standard normal CDF, the constructor uses
+\begin{equation}
+ a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
+ i=1,\ldots,L,\qquad
+ \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
+ \label{eq:2-cartesian}
+\end{equation}
+At the evaluated $B=D_s=8$, $L=2$ and $\mathcal C_m=\{-a,+a\}^8$,
+with $a\simeq0.67449\sigma$. Each byte records eight coordinate signs.
+The implementation estimates $\sigma$ from vector energy; unit-normalised
+inputs motivate the scale $1/\sqrt d$. This representation is prior art,
+not an invention of the GPU execution layer.
+
+Residuals are $r=y-\widehat p$, giving reconstruction $\widehat y=\widehat p+\widehat r$. The evaluated codes use $d/8$ primary bytes and $d$ residual bytes per vector, before metadata. Refining fewer rows reduces reads, not stored residual size.
+
+\subsection{Model assumptions and score semantics}
+
+Random rotation can spread coordinate energy, motivating a shared
+Gaussian-inspired scalar model. It does not force an arbitrary realised
+database to have independent, zero-mean Gaussian coordinates. For a fixed
+rotation and empirical database mean $\mu$, the transformed mean is
+$\Pi\mu$ and $\|\Pi\mu\|=\|\mu\|$. Averaging over random rotations is
+different from centring one fixed corpus. Even a uniformly random point on
+a sphere has dependent coordinates through its fixed norm. Consequently,
+isometry is an algebraic guarantee; the distributional approximation is a
+modelling assumption. Chapter 8's centred-coding pilot examines one practical
+consequence of that distinction.
+
+The inherited primary levels are Gaussian mid-quantiles. For $X\sim\mathcal N(0,\sigma^2)$ and a zero threshold,
+\[
+ \begin{aligned}
+ a_{\rm MSE}
+ &=\arg\min_a\mathbb E[(X-a)^2\mid X>0]\\
+ &=\mathbb E[X\mid X>0]
+ =\sigma\sqrt{2/\pi}\simeq0.79788\sigma.
+ \end{aligned}
+\] For fixed signs and positive scale, however,
+\begin{equation}
+ \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
+ \qquad s\in\{-1,+1\}^d.
+ \label{eq:2-sign-order}
+\end{equation}
+For fixed signs,
+\[
+ a>0\Longrightarrow
+ \arg\min_x\primarydist(q,x)
+ =\arg\max_x\langle q',s(x)\rangle.
+\]
+Residuals still depend on scale; separability alone gives no optimality.
+
+The scores use different vectors:
+\[
+ \rawdist=\|q-x\|^2,\qquad
+ \primarydist=\|q'-\widehat p\|^2.
+\]
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+Thus, for a fixed query,
+\[
+ \arg\min_x\refineddist=\arg\min_x\|q'-\widehat p-\widehat r\|^2,
+\]
+while raw-vector recall remains empirical.

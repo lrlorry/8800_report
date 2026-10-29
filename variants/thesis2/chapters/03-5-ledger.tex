@@ -1,0 +1,38 @@
+Records retain versions/settings/times/outputs. Paired runs share states; state/precision changes define separate families. Missing historical binary/model hashes limit exact reproduction (\cref{app:reproducibility}). Score/tie correctness differs from raw recall, which also depends on routing/reconstruction. Sampling/ordering/measurement limits are in \cref{sec:6-2,sec:6-3,sec:8-3}.
+
+\subsection{Sources and available records}
+\label{app:reproducibility}
+\label{sec:b-artifacts}
+The \href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project archive} holds source/measurement snapshots and selected T1, T4/T5 and A2 inputs. Complete vectors, trained states and historical executables are not all available. T4 candidate dumps were deleted; retained summaries cannot support an independent resort.
+
+\begin{table}[tbp]
+\centering
+\caption[Component implementations]{Implementation families used by component tests. Each experiment retains its own control; versions are not successive whole-system speedups.}
+\label{tab:a-components}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+Version & Mechanism / experimental role\\\midrule
+v61 & Word-load and lane-refinement controls\\
+v62 / v63 & Grouped full-key selection / shared bound\\
+v65 / v69 & Batch/skew scheduling / radix probe selection\\
+v69 / v71 / v73 & Budget calibration / LUT sweep / strict-score export\\
+v69 / v72 & OpenAI: TF32 versus FP32 add/query arithmetic on the same trained cache\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Additional timing conventions}
+\label{sec:a-e1-protocol}
+Warm-up reduces E1 call counts at 274 points; initial conversion/validation differs from steady-state timing. The 369 repeat-ID flags include tied reordering; 401 also counts cross-protocol differences. Flags alone exclude no points, and JHQ lacks the same flag.
+
+\subsection{Calibration and follow-up contracts}
+\label{sec:a-budget-contract}
+\label{sec:a-supplement}
+\label{sec:a-t4-t5}
+The campaign sets the 200-start grid explicitly. Fixed arms use one warm-up/three timed calls. Calibration times full searches and $O(Sk^2)$ host comparison, excluding gathering/scan calibration and bypassing graph capture. Warm-up visits every query without passing outputs/GT to agreement. Callers install the returned index with \texttt{set\_alpha(A[index])}; selected-arm rates reuse fixed-arm timing (\cref{sec:6-5}). For 64 sorted losses, the recorded quantile is
+\[
+ L_{95}=L^{\rm sorted}_{\lfloor0.95(64-1)\rfloor}
+       =L^{\rm sorted}_{59}\qquad\text{(zero-based)}.
+\]
+Follow-up sessions have separate states/boundaries unless stated. A2 corroborates the PTX contract (\cref{sec:5-5}); T4's score-export scope is in \cref{sec:7-strict-selection}. T5 includes null calls/int8 query quantisation, with API/warm-up differences (\cref{sec:7-smallbatch}).

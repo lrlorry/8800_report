@@ -1,0 +1,5 @@
+CUDA uses 32-thread warps and blocks with limited registers and shared memory \cite{cuda_programming_guide}. JHQ spreads scanning across candidates and refinement across coordinates of one survivor. More blocks can hide latency, but also duplicate tables and buffers.
+
+Faiss uses warp selection \cite{johnson_gpu}; bitonic, radix and merge primitives trade work for state. AIR top-$k$ and GridSelect study global selection \cite{gpu_topk}. JHQ adapts these existing tools.
+
+CUDA Graph replay saves launch setup. Capture, workspace changes and shared-key access still follow the lifecycle and correctness contracts in Chapter 5.

@@ -1,0 +1,50 @@
+\frontchapter{Notation and Abbreviations}
+\begingroup\small\setstretch{1.0}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$N,d$ & Number of database vectors and original dimension \\
+$M,D_s$ & Number of primary subspaces and dimensions per subspace \\
+$a_{\rm add},a_{\rm in},a_{\rm assign}$ & Configured add, staged input, and independently allocated assignment rows \\
+$n_b,S_{\rm stage}$ & Pipeline buffer count and byte budget per input/rotated array \\
+$\Pi$ & Square orthogonal transform; $q'=\Pi q$ \\
+$B,B_r$ & Primary bits per subspace and residual bits per coordinate \\
+$\rho(p),o_\ell$ & Input ID at physical position $p$, and start of IVF list $\ell$ \\
+$k$ & Number of returned neighbours \\
+$n_c,c$ & Routed candidates and primary survivors receiving refinement \\
+$\alpha$ & Refinement multiplier, with $c=\max\{k,\lceil\alpha k\rceil\}$ \\
+$S,\epsilon$ & Calibration sample size and allowed disagreeing result slots \\
+$C_\alpha,\mathcal R_\alpha$ & Valid primary survivor set and returned ID set at budget $\alpha$ \\
+$\alpha_{\rm ref},B_{\rm reuse}$ & Reference refinement budget and number of subsequent reuse batches \\
+$\glut$ & Number of groups in a factorised lookup table \\
+$\gscan$ & Number of scan groups per query; zero labels the one-block path \\
+$C_{\rm buf},T_{\rm blk}$ & Scan buffer capacity and threads per block \\
+$n_{\rm LUT}(\glut)$ & Number of LUT entries per primary subspace \\
+$\kappa(D,p)$ & Packed complete-key encoding for bound publication \\
+$\lrefine$ & Number of cooperating lanes per refined candidate \\
+$\rawdist$ & Squared distance between original vectors \\
+$\primarydist$ & Distance under the primary reconstruction \\
+$\refineddist$ & Refined ranking score: reconstructed squared distance plus a query-only constant \\
+\bottomrule
+\end{longtable}
+
+\bigskip
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
+\toprule
+Abbreviation & Meaning \\
+\midrule
+ANN & Approximate nearest neighbour \\
+ADC & Asymmetric distance computation (distinct from the ADC conference) \\
+IVF & Inverted file \\
+JHQ & Johnson--Lindenstrauss enhanced hierarchical quantisation \\
+LUT & Lookup table \\
+PQ & Product quantisation \\
+QPS & Queries per second \\
+GT & Ground truth \\
+FP32 & IEEE single-precision storage and arithmetic, with multiplication mode stated separately \\
+TF32 & Tensor-core multiplication format with reduced input precision and FP32 accumulation \\
+CV & Coefficient of variation of candidate counts \\
+\bottomrule
+\end{longtable}
+\endgroup

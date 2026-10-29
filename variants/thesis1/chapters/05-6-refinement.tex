@@ -1,0 +1,50 @@
+Primary screening limits residual-coordinate work to $O(cd)$ instead of $O(n_cd)$. Lanes cooperate at the same budget.
+
+\subsection{Reconstructed scoring and the query-only constant}
+
+With $\gamma=2\langle\widehat p,\widehat r\rangle$, real-arithmetic expansion gives
+\begin{align}
+ \refineddist(q,x)
+ &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
+ \label{eq:5-refined-score}\\
+ &=2\|q'\|_2^2+\|\widehat p+\widehat r\|_2^2-2\langle q',\widehat p+\widehat r\rangle\nonumber\\
+ &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+ \label{eq:5-refined-constant}
+\end{align}
+The query-only constant preserves ranking; reconstruction error remains \cite{jhq}.
+
+The scalar path sums squared coordinate differences between $q'$ and residual reconstruction, then adds the primary score/correction. Queries and fitting codebooks use shared memory.
+
+\subsection{Mapping lanes to words and reducing partial sums}
+
+For $\lrefine=L\in\{1,8,16,32\}$,
+\[
+ d_{\rm word}=32/B_R,\qquad
+ \text{words of lane }a:\ a,a+L,a+2L,\ldots.
+\]
+A word holds four eight-bit or eight four-bit codes. Butterfly shuffles sum lane partials; lane zero writes the score.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/lane-refinement}
+\caption[Sixteen-lane residual refinement]{Sixteen-lane residual refinement. A warp handles two candidates;
+lane $a$ within a candidate reads residual words $a,a+16,\ldots$.
+Each eight-bit-code word decodes four coordinates. Subgroups sum partials, then add primary score/correction. Candidate positions may remain scattered.}
+\label{fig:5-lane-refinement}
+\end{figure}
+
+Require word-aligned rows and $d_{\rm word}\mid D_s$. Every lane joins shuffles; invalid slots contribute zero before receiving infinite output scores. $L=16$ assigns two candidates per warp.
+
+L0 loads scalar bytes; L1 loads words with the same one-lane accumulation. L8/L16/L32 trade shorter walks for shuffles and fewer concurrent candidates. FP32 association, locality and codebook placement affect the result.
+
+\subsection{Final selection and the numerical boundary}
+
+For at least $k$ finite valid survivors with unique IDs, each round computes
+\[
+ i^*=\arg\min_{i<c}(D_{H,i},\mathrm{ID}_i),\quad d^*=D_{H,i^*},\quad
+ D_{H,i^*}\leftarrow+\infty
+\]
+using all slots and emits $(\mathrm{ID}_{i^*},d^*)$: exact retained-pool top-$k$, without thread quotas. After finite entries run out, a smallest valid ID may repeat at infinity; all-invalid pools return invalid IDs. Evaluated pools meet the finite-entry contract.
+
+Final ties use database IDs; primary ties use positions. Refinement cannot recover discarded candidates or quantisation loss. Lane FP32 association can move near ties.
+

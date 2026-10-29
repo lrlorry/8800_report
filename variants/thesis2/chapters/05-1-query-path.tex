@@ -1,0 +1,73 @@
+Queries rotate, route, screen and refine to return $k$ IDs/scores. \Cref{fig:5-query-path} distinguishes the
+three runtime selection decisions; the ground-truth ordering is an
+external evaluation object.
+
+Four quantities must be kept separate:
+\begin{align}
+ s_i(q)&=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+                   &&\text{centroid routing score},\nonumber\\
+ \primarydist(q,x)&=\|q'-\widehat p(x)\|_2^2,
+                   &&\text{primary score},\nonumber\\
+ \refineddist(q,x)&=\|q'-\widehat p(x)-\widehat r(x)\|_2^2
+                       +\|q'\|_2^2,
+                   &&\text{refined ranking score},\nonumber\\
+ \rawdist(q,x)&=\|q-x\|_2^2,
+                   &&\text{raw-space distance}.
+ \label{eq:5-ranking-objects}
+\end{align}
+$\mu_i$ is a transformed centroid; $\widehat p,\widehat r$ are decoded primary/residual vectors. The runtime refined score includes a query-only
+constant, as derived from the implemented correction in \Cref{sec:5-6}.
+It preserves the ordering of reconstructed distances for a fixed query,
+but neither it nor the primary score is the original-vector distance.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/query-path}
+\caption[Query stages and selection boundaries]{Query execution and its separate selection boundaries. Routing
+selects lists, primary screening selects vector candidates, and final
+selection ranks refined survivors. Raw-space ground truth is used for
+evaluation; it is not an input to these search decisions.}
+\label{fig:5-query-path}
+\end{figure}
+
+Routing defines the visited universe $U$ of $n_c$ candidate occurrences;
+primary screening retains up to $c=\max\{k,\lceil\alpha k\rceil\}$ for
+residual scoring. \Cref{tab:5-query-stages} records each stage's inputs,
+reads and costs; \cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}
+develop their implementations.
+
+The ordering and exactness columns of \cref{tab:5-query-stages}
+attach each claim to its score and tie rule. Chapter 7 tests survivor
+sets, ordered outputs and raw-space recall separately.
+
+
+\begin{table}[tbp]
+\centering
+\caption[Query-stage selection contracts]{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
+survivors. Exactness refers to the stated computed scores; routing and
+quantised reconstruction determine raw-space approximation.}
+\label{tab:5-selection-contracts}
+\label{tab:5-query-stages}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.1cm}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Stage & Input $\to$ output & Data read & Main work & Order / exactness \\
+\midrule
+Transform & $q\to q'$ & Query; transform & Apply $\Pi$ & Transform (precision in \cref{sec:7-precision}) \\
+Probe & $n_{\rm list}\to n_{\rm probe}$ lists & FP32 centroids; list lengths & Score; radix; rank count & $(s_i,i)$; exact probe selection \\
+LUT & $q'\to$ tables & Primary codebook & $MD_s2^{8/\glut}$ terms & Real-arithmetic factorisation; FP32 rounding \\
+Primary, $\gscan=0$ & $n_c\to c_v$ & Packed primary codes; LUT & $O(n_cM)$ scoring; compaction & Exact distance-order selection; arbitrary cutoff ties \\
+Primary, $\gscan\geq1$ & $n_c\to c_v$ & Same primary representation & Score; compact; merge & $(\primarydist,p)$; exact under stated premises \\
+Refine & $c_v\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed $\refineddist$; lane-dependent FP32 association \\
+Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\mathrm{ID})$; exact with $k$ finite valid entries \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\Cref{tab:5-query-stages} gives the stage contracts. The E1/budget
+harness explicitly selects 16 refinement lanes and scan policy $-1$
+(scheduling among 0/2/4/8), versus library defaults of scalar refinement
+and policy 0. Shared bounds are enabled but used only at $\gscan>1$;
+the harness calibrates scheduling with 512 database pseudoqueries,
+a step the library does not perform automatically. Component overrides and implementation versions are in \cref{tab:a-components}.

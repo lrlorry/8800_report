@@ -1,0 +1,37 @@
+\Cref{tab:6-controls} separates budget selection from its evaluation.
+Fixed arms share the index, route and held-out queries; invocation and
+timing details are in \cref{sec:a-budget-contract}.
+
+\begin{table}[tbp]
+\centering
+\caption[Budget controls and their roles]{Budget controls and the questions they answer. Held-out GT is
+used to assess every result, but only the diagnostic oracle uses it to
+choose a budget. The reference is fixed at 200 for agreement-based arms.}
+\label{tab:6-controls}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.7cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Control & Selection information & Question \\
+\midrule
+Fixed 100 & No calibration & Gain relative to the inherited default? \\
+Fixed 64 and smaller grid arms & No calibration & Does a simple fixed choice remove the need for calibration? \\
+Sampled bisection & $S$ unlabelled queries; slot agreement & How well does a low-cost sample choose a reusable budget? \\
+Same-sample enumeration & Same $S$, reference and threshold; all grid arms & Did bisection miss the smallest accepted grid budget? \\
+Full-pool calibration & All 500 calibration queries; same bisection rule & What changes with broader coverage and a stricter normalised allowance? \\
+Held-out oracle & GT recall and timed QPS for all arms & Which measured arm is fastest under the diagnostic quality constraint? \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Let $\widehat r,\widehat Q$ denote held-out recall/QPS and $\widehat r^*=\max_{\alpha\in A}\widehat r(\alpha)$. The diagnostic oracle is
+\begin{equation}
+ \alpha_{\rm oracle}\in\operatorname*{arg\,max}_{\alpha\in A}
+ \left\{\widehat Q(\alpha):
+ \widehat r(\alpha)\geq\widehat r^*-\delta\right\},\qquad\delta=10^{-3}.
+ \label{eq:6-oracle}
+\end{equation}
+It uses labels and timings. Its recall slack $\delta$ differs from agreement's slot allowance $\epsilon$.
+
+FULL remains label-free bisection and tightens $\epsilon/(Sk)$. Same-sample enumeration checks the search procedure. Agreement minimises an accepted multiplier; the oracle maximises quality-constrained speed, so their choices can differ.
+
+Fixed 64 tests a smaller default; fixed 200 tests a high budget (\cref{sec:7-5,tab:7-budget-quality}).

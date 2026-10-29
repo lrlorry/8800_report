@@ -1,0 +1,101 @@
+\subsection{Bisection and complete enumeration}
+
+Write $J=|A|$. The implementation computes the sample reference once,
+then searches for the largest acceptable index in the descending grid:
+\par\noindent\begin{minipage}{\linewidth}
+\begin{enumerate}[leftmargin=*,itemsep=0.15em]
+\item Set $l=0$, $h=J-1$. Index zero is the reference fallback.
+\item While $l<h$, test $j=\lfloor(l+h+1)/2\rfloor$ by running
+$A[j]$ and computing $D_S(A[j])$.
+\item If $D_S(A[j])\leq\epsilon$, set $l=j$; otherwise set $h=j-1$.
+\item Return $A[l]$. A caller applies it before processing reuse batches.
+\end{enumerate}
+\end{minipage}\par\medskip
+The eight-point grid needs at most three complete candidate searches
+in addition to the reference. Invocation, host-comparison complexity and
+timing boundaries are specified in \cref{sec:a-budget-contract}.
+
+Enumeration reruns the reference and all seven budgets on the same sample. Both timers include a fresh reference. Enumeration handles acceptance holes; bisection matches its minimum only when accepted indices form a prefix.
+
+\subsection{A sufficient condition for monotonicity}
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{proposition}[Nested survivors preserve reference membership]
+\label{prop:6-monotonicity}
+For one query, assume fixed routing and survivor sets
+$C_\alpha\subseteq C_\beta\subseteq C_{\alpha_{\rm ref}}$ whenever
+$\alpha\leq\beta\leq\alpha_{\rm ref}$. Assume at least $k$ valid
+survivors, fixed refined scores and one deterministic total order for
+final ties. Each result is the exact top-$k$ in that order. Then
+\begin{equation}
+ |\mathcal R_\alpha\cap\mathcal R_{\rm ref}|
+ =|C_\alpha\cap\mathcal R_{\rm ref}|,
+ \qquad D_S(\alpha)\geq D_S(\beta).
+ \label{eq:6-monotonicity}
+\end{equation}
+The latter statement holds when these conditions hold for every sampled
+query.
+\end{proposition}
+\begin{proof}
+For $x\in\mathcal R_{\rm ref}\cap C_\alpha$, the common total order gives
+\begin{equation*}
+ |\{y\in C_\alpha:y\prec x\}|
+ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
+\end{equation*}
+Hence $x\in\mathcal R_\alpha$. Together with
+$\mathcal R_\alpha\subseteq C_\alpha$, this proves the intersection
+identity in \cref{eq:6-monotonicity}. Nestedness gives
+$|C_\alpha\cap\mathcal R_{\rm ref}|
+ \leq|C_\beta\cap\mathcal R_{\rm ref}|$.
+Summing missing reference counts over queries proves
+$D_S(\alpha)\geq D_S(\beta)$.
+\end{proof}
+\end{minipage}\par\medskip
+
+Fixed-key exact primary top-$c$ gives nesting; fixed-key refinement then gives monotone agreement. This supports bisection, without making GT recall or runtime monotone as the pool grows.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch6/nesting-example}
+\caption[Nested and non-nested candidate pools]{Constructed $k=1$ example with refined order $a\prec b\prec c$
+and reference $\{a\}$. The nested case preserves reference membership.
+With all primary scores tied, different tie choices can produce the
+non-nested middle pool and break monotonicity. These are explanatory
+sets, not measured GPU outputs.}
+\label{fig:6-nesting}
+\end{figure}
+
+\subsection{A corollary for the evaluated grouped path}
+
+Within a draw, $S$, routing and scan threads are fixed; \texttt{scheduled\_groups(S)} ignores $c$. Grouped budgets use the same LUT sums. Fixed $B_r$, 16 refinement lanes and final $(\refineddist,\mathrm{ID})$ order preserve each candidate's scoring.
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{corollary}[Grouped calibration]
+\label[corollary]{cor:6-grouped-calibration}
+For the evaluated grouped configuration, under the representation and
+shared-bound contracts of Chapters 4 and 5, primary survivors are nested
+across budgets. Consequently \Cref{prop:6-monotonicity} applies and
+bisection returns the same minimum accepted grid budget as enumeration.
+\end{corollary}
+\begin{proof}
+\Cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} give exact
+primary top-$c$ under the common key $(\primarydist,\mathrm{position})$.
+Its prefixes nest as $c$ grows. The fixed per-candidate refinement and
+exact final total order supply the remaining premises of
+\Cref{prop:6-monotonicity}.
+\end{proof}
+\end{minipage}\par\medskip
+
+The corollary covers 2,176/2,304 draws. The other 128 are OpenAI-3072, $S=128$, distance-only. All recorded curves are monotone and choices match enumeration (\cref{sec:7-budget-trace}); that check remains finite.
+
+\paragraph{Full-pool coverage.}
+Two FULL cells group Vogue; ten use $\gscan=0$. All twelve choices match enumeration. The ten distance-only cells remain outside \cref{cor:6-grouped-calibration}. A common cutoff order, or no tie crossing any grid/reference cutoff, suffices for general nesting. Matching held-out execution does not prove that condition.
+
+\paragraph{A rank-based extension.}
+With the same nesting/fixed-score conditions and one-based primary rank,
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}\sum_{x\in\mathcal R_{\rm ref}(q)}
+ \mathbf1\{\operatorname{rank}_{\rm P}(x)>c(\alpha)\}.
+ \label{eq:6-rank-curve}
+\end{equation}
+Exported reference ranks could recover the whole curve from one search. The current harness instead reruns every budget; rank extraction remains future work.

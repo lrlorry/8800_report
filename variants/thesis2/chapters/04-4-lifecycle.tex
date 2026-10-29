@@ -1,0 +1,58 @@
+\subsection{Stored bytes and allocated bytes}
+
+For byte-sized primary codes,
+\begin{equation}
+ S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
+ \qquad S_{\rm offsets}=4(n_{\rm list}+1).
+ \label{eq:4-row-storage}
+\end{equation}
+IDs/corrections contribute $8N$ bytes. With $M=d/8$, $B_r=8$,
+\[
+ b_{\rm code}=d/8+d=9d/8=1.125d.
+\]
+The code payload exceeds SQ8 by 12.5\%; graph-free need not mean smaller than int8.
+
+\begin{table}[tbp]
+\centering
+\caption[Per-vector storage model]{Per-vector bytes. JHQ includes codes, ID and correction; SQ8 is
+vector codes alone; CAGRA int8 models vector codes plus 32 four-byte
+neighbours. Offsets, model parameters, workspace and other runtime
+allocations are excluded. These components are not complete process totals.}
+\label{tab:4-bytes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrrrrrrr@{}}
+\toprule
+$d$ & Primary & Residual & ID + corr. & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP32 \\
+\midrule
+768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\
+1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\
+1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\
+3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At graph degree $d_g=32$, CAGRA uses $d+4d_g$ row bytes. Stella JHQ payload (19.20\,GiB) is close to int8 CAGRA's 19,656\,MiB, under different scopes. $\alpha$ changes residual reads, not stored bytes.
+
+Basic model storage is
+\[
+ S_{\rm model}
+ =4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)
+ \quad\text{bytes}.
+\]
+Derived arrays are additional. Workspace holds two query matrices plus centroid scores, LUTs, probes and survivors. Optional residual LUTs add $4b_{\rm cap}dK_r$ bytes; defaults score directly. Group capacity stays about 93.8\,MiB at 128 probes even when unused (\cref{eq:5-group-workspace}).
+
+Input is caller-owned. Separate staging/order storage is
+\[
+ S_{\rm pinned}=4n_ba_{\rm in}d,\qquad
+ S_{\rm order}=S_{\rm inverse}=4N.
+\]
+Assignment scratch ends before gathering (\cref{eq:4-staging-rows,eq:4-assignment-scratch}).
+
+\subsection{Reuse, recovery and invalidation}
+
+Cache keys omit code version/full-data hashes. Code/data changes need invalidation. Sweeps share states; cold builds refit. Similar recall cannot establish model identity.
+
+Cache hits still pay QR, warm-up, model upload and add. Stella's 6.67\,s add includes initial workspace, excludes scan calibration/search warm-up and is not restart time.
+
+$\alpha$ changes need no retraining. Workspace grows before capture; changing batch size, survivors, probes, lanes, groups or bounds triggers recapture. Calibration may bypass capture. Index-owned buffers are reused until release.

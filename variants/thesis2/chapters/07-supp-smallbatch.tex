@@ -1,0 +1,36 @@
+\subsection{Small batches change the competitive region}
+\label{sec:7-smallbatch}
+
+T5 compares scheduled JHQ, CAGRA fp32/int8 and IVF-RaBitQ at batches
+8/32 on the four E1 datasets. Five synchronous host-to-host rounds use
+1,000/992 queries, respectively. The 1,808 points include a JHQ one-block control, excluding IVF-PQ/brute force.
+\Cref{fig:7-smallbatch,tab:7-smallbatch} compare the resulting regions.
+
+\suppressfloats[t]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{t4-t5/smallbatch.pdf}
+\captionof{figure}[Small-batch competitive regions]{T5 JHQ / fastest-competitor
+QPS under interpolation with qualifying measured endpoints. Above one
+favours JHQ. \Cref{tab:7-smallbatch} gives strict thresholds.}
+\label{fig:7-smallbatch}
+\end{minipage}\par\medskip
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Small-batch matched-recall ratios]{T5 QPS ratios:
+interpolation with qualifying endpoints / strict measured threshold.
+The fastest competitor is selected independently for each estimator;
+higher-recall qualifying endpoints remain eligible without extrapolation.}
+\label{tab:7-smallbatch}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/t4-t5/smallbatch}
+\end{minipage}\par\medskip
+
+At batch 8/recall 0.97, CAGRA fp32 wins all four datasets under both estimators (JHQ ratios 0.641--0.893). At batch 32, ratios are 0.622--1.008; OpenAI-3072 favours JHQ under the measured threshold. Vogue's batch-8/0.95 lead requires interpolation. Grid resolution changes near ties.
+
+Including qualifying endpoints, recall-0.90 ratios are 1.032--1.479 (batch 8), 0.866--1.166 (32), with three/one strict JHQ wins. Omitting endpoints overstates gains. Scheduling gains $1.7$--$3.3\times$ over one block at 0.95, without ensuring cross-system wins.
+
+Null-call medians are 0.012--0.072\,ms and remain included. CAGRA uses Python, JHQ/RaBitQ C++; warm-ups differ (\cref{sec:a-t4-t5}).

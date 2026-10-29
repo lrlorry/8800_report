@@ -1,0 +1,67 @@
+{
+  "reports": [
+    {
+      "part": 1,
+      "report_sha256": "94404712933b70d272a13a1120c02ca531d0b05301285fdd67382471505c311f",
+      "reported_percent": 38,
+      "content_pages": 38
+    },
+    {
+      "part": 2,
+      "report_sha256": "64c4cec407993b76e7b20694d5671c023cc9e4ff554c6bc6ff729e0ff8d2481c",
+      "reported_percent": 49,
+      "content_pages": 33
+    }
+  ],
+  "exact_matches": 29050,
+  "summary": {
+    "frontmatter": {
+      "words": 1118,
+      "blue": 11
+    },
+    "ch1": {
+      "words": 713,
+      "blue": 106
+    },
+    "ch2": {
+      "words": 1171,
+      "blue": 613
+    },
+    "ch3": {
+      "words": 1317,
+      "blue": 733
+    },
+    "ch4": {
+      "words": 2787,
+      "blue": 1158
+    },
+    "ch5": {
+      "words": 4360,
+      "blue": 1571
+    },
+    "ch6": {
+      "words": 1972,
+      "blue": 675
+    },
+    "ch7": {
+      "words": 4331,
+      "blue": 1108
+    },
+    "ch8": {
+      "words": 860,
+      "blue": 520
+    },
+    "ch9": {
+      "words": 262,
+      "blue": 217
+    },
+    "bibliography": {
+      "words": 850,
+      "blue": 20
+    },
+    "appendices": {
+      "words": 1298,
+      "blue": 959
+    }
+  }
+}

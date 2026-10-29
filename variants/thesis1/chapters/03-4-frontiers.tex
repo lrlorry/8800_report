@@ -1,0 +1,52 @@
+The competing families cover graph traversal (CAGRA fp32/int8),
+product-quantised IVF and GPU IVF-RaBitQ \cite{cagra,pq,ivfrabitq}.
+FP32 GPU brute force provides an exhaustive-search reference. Each family
+sweeps its own implementation parameters (\cref{tab:3-grids}); the recorded
+index configurations can differ in storage and reconstruction fidelity.
+Consequently the main frontier measures achievable speed at a quality
+target within these grids. A separate memory account accompanies it.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Principal E1 tuning dimensions]{Principal E1 tuning dimensions. Exact per-point parameters and
+coverage extensions remain in the raw records. The grid is finite and
+differs between methods.}
+\label{tab:3-grids}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Family & Recorded search dimensions \\
+\midrule
+JHQ & Probes and $\alpha$; initial probes 64/128/256 and
+$0.5/1/2$ times the workload budget; coverage extensions reach probe
+1,024 and larger/smaller budgets \\
+CAGRA fp32/int8 & Graph degree 32/64; search width 1/2/4/8;
+intermediate top-$k$ capacity 32--512 \\
+IVF-PQ & Eight-bit subcodes; 192/384/768-byte codes at $d=768$,
+384/768/1,536 at higher dimensions; fp16/fp32 lookup settings;
+probes 16--512 \\
+IVF-RaBitQ & 4/8/9 bits per dimension, supported search modes,
+probes 16--1,024; additional 4,096-list OpenAI indexes \\
+GPU brute force & Exhaustive FP32 squared-L2 search, common host boundary \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+Dominance and the measured frontier are
+\[
+ a\succ b\iff R_a\geq R_b,\ Q_a\geq Q_b,\
+ (R_a,Q_a)\ne(R_b,Q_b).
+\]
+\begin{equation}
+Q_{\rm meas}(r)=\max\{Q_i:R_i\geq r\}.
+\label{eq:3-measured-frontier}
+\end{equation}
+No qualifying measured point means undefined. For adjacent frontier points,
+\begin{equation}
+\log Q_{\rm int}(r)=(1-\lambda)\log Q_a+\lambda\log Q_b,
+\qquad \lambda=\frac{r-R_a}{R_b-R_a}.
+\label{eq:3-interpolated-frontier}
+\end{equation}
+The parser snaps within $5\times10^{-4}$, otherwise interpolates without extrapolation. T5 retains qualifying measured endpoints below a method's minimum recall. Both estimators are reported near ties; storage is unmatched.
+
+Frontiers exclude failed/invalid outputs, not repeat-ID flags alone. Isolated reruns replace contaminated builds; skipped Stella batch-1,000 files add no points (\cref{sec:a-e1-protocol}). Int8 CAGRA remains included (\cref{fig:7-frontiers}); older ADC/poster plots keep their own scope.

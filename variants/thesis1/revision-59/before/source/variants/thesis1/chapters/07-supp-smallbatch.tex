@@ -1,0 +1,44 @@
+\subsection{Small batches change the competitive region}
+\label{sec:7-smallbatch}
+
+T5 compares scheduled JHQ, CAGRA fp32/int8 and IVF-RaBitQ at batches
+8/32 on the four E1 datasets. Five synchronous host-to-host rounds use
+1,000/992 queries, respectively. Its 1,808 points include JHQ's one-block
+control; IVF-PQ and brute force are outside this campaign.
+\Cref{fig:7-smallbatch,tab:7-smallbatch} compare the resulting regions.
+
+\suppressfloats[t]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{t4-t5/smallbatch.pdf}
+\caption[Small-batch competitive regions]{T5 JHQ / fastest-competitor
+QPS under interpolation with qualifying measured endpoints. Above one
+favours JHQ. Strict measured thresholds are in \cref{tab:7-smallbatch}.}
+\label{fig:7-smallbatch}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption[Small-batch matched-recall ratios]{T5 QPS ratios:
+interpolation with qualifying endpoints / strict measured threshold.
+The fastest competitor is selected independently for each estimator;
+higher-recall qualifying endpoints remain eligible without extrapolation.}
+\label{tab:7-smallbatch}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/t4-t5/smallbatch}
+\end{table}
+
+At recall 0.97 and batch 8, CAGRA fp32 leads on all four datasets under
+both estimators: interpolated JHQ ratios are 0.641--0.893. At batch 32,
+these ratios are 0.622--1.008, with OpenAI-3072 close under interpolation
+but favourable to JHQ under the measured threshold. At recall 0.95,
+Vogue's batch-8 lead likewise appears only under interpolation. Grid
+resolution therefore matters to borderline rankings.
+
+Lower-recall comparisons must retain competitors whose fastest frontier
+point already exceeds the target.
+At recall 0.90, batch-8/32 ratios are 1.032--1.479/0.866--1.166; strict thresholds give three/one JHQ wins. Omitting qualifying endpoints would
+overstate these low-recall leads.
+Scheduling gains 1.7--3.3$\times$ over one block at recall 0.95, without guaranteeing a cross-system win.
+
+Null-call medians are 0.012--0.072\,ms and remain included. CAGRA uses Python, JHQ/RaBitQ C++; warm-ups differ (\cref{sec:a-t4-t5}).

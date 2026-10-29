@@ -1,0 +1,47 @@
+Residual access is restricted to primary survivors, reducing coordinate
+work from $O(n_cd)$ to $O(cd)$. Lane cooperation accelerates that work
+at a fixed budget.
+
+\subsection{Reconstructed scoring and the query-only constant}
+
+With primary reconstruction $\widehat p$, residual $\widehat r$ and stored correction $\gamma=2\langle\widehat p,\widehat r\rangle$, refinement computes
+\begin{align}
+ \refineddist(q,x)
+ &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
+ \label{eq:5-refined-score}\\
+ &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+ \label{eq:5-refined-constant}
+\end{align}
+Norm expansion gives the second equality. The query-only constant preserves ranking, while reconstruction error remains \cite{jhq}.
+
+The scalar path sums coordinate-wise residual differences from $q'$, staging queries and, when possible, codebooks in shared memory. It then adds the primary score and correction.
+
+\subsection{Mapping lanes to words and reducing partial sums}
+
+At $\lrefine=L\in\{1,8,16,32\}$, adjacent lanes share one candidate. A residual word holds $d_{\rm word}=32/B_R$ codes: four for eight-bit, eight for four-bit. Lane $a$ reads words $a,a+L,\ldots$; butterfly shuffles sum partials and lane zero writes the score.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/lane-refinement}
+\caption[Sixteen-lane residual refinement]{Sixteen-lane residual refinement. A warp handles two candidates;
+lane $a$ within a candidate reads residual words $a,a+16,\ldots$.
+With eight-bit residual codes, each 32-bit word decodes four coordinates.
+Subgroup reductions combine
+partial scores before adding the retained primary score and correction.
+Candidate positions can be scattered even when each subgroup's word
+access is contiguous.}
+\label{fig:5-lane-refinement}
+\end{figure}
+
+Rows must be word-aligned and $d_{\rm word}\mid D_s$, keeping words within a codebook. All lanes join shuffles; invalid slots contribute zero, then receive infinite output scores. At $L=16$, each warp handles two candidates.
+
+L0 uses scalar byte loads; L1 packs word loads but keeps one lane and the accumulation order. L8/L16/L32 divide coordinate work, shortening each walk at the cost of shuffles and fewer concurrent candidates. Larger $L$ need not win; survivor locality and codebook placement still matter.
+
+\subsection{Final selection and the numerical boundary}
+
+Given $k$ finite valid survivors with unique IDs, one block selects exact top-$k$ under $(\refineddist,\mathrm{ID})$. Each round scans all $c$ slots, emits the minimum and sets its score to infinity. There is no per-thread quota. If finite entries run out, a valid smallest ID can repeat with infinity; an entirely invalid pool returns invalid IDs. Evaluated pools satisfy the finite-entry contract.
+
+Final ties use database IDs; primary ties use positions. Refinement cannot restore excluded candidates or remove quantisation error. Lane reductions change FP32 association and may move near ties.
+
+\Cref{sec:7-3} reports the load-only and cooperative controls,
+numerical differences, kernel times and end-to-end gains separately.

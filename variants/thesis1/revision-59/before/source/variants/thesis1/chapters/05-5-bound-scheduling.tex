@@ -1,0 +1,133 @@
+Full local top-$c$ retention establishes correctness, but can produce
+$\gscan c$ intermediate survivors for only $c$ global outputs. The shared-bound
+component reduces this excess selection work. The scheduler
+then chooses how much scan parallelism to expose. Both operate at a fixed
+refinement budget; choosing that budget is the separate problem in
+\Cref{ch:refinement}.
+
+\subsection{A complete-key upper bound with explicit witnesses}
+
+Let $K_{(c)}$ be the global $c$th key when $|U|\geq c$. If a group holds
+$c$ distinct, fully scored candidates, the largest key among those
+witnesses, $\tau_j$, satisfies $K_{(c)}\preceq\tau_j$. There are already
+$c$ candidates no later than $\tau_j$ in the global universe. The shared
+bound is initialised to a top sentinel and updated by
+\begin{equation}
+ \tau\leftarrow\min_{\prec}(\tau,\tau_j).
+ \label{eq:5-shared-update}
+\end{equation}
+No bound is published from fewer than $c$ valid candidates. If the entire
+universe has fewer than $c$, no group can publish such a bound and all
+valid candidates remain eligible.
+
+\begin{resultblock}
+\begin{proposition}[Safe rejection by a witnessed bound]
+\label{prop:5-shared-bound}
+Assume fixed keys, publications backed by $c$ distinct candidates, and
+reads that return either the initial sentinel or one complete published
+key. Rejecting a candidate only when $K_q(x)\succ\tau$ cannot remove a
+global top-$c$ candidate, irrespective of publication timing.
+\end{proposition}
+\begin{proof}
+Every published bound is at least $K_{(c)}$, and the minimum of such
+bounds is also at least $K_{(c)}$. A global winner satisfies
+$K_q(x)\preceq K_{(c)}\preceq\tau$, so it is never rejected. An older
+bound remains an upper bound and merely permits extra work. Publications
+made after earlier safe rejections remain valid: any $c$ retained
+distinct candidates still supply $c$ witnesses, whether or not they are
+the best $c$ of their group.
+\end{proof}
+\end{resultblock}
+
+Sharing may remove local winners certified as globally uncompetitive;
+the retained union still satisfies \Cref{prop:5-local-coverage}.
+Equality with the shared bound remains eligible. Admission requires
+\begin{equation}
+ K_q(x)\prec\lambda_j
+ \quad\text{and}\quad
+ K_q(x)\preceq\tau_{\rm seen},
+ \label{eq:5-admission}
+\end{equation}
+where $\lambda_j$ is the local compaction threshold and
+$\tau_{\rm seen}$ is the group's last observed shared bound.
+
+\subsection{Publication, filtering and implementation limits}
+
+Nonnegative FP32 squared-sum scores and positions are packed as
+\begin{equation}
+ \kappa(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
+ \label{eq:5-packed-key}
+\end{equation}
+Unsigned comparison matches lexicographic order for positive-zero, non-NaN scores and valid nonnegative positions. Infinity follows finite scores; the initial all-one word follows valid keys. Invalid positions cannot publish bounds.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/shared-bound}
+\caption[Shared complete-key filtering]{Shared complete-key filtering for one scan group. A candidate's
+full primary score is computed before admission. A valid $c$-candidate
+witness set can tighten the per-query bound; a stale but complete bound
+only weakens filtering. Final prefix trimming reduces the valid merge
+input, while the allocated workspace capacity remains unchanged.
+The whole-key-read premise is qualified in the text.}
+\label{fig:5-shared-bound}
+\end{figure}
+
+One thread polls the bound per chunk. After compaction, $c$ valid entries permit publishing the local $c$th key with 64-bit \texttt{atomicMin}. A final publication and binary search trim the sorted prefix. Groups never wait for one another: stale bounds leave extra entries for exact merging. Each search resets bounds in-stream; merging follows scan completion.
+
+Extracted PTX uses aligned \path{ld.volatile.global.u64} and \path{atom.global.min.u64}. PTX's single-copy atomicity for compatible same-size strong accesses supplies the whole-key premise \cite{ptx_isa}. CUDA 13.0 \texttt{ptxas} for \texttt{sm\_120} corroborates this (\cref{sec:a-supplement}); actual driver-JIT SASS was not captured. The argument does not rely on C++ \texttt{volatile} alone \cite{cuda_programming_guide}.
+
+Bounds are checked after full primary scoring (\cref{fig:5-shared-bound}). They save buffer/merge work, not distance arithmetic, and add polling/atomics. \Cref{sec:7-4} includes a slowdown.
+
+\subsection{Choosing parallelism without changing the budget}
+
+Grouping launches $b\gscan$ blocks rather than $b$, adding parallelism but duplicating staging/selection and requiring merging. Smaller static quotas
+would reduce intermediate storage, but require a certificate or fallback
+to preserve coverage; the pilot's concentrated survivor distribution
+motivated using witnessed thresholds instead (\Cref{sec:7-4}).
+
+The implemented scheduler uses a fill proxy and a workload-skew
+statistic. Let $T_{\rm blk}$ be scan threads per block, $H$ the number of SMs times
+the maximum resident threads per SM, and
+$v=\operatorname{sd}(n_c)/\operatorname{mean}(n_c)$ the candidate-count
+coefficient of variation. Its rule is
+\begin{align}
+ g_{\rm fill}
+ &=\max\!\left(\{1\}\cup
+       \{h\in\{2,4,8\}:bhT_{\rm blk}\leq0.6H\}\right),
+       \label{eq:5-fill-rule}\\
+ g_{\rm skew}&=
+   \begin{cases}4,&v\geq0.3,\\1,&v<0.3,\end{cases}
+ \qquad
+ g_{\rm chosen}=\max(g_{\rm fill},g_{\rm skew}).
+ \label{eq:5-skew-rule}
+\end{align}
+The skew rule may override the fill limit. In the evaluation harness,
+$v$ is calibrated using 512 database vectors as pseudoqueries and a
+fixed routing configuration; it uses no ground-truth labels. This is
+distinct from Chapter 6's sampled output-agreement calibration. Once
+calibrated, scheduling uses the batch size and stored statistic without
+an additional per-search host readback. The constants were fitted on
+four pilot configurations and then evaluated on further configurations.
+The one-time pseudoquery calibration is excluded from
+the reported steady-state search times. Supplementary timing separates
+host gathering (0.81--7.04\,ms), the first calibration call
+(6.00--27.77\,ms) and repeat medians (2.72--18.13\,ms). This startup
+cost is separate from refinement-budget calibration (\cref{sec:a-supplement}).
+
+A chosen group count of one dispatches $\gscan=0$, keeping index, probes and budget fixed but inheriting distance-only cutoff ties. Identical survivors thus require a common-order check. Integrated checks, gains and regret appear in \cref{sec:7-6}.
+
+\subsection{Observed execution paths}
+
+On the 170-SM RTX 5090, 48 warps/SM gives $0.6H=156{,}672$ threads \cite{blackwell_tuning}. At batch 1,000 and $T_{\rm blk}=512$, two groups need a 1,024,000-thread proxy. Fill therefore chooses one; skew can force four.
+
+Nine of 38 E1 run records cross $v=0.3$, all Vogue (0.338--0.622).
+Their 132
+run--budget cells contain 27 Vogue cells scheduled to four groups and
+105 arXiv/OpenAI cells scheduled to the query-centric path.
+Non-Vogue full-batch gains therefore use LUTs, packed access, lane refinement and probe selection, without grouped retention or shared bounds.
+
+Vogue checks find 3--15 tie-only primary differences per 1,000 queries, zero non-tie differences and identical final outputs. The 7--11 range applies only at 128 probes.
+
+Held-out budget tests use one block in ten cells and four groups in two Vogue cells. At $S=128$, eight use two groups, two use four and two use one block: 8/12 change paths. Grouping mainly serves smaller/skewed workloads, without a fixed batch-256 cutoff.
+
+The heuristic omits register/shared-memory residency, compaction and merge costs, and its pseudoqueries can become stale. Its worst recorded regret is 1.217 at batch 256. Measurements hold the refinement budget fixed; \cref{sec:5-6} processes the resulting survivors.

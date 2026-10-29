@@ -1,0 +1,47 @@
+% Compile from the repository root: latexmk -pdf main.tex
+% Overleaf: set main.tex as the main document; compiler = pdfLaTeX.
+% KOMA-Script long-thesis structure used by the School of Computing template.
+% Electronic copy: oneside/openany avoids inserted binding-only blank pages.
+\documentclass[a4paper,11pt,oneside,openany,parskip=half-,bibliography=totoc]{scrbook}
+
+\input{config/metadata}
+\input{config/preamble}
+\input{variants/thesis2/format-59}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{frontmatter/title}
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\input{variants/thesis2/frontmatter/abstract}
+\input{frontmatter/acknowledgements}
+
+\begingroup
+\setstretch{1.0}
+\tableofcontents
+\begingroup
+\renewcommand{\addvspace}[1]{}
+\small
+\listoffigures
+\listoftables
+\endgroup
+\endgroup
+\input{variants/thesis2/frontmatter/notation}
+
+\clearpage
+\pagenumbering{arabic}
+\input{variants/thesis2/chapters/01-introduction}
+\input{variants/thesis2/chapters/02-background}
+\input{variants/thesis2/chapters/03-methodology}
+\input{variants/thesis2/chapters/04-architecture}
+\input{variants/thesis2/chapters/05-gpu-execution}
+\input{variants/thesis2/chapters/06-refinement}
+\input{variants/thesis2/chapters/07-evaluation}
+\input{variants/thesis2/chapters/08-discussion}
+\input{variants/thesis2/chapters/09-conclusion}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

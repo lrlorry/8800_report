@@ -1,0 +1,32 @@
+\Cref{tab:1-contributions} states three linked project contributions and
+their inherited foundations. The core contribution is the adaptation and
+evaluation of a particular representation--execution--budget combination.
+JHQ, Cartesian quantisation, IVF, bitonic/radix selection, merging and CUDA
+Graph execution retain their prior-art status.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Technical contributions and evidence boundaries]{Technical contributions and their evidence boundaries.}
+\label{tab:1-contributions}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+ & Inherited foundation & Project contribution & Evidence \\
+\midrule
+C1 & JHQ rotation, codebooks and hierarchy & GPU training/encoding,
+bounded batch construction and list-ordered packed representation
+& Search of 17.78M vectors at 20.44\,GiB resident; repeated train+add
+10.54--10.65\,s; sampled construction peak 22.58\,GiB \\
+C2 & Cartesian additivity and established GPU primitives & Integrated
+factorised scoring, complete-key grouped retention/bounds, lane refinement
+and execution scheduling & Two-group LUTs lead in 22/24 cells;
+scheduled execution $2.727\times$ at batch 8; explicit correctness scope \\
+C3 & Candidate expansion and output-agreement ideas & Workload-level
+budget rule, conditional selection analysis, held-out controls and cost/risk
+evaluation & FULL meets the relative-loss target in 12/12 cells;
+smaller samples expose risk; four cells directly measure calibrated reuse \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+Performance depends on batch size and quality target; Chapters 7--8 report the unfavourable regions and numerical limits.

@@ -1,0 +1,78 @@
+\subsection{From database IDs to list-ordered positions}
+
+An input row has identifier $i\in\{0,\ldots,N-1\}$. Coarse assignment
+places its transformed vector in a list according to the computed
+centroid scores. The mathematical assignment target is
+\begin{equation}
+ a(i)=\operatorname*{arg\,min}_{0\leq\ell<n_{\rm list}}
+       \|\Pi x_i-\mu_\ell\|_2^2.
+ \label{eq:4-assignment}
+\end{equation}
+Its implementation uses the selected numerical assignment path. Encoding
+the primary and residual representations does not subtract $\mu_{a(i)}$;
+list membership restricts the future search universe independently of
+those reconstructions.
+
+The builder sorts assignments together with a sequence of input IDs.
+Let $\rho(p)$ be the input ID at sorted physical position $p$ and let
+$o_\ell$ be the start of list $\ell$. The completed arrays satisfy
+\begin{equation}
+ 0=o_0\leq o_1\leq\cdots\leq o_{n_{\rm list}}=N,
+ \qquad p\in[o_\ell,o_{\ell+1})\Longrightarrow a(\rho(p))=\ell.
+ \label{eq:4-offsets}
+\end{equation}
+Lower-bound searches give offsets, with
+\[
+ o_\ell=o_{\ell+1}\Longleftrightarrow\text{list }\ell\text{ is empty}.
+\]
+Positions are stable within a snapshot, not across builds. All arrays use the same $\rho(p)$.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch4/physical-layout}
+\caption[List-ordered physical index layout]{One common physical position joins IDs, packed primary words,
+residual rows and correction factors. This illustrative eight-row index
+has offsets $[0,3,3,8]$, including an empty list. One word packs four subspaces of one vector; values/list sizes are schematic.}
+\label{fig:4-layout}
+\end{figure}
+
+IDs map $p\mapsto\rho(p)$. Two-pass add temporarily builds $\rho^{-1}$ for scatter. Primary ties use positions; final ties use database IDs.
+
+\subsection{Exact addresses and representation widths}
+
+For primary byte $Z[m,p]$,
+\[
+ \operatorname{offset}_{\rm byte}(Z[m,p])=mN+p.
+\] Final packing produces
+\begin{equation}
+ \mathsf w[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{addr}_{\rm byte}(\mathsf w[j,p])=4(jN+p).
+ \label{eq:4-primary-address}
+\end{equation}
+Here $j=0,\ldots,M/4-1$. $\text{word-layout build}\Longrightarrow M\bmod4=0$; other $M$ are rejected. A separate byte-layout compilation
+retains the byte representation. Each packed array occupies $NM$ bytes,
+but repacking temporarily holds both old and new copies, costing $2NM$.
+The one-pass builder
+temporarily gathers a vector-major $[N,M]$ primary array, transposes it, and
+then repacks; each obsolete copy is freed. The two-pass builder scatters
+directly into the subspace-major array before the same final repack.
+The search-time lane mapping is discussed in \Cref{sec:5-3}.
+
+Residual codes remain row-major, with
+$b_r=\lceil dB_r/8\rceil$ bytes per vector. In the eight-bit configuration,
+coordinate $t$ of row $p$ is at byte offset $pb_r+t$. In the four-bit
+path it is in byte $pb_r+\lfloor t/2\rfloor$, with even coordinates
+in the low nibble and odd coordinates in the high nibble. A four-byte
+correction per physical row stores
+\begin{equation}
+ \gamma[ p ]=2\langle\widehat p(x_{\rho(p)}),
+                              \widehat r(x_{\rho(p)})\rangle.
+ \label{eq:4-correction}
+\end{equation}
+Its value must move with that row's codes during gathering or scattering.
+Residual access then reconstructs the same object that primary screening
+identified, even though the two code arrays use different layouts.
+
+Primary codes scan in list order; residual rows are fetched only for survivors. Retaining raw FP32 vectors on the device would
+provide exact reranking but consume $4Nd$ additional bytes and change the
+reported search design. We refine compressed reconstructions; Chapter 7 measures the resulting quality.

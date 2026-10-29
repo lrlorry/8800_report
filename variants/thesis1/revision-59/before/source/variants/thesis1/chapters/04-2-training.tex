@@ -1,0 +1,106 @@
+\subsection{Transform and sampling}
+
+The implementation draws a seeded Gaussian matrix on the host and uses
+LAPACK QR routines to construct a square orthogonal matrix $\Pi$.
+For row-major training data $X_t$, device matrix multiplication computes
+\begin{equation}
+ Y_t=X_t\Pi^{\mathsf T},\qquad y=\Pi x,\qquad
+ \|\Pi(q-x)\|_2^2=\|q-x\|_2^2
+ \quad\text{when }\Pi^{\mathsf T}\Pi=I.
+ \label{eq:4-transform}
+\end{equation}
+The output retains dimension $d$. This is an orthogonal change of
+coordinates; QR construction and device products have finite-precision
+error, whose measurement is part of C0 in \cref{sec:4-6}.
+
+The harness selects database rows at a fixed stride. The primary/IVF
+sample has 159,744 rows for Vogue, 319,488 for arXiv and both OpenAI
+datasets, and 1,277,952 for BGE and Stella: exactly $39n_{\rm list}$ in
+each case. The $39n_{\rm list}$ rule matches FAISS's warning threshold \cite{faiss_clustering}, without guaranteeing fit quality. A separate 100,000-row strided sample bounds residual-training cost.
+
+An earlier sweep fixed primary/IVF models and varied residual samples on Vogue/OpenAI-3072 ($B_r\in\{4,8\}$, 32/128/256 probes). Across twelve configurations, 100K rather than all rows lowered recall in eleven cases and tied once; the largest gap was 0.0018. Intermediate sizes were non-monotone. This 25-Lloyd-iteration study motivates a bounded sample, not the later six-dataset result.
+
+\subsection{Why retain the analytical primary model?}
+
+The constructor estimates scale as
+\begin{equation}
+ \sigma^2=\frac{1}{n_t d}\sum_{i=0}^{n_t-1}\|x_i\|_2^2,
+ \qquad D_s=d/M,\qquad K=2^B.
+ \label{eq:4-scale}
+\end{equation}
+For $B=D_s=8$, levels are $\{-a,+a\}$ with $a=0.674\sigma$: one byte stores eight signs. JHQ's analytical structure \cite{jhq} allows $O(d)$ encoding and exact small-LUT factorisation (\cref{sec:5-2}). Arbitrary Lloyd-refined codewords need not remain separable.
+
+For fixed signs $\widehat p=a s$, $s_j\in\{-1,+1\}$,
+\begin{equation}
+ \|q'-a s\|^2=\|q'\|^2+da^2-2a\langle q',s\rangle.
+ \label{eq:4-sign-ranking}
+\end{equation}
+Positive $a$ does not change real-arithmetic primary order, without a Gaussian assumption. It does change residuals and refined ranking. Zero scale is degenerate; FP32 ties still matter.
+
+On historical Vogue ($M=96$, $B_r=4$, 128 probes), earlier/analytical-primary builds gave primary recall 0.6618/0.6342 and full recall 0.9452/0.9409. Refinement narrowed the gap. Residual training also changed, so this is not a primary-codebook-only experiment. Chapter 7 tests the complete frontier.
+
+\subsection{Coarse assignment as filter and refine}
+
+Eight IVF iterations update centroids seeded from spaced rotated rows. Assignment ranks $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$. Under supported dimensions, the default filters with int8 products and resolves ambiguity in FP32; other precision paths also exist.
+
+\begin{resultblock}
+\begin{lemma}[Assignment with certified score intervals]
+\label{lem:4-assignment-bound}
+Let $\widetilde y,\widetilde\mu_\ell$ be dequantised approximations,
+$e=y-\widetilde y$ and $f_\ell=\mu_\ell-\widetilde\mu_\ell$.
+Keeping centroid norms exact, the approximate score
+$\widetilde s_\ell=\|\mu_\ell\|^2-2\langle\widetilde y,\widetilde\mu_\ell\rangle$
+has real-arithmetic error bounded by
+\begin{equation}
+ E_\ell=2\bigl(\|y\|\|f_\ell\|+\|e\|\|\widetilde\mu_\ell\|\bigr).
+ \label{eq:4-assignment-bound}
+\end{equation}
+Given valid intervals $[L_\ell,U_\ell]$ containing every target score,
+discarding only $L_\ell>\min_j U_j$ and exactly resolving the remaining
+scores preserves the minimum and its specified tie rule.
+\end{lemma}
+\begin{proof}
+Expand the dot-product error as
+$\langle y,f_\ell\rangle+\langle e,\widetilde\mu_\ell\rangle$
+and apply Cauchy--Schwarz. A discarded score exceeds an upper bound on
+some retained score, so it cannot attain the minimum. Keeping interval
+equality preserves possible ties.
+\end{proof}
+\end{resultblock}
+
+The filter uses conservative norm bounds and FP32 headroom. A bitwise FP32 guarantee would also need accumulation-error bounds. The archived FP16 comparison differs on 0/14,838 Vogue, 6/31,748 BGE and 3/16,359 Stella tail assignments. This is finite evidence; cold logs do not identify the executed assignment precision.
+
+\subsection{Residual fitting and the iteration budget}
+
+Residual fitting follows IVF but uses $r=\Pi x-\widehat p(x)$, not an IVF-centroid residual. Each subspace shares a sorted $K_r=2^{B_r}$ scalar codebook across its coordinates. GPU sorting and one-dimensional Lloyd updates fit it, capped at 2,000 iterations.
+
+At the historical 100K sample, 2,000 rather than 25 updates gained 0.0063--0.0076 recall. Later changes exceeded reported two-run variation in BGE/Stella, and sparse tail bins kept changing. Cold runs hit the cap. This is budgeted FP32 fitting, not a claimed convergence result or a counterexample to exact Lloyd descent. At 20,000 updates, historical Stella all-row/100K recall was 0.9921/0.9920.
+
+\subsection{Construction work and observed imbalance}
+
+Dense QR costs $O(d^3)$ once; dense rotation costs $O(n_t d^2)$.
+Direct coarse assignment costs $O(n_t n_{\rm list}d)$ per iteration.
+Analytical primary construction writes $O(MKD_s)$ values; residual
+extraction touches $O(n_r d)$ coordinates, followed by sorting and scalar
+updates. These describe work, rather than predict latency.
+Synchronised phase diagnostics place about 83\% of BGE/Stella training
+in IVF k-means (about 2.97\,s). They use one add buffer and forced
+synchronisation, separately from the normal overlapped timings in
+\cref{sec:7-7}.
+
+
+List-size imbalance enters the scan rule in \cref{sec:5-5}. The
+individual contributions of eight IVF iterations, spaced seeds and
+finite sampling to that imbalance were not isolated.
+
+
+\paragraph{Arithmetic used in the measured implementation.}
+The evaluated implementation (v69) stores FP32 matrices but enables cuBLAS
+TF32 tensor-core math for $d\geq1{,}536$. In its compiled faithful branch,
+a null override falls through to the dimension-based default. This affects
+training/add/query rotation and centroid GEMMs on both OpenAI datasets;
+an environment override cannot disable that branch. Thus FP32 storage does
+not imply full FP32 multiplication. The supplementary FP32 variant (v72)
+corrects this switch. Its sensitivity experiment reuses the same
+TF32-trained cache and changes add/query arithmetic, rather than retraining
+the model in FP32 (\cref{sec:7-precision}).

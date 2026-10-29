@@ -1,0 +1,101 @@
+{
+  "output": "thesis2.pdf",
+  "pages": 66,
+  "body_pages": 56,
+  "front_pages": 7,
+  "sha256": "8bda73f4cb3df7246d6d0a38f549c4a2d443ba999a935c7e4f27ab035ce911f4",
+  "protected_files_unchanged": 887,
+  "missing_preexisting_derived_files": [
+    "thesis1-part1.pdf",
+    "thesis1-part2.pdf"
+  ],
+  "original_thesis_unchanged": true,
+  "thesis1_unchanged": true,
+  "source_edits_exact": true,
+  "unmarked_mapped_sentences_preserved": true,
+  "theorem_statements_preserved": true,
+  "body_numerical_tables_preserved": true,
+  "figures": 28,
+  "tables": 28,
+  "proofs": 6,
+  "statement_proof_same_page": true,
+  "proof_alignment": [
+    {
+      "page": 20,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    },
+    {
+      "page": 31,
+      "heading_x": 76.535,
+      "body_x": 76.143
+    },
+    {
+      "page": 32,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    },
+    {
+      "page": 34,
+      "heading_x": 76.535,
+      "body_x": 76.132
+    },
+    {
+      "page": 41,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    },
+    {
+      "page": 42,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    }
+  ],
+  "compiler_issues": [],
+  "all_fonts_embedded": true,
+  "type3_fonts": 0,
+  "words_outside_page": 0,
+  "counts": {
+    "body_abstract_before": 14119,
+    "body_abstract_after": 13250,
+    "appendix_prose_removed": 1042,
+    "edited_blocks": 201,
+    "word_count_scope": "Same source-level prose estimator applied to reachable chapters and abstract; not an official word count"
+  },
+  "appendices_removed_from_pdf": true,
+  "new_detector_result": null,
+  "derived_parts": [
+    {
+      "path": "thesis2-part1.pdf",
+      "pages": 38,
+      "source_physical_pages": [
+        1,
+        38
+      ],
+      "sha256": "057c934726ca5b67188511bbbb91d8ba9e1a5acd912c7cc2a25cc2245abe02d0",
+      "page_text_preserved": true
+    },
+    {
+      "path": "thesis2-part2.pdf",
+      "pages": 28,
+      "source_physical_pages": [
+        39,
+        66
+      ],
+      "sha256": "d9ff948a3c9caf5d455f46648d2a46a0f6ea2a7e1497683fb1ab136374cfc104",
+      "page_text_preserved": true
+    }
+  ],
+  "visual_review_pages": [
+    18,
+    19,
+    24,
+    25,
+    26,
+    31,
+    47,
+    48,
+    49
+  ],
+  "completed_date": "2026-10-30"
+}

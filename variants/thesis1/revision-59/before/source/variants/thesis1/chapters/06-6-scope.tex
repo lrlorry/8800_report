@@ -1,0 +1,5 @@
+Reuse assumes a stable index, $k$, routing and queries. Ordering and batch-path conditions follow \cref{sec:6-3}; quality, tails and total cost follow \cref{sec:6-5}. Drift detection is unimplemented.
+
+The caller must explicitly install $\alpha$ before reuse.
+
+Budget tests and their trace rerun use v69, including OpenAI TF32. FP32 frontier sensitivity does not validate or recalibrate those budget decisions.

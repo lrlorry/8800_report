@@ -1,0 +1,45 @@
+\Cref{tab:3-data} records the six exported datasets used by the newer
+budget, LUT and scale campaigns. The poster's E1 comparison uses the first
+four. Vogue contains fashion-image embeddings; arXiv contains abstract
+embeddings; the two OpenAI datasets use Qdrant's DBpedia exports
+\cite{data_vogue,data_arxiv,data_openai1536,data_openai3072}.
+BGE uses the Italian Wikipedia configuration, and Stella uses the
+TREC24 BioGen corpus export \cite{data_bge,data_stella}. Sizes describe the
+measured exports after preparation, rather than the current upstream cards.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Dataset and training configuration]{Data and JHQ training configuration. $n_q$ is the actual query count;
+$n_t=39n_{\rm list}$ is the requested coarse-training sample size. E1 uses
+the first four rows. All rows use squared L2 and $k=10$.}
+\label{tab:3-data}
+\small\setlength{\tabcolsep}{4pt}
+\input{tables/ch3/datasets}
+\end{minipage}\par\medskip
+
+OpenAI/BGE/Stella preparation removes non-finite rows and uses
+\[
+ x\leftarrow x/\|x\|\quad(\|x\|>10^{-12}).
+\]
+Seed 42 samples without replacement. Stella uses 999 corpus queries, replacing the 65-query benchmark; relevance labels are absent. OpenAI checks support alignment for all queries/10,299 base rows without original-ID joins (\cref{sec:7-precision,sec:7-2}).
+
+Methods share exported query/GT files. Exhaustive tiled squared-L2 search over FP32 vectors maintains GT top-$k$, including its ties:
+\begin{equation}
+\Recall@k=\frac{1}{|\mathcal Q|k}
+\sum_{q\in\mathcal Q}|\mathcal R_k(q)\cap\mathcal T_k(q)|.
+\label{eq:3-recall}
+\end{equation}
+Here $\mathcal T_k$ is the stored GT prefix and $\mathcal R_k$ the returned ID set. GT widths are 100 (Vogue/arXiv) or 20 (others); only ten entries count. Duplicate IDs earn no extra credit. Range/duplicate/repeat checks are separate.
+
+JHQ uses $M=d/8$, $B=B_r=8$, eight coarse iterations and 100,000 residual-training rows. Sweeps reload/re-encode; cold builds refit. Training uses database rows. \[
+ \begin{aligned}
+ \mathcal Q_{\rm cal}&=\{q_i:i\bmod2=0\},&
+ \mathcal Q_{\rm hold}&=\{q_i:i\bmod2=1\},\\
+ (|\mathcal Q_{\rm cal}|,|\mathcal Q_{\rm hold}|)
+ &=\begin{cases}(500,499),&\text{Stella},\\(500,500),&\text{otherwise}.\end{cases}
+ \end{aligned}
+ \]
+Seeded subsamples of sizes
+32, 64 and 128 are drawn 64 times per cell; FULL uses all 500 calibration
+queries. Labels assess the oracle and holdout; agreement uses outputs (\cref{sec:6-2,sec:a-budget-contract}).
+

@@ -1,0 +1,82 @@
+\subsection{Bounded input batches and two-pass construction}
+
+Rotating all $N$ raw vectors at once requires two FP32 device arrays,
+together $8Nd$ bytes. The builder instead stages bounded batches through
+pinned host memory and device raw/rotated buffers. For $n_b$ pipeline
+buffers, configured add rows $a_{\rm add}$ and per-array byte budget
+$S_{\rm stage}$, the source stages
+\begin{equation}
+ a_{\rm in}=\max\!\left\{1,\min\!\left(a_{\rm add},
+ \left\lfloor\frac{S_{\rm stage}}{4d}\right\rfloor\right)\right\},
+ \qquad S_{\rm float}=8n_ba_{\rm in}d.
+ \label{eq:4-staging-rows}
+\end{equation}
+Three buffers and the default 128\,MiB budget give at most 768\,MiB of
+input/rotated device floats. Assignment products and encoder scratch
+are separate allocations.
+
+One-pass add encodes input-order arrays, then gathers them into list order, temporarily keeping both copies. Two-pass add assigns/sorts IDs first, then revisits input to encode and scatter directly. It trades another read/rotation for lower simultaneous storage. Raw-input assignment against back-transformed centroids uses the real-arithmetic orthogonality identity.
+
+\subsection{Phase occupancy and the process peak}
+
+The one-pass capacity estimate is
+\begin{equation}
+ H_{\rm single}=N(2b_r+3M+20)+2^{30}\quad\text{bytes}.
+ \label{eq:4-peak-heuristic}
+\end{equation}
+Ten live gather/transpose arrays contribute $3NM+2Nb_r+20N$ bytes: three primary copies, two residual/correction copies, assignments, sort order and IDs. The extra 1\,GiB is heuristic headroom, not a full peak model.
+
+At final two-pass repack, IDs, residuals, corrections and both primary layouts occupy
+\begin{equation}
+ S_{\rm repack,2}=N(b_r+2M+8).
+ \label{eq:4-two-pass-repack}
+\end{equation}
+This counts that phase only. Whole-build peak also considers earlier pipeline/inverse scratch, model, sort, context and later workspace allocations.
+
+\begin{table}[tbp]
+\centering
+\caption[Analytical row-array occupancy by construction phase]{Analytical row-array occupancy (GiB), $d=1{,}024$, $M=128$,
+$B_r=8$. BGE uses one pass; Stella uses two. The one-pass Stella column
+is counterfactual capacity analysis. Pipeline, model, offsets and runtime
+costs are excluded from these phase values.}
+\label{tab:4-phase-storage}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Dataset & Final row payload & One-pass gather & Two-pass repack \\
+\midrule
+BGE & 10.90 & 23.05 & 12.11 \\
+Stella & 19.20 & 40.59 & 21.32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:4-phase-storage} quantifies the compressed-copy saving. Stella's
+cold log selects two passes and prints 41.6\,GiB for
+\cref{eq:4-peak-heuristic}, against 30.6\,GiB available at the tail.
+The separately sampled resident process totals, including context and
+query workspace, are 11.93\,GiB for BGE and 20.44\,GiB for Stella
+(\cref{sec:4-4}). The supplementary 20\,ms device samples observe a 26.08\,GiB BGE peak
+near the start of add, and a 22.58\,GiB Stella peak during repack.
+These are sampled device totals including context; shorter-lived peaks
+can be missed.
+
+Assignment-product capacity uses an independent configured row count
+$a_{\rm assign}$, selected by \texttt{JHQ\_ASSIGN\_BATCH} or the source
+default: 32,768 for at least 8,192 lists, otherwise 8,192.
+\begin{equation}
+ S_{\rm dots}=4n_b n_{\rm list}a_{\rm assign}\quad\text{bytes}.
+ \label{eq:4-assignment-scratch}
+\end{equation}
+Allocation capacity need not shrink with $a_{\rm in}$ or the rows in a
+particular call. \Cref{tab:b-scratch} checks four defaults: the 1,536/3,072-dimensional
+cases allocate 3\,GiB, despite different staging rows. BGE/Stella still
+allocate three 4\,GiB arrays, or 12\,GiB, near add entry. The 23.05\,GiB gather
+payload describes a later lifetime: adding 12\,GiB to it would not give
+the actual peak. Peak modelling must take the maximum over stage-specific
+live arrays, including pipeline scratch. Stella's smaller two-pass
+repack payload, plus model/context, explains its lower observed peak
+despite its larger database.
+
+\subsection{Construction measurements}
+

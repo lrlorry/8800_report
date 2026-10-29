@@ -1,0 +1,21 @@
+Train fits models; add encodes/list-orders rows; search uses the completed index. Cache hits skip fitting, not encoding, so cold-build and cached-search costs differ.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch4/architecture}
+\caption[Build and query architecture]{Implemented build and query boundaries. Host work includes
+sampling, orthogonal-matrix construction and analytical primary-codebook
+generation; the evaluated configuration fits IVF and residual models on
+the GPU. The cache stores trained state, whereas the completed database
+representation resides on the device. Dashed arrows: model reuse. The staging bound excludes other scratch.}
+\label{fig:4-architecture}
+\end{figure}
+
+Hosts prepare samples/rotation/primary codebooks; GPUs rotate, fit IVF/residual models and encode bounded batches into list order.
+
+Models hold rotation, codebooks and centroids; database state holds offsets, IDs, codes and corrections. Graphs reference reused query buffers.
+
+One successful \texttt{add} fixes positions. Further adds are rejected; updates require rebuilding. Mutable/transactional publication is unimplemented.
+
+Host IDs/scores and call timing follow \cref{eq:5-refined-constant,sec:3-3}.
+

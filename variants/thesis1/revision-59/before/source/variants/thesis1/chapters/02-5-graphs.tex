@@ -1,0 +1,5 @@
+SONG exposes distance parallelism in GPU graph search \cite{song}. CAGRA designs GPU construction and navigation, tuned by connectivity and search width \cite{cagra}. We test both fp32 and quantised-vector CAGRA because their speed and storage differ.
+
+BANG pairs GPU compressed vectors with a host-resident graph \cite{bang}. This trades transfer costs for capacity. JHQ's index remains device-resident.
+
+E1 compares graph navigation with regular scans at batch 1,000; T5 tests their small-batch behaviour (\cref{sec:7-smallbatch}).

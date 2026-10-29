@@ -1,0 +1,83 @@
+{
+  "output": "thesis1.pdf",
+  "pages": 70,
+  "body_pages": 55,
+  "front_pages": 7,
+  "sha256": "5438a3eee37b50e3fc229c6d9f758cb045e6e53b384c931c559321b60e240560",
+  "original_thesis_pdf_sha256": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72",
+  "original_tracked_files_unchanged": 750,
+  "figures": 26,
+  "tables": 31,
+  "proofs": 6,
+  "statement_proof_same_page": true,
+  "proof_alignment": [
+    {
+      "page": 21,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    },
+    {
+      "page": 31,
+      "heading_x": 76.535,
+      "body_x": 76.143
+    },
+    {
+      "page": 32,
+      "heading_x": 76.536,
+      "body_x": 76.536
+    },
+    {
+      "page": 34,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    },
+    {
+      "page": 41,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    },
+    {
+      "page": 41,
+      "heading_x": 76.535,
+      "body_x": 76.535
+    }
+  ],
+  "source_edits_exact": true,
+  "chapter_abstract_words": 16174,
+  "compiler_issues": [],
+  "all_fonts_embedded": true,
+  "type3_fonts": 0,
+  "words_outside_page": 0,
+  "new_detector_result": null,
+  "revision_scope": "Only mapped large highlighted prose and descendants; abstract, bibliography, scientific assets and original thesis files unchanged",
+  "derived_parts": [
+    {
+      "path": "thesis1-part1.pdf",
+      "pages": 37,
+      "source_physical_pages": [
+        1,
+        37
+      ],
+      "sha256": "06d529402d73af0f9e0ee7fe9ea3e1d622e190705602a690711c22d66f037e45",
+      "page_text_preserved": true
+    },
+    {
+      "path": "thesis1-part2.pdf",
+      "pages": 33,
+      "source_physical_pages": [
+        38,
+        70
+      ],
+      "sha256": "7dba0ad5f71bf04d2dcce70d1cee3826ef3aca4df36cc0b98ddb35ec25ec7267",
+      "page_text_preserved": true
+    }
+  ],
+  "visual_review_pages": [
+    8,
+    31,
+    36,
+    54,
+    59,
+    69
+  ]
+}

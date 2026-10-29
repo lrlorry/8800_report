@@ -1,0 +1,71 @@
+Probe selection precedes primary scanning and selects inverted lists,
+not database-vector survivors. For IVF centroid $\mu_i$, the selector
+orders the FP32-valued computed routing scores
+\begin{equation}
+ s_i=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+ \qquad (s_i,i)\ \text{ordered lexicographically}.
+ \label{eq:5-probe-score}
+\end{equation}
+Omitting the common query norm preserves centroid ordering. In contrast
+to primary squared-distance tables, these scores can be negative. The
+required output is the first $n_{\rm sel}=\min(n_{\rm probe},n_{\rm list})$
+centroid IDs in score order, using the smaller list ID at a tie, plus
+the prefix offsets of their list lengths.
+
+OpenAI rotation and centroid GEMMs use TF32 inputs with FP32 accumulation in v69. Probe selection is exact on these computed scores; later FP32 \texttt{fma} retains GEMM rounding (\cref{sec:7-precision}).
+
+\subsection{Radix selection followed by deterministic ordering}
+
+One block makes four radix passes, most-significant byte first. Each histogram counts the chosen prefix; its selected bin updates the residual rank. Four bytes determine the cutoff and required equal-key count.
+
+Canonicalise signed zeros to positive zero, then map bits $u$ by
+\begin{equation}
+ F(u)=\begin{cases}
+       \mathop{\sim}u,&\text{if the sign bit is set},\\
+       u\mathbin{|}2^{31},&\text{otherwise}.
+      \end{cases}
+ \label{eq:5-probe-key}
+\end{equation}
+For non-NaN scores, monotonicity follows by cases:
+\[
+ \begin{aligned}
+ D_1<D_2<0&\Rightarrow u_1>u_2\Rightarrow{\sim}u_1<{\sim}u_2,\\
+ 0\leq D_1<D_2&\Rightarrow u_1<u_2\Rightarrow
+ (u_1\mathbin{|}2^{31})<(u_2\mathbin{|}2^{31}),\\
+ D_1<0\leq D_2&\Rightarrow F(u_1)<2^{31}\leq F(u_2).
+ \end{aligned}
+\]
+This covers infinities and equal zeros, unlike \cref{eq:5-packed-key}'s nonnegative-only domain. Every pass uses the same rounded \texttt{fma}, fixing recomputed keys.
+
+Histogram storage is
+\[
+ 256\ \text{bins}\times32\ \text{lane replicas}\times4\ \text{bytes}=32\,\mathrm{KiB}.
+\]
+Replicas separate same-warp updates, with inter-warp contention and reduction overhead remaining.
+
+Let $h$ be the cutoff key. Collection forms
+\[
+ A_< =\{i:F(u_i)<h\},\quad A_= =\{i:F(u_i)=h\},\quad
+ m=n_{\rm sel}-|A_<|.
+\]
+It takes $A_< $ and the $m$ smallest list IDs from $A_=$. Ballots/prefix counts enforce this order, independent of atomic arrival. For the resulting set $A$,
+\[
+ \operatorname{rank}(i)=|\{j\in A:(s_j,j)\prec(s_i,i)\}|,
+ \qquad\mathrm{out}[\operatorname{rank}(i)]=i.
+\]
+No full centroid sort is needed.
+
+Selected lengths produce prefix offsets. For excess probes,
+\[
+ i_j=i_{n_{\rm sel}-1},\quad L_j=0\quad(j\geq n_{\rm sel}),
+ \qquad\omega_{j+1}=\omega_j+L_j.
+\]
+Repeated IDs add no scan work. Centroid sets and probe counts must be positive.
+
+\subsection{Costs and separate correctness contracts}
+
+Histogram/collection reread scores; ranking costs $O(n_{\rm sel}^2)$ with growing shared storage. Small selections still pay fixed histogram allocation. The tests assess deterministic integration of this radix method.
+
+\Cref{sec:7-4} tests ties, signed zeros, infinities, extremes and excess probes.
+
+FP16 routing is a separate approximation in \cref{sec:7-4}, alongside cross-process identity checks.

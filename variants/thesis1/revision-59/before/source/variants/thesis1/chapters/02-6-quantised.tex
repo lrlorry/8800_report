@@ -1,0 +1,13 @@
+\subsection{Learning a representation versus exploiting its structure}
+
+OPQ learns rotation and subspace codebooks \cite{opq}; this can remove the Cartesian structure needed for JHQ's exact split. ScaNN weights error for inner-product ranking \cite{scann}. Both show why reconstruction error alone is insufficient; Chapter 8 tests this within JHQ.
+
+\subsection{Small lookup tables have substantial prior art}
+
+PQ Fast Scan and Quicker ADC already shape tables for CPU register lookup \cite{fastscan,quickeradc}. JHQ exploits Cartesian structure on a GPU, with separate checks for FP32 rounding and cutoff ties.
+
+RaBitQ analyses a randomised compact-code estimator \cite{rabitq}; multi-bit variants trade storage for accuracy \cite{rabitq_multi}. Its guarantees do not transfer to JHQ's primary/residual hierarchy. GPU IVF-RaBitQ supplies fused GPU search \cite{ivfrabitq} and is a direct baseline.
+
+\subsection{Refinement effort and adaptive stopping}
+
+Faiss and cuVS expose refinement controls \cite{faiss_refine,cuvs_refinement}. Alternatives include GT-based autotuning \cite{faiss_autotune}, learned termination \cite{li_termination} and recall-targeted DARTH \cite{darth}. Chapter 6 instead selects one reusable budget from unlabelled reference agreement.

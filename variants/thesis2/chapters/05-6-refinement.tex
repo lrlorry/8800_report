@@ -1,0 +1,50 @@
+Primary screening changes coordinate work from $O(n_cd)$ to $O(cd)$. Lanes cooperate at the same budget.
+
+\subsection{Reconstructed scoring and the query-only constant}
+
+For $\gamma=2\langle\widehat p,\widehat r\rangle$, expand in real arithmetic:
+\begin{align}
+ \refineddist(q,x)
+ &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
+ \label{eq:5-refined-score}\\
+ &=2\|q'\|_2^2+\|\widehat p+\widehat r\|_2^2-2\langle q',\widehat p+\widehat r\rangle\nonumber\\
+ &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+ \label{eq:5-refined-constant}
+\end{align}
+The query constant preserves reconstructed-distance order \cite{jhq}.
+
+Scalar scoring sums squared residual differences, then adds primary score/correction. Queries and fitting codebooks use shared memory.
+
+\subsection{Mapping lanes to words and reducing partial sums}
+
+For $\lrefine=L\in\{1,8,16,32\}$,
+\[
+ d_{\rm word}=32/B_R,\qquad
+ \text{words of lane }a:\ a,a+L,a+2L,\ldots.
+\]
+A word holds four eight-bit or eight four-bit codes. Butterfly shuffles sum lane partials; lane zero writes the score.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch5/lane-refinement}
+\caption[Sixteen-lane residual refinement]{Sixteen-lane residual refinement. A warp handles two candidates;
+lane $a$ within a candidate reads residual words $a,a+16,\ldots$.
+Each eight-bit-code word decodes four coordinates. Subgroups sum partials, then add primary score/correction. Candidate positions may remain scattered.}
+\label{fig:5-lane-refinement}
+\end{figure}
+
+Word-aligned rows and $d_{\rm word}\mid D_s$ keep words within codebooks. All lanes shuffle; invalid slots contribute zero, then output infinity. $L=16$ gives two candidates/warp.
+
+L0 loads bytes; L1 loads words with the same one-lane accumulation. L8/L16/L32 trade shorter walks for shuffles/fewer concurrent candidates. FP32 association and locality matter.
+
+\subsection{Final selection and the numerical boundary}
+
+For at least $k$ finite valid survivors with unique IDs, each round computes
+\[
+ i^*=\arg\min_{i<c}(D_{H,i},\mathrm{ID}_i),\quad d^*=D_{H,i^*},\quad
+ D_{H,i^*}\leftarrow+\infty
+\]
+using all slots and emits $(\mathrm{ID}_{i^*},d^*)$: exact retained-pool top-$k$, without thread quotas. Underfull pools may repeat the smallest valid ID at infinity; all-invalid pools return invalid IDs. Tests meet the finite-entry premise.
+
+Primary ties use positions, final ties IDs. Exclusions/quantisation remain; lane FP32 association may move near ties.
+

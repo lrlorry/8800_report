@@ -1,0 +1,150 @@
+\chapter[Supplementary Results and Correctness Checks]{Supplementary Results\\and Correctness Checks}
+\label{app:supplementary}
+Parameter coverage and secondary checks follow below; protocol is in Appendix~\ref{app:reproducibility}.
+
+\section{Parameter Coverage}
+\label{sec:b-grids}
+The E1 comparison contains 1,590 valid measured configurations, with
+coverage in \cref{tab:b-e1-counts}. The sets below describe observed parameter values;
+their Cartesian products are not assumed to have been measured.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Exact E1 configuration counts]{Exact E1 configuration counts, including coverage
+extensions. Counts are parameter points, not independent index builds.}
+\label{tab:b-e1-counts}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/appendix/e1-counts}
+\end{minipage}\par\medskip
+
+\begingroup\raggedright
+\paragraph{JHQ-GPU.}
+All E1 points use $B=B_r=8$, $M=d/8$, $k=10$ and batch 1,000.
+Vogue uses 4,096 IVF lists; the other three use 8,192.
+Vogue observes probes 16/\allowbreak{}32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512 and
+$\alpha\in\{16,32,64,128\}$ over 27 tuples. ArXiv adds probe 1,024
+and uses $\alpha\in\{25,50,100,200\}$ over 29 tuples.
+Both OpenAI grids use probes 32/\allowbreak{}64/\allowbreak{}128/\allowbreak{}256/\allowbreak{}512/\allowbreak{}1,024;
+their observed multipliers are respectively
+$\{4,8,16,32,64,128,256,512\}$ and
+$\{2,4,8,16,32,64,128,256\}$, over 37 and 39 tuples.
+The reported scheduled path uses four groups on Vogue and one block
+elsewhere. OpenAI uses TF32 rotation/centroid GEMMs in historical v69;
+the v72 FP32 sensitivity is a separate family (\cref{sec:7-precision}).
+
+\paragraph{CAGRA fp32 and int8.}
+Each representation has 64 points per dataset: graph degrees 32/\allowbreak{}64,
+intermediate degree 128, \texttt{ivf\_pq} construction,
+\texttt{itopk\_size} in 32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512 and search width
+1/\allowbreak{}2/\allowbreak{}4/\allowbreak{}8. Int8 records quantile 0.99 for dataset scaling and includes
+query quantisation in the host search boundary.
+
+\paragraph{IVF-PQ.}
+Eight-bit subcodes use 192/\allowbreak{}384/\allowbreak{}768-byte codes at dimension 768,
+and 384/\allowbreak{}768/\allowbreak{}1,536-byte codes on OpenAI. Each length has fp16/fp32
+lookup tables and probes 16/\allowbreak{}32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512:
+54 points per dataset. The recorded refinement ratio is one and list
+counts match JHQ. Code lengths and memory budgets differ.
+
+\paragraph{IVF-RaBitQ and brute force.}
+RaBitQ sweeps 4/8/9 bits and probes 16/\allowbreak{}32/\allowbreak{}64/\allowbreak{}96/\allowbreak{}128/\allowbreak{}192/\allowbreak{}256/\allowbreak{}384/\allowbreak{}512/\allowbreak{}768/\allowbreak{}1,024. Modes are LUT16/LUT32/QUANT4/QUANT8 except OpenAI-3072 omits LUT16. OpenAI adds 4,096-list indexes to default 8,192-list coverage; exact combinations remain in the registry. Each dataset has one FP32 squared-L2 brute-force point. Missing coverage is not failure.
+
+\paragraph{Auxiliary grids.}
+LUT sweeps six datasets, four probe counts (8/32/128/512) and $\glut\in\{1,2,4,8\}$ at $\alpha=100$: 24 cells, 96 arms.
+Budget evaluation uses probes 128/\allowbreak{}512 and
+$A=(200,100,64,32,16,8,4,2)$ on the same six datasets, with 64 draws
+at each $S\in\{32,64,128\}$ and $\epsilon=1$. FULL separately uses
+all 500 calibration queries. Held-out counts are 500, or 499 for
+Stella.  Boundaries are specified in
+\cref{sec:a-budget-contract,sec:a-supplement}.
+
+\par\endgroup
+
+\section{Correctness and Numerical Evidence}
+\label{sec:b-correctness}
+\Cref{tab:b-checks} separates numerical, algorithmic and memory evidence.
+Chapter 5's ordering arguments concern computed scores under their
+stated contracts; raw-vector recall is evaluated separately.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Validation coverage]{Validation coverage and the object actually checked.}
+\label{tab:b-checks}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Boundary & Completed evidence and scope \\
+\midrule
+Representation & Four all-row offset/ID audits; sampled raw-input FP64
+recoding and stored-matrix geometry; TF32 deviations identified \\
+Cartesian LUTs & Real-arithmetic factorisation; 96 timed arms; T4
+per-candidate FP32 error and ranking diagnostics across four table forms \\
+Global selection & T4: 270 configurations, 69,120 query instances;
+55,296 grouped instances match strict CPU complete-key sorting in order \\
+Shared bound & 48 paired checks; extracted scalar 64-bit PTX and toolkit
+SASS support whole-key access; actual driver SASS not captured \\
+Scheduling & 250 variant/configuration and 234,320 query comparisons,
+retaining distinctions between ID sets and tie order \\
+Probe selector & 1,792 synthetic cases with zero failures; real-query
+ID/offset checks, relative to computed routing scores \\
+Budget search & 2,304 monotone sampled curves and 12 FULL enumeration
+matches; 18,432 sampled grid counts reproduce full-pool subset sums \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The smaller representation-audit databases have identical primary and
+residual bytes across one-/two-pass builds when joined by ID.
+Corrections differ by at most $8.94\times10^{-8}$ and 1/\allowbreak{}1/\allowbreak{}40 rows change
+list assignment; Stella validates its natural two-pass path
+(\cref{sec:4-representation-audit}). T4 supplies the strict
+computed-score selection reference (\cref{sec:a-t4-t5}). The controlled
+same-model Vogue cross-process diagnosis remains unperformed: archived
+processes with matching probe/primary dumps still report final recall
+0.9642/\allowbreak{}0.9644. Within-run selection checks do not localise
+that separate anomaly.
+
+\section{Secondary Results and Evidence Status}
+\label{sec:b-secondary}
+\paragraph{Adverse regimes.}
+Worst scheduling regret is 1.217 at batch 256; Vogue E1 ratios span 0.895--1.175 (\cref{sec:7-6}). T5 CAGRA fp32 wins every batch-8 dataset at recall 0.97; batch-32 ties depend on the estimator (\cref{sec:7-smallbatch}).
+
+
+
+
+
+\section{Construction Capacities and Precision Anchors}
+\label{sec:b-full-review}
+
+\Cref{tab:b-scratch} separates staging from assignment scratch. Defaults use three buffers, 65,536 add rows and 128\,MiB per input/rotation array; these are capacities, not current batch sizes or process peaks.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Independent construction-buffer capacities]{Default construction-buffer capacities.
+The last column is $4n_b n_{\rm list}a_{\rm assign}/2^{30}$; substituting
+$a_{\rm in}$ would give an incorrect general model.}
+\label{tab:b-scratch}
+\footnotesize\input{tables/full-review/scratch}
+\end{minipage}\par\medskip
+
+\subsection{Contemporaneous precision anchors}
+\label{sec:b-precision-anchors}
+
+T1 remeasures JHQ and baselines near recall 0.97 in one session with E1 pools. Twelve configuration pairs per OpenAI dataset bracket baselines with two five-round JHQ repetitions; QPS combines their medians geometrically. FP32/TF32 means are 0.956/0.964. Both reuse TF32-trained caches and change add/query arithmetic.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Same-session precision anchors]{T1 at recall 0.97 and batch 1,000.
+Baseline columns report interpolation / strict measured threshold;
+the FP32/TF32 column is interpolated. All methods here are contemporaneous;
+these values are separate from D's cross-session baseline ratios.}
+\label{tab:b-precision-anchors}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{tables/full-review/precision-anchors}
+\end{minipage}\par\medskip
+
+Both estimators retain numerical FP32 advantages. OpenAI-3072's RaBitQ bracket (0.9669--0.9796 recall) exposes grid sensitivity. These anchors neither replace E1 nor retrain FP32 models.
+
+\section{Artifact Access}
+\label{sec:b-artifacts}
+The \href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project artifact archive} provides source/measurement snapshots and selected T4/T5, T1 and A2 inputs. Complete vectors, model states and historical executables are absent; GPU reproduction needs those plus the matching environment.

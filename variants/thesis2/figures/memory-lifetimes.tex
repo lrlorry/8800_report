@@ -1,0 +1,9 @@
+\begin{tikzpicture}[font=\footnotesize]
+\draw[-{Latex[length=2mm]},black!55] (0,0)--(13.1,0) node[below left] {construction order (schematic)};
+\filldraw[draw=ThesisNavy!60,fill=ThesisNavy!9,rounded corners=2pt] (.2,.55) rectangle (4.8,1.55);
+\node[align=center] at (2.5,1.05) {Assignment-product scratch\\$3\times4=12$ GiB};
+\filldraw[draw=ThesisNavy!60,fill=ThesisNavy!4,rounded corners=2pt] (6,.55) rectangle (12.7,1.55);
+\node[align=center] at (9.35,1.05) {BGE one-pass row-array gather\\23.05 GiB};
+\draw[dashed,black!45] (5.4,.15)--(5.4,1.9);
+\node[align=center,fill=white,inner sep=2pt] at (5.4,2.12) {scratch released before gather};
+\end{tikzpicture}

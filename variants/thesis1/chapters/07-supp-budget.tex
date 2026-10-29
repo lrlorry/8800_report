@@ -1,0 +1,48 @@
+\subsection{Complete decision traces and finite-pool risk}
+\label{sec:7-budget-trace}
+
+All 2,304 sampled and twelve FULL curves are monotone with enumeration-matched choices. Recorded subset sums reproduce 18,432 grid counts (\cref{eq:6-finite-pool}). This verifies recorded aggregates; arbitrary subset/position invariance and general distance-only nesting remain conditional (\cref{sec:6-3}).
+
+Maximum loss is 0.0050 (arXiv/512), 0.0046 (BGE/512) at $S=128$, and 0.0294 at $S=32$. FULL stays within 0.0006.
+
+ArXiv/128 predicted/observed crossing rates are 0.965/0.984, 0.875/0.875, 0.620/0.625 for $S=32,64,128$ (\cref{fig:7-finite-pool}). The largest of 36 gaps is BGE/512: 0.144 (0.519/0.375). Mapping predictions to GT loss uses stable counts and held-out arm quality; calibration itself is label-free.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
+\caption[Finite-pool risk prediction and observation]{Finite-pool prediction and observed arXiv loss crossings. Bars
+show one estimated standard error over 64 independently drawn subsets
+conditional on the fixed pool, not uncertainty over future workloads.}
+\label{fig:7-finite-pool}
+\end{figure}
+
+Ten alternating repeats support a low-budget timing plateau, rather than general runtime monotonicity.
+
+\subsection{Direct calibration-plus-reuse measurement}
+\label{sec:7-stream-cost}
+
+Four cells compare fixed 64/100, sampling and FULL across five rotated rounds of 500 repeated held-out batches. Timing includes gathering, calibration, budget installation and first graph setup; build/warm-up/scan calibration are excluded (\cref{tab:7-stream-cost}).
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Direct costs for 500 reuse batches]{Direct total milliseconds for 500 reuse batches, averaged over
+five rounds, including budget calibration for sampled and FULL policies.
+Each batch has 500 queries. Quality is discussed with the timing results.}
+\label{tab:7-stream-cost}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/supplement/stream}
+\end{minipage}\par\medskip
+
+OpenAI-3072/128 always selects 4: sampled/FULL totals are 1,769/1,783\,ms versus fixed 100's 2,757\,ms, all at recall 0.9252. OpenAI-1536 FULL takes 860 versus 1,491\,ms at 0.9280; sampling takes 852\,ms at 0.9276.
+
+Direct savings start after 4/6 batches (OpenAI-1536), 4/9 (OpenAI-3072) versus fixed 100/64; fractional fits are separate (\cref{fig:7-stream-cost}). BGE sampling takes 4,921 versus 5,185\,ms at recall 0.9658/0.9670; FULL takes 5,062\,ms at 0.9664. ArXiv FULL selects slower 200 to meet quality; fixed controls fail.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
+\caption[Direct cumulative calibrated-reuse time]{Direct mean cumulative time, including budget calibration and
+first-batch setup. Each curve replays one fixed held-out query pool.
+Policies can have different recall; timings alone are not a quality-matched
+ranking. Dataset/probe settings match \cref{tab:7-stream-cost}.}
+\label{fig:7-stream-cost}
+\end{figure}

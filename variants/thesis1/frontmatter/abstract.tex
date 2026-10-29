@@ -1,0 +1,11 @@
+\frontchapter{Abstract}
+JHQ-GPU runs JHQ's primary/residual search on a GPU. It combines index construction, packed scanning, lane refinement and workload-level calibration. Cartesian splitting replaces 256 LUT entries with $16+16$, giving a storage ratio $32/256=1/8$ with the same real-arithmetic score. Calibration compares sampled top-$k$ IDs with a larger-budget reference, without GT or a learned predictor.
+
+On six RTX 5090 datasets, two-group LUTs lead in 22/24 cells; the largest index holds 17.78 million vectors at 20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
+recall-loss target relative to the best tested budget in 12/12 cells, with
+maximum loss 0.0006; smaller samples expose workload-dependent quality risk.
+At recall 0.97 and batch 1,000, JHQ leads in three of four datasets and is
+near parity with IVF-RaBitQ on arXiv. OpenAI runs use TF32; FP32 checks
+retain favourable comparisons under a TF32-trained cache. At batch 8 and
+the same recall, CAGRA fp32 leads on all four datasets. These results
+locate the execution, quality and capacity trade-offs of GPU JHQ.

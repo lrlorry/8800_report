@@ -1,0 +1,43 @@
+The measured interval is the host search call:
+\[
+ t_{\rm call}=t_{\rm return}-t_{\rm entry},
+ \quad
+ \begin{cases}
+ \text{entry: FP32 queries in host memory},\\
+ \text{return: host IDs/scores after stream completion}.
+ \end{cases}
+\]
+Staging, transfers, query work and int8 query quantisation are timed; build/fitting are excluded (\cref{fig:3-boundary}). Handles/outputs are reused. JHQ uses pageable/C++, CAGRA/PQ pinned/Python, RaBitQ pinned/C++; these costs matter to small margins.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
+\captionof{figure}[Host and device timing boundaries]{Timing boundaries. The host interval includes transfers and
+query-specific computation. Device-stage profiles explain parts of that
+interval; separate profiling and synchronisation can change execution, so
+their sum is not an interchangeable end-to-end latency.}
+\label{fig:3-boundary}
+\end{minipage}\par\medskip
+
+Times are in seconds:
+\begin{equation}
+ \bar t_r=\frac1{m_r}\sum_{i=1}^{m_r}t_{ri},
+ \qquad Q_r=\frac b{\bar t_r},
+ \qquad Q=\operatorname{median}_r Q_r.
+ \label{eq:3-throughput}
+\end{equation}
+E1: batch 1,000, five rounds, normally 24 calls. JHQ warms once per variant/round; baselines three times initially. Slow baseline points use fewer calls. JIT/capture are excluded; call percentiles do not describe concurrent requests.
+
+Slow valid calls stay. For illustrative call times $(1,1,10)$\,ms,
+\[
+ \bar t=4\,\mathrm{ms}\ne\operatorname{median}(t)=1\,\mathrm{ms},
+ \qquad b/\bar t\ne b/\operatorname{median}(t).
+\]
+Shared indexes/pools do not provide independent builds.
+
+RTX 5090/32,607\,MiB; driver 595.71.05; CUDA 13.0; cuVS 26.08.01. OpenMP uses 16 of 25 CPUs; E1 records 575\,W. Clocks/load can vary. JHQ JITs compute\_80 PTX \cite{cuda_platform}; library builds/device profiles are separate.
+
+Resident totals include model, workspace and context. CAGRA index deltas and JHQ context-subtracted totals differ (\cref{sec:4-4,sec:7-7}). Pools/scratch prevent peak matching. Build peaks use 20\,ms sampling; train/add excludes loading/host setup.
+
+\paragraph{Supplementary sessions.}
+Campaigns are separate (\cref{sec:a-supplement}); cached-state/precision changes follow \cref{sec:4-2,sec:7-precision}. Historical baseline ratios remain cross-session.

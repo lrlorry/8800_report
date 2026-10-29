@@ -1,0 +1,4 @@
+CUDA warps have 32 threads; blocks share limited registers/memory \cite{cuda_programming_guide}. JHQ parallelises candidates in scans and coordinates in refinement. Extra blocks also duplicate state.
+
+Faiss uses warp selection \cite{johnson_gpu}; bitonic, radix and merge trade state for work. AIR/GridSelect cover global selection \cite{gpu_topk}. These are inherited tools.
+

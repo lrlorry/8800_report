@@ -1,0 +1,73 @@
+\chapter{Reproducibility and Experiment Manifest}
+\label{app:reproducibility}
+
+This appendix specifies the experimental environment and measurement
+protocol. Available source and measurement materials are listed in
+\cref{sec:b-artifacts}.
+
+\section{Source, Environment and Trained States}
+
+\Cref{tab:a-components} lists run-header/report versions. Environment and JIT settings follow Chapter 3; historical executable and model fingerprints remain incomplete.
+
+\begin{table}[tbp]
+\centering
+\caption[Component and run provenance]{Recorded component provenance. Report and script identities
+are distinguished from raw run headers.}
+\label{tab:a-components}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.34\linewidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Component & Recorded source evidence \\
+\midrule
+E1 final pipeline & Environment logs include \texttt{a31c22d}; extensions retain separate metadata \\
+Lane refinement (v61) & Raw header \texttt{b37efa4} \\
+Grouped scan (v62) & Report \texttt{862543a}; run script \texttt{e0d0518} \\
+Shared bound (v63) & Source and build flags archived; no inferred run head \\
+Batch scheduling (v65) & Raw header \texttt{d425ab8} \\
+Radix probe (v69) & Comparative runs and source archived; binary SHA unrecorded \\
+Budget / table sweep & Raw header \texttt{d5e1526} \\
+Large int8 rerun & Stella degree-64 metadata \texttt{ad433a4} \\
+Historical budget & Raw header \texttt{bf31b41}, v57 family \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Data/GT follow \cref{tab:3-data}. Sweeps reuse trained caches; cold builds do not. Isolated large-baseline reruns replace contaminated builds. Corrected Stella search uses 999 queries; skipped batch-1,000 runs supply no points.
+
+\section{Measurement Contracts}
+\label{sec:a-e1-protocol}
+
+E1 takes the median of five round QPS values, normally 24 calls each. Warm-up classification reduces calls at 274 points; its first-call conversion/validation interval differs from steady-state timing. Host staging, int8 quantisation and transfers are timed; API/output-memory differences remain. Device-only times are auxiliary.
+
+The 369 repeat-ID flags include tie-order changes; 401 also counts cross-protocol disagreement. Flags alone do not exclude points, and JHQ lacks the same flag. Cold timers exclude constructor/host QR/warm-up. Build sampling includes context at 20\,ms; synchronised one-buffer diagnostics are separate.
+
+\section{Budget Harness Contract}
+\label{sec:a-budget-contract}
+
+The campaign overrides the fallback grid starting at 100 with one starting at 200. Pools/draws follow Chapter 3. Initial warm-up visits all queries but supplies neither GT nor outputs to agreement; scan calibration uses separate database pseudoqueries.
+
+Fixed arms use one warm-up and three timed calls. Calibration times searches plus $O(Sk^2)$ host comparison, bypassing graph capture; gathering and scan calibration are excluded. p95 uses index $\lfloor0.95(64-1)\rfloor$. The helper returns an index, so callers must apply \texttt{set\_alpha(A[index])}. Original selected-arm rates reuse fixed-arm timings.
+
+Original enumeration covers 2,304 draws; supplementary checks add twelve FULL decisions. All choices and 18,432 subset-sum grid counts match. General ordering/invariance conditions remain those of \cref{sec:6-3,eq:6-finite-pool}; GT-risk mapping uses held-out labels.
+
+\section{Supplementary Evidence}
+\label{sec:a-supplement}
+
+A1 separates first-read, warm-input and synchronised builds. C1 checks four layouts and sampled recoding; FP64 norms use stored rotations, not GPU rotation outputs. A3 checks all OpenAI queries and 10,299 base rows without original entity IDs.
+
+A2 reassembles extracted sm\_80 PTX with CUDA 13.0.88 \texttt{ptxas} for sm\_120. Aligned eight-byte key accesses support the PTX contract; toolkit SASS is not captured driver-JIT code.
+
+D varies add/query GEMMs on TF32-trained caches against archived baselines. T1 supplies separate same-session anchors (\cref{sec:b-precision-anchors}); neither retrains FP32 models.
+
+B reproduces \texttt{srand(12345)} decisions. Direct reuse instead uses a separate seed, five rotated-policy rounds and 500 repeated batches. Its timer includes gathering, calibration, budget installation and first-graph setup, but excludes build, scan calibration and warm-up. Schedule startup is reported separately.
+
+\section{Strict Selection, Small Batches and Artifact Access}
+\label{sec:a-t4-t5}
+
+T4 v73 differs from v71 by two export blocks. GPU-produced scores feed CPU sorting; bitwise equality covers returned valid primary entries, and padding checks cover valid counts. Table-form checks fix 128 probes, $\alpha=100$, 256 queries, shared bounds, $\gscan\in\{0,2\}$ and $\glut\in\{1,2,4,8\}$. Candidate dumps were deleted; summaries retain finite counts. Empty/adversarial lists and the unexplained cross-process Vogue discrepancy are separate questions.
+
+T5 uses fixed small synchronous batches and five host-to-host rounds, including null-call costs and int8 query quantisation. JHQ/CAGRA reuse E1 grids; RaBitQ has a separate sweep. Both threshold estimators retain qualifying endpoints. APIs/warm-ups differ; service concurrency is untested.
+
+GPU reproduction requires original vectors, matching trained states and
+builds, and the specified environment. \Cref{sec:b-artifacts} identifies
+which materials are available.

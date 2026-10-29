@@ -1,0 +1,23 @@
+Training creates reusable models; add encodes rows and builds lists; search uses the completed index. A cache hit skips fitting, not database encoding. Cold train-plus-add and cached-state search therefore measure different work.
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch4/architecture}
+\caption[Build and query architecture]{Implemented build and query boundaries. Host work includes
+sampling, orthogonal-matrix construction and analytical primary-codebook
+generation; the evaluated configuration fits IVF and residual models on
+the GPU. The cache stores trained state, whereas the completed database
+representation resides on the device. Dashed arrows denote trained-state
+reuse. The staging label bounds only raw/rotated float buffers at source
+defaults; other pipeline scratch is additional.}
+\label{fig:4-architecture}
+\end{figure}
+
+The host prepares samples, the square transform and primary codebook. GPU products apply rotation; device training fits IVF centroids and residual codebooks. Add then transfers bounded batches, encodes both levels and writes list-ordered arrays.
+
+Model state holds the transform, codebooks and centroids. Database state adds offsets, IDs, codes and corrections. Queries overwrite workspace but reuse its allocations; a captured graph references those existing arrays.
+
+One successful \texttt{add} creates a fixed snapshot; another add is rejected. Updates require a replacement snapshot. Physical positions stay fixed during search; mutable insert/delete and transactional publication are unimplemented.
+
+Search maps host queries to host IDs and computed scores. \Cref{eq:5-refined-constant} explains the query-only score term; \cref{sec:3-3} defines timing.
+

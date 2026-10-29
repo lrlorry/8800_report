@@ -1,0 +1,26 @@
+\subsection{A useful representation exposes a useful unit of reuse}
+
+More reuse does not help Mailman; two-group LUTs usually win (\cref{fig:7-lut}). Codebook quality must therefore be evaluated with achievable table placement/access cost (\cref{sec:5-2,sec:5-3}).
+
+\subsection{Useful parallelism is bounded by duplicated state and selection}
+
+Once queries supply enough parallelism, staging/selection/merge overhead can dominate (\cref{fig:7-batch}). Vogue/BGE expose missing absolute-work/decomposition features (\cref{sec:7-2,sec:7-6}). Richer scheduling must repay calibration; bounds alone are not isolated.
+
+\subsection{Execution speed changes the value of avoiding refinement}
+
+Assume fixed $T_0>0$, refinement times $F_h\geq F_\ell>0$ and common multiplier $\eta\in(0,1]$. The low-budget speedup and
+its derivatives are
+\begin{align}
+ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
+ \label{eq:8-refinement-sensitivity}\\
+ \frac{\partial S}{\partial\eta}
+ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
+ \frac{\partial S}{\partial T_0}
+ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
+\end{align}
+For $F_h>F_\ell$, faster refinement reduces the value of cutting its
+budget; lower fixed cost increases it. The derivatives hold with
+non-refinement work fixed. Budget-dependent scan maintenance and
+resource transitions require the controlled comparisons of
+\cref{sec:7-5,sec:7-stream-cost}. Quality and reuse remain constraints
+(\cref{tab:7-budget-full,fig:7-budget-risk}).
