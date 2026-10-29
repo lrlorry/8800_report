@@ -1,0 +1,79 @@
+大块高亮修订工作流：本轮处理记录
+2026-10-29，Australia/Sydney
+基线：9613db1d6727d0518b9e2ae75a9449d3a59b08db
+
+范围
+----
+从用户提供的报告与工作流选定30块英文段落，中文逐块同步。
+它们位于第7章结果解释、第6章集合／证明／成本说明、第2章综述及第8章讨论。
+选定段落可能同时包含少量未高亮文字；本记录不把整段每个词都称为已标记。
+第1、3、4、5、9章、摘要、表格、图注及科学图件均不在这轮改写范围内。
+
+处理结果
+--------
+英文正文与摘要约24,033 -> 22,258词，减少1,775词（7.4%）。
+统计排除数学和表体，沿用前轮口径；不是学校官方字数或检测分母。
+目标段落合计3,661 -> 1,886词。已移出的原文保存在机器清单及基线源文件中。
+
+1. 第7章删除逐行读表、重复运行叙述、单位换算和历史实现旁白。
+   保留比较估计差异、Vogue路径反转、采样风险、强固定预算对照、
+   直接复用计时的质量代价、构建峰值生命周期及负结果。
+2. 第6章将等长集合的不一致数写成半个对称差；
+   在原相对参考、样本内recall界后写出接纳预算的直接推论。
+   命题6.1的陈述与所有前提不变，证明改写为共同全序下的前驱计数。
+   分组推论及其证明未改；距离路径仍只保留已测枚举证据。
+3. 第7章新增互斥时间类别的扫描／合并／其余成本恒等式，
+   用小批次收益和全批次反例解释净收益条件；它不是硬件延迟预测模型。
+4. 第2、8章只缩短选定的密集高亮文字；保留原参考文献、
+   方法差异、模型假设、有效性威胁和部署边界。
+
+对工作流的必要校正
+------------------
+原T76报告的40页论文内容包含第6--9章、Bibliography、附录A/B。
+不能将它说成仅包含正文。新版part2继续保留这一范围；
+part1继续为前置页加第1--5章。按章节边界导出，不照抄旧物理页码。
+另给thesis-body.pdf，仅含第1--9章，方便单独阅读或另行检测。
+本轮没有外部检测新结果，不据文字压缩推算新比例。
+
+逐块对照
+--------
+编号 | 源文件 | 原检测报告页码 | 动作 | 英文词数
+H01 | 07-evaluation.tex | T76 p.11 | compress | 38 -> 42
+H02 | 07-evaluation.tex | T76 p.11 | compress | 80 -> 49
+H03 | 07-evaluation.tex | T76 p.11,12 | compress | 183 -> 54
+H04 | 07-evaluation.tex | T76 p.13 | compress | 65 -> 39
+H05 | 07-evaluation.tex | T76 p.19 | compress | 94 -> 69
+H06 | 07-evaluation.tex | T76 p.19,20 | compress | 174 -> 77
+H07 | 07-evaluation.tex | T76 p.20 | compress | 115 -> 40
+H08 | 07-evaluation.tex | T76 p.20,21 | relocate | 175 -> 56
+H09 | 07-evaluation.tex | T76 p.23 | formalise | 181 -> 132
+H10 | 07-evaluation.tex | T76 p.24 | compress | 111 -> 61
+H11 | 07-evaluation.tex | T76 p.25 | compress | 111 -> 76
+H12 | 07-evaluation.tex | T76 p.25,26 | compress | 157 -> 91
+H13 | 07-supp-budget.tex | T76 p.21 | relocate | 125 -> 58
+H14 | 07-supp-budget.tex | T76 p.21 | compress | 72 -> 44
+H15 | 07-supp-budget.tex | T76 p.21 | relocate | 48 -> 27
+H16 | 07-supp-budget.tex | T76 p.22 | compress | 70 -> 40
+H17 | 07-supp-budget.tex | T76 p.22 | relocate | 127 -> 67
+H18 | 06-2-agreement.tex | T76 p.4,5 | formalise | 38 -> 28
+H19 | 06-2-agreement.tex | T76 p.5 | formalise | 52 -> 35
+H20 | 06-3-search.tex | T76 p.6 | formalise | 63 -> 24
+H21 | 06-5-economics.tex | T76 p.8,9 | compress | 57 -> 37
+H22 | 06-5-economics.tex | T76 p.9 | relocate | 68 -> 14
+H23 | 02-4-gpu.tex | T71 p.15,16 | compress | 301 -> 147
+H24 | 02-5-graphs.tex | T71 p.16 | compress | 293 -> 128
+H25 | 02-6-quantised.tex | T71 p.17 | compress | 478 -> 213
+H26 | 08-1-insights.tex | T76 p.29 | compress | 65 -> 44
+H27 | 08-1-insights.tex | T76 p.29 | compress | 69 -> 51
+H28 | 08-1-insights.tex | T76 p.29 | compress | 60 -> 38
+H29 | 08-3-validity.tex | T76 p.31 | compress | 77 -> 43
+H30 | 08-5-deployment.tex | T76 p.32 | compress | 114 -> 62
+
+复核与归档
+----------
+assessment/highlight-remediation-edits.json：精确删改前后文本、报告hash、页码与理由。
+evidence/editorial/9613db1/before/：该轮22个源文件的完整前像。
+evidence/editorial/9613db1/highlight-remediation.patch：实际保留的双语补丁。
+scripts/audit_highlight_remediation.py：逐块还原、受保护内容、3,375组有限集合检查。
+既有数值审计、双语引用核对和PDF版面检查继续执行。
+没有启动GPU、修改实验结果或补造个人贡献／原始交互记录。

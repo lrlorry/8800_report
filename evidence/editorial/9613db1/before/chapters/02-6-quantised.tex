@@ -1,0 +1,63 @@
+\subsection{Learning a representation versus exploiting its structure}
+
+Optimised product quantisation learns the space decomposition and codebooks
+to reduce quantisation distortion \cite{opq}. Its rotation is optimised for
+the data, whereas JHQ's random square rotation supports a cheap analytical
+primary model. The trade-off involves fitting cost, reconstruction fidelity
+and scorer structure. Improving a general learned codebook does not
+automatically preserve the internal Cartesian product needed by an exact
+16+16 decomposition.
+
+ScaNN's anisotropic quantisation work instead weights error according to
+its relevance to maximum-inner-product retrieval, showing why reconstruction
+MSE is not the only useful objective \cite{scann}. Its objective and
+implementation setting differ from the squared-L2 hierarchical pipeline
+here. The useful comparison is the choice of loss: a rank-sensitive
+representation should be tested against actual retained-neighbour quality
+and execution cost. The stopped rank-oriented experiment in Chapter 8
+provides an example of this distinction within JHQ.
+
+\subsection{Small lookup tables have substantial prior art}
+
+PQ Fast Scan replaces reliance on cache-resident tables with tables suited
+to CPU SIMD registers \cite{fastscan}. Quicker ADC generalises register
+lookup techniques and introduces irregular quantisers and split tables
+\cite{quickeradc}. These works establish that table shape and the execution
+instruction set must be designed together. This thesis's claim is the exact
+decomposition available from its inherited Cartesian coordinate structure,
+and its measured implementation on a GPU. CPU SIMD results are conceptual
+precedents, not throughput measurements on the tested GPU. FP32 table
+association and cutoff ties still require separate numerical checking.
+
+RaBitQ also uses randomised quantisation and compact sign information,
+with a distance estimator and theoretical error analysis
+\cite{rabitq}. Multi-bit extensions trade storage for estimator accuracy
+\cite{rabitq_multi}. Their guarantees attach to their specified constructions
+and estimator assumptions. They cannot be transferred to JHQ merely because
+both use rotations and binary components. In JHQ, primary signs select
+survivors and an explicitly stored residual supplies the next precision
+level; the resulting quality depends on both truncation and reconstruction.
+
+GPU IVF-RaBitQ brings this family into a complete GPU build/search design,
+including GPU-oriented distance computation and fused search
+\cite{ivfrabitq}. It is therefore a particularly relevant contemporary
+baseline, rather than background evidence of a missing GPU quantiser.
+Its fused execution makes clear that compact codes alone are insufficient:
+the access and selection pipeline must also be competitive. E1 includes
+multiple bit budgets, and its high-recall results limit any broad claim
+of JHQ dominance.
+
+\subsection{Refinement effort and adaptive stopping}
+
+Candidate expansion and reranking already appear in Faiss's
+\texttt{k\_factor} and cuVS refinement controls
+\cite{faiss_refine,cuvs_refinement}. Faiss autotuning can use GT-labelled
+queries to search recall--time trade-offs \cite{faiss_autotune}. Learned
+adaptive termination predicts sufficient search effort
+\cite{li_termination}; DARTH frames early termination around declarative
+recall targets \cite{darth}. These are relevant alternatives to spending a
+uniform effort everywhere. Chapter 6's particular policy selects one
+workload-level survivor multiplier using unlabelled agreement with a larger
+budget. It avoids a trained predictor, while inheriting the reference's
+quality limits. This distinction is the policy's scope, rather than a claim
+that adaptive search or refinement budgets are new ideas.

@@ -403,6 +403,46 @@
       "output_sha256": null,
       "output_status": "Applied source patch retained; full model response not separately exported",
       "verification": "Reference, scientific-content and PDF checks recorded by Codex; student-personal verification and submission completion not inferred"
+    },
+    {
+      "id": "P14",
+      "tool": "OpenAI Codex",
+      "source": "Original user request in the current conversation",
+      "interaction_date": "2026-10-29",
+      "model_version": null,
+      "task": "Apply the supplied highlight-remediation workflow to selected large highlighted blocks and produce a bilingual compiled version",
+      "prompt": "你按照这个工作流生成一版本吧",
+      "prompt_sha256": "b17db0ae0835b3e88ccce664dcb9a75b4a9e261a95d275a3ff56bff2db58dfaa",
+      "artifact_mapping": [
+        "chapters/07-evaluation.tex",
+        "chapters/07-supp-budget.tex",
+        "chapters/06-2-agreement.tex",
+        "chapters/06-3-search.tex",
+        "chapters/06-5-economics.tex",
+        "chapters/02-4-gpu.tex",
+        "chapters/02-5-graphs.tex",
+        "chapters/02-6-quantised.tex",
+        "chapters/08-1-insights.tex",
+        "chapters/08-3-validity.tex",
+        "chapters/08-5-deployment.tex",
+        "zh/chapters/07-evaluation.tex",
+        "zh/chapters/07-supp-budget.tex",
+        "zh/chapters/06-2-agreement.tex",
+        "zh/chapters/06-3-search.tex",
+        "zh/chapters/06-5-economics.tex",
+        "zh/chapters/02-4-gpu.tex",
+        "zh/chapters/02-5-graphs.tex",
+        "zh/chapters/02-6-quantised.tex",
+        "zh/chapters/08-1-insights.tex",
+        "zh/chapters/08-3-validity.tex",
+        "zh/chapters/08-5-deployment.tex"
+      ],
+      "used_as": "Targeted compression, deletion/merging of repeated narration, explicit set identities and a predecessor-count proof; no new experiment or detector result",
+      "retained_patch": "evidence/editorial/9613db1/highlight-remediation.patch",
+      "retained_patch_sha256": "54f9d7812267ec1e7fe82199cc4e8c5fceb946c930754f05531143dd52b87272",
+      "output_sha256": null,
+      "output_status": "Exact before/after source blocks, baseline files and applied patch retained",
+      "verification": "Exact-edit, scientific-content, finite-set, bilingual, numerical-source and PDF checks by Codex; no student-personal verification inferred"
     }
   ]
 }

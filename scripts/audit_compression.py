@@ -128,9 +128,11 @@ def main():
         for filename, first, last in [('thesis-no-refs.pdf', 1, end),
                                       ('thesis-check-1.pdf', 1, split - 1),
                                       ('thesis-check-2.pdf', split, end),
-                                      ('thesis-body.pdf', front + 1, end)]:
+                                      ('thesis-body.pdf', front + 1, end),
+                                      ('thesis-part1.pdf', 1, split - 1),
+                                      ('thesis-part2.pdf', split, len(source_pages))]:
             if not (ROOT / filename).is_file():
-                assert filename != 'thesis-body.pdf', 'Requested body PDF is missing'
+                assert filename not in ['thesis-body.pdf', 'thesis-part1.pdf', 'thesis-part2.pdf'], filename
                 continue
             pages = run('pdftotext', filename, '-').split('\f')[:-1]
             assert len(pages) == last - first + 1, filename
@@ -143,7 +145,7 @@ def main():
                                all_nonwhitespace_characters_preserved=True))
 
     records = json.loads(read('data/submission/ai-use-record.json'))['records']
-    assert len(records) == 13 and records[-1]['id'] == 'P13'
+    assert len(records) == 14 and records[-1]['id'] == 'P14'
     for record in records:
         assert digest(record['prompt'].encode()) == record['prompt_sha256']
         for steering in record.get('steering_messages', []):
@@ -157,6 +159,10 @@ def main():
                 'assessment/adc-revision-response.txt','assessment/adc-revision-source.json',
                 'assessment/layout-reflow-2026-10-29.txt',
                 'assessment/proof-layout-review-2026-10-29.txt',
+                'assessment/highlight-remediation-edits.json',
+                'assessment/highlight-remediation-response.txt',
+                'scripts/audit_highlight_remediation.py',
+                'data/highlight-remediation/audit.json',
                 'scripts/audit_compression.py']:
         read(rel)
     result = dict(date='2026-10-29', timezone='Australia/Sydney',

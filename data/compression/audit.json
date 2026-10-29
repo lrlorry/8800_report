@@ -3,20 +3,20 @@
   "timezone": "Australia/Sydney",
   "scope": "Editorial compression and offline/PDF checks; no GPU or AI-detector rerun",
   "baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
-  "source_files": 77,
+  "source_files": 93,
   "words": {
     "before": 26932,
-    "after": 24033,
-    "removed": 2899,
+    "after": 22258,
+    "removed": 4674,
     "scope": "Prose/captions, math and table bodies excluded; not an official course count"
   },
-  "english_body_pages": 67,
+  "english_body_pages": 65,
   "english_front_pages": 7,
   "pdfs": {
     "thesis.pdf": {
-      "pages": 83,
-      "sha256": "be244a0a6449b20ee4b15ec8ec5289b814699a1f4bfbff952985377571c4ed3b",
-      "bytes": 1068198,
+      "pages": 81,
+      "sha256": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72",
+      "bytes": 1056238,
       "figures": 26,
       "tables": 31,
       "fonts": 47,
@@ -26,32 +26,32 @@
       "internal_workflow_paths_visible": 0,
       "proof_alignment": [
         {
-          "page": 24,
+          "page": 23,
           "heading_x": 76.535,
           "first_line_x": 76.535
         },
         {
-          "page": 36,
+          "page": 35,
           "heading_x": 76.535,
           "first_line_x": 76.143
         },
         {
-          "page": 36,
+          "page": 35,
           "heading_x": 76.535,
           "first_line_x": 76.535
         },
         {
-          "page": 38,
+          "page": 37,
+          "heading_x": 76.535,
+          "first_line_x": 76.535
+        },
+        {
+          "page": 46,
           "heading_x": 76.535,
           "first_line_x": 76.535
         },
         {
           "page": 47,
-          "heading_x": 76.535,
-          "first_line_x": 76.132
-        },
-        {
-          "page": 48,
           "heading_x": 76.535,
           "first_line_x": 76.535
         }
@@ -59,9 +59,9 @@
       "statement_proof_pairs_same_page": 6
     },
     "thesis-zh.pdf": {
-      "pages": 80,
-      "sha256": "51e58e2cfd0f299ca57a7c30dddd6578e7e27811e6857c1adefb8c5cd7f86286",
-      "bytes": 1166407,
+      "pages": 79,
+      "sha256": "81f326d805074ef51092d6541a104e57c9968be79426c0930e727ef0a8c0b578",
+      "bytes": 1149988,
       "figures": 26,
       "tables": 31,
       "fonts": 40,
@@ -96,7 +96,7 @@
           "first_line_x": 76.535
         },
         {
-          "page": 45,
+          "page": 46,
           "heading_x": 76.535,
           "first_line_x": 76.535
         }
@@ -110,12 +110,32 @@
   "derived_copies": [
     {
       "path": "thesis-body.pdf",
-      "pages": 67,
+      "pages": 65,
       "source_physical_pages": [
         8,
-        74
+        72
       ],
-      "sha256": "80e1b9466580320d0b1b136be46ee21a8b22e899453a5b43b2999ce7c57cef96",
+      "sha256": "2b7312a942039ea0b3e923321d8c81282e3121c5b6a6bb001289d836e4c695b1",
+      "all_nonwhitespace_characters_preserved": true
+    },
+    {
+      "path": "thesis-part1.pdf",
+      "pages": 42,
+      "source_physical_pages": [
+        1,
+        42
+      ],
+      "sha256": "7e93973504db3ce0d4b5550744a3494e1807be83f3995ec85cf87c9df126a82e",
+      "all_nonwhitespace_characters_preserved": true
+    },
+    {
+      "path": "thesis-part2.pdf",
+      "pages": 39,
+      "source_physical_pages": [
+        43,
+        81
+      ],
+      "sha256": "be5501c158a7e3d31152a54614dbb3b8115cbd67db918103da82b2d46048b247",
       "all_nonwhitespace_characters_preserved": true
     }
   ],
@@ -124,12 +144,12 @@
     {
       "repository": "8800_report",
       "path": "assessment/compression-edits.json",
-      "sha256": "fa0e9de59aca07de79db7608665690232821a5bd026d7e0855e8e6a0f97a868a"
+      "sha256": "fcef34623649868d8db615b27a779d44c582d3ed7cd4bbf3c1a5ff651485207e"
     },
     {
       "repository": "8800_report",
       "path": "data/deduplication/audit.json",
-      "sha256": "cfb43b981d3153bf3effe0ccce899f8419d7f37b3a58d36c48abf2fa6fbff5dc"
+      "sha256": "ce505869b714bda9b042278c2b73c3ffe574dc2b3d32c5804ac7d96da37a74bd"
     },
     {
       "repository": "8800_report",
@@ -160,6 +180,21 @@
       "repository": "8800_report",
       "path": "chapters/01-introduction.tex",
       "sha256": "3106373ddfd57203cc72c1a138cf0d15cb1b117067f7325691eafe74c97b530c"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-4-gpu.tex",
+      "sha256": "5cb401dff9651e713774b6913e9df5b8d486d5c49360651e7b88f0ebfab6c488"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-5-graphs.tex",
+      "sha256": "7d0ce4a8f6fe9f328c1b5144bd2d192fd708a8110a2ead6655674049c6485896"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-6-quantised.tex",
+      "sha256": "cc58dac166f06b441731477075113db0b7c9b47cb4b33e1587e61869f6e50062"
     },
     {
       "repository": "8800_report",
@@ -258,6 +293,21 @@
     },
     {
       "repository": "8800_report",
+      "path": "chapters/06-2-agreement.tex",
+      "sha256": "3b6fbe395b3109cd9fed416acdff0c72a0daf07ebfbf4ab9301d82c8dbb6cbd8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-3-search.tex",
+      "sha256": "45cdc3101449a47dc56088ad49b47c703b0e049becf4193d60b0e0597718b77a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-5-economics.tex",
+      "sha256": "7e7439b6cb2e6c05d068fa6909c441396f3d59bd62d8ab1643e38c7169a18855"
+    },
+    {
+      "repository": "8800_report",
       "path": "chapters/06-6-scope.tex",
       "sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c"
     },
@@ -269,22 +319,32 @@
     {
       "repository": "8800_report",
       "path": "chapters/07-evaluation.tex",
-      "sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
+      "sha256": "8ce5021c27d5a5b73fcad5f0f61e4ed08b3cd5a9bd84132c3d0bcaa1211f9a1d"
     },
     {
       "repository": "8800_report",
       "path": "chapters/07-supp-budget.tex",
-      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
+      "sha256": "2aafe5253c7e6e5f6c9d1a046828a56472925f8f94bb6c20caacd1c80a4bf2e2"
     },
     {
       "repository": "8800_report",
       "path": "chapters/08-1-insights.tex",
-      "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
+      "sha256": "d1b1d9ed18338d57170855e160c5eca91950d776f4cb80ecab49ee834b3ab257"
     },
     {
       "repository": "8800_report",
       "path": "chapters/08-2-negative.tex",
       "sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "865103d196ef9f6ffbac9b75485aeab612a8a912225975a98f4ecb38c5f29636"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "2e4f6032c972450bbf45391b2ac40081d1a11179bef6a98cfbecf45f2cdbecfe"
     },
     {
       "repository": "8800_report",
@@ -370,6 +430,21 @@
       "repository": "8800_report",
       "path": "zh/chapters/01-introduction.tex",
       "sha256": "0742ec8e17c3fe59912c97f148f4f24370211f46ca047cc572823db461ac60a5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-4-gpu.tex",
+      "sha256": "b85be527733e824288ec53b26fa61a4871709190b2e21a05a1e290d511dd4a18"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-5-graphs.tex",
+      "sha256": "e87ae06219ce90077fa9f072c0fce2c62240e5904f18c762cc70b28a4d2eabec"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-6-quantised.tex",
+      "sha256": "ddaa7f4d5943eee6c861d869758c87b741dfb1c02153232e43f6e7cf6c9affa6"
     },
     {
       "repository": "8800_report",
@@ -468,6 +543,21 @@
     },
     {
       "repository": "8800_report",
+      "path": "zh/chapters/06-2-agreement.tex",
+      "sha256": "333cab55652255eca2837abf09d8be7c3fa8be39cfe3eab7c69fd776c5fbc0fc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-3-search.tex",
+      "sha256": "523afcc5d5e550ee96f02adad9fe4b09b9254836b7916cd2aa482de1d94bc92d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-5-economics.tex",
+      "sha256": "ee7e8d9b4d0ed6e24b805929a9aaeb312eb91d8627cd640dd6c76d4b9d42c90d"
+    },
+    {
+      "repository": "8800_report",
       "path": "zh/chapters/06-6-scope.tex",
       "sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56"
     },
@@ -479,22 +569,32 @@
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
+      "sha256": "4fc1e33ca7a3fa3cad4aa4e73c7132c6cd49f7e8e5d5c31d4009f7862fe813dc"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/07-supp-budget.tex",
-      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
+      "sha256": "b7855606bcfe53cfb326c213ae47cad588cd1dbe895112f6b94886a48d1f489f"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-1-insights.tex",
-      "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
+      "sha256": "ec6c412c223c93d2c17193f91b5ac44194d1ca0a292dfbd361d91723192fae53"
     },
     {
       "repository": "8800_report",
       "path": "zh/chapters/08-2-negative.tex",
       "sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "3d8307a0d05dced9e5e4af9d19665de68bcae618987a0469292209496ec618c7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "22d83ef41adccdebaab4606251503f8cc25aa32741fd80e84ff6c4c99a2cd73d"
     },
     {
       "repository": "8800_report",
@@ -959,17 +1059,17 @@
     {
       "repository": "8800_report",
       "path": "thesis.pdf",
-      "sha256": "be244a0a6449b20ee4b15ec8ec5289b814699a1f4bfbff952985377571c4ed3b"
+      "sha256": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72"
     },
     {
       "repository": "8800_report",
       "path": "thesis-zh.pdf",
-      "sha256": "51e58e2cfd0f299ca57a7c30dddd6578e7e27811e6857c1adefb8c5cd7f86286"
+      "sha256": "81f326d805074ef51092d6541a104e57c9968be79426c0930e727ef0a8c0b578"
     },
     {
       "repository": "8800_report",
       "path": "data/submission/ai-use-record.json",
-      "sha256": "a9488cf0601492dcd25f34cf6bae30d69e81c8637eca59c92ab79716b667ea07"
+      "sha256": "696811f6e27f29b19f7b15ec26cb07c48abae4ba2716618ae648c1a66cedd5a7"
     },
     {
       "repository": "8800_report",
@@ -1003,6 +1103,11 @@
     },
     {
       "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/highlight-remediation.patch",
+      "sha256": "54f9d7812267ec1e7fe82199cc4e8c5fceb946c930754f05531143dd52b87272"
+    },
+    {
+      "repository": "8800_report",
       "path": "assessment/compression-review-source.json",
       "sha256": "a008b6d283db04f7e5f72ec56e8e1d518dd4730330b899eb887fa7b320d78957"
     },
@@ -1018,8 +1123,8 @@
     },
     {
       "repository": "8800_report",
-      "path": "evidence/editorial/f8dbf87/compression-from-03775b7.patch",
-      "sha256": "61eb5bba98754aed975f2ce51fad5ce44b90608cf31e6dc1761fe869ffa6cfe9"
+      "path": "evidence/editorial/9613db1/compression-from-03775b7.patch",
+      "sha256": "255141c168f7035b7158e9c61547e8085ecebf8ec2931600a025ded99be1b27a"
     },
     {
       "repository": "8800_report",
@@ -1029,7 +1134,7 @@
     {
       "repository": "8800_report",
       "path": "docs/ai-use-record.md",
-      "sha256": "fb5f101ba60524fd038df5c709520d13575485d2dd9c8bf7b8f9fee1b0410f13"
+      "sha256": "76060b2b4ef9e49900d2ccb1ce787fa0197acf9c99bbafc6e91f64ccd587ef4c"
     },
     {
       "repository": "8800_report",
@@ -1053,8 +1158,28 @@
     },
     {
       "repository": "8800_report",
+      "path": "assessment/highlight-remediation-edits.json",
+      "sha256": "6267f5d13eb7dcec75235fcd620f7a7a175a6690ef04f7be71a80834e2524a5b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "assessment/highlight-remediation-response.txt",
+      "sha256": "004bc3d18b15854efb86a7a90156bf9307bb5031e2d9faf806316c769ea79878"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_highlight_remediation.py",
+      "sha256": "7797bbb932f2c186de31dacb3c3deaebdf8954e0b472559b69f14b229ab34e15"
+    },
+    {
+      "repository": "8800_report",
+      "path": "data/highlight-remediation/audit.json",
+      "sha256": "a15eb6556bb429a68cc798bb44dfda213e53170206b6184cafea07467e3b03a2"
+    },
+    {
+      "repository": "8800_report",
       "path": "scripts/audit_compression.py",
-      "sha256": "49ccfdbb9fad73f970f351b5cdb82b69dc1350de0de10b226b8052511a645d62"
+      "sha256": "ec22e5f462542e23b74f4170beb3f9b7f24620a28e7c0e65c8c560ae73c5eaec"
     }
   ]
 }

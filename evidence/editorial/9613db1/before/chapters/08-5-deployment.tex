@@ -1,0 +1,14 @@
+JHQ-GPU merits evaluation when a compressed resident hierarchy fits the
+device and the required recall lies within its measured competitive region.
+E1 supports high-recall throughput at batch 1,000; T5 instead favours
+CAGRA fp32 at recall 0.97 and batch 8 on all four datasets. At batch 32,
+OpenAI-3072 is close under interpolation and favourable to JHQ under the
+measured threshold; the other three favour CAGRA. Lower-recall JHQ
+advantages also depend on dataset and grid. Grouped scheduling helps
+JHQ internally without guaranteeing a cross-system lead
+(\cref{sec:7-smallbatch}).
+
+Start calibration from the recorded FULL working point, then validate
+quality and direct reuse cost on deployment queries. Compare total time
+and resident memory under the actual batch regime, subject to the
+external-validity limits in \cref{sec:8-3}.

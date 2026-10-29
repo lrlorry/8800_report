@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check thesis consolidation against its pre-edit commit; no GPU or network.
 
-Proofs and unique displayed mathematics remain intact. Explicit duplicate
-equation/display removals are checked against archived originals. Numeric assets remain unchanged;
+Protected mathematics remains exact outside declared formalisation blocks.
+Duplicate equation/display removals are checked against archived originals. Numeric assets remain unchanged;
 one explicitly archived PDF font export is permitted. This is not an
 automatic judgement of prose.
 """
@@ -17,6 +17,7 @@ from pathlib import Path
 
 sys.dont_write_bytecode = True
 from audit_synthesis import prose_count
+from audit_highlight_remediation import validate_highlight_round
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASE = 'e610272e50db0d416d92b41d19b8dbfa40c00baa'
@@ -61,6 +62,9 @@ def main():
     assert hashlib.sha256(patch).hexdigest() == compression['patch_sha256']
     subprocess.run(['git', 'apply', '--check', '--reverse', compression['patch']],
                    cwd=ROOT, check=True, capture_output=True)
+    # Validate this round independently, then use its exact before-images
+    # for historical preservation checks whose scope predates these edits.
+    pre_highlight, highlight_result = validate_highlight_round(current)
     cleanup = json.loads(current('assessment/internal-reference-edits.json'))
     assert cleanup['baseline'] == '2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab'
     pre_cleanup = {}
@@ -73,7 +77,7 @@ def main():
             if edit['path'] == rel:
                 assert expected.count(edit['before']) == 1, rel
                 expected = expected.replace(edit['before'], edit['after'])
-        actual = current(rel)
+        actual = pre_highlight.get(rel, current(rel).decode()).encode()
         assert expected.encode() == actual, ('undeclared cleanup edit', rel)
         assert hashlib.sha256(actual).hexdigest() == entry['after_sha256']
         # Captions may lose workflow narration; mathematics and table rows may not.
@@ -88,7 +92,7 @@ def main():
     assert wrappers['environment'] == 'resultblock' and len(wrappers['source_files']) == 6
     wrapper_count = 0
     for rel in wrappers['source_files']:
-        actual = pre_cleanup.get(rel, current(rel).decode())
+        actual = pre_cleanup.get(rel, pre_highlight.get(rel, current(rel).decode()))
         wrapper_count += actual.count('\\begin{resultblock}')
         stripped = actual.replace('\\begin{resultblock}\n', '').replace('\n\\end{resultblock}', '')
         assert stripped == git('show', wrappers['baseline'] + ':' + rel).decode(), rel
@@ -236,7 +240,7 @@ def main():
             for edit in cleanup['source_edits']:
                 if edit['path'] == rel and edit['before'] in restored:
                     restored = restored.replace(edit['before'], edit['after'])
-            compared_actual = actual
+            compared_actual = pre_highlight.get(rel, actual)
             for block in additions[rel]:
                 compared_actual = compared_actual.replace(block, '')
             for env in envs:
@@ -305,6 +309,7 @@ def main():
                 'assessment/targeted-curation-review.md', 'assessment/targeted-curation-source.json',
                 'assessment/final-review-response.txt', 'assessment/submission-manual-actions.txt',
                 'assessment/compression-review-response.txt', 'assessment/compression-review-source.json',
+                'scripts/audit_highlight_remediation.py',
                 'docs/ai-use-record.md', 'data/submission/ai-use-record.json', 'docs/artifact-access.md',
                 'docs/supplementary-evidence.md',
                 'FORMAT_NOTES.txt', 'main.tex', 'main-zh.tex',
@@ -318,6 +323,7 @@ def main():
                                archive_manifest='evidence/editorial/03775b7/manifest.json',
                                removed_tables_per_language=1,removed_duplicate_equations_per_language=2,
                                reference_remapping=new_ref_map),
+        highlight_remediation=highlight_result,
         display_curation=dict(baseline=curation['baseline'],
                               archived_blocks=len(curation['entries']),
                               removed_tables_per_language=12,

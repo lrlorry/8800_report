@@ -1,0 +1,8 @@
+压缩常驻层次能放入设备、且目标 recall 位于已测竞争区间时，JHQ-GPU 值得评估。
+E1 支持 batch 1,000 的高 recall 吞吐；T5 则显示 recall 0.97、batch 8 下，
+四个数据集均由 CAGRA fp32 领先。batch 32 的 OpenAI-3072 在插值下接近平手、
+实测阈值有利于 JHQ，其余三个有利于 CAGRA。低 recall 优势同样依赖数据集和网格。
+分组调度能改善 JHQ 内部执行，但不保证跨系统领先（\cref{sec:7-smallbatch}）。
+
+以已测FULL工作点开始校准，再用部署查询验证质量并直接计时复用成本。
+在实际批次制度下比较总时间与常驻显存，适用边界见\cref{sec:8-3}。

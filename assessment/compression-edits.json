@@ -6,467 +6,563 @@
       "path": "appendices/a-reproducibility.tex",
       "before_sha256": "e1719f401b185962532eda4a0c443d6e1b9588d3e58dc82ade6cd8d4527960fd",
       "after_sha256": "3e9496bdaa1aa68b10d80dd09d694d2a791608b222ac3b7aa0e020be968840c5",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "appendices/b-supplementary.tex",
       "before_sha256": "03cb527da38a1d6b672a522baec88103fe61cdd0bc9345911dea8f550595ecc0",
       "after_sha256": "198e5a6b9f7b69a0b57b01f6a56795efb1c234b6ec6282c5a4837d5e1c28508c",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/01-1-context.tex",
       "before_sha256": "239b02d7b0060c904b3a9194bb0c94af54430af48eb35d2ba6c42fc61aeedaf4",
       "after_sha256": "03e5374087e49bed60464118f37705148262149697b5cf4322a2e29a99df41de",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/01-3-challenges.tex",
       "before_sha256": "68788c9d3e6fc1778211b8644bfef3f89265dc3008484ef642708863f24f4d47",
       "after_sha256": "317184ae14263419161b298a52390e81bef107e76bffd4f15a2780baa0b4bd4b",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/01-5-contributions.tex",
       "before_sha256": "ab4175a773399b512a6caf66b651f4a4e95e4d58938d33b09e621b5dbd3f923b",
       "after_sha256": "6ee6e45d2d73aa8d5b054262a0c65eeadff7cace0e89452126c64c8cd4e9bbad",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/01-introduction.tex",
       "before_sha256": "44d3eae771e9df936e758e5a1d56b44b3b08797b7ddd31a35727e341da2d5279",
       "after_sha256": "3106373ddfd57203cc72c1a138cf0d15cb1b117067f7325691eafe74c97b530c",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/02-4-gpu.tex",
+      "before_sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5",
+      "after_sha256": "5cb401dff9651e713774b6913e9df5b8d486d5c49360651e7b88f0ebfab6c488",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/02-5-graphs.tex",
+      "before_sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458",
+      "after_sha256": "7d0ce4a8f6fe9f328c1b5144bd2d192fd708a8110a2ead6655674049c6485896",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/02-6-quantised.tex",
+      "before_sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f",
+      "after_sha256": "cc58dac166f06b441731477075113db0b7c9b47cb4b33e1587e61869f6e50062",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/02-7-gap.tex",
       "before_sha256": "99a5f77f9949be6ae1a9f9697e496308542f33d32e474e2a341b2464bf5eee9a",
       "after_sha256": "884c7c1850ef2d3006a3d5ef57739fff0e28d21ccc09b240d60f677f9c0753a1",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/02-background.tex",
       "before_sha256": "1565808b5066866b1a73236e883d8436860eac9df4419d44d5e353cce63f96d0",
       "after_sha256": "0a337fa97c3c60942cdea568812c62b16b1b1e3027f8b75da21edb1a2e437868",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/03-1-comparisons.tex",
       "before_sha256": "e103ea1aa65046714ab0f912e4b4c8f7ea0a2db94e2080314f6bba7cad6e349b",
       "after_sha256": "d53c8bd16623c87d88a3de1fe87890c06f780ad3e0be7c9a707049861a66f285",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/03-2-data.tex",
       "before_sha256": "d4098eb45fd144f04cf41d7982fc13df445237bed9a24d64e6de72175ffa17c0",
       "after_sha256": "e36022336d1cd6c3c11b0a945d77367d86818d553f4281e25970c94d3330bfaa",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/03-5-ledger.tex",
       "before_sha256": "de942b4613b1acdbe27d037df8bc1c74229e50fd9f58a0572e658e9718a6409e",
       "after_sha256": "1067b2f6095bae7df11cf77449dc662d4e80a03a57e35e8a12e51470b6f9d551",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/03-6-validity.tex",
       "before_sha256": "d4823eef51bed50c0b0dfbfd48580b76a649f345e3ec4aad697811bfc9d92624",
       "after_sha256": "8ed459d20a38555a6cdf7f2cbfc60aa8fe49fb89f41610477a461c9b4fb0a023",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/03-methodology.tex",
       "before_sha256": "5d5476a1bf6800dd89920bb50c6129748e72ccd73ddb277889045853d78e1be4",
       "after_sha256": "972e4803c07e5dc1db3722abd0e9850ebd25af985ce3ad3bce7209ad5712781e",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/04-1-boundaries.tex",
       "before_sha256": "1ea3a67fee49c32592e8e36d362a401021dbae2f7114b7aa058afde3b311adfe",
       "after_sha256": "5850439ffaaf549c27432942ca2fbe7059f0ba90d077057b13ce70909557e0d1",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/04-2-training.tex",
       "before_sha256": "e879ba23a2fde202a993f4dd368f3047b610cffb53ae5480e2c6d73af20ff754",
       "after_sha256": "1a80e59e3e3396f154dc45cd8ba4a4134d9c7f82ddc60294fa122f2250cf6088",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/04-4-lifecycle.tex",
       "before_sha256": "b78040584cc1340fec0961ed625ec78f8beb9cdc79fff752a2a549e2b8151f6e",
       "after_sha256": "061d3afd5c792d02d8adb4ba6d101ee8ba3e7e7da69226dde9acbb3a5c99ec93",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/04-5-construction.tex",
       "before_sha256": "5409de25c87e9ee23cdb79c949bcc1550d1128320014641726f29be891ab5f72",
       "after_sha256": "d381bb2fec723460765fbe24bbe52b2fef1a7994f04f57a1822a6c21668c704d",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/04-6-contracts.tex",
       "before_sha256": "9585272384890fb1cdfd1247546ac3af37e842fcd14fa0d2c75308032bc8eecd",
       "after_sha256": "6bd0f9b096bddcbdce6542bf347e99b6eb2e3c3fcbbd293118f4e260b27f7a2b",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/04-architecture.tex",
       "before_sha256": "1d452fa40ad440eae66aa263c1ab1439e891f685c9cb66ffbe718c6946192498",
       "after_sha256": "5f9486fc99e62dfec46ce6366f7d63725e710f1fab61e5ea9ec6689c51242e91",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/05-2-lut.tex",
       "before_sha256": "ff629614eb48614f5e4ce39841ab072a7f8c07ab4cc63f3d6b3165033fbec43d",
       "after_sha256": "6ca4d38c963ff19f295f5d8f406d5b6221917fb4133805e5bfe46c9673fe0a19",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/05-3-packed-access.tex",
       "before_sha256": "8cfc9974f9828574b7546f29df2e1161f2a25f7f0c692ed52a41595968f6c897",
       "after_sha256": "b37b27c7ac1350b0ef013c89b3bc9f32e4ec69d239d624538f9b7d52f2a00d2e",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/05-4-global-selection.tex",
       "before_sha256": "8d6de7ce0bc99d68545b47bbb2274708d57e0002e075f965e7931ff5f664a94e",
       "after_sha256": "1532e51c50b58ac92aa1a863e8da124186f57356b75eb2d57a0457259691d3a4",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/05-5-bound-scheduling.tex",
       "before_sha256": "1eb53d5401bf5d4a4315134f1026e74dde87039a162f14496761668d528c9aa3",
       "after_sha256": "b78bb9720ab4a60034a63e111af9ed50082f46e5ef438d0512eb3c55e1c70db5",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/05-6-refinement.tex",
       "before_sha256": "3600e0334d80553fcfaa0bf85237b167b0993925d5dd39a34e2aebe0dba5a6c0",
       "after_sha256": "81b4f388d56aabac0d863e6072e9bc7a051de2f6cf5a64ac6570a1a7ade37a28",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/05-gpu-execution.tex",
       "before_sha256": "352fc492c8c4df331c51e2ff3e9f4c5747292581d7f13617bb51d23fd07355a1",
       "after_sha256": "67cab36f0561acac3f19c7f5139bda81332a46a9c668ce191d507956f322ca8d",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/06-2-agreement.tex",
+      "before_sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205",
+      "after_sha256": "3b6fbe395b3109cd9fed416acdff0c72a0daf07ebfbf4ab9301d82c8dbb6cbd8",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/06-3-search.tex",
+      "before_sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e",
+      "after_sha256": "45cdc3101449a47dc56088ad49b47c703b0e049becf4193d60b0e0597718b77a",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/06-5-economics.tex",
+      "before_sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295",
+      "after_sha256": "7e7439b6cb2e6c05d068fa6909c441396f3d59bd62d8ab1643e38c7169a18855",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/06-6-scope.tex",
       "before_sha256": "a5cd9fec9834b358cda1a77ec54b644ba2e90ad44945767ce3b3d2b401c9d480",
       "after_sha256": "844968e3f5660742f8b2d396691ebba61008b3934524671423a74c0d4f17141c",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/06-refinement.tex",
       "before_sha256": "edf300459ccada3fd21a5b37284f7d242c9b6e2259af0b1f0fee2cc86adf2a51",
       "after_sha256": "dc26aa45681fdc34a95d2d140571d1abde0d56d933ccba3a2ba0fcf5b39c80f0",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/07-evaluation.tex",
       "before_sha256": "7061b0bfb1e946fb770a90b17314b464a2c279f1a6072dfc5c6962305ef2e23d",
-      "after_sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "after_sha256": "8ce5021c27d5a5b73fcad5f0f61e4ed08b3cd5a9bd84132c3d0bcaa1211f9a1d",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/07-supp-budget.tex",
       "before_sha256": "a8e8aad088e789d765e638c3a37730a8ac47f24fb6b14b71202a76f699c358a9",
-      "after_sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "after_sha256": "2aafe5253c7e6e5f6c9d1a046828a56472925f8f94bb6c20caacd1c80a4bf2e2",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/08-1-insights.tex",
       "before_sha256": "375848b7d9436273649d57ddd72aa03b9915b7b2c91b355e46c5c675f7abbda8",
-      "after_sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "after_sha256": "d1b1d9ed18338d57170855e160c5eca91950d776f4cb80ecab49ee834b3ab257",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/08-2-negative.tex",
       "before_sha256": "9fd3e99236d45cc47beb976d94db2776aa1ccce50d85d4c52ca66da8ceb53b85",
       "after_sha256": "f1752d29552c2d5be83bf1064777c97a969f955e651f354be717b8c004717b36",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/08-3-validity.tex",
+      "before_sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd",
+      "after_sha256": "865103d196ef9f6ffbac9b75485aeab612a8a912225975a98f4ecb38c5f29636",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "chapters/08-5-deployment.tex",
+      "before_sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2",
+      "after_sha256": "2e4f6032c972450bbf45391b2ac40081d1a11179bef6a98cfbecf45f2cdbecfe",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/08-discussion.tex",
       "before_sha256": "1d0ed305c8b19cd25bc4b4a2eb86d369c92f761d622606f81219b9f419e69434",
       "after_sha256": "071e2bfc863217e3b293d4e8b886b6d127073215be4b11d7da01d585403b8ca1",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "chapters/09-conclusion.tex",
       "before_sha256": "88bd7983a7e5c2fc61a6285011116b234aefd284b2717dfcc184cd747e39c984",
       "after_sha256": "e57941221550827e5e692d800f3ef86d58d16f1ffec47d6d83994d113f3dcf06",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "config/layout.tex",
       "before_sha256": "e85235570d216a6bcc6ad816f48cbc60942b291a5ce52bb99d5c97347ba434d3",
       "after_sha256": "fdb9e9239ecfa28e97e42979eaccbd5903bc1676feb7ef201ecd4c03ff57e3fe",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "config/preamble.tex",
       "before_sha256": "2701f51a3c0370d7a3736ced00f8fca0050d58058afe98a10db47a2cb72bb1c2",
       "after_sha256": "193e2ef338a717d96a5d4f488aad33c03f3142c738228a0a893845d02d6f8ca3",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "frontmatter/abstract.tex",
       "before_sha256": "24d9b0f06c271f3c23f8510c224b8b0ac2240c5bff465f753b8fa8c621a8ac1f",
       "after_sha256": "3d6ce9810958cfc651e1bec5ac388c6e3b994c05ba56b0966054a3011734fef1",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "frontmatter/acknowledgements.tex",
       "before_sha256": "80e83bfb88e3880fb72ba5c088875bfb8680616a6fbd15dd16724ab1baec2fd6",
       "after_sha256": "a24e7ddb713a6401262411d0199ea8b0cfaf2e473f968e4d9556b186e895862f",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "frontmatter/declaration.tex",
       "before_sha256": "7bbad473711a37facb8ff005b92ae4432a0c6f0e490aec8d88b2edd4701520f9",
       "after_sha256": "375b7a6d29814182c0f6e39288972f6cf978f4bdef0202623a5248af2dd3d0ce",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "main-zh.tex",
       "before_sha256": "da8ce11c8cefb389e6cfd5dc2fa36c9e50d07e92a0d37fadb0953d0ac912905b",
       "after_sha256": "12949979059c7c49b5caf410b5926e9d33a812e5e793b2d47db4a17237dca38f",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "main.tex",
       "before_sha256": "3dac948d776c617d448201b98541c1d8d542d360c3531dc4484572e95fb5d8ba",
       "after_sha256": "7cfcb5504a3d852ee535911b1d04bb1e407d03e1429da726c16b544ed0a45a69",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "references.bib",
       "before_sha256": "788378b9c212f6f30cfb8500fc6c6bc5e36452d9a2b4a3fa4afdc5e27a0a3265",
       "after_sha256": "b0b6c2963280ebb6dbf2311fb2bdd2c3225516fd62d28f40d0866956c9c72ae3",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/abstract.tex",
       "before_sha256": "32f7c3596dd93d3e03e71510a367a6b9c3afb2572cdca75c36b735ed6be21ea0",
       "after_sha256": "b2b92a08849bcb22b87aa956afdfa413f385cf4d5a096e9aca72a37f80b932d2",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/acknowledgements.tex",
       "before_sha256": "1d0dff7df16307e27a0249f44271ecaef0e3c1f89677eb65a3a440d9738de320",
       "after_sha256": "91047d57c147608809cc2e6ce91f7b93aab9712a625104984e7c6128c7e0c840",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/appendices/b-supplementary.tex",
       "before_sha256": "c924c8743cbb6a718cdfe7ee35211d45e6f446b07b33c86c1b3f48c4b6193b82",
       "after_sha256": "d6803c4b98e81a283c81a341132dbee95888e986dbe9b9f062f9c31278d9169b",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/01-1-context.tex",
       "before_sha256": "1fad6266421bf437fb071002407d99191396900b4fa6d6b1c44833924f5b75d1",
       "after_sha256": "97040707d38385dd1430466f606827baf469e74deeb0cea99c5effe13a1acf81",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/01-3-challenges.tex",
       "before_sha256": "9b4c2085db917e476cda14433c96649a7f8b8efa1fad40008db4fb2623a8f65f",
       "after_sha256": "67d03bfb84957d3f38944b241251fdb1ced0a70535329196fceb0b50b51a1534",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/01-5-contributions.tex",
       "before_sha256": "3f1d58a915cd760ba7e725fda664a08d42e707ef13848d3033a492b9ef20cc8a",
       "after_sha256": "b7f93d505983c70b42ded7be490a2d4b27e5346a70f00f980fdd500279893aec",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/01-introduction.tex",
       "before_sha256": "65e9f3a6aa9fb8dafb075e2d66fadfc23164527fa9256390eb65f9945638661a",
       "after_sha256": "0742ec8e17c3fe59912c97f148f4f24370211f46ca047cc572823db461ac60a5",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/02-4-gpu.tex",
+      "before_sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d",
+      "after_sha256": "b85be527733e824288ec53b26fa61a4871709190b2e21a05a1e290d511dd4a18",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/02-5-graphs.tex",
+      "before_sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086",
+      "after_sha256": "e87ae06219ce90077fa9f072c0fce2c62240e5904f18c762cc70b28a4d2eabec",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/02-6-quantised.tex",
+      "before_sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350",
+      "after_sha256": "ddaa7f4d5943eee6c861d869758c87b741dfb1c02153232e43f6e7cf6c9affa6",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/02-7-gap.tex",
       "before_sha256": "c9ee3045957253b708e01926080525b8d0820d4e0c20836d008312f19dc76bfb",
       "after_sha256": "206306fd28e6526e86e83c6cda5baf5ca905099a9f6a917ea657f5387c704f9c",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/02-background.tex",
       "before_sha256": "97f2e13b1581824537fd2198684060d86973ba1355207f354dcd7c00fccf9188",
       "after_sha256": "bf85d6668a2d48af32934e74600dbcaf2f23307e47818fbe3c80dc0aaa302cd9",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/03-1-comparisons.tex",
       "before_sha256": "06c41e79a3712a904f30e9c46d24c600b602e19fcdf618f5cc1ab9cf01b5ac3b",
       "after_sha256": "a6842068c2c61c3b8b98b617364992bab1f8bb803e9592fe32c5cf0d3b832460",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/03-2-data.tex",
       "before_sha256": "d295f7573038b3c04faf76db58d3fc63a8e4171aff9e8f7fbdc6cfacb4ea605e",
       "after_sha256": "aee423dc4dfdc672f1586941c11c63660f3fdabaf55aba8c84e56eb78d146d60",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/03-5-ledger.tex",
       "before_sha256": "c9a482cf4386cbd540bbbd4c79c9b8945269592ea8f47730733dadc025a89ff0",
       "after_sha256": "8ef399cdd64568fa4211c0ae306118c1f399b0cc82485c28c305e8a05b503c36",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/03-6-validity.tex",
       "before_sha256": "141576f49ef3e9883ea493643a0c01308f8d08f295541bf76e40955f376c9878",
       "after_sha256": "6d65100825f94342cf3c0a042a0026711a95f0c1eebafcba107070cc9d8b6b9a",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/03-methodology.tex",
       "before_sha256": "dbae06970aa2d8808911fb4f301b2bc5bc0a3ed01d6a2535682cdca1cb63bd4a",
       "after_sha256": "8ad37d66ba24ba8d7adf19e350b25464db5b4deabfd478c12dcfa026f6661e4e",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/04-1-boundaries.tex",
       "before_sha256": "3fc03235a055c30aa876c3a9c8068686f16edf3f1a14437403d97f6ab00c4666",
       "after_sha256": "0751ec16ae142ebe3d1e5282dd5f27825b38517f87deb2ac626c080f8c4b743c",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/04-2-training.tex",
       "before_sha256": "3158e3f91794ce25cbdfc1605675e2c8c38796db970167a45ce2935a9d39bc37",
       "after_sha256": "d8cb9ec8895fab1983a2e53385ebffa146e1bda64770bc0db12c5a9a46e68135",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/04-4-lifecycle.tex",
       "before_sha256": "cb5e60f2a3ccf4d304b9b5f08eb3d9ce84dda92dc9808679780c079e7ffb772f",
       "after_sha256": "228db57a25438df0660553c94dacb8f9fe884f69391b4ce4b1c15396f79d6180",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/04-5-construction.tex",
       "before_sha256": "f1ea49fd39340bf4cf47abe8d8bbbca0c6181ec92e5de4aadc91dace7543ce60",
       "after_sha256": "9fc69c8ae0ce53fdd99790d86ddcb94c8b84e2dee75443606db134f457807b69",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/04-6-contracts.tex",
       "before_sha256": "850e40e734d4968c3836cf97dbbb59cb2a01a38b499201cd2f0295c3f9caee76",
       "after_sha256": "543dd20a886ed9fb9ba657a9f97df0470c94b84dfbf05c81ae6aa1fac19680cf",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/04-architecture.tex",
       "before_sha256": "604003d787125af8fbe3284f6d6e1268d3afc2fb5dec80078eefa27ac30328f0",
       "after_sha256": "7464998e696f05592e08e95e7edb09cc1117038c66ce8708ec6d2a9a40525de5",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/05-2-lut.tex",
       "before_sha256": "470734032705149724239ab7bf143f2ecb6b9b0d3f2c3330b2445f8cd7ea7e30",
       "after_sha256": "b184278724445acd6f17201472743071a9ae22780d6ab6ebb2066485afedb347",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/05-3-packed-access.tex",
       "before_sha256": "3c2cdecc73ab7b519a9e0d28f6d6e6d6bfde1d169be48c05fccde74f4a531e69",
       "after_sha256": "dd549bb7376c9332251f2d779eb9218ce18337309a6272ae79f9c75e3a68fad6",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/05-4-global-selection.tex",
       "before_sha256": "472e38a4634673a0afa31214707e37e88efcbc60be6070dc52cdc028444a9bef",
       "after_sha256": "ba12faedbc8ccbda20adeb938da837604721995022f83423cb976691bcb76122",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/05-5-bound-scheduling.tex",
       "before_sha256": "5dd2f64a0977156d20bbca9fd9523dea343d34863172131af68a125484616239",
       "after_sha256": "076e8ef788672f0c26b18fe00856f4729dad5f816fb0c43ad737c5259114a164",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/05-6-refinement.tex",
       "before_sha256": "75a4fd9792628d91d4c3eb6193e3ef8a4585742ca7c4cf0d618096fa01bc5c40",
       "after_sha256": "ed60a17a6397b9aec083380ad8fc079b1a60e7e4ed2b44852cc3f9b2353c32d2",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/05-gpu-execution.tex",
       "before_sha256": "7a429d77c64616d412f0e5c76891f7889c2d0872368f0b7f082055b8ebdea46a",
       "after_sha256": "74b3da19883a66a651694eb5d25d28b72aecc432f377f7430aa59952111983cf",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/06-2-agreement.tex",
+      "before_sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914",
+      "after_sha256": "333cab55652255eca2837abf09d8be7c3fa8be39cfe3eab7c69fd776c5fbc0fc",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/06-3-search.tex",
+      "before_sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef",
+      "after_sha256": "523afcc5d5e550ee96f02adad9fe4b09b9254836b7916cd2aa482de1d94bc92d",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/06-5-economics.tex",
+      "before_sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6",
+      "after_sha256": "ee7e8d9b4d0ed6e24b805929a9aaeb312eb91d8627cd640dd6c76d4b9d42c90d",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/06-6-scope.tex",
       "before_sha256": "e004df9dc0e8c196d4c5da3e2acce212ea06e63b29a1ce2a876c562294988619",
       "after_sha256": "fa5ce709b44dbe33d9919abb9d87acb4c02b76d38c8fb8a1fc30888cc3b5ae56",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/06-refinement.tex",
       "before_sha256": "1e781a970986ac6064146f10733bc36c0f5cb9cc83e9a96ef535953711b7e67c",
       "after_sha256": "c7d6c676906063caea95a9e499b8352c9efa625afcc246c58c35d4d603308467",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
       "before_sha256": "35d9c2719c2f2bdb6746dbeb764b0e93a4b5d6fd339c1ccac1afd9d2504f5699",
-      "after_sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "after_sha256": "4fc1e33ca7a3fa3cad4aa4e73c7132c6cd49f7e8e5d5c31d4009f7862fe813dc",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/07-supp-budget.tex",
       "before_sha256": "ca80ce1ca9a22b8f9b10a90ac754d6651702b877d9315d7c8b69306092947a0e",
-      "after_sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "after_sha256": "b7855606bcfe53cfb326c213ae47cad588cd1dbe895112f6b94886a48d1f489f",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/08-1-insights.tex",
       "before_sha256": "013853dcf8763f35d1875444d0d03ec6061650e81d5d1fbc496a8e31dd36401b",
-      "after_sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "after_sha256": "ec6c412c223c93d2c17193f91b5ac44194d1ca0a292dfbd361d91723192fae53",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/08-2-negative.tex",
       "before_sha256": "707260eb84e4d7932f3c00db2c129c222b282b65d00f018f20b37f1f8896f41f",
       "after_sha256": "8dd3dad0f9c1cc53fde950c41f8f65f8cdc36cca9606f8384be6b8a71e3975dc",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/08-3-validity.tex",
+      "before_sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22",
+      "after_sha256": "3d8307a0d05dced9e5e4af9d19665de68bcae618987a0469292209496ec618c7",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
+    },
+    {
+      "path": "zh/chapters/08-5-deployment.tex",
+      "before_sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9",
+      "after_sha256": "22d83ef41adccdebaab4606251503f8cc25aa32741fd80e84ff6c4c99a2cd73d",
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/08-discussion.tex",
       "before_sha256": "bb99be2cc58aba8e156ce961b4ce76667e502538453a364c96e850ddc579571c",
       "after_sha256": "06aa65c2ab56e05411e1c968c616115c49a1db65f1311c72f13b6a0fa90ec3b8",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/chapters/09-conclusion.tex",
       "before_sha256": "11c088978dd51530498a541747cffa0d57d72c0b492900f0fb1da5d7a3aa0e05",
       "after_sha256": "bd8d81b0fa395402818884db380f5eaa861c62ead1e6163ab29e64e27246ef3a",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/declaration.tex",
       "before_sha256": "e73b7323143a37c09bb403b4bf034629890e1ae5ef9d4106cc64e8fc105d629c",
       "after_sha256": "2f331c30973c9726f6be1cdc82d408d010ca65e88bce319c0c34d195f646d3c4",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     },
     {
       "path": "zh/preamble.tex",
       "before_sha256": "1410ee195bd51fe70414261c8f5d7f49a8e1eb73a9a2276c829687556baa3e33",
       "after_sha256": "fc2bfe414a63bbab3d6d6546c168ff01f7408ce1d183e6d259283a4c1b55603e",
-      "reason": "Declared prose and layout rounds; final review removes process narration and clarifies measured scope"
+      "reason": "Recorded bilingual prose rounds; this round uses the exact selected-highlight edit ledger and four declared mathematical transformations"
     }
   ],
-  "patch": "evidence/editorial/f8dbf87/compression-from-03775b7.patch",
-  "patch_sha256": "61eb5bba98754aed975f2ce51fad5ce44b90608cf31e6dc1761fe869ffa6cfe9",
+  "patch": "evidence/editorial/9613db1/compression-from-03775b7.patch",
+  "patch_sha256": "255141c168f7035b7158e9c61547e8085ecebf8ec2931600a025ded99be1b27a",
   "archive_manifest": "evidence/editorial/03775b7/manifest.json",
   "chapter_words": [
     {
@@ -478,8 +574,8 @@
     {
       "chapter": 2,
       "before": 2419,
-      "after": 2402,
-      "removed": 17
+      "after": 1818,
+      "removed": 601
     },
     {
       "chapter": 3,
@@ -502,20 +598,20 @@
     {
       "chapter": 6,
       "before": 2366,
-      "after": 2197,
-      "removed": 169
+      "after": 2057,
+      "removed": 309
     },
     {
       "chapter": 7,
       "before": 7349,
-      "after": 6512,
-      "removed": 837
+      "after": 5608,
+      "removed": 1741
     },
     {
       "chapter": 8,
       "before": 1650,
-      "after": 1366,
-      "removed": 284
+      "after": 1219,
+      "removed": 431
     },
     {
       "chapter": 9,
@@ -526,12 +622,12 @@
   ],
   "chapters_and_abstract": {
     "before": 26932,
-    "after": 24033
+    "after": 22258
   },
   "word_count_scope": "Prose/captions, math and table bodies excluded; not an official course count",
-  "round_baseline": "f8dbf87d023fa77f3903c09d44f585beafa02120",
-  "round_patch": "evidence/editorial/f8dbf87/submission-polish.patch",
-  "round_patch_sha256": "a355c22710ed4655952b3e94d276cc23928921c6a62ca7ca94dd9542b2025fef",
+  "round_baseline": "9613db1d6727d0518b9e2ae75a9449d3a59b08db",
+  "round_patch": "evidence/editorial/9613db1/highlight-remediation.patch",
+  "round_patch_sha256": "54f9d7812267ec1e7fe82199cc4e8c5fceb946c930754f05531143dd52b87272",
   "approved_additions": [
     {
       "source": "chapters/08-1-insights.tex",
@@ -547,9 +643,9 @@
     }
   ],
   "round_words": {
-    "before": 24124,
-    "after": 24033,
-    "removed": 91
+    "before": 24033,
+    "after": 22258,
+    "removed": 1775
   },
   "frontmatter_reduction": {
     "frontmatter/declaration.tex": {
@@ -591,5 +687,6 @@
     ],
     "statement_proof_pairs": 8
   },
-  "internal_reference_cleanup": "assessment/internal-reference-edits.json"
+  "internal_reference_cleanup": "assessment/internal-reference-edits.json",
+  "highlight_remediation": "assessment/highlight-remediation-edits.json"
 }

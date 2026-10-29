@@ -1,0 +1,77 @@
+\subsection{二分与完整枚举}
+
+记 $J=|A|$。实现先计算一次样本参考，再在降序网格中寻找最大的可接纳下标：
+\par\noindent\begin{minipage}{\linewidth}
+\begin{enumerate}[leftmargin=*,itemsep=0.15em]
+\item 置 $l=0$、$h=J-1$。下标零为参考回退。
+\item 当 $l<h$，测试 $j=\lfloor(l+h+1)/2\rfloor$，运行 $A[j]$ 并计算 $D_S(A[j])$。
+\item 若 $D_S(A[j])\leq\epsilon$，置 $l=j$；否则置 $h=j-1$。
+\item 返回 $A[l]$；调用方在处理复用批次前应用该值。
+\end{enumerate}
+\end{minipage}\par\medskip
+八点网格除参考外至多需要三次完整候选预算搜索。调用语义、主机比较复杂度和计时边界见\cref{sec:a-budget-contract}。
+
+完整枚举重新计算参考，在完全相同样本上测试其他七个预算，选择最小被接纳乘数。两种计时都含新参考，统一成本边界。即使接纳集合存在空洞，枚举仍评价整个有限网格；二分要保证找到相同最小值，则需要接纳下标构成前缀。
+
+\subsection{单调性的充分条件}
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{proposition}[嵌套候选保留参考成员]
+\label{prop:6-monotonicity}
+对单条查询，假定路由固定，且 $\alpha\leq\beta\leq\alpha_{\rm ref}$ 时
+$C_\alpha\subseteq C_\beta\subseteq C_{\alpha_{\rm ref}}$。假定至少有 $k$ 个有效候选、精排分数固定、最终并列使用同一个确定全序。每个结果均为该顺序下精确 top-$k$，则
+\begin{equation}
+ |\mathcal R_\alpha\cap\mathcal R_{\rm ref}|
+ =|C_\alpha\cap\mathcal R_{\rm ref}|,
+ \qquad D_S(\alpha)\geq D_S(\beta).
+ \label{eq:6-monotonicity}
+\end{equation}
+后一结论要求条件对每个采样查询均成立。
+\end{proposition}
+\begin{proof}
+参考成员在最大保留集合中至多有 $k-1$ 个前驱。若它存在于较小集合，限制集合不会引入新前驱，因此仍处于该集合精确 top-$k$。与参考的交集，恰等于保留集合中存在的参考成员。嵌套只能增加这些成员；对查询求和缺失数即得不等式。
+\end{proof}
+\end{minipage}\par\medskip
+
+在同一固定完整 key 下进行精确主码 top-$c$，可在 $c$ 增大时提供嵌套前提。再固定精排完整 key，接纳便单调，下标形成前缀，二分找到网格中最小可接纳预算。GT recall 和执行速度均不在定理中：近似精排分数可能随候选池扩大而提升错误近邻的名次，运行时间也依赖硬件。
+
+\begin{figure}[tbp]
+\centering
+\input{figures/ch6/nesting-example}
+\caption[嵌套与非嵌套候选池]{构造的 $k=1$ 例子，精排顺序 $a\prec b\prec c$，参考为 $\{a\}$。嵌套情形保持参考成员；主码分数全并列时，不同并列选择可能产生非嵌套的中间候选池，破坏单调性。这些是解释用集合，不是 GPU 实测输出。}
+\label{fig:6-nesting}
+\end{figure}
+
+\subsection{评测分组路径的推论}
+
+运行头源码默认精确主码选择。同一次校准抽取内，$S$、路由和扫描线程数固定，\texttt{scheduled\_groups(S)} 与 $c$ 无关。改变预算影响缓冲容量和接纳工作，分组评分器仍使用相同 FP32 LUT 项与累加顺序。精排固定 $B_r$ 和 16 lanes，保持每候选的残差归约；最终选择使用 $(\refineddist,\mathrm{ID})$。
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{corollary}[分组校准]
+\label[corollary]{cor:6-grouped-calibration}
+对评测中的分组配置，在第四、五章的表示与共享界契约下，各预算的主码保留集合嵌套。因此\Cref{prop:6-monotonicity}适用，二分与枚举返回同一最小被接纳网格预算。
+\end{corollary}
+\begin{proof}
+\Cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}给出共同完整键 $(\primarydist,\mathrm{position})$ 下的精确主码 top-$c$，其前缀随 $c$ 增大而嵌套。固定的逐候选精排与精确最终全序提供\Cref{prop:6-monotonicity}的其余前提。
+\end{proof}
+\end{minipage}\par\medskip
+
+推论覆盖$S=32,64,128$的2,304次抽取中的2,176次；其余128次是
+OpenAI-3072在$S=128$的距离单block路径。补证逐次记录完整网格计数，
+2,304条曲线全部单调，决策均与枚举一致（\cref{sec:7-budget-trace}）。
+
+\paragraph{全池覆盖范围。}
+十二次$S=500$调用另计：两个Vogue单元分组，十个使用$\gscan=0$。
+补证新增全池枚举，十二条曲线均单调，所选预算均等于枚举得到的最小接纳预算，
+因此关闭了有限网格的实测缺口。十个距离路径仍不在
+\Cref{cor:6-grouped-calibration}中；要给一般嵌套保证，仍可要求共同截断顺序，
+或所有网格截断（含参考）均无跨界并列。匹配留出路径有助迁移，但不证明一般条件。
+
+\paragraph{基于排名的扩展。}
+在同样的嵌套与固定分数条件下，令 $\operatorname{rank}_{\rm P}(x)$ 为参考答案在共同主码 key 下从 1 开始的排名，则
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}\sum_{x\in\mathcal R_{\rm ref}(q)}
+ \mathbf1\{\operatorname{rank}_{\rm P}(x)>c(\alpha)\}.
+ \label{eq:6-rank-curve}
+\end{equation}
+导出这些排名，可从一次参考搜索恢复整条网格曲线。当前 harness 仍逐预算搜索；排名提取与传输是同一排序条件下的后续工作。

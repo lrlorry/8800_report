@@ -3,14 +3,20 @@
  A=(200,100,64,32,16,8,4,2),\qquad \alpha_{\rm ref}=A[0]=200.
  \label{eq:6-grid}
 \end{equation}
-对 $S$ 个校准查询 $\mathcal Q_S$，定义
+对$S$个校准查询$\mathcal Q_S$，定义
 \begin{equation}
- D_S(\alpha)=\sum_{q\in\mathcal Q_S}
- \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right),
- \qquad D_S(\alpha)\leq\epsilon.
+ \begin{aligned}
+ D_S(\alpha)
+ &=\sum_{q\in\mathcal Q_S}
+   \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right)\\
+ &=\frac12\sum_{q\in\mathcal Q_S}
+   |\mathcal R_\alpha(q)\triangle\mathcal R_{\rm ref}(q)|.
+ \end{aligned}
  \label{eq:6-agreement}
 \end{equation}
-评测中的 $\epsilon=1$ 允许整个样本共缺失一个参考 ID。它忽略结果顺序和距离差异；替换一个 ID 计一次，尽管对称差包含两个 ID。有限网格目标为
+当且仅当$D_S(\alpha)\leq\epsilon$时接受预算，取$\epsilon=1$：
+允许整个样本缺失一个参考ID，不计结果顺序或报告距离。有限网格目标为
+
 \begin{equation}
  \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
  \label{eq:6-selection-objective}
@@ -34,13 +40,20 @@
        |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
  \label{eq:6-reference-coverage}
 \end{equation}
-对有效定长输出集合，令 $r_{\mathcal Q_S}$ 为同一批查询的 GT recall。每个缺失参考 ID 至多损失一个 GT 命中，因此
+对有效的$k$元素输出，每个缺失参考ID至多损失一个GT命中。在同一样本上，
 \begin{equation}
- r_{\mathcal Q_S}(\alpha)\geq r_{\mathcal Q_S}({\rm ref})
-                         -\frac{D_S(\alpha)}{Sk}.
+ \begin{aligned}
+ r_{\mathcal Q_S}(\alpha)
+ &\geq r_{\mathcal Q_S}({\rm ref})-\frac{D_S(\alpha)}{Sk},\\
+ D_S(\alpha)\leq\epsilon
+ &\implies r_{\mathcal Q_S}(\alpha)
+       \geq r_{\mathcal Q_S}({\rm ref})-\frac{\epsilon}{Sk}.
+ \end{aligned}
  \label{eq:6-relative-recall}
 \end{equation}
-该界仅在样本内、相对参考成立。一致性控制相对参考的额外损失；参考自身质量仍需 GT 评价。\Cref{sec:7-recall-attribution}用重建 pilot 量化这一区别。
+\paragraph{适用范围。}
+该界仅在样本内、相对参考成立。参考自身剩余误差由GT评价
+（\cref{sec:7-recall-attribution}）。
 
 \subsection{抽样分辨率与有序检验}
 

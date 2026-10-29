@@ -44,23 +44,13 @@ When $T_{\rm chosen}<T_f$, the break-even count is
  B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
  \label{eq:6-payback}
 \end{equation}
-Strictly exceeding $B_{\rm reuse}^*$ gives positive saving. If the chosen
-batch is no faster, there is no throughput payback. Convert QPS to milliseconds as
-$T=1000n/Q$ for an $n$-query batch. Using $1/\overline Q$ is optimistic
-when choices vary, because $1/\mathbb E[Q]\leq\mathbb E[1/Q]$.
-Measured call boundaries are in \cref{sec:a-budget-contract}; direct
-calibration-plus-stream totals validate this model in four measured cells
-(\cref{sec:7-stream-cost}), with quality reported alongside time.
-\Cref{tab:7-budget-cost} gives the campaign's estimates.
+Positive saving requires $T_{\rm chosen}<T_f$ and
+$B_{\rm reuse}>B_{\rm reuse}^*$. Batch time is $T=1000n/Q$ milliseconds.
+When choices vary, $1/\mathbb E[Q]\leq\mathbb E[1/Q]$, so inverse mean
+QPS understates mean time. Timing boundaries are in
+\cref{sec:a-budget-contract}; \cref{sec:7-stream-cost} tests direct
+calibration-plus-reuse cost on four cells with quality alongside time.
+Campaign estimates are in \cref{tab:7-budget-cost}.
 
-\paragraph{A worked reuse calculation.}
-On OpenAI-1536 at 128 probes, full-pool calibration selects $\alpha=8$,
-requesting 80 survivors versus fixed 100's 1,000. Both arms have recall
-0.9280; their rates are 267,690 and 167,451 QPS. For 500 queries this
-gives $T_{\rm chosen}=1.868$\,ms and $T_f=2.986$\,ms. With 9.5\,ms
-calibration, $B_{\rm reuse}^*=8.50$: nine subsequent batches give positive
-modelled saving. These are calculations from archived arms, not directly
-timed stream costs.
-
-Recalibration every $H$ batches would add $T_{\rm cal}/H$ per batch;
-drift detection and automatic recalibration remain future work.
+Recalibration every $H$ batches adds $T_{\rm cal}/H$ per batch.
+Drift detection and automatic recalibration remain future work.

@@ -30,9 +30,11 @@ FULL的路径与共同排序条件见\cref{sec:6-3}。
  B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
  \label{eq:6-payback}
 \end{equation}
-严格超过 $B_{\rm reuse}^*$ 才有正节省；若选中批次不更快，则没有吞吐回本。对 $n$ 查询批，由 QPS 换算毫秒为 $T=1000n/Q$。选择变化时，$1/\mathbb E[Q]\leq\mathbb E[1/Q]$，因此使用 $1/\overline Q$ 偏乐观。实测调用边界见\cref{sec:a-budget-contract}；四个单元已用直接校准加查询流总成本验证这一模型，并同时报告质量（\cref{sec:7-stream-cost}）。\Cref{tab:7-budget-cost}给出当前实验估计。
+正节省需要$T_{\rm chosen}<T_f$且$B_{\rm reuse}>B_{\rm reuse}^*$。
+批次毫秒数为$T=1000n/Q$。选择变化时，$1/\mathbb E[Q]\leq\mathbb E[1/Q]$，
+故平均QPS倒数低估平均时间。计时边界见\cref{sec:a-budget-contract}；
+\cref{sec:7-stream-cost}在四个单元上直接检验校准加复用成本，同时报告质量。
+实验估计见\cref{tab:7-budget-cost}。
 
-\paragraph{一个复用成本算例。}
-OpenAI-1536 在 128 探针时，全池校准选择 $\alpha=8$，请求 80 个保留候选，固定 100 则为 1,000。两者 recall 均为 0.9280，速率分别为 267,690 和 167,451 QPS。500 查询时，由此得到 $T_{\rm chosen}=1.868$\,ms、$T_f=2.986$\,ms；校准为 9.5\,ms，故 $B_{\rm reuse}^*=8.50$，随后九批有正模型节省。这些是归档预算的算术计算，不是直接计时的查询流成本。
-
-若每 $H$ 批重新校准，会增加每批 $T_{\rm cal}/H$；漂移检测和自动重校准仍是后续工作。
+每$H$批重新校准增加每批$T_{\rm cal}/H$成本。
+漂移检测与自动重校准仍是后续工作。

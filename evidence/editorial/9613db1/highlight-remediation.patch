@@ -1,0 +1,1525 @@
+diff --git a/chapters/02-4-gpu.tex b/chapters/02-4-gpu.tex
+index f2e18bf..b5eaf5e 100644
+--- a/chapters/02-4-gpu.tex
++++ b/chapters/02-4-gpu.tex
+@@ -1,35 +1,20 @@
+-The implementation uses CUDA's SIMT execution: threads are organised into
+-blocks and 32-thread warps, with registers, block-shared memory and device
+-global memory serving different reuse scopes \cite{cuda_programming_guide}.
+-Coalescing groups neighbouring lane accesses into suitable memory
+-transactions; it does not require fewer logical code bits. Candidate-parallel
+-primary scanning assigns lanes to neighbouring vectors, while refinement
+-assigns several lanes to one survivor's coordinates. These mappings exploit
+-different available parallelism, so one mapping need not suit both stages.
++CUDA groups threads into blocks and 32-thread warps; registers, shared
++memory and global memory expose different reuse scopes
++\cite{cuda_programming_guide}. JHQ maps primary scanning across neighbouring
++candidates for coalesced loads, and refinement across one survivor's
++coordinates. Extra blocks can hide latency but duplicate LUTs and buffers;
++register/shared-memory use limits residency. These competing costs motivate
++the mappings evaluated in Chapter 5. Bandwidth or cache attribution would
++require counters beyond throughput measurements.
+ 
+-Occupancy is constrained by registers, shared state and block geometry.
+-More resident threads can hide latency, but more blocks per query can also
+-duplicate tables and local candidate buffers. Shared memory is valuable
+-when query data are reused enough to repay loading and synchronisation.
+-These observations motivate Chapter 5's table grouping, packed access and
+-batch-aware scheduling; the throughput ablations assess their combined
+-effects. A claim of bandwidth saturation or a specific cache bottleneck
+-would additionally require counters and a consistent physical-byte model.
++Selection must be designed with scoring. Faiss uses warp-oriented selection
++\cite{johnson_gpu}; bitonic, radix and merge primitives offer different
++state/work trade-offs. AIR top-$k$ and GridSelect address workload-dependent
++global selection \cite{gpu_topk}. JHQ uses these established ideas for
++routing and survivor retention.
+ 
+-Selection is itself substantial computation. Faiss's GPU work combines
+-efficient distance processing with warp-oriented selection
+-\cite{johnson_gpu}. Bitonic networks, radix methods and merge-based
+-approaches provide established building blocks with different $k$, input
+-length and state costs. AIR top-$k$ and GridSelect further illustrate why
+-global selection design depends on workload and whether scores arrive
+-on the fly \cite{gpu_topk}. This thesis adapts such ideas to JHQ's probe
+-selection and survivor retention; it does not claim to invent these primitives.
+-
+-CUDA Graph replay reduces repeated launch setup for a captured workload.
+-Capture, workspace allocation and changes in graph shape belong to the
+-index/search lifecycle, rather than the mathematical scoring rule.
+-Likewise, publishing a shared threshold requires an explicit ordering and
+-memory-access contract. Correct scalar scores do not alone prove concurrent
+-admission safe. Chapter 5 separates these correctness conditions from
+-performance measurements, and Chapter 3 keeps device profiling distinct
+-from the host-visible search interval.
++CUDA Graph replay reduces launch setup, while capture and workspace changes
++belong to the execution lifecycle. Shared-bound admission additionally needs
++the ordering and whole-key-access contracts of Chapter 5. Neither a correct
++scalar score nor device-only profiling establishes end-to-end correctness
++or host-visible performance.
+diff --git a/chapters/02-5-graphs.tex b/chapters/02-5-graphs.tex
+index b13356f..16ba3ca 100644
+--- a/chapters/02-5-graphs.tex
++++ b/chapters/02-5-graphs.tex
+@@ -1,33 +1,16 @@
+-Graph ANN replaces list scanning with navigation through promising
+-neighbourhoods. Its benefit is to avoid scoring most database vectors;
+-its GPU difficulty is the dependency between discovering a neighbour and
+-deciding which neighbourhood to expand. SONG separates graph search into
+-stages to expose distance parallelism and controls dynamic memory overhead
+-\cite{song}. This is an alternative access strategy, rather than a different
+-implementation of JHQ's fixed routed candidate universe.
++Graph ANN avoids most database scoring through data-dependent navigation.
++SONG separates GPU graph search into stages and controls dynamic memory
++overhead \cite{song}. CAGRA designs graph construction and search for GPU
++parallelism, with connectivity and search width as tuning parameters
++\cite{cagra}. Its edges and vectors create a capacity cost; E1 therefore
++includes both fp32 and quantised-vector CAGRA.
+ 
+-CAGRA designs graph construction and search for GPU parallelism, including
+-small- and large-batch queries \cite{cagra}. Its graph connectivity and
+-search width expose a different tuning surface from IVF probes. Storing
+-edges and vectors creates a capacity trade-off; quantised-vector CAGRA is
+-also relevant, so fp32 CAGRA alone is an incomplete compressed-index
+-comparison. The thesis measures both in E1. Their different operating
+-regions are reported under the common boundary rather than inferred from
+-cross-paper speedup numbers.
++BANG instead keeps compressed vectors on the GPU and the graph in host
++memory, trading complete device residency for communication and coordination
++\cite{bang}. Its billion-scale results concern that distributed working
++structure; JHQ's resident index has no comparable host-graph path.
+ 
+-BANG targets a different capacity regime: it keeps compressed vectors on
+-the GPU and accesses the host-resident graph through CPU/GPU cooperation
+-\cite{bang}. Capacity is obtained by distributing the working structures,
+-with transfer and coordination becoming part of the design. Its billion-scale
+-results demonstrate an alternative to complete device residency, not
+-capacity evidence for this thesis. The present JHQ implementation retains
+-its compressed search index on one device and has no comparable host-graph
+-execution path.
+-
+-The comparison therefore turns on access regularity, representation and
+-residency, not a general graph-versus-quantisation hierarchy. Graph navigation
+-can be attractive for a small number of queries; list scans expose regular
+-code access and abundant batch work. Either can be bottlenecked by selection
+-or movement. Which wins at a target recall is an empirical question for a
+-specified device, memory budget and workload. E1 tests that question at batch
+-1,000; internal small-batch JHQ gains do not answer it for graph competitors.
++Graph navigation and regular list scans expose different access and
++concurrency costs. Their ranking is tested at a specified recall, batch,
++device and call boundary: E1 uses batch 1,000, and T5 supplies the separate
++small-batch cross-system comparison (\cref{sec:7-smallbatch}).
+diff --git a/chapters/02-6-quantised.tex b/chapters/02-6-quantised.tex
+index 8834a1e..58014b6 100644
+--- a/chapters/02-6-quantised.tex
++++ b/chapters/02-6-quantised.tex
+@@ -1,63 +1,34 @@
+ \subsection{Learning a representation versus exploiting its structure}
+ 
+-Optimised product quantisation learns the space decomposition and codebooks
+-to reduce quantisation distortion \cite{opq}. Its rotation is optimised for
+-the data, whereas JHQ's random square rotation supports a cheap analytical
+-primary model. The trade-off involves fitting cost, reconstruction fidelity
+-and scorer structure. Improving a general learned codebook does not
+-automatically preserve the internal Cartesian product needed by an exact
+-16+16 decomposition.
+-
+-ScaNN's anisotropic quantisation work instead weights error according to
+-its relevance to maximum-inner-product retrieval, showing why reconstruction
+-MSE is not the only useful objective \cite{scann}. Its objective and
+-implementation setting differ from the squared-L2 hierarchical pipeline
+-here. The useful comparison is the choice of loss: a rank-sensitive
+-representation should be tested against actual retained-neighbour quality
+-and execution cost. The stopped rank-oriented experiment in Chapter 8
+-provides an example of this distinction within JHQ.
++OPQ learns rotation and subspace codebooks to reduce distortion
++\cite{opq}; JHQ's random square rotation supports an analytical primary
++model. A learned replacement can improve reconstruction while losing the
++Cartesian structure needed for exact 16+16 splitting.
++ScaNN weights quantisation error for maximum-inner-product retrieval
++\cite{scann}, illustrating why low reconstruction MSE need not preserve
++nearest-neighbour ranking. Chapter 8 tests that distinction within JHQ.
+ 
+ \subsection{Small lookup tables have substantial prior art}
+ 
+-PQ Fast Scan replaces reliance on cache-resident tables with tables suited
+-to CPU SIMD registers \cite{fastscan}. Quicker ADC generalises register
+-lookup techniques and introduces irregular quantisers and split tables
+-\cite{quickeradc}. These works establish that table shape and the execution
+-instruction set must be designed together. This thesis's claim is the exact
+-decomposition available from its inherited Cartesian coordinate structure,
+-and its measured implementation on a GPU. CPU SIMD results are conceptual
+-precedents, not throughput measurements on the tested GPU. FP32 table
+-association and cutoff ties still require separate numerical checking.
+-
+-RaBitQ also uses randomised quantisation and compact sign information,
+-with a distance estimator and theoretical error analysis
+-\cite{rabitq}. Multi-bit extensions trade storage for estimator accuracy
+-\cite{rabitq_multi}. Their guarantees attach to their specified constructions
+-and estimator assumptions. They cannot be transferred to JHQ merely because
+-both use rotations and binary components. In JHQ, primary signs select
+-survivors and an explicitly stored residual supplies the next precision
+-level; the resulting quality depends on both truncation and reconstruction.
++PQ Fast Scan targets CPU SIMD-register tables \cite{fastscan};
++Quicker ADC extends register lookup with irregular quantisers and split
++tables \cite{quickeradc}. These are precedents for co-designing table
++shape and execution, not GPU throughput measurements. JHQ's exact
++Cartesian split still requires numerical and cutoff-tie checks.
+ 
+-GPU IVF-RaBitQ brings this family into a complete GPU build/search design,
+-including GPU-oriented distance computation and fused search
+-\cite{ivfrabitq}. It is therefore a particularly relevant contemporary
+-baseline, rather than background evidence of a missing GPU quantiser.
+-Its fused execution makes clear that compact codes alone are insufficient:
+-the access and selection pipeline must also be competitive. E1 includes
+-multiple bit budgets, and its high-recall results limit any broad claim
+-of JHQ dominance.
++RaBitQ combines randomised compact codes with an analysed distance
++estimator \cite{rabitq}; multi-bit extensions trade storage for accuracy
++\cite{rabitq_multi}. JHQ instead uses signs for primary retention and
++stored residuals for refinement, so RaBitQ's guarantees do not transfer.
++GPU IVF-RaBitQ supplies GPU construction and fused search
++\cite{ivfrabitq}, making it a contemporary end-to-end baseline. E1 tests
++multiple bit budgets and reveals high-recall reversals.
+ 
+ \subsection{Refinement effort and adaptive stopping}
+ 
+-Candidate expansion and reranking already appear in Faiss's
+-\texttt{k\_factor} and cuVS refinement controls
+-\cite{faiss_refine,cuvs_refinement}. Faiss autotuning can use GT-labelled
+-queries to search recall--time trade-offs \cite{faiss_autotune}. Learned
+-adaptive termination predicts sufficient search effort
+-\cite{li_termination}; DARTH frames early termination around declarative
+-recall targets \cite{darth}. These are relevant alternatives to spending a
+-uniform effort everywhere. Chapter 6's particular policy selects one
+-workload-level survivor multiplier using unlabelled agreement with a larger
+-budget. It avoids a trained predictor, while inheriting the reference's
+-quality limits. This distinction is the policy's scope, rather than a claim
+-that adaptive search or refinement budgets are new ideas.
++Faiss's \texttt{k\_factor} and cuVS expose candidate expansion/refinement
++\cite{faiss_refine,cuvs_refinement}. Faiss autotuning uses GT-labelled
++queries \cite{faiss_autotune}; learned termination predicts effort
++\cite{li_termination}, while DARTH targets declarative recall
++\cite{darth}. Chapter 6 calibrates one unlabelled workload-level multiplier
++for reuse. It avoids a learned predictor but inherits reference error.
+diff --git a/chapters/06-2-agreement.tex b/chapters/06-2-agreement.tex
+index 7206e1d..15cff8b 100644
+--- a/chapters/06-2-agreement.tex
++++ b/chapters/06-2-agreement.tex
+@@ -7,15 +7,19 @@ $\mathcal R_{\rm ref}(q)=\mathcal R_{\alpha_{\rm ref}}(q)$. The descending grid
+ \end{equation}
+ For $S$ calibration queries $\mathcal Q_S$, define
+ \begin{equation}
+- D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+- \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right),
+- \qquad D_S(\alpha)\leq\epsilon.
++ \begin{aligned}
++ D_S(\alpha)
++ &=\sum_{q\in\mathcal Q_S}
++   \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right)\\
++ &=\frac12\sum_{q\in\mathcal Q_S}
++   |\mathcal R_\alpha(q)\triangle\mathcal R_{\rm ref}(q)|.
++ \end{aligned}
+  \label{eq:6-agreement}
+ \end{equation}
+-The evaluated $\epsilon=1$ permits one missing reference ID across the
+-whole sample. It ignores output order and distance differences; replacing
+-one ID counts once, although the symmetric difference contains two IDs.
+-The finite-grid objective is
++A budget is accepted iff $D_S(\alpha)\leq\epsilon$, with $\epsilon=1$:
++one missing reference ID across the sample, independent of result order
++or reported distances. The finite-grid objective is
++
+ \begin{equation}
+  \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
+  \label{eq:6-selection-objective}
+@@ -48,17 +52,21 @@ excluded by primary screening:
+        |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
+  \label{eq:6-reference-coverage}
+ \end{equation}
+-For valid fixed-size output sets, let $r_{\mathcal Q_S}$ denote GT recall
+-on these same queries. Each missing reference ID removes at most one GT hit, so
++For valid $k$-element outputs, each missing reference ID costs at most
++one GT hit. On the same sample,
+ \begin{equation}
+- r_{\mathcal Q_S}(\alpha)\geq r_{\mathcal Q_S}({\rm ref})
+-                         -\frac{D_S(\alpha)}{Sk}.
++ \begin{aligned}
++ r_{\mathcal Q_S}(\alpha)
++ &\geq r_{\mathcal Q_S}({\rm ref})-\frac{D_S(\alpha)}{Sk},\\
++ D_S(\alpha)\leq\epsilon
++ &\implies r_{\mathcal Q_S}(\alpha)
++       \geq r_{\mathcal Q_S}({\rm ref})-\frac{\epsilon}{Sk}.
++ \end{aligned}
+  \label{eq:6-relative-recall}
+ \end{equation}
+-This bound is sample-local and reference-relative. Agreement controls
+-additional loss relative to the reference; the reference's own quality
+-requires GT evaluation. \Cref{sec:7-recall-attribution} quantifies that
+-distinction with the reconstruction pilot.
++\paragraph{Scope.}
++This is a sample-local bound relative to the reference. GT evaluation
++measures the reference's remaining error (\cref{sec:7-recall-attribution}).
+ 
+ \subsection{Sampling resolution and ordered testing}
+ 
+diff --git a/chapters/06-3-search.tex b/chapters/06-3-search.tex
+index 4b47509..43ce0b9 100644
+--- a/chapters/06-3-search.tex
++++ b/chapters/06-3-search.tex
+@@ -41,12 +41,18 @@ The latter statement holds when these conditions hold for every sampled
+ query.
+ \end{proposition}
+ \begin{proof}
+-A reference item has fewer than $k$ predecessors in the largest survivor
+-set. If it is present in a smaller set, restriction cannot introduce new
+-predecessors, so it remains in that set's exact top-$k$. Thus the
+-intersection with the reference equals the reference items present in
+-the survivor set. Nestedness can only add such items. Summing missing
+-reference counts over queries proves the inequality.
++For $x\in\mathcal R_{\rm ref}\cap C_\alpha$, the common total order gives
++\begin{equation*}
++ |\{y\in C_\alpha:y\prec x\}|
++ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
++\end{equation*}
++Hence $x\in\mathcal R_\alpha$. Together with
++$\mathcal R_\alpha\subseteq C_\alpha$, this proves the intersection
++identity in \cref{eq:6-monotonicity}. Nestedness gives
++$|C_\alpha\cap\mathcal R_{\rm ref}|
++ \leq|C_\beta\cap\mathcal R_{\rm ref}|$.
++Summing missing reference counts over queries proves
++$D_S(\alpha)\geq D_S(\beta)$.
+ \end{proof}
+ \end{minipage}\par\medskip
+ 
+diff --git a/chapters/06-5-economics.tex b/chapters/06-5-economics.tex
+index 619972f..c0e9cd7 100644
+--- a/chapters/06-5-economics.tex
++++ b/chapters/06-5-economics.tex
+@@ -44,23 +44,13 @@ When $T_{\rm chosen}<T_f$, the break-even count is
+  B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
+  \label{eq:6-payback}
+ \end{equation}
+-Strictly exceeding $B_{\rm reuse}^*$ gives positive saving. If the chosen
+-batch is no faster, there is no throughput payback. Convert QPS to milliseconds as
+-$T=1000n/Q$ for an $n$-query batch. Using $1/\overline Q$ is optimistic
+-when choices vary, because $1/\mathbb E[Q]\leq\mathbb E[1/Q]$.
+-Measured call boundaries are in \cref{sec:a-budget-contract}; direct
+-calibration-plus-stream totals validate this model in four measured cells
+-(\cref{sec:7-stream-cost}), with quality reported alongside time.
+-\Cref{tab:7-budget-cost} gives the campaign's estimates.
+-
+-\paragraph{A worked reuse calculation.}
+-On OpenAI-1536 at 128 probes, full-pool calibration selects $\alpha=8$,
+-requesting 80 survivors versus fixed 100's 1,000. Both arms have recall
+-0.9280; their rates are 267,690 and 167,451 QPS. For 500 queries this
+-gives $T_{\rm chosen}=1.868$\,ms and $T_f=2.986$\,ms. With 9.5\,ms
+-calibration, $B_{\rm reuse}^*=8.50$: nine subsequent batches give positive
+-modelled saving. These are calculations from archived arms, not directly
+-timed stream costs.
+-
+-Recalibration every $H$ batches would add $T_{\rm cal}/H$ per batch;
+-drift detection and automatic recalibration remain future work.
++Positive saving requires $T_{\rm chosen}<T_f$ and
++$B_{\rm reuse}>B_{\rm reuse}^*$. Batch time is $T=1000n/Q$ milliseconds.
++When choices vary, $1/\mathbb E[Q]\leq\mathbb E[1/Q]$, so inverse mean
++QPS understates mean time. Timing boundaries are in
++\cref{sec:a-budget-contract}; \cref{sec:7-stream-cost} tests direct
++calibration-plus-reuse cost on four cells with quality alongside time.
++Campaign estimates are in \cref{tab:7-budget-cost}.
++
++Recalibration every $H$ batches adds $T_{\rm cal}/H$ per batch.
++Drift detection and automatic recalibration remain future work.
+diff --git a/chapters/07-evaluation.tex b/chapters/07-evaluation.tex
+index 114a321..0cccac1 100644
+--- a/chapters/07-evaluation.tex
++++ b/chapters/07-evaluation.tex
+@@ -93,45 +93,24 @@ The small arXiv--RaBitQ difference changes direction with the estimator.}
+ \input{tables/ch7/matched97}
+ \end{table}
+ 
+-Against CAGRA fp32, interpolated ratios at this target range from
+-$1.317\times$ on arXiv to $1.747\times$ on the two OpenAI datasets.
+-Against IVF-RaBitQ, the corresponding values are $1.059\times$,
+-$0.996\times$, $1.130\times$ and $1.157\times$. The arXiv result is a
+-near tie whose direction depends on the estimator.
+-
+-The paired E1 one-block measurements connect RQ2 to this RQ4 result.
+-Rebuilding Vogue's frontier with $\gscan=0$ reduces its 0.97 ratio to
+-RaBitQ from $1.059$ to $0.933$; at 0.96 the corresponding ratios are
+-$1.250$ and $1.072$. Both use the same run--budget grid and log-QPS
+-interpolation at batch 1,000. The favourable
+-direction therefore depends on the scheduled grouped path in this grid.
+-The comparison holds the index, probes, budget and final outputs fixed
+-within each pair; it measures the integrated path, rather than isolating
+-the shared bound's contribution alone.
+-
+-
+-Across targets 0.90--0.985, JHQ's interpolated advantage over CAGRA fp32
+-is approximately $1.10$--$2.44\times$ in the covered comparisons.
+-However, adding CAGRA int8 changes the low-recall interpretation: around
+-0.90--0.92, its lower-precision graph search can be faster than JHQ.
+-At higher recall, IVF-RaBitQ often regains the lead, including several
+-targets at 0.98 or above. On arXiv around 0.99, CAGRA fp32 is also faster
+-than JHQ in the recorded grid. JHQ's favourable region is bounded by
+-both target recall and competing representation.
+-
+-CAGRA int8 reaches maximum measured recalls of 0.9453, 0.9620, 0.9667 and
+-0.9683 on Vogue, arXiv, OpenAI-1536 and OpenAI-3072, respectively. It
+-therefore has no qualifying point at 0.97 in these grids. At targets
+-0.90--0.92 it is approximately $1.20$--$1.98\times$ faster than JHQ by the
+-same interpolation rule; it remains faster at 0.95 on arXiv and at 0.94
+-on both OpenAI datasets. The 0.97 result concerns methods with measured
+-coverage and does not extend to every target below 0.97.
+-
+-The two estimators can disagree substantially where the grid is sparse.
+-For example, at recall 0.97 the OpenAI-1536 comparison with CAGRA fp32 is
+-$1.747\times$ by interpolation but $2.294\times$ using qualifying measured
+-points. The measured estimator pays for the next qualifying baseline
+-point; the gap between estimators exposes grid sensitivity.
++At recall 0.97, JHQ's interpolated rate is $1.317$--$1.747\times$
++CAGRA fp32's. It also leads IVF-RaBitQ on three datasets; arXiv is a
++near tie whose direction changes with the estimator (\cref{tab:7-matched}).
++Grid spacing matters: OpenAI-1536's CAGRA comparison is $1.747\times$
++by interpolation and $2.294\times$ at qualifying measured points.
++
++Vogue's lead depends on the grouped execution path. Replacing it by
++$\gscan=0$ changes the recall-0.97 ratio against RaBitQ from $1.059$
++to $0.933$ on the same batch-1,000 grid. Each pair fixes the index,
++probes, budget and final outputs. This links RQ2 to RQ4 through the
++integrated path, without isolating the shared bound alone.
++
++The advantage changes with the recall target. CAGRA int8 is about
++$1.20$--$1.98\times$ faster at 0.90--0.92 but has no qualifying point
++at 0.97 in these grids. IVF-RaBitQ regains the lead at several targets
++of 0.98 or above; CAGRA fp32 also leads on arXiv near 0.99.
++\Cref{fig:7-frontiers} therefore supports a high-recall operating region,
++with both the competitor's precision and measured coverage specified.
+ 
+ \input{chapters/07-supp-precision}
+ 
+@@ -151,14 +130,11 @@ ratio at 1.747 in both datasets and changes the RaBitQ ratio from
+ advantages. Dimension alone therefore does not explain the observed
+ advantage within this paired corpus/embedding contrast.
+ 
+-The advantage instead co-varies with refinement demand: the E1 setup's
+-128-probe budget anchors are 4--8 for OpenAI, 64 for Vogue and 100 for
+-arXiv (the later full-pool rule selects 200 there). Their 0.97 RaBitQ
+-ratios are respectively 1.130--1.157, 1.059 and 0.996. This four-dataset
+-association agrees with the design of selective residual access; the
+-anchors are neither equal-recall frontier parameters nor a causal
+-isolation of primary quality. The ablations below test execution
+-components directly.
++The four-dataset advantage co-varies with the 128-probe refinement
++anchors: 4--8 for OpenAI, 64 for Vogue and 100 for arXiv
++(the later FULL rule selects 200 there). These anchors are not the
++matched-recall frontier parameters, so the association does not isolate
++primary quality causally.
+ 
+ The interface, memory and compilation differences in \cref{sec:3-3}
+ remain relevant to small margins. \Cref{sec:7-8} examines their empirical
+@@ -426,19 +402,15 @@ fixed-budget recall.}
+ \input{tables/ch7/budget_quality}
+ \end{table}
+ 
+-The important counterexample is arXiv. At 128 probes, 40/64 draws lose
+-more than $10^{-3}$ recall even though mean loss is only 0.0009; at
+-512 probes, 32/64 draws cross the threshold. BGE at 512 probes has
+-24/64 threshold crossings and a 95th-percentile loss of 0.0014. Stella
+-has fewer crossings but a 95th-percentile loss of 0.0030 at both probe
+-depths. OpenAI-3072 has no observed crossings in this finite pool. Mean
+-loss, crossing frequency and tail magnitude distinguish these outcomes.
+-
+-Under the lower-order percentile convention in \cref{sec:a-budget-contract}
+-(zero-based index 59),
+-four nonzero tail losses can coexist with $L_{95}=0$, as on OpenAI-1536.
+-The crossing count in the table preserves that distinction.
+-
++ArXiv exposes the sampling risk: 40/64 draws at 128 probes and 32/64
++at 512 exceed the $10^{-3}$ loss threshold, despite mean loss 0.0009
++in both cells. Fixed 100 itself loses 0.0012/0.0016, so improvement
++over that default coexists with failure against the stronger target.
++Other tails are in \cref{tab:7-budget-quality}: BGE/512 has 24/64
++crossings and $L_{95}=0.0014$; Stella has $L_{95}=0.0030$ at both
++probe depths, while OpenAI-3072 has no observed crossings.
++Under the percentile convention in \cref{sec:a-budget-contract},
++four nonzero losses can coexist with $L_{95}=0$, as on OpenAI-1536.
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -450,34 +422,19 @@ slot-disagreement fraction because \cref{eq:6-agreement} keeps threshold one.}
+ \label{fig:7-budget-risk}
+ \end{figure}
+ 
+-\Cref{fig:7-budget-risk} shows the effect of sample size. A larger sample
+-usually makes selection more conservative, but also tightens the
+-normalized allowance $1/(10S)$. Same-sample enumeration agrees with
+-bisection in all 2,304 draws ($12\times3\times64$), while taking
+-1.75--2.01 times as long in the printed logs.
+-
+-\Cref{cor:6-grouped-calibration} covers 2,176 of the 2,304 draws.
+-The remaining 128 OpenAI-3072 draws at $S=128$ use distance-only cutoff
+-ties and agree with enumeration empirically. Path changes in eight cells
+-concern calibration-to-evaluation transfer, separately from this check.
+-
+-
+-Across the eight fixed choices, $\alpha=64$ and 100 each qualify in
+-ten of twelve cells against the diagnostic quality target; $\alpha=200$
+-qualifies in all twelve. Among qualifying cells, their maximum QPS deficits
+-to the diagnostic oracle are 26.6\%, 40.9\% and 57.1\%, respectively.
+-Full-pool
+-calibration selects 100 on Vogue at both probe depths while the oracle
+-selects 64: reference agreement and fastest quality-constrained selection
+-have different objectives. Here $\alpha=200$ attains the best measured
+-recall, so its 12/12 qualification follows from its role as the coverage
+-control.
+-The short fixed-arm timings have apparent small-budget inversions.
+-Supplementary alternating repetitions resolve the cited OpenAI inversion
+-as timing variation and establish a low-budget plateau
+-(\cref{sec:7-budget-trace}). Minimum accepted budget consequently need
+-not maximise throughput.
++Increasing $S$ tightens the normalised allowance $1/(10S)$ as well
++as changing sample coverage (\cref{fig:7-budget-risk}).
++The grouped-path guarantee covers 2,176/2,304 sampled draws;
++the remaining 128 distance-only cases are empirical checks
++(\cref{cor:6-grouped-calibration}). Enumeration and FULL verification
++are reported in \cref{sec:7-budget-trace}.
+ 
++Fixed 64 and fixed 100 each meet the diagnostic quality target in 10/12
++cells; fixed 200 meets it in all twelve. FULL selects 100 on Vogue
++where the fastest qualifying oracle arm is 64: minimum reference
++disagreement and maximum quality-constrained throughput are different
++objectives. The observed low-budget timing plateau reinforces this
++distinction.
+ 
+ \subsection{Estimated throughput and calibration economics}
+ 
+@@ -488,20 +445,11 @@ and 0.917: mean recall improves, but throughput falls, giving no
+ throughput payback.
+ 
+ 
+-The stronger $\alpha=64$ comparison reduces the aggregate gain:
+-mean selected-arm QPS wins in 9/12 cells, with geometric-mean ratio
+-$1.054\times$ and range $0.821$--$1.367\times$. It is nearly unchanged
+-on Vogue and improves only 0.6\% on BGE at 512 probes; OpenAI gains
+-range from $1.052$ to $1.367\times$. Both fixed 64 and fixed 100 qualify
+-in 10/12 cells, failing the two arXiv cells. The useful property of
+-calibration is matching heterogeneous refinement demands, rather than
+-uniformly beating an already sensible fixed budget.
+-
+-ArXiv's threshold crossings are relative to the best tested held-out
+-recall, not relative to the default configuration. Fixed 100 already
+-loses 0.0012 and 0.0016 recall at probes 128 and 512, while the sampled
+-mean loss is 0.0009 in both cells. Mean quality therefore improves over
+-the default despite some draws exceeding the oracle-relative target.
++Against fixed 64, selected-arm QPS wins in 9/12 cells with geometric
++mean $1.054\times$ and range $0.821$--$1.367\times$; OpenAI gains are
++$1.052$--$1.367\times$. Both fixed controls fail the two arXiv quality
++targets. These are consequently joint quality/time comparisons, rather
++than uniform speedups over an acceptable fixed budget.
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -516,31 +464,14 @@ held-out loss target.}
+ \input{tables/ch7/budget_cost}
+ \end{table}
+ 
+-Calibration costs 3.9--21.3\,ms under the boundary in
+-\cref{sec:a-budget-contract}. Applying \cref{eq:6-payback} with fixed
+-$\alpha=100$ and $T_{\rm rule}\approx1000n/\overline Q_{\rm rule}$ in milliseconds gives the estimates
+-in \cref{tab:7-budget-cost}: 2.4--55.4 subsequent held-out-sized batches
+-against fixed 100 in favourable cells. Against fixed 64, the corresponding
+-range is 5.7--404.3 batches in nine favourable cells; Vogue at 512 probes
+-has no throughput payback. The two arXiv controls also miss the quality
+-target, so their timing comparisons are diagnostics rather than
+-comparisons at matched quality. At the control rates, the largest positive
+-$S=128$ break-even estimates correspond to 0.54\,s versus fixed 100
+-and 2.72\,s versus fixed 64 (about 27.7K and 202.2K queries).
+-Full-pool positive cases reach at most 1.52/2.25\,s and 64.9K/78.7K
+-queries against those controls, using their own calibration costs.
+-These modelled horizons favour reuse on long stable jobs.
+-
+-
+-These estimates inherit the mean-rate inversion and stationary-reuse
+-assumptions analysed in \cref{sec:6-5}. Direct execution below checks
+-their net-cost implication on the recorded query stream.
+-
+-
+-The newer lane-refined pipeline leaves less removable refinement work
+-than the historical scalar implementation.
+-The runs share the budget protocol and grid, but this cross-campaign
+-comparison does not isolate refinement as the sole cause of the change.
++Calibration costs 3.9--21.3\,ms. Applying \cref{eq:6-payback} gives
++the batch estimates in \cref{tab:7-budget-cost}, subject to the
++stationary-reuse and inverse-mean-rate assumptions of \cref{sec:6-5}.
++The largest positive $S=128$ payback estimates correspond to
++0.54/2.72\,s against fixed 100/64; FULL's corresponding maxima are
++1.52/2.25\,s. ArXiv's fixed controls miss the quality target, so their
++timing ratios are diagnostic. Direct reuse below tests net cost with
++quality reported alongside time.
+ 
+ \input{chapters/07-supp-budget}
+ 
+@@ -552,27 +483,30 @@ scan groups supply useful parallelism, and when their extra work dominates.
+ 
+ \subsection{Parallelism versus repeated selection work}
+ 
+-The scan experiments reveal two execution regimes. With one block per
+-query, batch 8 exposes only eight blocks on a 170-SM device. Candidate
+-partitioning increases the available block parallelism. In the independent-bound grouped-scan
+-experiment, eight groups improve end-to-end throughput by
+-$2.06$--$2.76\times$ at batch 8. Profiling supports a stage-level
+-explanation: arXiv's scan falls from about 849 to 216\,$\mu$s, Vogue's
+-from 1,059 to 246\,$\mu$s, and OpenAI-3072's from 728 to 155\,$\mu$s.
+-The additional merges cost approximately 16.7, 9.1 and 3.7\,$\mu$s,
+-respectively. The net reduction is large even after paying for merging.
+-
+-At batch 1,000 there are already enough independent queries to expose
+-many blocks. Additional groups repeat table staging, local-buffer
+-admission and sorting, and produce extra merge traffic. The independent-bound
+-grouped path can fall to about $0.46\times$ its one-block baseline on
+-arXiv at $\alpha=200$. The full-batch profiles show scan increasing from
+-2,922 to 6,079\,$\mu$s at $\alpha=100$ and from 3,530 to
+-7,652\,$\mu$s at $\alpha=200$, with an additional 2,624\,$\mu$s
+-merge in the latter case. This opposing result is central to the design:
+-parallel decomposition solves insufficient concurrency, but incurs work
+-that can dominate once concurrency is adequate. Shared bounds reduce
+-that extra work but do not eliminate the regime change.
++For a fixed workload and timing boundary, separate scan, merge and
++remaining execution time:
++\begin{equation}
++ \begin{aligned}
++ T^{(g)}&=T_{\rm scan}^{(g)}+T_{\rm merge}^{(g)}+T_{\rm other}^{(g)},\\
++ \Delta T(g)&=T^{(g)}-T^{(0)},\qquad
++ T^{(g)}<T^{(0)}\iff\Delta T(g)<0.
++ \end{aligned}
++ \label{eq:7-group-cost}
++\end{equation}
++Here $g=0$ denotes the query-centric implementation and $g>0$ a grouped
++path. The three time categories are disjoint: staging and local
++selection already included in scan time are not charged again.
++This is an accounting identity, not an analytical latency predictor.
++
++At batch 8, one block per query exposes only eight blocks on 170 SMs.
++Eight scan groups improve end-to-end throughput by $2.06$--$2.76\times$.
++For example, arXiv's scan falls from 849 to 216\,$\mu$s while merging
++adds 16.7\,$\mu$s. At batch 1,000, arXiv with $\alpha=200$ instead
++increases scan time from 3,530 to 7,652\,$\mu$s and adds
++2,624\,$\mu$s of merging; the independent-bound path reaches only
++about $0.46\times$ its one-block throughput. Extra parallelism repays
++its duplicated work in the first regime and loses in the second.
++Shared bounds reduce work without removing this regime change.
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -604,21 +538,14 @@ additional configurations were measured.
+ \input{tables/ch7/scheduling}
+ \end{table}
+ 
+-\Cref{tab:7-scheduling} recomputes the results from the raw timing arrays.
+-The scheduled geometric-mean gains are $2.727\times$, $2.356\times$,
+-$1.057\times$ and $1.015\times$ at batches 8, 32, 256 and 1,000.
+-The first three batch sizes have thirteen configurations, including a
+-high-budget arXiv control; batch 1,000 has eleven because Stella has only
+-999 queries. The held-out subsets contain nine and seven configurations.
+-Thus the connected means describe partly different configuration sets.
+-
+-Fixed eight-group execution matches the scheduled mean closely at batch
+-8 but falls to $0.886\times$ at batch 1,000. Scheduling largely retains
+-the small-batch gain while avoiding that full-batch loss. At batch 256
+-its worst ratio of best fixed
+-throughput to scheduled throughput is 1.217, on a BGE configuration.
+-Candidate-count CV does not capture every cost of list traversal,
+-selection or merging.
++\Cref{tab:7-scheduling} gives the paired gains and evaluation subsets.
++The small-batch means use thirteen configurations; batch 1,000 uses
++eleven because Stella has 999 queries, with nine/seven held-out
++configurations respectively. Scheduling retains the batch-8 benefit
++while protecting full-batch execution: fixed eight groups fall to
++$0.886\times$ at batch 1,000. The largest scheduler regret is
++1.217 on BGE at batch 256, showing that candidate-count CV omits
++some traversal and selection costs.
+ 
+ Vogue illustrates both the value and limits of the skew feature. Its E1
+ candidate-count CV ranges from 0.338 to 0.622 as probes change, forcing
+@@ -691,17 +618,15 @@ reported boundaries. Downstream quality and resident cost are evaluated
+ separately.
+ 
+ 
+-Across five independent builds per dataset at fixed 128-probe points,
+-the largest recall range is 0.0012 on arXiv; normal timing ranges use
+-only the three uninstrumented builds. The broader startup boundary is material: Stella takes 18.2--18.6\,s
+-with warm input pages and 129.9\,s on its session-first read. The
+-phase diagnostic synchronises stages and changes the pipeline to one
+-buffer, so its timing is excluded from normal-build ranges. Twenty-millisecond
+-device samples observe 26.08\,GiB for BGE near add entry and 22.58\,GiB
+-for Stella during repack. BGE's three assignment-product buffers total
+-12\,GiB; they belong to the early pipeline lifetime, not to the later
+-23.05\,GiB gather payload (\cref{eq:4-assignment-scratch}). These results
+-show why resident memory alone understates construction capacity.
++Five independent builds give a maximum fixed-point recall range
++of 0.0012 on arXiv; normal timing uses three uninstrumented builds.
++Startup is a broader boundary: Stella takes 18.2--18.6\,s with warm
++input pages, versus 129.9\,s on the session-first read.
++Twenty-millisecond device sampling observes 26.08\,GiB near BGE's
++add entry and 22.58\,GiB during Stella's repack. BGE's three
++assignment buffers total 12\,GiB in an earlier lifetime than the
++23.05\,GiB gather payload (\cref{eq:4-assignment-scratch}); the two
++allocations must not be summed as a simultaneous peak.
+ 
+ \subsection{Resident allocation and where compression helps}
+ 
+@@ -721,24 +646,17 @@ resident markers are not peaks.}
+ \label{fig:7-memory}
+ \end{figure}
+ 
+-Residual codes dominate the large datasets: approximately 80.7\% of
+-BGE's 11.93\,GiB and 82.9\% of Stella's 20.44\,GiB used totals.
+-The corresponding raw FP32 vector arrays alone would require 38.50
+-and 67.81\,GiB. JHQ therefore enables the tested resident search on one
+-card by retaining a compressed hierarchy. Lowering $\alpha$ reduces
+-residual codes accessed and scored per query, but leaves the stored
+-residual array allocated. Similarly, Cartesian LUT factorization reduces
+-query-specific table storage, not the database's residual-code precision.
+-
+-Workspace also matters. The reported list-group scratch is approximately
+-93.8\,MiB in these $\alpha=100$ measurements, reserved for a batch
+-capacity of 1,024 and up to eight groups even when the selected execution
+-uses the one-block path. A smaller actual group count therefore does
+-not imply that the allocation shrank proportionally. Conversely, these
+-resident samples do not capture temporary construction peaks. The
+-baseline harness also initializes some search memory pools after its
+-index-memory measurement, so an after-build index delta cannot be used
+-as a complete peak process-memory budget across methods.
++Residual codes account for 80.7\% of BGE's 11.93\,GiB and 82.9\%
++of Stella's 20.44\,GiB measured totals. Raw FP32 vectors alone would
++require 38.50 and 67.81\,GiB. These resident totals include context
++and query workspace; lowering $\alpha$ changes residual access rather
++than the stored array. The component model is in \cref{sec:4-4}.
++
++The reserved group workspace is about 93.8\,MiB even on the one-block
++path, for batch capacity 1,024 and up to eight groups. Actual group
++count therefore does not determine allocated capacity. Construction
++peaks and after-build index deltas also exclude different allocations;
++some baseline search pools are initialised after index-memory measurement.
+ 
+ The E1 measurements provide a separate cross-system view in
+ \cref{tab:7-e1-memory}. Subtracting the baseline-measured 507.2\,MiB
+diff --git a/chapters/07-supp-budget.tex b/chapters/07-supp-budget.tex
+index cd1e697..e5b0cee 100644
+--- a/chapters/07-supp-budget.tex
++++ b/chapters/07-supp-budget.tex
+@@ -1,37 +1,27 @@
+ \subsection{Complete decision traces and finite-pool risk}
+ \label{sec:7-budget-trace}
+ 
+-The supplementary harness preserves the original grid, trained state,
+-query split and seeded draws, adding complete records. All twelve
+-fixed-arm recalls reproduce at the archived precision; full-pool choices,
+-sampled median choices and crossing counts reproduce. Timing changes the
+-GT oracle's fastest arm in two near-tied cells, illustrating that this
+-diagnostic also depends on measured speed.
+-
+-All 2,304 sampled disagreement curves are monotone and their selected
+-budgets match enumeration. The twelve full-pool curves also pass both
+-checks. Moreover, summing full-pool per-query counts over each recorded
+-sample's actual IDs reproduces all 18,432 grid counts. This is stronger
+-than checking the selected budget alone, and supports using
+-\cref{eq:6-finite-pool} for these observations despite the scan-path
+-changes. It checks aggregate counts on the traced subsets, rather than
+-per-query invariance on every possible subset.
+-
++All 2,304 sampled curves are monotone and bisection selects the
++enumerated minimum; the twelve FULL calls also pass both checks.
++Summing full-pool per-query counts over recorded sample IDs reproduces
++all 18,432 grid counts, supporting \cref{eq:6-finite-pool} on these
++subsets. This aggregate check does not establish per-query invariance
++for arbitrary subsets or positions. The structural grouped-path
++guarantee and distance-only exceptions remain those of
++\cref{sec:6-3}.
+ 
+ At $S=128$, maxima reach 0.0050 for arXiv/512 and 0.0046 for BGE/512;
+ at $S=32$ the largest is 0.0294. A low mean loss therefore coexists
+ with occasional materially worse chosen budgets. FULL's maximum across
+ the twelve cells remains 0.0006.
+ 
+-For arXiv/128, the finite-pool model predicts crossing probabilities
+-0.965, 0.875 and 0.620 at $S=32,64,128$, against 0.984, 0.875 and
+-0.625 observed (\cref{fig:7-finite-pool}). Acceptance uses only reference
+-outputs; translating its selection probabilities into GT-loss crossings
+-uses the fixed-arm held-out quality map. The calculation is therefore an
+-offline risk explanation, not a label-free GT guarantee. Across the 36
+-comparisons, the largest absolute gap is 0.144 for BGE/512 at $S=128$
+-(0.519 predicted, 0.375 observed). The fixed-pool calculation isolates
+-sampling risk without fitting a population model to held-out recall gaps.
++For arXiv/128, predicted crossings at $S=32,64,128$ are
++0.965/0.875/0.620, versus 0.984/0.875/0.625 observed
++(\cref{fig:7-finite-pool}). The largest discrepancy among 36 comparisons
++is 0.144 on BGE/512 at $S=128$ (0.519 predicted, 0.375 observed).
++Prediction conditions on stable query counts and uses held-out fixed-arm
++quality to map accepted budgets to GT loss; the agreement decision itself
++uses no labels.
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -42,24 +32,18 @@ conditional on the fixed pool, not uncertainty over future workloads.}
+ \label{fig:7-finite-pool}
+ \end{figure}
+ 
+-Ten alternating remeasurements also remove the apparent small-budget
+-speed inversion. OpenAI-3072/128 gives 142.3/142.7 kQPS at
+-$\alpha=4/2$, versus 145.0/128.7 in the original short timing. BGE/128
+-and Vogue/512 likewise approach a plateau. This supports treating the
+-archived inversions as timing variation; it does not imply monotone
+-runtime for all budgets or resource thresholds.
++Ten alternating repetitions resolve the apparent small-budget speed
++inversion into a low-budget timing plateau. This observation does not
++impose monotone runtime across all budgets and resource transitions.
+ 
+ \subsection{Direct calibration-plus-reuse measurement}
+ \label{sec:7-stream-cost}
+ 
+-Four cells directly execute fixed 64, fixed 100, sampled $S=128$ and
+-FULL policies, rotating policy order over five rounds. Each calibrated
+-round gathers its sample, calibrates once, explicitly installs the chosen
+-multiplier, then times 500 consecutive held-out batches. The first batch
+-includes any graph recapture. The same held-out pool is replayed, rather
+-than sampling new traffic. Index construction, prior warm-up and the
+-separately timed schedule calibration are outside this boundary.
+-\Cref{tab:7-stream-cost} reports the cumulative measurements.
++Four cells compare fixed 64/100 with sampled and FULL calibration
++over five rotated-policy rounds and 500 held-out batches. The timer
++includes gathering, calibration, budget installation and first-batch graph
++setup; construction, warm-up and scan calibration are excluded.
++The same query pool is replayed (\cref{tab:7-stream-cost}).
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+@@ -78,21 +62,15 @@ and takes 1,783\,ms including its larger calibration cost. On
+ OpenAI-1536/128, FULL takes 860 versus 1,491\,ms at the same recall
+ 0.9280; the sampled policy averages 852\,ms and 0.9276 recall.
+ 
+-The steady-rate fit to the sampled stream gives break-even counts of
+-3.6/5.5 batches against fixed 100/64 on OpenAI-1536, and 3.5/8.9 on
+-OpenAI-3072. These fractional values fit directly timed calibration and
+-steady batches; they are not directly observed fractional crossings.
+-\Cref{fig:7-stream-cost} instead plots measured cumulative totals,
+-including first-batch setup. The first positive mean cumulative savings
+-occur at 4/6 batches on OpenAI-1536 and 4/9 on OpenAI-3072 against
+-fixed 100/64. BGE/512 has a smaller sampled saving,
+-4,921 versus 5,185\,ms against fixed 100, but mean recall 0.9658 versus
+-0.9670; its FULL policy restores 0.9664 at 5,062\,ms. ArXiv's FULL
+-policy selects 200 for higher quality and is slower than fixed 100/64,
+-both of which miss the quality target. Thus timing and quality jointly
+-determine whether calibration is worthwhile. The measurements support
+-reuse economics without requiring the old fitted payback values to
+-match exactly in every cell.
++Measured mean cumulative savings first appear at 4/6 batches on
++OpenAI-1536 and 4/9 on OpenAI-3072 against fixed 100/64
++(\cref{fig:7-stream-cost}); fractional steady-rate fits are separate
++model estimates. BGE/512 trades lower time for lower mean recall:
++4,921 versus 5,185\,ms and 0.9658 versus 0.9670 for sampled/fixed 100.
++FULL reaches 0.9664 at 5,062\,ms. ArXiv's FULL policy selects 200 for
++quality and is slower than fixed 100/64, which miss the target.
++Calibration's benefit therefore depends jointly on quality and total
++reuse cost.
+ 
+ \begin{figure}[tbp]
+ \centering
+diff --git a/chapters/08-1-insights.tex b/chapters/08-1-insights.tex
+index 7028cd5..70576f8 100644
+--- a/chapters/08-1-insights.tex
++++ b/chapters/08-1-insights.tex
+@@ -1,24 +1,20 @@
+ \subsection{A useful representation exposes a useful unit of reuse}
+ 
+-The coordinate-group LUT in \cref{sec:5-2} computes distances once for
+-reuse across candidates. Yet the grouping results and Mailman case show
+-that storage savings alone do not determine throughput (\cref{fig:7-lut}).
+-Shared-memory placement and word access must be considered together
+-(\cref{sec:5-2,sec:5-3}). Two groups are an empirical default on this GPU.
+-A codebook change can remove Cartesian compatibility, so reconstruction
+-error must be assessed alongside the scorer's attainable recall--cost
++Two groups win most measured cells, while the Mailman alternative loses
++despite additional arithmetic reuse (\cref{fig:7-lut}). Table size,
++shared-memory placement and packed access jointly determine the useful
++reuse unit (\cref{sec:5-2,sec:5-3}). Changing the codebook must therefore
++be judged on both reconstruction quality and the attainable scorer
+ frontier.
+ 
+ \subsection{Useful parallelism is bounded by duplicated state and selection}
+ 
+-The batch trend in \cref{fig:7-batch} reflects the cost of duplicating
+-staging, selection and merging once query concurrency is sufficient.
+-Vogue's path-sensitive frontier and BGE's regret expose what CV misses:
+-absolute work and decomposition cost (\cref{sec:7-2,sec:7-6}). These
+-integrated comparisons remain separate from the shared-bound ablation.
+-A richer scheduler could combine candidate count, survivor capacity and
+-local-buffer cost while retaining the query-centric path; its calibration
+-cost and held-out workload performance would need evaluation.
++Once query concurrency is sufficient, duplicated staging, selection and
++merging can outweigh extra parallelism (\cref{fig:7-batch}).
++Vogue and BGE expose the scheduler's missing features: absolute candidate
++work and decomposition cost (\cref{sec:7-2,sec:7-6}). A richer rule would
++need to repay its own calibration cost on held-out workloads; the
++integrated results do not isolate the shared-bound ablation.
+ 
+ \subsection{Execution speed changes the value of avoiding refinement}
+ 
+@@ -34,12 +30,9 @@ its derivatives are
+  \frac{\partial S}{\partial T_0}
+  =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
+ \end{align}
+-For $F_h>F_\ell$, faster refinement reduces the benefit of cutting its budget, while
+-lower fixed cost increases it. This model holds non-refinement work
+-constant; budget-dependent scan maintenance and resource transitions
+-require measurement. A causal kernel comparison would fix candidate sets
+-and budget decisions (\cref{sec:7-5,sec:7-stream-cost}).
+-
+-The FULL results and sampled tails show why this cost decision also
+-needs a quality constraint and sufficient reuse
++For $F_h>F_\ell$, faster refinement reduces the value of cutting its
++budget; lower fixed cost increases it. The derivatives hold with
++non-refinement work fixed. Budget-dependent scan maintenance and
++resource transitions require the controlled comparisons of
++\cref{sec:7-5,sec:7-stream-cost}. Quality and reuse remain constraints
+ (\cref{tab:7-budget-full,fig:7-budget-risk}).
+diff --git a/chapters/08-3-validity.tex b/chapters/08-3-validity.tex
+index 643ac58..cdb97bb 100644
+--- a/chapters/08-3-validity.tex
++++ b/chapters/08-3-validity.tex
+@@ -30,12 +30,9 @@ sub-interval allocations and full retrained frontiers remain unmeasured \\
+ \end{tabularx}
+ \end{minipage}\par\medskip
+ 
+-External validity is limited by one GPU, squared-L2 top-10 and six
+-prepared embedding datasets. The batch-dependent operating regions are
+-reported in \cref{sec:7-smallbatch}. Query removal by position does not
+-certify the absence of near-duplicate embeddings, and the exports are not
+-a relevance-labelled retrieval benchmark. Database updates, concurrent
+-traffic, deployment latency objectives and changing query populations
+-remain untested. The resident-index results supply no billion-scale or
+-multi-device capacity evidence. These are the remaining checks before
+-transferring an observed region to deployment.
++Coverage is one GPU, squared-L2 top-10 and six prepared embedding
++datasets (\cref{sec:7-smallbatch}). Positional query removal does not
++exclude near-duplicate embeddings, and the exports lack relevance labels.
++Updates, concurrent traffic, changing query populations and deployment
++latency targets remain untested, as do billion-scale and multi-device
++capacity.
+diff --git a/chapters/08-5-deployment.tex b/chapters/08-5-deployment.tex
+index a2f5a99..66d549d 100644
+--- a/chapters/08-5-deployment.tex
++++ b/chapters/08-5-deployment.tex
+@@ -1,14 +1,7 @@
+-JHQ-GPU merits evaluation when a compressed resident hierarchy fits the
+-device and the required recall lies within its measured competitive region.
+-E1 supports high-recall throughput at batch 1,000; T5 instead favours
+-CAGRA fp32 at recall 0.97 and batch 8 on all four datasets. At batch 32,
+-OpenAI-3072 is close under interpolation and favourable to JHQ under the
+-measured threshold; the other three favour CAGRA. Lower-recall JHQ
+-advantages also depend on dataset and grid. Grouped scheduling helps
+-JHQ internally without guaranteeing a cross-system lead
+-(\cref{sec:7-smallbatch}).
+-
+-Start calibration from the recorded FULL working point, then validate
+-quality and direct reuse cost on deployment queries. Compare total time
+-and resident memory under the actual batch regime, subject to the
+-external-validity limits in \cref{sec:8-3}.
++Deployment should match the measured batch and recall regime.
++E1 supports high-recall throughput at batch 1,000; at batch 8 and recall
++0.97, T5 favours CAGRA fp32 on all four datasets. At batch 32,
++OpenAI-3072's near tie changes with the estimator; the other three
++favour CAGRA (\cref{sec:7-smallbatch}). Start from FULL calibration,
++then validate quality, total reuse time and resident memory on deployment
++queries under the limits in \cref{sec:8-3}.
+diff --git a/zh/chapters/02-4-gpu.tex b/zh/chapters/02-4-gpu.tex
+index 707f13d..2ec502c 100644
+--- a/zh/chapters/02-4-gpu.tex
++++ b/zh/chapters/02-4-gpu.tex
+@@ -1,20 +1,14 @@
+-CUDA SIMT把线程组织成block与32线程warp，寄存器、block共享内存及global memory
+-服务不同复用范围\cite{cuda_programming_guide}。
+-Coalescing把邻lane访问组织成合适事务，不要求逻辑码位更少。
+-primary扫描把lane分给相邻向量，精排则让多个lane合作处理一个survivor的坐标；
+-两者利用不同并行度，一个映射不必同时适合两阶段。
++CUDA将线程组织成block和32线程warp；寄存器、共享内存与global memory服务不同
++复用范围\cite{cuda_programming_guide}。JHQ主码扫描将相邻候选映射到相邻线程，
++精排则将一个候选的坐标分给多个lane。更多block能隐藏延迟，却重复LUT与缓冲；
++寄存器和共享内存限制驻留。这些成本推动第5章的映射选择，具体带宽或cache归因
++还需吞吐之外的计数器。
+ 
+-寄存器、共享状态和block几何限制occupancy。更多驻留线程能隐藏延迟，
+-更多单查询block也会重复表与局部缓冲。数据复用足以抵消加载与同步时，共享内存才有价值。
+-这些概念推动第5章拆表、packed访问与batch调度，吞吐消融测其组合效果。
+-带宽饱和或具体cache瓶颈还需计数器及一致的物理字节模型。
++选择须与评分共同设计。Faiss采用warp选择\cite{johnson_gpu}；
++bitonic、radix和merge原语在状态与工作量上有不同取舍。
++AIR top-$k$与GridSelect研究依赖工作负载的全局选择\cite{gpu_topk}。
++JHQ将这些已有思路用于路由和候选保留。
+ 
+-选择本身也是重要计算。Faiss GPU工作把高效距离与warp选择结合\cite{johnson_gpu}。
+-bitonic、radix和merge都是已有构件，对$k$、长度和状态成本有不同取舍。
+-AIR top-$k$和GridSelect进一步展示全局选择如何取决于工作负载及分数是否流式产生
+-\cite{gpu_topk}。本文把这些思路适配到JHQ的probe与survivor保留，不把原语称为新发明。
+-
+-CUDA Graph回放降低重复launch设置；capture、工作区分配与图形状变化属于生命周期，
+-不是数学打分规则。共享阈值发布同样需要排序和内存访问契约；
+-标量分数正确并不足以证明并发准入安全。第5章把正确性条件与性能测量分开，
+-第3章区分设备profile和主机可见搜索区间。
++CUDA Graph回放减少launch设置，capture与工作区变化则属于执行生命周期。
++共享界准入还需第5章的排序及完整key访问契约。标量分数正确或设备侧剖析
++均不足以建立端到端正确性及主机可见性能。
+diff --git a/zh/chapters/02-5-graphs.tex b/zh/chapters/02-5-graphs.tex
+index 628956e..c5707a3 100644
+--- a/zh/chapters/02-5-graphs.tex
++++ b/zh/chapters/02-5-graphs.tex
+@@ -1,19 +1,12 @@
+-图ANN通过有希望的邻域导航替代列表扫描，以避免评分大多数向量。
+-GPU难点在于“发现邻居”与“选择扩展哪个邻域”之间的数据依赖。
+-SONG把搜索拆成阶段来暴露距离并行，并控制动态内存开销\cite{song}。
+-这是替代访问策略，不是JHQ固定路由全集的另一种实现。
++图ANN通过依赖数据的导航避免对多数向量评分。
++SONG将GPU搜索分阶段以暴露距离并行，控制动态内存成本\cite{song}；
++CAGRA共同设计建图与搜索，以覆盖小批和大批查询\cite{cagra}。
++连通性与搜索宽度形成不同于IVF探针的调参面。CAGRA fp32与量化向量模式
++均是相关对照，表示方式改变速度与容量。
+ 
+-CAGRA针对GPU并行设计建图与搜索，覆盖小batch和大batch\cite{cagra}。
+-图连通性与search width形成不同于IVF probe的调参面。
+-边与向量的存储形成容量取舍；量化向量CAGRA同样重要，所以只测fp32图索引不足以
+-评价压缩索引。E1包含二者，在共同边界下报告不同工作区间，不拿跨论文提速比相除。
++BANG采用主机图与GPU压缩向量，扩大容量并引入传输和协调\cite{bang}。
++本文JHQ将压缩搜索索引保留在单卡，没有相同的主机图路径。
+ 
+-BANG针对另一容量区间：GPU保存压缩向量，CPU/GPU合作访问主机图\cite{bang}。
+-拆分工作结构获得容量，同时引入传输与协调成本。其十亿规模说明完整常驻之外的
+-替代方案，不构成本论文的容量证据。本文JHQ压缩搜索索引保留在单卡，
+-没有相同的主机图执行路径。
+-
+-因此比较取决于访问规则性、表示与驻留方式，而不是图和量化的普遍优劣。
+-少量查询时图导航可能有吸引力，列表扫描则暴露规则编码访问与batch并行。
+-二者都可能受选择或移动限制；目标recall下谁更快，必须指定设备、显存和工作负载实测。
+-E1只测试batch 1,000，JHQ内部小batch收益不能回答相对图基线的问题。
++因此比较须指定访问规则性、表示、驻留方式和目标recall。
++E1评测batch 1,000；\cref{sec:7-smallbatch}用共同小batch协议直接比较图与量化方法。
++单独的内部调度收益不能决定相对图基线的表现。
+diff --git a/zh/chapters/02-6-quantised.tex b/zh/chapters/02-6-quantised.tex
+index 2b43de3..19a47e8 100644
+--- a/zh/chapters/02-6-quantised.tex
++++ b/zh/chapters/02-6-quantised.tex
+@@ -1,35 +1,23 @@
+ \subsection{学习表示与利用表示结构}
+-OPQ通过学习空间分解和码本降低失真\cite{opq}，其旋转为数据优化；
+-JHQ随机平方旋转支持廉价解析primary模型。取舍涉及拟合成本、重建保真和评分结构，
+-更好的通用学习码本未必保留16+16精确分解所需的内部Cartesian乘积。
+-
+-ScaNN的各向异性量化根据最大内积检索的重要性加权误差，说明重建MSE不是唯一有用
+-目标\cite{scann}。其目标与实现环境不同于本文平方L2层次流水线。
+-可比的是损失选择：面向排序的表示仍须检验实际近邻保留及执行成本。
+-第8章停止的排序研究在JHQ内部提供了例子。
++OPQ学习旋转和子空间码本以降低失真\cite{opq}；JHQ的随机旋转则支持解析primary模型。
++通用学习码本未必保留$16+16$精确分解所需的Cartesian结构。
++ScaNN按最大内积排序重要性加权量化误差\cite{scann}，说明MSE不是唯一目标；
++本文评估平方L2下近邻保留与GPU执行成本。
+ 
+ \subsection{小查找表已有充分先行工作}
+-PQ Fast Scan把依赖cache的表改造成适于CPU SIMD寄存器的表\cite{fastscan}；
+-Quicker ADC推广寄存器查找，引入不规则量化器与split tables\cite{quickeradc}。
+-这些工作说明表形状要与执行指令共同设计。本文的范围是继承Cartesian坐标结构所支持
+-的精确分解及其GPU实测；CPU SIMD结果提供概念先例，不是本GPU的吞吐。
+-FP32结合顺序和cutoff并列仍需独立数值检查。
+-
+-RaBitQ也使用随机化量化与紧凑符号信息，具有特定距离估计器及理论误差分析
+-\cite{rabitq}；多bit扩展以存储换估计精度\cite{rabitq_multi}。
+-其保证属于相应构造和假设，不能因双方都用旋转与二值组件就转移给JHQ。
+-JHQ主符号选survivor，显式存储的残差提供下一精度层；质量同时依赖截断与重建。
++PQ Fast Scan将表重组为适于CPU SIMD的寄存器查找\cite{fastscan}，
++Quicker ADC扩展到不规则量化器和split tables\cite{quickeradc}。
++JHQ利用内部Cartesian结构实现GPU因子化；FP32结合顺序及截断并列仍需数值检验。
+ 
+-GPU IVF-RaBitQ把该族整合成GPU建库与搜索，包括GPU距离计算和融合搜索
+-\cite{ivfrabitq}，因此是直接相关的现代基线，不是“缺少GPU量化器”的背景证据。
+-其融合执行说明紧凑编码还需要有竞争力的访问和选择流水线。
+-E1纳入多个bit预算，其高recall结果限制JHQ的宽泛优势主张。
++RaBitQ用随机化与紧凑符号信息建立特定距离估计器和误差界\cite{rabitq}；
++多bit扩展以存储换精度\cite{rabitq_multi}。GPU IVF-RaBitQ进一步融合GPU建库、
++评分与搜索\cite{ivfrabitq}，是直接竞争基线。其理论保证不能因表示相似而转移给JHQ；
++JHQ以主符号筛选候选，再显式读取残差层。
+ 
+ \subsection{精排工作量与自适应停止}
+-候选扩张和重排已经存在于Faiss的\texttt{k\_factor}及cuVS refinement控制
+-\cite{faiss_refine,cuvs_refinement}。Faiss autotuning可用GT标签搜索recall--时间取舍
+-\cite{faiss_autotune}；学习式自适应终止预测足够搜索量\cite{li_termination}，
+-DARTH围绕声明式recall目标组织早停\cite{darth}。
+-这些都是均匀工作量之外的相关替代。第6章的具体策略用大预算参考的无标签一致性，
+-为整个工作负载选择一个survivor倍率，省去预测器训练，却继承参考的质量局限。
+-这是策略范围，不表示自适应搜索或精排预算是新概念。
++Faiss的\texttt{k\_factor}与cuVS refinement已提供候选扩张控制
++\cite{faiss_refine,cuvs_refinement}。Faiss autotuning用GT探索recall--时间取舍
++\cite{faiss_autotune}；学习式终止预测搜索充分性\cite{li_termination}，
++DARTH以声明式recall目标组织早停\cite{darth}。
++第6章以无标签参考一致性为整个工作负载选择一个倍率，无需预测器训练，
++但继承参考自身的误差。
+diff --git a/zh/chapters/06-2-agreement.tex b/zh/chapters/06-2-agreement.tex
+index 315ffd3..0b5c237 100644
+--- a/zh/chapters/06-2-agreement.tex
++++ b/zh/chapters/06-2-agreement.tex
+@@ -3,14 +3,20 @@
+  A=(200,100,64,32,16,8,4,2),\qquad \alpha_{\rm ref}=A[0]=200.
+  \label{eq:6-grid}
+ \end{equation}
+-对 $S$ 个校准查询 $\mathcal Q_S$，定义
++对$S$个校准查询$\mathcal Q_S$，定义
+ \begin{equation}
+- D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+- \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right),
+- \qquad D_S(\alpha)\leq\epsilon.
++ \begin{aligned}
++ D_S(\alpha)
++ &=\sum_{q\in\mathcal Q_S}
++   \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right)\\
++ &=\frac12\sum_{q\in\mathcal Q_S}
++   |\mathcal R_\alpha(q)\triangle\mathcal R_{\rm ref}(q)|.
++ \end{aligned}
+  \label{eq:6-agreement}
+ \end{equation}
+-评测中的 $\epsilon=1$ 允许整个样本共缺失一个参考 ID。它忽略结果顺序和距离差异；替换一个 ID 计一次，尽管对称差包含两个 ID。有限网格目标为
++当且仅当$D_S(\alpha)\leq\epsilon$时接受预算，取$\epsilon=1$：
++允许整个样本缺失一个参考ID，不计结果顺序或报告距离。有限网格目标为
++
+ \begin{equation}
+  \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
+  \label{eq:6-selection-objective}
+@@ -34,13 +40,20 @@
+        |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
+  \label{eq:6-reference-coverage}
+ \end{equation}
+-对有效定长输出集合，令 $r_{\mathcal Q_S}$ 为同一批查询的 GT recall。每个缺失参考 ID 至多损失一个 GT 命中，因此
++对有效的$k$元素输出，每个缺失参考ID至多损失一个GT命中。在同一样本上，
+ \begin{equation}
+- r_{\mathcal Q_S}(\alpha)\geq r_{\mathcal Q_S}({\rm ref})
+-                         -\frac{D_S(\alpha)}{Sk}.
++ \begin{aligned}
++ r_{\mathcal Q_S}(\alpha)
++ &\geq r_{\mathcal Q_S}({\rm ref})-\frac{D_S(\alpha)}{Sk},\\
++ D_S(\alpha)\leq\epsilon
++ &\implies r_{\mathcal Q_S}(\alpha)
++       \geq r_{\mathcal Q_S}({\rm ref})-\frac{\epsilon}{Sk}.
++ \end{aligned}
+  \label{eq:6-relative-recall}
+ \end{equation}
+-该界仅在样本内、相对参考成立。一致性控制相对参考的额外损失；参考自身质量仍需 GT 评价。\Cref{sec:7-recall-attribution}用重建 pilot 量化这一区别。
++\paragraph{适用范围。}
++该界仅在样本内、相对参考成立。参考自身剩余误差由GT评价
++（\cref{sec:7-recall-attribution}）。
+ 
+ \subsection{抽样分辨率与有序检验}
+ 
+diff --git a/zh/chapters/06-3-search.tex b/zh/chapters/06-3-search.tex
+index 5b74e53..64e0e66 100644
+--- a/zh/chapters/06-3-search.tex
++++ b/zh/chapters/06-3-search.tex
+@@ -29,7 +29,16 @@ $C_\alpha\subseteq C_\beta\subseteq C_{\alpha_{\rm ref}}$。假定至少有 $k$
+ 后一结论要求条件对每个采样查询均成立。
+ \end{proposition}
+ \begin{proof}
+-参考成员在最大保留集合中至多有 $k-1$ 个前驱。若它存在于较小集合，限制集合不会引入新前驱，因此仍处于该集合精确 top-$k$。与参考的交集，恰等于保留集合中存在的参考成员。嵌套只能增加这些成员；对查询求和缺失数即得不等式。
++对$x\in\mathcal R_{\rm ref}\cap C_\alpha$，共同全序给出
++\begin{equation*}
++ |\{y\in C_\alpha:y\prec x\}|
++ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
++\end{equation*}
++故$x\in\mathcal R_\alpha$。结合$\mathcal R_\alpha\subseteq C_\alpha$，
++即得\cref{eq:6-monotonicity}的交集恒等式。嵌套性给出
++$|C_\alpha\cap\mathcal R_{\rm ref}|
++ \leq|C_\beta\cap\mathcal R_{\rm ref}|$。
++对查询求和缺失参考数，即得$D_S(\alpha)\geq D_S(\beta)$。
+ \end{proof}
+ \end{minipage}\par\medskip
+ 
+diff --git a/zh/chapters/06-5-economics.tex b/zh/chapters/06-5-economics.tex
+index ed8e40d..56cddd2 100644
+--- a/zh/chapters/06-5-economics.tex
++++ b/zh/chapters/06-5-economics.tex
+@@ -30,9 +30,11 @@ FULL的路径与共同排序条件见\cref{sec:6-3}。
+  B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
+  \label{eq:6-payback}
+ \end{equation}
+-严格超过 $B_{\rm reuse}^*$ 才有正节省；若选中批次不更快，则没有吞吐回本。对 $n$ 查询批，由 QPS 换算毫秒为 $T=1000n/Q$。选择变化时，$1/\mathbb E[Q]\leq\mathbb E[1/Q]$，因此使用 $1/\overline Q$ 偏乐观。实测调用边界见\cref{sec:a-budget-contract}；四个单元已用直接校准加查询流总成本验证这一模型，并同时报告质量（\cref{sec:7-stream-cost}）。\Cref{tab:7-budget-cost}给出当前实验估计。
+-
+-\paragraph{一个复用成本算例。}
+-OpenAI-1536 在 128 探针时，全池校准选择 $\alpha=8$，请求 80 个保留候选，固定 100 则为 1,000。两者 recall 均为 0.9280，速率分别为 267,690 和 167,451 QPS。500 查询时，由此得到 $T_{\rm chosen}=1.868$\,ms、$T_f=2.986$\,ms；校准为 9.5\,ms，故 $B_{\rm reuse}^*=8.50$，随后九批有正模型节省。这些是归档预算的算术计算，不是直接计时的查询流成本。
+-
+-若每 $H$ 批重新校准，会增加每批 $T_{\rm cal}/H$；漂移检测和自动重校准仍是后续工作。
++正节省需要$T_{\rm chosen}<T_f$且$B_{\rm reuse}>B_{\rm reuse}^*$。
++批次毫秒数为$T=1000n/Q$。选择变化时，$1/\mathbb E[Q]\leq\mathbb E[1/Q]$，
++故平均QPS倒数低估平均时间。计时边界见\cref{sec:a-budget-contract}；
++\cref{sec:7-stream-cost}在四个单元上直接检验校准加复用成本，同时报告质量。
++实验估计见\cref{tab:7-budget-cost}。
++
++每$H$批重新校准增加每批$T_{\rm cal}/H$成本。
++漂移检测与自动重校准仍是后续工作。
+diff --git a/zh/chapters/07-evaluation.tex b/zh/chapters/07-evaluation.tex
+index 0da8c67..633367f 100644
+--- a/zh/chapters/07-evaluation.tex
++++ b/zh/chapters/07-evaluation.tex
+@@ -72,16 +72,20 @@ E1共1,590个有效点，没有失败记录、无效ID或行内重复标记。
+ \input{zh/tables/matched97}
+ \end{table}
+ 
+-相较于 CAGRA fp32，该目标下的插值比值从 arXiv 的 $1.317\times$ 到两个 OpenAI 数据集的 $1.747\times$ 不等。相较于 IVF-RaBitQ，对应数值分别为 $1.059\times$、$0.996\times$、$1.130\times$ 和 $1.157\times$。arXiv 接近平手，方向取决于估计方法。
++召回率0.97处，JHQ相对CAGRA fp32的插值速率比为$1.317$--$1.747\times$，
++相对IVF-RaBitQ则在三个数据集领先；arXiv接近平手，方向随估计方法变化
++（\cref{tab:7-matched}）。网格间距会影响比较：OpenAI-1536对CAGRA的比值，
++插值为$1.747\times$，实测达标点为$2.294\times$。
+ 
+-E1 同批单线程块测量把 RQ2 与这项 RQ4 结果连接起来。以 $\gscan=0$ 重建 Vogue 前沿，0.97 处相对 RaBitQ 的比值从 $1.059$ 降到 $0.933$；0.96处对应比值为$1.250$与$1.072$。两者使用相同运行—预算网格、batch 1,000及log-QPS插值规则。因此，这份网格中的有利方向依赖调度后的分组路径。每对保持索引、探针、预算和最终输出不变；它测的是集成路径，未单独隔离共享界的贡献。
++Vogue的领先依赖分组执行路径。同一batch 1,000网格改用$\gscan=0$后，
++召回率0.97处相对RaBitQ的比值从$1.059$降至$0.933$。
++每对固定索引、探针、预算及最终输出。这将RQ2与RQ4联系到集成路径，
++但未单独隔离共享界的贡献。
+ 
+-
+-在有共同覆盖的比较中，目标召回率 0.90--0.985 范围内，JHQ 相对 CAGRA fp32 的插值优势约为 $1.10$--$2.44\times$。但是，加入 CAGRA int8 后，低召回率区间的解释发生变化：在 0.90--0.92 附近，其低精度图搜索可以快于 JHQ。在更高召回率下，IVF-RaBitQ 常重新领先，包括若干 0.98 及以上目标。在 arXiv 约 0.99 的召回率处，记录网格中的 CAGRA fp32 也快于 JHQ。JHQ 的有利区间同时受到目标召回率与竞争表示的限制。
+-
+-CAGRA int8 在 Vogue、arXiv、OpenAI-1536 和 OpenAI-3072 上的最高实测召回率分别为 0.9453、0.9620、0.9667 和 0.9683，因此这些网格中没有达到 0.97 的配置。按相同插值规则，目标召回率 0.90--0.92 处，它约比 JHQ 快 $1.20$--$1.98\times$；在 arXiv 的 0.95 和两个 OpenAI 数据集的 0.94 处也仍然更快。0.97 的结果针对具有测量覆盖的方法，不能推广为低于 0.97 的每个目标均领先。
+-
+-网格稀疏时，两种估计可能有明显差异。例如，OpenAI-1536 在召回率 0.97 处相对 CAGRA fp32 的比值，插值为 $1.747\times$，而按满足阈值的实测点计算为 $2.294\times$。实测估计支付基线下一个达标点的成本，两种估计之间的差距揭示网格敏感性。
++优势随召回率目标变化。0.90--0.92处，CAGRA int8约快$1.20$--$1.98\times$，
++但这些网格中没有达到0.97的配置。IVF-RaBitQ在若干0.98及以上目标重新领先；
++CAGRA fp32也在arXiv约0.99处领先。\Cref{fig:7-frontiers}因而支持一个
++高召回率工作区间，其解释需同时指定竞争表示的精度与实测覆盖。
+ 
+ \input{zh/chapters/07-supp-precision}
+ 
+@@ -95,7 +99,9 @@ OpenAI对照来自Qdrant DBpedia的\texttt{text-embedding-3-large}语料族，
+ 处相对CAGRA fp32均为1.747，RaBitQ比值从1.130变为1.157；FP32敏感性也保留相近
+ 优势。因此这一配对语料／嵌入对照内，维度本身不能解释观测优势。
+ 
+-领先幅度反而与精排需求同向变化：E1 设置的 128 探针预算锚点，OpenAI 为 4--8、Vogue 为 64、arXiv 为 100（后来的全池规则在 arXiv 选择 200）；0.97 处相对 RaBitQ 的比值依次为 1.130--1.157、1.059、0.996。这四个数据集的观测关联符合选择性残差访问的设计；锚点既不是各同召回率前沿点的参数，也没有因果隔离主码质量。后文消融直接检查执行组件。
++四数据集上的优势与128探针精排锚点同向变化：OpenAI为4--8、Vogue为64、
++arXiv为100（后来的FULL规则选200）。这些锚点并非匹配召回率前沿的参数，
++因此该关联没有因果隔离主码质量。
+ 
+ \Cref{sec:3-3}中的接口、内存与编译差异仍影响小幅差距的解释；
+ \cref{sec:7-8}进一步检查经验敏感性。
+@@ -248,11 +254,12 @@ FULL 使用全部校准查询，诊断 oracle 使用留出标签（\cref{tab:6-c
+ \input{zh/tables/budget_quality}
+ \end{table}
+ 
+-一个重要反例是 arXiv。在 128 探针下，即使平均损失仅为 0.0009，仍有 40/64 次抽样的召回率损失超过 $10^{-3}$；512 探针下有 32/64 次超标。BGE 的 512 探针配置有 24/64 次超标，95 分位损失为 0.0014。Stella 超标次数较少，但两个探针数下的 95 分位损失均为 0.0030。OpenAI-3072 在这一有限池中未观察到超标。平均损失、越阈频率和尾部幅度区分这些结果。
+-
+-按\cref{sec:a-budget-contract}中的较低次序统计量约定（从零起算第59项），四个非零尾部损失可与
+-$L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区别。
+-
++arXiv暴露了采样风险：128／512探针分别有40/64、32/64次抽样超过$10^{-3}$
++损失阈值，尽管两个单元的平均损失均为0.0009。固定100本身损失0.0012／0.0016，
++因此优于默认配置仍可能未达更强目标。\Cref{tab:7-budget-quality}保留其他尾部：
++BGE/512有24/64次越阈、$L_{95}=0.0014$；Stella两个探针数均为$L_{95}=0.0030$；
++OpenAI-3072未观察到越阈。按\cref{sec:a-budget-contract}的分位数约定，
++四个非零损失仍可与$L_{95}=0$并存，OpenAI-1536即如此。
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -261,21 +268,14 @@ $L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区
+ \label{fig:7-budget-risk}
+ \end{figure}
+ 
+-\Cref{fig:7-budget-risk} 显示了样本大小的影响。更大的样本通常使选择更保守，但同时收紧了归一化允许量 $1/(10S)$。在全部 2,304 次抽样（$12\times3\times64$）中，同样本枚举与二分搜索一致，而打印日志显示枚举耗时为其 1.75--2.01 倍。
+-
+-\Cref{cor:6-grouped-calibration}覆盖2,304次抽取中的2,176次。
+-剩下128次为$S=128$的OpenAI-3072距离截断并列路径，经验上与枚举一致。
+-八个单元校准到评测的换路涉及预算迁移，区别于本项核查。
+-
+-
+-八个固定选项中，$\alpha=64$ 和 100 各有 10/12 单元达标，200 为 12/12；
+-各自达标单元相对诊断 oracle 的最大 QPS 缺口为 26.6\%、40.9\%、57.1\%。
+-Vogue 的两个探针数下，FULL 选 100 而 oracle
+-选 64，说明参考一致性与质量约束下最快选择具有不同目标。此处 $\alpha=200$
+-达到最佳实测 recall，12/12 达标来自其覆盖对照的定义。
+-短计时中的 OpenAI 小预算反转经交替重复被解释为计时变化，并形成低预算平台
+-（\cref{sec:7-budget-trace}）；最小接纳预算未必使吞吐最大。
++增大$S$既收紧归一化容许量$1/(10S)$，也改变样本覆盖
++（\cref{fig:7-budget-risk}）。分组路径保证覆盖2,304次抽取中的2,176次；
++其余128次距离路径属于经验核查（\cref{cor:6-grouped-calibration}）。
++枚举及FULL核查见\cref{sec:7-budget-trace}。
+ 
++固定64、固定100各有10/12单元满足诊断质量目标，固定200则全部满足。
++Vogue的FULL选100，而最快达标oracle臂为64：最小参考不一致与
++质量约束下的最大吞吐是不同目标。观测到的低预算计时平台也支持这一区别。
+ 
+ \subsection{估计吞吐量与校准经济性}
+ 
+@@ -284,9 +284,10 @@ Vogue 的两个探针数下，FULL 选 100 而 oracle
+ 平均召回提高而吞吐降低，因而没有吞吐量回本。
+ 
+ 
+-更强的 $\alpha=64$ 对照缩小了整体收益：所选配置的平均 QPS 在 9/12 个单元中胜出，几何平均比值为 $1.054\times$，范围为 $0.821$--$1.367\times$。Vogue 几乎不变；BGE 的 512 探针配置只提高 0.6\%；OpenAI 的收益范围为 $1.052$--$1.367\times$。固定 64 和固定 100 都在 10/12 个单元达标，失败的都是两个 arXiv 单元。校准的价值是适应不同精排需求，而不是始终击败已经合理的固定预算。
+-
+-arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置。固定 100 在 128 和 512 探针下本来分别损失 0.0012 和 0.0016，而抽样平均损失在两个单元均为 0.0009。因此，即使部分抽样超过相对 oracle 的目标，平均质量仍比默认配置更好。
++相对固定64，所选配置QPS在9/12单元胜出，几何平均$1.054\times$，
++范围$0.821$--$1.367\times$；OpenAI收益为$1.052$--$1.367\times$。
++两个固定对照均未满足arXiv的两项目标。因此这些比较须联合质量与时间解释，
++不能视作相对可接受固定预算的一致提速。
+ 
+ \begin{table}[tbp]
+ \centering
+@@ -296,16 +297,11 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置
+ \input{zh/tables/budget_cost}
+ \end{table}
+ 
+-按\cref{sec:a-budget-contract}的计时边界，校准成本为3.9--21.3\,ms。
+-对固定 $\alpha=100$ 应用\cref{eq:6-payback}，取毫秒单位的 $T_{\rm rule}\approx1000n/\overline Q_{\rm rule}$，得到\cref{tab:7-budget-cost}中的估计：有利单元相对固定 100 约需 2.4--55.4 个留出池大小的后续批次。相对固定 64，九个有利单元约需 5.7--404.3 批，Vogue 的 512 探针配置没有吞吐量回本。两个 arXiv 对照也未满足质量目标，因此其计时比较是诊断，不是同质量比较。按对照速率换算，$S=128$ 的最大正回本估计相对固定 100 为 0.54\,s、相对固定 64 为 2.72\,s，约 27.7K 和 202.2K 查询。全池正收益项按自身校准成本计算，对应最多 1.52/2.25\,s、64.9K/78.7K 查询。这些模型时域支持长稳定任务复用。
+-
+-
+-这些估计沿用\cref{sec:6-5}分析的平均速率倒数与稳定复用假设；
+-下文直接执行核查它们在归档查询流上的净成本含义。
+-
+-
+-较新的 lane 精排流水线比历史标量实现保留更少的可消除精排工作。
+-各次运行共享预算协议与网格，但跨实验比较没有隔离精排作为变化的唯一原因。
++校准耗时3.9--21.3\,ms。应用\cref{eq:6-payback}得到
++\cref{tab:7-budget-cost}的批次估计，前提是\cref{sec:6-5}的稳定复用及
++平均速率倒数假设。$S=128$相对固定100／64的最大正回本估计对应0.54／2.72\,s，
++FULL对应1.52／2.25\,s。arXiv固定对照未达质量目标，故其时间比仅作诊断。
++下文直接复用测量在同时报告质量的情况下检验净成本。
+ 
+ \input{zh/chapters/07-supp-budget}
+ 
+@@ -316,9 +312,24 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置
+ 
+ \subsection{并行度与重复选择工作的权衡}
+ 
+-扫描实验揭示了两种执行区间。每条查询使用一个线程块时，批大小 8 只在具有 170 个 SM 的设备上提供八个线程块。划分候选能增加可用线程块并行度。在 v62 实验中，批大小 8 使用八组后，端到端吞吐量为原来的 $2.06$--$2.76\times$。剖析给出了阶段解释：arXiv 扫描约从 849 降至 216\,$\mu$s，Vogue 从 1,059 降至 246\,$\mu$s，OpenAI-3072 从 728 降至 155\,$\mu$s。额外合并分别约需 16.7、9.1 和 3.7\,$\mu$s。即使支付合并成本，净节省仍很大。
+-
+-批大小为 1,000 时，独立查询已足以提供较多线程块。增加分组会重复搬入查找表、接纳局部候选并排序，还产生额外合并流量。对于 arXiv 的 $\alpha=200$ 配置，不共享界的 v62 路径可能降至单线程块基线的约 $0.46\times$。全批次剖析显示，$\alpha=100$ 的扫描从 2,922 增至 6,079\,$\mu$s，$\alpha=200$ 从 3,530 增至 7,652\,$\mu$s，后者还增加了 2,624\,$\mu$s 合并时间。这一反向结果对设计至关重要：并行拆分能够解决并发不足，但当并发已经充足时，它引入的额外工作可能成为主导。共享界减少了这些额外工作，却没有消除执行区间的变化。
++固定工作负载及计时边界，将时间分为扫描、合并与其余执行：
++\begin{equation}
++ \begin{aligned}
++ T^{(g)}&=T_{\rm scan}^{(g)}+T_{\rm merge}^{(g)}+T_{\rm other}^{(g)},\\
++ \Delta T(g)&=T^{(g)}-T^{(0)},\qquad
++ T^{(g)}<T^{(0)}\iff\Delta T(g)<0.
++ \end{aligned}
++ \label{eq:7-group-cost}
++\end{equation}
++$g=0$表示查询级实现，$g>0$为分组路径。三个时间类别互斥：
++扫描已含暂存与局部选择，不再重复计费。这是成本记账恒等式，不是解析延迟预测器。
++
++batch 8时，每查询一block仅在170个SM上暴露八个block；八组使端到端吞吐提高
++$2.06$--$2.76\times$。例如arXiv扫描从849降至216\,$\mu$s，合并增加16.7\,$\mu$s。
++batch 1,000、$\alpha=200$时则相反：扫描从3,530增至7,652\,$\mu$s，
++另加2,624\,$\mu$s合并，独立界路径仅达单block吞吐的约$0.46\times$。
++额外并行在前一区间抵消重复工作，在后一区间造成损失；共享界减轻成本，
++但没有消除区间变化。
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -341,9 +352,11 @@ arXiv 的超标是相对最佳被测留出召回率，不是相对默认配置
+ \input{zh/tables/scheduling}
+ \end{table}
+ 
+-\Cref{tab:7-scheduling} 从原始计时数组重新计算结果。批大小为 8、32、256 和 1,000 时，调度收益的几何平均分别为 $2.727\times$、$2.356\times$、$1.057\times$ 和 $1.015\times$。前三种批大小有十三个配置，含高预算 arXiv 对照；batch 1,000 只有十一个，因为 Stella 仅有 999 条查询。留出配置子集含九个和七个，故连线均值对应部分不同的配置集合。
+-
+-固定八组在批大小 8 时的均值接近调度结果，但在批大小 1,000 时降至 $0.886\times$。调度大体保留了小批次收益，并避免上述大批次损失。批大小 256 时，在一个 BGE 配置上，“最佳固定吞吐量 / 调度吞吐量”的最差比值为 1.217。候选数 CV 无法描述列表遍历、选择或合并的全部成本。
++\Cref{tab:7-scheduling}给出配对收益与评测子集。
++小批次均值使用十三个配置；batch 1,000因Stella只有999条查询而使用十一个，
++留出配置分别为九个／七个。调度保留batch 8收益并保护全批次执行，
++固定八组在batch 1,000降至$0.886\times$。最大调度regret为BGE在batch 256的1.217，
++说明候选数CV遗漏部分遍历与选择成本。
+ 
+ Vogue 同时说明偏斜特征的价值与局限。E1 候选数 CV 随探针数在 0.338--0.622 变化，使批大小 1,000 仍采用四组。集成路径相对单线程块的比值为 0.895--1.175；在 $(n_{\rm probe},\alpha)=(16,16)$、$(16,64)$、$(32,64)$ 时变慢，比值依次为 0.955、0.895、0.955。候选数离散程度没有编码每条查询的绝对工作量，因此规则可能给这些低探针配置增加开销，同时又支撑\cref{sec:7-2}中 0.97 的跨系统领先。两项失败都暴露出 CV 特征未覆盖的分解成本。
+ 
+@@ -384,11 +397,12 @@ Stella为10.54--10.65\,s，接近历史10.40\,s。
+ 在 Stella 上，CAGRA int8 成功的隔离构建按图出度不同，包含数据集量化后约为 74.55 和 82.45\,s；IVF-PQ 三个配置的实测构建中位数为 86.59\,s。在报告边界内，JHQ 重复的 10.54--10.65\,s 明显更短；后续质量与常驻成本分别评估。
+ 
+ 
+-每数据集固定128探针工作点的五次独立构建中，最大recall范围为arXiv的0.0012；正常计时范围只取三次无阶段插桩构建。较宽启动边界的差别明显：Stella热输入页18.2--18.6\,s，本会话首次读取129.9\,s。
+-阶段诊断同步各阶段并改为一个流水缓冲区，因此其计时不混入正常构建范围。
++五次独立构建的固定工作点recall最大范围为arXiv的0.0012；
++正常计时使用三次无阶段插桩构建。更宽的启动边界下，
++Stella热输入页耗时18.2--18.6\,s，本会话首次读取为129.9\,s。
+ 20\,ms设备采样观察到BGE在add开头26.08\,GiB、Stella在repack时22.58\,GiB。
+-BGE三个分配乘积缓冲区共12\,GiB，属于早期流水生命周期，不能直接加到后期
+-23.05\,GiB的gather载荷（\cref{eq:4-assignment-scratch}）。因此常驻显存不足以代表构建容量。
++BGE三个分配缓冲区共12\,GiB，生命周期早于23.05\,GiB gather载荷
++（\cref{eq:4-assignment-scratch}），两者不能相加作为同时峰值。
+ 
+ \subsection{常驻分配与压缩发挥作用的位置}
+ 
+@@ -403,9 +417,13 @@ BGE三个分配乘积缓冲区共12\,GiB，属于早期流水生命周期，不
+ \label{fig:7-memory}
+ \end{figure}
+ 
+-在大数据集上，残差码是主要占用：BGE 的已用总量为 11.93\,GiB，其中约 80.7\% 为残差码；Stella 为 20.44\,GiB，其中约 82.9\% 为残差码。仅对应的原始 FP32 向量数组就分别需要 38.50 和 67.81\,GiB。因此，JHQ 通过保留压缩层次表示，使这些已测试的数据能够在单卡常驻搜索。降低 $\alpha$ 会减少每条查询访问、评分的残差码，但不会释放已经存储的残差数组。同样，笛卡尔 LUT 因子化减少的是查询相关查找表存储，不是数据库残差码的精度。
++残差码占BGE实测11.93\,GiB的80.7\%、Stella实测20.44\,GiB的82.9\%；
++仅原始FP32向量就需38.50／67.81\,GiB。这些常驻总量包含上下文与查询工作区；
++降低$\alpha$改变残差访问，不改变已存储数组。组件模型见\cref{sec:4-4}。
+ 
+-工作区同样重要。在这些 $\alpha=100$ 测量中，报告的列表分组临时区约为 93.8\,MiB，即使实际执行选择单线程块路径，也为批容量 1,024 和最多八组预留。因此，实际组数变小，不意味着分配按比例缩小。另一方面，这些常驻样本没有捕获临时构建峰值。基线测试程序也在测量索引显存之后才初始化部分搜索内存池，因此，不能把构建后的索引增量当作各方法完整进程峰值显存预算。
++即使使用单block路径，分组工作区仍预留约93.8\,MiB，对应批容量1,024及最多八组。
++实际组数因而不决定分配容量。构建峰值与构建后索引增量排除的分配也不同；
++部分基线搜索池在索引显存测量之后才初始化。
+ 
+ E1 测量提供了\cref{tab:7-e1-memory}中的独立跨系统视图。从 JHQ 进程总量减去基线测得的 507.2\,MiB 上下文后，约为 CAGRA fp32 索引分配的 0.29--0.39。JHQ 数字包含工作区，CAGRA 数字则是构建时索引增量。这些是参数扫描范围，不是显存匹配的同召回率运行点，也不是相同峰值预算的比较。同表的 CAGRA int8 分配与 JHQ 处于相近量级，相对 fp32 的压缩是多个设计共有的特征；组件模型见\cref{tab:4-bytes}。
+ 
+diff --git a/zh/chapters/07-supp-budget.tex b/zh/chapters/07-supp-budget.tex
+index be9a119..4ae0351 100644
+--- a/zh/chapters/07-supp-budget.tex
++++ b/zh/chapters/07-supp-budget.tex
+@@ -1,25 +1,20 @@
+ \subsection{完整决策轨迹与有限池风险}
+ \label{sec:7-budget-trace}
+ 
+-补证程序保留原网格、训练状态、查询划分与固定seed抽样，新增完整日志。
+-十二单元的固定预算recall在归档精度下全部复现，全池选择、采样中位选择与越阈
+-计数也全部复现。计时让两个近乎并列单元的GT oracle最快臂变化，说明这一诊断也
+-依赖所测速度。
+-
+-2,304条采样不一致曲线均单调，选择全部与枚举一致；十二条全池曲线也通过两项
+-检查。进一步，将全池逐查询计数按各次实际样本ID求和，18,432个网格计数全部
+-复现。这比只核对最终预算更强，支持在这些观测中使用\cref{eq:6-finite-pool}，
+-包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。
+-
++2,304条采样曲线全部单调，二分均选中枚举的最小值；十二次FULL调用也通过两项检查。
++将全池逐查询计数按实际样本ID求和，18,432个网格计数全部复现，
++支持在这些子集上使用\cref{eq:6-finite-pool}。
++该汇总检查不证明任意子集或位置下的逐查询不变性。
++分组路径结构保证与距离路径例外仍按\cref{sec:6-3}限定。
+ 
+ $S=128$时，arXiv/512最大损失0.0050、BGE/512为0.0046；$S=32$最大达0.0294。
+ 因此较小平均损失可以伴随少数明显更差的选择。十二个FULL单元的最大损失仍为0.0006。
+ 
+-arXiv/128在$S=32,64,128$的有限池越阈预测为0.965、0.875、0.620，实测为
+-0.984、0.875、0.625（\cref{fig:7-finite-pool}）。接纳只用参考输出；将选择概率
+-转为GT损失越阈率还要固定预算的留出质量映射，因此这是离线风险解释，不是无标签
+-GT保证。36项比较中最大绝对差为BGE/512在$S=128$的0.144（预测0.519、实测0.375）。
+-有限池计算隔离抽样风险，没有用留出recall差拟合总体模型。
++arXiv/128在$S=32,64,128$的预测越阈率为0.965／0.875／0.620，
++实测0.984／0.875／0.625（\cref{fig:7-finite-pool}）。
++36项比较最大差为BGE/512在$S=128$的0.144（预测0.519、实测0.375）。
++预测以稳定逐查询计数为条件，并用固定预算的留出质量将接纳预算映射到GT损失；
++一致性决策本身不使用标签。
+ 
+ \begin{figure}[tbp]
+ \centering
+@@ -29,17 +24,15 @@ GT保证。36项比较中最大绝对差为BGE/512在$S=128$的0.144（预测0.5
+ \label{fig:7-finite-pool}
+ \end{figure}
+ 
+-十轮交替重测也消除了表面的小预算速度反转。OpenAI-3072/128在$\alpha=4/2$时
+-为142.3／142.7 kQPS，原短计时为145.0／128.7；BGE/128与Vogue/512同样趋于平台。
+-这支持将归档反转解释为计时变化，但不代表所有预算和资源阈值上的运行时间均单调。
++十轮交替重复将表面的小预算速度反转解释为低预算计时平台。
++该观测不要求所有预算和资源阈值上的运行时间单调。
+ 
+ \subsection{直接校准加复用测量}
+ \label{sec:7-stream-cost}
+ 
+-四个单元直接执行固定64、固定100、采样$S=128$与FULL策略，五轮间轮换策略顺序。
+-每个校准轮先收集样本、校准一次、显式设置所选乘数，再连续计时500个留出批次。
+-首批包含可能的graph重新捕获，重复使用同一留出池，没有采样新流量。
+-索引构建、此前预热及另行计时的调度校准不在该边界内。\Cref{tab:7-stream-cost}报告累计测量。
++四个单元以五轮轮换策略顺序、500个留出批次比较固定64／100、采样和FULL校准。
++计时含样本收集、校准、预算设置及首批graph设置；
++不含构建、预热和扫描校准。查询池重复使用（\cref{tab:7-stream-cost}）。
+ 
+ \par\medskip\noindent\begin{minipage}{\linewidth}
+ \centering\captionsetup{hypcap=false}
+@@ -55,14 +48,12 @@ OpenAI-3072/128的采样策略每轮均选4，相对固定100将总时间从2,75
+ OpenAI-1536/128的FULL为860／固定100的1,491\,ms，recall同为0.9280；
+ 采样策略平均852\,ms、recall 0.9276。
+ 
+-从直接计时的校准和稳态批次拟合，采样策略相对固定100／64的回本分别为：
+-OpenAI-1536的3.6／5.5批、OpenAI-3072的3.5／8.9批。小数值是稳态速率拟合，
+-不是直接观测到的小数批次交点；\cref{fig:7-stream-cost}绘制含首批设置的实测累计总时间。
+-相对固定100／64，平均累计时间首次正节省在OpenAI-1536为4／6批，OpenAI-3072为4／9批。
+-BGE/512采样收益较小，相对固定100为4,921／5,185\,ms，平均recall为0.9658／0.9670；
+-FULL恢复至0.9664，耗时5,062\,ms。arXiv的FULL为提高质量选择200，慢于固定100／64，
+-而两个固定控制均未达到质量目标。因此必须联合质量和时间判断校准价值。
+-测量支持复用经济性，不要求旧模型回本值在每个单元精确吻合。
++相对固定100／64，实测平均累计成本首次正节省在OpenAI-1536为4／6批，
++OpenAI-3072为4／9批（\cref{fig:7-stream-cost}）；小数稳态拟合属于另一模型估计。
++BGE/512以较低时间换取较低平均recall：采样／固定100为4,921／5,185\,ms、
++0.9658／0.9670；FULL为5,062\,ms、0.9664。
++arXiv的FULL为质量选择200，比未达目标的固定100／64更慢。
++校准价值须同时取决于质量和总复用成本。
+ 
+ \begin{figure}[tbp]
+ \centering
+diff --git a/zh/chapters/08-1-insights.tex b/zh/chapters/08-1-insights.tex
+index 5660ce2..01bccb8 100644
+--- a/zh/chapters/08-1-insights.tex
++++ b/zh/chapters/08-1-insights.tex
+@@ -1,17 +1,15 @@
+ \subsection{有价值的表示暴露有价值的复用单位}
+ 
+-\cref{sec:5-2}的坐标组 LUT 将计算所得距离复用于多个候选；但分组结果与 Mailman
+-表明，仅节省存储不足以决定吞吐（\cref{fig:7-lut}）。共享内存放置与 word 访问须联合
+-考虑（\cref{sec:5-2,sec:5-3}）；两组是该 GPU 上的经验默认。码本改变可能破坏
+-Cartesian 兼容性，因此需将重建误差与评分器可达的 recall--成本前沿共同评价。
++两组在多数实测单元胜出，而Mailman虽增加算术复用仍更慢（\cref{fig:7-lut}）。
++表大小、共享内存放置与packed访问共同决定有效复用单位
++（\cref{sec:5-2,sec:5-3}）。因此码本变化需同时评价重建质量和可达评分器前沿。
+ 
+ \subsection{有效并行受重复状态与选择成本限制}
+ 
+-\cref{fig:7-batch}的批次趋势反映查询并发充足后，重复暂存、选择与合并的成本。
+-Vogue 的路径相关前沿与 BGE 的 regret 暴露 CV 未描述的绝对工作量及分解成本
+-（\cref{sec:7-2,sec:7-6}）。这些集成比较仍与单独共享界消融分开。
+-更丰富的调度器可以结合候选数、保留容量与局部缓冲成本，同时保留查询级路径；
+-其校准成本与留出工作负载性能仍需评测。
++查询并发充足后，重复暂存、选择与合并可超过额外并行的收益（\cref{fig:7-batch}）。
++Vogue与BGE暴露调度器缺失的绝对候选工作量及分解成本特征
++（\cref{sec:7-2,sec:7-6}）。更丰富的规则需在留出工作负载上抵消自身校准成本；
++集成结果仍不单独隔离共享界消融。
+ 
+ \subsection{执行变快会改变避免精排的价值}
+ 
+@@ -25,9 +23,7 @@ $F_h\geq F_\ell>0$，共同精排时间倍率为 $0<\eta\leq1$。低预算加速
+  \frac{\partial S}{\partial T_0}
+  =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
+ \end{align}
+-当 $F_h>F_\ell$ 时，精排加快降低削减预算的收益，固定成本降低则提高该收益。
+-模型固定了非精排工作；预算相关扫描维护和资源阈值仍需实测。
+-因果内核比较应固定候选集合及预算决策（\cref{sec:7-5,sec:7-stream-cost}）。
+-
+-FULL 结果与采样尾部说明，该成本决策还需质量约束及足够复用
+-（\cref{tab:7-budget-full,fig:7-budget-risk}）。
++当$F_h>F_\ell$时，精排加快降低削减其预算的价值，固定成本降低则提高该价值。
++导数保持非精排工作不变；预算相关扫描维护与资源阈值需通过
++\cref{sec:7-5,sec:7-stream-cost}的受控比较评价。
++质量与复用仍构成约束（\cref{tab:7-budget-full,fig:7-budget-risk}）。
+diff --git a/zh/chapters/08-3-validity.tex b/zh/chapters/08-3-validity.tex
+index 6cf7cca..b42ce4c 100644
+--- a/zh/chapters/08-3-validity.tex
++++ b/zh/chapters/08-3-validity.tex
+@@ -23,8 +23,6 @@ T4 严格 CPU 排序及表形式数值诊断；覆盖有限，候选 dump 已不
+ \end{tabularx}
+ \end{minipage}\par\medskip
+ 
+-外部有效性限于一张GPU、平方L2 top-10和六份准备后的嵌入数据。
+-批次相关工作区间见\cref{sec:7-smallbatch}。按位置移除查询不认证没有近重复嵌入，
+-这些导出也不是带相关性标签的检索基准。数据库更新、并发流量、部署延迟目标和变化查询总体
+-仍未测试，常驻索引结果也不提供十亿规模或多设备容量证据。
+-这些是把观测区间迁移到部署前仍需完成的检查。
++覆盖范围为一张GPU、平方L2 top-10与六份准备后的嵌入数据（\cref{sec:7-smallbatch}）。
++按位置移除查询不排除近重复嵌入，导出也缺少相关性标签。
++更新、并发流量、查询总体变化和部署延迟目标，以及十亿规模与多设备容量均未测试。
+diff --git a/zh/chapters/08-5-deployment.tex b/zh/chapters/08-5-deployment.tex
+index c8aa242..4f9e4fd 100644
+--- a/zh/chapters/08-5-deployment.tex
++++ b/zh/chapters/08-5-deployment.tex
+@@ -1,8 +1,5 @@
+-压缩常驻层次能放入设备、且目标 recall 位于已测竞争区间时，JHQ-GPU 值得评估。
+-E1 支持 batch 1,000 的高 recall 吞吐；T5 则显示 recall 0.97、batch 8 下，
+-四个数据集均由 CAGRA fp32 领先。batch 32 的 OpenAI-3072 在插值下接近平手、
+-实测阈值有利于 JHQ，其余三个有利于 CAGRA。低 recall 优势同样依赖数据集和网格。
+-分组调度能改善 JHQ 内部执行，但不保证跨系统领先（\cref{sec:7-smallbatch}）。
+-
+-以已测FULL工作点开始校准，再用部署查询验证质量并直接计时复用成本。
+-在实际批次制度下比较总时间与常驻显存，适用边界见\cref{sec:8-3}。
++部署应匹配实测批次与recall区间。E1支持batch 1,000的高recall吞吐；
++batch 8、recall 0.97时，T5四个数据集均由CAGRA fp32领先。
++batch 32的OpenAI-3072接近平手且方向随估计方法变化，其余三个有利于CAGRA
++（\cref{sec:7-smallbatch}）。从FULL校准开始，再按\cref{sec:8-3}的边界，
++用部署查询验证质量、总复用时间及常驻显存。

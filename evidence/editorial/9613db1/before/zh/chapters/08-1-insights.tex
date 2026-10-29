@@ -1,0 +1,33 @@
+\subsection{有价值的表示暴露有价值的复用单位}
+
+\cref{sec:5-2}的坐标组 LUT 将计算所得距离复用于多个候选；但分组结果与 Mailman
+表明，仅节省存储不足以决定吞吐（\cref{fig:7-lut}）。共享内存放置与 word 访问须联合
+考虑（\cref{sec:5-2,sec:5-3}）；两组是该 GPU 上的经验默认。码本改变可能破坏
+Cartesian 兼容性，因此需将重建误差与评分器可达的 recall--成本前沿共同评价。
+
+\subsection{有效并行受重复状态与选择成本限制}
+
+\cref{fig:7-batch}的批次趋势反映查询并发充足后，重复暂存、选择与合并的成本。
+Vogue 的路径相关前沿与 BGE 的 regret 暴露 CV 未描述的绝对工作量及分解成本
+（\cref{sec:7-2,sec:7-6}）。这些集成比较仍与单独共享界消融分开。
+更丰富的调度器可以结合候选数、保留容量与局部缓冲成本，同时保留查询级路径；
+其校准成本与留出工作负载性能仍需评测。
+
+\subsection{执行变快会改变避免精排的价值}
+
+考虑延迟模型：非精排成本固定为 $T_0>0$，高／低预算精排时间满足
+$F_h\geq F_\ell>0$，共同精排时间倍率为 $0<\eta\leq1$。低预算加速比及其导数为
+\begin{align}
+ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
+ \label{eq:8-refinement-sensitivity}\\
+ \frac{\partial S}{\partial\eta}
+ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
+ \frac{\partial S}{\partial T_0}
+ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
+\end{align}
+当 $F_h>F_\ell$ 时，精排加快降低削减预算的收益，固定成本降低则提高该收益。
+模型固定了非精排工作；预算相关扫描维护和资源阈值仍需实测。
+因果内核比较应固定候选集合及预算决策（\cref{sec:7-5,sec:7-stream-cost}）。
+
+FULL 结果与采样尾部说明，该成本决策还需质量约束及足够复用
+（\cref{tab:7-budget-full,fig:7-budget-risk}）。

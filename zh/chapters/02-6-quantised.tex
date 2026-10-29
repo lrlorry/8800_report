@@ -1,35 +1,23 @@
 \subsection{学习表示与利用表示结构}
-OPQ通过学习空间分解和码本降低失真\cite{opq}，其旋转为数据优化；
-JHQ随机平方旋转支持廉价解析primary模型。取舍涉及拟合成本、重建保真和评分结构，
-更好的通用学习码本未必保留16+16精确分解所需的内部Cartesian乘积。
-
-ScaNN的各向异性量化根据最大内积检索的重要性加权误差，说明重建MSE不是唯一有用
-目标\cite{scann}。其目标与实现环境不同于本文平方L2层次流水线。
-可比的是损失选择：面向排序的表示仍须检验实际近邻保留及执行成本。
-第8章停止的排序研究在JHQ内部提供了例子。
+OPQ学习旋转和子空间码本以降低失真\cite{opq}；JHQ的随机旋转则支持解析primary模型。
+通用学习码本未必保留$16+16$精确分解所需的Cartesian结构。
+ScaNN按最大内积排序重要性加权量化误差\cite{scann}，说明MSE不是唯一目标；
+本文评估平方L2下近邻保留与GPU执行成本。
 
 \subsection{小查找表已有充分先行工作}
-PQ Fast Scan把依赖cache的表改造成适于CPU SIMD寄存器的表\cite{fastscan}；
-Quicker ADC推广寄存器查找，引入不规则量化器与split tables\cite{quickeradc}。
-这些工作说明表形状要与执行指令共同设计。本文的范围是继承Cartesian坐标结构所支持
-的精确分解及其GPU实测；CPU SIMD结果提供概念先例，不是本GPU的吞吐。
-FP32结合顺序和cutoff并列仍需独立数值检查。
+PQ Fast Scan将表重组为适于CPU SIMD的寄存器查找\cite{fastscan}，
+Quicker ADC扩展到不规则量化器和split tables\cite{quickeradc}。
+JHQ利用内部Cartesian结构实现GPU因子化；FP32结合顺序及截断并列仍需数值检验。
 
-RaBitQ也使用随机化量化与紧凑符号信息，具有特定距离估计器及理论误差分析
-\cite{rabitq}；多bit扩展以存储换估计精度\cite{rabitq_multi}。
-其保证属于相应构造和假设，不能因双方都用旋转与二值组件就转移给JHQ。
-JHQ主符号选survivor，显式存储的残差提供下一精度层；质量同时依赖截断与重建。
-
-GPU IVF-RaBitQ把该族整合成GPU建库与搜索，包括GPU距离计算和融合搜索
-\cite{ivfrabitq}，因此是直接相关的现代基线，不是“缺少GPU量化器”的背景证据。
-其融合执行说明紧凑编码还需要有竞争力的访问和选择流水线。
-E1纳入多个bit预算，其高recall结果限制JHQ的宽泛优势主张。
+RaBitQ用随机化与紧凑符号信息建立特定距离估计器和误差界\cite{rabitq}；
+多bit扩展以存储换精度\cite{rabitq_multi}。GPU IVF-RaBitQ进一步融合GPU建库、
+评分与搜索\cite{ivfrabitq}，是直接竞争基线。其理论保证不能因表示相似而转移给JHQ；
+JHQ以主符号筛选候选，再显式读取残差层。
 
 \subsection{精排工作量与自适应停止}
-候选扩张和重排已经存在于Faiss的\texttt{k\_factor}及cuVS refinement控制
-\cite{faiss_refine,cuvs_refinement}。Faiss autotuning可用GT标签搜索recall--时间取舍
-\cite{faiss_autotune}；学习式自适应终止预测足够搜索量\cite{li_termination}，
-DARTH围绕声明式recall目标组织早停\cite{darth}。
-这些都是均匀工作量之外的相关替代。第6章的具体策略用大预算参考的无标签一致性，
-为整个工作负载选择一个survivor倍率，省去预测器训练，却继承参考的质量局限。
-这是策略范围，不表示自适应搜索或精排预算是新概念。
+Faiss的\texttt{k\_factor}与cuVS refinement已提供候选扩张控制
+\cite{faiss_refine,cuvs_refinement}。Faiss autotuning用GT探索recall--时间取舍
+\cite{faiss_autotune}；学习式终止预测搜索充分性\cite{li_termination}，
+DARTH以声明式recall目标组织早停\cite{darth}。
+第6章以无标签参考一致性为整个工作负载选择一个倍率，无需预测器训练，
+但继承参考自身的误差。

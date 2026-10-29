@@ -114,6 +114,14 @@ Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model versi
 
 Codex checked references, placeholders, scientific consistency and submission actions, then shortened residual process narration and clarified the capacity summary. Personal contribution and missing original interaction records remain author actions. The [applied patch](../evidence/editorial/f8dbf87/submission-polish.patch) records the edits.
 
+### P14 — 按大块高亮工作流生成修订版
+
+Tool: OpenAI Codex. Interaction date: 2026-10-29 (Australia/Sydney). Model version: not preserved.
+
+> 你按照这个工作流生成一版本吧
+
+Codex applied 30 selected block edits in each language, concentrating on Chapters 7, 6, 2 and 8. It removed repeated table narration and operational prose, made existing set/order arguments explicit, and retained the original statements and their assumptions. The [block ledger](../assessment/highlight-remediation-edits.json) records the supplied report hashes and pages, the exact before/after text and the correction to the second report's scope. The [applied patch](../evidence/editorial/9613db1/highlight-remediation.patch) retains the changes. No GPU experiment or external AI-detector rerun was performed.
+
 ## ChatGPT: retained review record
 
 The user supplied ChatGPT frameworks and reviews covering chapter structure, evidence, experimental design and final submission requirements. Retained review identities and accepted/corrected findings are in the following records:

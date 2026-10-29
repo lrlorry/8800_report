@@ -1,35 +1,20 @@
-The implementation uses CUDA's SIMT execution: threads are organised into
-blocks and 32-thread warps, with registers, block-shared memory and device
-global memory serving different reuse scopes \cite{cuda_programming_guide}.
-Coalescing groups neighbouring lane accesses into suitable memory
-transactions; it does not require fewer logical code bits. Candidate-parallel
-primary scanning assigns lanes to neighbouring vectors, while refinement
-assigns several lanes to one survivor's coordinates. These mappings exploit
-different available parallelism, so one mapping need not suit both stages.
+CUDA groups threads into blocks and 32-thread warps; registers, shared
+memory and global memory expose different reuse scopes
+\cite{cuda_programming_guide}. JHQ maps primary scanning across neighbouring
+candidates for coalesced loads, and refinement across one survivor's
+coordinates. Extra blocks can hide latency but duplicate LUTs and buffers;
+register/shared-memory use limits residency. These competing costs motivate
+the mappings evaluated in Chapter 5. Bandwidth or cache attribution would
+require counters beyond throughput measurements.
 
-Occupancy is constrained by registers, shared state and block geometry.
-More resident threads can hide latency, but more blocks per query can also
-duplicate tables and local candidate buffers. Shared memory is valuable
-when query data are reused enough to repay loading and synchronisation.
-These observations motivate Chapter 5's table grouping, packed access and
-batch-aware scheduling; the throughput ablations assess their combined
-effects. A claim of bandwidth saturation or a specific cache bottleneck
-would additionally require counters and a consistent physical-byte model.
+Selection must be designed with scoring. Faiss uses warp-oriented selection
+\cite{johnson_gpu}; bitonic, radix and merge primitives offer different
+state/work trade-offs. AIR top-$k$ and GridSelect address workload-dependent
+global selection \cite{gpu_topk}. JHQ uses these established ideas for
+routing and survivor retention.
 
-Selection is itself substantial computation. Faiss's GPU work combines
-efficient distance processing with warp-oriented selection
-\cite{johnson_gpu}. Bitonic networks, radix methods and merge-based
-approaches provide established building blocks with different $k$, input
-length and state costs. AIR top-$k$ and GridSelect further illustrate why
-global selection design depends on workload and whether scores arrive
-on the fly \cite{gpu_topk}. This thesis adapts such ideas to JHQ's probe
-selection and survivor retention; it does not claim to invent these primitives.
-
-CUDA Graph replay reduces repeated launch setup for a captured workload.
-Capture, workspace allocation and changes in graph shape belong to the
-index/search lifecycle, rather than the mathematical scoring rule.
-Likewise, publishing a shared threshold requires an explicit ordering and
-memory-access contract. Correct scalar scores do not alone prove concurrent
-admission safe. Chapter 5 separates these correctness conditions from
-performance measurements, and Chapter 3 keeps device profiling distinct
-from the host-visible search interval.
+CUDA Graph replay reduces launch setup, while capture and workspace changes
+belong to the execution lifecycle. Shared-bound admission additionally needs
+the ordering and whole-key-access contracts of Chapter 5. Neither a correct
+scalar score nor device-only profiling establishes end-to-end correctness
+or host-visible performance.

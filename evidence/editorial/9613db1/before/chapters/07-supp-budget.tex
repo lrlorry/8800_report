@@ -1,0 +1,105 @@
+\subsection{Complete decision traces and finite-pool risk}
+\label{sec:7-budget-trace}
+
+The supplementary harness preserves the original grid, trained state,
+query split and seeded draws, adding complete records. All twelve
+fixed-arm recalls reproduce at the archived precision; full-pool choices,
+sampled median choices and crossing counts reproduce. Timing changes the
+GT oracle's fastest arm in two near-tied cells, illustrating that this
+diagnostic also depends on measured speed.
+
+All 2,304 sampled disagreement curves are monotone and their selected
+budgets match enumeration. The twelve full-pool curves also pass both
+checks. Moreover, summing full-pool per-query counts over each recorded
+sample's actual IDs reproduces all 18,432 grid counts. This is stronger
+than checking the selected budget alone, and supports using
+\cref{eq:6-finite-pool} for these observations despite the scan-path
+changes. It checks aggregate counts on the traced subsets, rather than
+per-query invariance on every possible subset.
+
+
+At $S=128$, maxima reach 0.0050 for arXiv/512 and 0.0046 for BGE/512;
+at $S=32$ the largest is 0.0294. A low mean loss therefore coexists
+with occasional materially worse chosen budgets. FULL's maximum across
+the twelve cells remains 0.0006.
+
+For arXiv/128, the finite-pool model predicts crossing probabilities
+0.965, 0.875 and 0.620 at $S=32,64,128$, against 0.984, 0.875 and
+0.625 observed (\cref{fig:7-finite-pool}). Acceptance uses only reference
+outputs; translating its selection probabilities into GT-loss crossings
+uses the fixed-arm held-out quality map. The calculation is therefore an
+offline risk explanation, not a label-free GT guarantee. Across the 36
+comparisons, the largest absolute gap is 0.144 for BGE/512 at $S=128$
+(0.519 predicted, 0.375 observed). The fixed-pool calculation isolates
+sampling risk without fitting a population model to held-out recall gaps.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
+\caption[Finite-pool risk prediction and observation]{Finite-pool prediction and observed arXiv loss crossings. Bars
+show one estimated standard error over 64 independently drawn subsets
+conditional on the fixed pool, not uncertainty over future workloads.}
+\label{fig:7-finite-pool}
+\end{figure}
+
+Ten alternating remeasurements also remove the apparent small-budget
+speed inversion. OpenAI-3072/128 gives 142.3/142.7 kQPS at
+$\alpha=4/2$, versus 145.0/128.7 in the original short timing. BGE/128
+and Vogue/512 likewise approach a plateau. This supports treating the
+archived inversions as timing variation; it does not imply monotone
+runtime for all budgets or resource thresholds.
+
+\subsection{Direct calibration-plus-reuse measurement}
+\label{sec:7-stream-cost}
+
+Four cells directly execute fixed 64, fixed 100, sampled $S=128$ and
+FULL policies, rotating policy order over five rounds. Each calibrated
+round gathers its sample, calibrates once, explicitly installs the chosen
+multiplier, then times 500 consecutive held-out batches. The first batch
+includes any graph recapture. The same held-out pool is replayed, rather
+than sampling new traffic. Index construction, prior warm-up and the
+separately timed schedule calibration are outside this boundary.
+\Cref{tab:7-stream-cost} reports the cumulative measurements.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Direct costs for 500 reuse batches]{Direct total milliseconds for 500 reuse batches, averaged over
+five rounds, including budget calibration for sampled and FULL policies.
+Each batch has 500 queries. Quality is discussed with the timing results.}
+\label{tab:7-stream-cost}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/supplement/stream}
+\end{minipage}\par\medskip
+
+On OpenAI-3072/128, the sampled policy selects 4 in every round and
+reduces total time from 2,757 to 1,769\,ms against fixed 100, about
+36\%, at the same measured recall 0.9252. FULL selects the same budget
+and takes 1,783\,ms including its larger calibration cost. On
+OpenAI-1536/128, FULL takes 860 versus 1,491\,ms at the same recall
+0.9280; the sampled policy averages 852\,ms and 0.9276 recall.
+
+The steady-rate fit to the sampled stream gives break-even counts of
+3.6/5.5 batches against fixed 100/64 on OpenAI-1536, and 3.5/8.9 on
+OpenAI-3072. These fractional values fit directly timed calibration and
+steady batches; they are not directly observed fractional crossings.
+\Cref{fig:7-stream-cost} instead plots measured cumulative totals,
+including first-batch setup. The first positive mean cumulative savings
+occur at 4/6 batches on OpenAI-1536 and 4/9 on OpenAI-3072 against
+fixed 100/64. BGE/512 has a smaller sampled saving,
+4,921 versus 5,185\,ms against fixed 100, but mean recall 0.9658 versus
+0.9670; its FULL policy restores 0.9664 at 5,062\,ms. ArXiv's FULL
+policy selects 200 for higher quality and is slower than fixed 100/64,
+both of which miss the quality target. Thus timing and quality jointly
+determine whether calibration is worthwhile. The measurements support
+reuse economics without requiring the old fitted payback values to
+match exactly in every cell.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
+\caption[Direct cumulative calibrated-reuse time]{Direct mean cumulative time, including budget calibration and
+first-batch setup. Each curve replays one fixed held-out query pool.
+Policies can have different recall; timings alone are not a quality-matched
+ranking. Dataset/probe settings match \cref{tab:7-stream-cost}.}
+\label{fig:7-stream-cost}
+\end{figure}

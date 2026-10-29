@@ -29,7 +29,16 @@ $C_\alpha\subseteq C_\beta\subseteq C_{\alpha_{\rm ref}}$。假定至少有 $k$ 
 后一结论要求条件对每个采样查询均成立。
 \end{proposition}
 \begin{proof}
-参考成员在最大保留集合中至多有 $k-1$ 个前驱。若它存在于较小集合，限制集合不会引入新前驱，因此仍处于该集合精确 top-$k$。与参考的交集，恰等于保留集合中存在的参考成员。嵌套只能增加这些成员；对查询求和缺失数即得不等式。
+对$x\in\mathcal R_{\rm ref}\cap C_\alpha$，共同全序给出
+\begin{equation*}
+ |\{y\in C_\alpha:y\prec x\}|
+ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
+\end{equation*}
+故$x\in\mathcal R_\alpha$。结合$\mathcal R_\alpha\subseteq C_\alpha$，
+即得\cref{eq:6-monotonicity}的交集恒等式。嵌套性给出
+$|C_\alpha\cap\mathcal R_{\rm ref}|
+ \leq|C_\beta\cap\mathcal R_{\rm ref}|$。
+对查询求和缺失参考数，即得$D_S(\alpha)\geq D_S(\beta)$。
 \end{proof}
 \end{minipage}\par\medskip
 

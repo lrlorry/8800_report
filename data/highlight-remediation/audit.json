@@ -1,0 +1,262 @@
+{
+  "baseline": "9613db1d6727d0518b9e2ae75a9449d3a59b08db",
+  "blocks": 60,
+  "source_files": 22,
+  "protected_before_counts": {
+    "equation": 24,
+    "align": 2,
+    "lemma": 0,
+    "proposition": 2,
+    "proof": 4,
+    "corollary": 2,
+    "definition": 0,
+    "figure": 24,
+    "table": 18,
+    "tabular": 0,
+    "tabularx": 2,
+    "longtable": 0,
+    "minipage": 10
+  },
+  "finite_set_checks": 3375,
+  "chapters_abstract_before": 24033,
+  "chapters_abstract_after": 22258,
+  "new_detector_result": null,
+  "scope": "Exact edit and preservation checks; finite sanity checks supplement the written arguments; no GPU or detector rerun",
+  "inputs": [
+    {
+      "repository": "8800_report",
+      "path": "assessment/highlight-remediation-edits.json",
+      "sha256": "6267f5d13eb7dcec75235fcd620f7a7a175a6690ef04f7be71a80834e2524a5b"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/07-evaluation.tex",
+      "sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-evaluation.tex",
+      "sha256": "8ce5021c27d5a5b73fcad5f0f61e4ed08b3cd5a9bd84132c3d0bcaa1211f9a1d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/07-supp-budget.tex",
+      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/07-supp-budget.tex",
+      "sha256": "2aafe5253c7e6e5f6c9d1a046828a56472925f8f94bb6c20caacd1c80a4bf2e2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/06-2-agreement.tex",
+      "sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-2-agreement.tex",
+      "sha256": "3b6fbe395b3109cd9fed416acdff0c72a0daf07ebfbf4ab9301d82c8dbb6cbd8"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/06-3-search.tex",
+      "sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-3-search.tex",
+      "sha256": "45cdc3101449a47dc56088ad49b47c703b0e049becf4193d60b0e0597718b77a"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/06-5-economics.tex",
+      "sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/06-5-economics.tex",
+      "sha256": "7e7439b6cb2e6c05d068fa6909c441396f3d59bd62d8ab1643e38c7169a18855"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/02-4-gpu.tex",
+      "sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-4-gpu.tex",
+      "sha256": "5cb401dff9651e713774b6913e9df5b8d486d5c49360651e7b88f0ebfab6c488"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/02-5-graphs.tex",
+      "sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-5-graphs.tex",
+      "sha256": "7d0ce4a8f6fe9f328c1b5144bd2d192fd708a8110a2ead6655674049c6485896"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/02-6-quantised.tex",
+      "sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/02-6-quantised.tex",
+      "sha256": "cc58dac166f06b441731477075113db0b7c9b47cb4b33e1587e61869f6e50062"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/08-1-insights.tex",
+      "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-1-insights.tex",
+      "sha256": "d1b1d9ed18338d57170855e160c5eca91950d776f4cb80ecab49ee834b3ab257"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/08-3-validity.tex",
+      "sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-3-validity.tex",
+      "sha256": "865103d196ef9f6ffbac9b75485aeab612a8a912225975a98f4ecb38c5f29636"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/chapters/08-5-deployment.tex",
+      "sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2"
+    },
+    {
+      "repository": "8800_report",
+      "path": "chapters/08-5-deployment.tex",
+      "sha256": "2e4f6032c972450bbf45391b2ac40081d1a11179bef6a98cfbecf45f2cdbecfe"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/07-evaluation.tex",
+      "sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-evaluation.tex",
+      "sha256": "4fc1e33ca7a3fa3cad4aa4e73c7132c6cd49f7e8e5d5c31d4009f7862fe813dc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/07-supp-budget.tex",
+      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "sha256": "b7855606bcfe53cfb326c213ae47cad588cd1dbe895112f6b94886a48d1f489f"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/06-2-agreement.tex",
+      "sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-2-agreement.tex",
+      "sha256": "333cab55652255eca2837abf09d8be7c3fa8be39cfe3eab7c69fd776c5fbc0fc"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/06-3-search.tex",
+      "sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-3-search.tex",
+      "sha256": "523afcc5d5e550ee96f02adad9fe4b09b9254836b7916cd2aa482de1d94bc92d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/06-5-economics.tex",
+      "sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/06-5-economics.tex",
+      "sha256": "ee7e8d9b4d0ed6e24b805929a9aaeb312eb91d8627cd640dd6c76d4b9d42c90d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/02-4-gpu.tex",
+      "sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-4-gpu.tex",
+      "sha256": "b85be527733e824288ec53b26fa61a4871709190b2e21a05a1e290d511dd4a18"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/02-5-graphs.tex",
+      "sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-5-graphs.tex",
+      "sha256": "e87ae06219ce90077fa9f072c0fce2c62240e5904f18c762cc70b28a4d2eabec"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/02-6-quantised.tex",
+      "sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/02-6-quantised.tex",
+      "sha256": "ddaa7f4d5943eee6c861d869758c87b741dfb1c02153232e43f6e7cf6c9affa6"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/08-1-insights.tex",
+      "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-1-insights.tex",
+      "sha256": "ec6c412c223c93d2c17193f91b5ac44194d1ca0a292dfbd361d91723192fae53"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/08-3-validity.tex",
+      "sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-3-validity.tex",
+      "sha256": "3d8307a0d05dced9e5e4af9d19665de68bcae618987a0469292209496ec618c7"
+    },
+    {
+      "repository": "8800_report",
+      "path": "evidence/editorial/9613db1/before/zh/chapters/08-5-deployment.tex",
+      "sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9"
+    },
+    {
+      "repository": "8800_report",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "sha256": "22d83ef41adccdebaab4606251503f8cc25aa32741fd80e84ff6c4c99a2cd73d"
+    },
+    {
+      "repository": "8800_report",
+      "path": "frontmatter/abstract.tex",
+      "sha256": "3d6ce9810958cfc651e1bec5ac388c6e3b994c05ba56b0966054a3011734fef1"
+    },
+    {
+      "repository": "8800_report",
+      "path": "scripts/audit_highlight_remediation.py",
+      "sha256": "7797bbb932f2c186de31dacb3c3deaebdf8954e0b472559b69f14b229ab34e15"
+    }
+  ]
+}

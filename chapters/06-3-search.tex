@@ -41,12 +41,18 @@ The latter statement holds when these conditions hold for every sampled
 query.
 \end{proposition}
 \begin{proof}
-A reference item has fewer than $k$ predecessors in the largest survivor
-set. If it is present in a smaller set, restriction cannot introduce new
-predecessors, so it remains in that set's exact top-$k$. Thus the
-intersection with the reference equals the reference items present in
-the survivor set. Nestedness can only add such items. Summing missing
-reference counts over queries proves the inequality.
+For $x\in\mathcal R_{\rm ref}\cap C_\alpha$, the common total order gives
+\begin{equation*}
+ |\{y\in C_\alpha:y\prec x\}|
+ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
+\end{equation*}
+Hence $x\in\mathcal R_\alpha$. Together with
+$\mathcal R_\alpha\subseteq C_\alpha$, this proves the intersection
+identity in \cref{eq:6-monotonicity}. Nestedness gives
+$|C_\alpha\cap\mathcal R_{\rm ref}|
+ \leq|C_\beta\cap\mathcal R_{\rm ref}|$.
+Summing missing reference counts over queries proves
+$D_S(\alpha)\geq D_S(\beta)$.
 \end{proof}
 \end{minipage}\par\medskip
 

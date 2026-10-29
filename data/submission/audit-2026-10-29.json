@@ -15,10 +15,10 @@
     "NA": 4
   },
   "pdf": {
-    "english_pages": 83,
-    "english_chapters_pages": 67,
-    "chinese_pages": 80,
-    "english_prose_and_abstract_estimate": 24033,
+    "english_pages": 81,
+    "english_chapters_pages": 65,
+    "chinese_pages": 79,
+    "english_prose_and_abstract_estimate": 22258,
     "abstract_estimate": 186,
     "figures": 26,
     "tables": 31,
@@ -29,8 +29,8 @@
       "type3": 0
     },
     "words_outside_page": 0,
-    "english_sha256": "be244a0a6449b20ee4b15ec8ec5289b814699a1f4bfbff952985377571c4ed3b",
-    "chinese_sha256": "51e58e2cfd0f299ca57a7c30dddd6578e7e27811e6857c1adefb8c5cd7f86286"
+    "english_sha256": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72",
+    "chinese_sha256": "81f326d805074ef51092d6541a104e57c9968be79426c0930e727ef0a8c0b578"
   },
   "code": {
     "local_commit": "19135c965a2cfccf469efb6b75029a268c7c3b5b",
@@ -251,7 +251,7 @@
       "source_ids": [
         "S03"
       ],
-      "evidence": "同口径工具估算24,033词；九章及摘要文字／图注，排除表体和数学。",
+      "evidence": "同口径工具估算22,258词；九章及摘要文字／图注，排除表体和数学。",
       "action": "这不是课程官方字数认证；若Canvas有独立计数规则，须按其重计。"
     },
     {
@@ -1178,7 +1178,7 @@
     }
   ],
   "checks": {
-    "local_input_hashes": 1883,
+    "local_input_hashes": 2043,
     "v71_bundle_files": 209,
     "review_bundle_files": 131,
     "cited_keys": 39,
@@ -1188,7 +1188,7 @@
     ],
     "undefined_refs": [],
     "duplicate_labels": [],
-    "visual_scope": "Readable checks of revised introduction, comparison design, capacity discussion and conclusion; full compiled-text, reference, font, boundary and proof-alignment checks; not full student-personal verification",
+    "visual_scope": "Readable inspection of EN physical pages 44, 46, 51, 57, 62, 71 and ZH pages 43, 45; whole-PDF references, fonts, bounds and proof alignment; not full sentence proofreading or student-personal verification",
     "isolated_checks": [
       "evidence/review/check.py --run-audits",
       "evidence/ch5/v71/check.py",
@@ -1199,16 +1199,18 @@
       "audit_ch7_round2.py",
       "audit_ch8.py --no-plot",
       "audit_ch3.py",
-      "audit_synthesis.py"
+      "audit_synthesis.py",
+      "audit_highlight_remediation.py",
+      "audit_compression.py --check-copies"
     ],
     "isolated_numeric_table_changes": [],
-    "candidate_file_fingerprints": 190,
+    "candidate_file_fingerprints": 219,
     "candidate_fonts_type3": 0,
     "identical_scientific_assets": 86,
     "font_only_pdf_exports": 1,
     "hash_count_scope": "All current data/* inputs entries, including the refreshed candidate fingerprints and compression audit",
     "compression_audit": "scripts/audit_compression.py --check-copies; data/compression/audit.json",
-    "mathematical_typography": "12 statement/proof pairs retained verbatim; six per language kept on one page with headings and first proof lines within 1pt of the 27mm left margin",
+    "mathematical_typography": "Six statement/proof pairs per language remain on one page and aligned to the margin; one proof per language restated by predecessor counts, with unchanged statement and assumptions; other transformations enumerated in the exact highlight ledger",
     "internal_workflow_paths_visible": 0,
     "course_cover_identity": {
       "checked_on": "2026-10-29",
@@ -1225,7 +1227,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "6d0505a6e6dd60112613de6331e5e4b23945dc37e8ebf1dcade5c7d9c3dc1d5d"
+      "sha256": "7ec597187214818133bbf0b9859b2f211240b27eaf2e678de832c15b3d26a680"
     },
     {
       "path": "appendices/a-reproducibility.tex",
@@ -1253,7 +1255,7 @@
     },
     {
       "path": "assessment/compression-edits.json",
-      "sha256": "fa0e9de59aca07de79db7608665690232821a5bd026d7e0855e8e6a0f97a868a"
+      "sha256": "fcef34623649868d8db615b27a779d44c582d3ed7cd4bbf3c1a5ff651485207e"
     },
     {
       "path": "assessment/compression-review-response.txt",
@@ -1276,6 +1278,14 @@
       "sha256": "69630b472ff5b4e269a1dc50de8dc868ddd207c4d07269923464c798a7114584"
     },
     {
+      "path": "assessment/highlight-remediation-edits.json",
+      "sha256": "6267f5d13eb7dcec75235fcd620f7a7a175a6690ef04f7be71a80834e2524a5b"
+    },
+    {
+      "path": "assessment/highlight-remediation-response.txt",
+      "sha256": "004bc3d18b15854efb86a7a90156bf9307bb5031e2d9faf806316c769ea79878"
+    },
+    {
       "path": "assessment/internal-reference-edits.json",
       "sha256": "6002bac4fadffe526d58b287cee035e3f5f099dc4ef96c11bee3ef1967b6de33"
     },
@@ -1293,7 +1303,7 @@
     },
     {
       "path": "assessment/submission-manual-actions.txt",
-      "sha256": "691d430bb6a32dbba64fcfea81c988158857129a431bf67d031d3b367d1f3135"
+      "sha256": "2a6a5195e287b392ea6063e19ade6c572c9016c4a95317b001e2d42d9fbd91d3"
     },
     {
       "path": "assessment/targeted-curation-review.md",
@@ -1345,15 +1355,15 @@
     },
     {
       "path": "chapters/02-4-gpu.tex",
-      "sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5"
+      "sha256": "5cb401dff9651e713774b6913e9df5b8d486d5c49360651e7b88f0ebfab6c488"
     },
     {
       "path": "chapters/02-5-graphs.tex",
-      "sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458"
+      "sha256": "7d0ce4a8f6fe9f328c1b5144bd2d192fd708a8110a2ead6655674049c6485896"
     },
     {
       "path": "chapters/02-6-quantised.tex",
-      "sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f"
+      "sha256": "cc58dac166f06b441731477075113db0b7c9b47cb4b33e1587e61869f6e50062"
     },
     {
       "path": "chapters/02-7-gap.tex",
@@ -1457,11 +1467,11 @@
     },
     {
       "path": "chapters/06-2-agreement.tex",
-      "sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205"
+      "sha256": "3b6fbe395b3109cd9fed416acdff0c72a0daf07ebfbf4ab9301d82c8dbb6cbd8"
     },
     {
       "path": "chapters/06-3-search.tex",
-      "sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e"
+      "sha256": "45cdc3101449a47dc56088ad49b47c703b0e049becf4193d60b0e0597718b77a"
     },
     {
       "path": "chapters/06-4-controls.tex",
@@ -1469,7 +1479,7 @@
     },
     {
       "path": "chapters/06-5-economics.tex",
-      "sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295"
+      "sha256": "7e7439b6cb2e6c05d068fa6909c441396f3d59bd62d8ab1643e38c7169a18855"
     },
     {
       "path": "chapters/06-6-scope.tex",
@@ -1481,11 +1491,11 @@
     },
     {
       "path": "chapters/07-evaluation.tex",
-      "sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
+      "sha256": "8ce5021c27d5a5b73fcad5f0f61e4ed08b3cd5a9bd84132c3d0bcaa1211f9a1d"
     },
     {
       "path": "chapters/07-supp-budget.tex",
-      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
+      "sha256": "2aafe5253c7e6e5f6c9d1a046828a56472925f8f94bb6c20caacd1c80a4bf2e2"
     },
     {
       "path": "chapters/07-supp-precision.tex",
@@ -1501,7 +1511,7 @@
     },
     {
       "path": "chapters/08-1-insights.tex",
-      "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
+      "sha256": "d1b1d9ed18338d57170855e160c5eca91950d776f4cb80ecab49ee834b3ab257"
     },
     {
       "path": "chapters/08-2-negative.tex",
@@ -1509,7 +1519,7 @@
     },
     {
       "path": "chapters/08-3-validity.tex",
-      "sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd"
+      "sha256": "865103d196ef9f6ffbac9b75485aeab612a8a912225975a98f4ecb38c5f29636"
     },
     {
       "path": "chapters/08-4-directions.tex",
@@ -1517,7 +1527,7 @@
     },
     {
       "path": "chapters/08-5-deployment.tex",
-      "sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2"
+      "sha256": "2e4f6032c972450bbf45391b2ac40081d1a11179bef6a98cfbecf45f2cdbecfe"
     },
     {
       "path": "chapters/08-discussion.tex",
@@ -1541,43 +1551,47 @@
     },
     {
       "path": "data/ch3/audit.json",
-      "sha256": "7035060562c8c6ad46d7191a297c77beb9ff99b1eba5e65f1e8503b04e08734f"
+      "sha256": "f1a7e4421e25c70e1c7fef19bfb275139fed59703b3ebdd84473d5c60d109c71"
     },
     {
       "path": "data/ch4/audit.json",
-      "sha256": "19476693644ff41dec5330f245316cbe38ff441e69127d3479e4e8f341c429fd"
+      "sha256": "c0939b3873053e57786e37cd96bc5a8892e5553f7845ad0d4f40ace069153b08"
     },
     {
       "path": "data/ch6/audit.json",
-      "sha256": "dae2577183dcf9432b6a66c1acc0faef09ac514894142a7aeb6b5c862f33c39e"
+      "sha256": "4de945112e21975eb56099f718e104842366161cf8e7705c5c1fad7df2e9f5ce"
     },
     {
       "path": "data/ch7/round2-audit.json",
-      "sha256": "96638de1847e68a5e4c7ac3a99e4f328dafcce94aeb2ddea88c748bc9af47cea"
+      "sha256": "21525e38b753f4775201409eb033576dd504471f3ddfa303db5d069b7d4857f9"
     },
     {
       "path": "data/ch8/audit.json",
-      "sha256": "cc59cca01dac1ca4dfbe4786a8ca62836ed36dac651e84e8eb581d10b6cbe07e"
+      "sha256": "0e6a418394716cee91613773ff3578e4ef639cb6d0981495e4efe91291d47fe1"
     },
     {
       "path": "data/compression/audit.json",
-      "sha256": "3353bf2790e5301b9498405fdcaa376657eba0904eed5364607abb35f7d87184"
+      "sha256": "b44d63bc7b962a7f4171e7e77403937dad3d422faca5ac43ff09343b9e947eee"
     },
     {
       "path": "data/deduplication/audit.json",
-      "sha256": "cfb43b981d3153bf3effe0ccce899f8419d7f37b3a58d36c48abf2fa6fbff5dc"
+      "sha256": "ce505869b714bda9b042278c2b73c3ffe574dc2b3d32c5804ac7d96da37a74bd"
     },
     {
       "path": "data/full-review/audit.json",
-      "sha256": "7c3eec4c4562d5206d16b5202d722da0f30355bf3dda290f032061102e56f03e"
+      "sha256": "30305b5c6699d99c4f2dae232bbd3851695370514d97e6b653b13dc2d1bd5108"
+    },
+    {
+      "path": "data/highlight-remediation/audit.json",
+      "sha256": "a15eb6556bb429a68cc798bb44dfda213e53170206b6184cafea07467e3b03a2"
     },
     {
       "path": "data/submission/ai-use-record.json",
-      "sha256": "a9488cf0601492dcd25f34cf6bae30d69e81c8637eca59c92ab79716b667ea07"
+      "sha256": "696811f6e27f29b19f7b15ec26cb07c48abae4ba2716618ae648c1a66cedd5a7"
     },
     {
       "path": "data/synthesis/audit.json",
-      "sha256": "1ee95ae2cd0237adcb789d5189d9347106bb981dcbe65d236b35437bacc2b736"
+      "sha256": "df6b6c291c1f1b386f412e0383dd3235ef6ae1b2c1e001d1103e2708783df960"
     },
     {
       "path": "data/synthesis/primary-sources.json",
@@ -1585,11 +1599,11 @@
     },
     {
       "path": "data/t4-t5/audit.json",
-      "sha256": "6f8fbbdbe4c254313a8e4f2e0d46d357ac503b2181346e8d4e45816deea6e5d2"
+      "sha256": "9edc6e29d35792da50a29eea2cfb0e60152d4db084a6070d8ff367b413b3973f"
     },
     {
       "path": "docs/ai-use-record.md",
-      "sha256": "fb5f101ba60524fd038df5c709520d13575485d2dd9c8bf7b8f9fee1b0410f13"
+      "sha256": "76060b2b4ef9e49900d2ccb1ce787fa0197acf9c99bbafc6e91f64ccd587ef4c"
     },
     {
       "path": "docs/artifact-access.md",
@@ -1634,6 +1648,102 @@
     {
       "path": "evidence/editorial/2d9d2aa/internal-reference-cleanup.patch",
       "sha256": "8ba171e2fe84cdea1371b57fb9d1b01539b400b1532718c63fb0928f07a59e47"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/02-4-gpu.tex",
+      "sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/02-5-graphs.tex",
+      "sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/02-6-quantised.tex",
+      "sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/06-2-agreement.tex",
+      "sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/06-3-search.tex",
+      "sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/06-5-economics.tex",
+      "sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/07-evaluation.tex",
+      "sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/07-supp-budget.tex",
+      "sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/08-1-insights.tex",
+      "sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/08-3-validity.tex",
+      "sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/chapters/08-5-deployment.tex",
+      "sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/02-4-gpu.tex",
+      "sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/02-5-graphs.tex",
+      "sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/02-6-quantised.tex",
+      "sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/06-2-agreement.tex",
+      "sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/06-3-search.tex",
+      "sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/06-5-economics.tex",
+      "sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/07-evaluation.tex",
+      "sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/07-supp-budget.tex",
+      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/08-1-insights.tex",
+      "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/08-3-validity.tex",
+      "sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22"
+    },
+    {
+      "path": "evidence/editorial/9613db1/before/zh/chapters/08-5-deployment.tex",
+      "sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9"
+    },
+    {
+      "path": "evidence/editorial/9613db1/compression-from-03775b7.patch",
+      "sha256": "255141c168f7035b7158e9c61547e8085ecebf8ec2931600a025ded99be1b27a"
+    },
+    {
+      "path": "evidence/editorial/9613db1/highlight-remediation.patch",
+      "sha256": "54f9d7812267ec1e7fe82199cc4e8c5fceb946c930754f05531143dd52b87272"
     },
     {
       "path": "evidence/editorial/a047ee8/adc-abstract.txt",
@@ -1721,11 +1831,15 @@
     },
     {
       "path": "scripts/audit_compression.py",
-      "sha256": "49ccfdbb9fad73f970f351b5cdb82b69dc1350de0de10b226b8052511a645d62"
+      "sha256": "ec22e5f462542e23b74f4170beb3f9b7f24620a28e7c0e65c8c560ae73c5eaec"
     },
     {
       "path": "scripts/audit_deduplication.py",
-      "sha256": "827ba97dc35fd3a3891efe619ea46c2fa7245f4f3ab6aae9b56b017a037e5084"
+      "sha256": "550de7b1859ee3b11e45b617cb32b01998870eb3f8a7a6857c17dcfd8b8c0d75"
+    },
+    {
+      "path": "scripts/audit_highlight_remediation.py",
+      "sha256": "7797bbb932f2c186de31dacb3c3deaebdf8954e0b472559b69f14b229ab34e15"
     },
     {
       "path": "scripts/audit_synthesis.py",
@@ -1736,12 +1850,16 @@
       "sha256": "c5f574816d6996b4a5b21940aea01508b4838c267e5e2af06c1d3b5aea31a60f"
     },
     {
+      "path": "scripts/export_review_pdfs.py",
+      "sha256": "fd62754f2f2dfdaa08bb73d701a51d25e397d96858d0ec811045a2251af389b1"
+    },
+    {
       "path": "thesis-zh.pdf",
-      "sha256": "51e58e2cfd0f299ca57a7c30dddd6578e7e27811e6857c1adefb8c5cd7f86286"
+      "sha256": "81f326d805074ef51092d6541a104e57c9968be79426c0930e727ef0a8c0b578"
     },
     {
       "path": "thesis.pdf",
-      "sha256": "be244a0a6449b20ee4b15ec8ec5289b814699a1f4bfbff952985377571c4ed3b"
+      "sha256": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72"
     },
     {
       "path": "zh/acknowledgements.tex",
@@ -1789,15 +1907,15 @@
     },
     {
       "path": "zh/chapters/02-4-gpu.tex",
-      "sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d"
+      "sha256": "b85be527733e824288ec53b26fa61a4871709190b2e21a05a1e290d511dd4a18"
     },
     {
       "path": "zh/chapters/02-5-graphs.tex",
-      "sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086"
+      "sha256": "e87ae06219ce90077fa9f072c0fce2c62240e5904f18c762cc70b28a4d2eabec"
     },
     {
       "path": "zh/chapters/02-6-quantised.tex",
-      "sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350"
+      "sha256": "ddaa7f4d5943eee6c861d869758c87b741dfb1c02153232e43f6e7cf6c9affa6"
     },
     {
       "path": "zh/chapters/02-7-gap.tex",
@@ -1901,11 +2019,11 @@
     },
     {
       "path": "zh/chapters/06-2-agreement.tex",
-      "sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914"
+      "sha256": "333cab55652255eca2837abf09d8be7c3fa8be39cfe3eab7c69fd776c5fbc0fc"
     },
     {
       "path": "zh/chapters/06-3-search.tex",
-      "sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef"
+      "sha256": "523afcc5d5e550ee96f02adad9fe4b09b9254836b7916cd2aa482de1d94bc92d"
     },
     {
       "path": "zh/chapters/06-4-controls.tex",
@@ -1913,7 +2031,7 @@
     },
     {
       "path": "zh/chapters/06-5-economics.tex",
-      "sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6"
+      "sha256": "ee7e8d9b4d0ed6e24b805929a9aaeb312eb91d8627cd640dd6c76d4b9d42c90d"
     },
     {
       "path": "zh/chapters/06-6-scope.tex",
@@ -1925,11 +2043,11 @@
     },
     {
       "path": "zh/chapters/07-evaluation.tex",
-      "sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143"
+      "sha256": "4fc1e33ca7a3fa3cad4aa4e73c7132c6cd49f7e8e5d5c31d4009f7862fe813dc"
     },
     {
       "path": "zh/chapters/07-supp-budget.tex",
-      "sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9"
+      "sha256": "b7855606bcfe53cfb326c213ae47cad588cd1dbe895112f6b94886a48d1f489f"
     },
     {
       "path": "zh/chapters/07-supp-precision.tex",
@@ -1945,7 +2063,7 @@
     },
     {
       "path": "zh/chapters/08-1-insights.tex",
-      "sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa"
+      "sha256": "ec6c412c223c93d2c17193f91b5ac44194d1ca0a292dfbd361d91723192fae53"
     },
     {
       "path": "zh/chapters/08-2-negative.tex",
@@ -1953,7 +2071,7 @@
     },
     {
       "path": "zh/chapters/08-3-validity.tex",
-      "sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22"
+      "sha256": "3d8307a0d05dced9e5e4af9d19665de68bcae618987a0469292209496ec618c7"
     },
     {
       "path": "zh/chapters/08-4-directions.tex",
@@ -1961,7 +2079,7 @@
     },
     {
       "path": "zh/chapters/08-5-deployment.tex",
-      "sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9"
+      "sha256": "22d83ef41adccdebaab4606251503f8cc25aa32741fd80e84ff6c4c99a2cd73d"
     },
     {
       "path": "zh/chapters/08-discussion.tex",
@@ -1981,12 +2099,13 @@
     }
   ],
   "initial_report_commit": "5003f08b18eb7e3a9ed3e7376c0f88b56fc68503",
-  "audited_base_commit": "682ef939ee41e3a9b9c9ec984604c62008406744",
-  "revision_scope": "Additional submission review: remove residual process narration and clarify capacity/measurement language; numerical results, proofs and assets preserved; personal contribution, interaction completeness and Canvas actions remain pending",
+  "audited_base_commit": "9613db1d6727d0518b9e2ae75a9449d3a59b08db",
+  "revision_scope": "Thirty selected large highlighted blocks per language compressed or formalised; existing proposition assumptions, results and figures/tables preserved; no GPU or external detector rerun",
   "compression_baseline": "03775b765ce0fbbc378f55a98cfa48669b9a223e",
   "adc_revision_baseline": "a047ee84ec9a52c6de7fa523fa95c084ad7686a4",
   "layout_baseline": "f39bf756dbd5f3b9708a6f2919de7c124af7cdf1",
   "proof_layout_baseline": "cc696f2f98f29ebe794d930f08d2d5ab4add994e",
   "internal_reference_cleanup_baseline": "2d9d2aa7bbfd6d6c8479a884cc4500a9a8b0ffab",
-  "submission_polish_baseline": "f8dbf87d023fa77f3903c09d44f585beafa02120"
+  "submission_polish_baseline": "f8dbf87d023fa77f3903c09d44f585beafa02120",
+  "highlight_remediation_baseline": "9613db1d6727d0518b9e2ae75a9449d3a59b08db"
 }

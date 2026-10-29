@@ -1,0 +1,1099 @@
+{
+  "baseline": "9613db1d6727d0518b9e2ae75a9449d3a59b08db",
+  "date": "2026-10-29",
+  "timezone": "Australia/Sydney",
+  "scope": "Thirty selected large highlighted prose blocks per language; compress repetition and formalise only existing set/order arguments. No GPU or detector rerun.",
+  "detectors": [
+    {
+      "id": "T71",
+      "sha256": "e6c651d2a45fd97b9a00f0313b414d6bd22cd2917d4ab8e9a8c58a5b01fb7cc1",
+      "reported_percent": 71,
+      "report_pages": 45,
+      "content_pages": 43,
+      "scope": "Front matter and Chapters 1–5"
+    },
+    {
+      "id": "T76",
+      "sha256": "1b70c00e6985f2fda0c944b10931beb0106d96e9a774509b31e88078a689af2a",
+      "reported_percent": 76,
+      "report_pages": 42,
+      "content_pages": 40,
+      "scope": "Chapters 6–9, bibliography, Appendices A/B"
+    }
+  ],
+  "workflow": {
+    "title": "Turnitin Highlight Remediation Audit for the COMP8800 Thesis",
+    "sha256": "b36975506efeea616bc260350bc888bbfad0e7fbabfa463db22ff43c61f19335",
+    "correction": "The T76 source includes bibliography and Appendices A/B; split by chapter boundary rather than reusing physical page numbers."
+  },
+  "mapping_method": "Source anchors and report-page inspection within large highlighted runs. Entire selected paragraph blocks may also contain unhighlighted tokens; page geometry is not a chapter AI percentage.",
+  "entries": [
+    {
+      "id": "H01",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "Against CAGRA fp32, interpolated ratios at this target range from\n$1.317\\times$ on arXiv to $1.747\\times$ on the two OpenAI datasets.\nAgainst IVF-RaBitQ, the corresponding values are $1.059\\times$,\n$0.996\\times$, $1.130\\times$ and $1.157\\times$. The arXiv result is a\nnear tie whose direction depends on the estimator.\n\n",
+      "after": "At recall 0.97, JHQ's interpolated rate is $1.317$--$1.747\\times$\nCAGRA fp32's. It also leads IVF-RaBitQ on three datasets; arXiv is a\nnear tie whose direction changes with the estimator (\\cref{tab:7-matched}).\nGrid spacing matters: OpenAI-1536's CAGRA comparison is $1.747\\times$\nby interpolation and $2.294\\times$ at qualifying measured points.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        11
+      ],
+      "action": "compress",
+      "reason": "Keep the comparative pattern and estimator discrepancy instead of repeating every table row",
+      "before_words": 38,
+      "after_words": 42
+    },
+    {
+      "id": "H02",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "The paired E1 one-block measurements connect RQ2 to this RQ4 result.\nRebuilding Vogue's frontier with $\\gscan=0$ reduces its 0.97 ratio to\nRaBitQ from $1.059$ to $0.933$; at 0.96 the corresponding ratios are\n$1.250$ and $1.072$. Both use the same run--budget grid and log-QPS\ninterpolation at batch 1,000. The favourable\ndirection therefore depends on the scheduled grouped path in this grid.\nThe comparison holds the index, probes, budget and final outputs fixed\nwithin each pair; it measures the integrated path, rather than isolating\nthe shared bound's contribution alone.\n\n\n",
+      "after": "Vogue's lead depends on the grouped execution path. Replacing it by\n$\\gscan=0$ changes the recall-0.97 ratio against RaBitQ from $1.059$\nto $0.933$ on the same batch-1,000 grid. Each pair fixes the index,\nprobes, budget and final outputs. This links RQ2 to RQ4 through the\nintegrated path, without isolating the shared bound alone.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        11
+      ],
+      "action": "compress",
+      "reason": "Retain the unique path-sensitive reversal and its paired control",
+      "before_words": 80,
+      "after_words": 49
+    },
+    {
+      "id": "H03",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "Across targets 0.90--0.985, JHQ's interpolated advantage over CAGRA fp32\nis approximately $1.10$--$2.44\\times$ in the covered comparisons.\nHowever, adding CAGRA int8 changes the low-recall interpretation: around\n0.90--0.92, its lower-precision graph search can be faster than JHQ.\nAt higher recall, IVF-RaBitQ often regains the lead, including several\ntargets at 0.98 or above. On arXiv around 0.99, CAGRA fp32 is also faster\nthan JHQ in the recorded grid. JHQ's favourable region is bounded by\nboth target recall and competing representation.\n\nCAGRA int8 reaches maximum measured recalls of 0.9453, 0.9620, 0.9667 and\n0.9683 on Vogue, arXiv, OpenAI-1536 and OpenAI-3072, respectively. It\ntherefore has no qualifying point at 0.97 in these grids. At targets\n0.90--0.92 it is approximately $1.20$--$1.98\\times$ faster than JHQ by the\nsame interpolation rule; it remains faster at 0.95 on arXiv and at 0.94\non both OpenAI datasets. The 0.97 result concerns methods with measured\ncoverage and does not extend to every target below 0.97.\n\nThe two estimators can disagree substantially where the grid is sparse.\nFor example, at recall 0.97 the OpenAI-1536 comparison with CAGRA fp32 is\n$1.747\\times$ by interpolation but $2.294\\times$ using qualifying measured\npoints. The measured estimator pays for the next qualifying baseline\npoint; the gap between estimators exposes grid sensitivity.\n\n",
+      "after": "The advantage changes with the recall target. CAGRA int8 is about\n$1.20$--$1.98\\times$ faster at 0.90--0.92 but has no qualifying point\nat 0.97 in these grids. IVF-RaBitQ regains the lead at several targets\nof 0.98 or above; CAGRA fp32 also leads on arXiv near 0.99.\n\\Cref{fig:7-frontiers} therefore supports a high-recall operating region,\nwith both the competitor's precision and measured coverage specified.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        11,
+        12
+      ],
+      "action": "compress",
+      "reason": "Retain lower- and higher-recall counterexamples; archive detailed endpoint readouts",
+      "before_words": 183,
+      "after_words": 54
+    },
+    {
+      "id": "H04",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "The advantage instead co-varies with refinement demand: the E1 setup's\n128-probe budget anchors are 4--8 for OpenAI, 64 for Vogue and 100 for\narXiv (the later full-pool rule selects 200 there). Their 0.97 RaBitQ\nratios are respectively 1.130--1.157, 1.059 and 0.996. This four-dataset\nassociation agrees with the design of selective residual access; the\nanchors are neither equal-recall frontier parameters nor a causal\nisolation of primary quality. The ablations below test execution\ncomponents directly.\n\n",
+      "after": "The four-dataset advantage co-varies with the 128-probe refinement\nanchors: 4--8 for OpenAI, 64 for Vogue and 100 for arXiv\n(the later FULL rule selects 200 there). These anchors are not the\nmatched-recall frontier parameters, so the association does not isolate\nprimary quality causally.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        13
+      ],
+      "action": "compress",
+      "reason": "Remove a second recital of the same RaBitQ ratios",
+      "before_words": 65,
+      "after_words": 39
+    },
+    {
+      "id": "H05",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "The important counterexample is arXiv. At 128 probes, 40/64 draws lose\nmore than $10^{-3}$ recall even though mean loss is only 0.0009; at\n512 probes, 32/64 draws cross the threshold. BGE at 512 probes has\n24/64 threshold crossings and a 95th-percentile loss of 0.0014. Stella\nhas fewer crossings but a 95th-percentile loss of 0.0030 at both probe\ndepths. OpenAI-3072 has no observed crossings in this finite pool. Mean\nloss, crossing frequency and tail magnitude distinguish these outcomes.\n\nUnder the lower-order percentile convention in \\cref{sec:a-budget-contract}\n(zero-based index 59),\nfour nonzero tail losses can coexist with $L_{95}=0$, as on OpenAI-1536.\nThe crossing count in the table preserves that distinction.\n\n\n",
+      "after": "ArXiv exposes the sampling risk: 40/64 draws at 128 probes and 32/64\nat 512 exceed the $10^{-3}$ loss threshold, despite mean loss 0.0009\nin both cells. Fixed 100 itself loses 0.0012/0.0016, so improvement\nover that default coexists with failure against the stronger target.\nOther tails are in \\cref{tab:7-budget-quality}: BGE/512 has 24/64\ncrossings and $L_{95}=0.0014$; Stella has $L_{95}=0.0030$ at both\nprobe depths, while OpenAI-3072 has no observed crossings.\nUnder the percentile convention in \\cref{sec:a-budget-contract},\nfour nonzero losses can coexist with $L_{95}=0$, as on OpenAI-1536.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        19
+      ],
+      "action": "compress",
+      "reason": "Combine tail interpretation with its fixed-budget control; keep all scientific counterexamples",
+      "before_words": 94,
+      "after_words": 69
+    },
+    {
+      "id": "H06",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "\\Cref{fig:7-budget-risk} shows the effect of sample size. A larger sample\nusually makes selection more conservative, but also tightens the\nnormalized allowance $1/(10S)$. Same-sample enumeration agrees with\nbisection in all 2,304 draws ($12\\times3\\times64$), while taking\n1.75--2.01 times as long in the printed logs.\n\n\\Cref{cor:6-grouped-calibration} covers 2,176 of the 2,304 draws.\nThe remaining 128 OpenAI-3072 draws at $S=128$ use distance-only cutoff\nties and agree with enumeration empirically. Path changes in eight cells\nconcern calibration-to-evaluation transfer, separately from this check.\n\n\nAcross the eight fixed choices, $\\alpha=64$ and 100 each qualify in\nten of twelve cells against the diagnostic quality target; $\\alpha=200$\nqualifies in all twelve. Among qualifying cells, their maximum QPS deficits\nto the diagnostic oracle are 26.6\\%, 40.9\\% and 57.1\\%, respectively.\nFull-pool\ncalibration selects 100 on Vogue at both probe depths while the oracle\nselects 64: reference agreement and fastest quality-constrained selection\nhave different objectives. Here $\\alpha=200$ attains the best measured\nrecall, so its 12/12 qualification follows from its role as the coverage\ncontrol.\nThe short fixed-arm timings have apparent small-budget inversions.\nSupplementary alternating repetitions resolve the cited OpenAI inversion\nas timing variation and establish a low-budget plateau\n(\\cref{sec:7-budget-trace}). Minimum accepted budget consequently need\nnot maximise throughput.\n\n\n",
+      "after": "Increasing $S$ tightens the normalised allowance $1/(10S)$ as well\nas changing sample coverage (\\cref{fig:7-budget-risk}).\nThe grouped-path guarantee covers 2,176/2,304 sampled draws;\nthe remaining 128 distance-only cases are empirical checks\n(\\cref{cor:6-grouped-calibration}). Enumeration and FULL verification\nare reported in \\cref{sec:7-budget-trace}.\n\nFixed 64 and fixed 100 each meet the diagnostic quality target in 10/12\ncells; fixed 200 meets it in all twelve. FULL selects 100 on Vogue\nwhere the fastest qualifying oracle arm is 64: minimum reference\ndisagreement and maximum quality-constrained throughput are different\nobjectives. The observed low-budget timing plateau reinforces this\ndistinction.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        19,
+        20
+      ],
+      "action": "compress",
+      "reason": "Remove fixed-arm grid readout and duplicate enumeration discussion; retain tie-path scope and oracle distinction",
+      "before_words": 174,
+      "after_words": 77
+    },
+    {
+      "id": "H07",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "The stronger $\\alpha=64$ comparison reduces the aggregate gain:\nmean selected-arm QPS wins in 9/12 cells, with geometric-mean ratio\n$1.054\\times$ and range $0.821$--$1.367\\times$. It is nearly unchanged\non Vogue and improves only 0.6\\% on BGE at 512 probes; OpenAI gains\nrange from $1.052$ to $1.367\\times$. Both fixed 64 and fixed 100 qualify\nin 10/12 cells, failing the two arXiv cells. The useful property of\ncalibration is matching heterogeneous refinement demands, rather than\nuniformly beating an already sensible fixed budget.\n\nArXiv's threshold crossings are relative to the best tested held-out\nrecall, not relative to the default configuration. Fixed 100 already\nloses 0.0012 and 0.0016 recall at probes 128 and 512, while the sampled\nmean loss is 0.0009 in both cells. Mean quality therefore improves over\nthe default despite some draws exceeding the oracle-relative target.\n\n",
+      "after": "Against fixed 64, selected-arm QPS wins in 9/12 cells with geometric\nmean $1.054\\times$ and range $0.821$--$1.367\\times$; OpenAI gains are\n$1.052$--$1.367\\times$. Both fixed controls fail the two arXiv quality\ntargets. These are consequently joint quality/time comparisons, rather\nthan uniform speedups over an acceptable fixed budget.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        20
+      ],
+      "action": "compress",
+      "reason": "Keep the stronger fixed-64 control; avoid repeating the arXiv loss explanation",
+      "before_words": 115,
+      "after_words": 40
+    },
+    {
+      "id": "H08",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "Calibration costs 3.9--21.3\\,ms under the boundary in\n\\cref{sec:a-budget-contract}. Applying \\cref{eq:6-payback} with fixed\n$\\alpha=100$ and $T_{\\rm rule}\\approx1000n/\\overline Q_{\\rm rule}$ in milliseconds gives the estimates\nin \\cref{tab:7-budget-cost}: 2.4--55.4 subsequent held-out-sized batches\nagainst fixed 100 in favourable cells. Against fixed 64, the corresponding\nrange is 5.7--404.3 batches in nine favourable cells; Vogue at 512 probes\nhas no throughput payback. The two arXiv controls also miss the quality\ntarget, so their timing comparisons are diagnostics rather than\ncomparisons at matched quality. At the control rates, the largest positive\n$S=128$ break-even estimates correspond to 0.54\\,s versus fixed 100\nand 2.72\\,s versus fixed 64 (about 27.7K and 202.2K queries).\nFull-pool positive cases reach at most 1.52/2.25\\,s and 64.9K/78.7K\nqueries against those controls, using their own calibration costs.\nThese modelled horizons favour reuse on long stable jobs.\n\n\nThese estimates inherit the mean-rate inversion and stationary-reuse\nassumptions analysed in \\cref{sec:6-5}. Direct execution below checks\ntheir net-cost implication on the recorded query stream.\n\n\nThe newer lane-refined pipeline leaves less removable refinement work\nthan the historical scalar implementation.\nThe runs share the budget protocol and grid, but this cross-campaign\ncomparison does not isolate refinement as the sole cause of the change.\n\n",
+      "after": "Calibration costs 3.9--21.3\\,ms. Applying \\cref{eq:6-payback} gives\nthe batch estimates in \\cref{tab:7-budget-cost}, subject to the\nstationary-reuse and inverse-mean-rate assumptions of \\cref{sec:6-5}.\nThe largest positive $S=128$ payback estimates correspond to\n0.54/2.72\\,s against fixed 100/64; FULL's corresponding maxima are\n1.52/2.25\\,s. ArXiv's fixed controls miss the quality target, so their\ntiming ratios are diagnostic. Direct reuse below tests net cost with\nquality reported alongside time.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        20,
+        21
+      ],
+      "action": "relocate",
+      "reason": "Keep the cost scale and assumptions; archive detailed unit conversions and historical cross-version commentary",
+      "before_words": 175,
+      "after_words": 56
+    },
+    {
+      "id": "H09",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "The scan experiments reveal two execution regimes. With one block per\nquery, batch 8 exposes only eight blocks on a 170-SM device. Candidate\npartitioning increases the available block parallelism. In the independent-bound grouped-scan\nexperiment, eight groups improve end-to-end throughput by\n$2.06$--$2.76\\times$ at batch 8. Profiling supports a stage-level\nexplanation: arXiv's scan falls from about 849 to 216\\,$\\mu$s, Vogue's\nfrom 1,059 to 246\\,$\\mu$s, and OpenAI-3072's from 728 to 155\\,$\\mu$s.\nThe additional merges cost approximately 16.7, 9.1 and 3.7\\,$\\mu$s,\nrespectively. The net reduction is large even after paying for merging.\n\nAt batch 1,000 there are already enough independent queries to expose\nmany blocks. Additional groups repeat table staging, local-buffer\nadmission and sorting, and produce extra merge traffic. The independent-bound\ngrouped path can fall to about $0.46\\times$ its one-block baseline on\narXiv at $\\alpha=200$. The full-batch profiles show scan increasing from\n2,922 to 6,079\\,$\\mu$s at $\\alpha=100$ and from 3,530 to\n7,652\\,$\\mu$s at $\\alpha=200$, with an additional 2,624\\,$\\mu$s\nmerge in the latter case. This opposing result is central to the design:\nparallel decomposition solves insufficient concurrency, but incurs work\nthat can dominate once concurrency is adequate. Shared bounds reduce\nthat extra work but do not eliminate the regime change.\n\n",
+      "after": "For a fixed workload and timing boundary, separate scan, merge and\nremaining execution time:\n\\begin{equation}\n \\begin{aligned}\n T^{(g)}&=T_{\\rm scan}^{(g)}+T_{\\rm merge}^{(g)}+T_{\\rm other}^{(g)},\\\\\n \\Delta T(g)&=T^{(g)}-T^{(0)},\\qquad\n T^{(g)}<T^{(0)}\\iff\\Delta T(g)<0.\n \\end{aligned}\n \\label{eq:7-group-cost}\n\\end{equation}\nHere $g=0$ denotes the query-centric implementation and $g>0$ a grouped\npath. The three time categories are disjoint: staging and local\nselection already included in scan time are not charged again.\nThis is an accounting identity, not an analytical latency predictor.\n\nAt batch 8, one block per query exposes only eight blocks on 170 SMs.\nEight scan groups improve end-to-end throughput by $2.06$--$2.76\\times$.\nFor example, arXiv's scan falls from 849 to 216\\,$\\mu$s while merging\nadds 16.7\\,$\\mu$s. At batch 1,000, arXiv with $\\alpha=200$ instead\nincreases scan time from 3,530 to 7,652\\,$\\mu$s and adds\n2,624\\,$\\mu$s of merging; the independent-bound path reaches only\nabout $0.46\\times$ its one-block throughput. Extra parallelism repays\nits duplicated work in the first regime and loses in the second.\nShared bounds reduce work without removing this regime change.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        23
+      ],
+      "action": "formalise",
+      "reason": "Replace repeated regime explanation by a disjoint cost identity plus opposing measured examples",
+      "before_words": 181,
+      "after_words": 132
+    },
+    {
+      "id": "H10",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "\\Cref{tab:7-scheduling} recomputes the results from the raw timing arrays.\nThe scheduled geometric-mean gains are $2.727\\times$, $2.356\\times$,\n$1.057\\times$ and $1.015\\times$ at batches 8, 32, 256 and 1,000.\nThe first three batch sizes have thirteen configurations, including a\nhigh-budget arXiv control; batch 1,000 has eleven because Stella has only\n999 queries. The held-out subsets contain nine and seven configurations.\nThus the connected means describe partly different configuration sets.\n\nFixed eight-group execution matches the scheduled mean closely at batch\n8 but falls to $0.886\\times$ at batch 1,000. Scheduling largely retains\nthe small-batch gain while avoiding that full-batch loss. At batch 256\nits worst ratio of best fixed\nthroughput to scheduled throughput is 1.217, on a BGE configuration.\nCandidate-count CV does not capture every cost of list traversal,\nselection or merging.\n\n",
+      "after": "\\Cref{tab:7-scheduling} gives the paired gains and evaluation subsets.\nThe small-batch means use thirteen configurations; batch 1,000 uses\neleven because Stella has 999 queries, with nine/seven held-out\nconfigurations respectively. Scheduling retains the batch-8 benefit\nwhile protecting full-batch execution: fixed eight groups fall to\n$0.886\\times$ at batch 1,000. The largest scheduler regret is\n1.217 on BGE at batch 256, showing that candidate-count CV omits\nsome traversal and selection costs.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        24
+      ],
+      "action": "compress",
+      "reason": "Let the table carry all four batch means; preserve sample composition and scheduler failures",
+      "before_words": 111,
+      "after_words": 61
+    },
+    {
+      "id": "H11",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "Across five independent builds per dataset at fixed 128-probe points,\nthe largest recall range is 0.0012 on arXiv; normal timing ranges use\nonly the three uninstrumented builds. The broader startup boundary is material: Stella takes 18.2--18.6\\,s\nwith warm input pages and 129.9\\,s on its session-first read. The\nphase diagnostic synchronises stages and changes the pipeline to one\nbuffer, so its timing is excluded from normal-build ranges. Twenty-millisecond\ndevice samples observe 26.08\\,GiB for BGE near add entry and 22.58\\,GiB\nfor Stella during repack. BGE's three assignment-product buffers total\n12\\,GiB; they belong to the early pipeline lifetime, not to the later\n23.05\\,GiB gather payload (\\cref{eq:4-assignment-scratch}). These results\nshow why resident memory alone understates construction capacity.\n\n",
+      "after": "Five independent builds give a maximum fixed-point recall range\nof 0.0012 on arXiv; normal timing uses three uninstrumented builds.\nStartup is a broader boundary: Stella takes 18.2--18.6\\,s with warm\ninput pages, versus 129.9\\,s on the session-first read.\nTwenty-millisecond device sampling observes 26.08\\,GiB near BGE's\nadd entry and 22.58\\,GiB during Stella's repack. BGE's three\nassignment buffers total 12\\,GiB in an earlier lifetime than the\n23.05\\,GiB gather payload (\\cref{eq:4-assignment-scratch}); the two\nallocations must not be summed as a simultaneous peak.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        25
+      ],
+      "action": "compress",
+      "reason": "Retain startup comparability, sampling and independent scratch lifetimes",
+      "before_words": 111,
+      "after_words": 76
+    },
+    {
+      "id": "H12",
+      "language": "en",
+      "path": "chapters/07-evaluation.tex",
+      "before": "Residual codes dominate the large datasets: approximately 80.7\\% of\nBGE's 11.93\\,GiB and 82.9\\% of Stella's 20.44\\,GiB used totals.\nThe corresponding raw FP32 vector arrays alone would require 38.50\nand 67.81\\,GiB. JHQ therefore enables the tested resident search on one\ncard by retaining a compressed hierarchy. Lowering $\\alpha$ reduces\nresidual codes accessed and scored per query, but leaves the stored\nresidual array allocated. Similarly, Cartesian LUT factorization reduces\nquery-specific table storage, not the database's residual-code precision.\n\nWorkspace also matters. The reported list-group scratch is approximately\n93.8\\,MiB in these $\\alpha=100$ measurements, reserved for a batch\ncapacity of 1,024 and up to eight groups even when the selected execution\nuses the one-block path. A smaller actual group count therefore does\nnot imply that the allocation shrank proportionally. Conversely, these\nresident samples do not capture temporary construction peaks. The\nbaseline harness also initializes some search memory pools after its\nindex-memory measurement, so an after-build index delta cannot be used\nas a complete peak process-memory budget across methods.\n\n",
+      "after": "Residual codes account for 80.7\\% of BGE's 11.93\\,GiB and 82.9\\%\nof Stella's 20.44\\,GiB measured totals. Raw FP32 vectors alone would\nrequire 38.50 and 67.81\\,GiB. These resident totals include context\nand query workspace; lowering $\\alpha$ changes residual access rather\nthan the stored array. The component model is in \\cref{sec:4-4}.\n\nThe reserved group workspace is about 93.8\\,MiB even on the one-block\npath, for batch capacity 1,024 and up to eight groups. Actual group\ncount therefore does not determine allocated capacity. Construction\npeaks and after-build index deltas also exclude different allocations;\nsome baseline search pools are initialised after index-memory measurement.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        25,
+        26
+      ],
+      "action": "compress",
+      "reason": "Keep measured totals, storage distinction and allocation-boundary caveats once",
+      "before_words": 157,
+      "after_words": 91
+    },
+    {
+      "id": "H13",
+      "language": "en",
+      "path": "chapters/07-supp-budget.tex",
+      "before": "The supplementary harness preserves the original grid, trained state,\nquery split and seeded draws, adding complete records. All twelve\nfixed-arm recalls reproduce at the archived precision; full-pool choices,\nsampled median choices and crossing counts reproduce. Timing changes the\nGT oracle's fastest arm in two near-tied cells, illustrating that this\ndiagnostic also depends on measured speed.\n\nAll 2,304 sampled disagreement curves are monotone and their selected\nbudgets match enumeration. The twelve full-pool curves also pass both\nchecks. Moreover, summing full-pool per-query counts over each recorded\nsample's actual IDs reproduces all 18,432 grid counts. This is stronger\nthan checking the selected budget alone, and supports using\n\\cref{eq:6-finite-pool} for these observations despite the scan-path\nchanges. It checks aggregate counts on the traced subsets, rather than\nper-query invariance on every possible subset.\n\n\n",
+      "after": "All 2,304 sampled curves are monotone and bisection selects the\nenumerated minimum; the twelve FULL calls also pass both checks.\nSumming full-pool per-query counts over recorded sample IDs reproduces\nall 18,432 grid counts, supporting \\cref{eq:6-finite-pool} on these\nsubsets. This aggregate check does not establish per-query invariance\nfor arbitrary subsets or positions. The structural grouped-path\nguarantee and distance-only exceptions remain those of\n\\cref{sec:6-3}.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        21
+      ],
+      "action": "relocate",
+      "reason": "Keep finite validation counts and limits; archive run-by-run reproduction narrative",
+      "before_words": 125,
+      "after_words": 58
+    },
+    {
+      "id": "H14",
+      "language": "en",
+      "path": "chapters/07-supp-budget.tex",
+      "before": "For arXiv/128, the finite-pool model predicts crossing probabilities\n0.965, 0.875 and 0.620 at $S=32,64,128$, against 0.984, 0.875 and\n0.625 observed (\\cref{fig:7-finite-pool}). Acceptance uses only reference\noutputs; translating its selection probabilities into GT-loss crossings\nuses the fixed-arm held-out quality map. The calculation is therefore an\noffline risk explanation, not a label-free GT guarantee. Across the 36\ncomparisons, the largest absolute gap is 0.144 for BGE/512 at $S=128$\n(0.519 predicted, 0.375 observed). The fixed-pool calculation isolates\nsampling risk without fitting a population model to held-out recall gaps.\n\n",
+      "after": "For arXiv/128, predicted crossings at $S=32,64,128$ are\n0.965/0.875/0.620, versus 0.984/0.875/0.625 observed\n(\\cref{fig:7-finite-pool}). The largest discrepancy among 36 comparisons\nis 0.144 on BGE/512 at $S=128$ (0.519 predicted, 0.375 observed).\nPrediction conditions on stable query counts and uses held-out fixed-arm\nquality to map accepted budgets to GT loss; the agreement decision itself\nuses no labels.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        21
+      ],
+      "action": "compress",
+      "reason": "Retain the finite-pool fit and its worst discrepancy without repeated scope narration",
+      "before_words": 72,
+      "after_words": 44
+    },
+    {
+      "id": "H15",
+      "language": "en",
+      "path": "chapters/07-supp-budget.tex",
+      "before": "Ten alternating remeasurements also remove the apparent small-budget\nspeed inversion. OpenAI-3072/128 gives 142.3/142.7 kQPS at\n$\\alpha=4/2$, versus 145.0/128.7 in the original short timing. BGE/128\nand Vogue/512 likewise approach a plateau. This supports treating the\narchived inversions as timing variation; it does not imply monotone\nruntime for all budgets or resource thresholds.\n\n",
+      "after": "Ten alternating repetitions resolve the apparent small-budget speed\ninversion into a low-budget timing plateau. This observation does not\nimpose monotone runtime across all budgets and resource transitions.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        21
+      ],
+      "action": "relocate",
+      "reason": "Keep the timing conclusion; archive all repetition-specific rate readouts",
+      "before_words": 48,
+      "after_words": 27
+    },
+    {
+      "id": "H16",
+      "language": "en",
+      "path": "chapters/07-supp-budget.tex",
+      "before": "Four cells directly execute fixed 64, fixed 100, sampled $S=128$ and\nFULL policies, rotating policy order over five rounds. Each calibrated\nround gathers its sample, calibrates once, explicitly installs the chosen\nmultiplier, then times 500 consecutive held-out batches. The first batch\nincludes any graph recapture. The same held-out pool is replayed, rather\nthan sampling new traffic. Index construction, prior warm-up and the\nseparately timed schedule calibration are outside this boundary.\n\\Cref{tab:7-stream-cost} reports the cumulative measurements.\n\n",
+      "after": "Four cells compare fixed 64/100 with sampled and FULL calibration\nover five rotated-policy rounds and 500 held-out batches. The timer\nincludes gathering, calibration, budget installation and first-batch graph\nsetup; construction, warm-up and scan calibration are excluded.\nThe same query pool is replayed (\\cref{tab:7-stream-cost}).\n\n",
+      "detector": "T76",
+      "report_pages": [
+        22
+      ],
+      "action": "compress",
+      "reason": "Keep direct timing boundary and fixed-pool reuse without an execution diary",
+      "before_words": 70,
+      "after_words": 40
+    },
+    {
+      "id": "H17",
+      "language": "en",
+      "path": "chapters/07-supp-budget.tex",
+      "before": "The steady-rate fit to the sampled stream gives break-even counts of\n3.6/5.5 batches against fixed 100/64 on OpenAI-1536, and 3.5/8.9 on\nOpenAI-3072. These fractional values fit directly timed calibration and\nsteady batches; they are not directly observed fractional crossings.\n\\Cref{fig:7-stream-cost} instead plots measured cumulative totals,\nincluding first-batch setup. The first positive mean cumulative savings\noccur at 4/6 batches on OpenAI-1536 and 4/9 on OpenAI-3072 against\nfixed 100/64. BGE/512 has a smaller sampled saving,\n4,921 versus 5,185\\,ms against fixed 100, but mean recall 0.9658 versus\n0.9670; its FULL policy restores 0.9664 at 5,062\\,ms. ArXiv's FULL\npolicy selects 200 for higher quality and is slower than fixed 100/64,\nboth of which miss the quality target. Thus timing and quality jointly\ndetermine whether calibration is worthwhile. The measurements support\nreuse economics without requiring the old fitted payback values to\nmatch exactly in every cell.\n\n",
+      "after": "Measured mean cumulative savings first appear at 4/6 batches on\nOpenAI-1536 and 4/9 on OpenAI-3072 against fixed 100/64\n(\\cref{fig:7-stream-cost}); fractional steady-rate fits are separate\nmodel estimates. BGE/512 trades lower time for lower mean recall:\n4,921 versus 5,185\\,ms and 0.9658 versus 0.9670 for sampled/fixed 100.\nFULL reaches 0.9664 at 5,062\\,ms. ArXiv's FULL policy selects 200 for\nquality and is slower than fixed 100/64, which miss the target.\nCalibration's benefit therefore depends jointly on quality and total\nreuse cost.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        22
+      ],
+      "action": "relocate",
+      "reason": "Retain actual cumulative crossings and negative quality/time cases; archive fractional-fit detail",
+      "before_words": 127,
+      "after_words": 67
+    },
+    {
+      "id": "H18",
+      "language": "en",
+      "path": "chapters/06-2-agreement.tex",
+      "before": "For $S$ calibration queries $\\mathcal Q_S$, define\n\\begin{equation}\n D_S(\\alpha)=\\sum_{q\\in\\mathcal Q_S}\n \\left(k-|\\mathcal R_\\alpha(q)\\cap\\mathcal R_{\\rm ref}(q)|\\right),\n \\qquad D_S(\\alpha)\\leq\\epsilon.\n \\label{eq:6-agreement}\n\\end{equation}\nThe evaluated $\\epsilon=1$ permits one missing reference ID across the\nwhole sample. It ignores output order and distance differences; replacing\none ID counts once, although the symmetric difference contains two IDs.\nThe finite-grid objective is\n",
+      "after": "For $S$ calibration queries $\\mathcal Q_S$, define\n\\begin{equation}\n \\begin{aligned}\n D_S(\\alpha)\n &=\\sum_{q\\in\\mathcal Q_S}\n   \\left(k-|\\mathcal R_\\alpha(q)\\cap\\mathcal R_{\\rm ref}(q)|\\right)\\\\\n &=\\frac12\\sum_{q\\in\\mathcal Q_S}\n   |\\mathcal R_\\alpha(q)\\triangle\\mathcal R_{\\rm ref}(q)|.\n \\end{aligned}\n \\label{eq:6-agreement}\n\\end{equation}\nA budget is accepted iff $D_S(\\alpha)\\leq\\epsilon$, with $\\epsilon=1$:\none missing reference ID across the sample, independent of result order\nor reported distances. The finite-grid objective is\n\n",
+      "detector": "T76",
+      "report_pages": [
+        4,
+        5
+      ],
+      "action": "formalise",
+      "reason": "The symmetric-difference identity replaces prose about replacement counting; valid unique k-element outputs remain the premise",
+      "before_words": 38,
+      "after_words": 28
+    },
+    {
+      "id": "H19",
+      "language": "en",
+      "path": "chapters/06-2-agreement.tex",
+      "before": "For valid fixed-size output sets, let $r_{\\mathcal Q_S}$ denote GT recall\non these same queries. Each missing reference ID removes at most one GT hit, so\n\\begin{equation}\n r_{\\mathcal Q_S}(\\alpha)\\geq r_{\\mathcal Q_S}({\\rm ref})\n                         -\\frac{D_S(\\alpha)}{Sk}.\n \\label{eq:6-relative-recall}\n\\end{equation}\nThis bound is sample-local and reference-relative. Agreement controls\nadditional loss relative to the reference; the reference's own quality\nrequires GT evaluation. \\Cref{sec:7-recall-attribution} quantifies that\ndistinction with the reconstruction pilot.\n\n",
+      "after": "For valid $k$-element outputs, each missing reference ID costs at most\none GT hit. On the same sample,\n\\begin{equation}\n \\begin{aligned}\n r_{\\mathcal Q_S}(\\alpha)\n &\\geq r_{\\mathcal Q_S}({\\rm ref})-\\frac{D_S(\\alpha)}{Sk},\\\\\n D_S(\\alpha)\\leq\\epsilon\n &\\implies r_{\\mathcal Q_S}(\\alpha)\n       \\geq r_{\\mathcal Q_S}({\\rm ref})-\\frac{\\epsilon}{Sk}.\n \\end{aligned}\n \\label{eq:6-relative-recall}\n\\end{equation}\n\\paragraph{Scope.}\nThis is a sample-local bound relative to the reference. GT evaluation\nmeasures the reference's remaining error (\\cref{sec:7-recall-attribution}).\n\n",
+      "detector": "T76",
+      "report_pages": [
+        5
+      ],
+      "action": "formalise",
+      "reason": "Use the existing recall inequality and its accepted-budget consequence instead of repeated prose; no population or absolute-GT claim",
+      "before_words": 52,
+      "after_words": 35
+    },
+    {
+      "id": "H20",
+      "language": "en",
+      "path": "chapters/06-3-search.tex",
+      "before": "\\begin{proof}\nA reference item has fewer than $k$ predecessors in the largest survivor\nset. If it is present in a smaller set, restriction cannot introduce new\npredecessors, so it remains in that set's exact top-$k$. Thus the\nintersection with the reference equals the reference items present in\nthe survivor set. Nestedness can only add such items. Summing missing\nreference counts over queries proves the inequality.\n\\end{proof}",
+      "after": "\\begin{proof}\nFor $x\\in\\mathcal R_{\\rm ref}\\cap C_\\alpha$, the common total order gives\n\\begin{equation*}\n |\\{y\\in C_\\alpha:y\\prec x\\}|\n \\leq|\\{y\\in C_{\\alpha_{\\rm ref}}:y\\prec x\\}|<k.\n\\end{equation*}\nHence $x\\in\\mathcal R_\\alpha$. Together with\n$\\mathcal R_\\alpha\\subseteq C_\\alpha$, this proves the intersection\nidentity in \\cref{eq:6-monotonicity}. Nestedness gives\n$|C_\\alpha\\cap\\mathcal R_{\\rm ref}|\n \\leq|C_\\beta\\cap\\mathcal R_{\\rm ref}|$.\nSumming missing reference counts over queries proves\n$D_S(\\alpha)\\geq D_S(\\beta)$.\n\\end{proof}",
+      "detector": "T76",
+      "report_pages": [
+        6
+      ],
+      "action": "formalise",
+      "reason": "Write the predecessor-count implication explicitly; retain the proposition and all its assumptions unchanged",
+      "before_words": 63,
+      "after_words": 24
+    },
+    {
+      "id": "H21",
+      "language": "en",
+      "path": "chapters/06-5-economics.tex",
+      "before": "Strictly exceeding $B_{\\rm reuse}^*$ gives positive saving. If the chosen\nbatch is no faster, there is no throughput payback. Convert QPS to milliseconds as\n$T=1000n/Q$ for an $n$-query batch. Using $1/\\overline Q$ is optimistic\nwhen choices vary, because $1/\\mathbb E[Q]\\leq\\mathbb E[1/Q]$.\nMeasured call boundaries are in \\cref{sec:a-budget-contract}; direct\ncalibration-plus-stream totals validate this model in four measured cells\n(\\cref{sec:7-stream-cost}), with quality reported alongside time.\n\\Cref{tab:7-budget-cost} gives the campaign's estimates.\n\n",
+      "after": "Positive saving requires $T_{\\rm chosen}<T_f$ and\n$B_{\\rm reuse}>B_{\\rm reuse}^*$. Batch time is $T=1000n/Q$ milliseconds.\nWhen choices vary, $1/\\mathbb E[Q]\\leq\\mathbb E[1/Q]$, so inverse mean\nQPS understates mean time. Timing boundaries are in\n\\cref{sec:a-budget-contract}; \\cref{sec:7-stream-cost} tests direct\ncalibration-plus-reuse cost on four cells with quality alongside time.\nCampaign estimates are in \\cref{tab:7-budget-cost}.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        8,
+        9
+      ],
+      "action": "compress",
+      "reason": "Let the existing two cost equations carry the argument and retain Jensen/measurement boundaries",
+      "before_words": 57,
+      "after_words": 37
+    },
+    {
+      "id": "H22",
+      "language": "en",
+      "path": "chapters/06-5-economics.tex",
+      "before": "\\paragraph{A worked reuse calculation.}\nOn OpenAI-1536 at 128 probes, full-pool calibration selects $\\alpha=8$,\nrequesting 80 survivors versus fixed 100's 1,000. Both arms have recall\n0.9280; their rates are 267,690 and 167,451 QPS. For 500 queries this\ngives $T_{\\rm chosen}=1.868$\\,ms and $T_f=2.986$\\,ms. With 9.5\\,ms\ncalibration, $B_{\\rm reuse}^*=8.50$: nine subsequent batches give positive\nmodelled saving. These are calculations from archived arms, not directly\ntimed stream costs.\n\nRecalibration every $H$ batches would add $T_{\\rm cal}/H$ per batch;\ndrift detection and automatic recalibration remain future work.\n",
+      "after": "Recalibration every $H$ batches adds $T_{\\rm cal}/H$ per batch.\nDrift detection and automatic recalibration remain future work.\n",
+      "detector": "T76",
+      "report_pages": [
+        9
+      ],
+      "action": "relocate",
+      "reason": "Archive the worked arithmetic already represented by cost equations and measured reuse results",
+      "before_words": 68,
+      "after_words": 14
+    },
+    {
+      "id": "H23",
+      "language": "en",
+      "path": "chapters/02-4-gpu.tex",
+      "before": "The implementation uses CUDA's SIMT execution: threads are organised into\nblocks and 32-thread warps, with registers, block-shared memory and device\nglobal memory serving different reuse scopes \\cite{cuda_programming_guide}.\nCoalescing groups neighbouring lane accesses into suitable memory\ntransactions; it does not require fewer logical code bits. Candidate-parallel\nprimary scanning assigns lanes to neighbouring vectors, while refinement\nassigns several lanes to one survivor's coordinates. These mappings exploit\ndifferent available parallelism, so one mapping need not suit both stages.\n\nOccupancy is constrained by registers, shared state and block geometry.\nMore resident threads can hide latency, but more blocks per query can also\nduplicate tables and local candidate buffers. Shared memory is valuable\nwhen query data are reused enough to repay loading and synchronisation.\nThese observations motivate Chapter 5's table grouping, packed access and\nbatch-aware scheduling; the throughput ablations assess their combined\neffects. A claim of bandwidth saturation or a specific cache bottleneck\nwould additionally require counters and a consistent physical-byte model.\n\nSelection is itself substantial computation. Faiss's GPU work combines\nefficient distance processing with warp-oriented selection\n\\cite{johnson_gpu}. Bitonic networks, radix methods and merge-based\napproaches provide established building blocks with different $k$, input\nlength and state costs. AIR top-$k$ and GridSelect further illustrate why\nglobal selection design depends on workload and whether scores arrive\non the fly \\cite{gpu_topk}. This thesis adapts such ideas to JHQ's probe\nselection and survivor retention; it does not claim to invent these primitives.\n\nCUDA Graph replay reduces repeated launch setup for a captured workload.\nCapture, workspace allocation and changes in graph shape belong to the\nindex/search lifecycle, rather than the mathematical scoring rule.\nLikewise, publishing a shared threshold requires an explicit ordering and\nmemory-access contract. Correct scalar scores do not alone prove concurrent\nadmission safe. Chapter 5 separates these correctness conditions from\nperformance measurements, and Chapter 3 keeps device profiling distinct\nfrom the host-visible search interval.\n",
+      "after": "CUDA groups threads into blocks and 32-thread warps; registers, shared\nmemory and global memory expose different reuse scopes\n\\cite{cuda_programming_guide}. JHQ maps primary scanning across neighbouring\ncandidates for coalesced loads, and refinement across one survivor's\ncoordinates. Extra blocks can hide latency but duplicate LUTs and buffers;\nregister/shared-memory use limits residency. These competing costs motivate\nthe mappings evaluated in Chapter 5. Bandwidth or cache attribution would\nrequire counters beyond throughput measurements.\n\nSelection must be designed with scoring. Faiss uses warp-oriented selection\n\\cite{johnson_gpu}; bitonic, radix and merge primitives offer different\nstate/work trade-offs. AIR top-$k$ and GridSelect address workload-dependent\nglobal selection \\cite{gpu_topk}. JHQ uses these established ideas for\nrouting and survivor retention.\n\nCUDA Graph replay reduces launch setup, while capture and workspace changes\nbelong to the execution lifecycle. Shared-bound admission additionally needs\nthe ordering and whole-key-access contracts of Chapter 5. Neither a correct\nscalar score nor device-only profiling establishes end-to-end correctness\nor host-visible performance.\n",
+      "detector": "T71",
+      "report_pages": [
+        15,
+        16
+      ],
+      "action": "compress",
+      "reason": "Keep the GPU concepts used by this thesis and selection prior art; remove textbook repetition",
+      "before_words": 301,
+      "after_words": 147
+    },
+    {
+      "id": "H24",
+      "language": "en",
+      "path": "chapters/02-5-graphs.tex",
+      "before": "Graph ANN replaces list scanning with navigation through promising\nneighbourhoods. Its benefit is to avoid scoring most database vectors;\nits GPU difficulty is the dependency between discovering a neighbour and\ndeciding which neighbourhood to expand. SONG separates graph search into\nstages to expose distance parallelism and controls dynamic memory overhead\n\\cite{song}. This is an alternative access strategy, rather than a different\nimplementation of JHQ's fixed routed candidate universe.\n\nCAGRA designs graph construction and search for GPU parallelism, including\nsmall- and large-batch queries \\cite{cagra}. Its graph connectivity and\nsearch width expose a different tuning surface from IVF probes. Storing\nedges and vectors creates a capacity trade-off; quantised-vector CAGRA is\nalso relevant, so fp32 CAGRA alone is an incomplete compressed-index\ncomparison. The thesis measures both in E1. Their different operating\nregions are reported under the common boundary rather than inferred from\ncross-paper speedup numbers.\n\nBANG targets a different capacity regime: it keeps compressed vectors on\nthe GPU and accesses the host-resident graph through CPU/GPU cooperation\n\\cite{bang}. Capacity is obtained by distributing the working structures,\nwith transfer and coordination becoming part of the design. Its billion-scale\nresults demonstrate an alternative to complete device residency, not\ncapacity evidence for this thesis. The present JHQ implementation retains\nits compressed search index on one device and has no comparable host-graph\nexecution path.\n\nThe comparison therefore turns on access regularity, representation and\nresidency, not a general graph-versus-quantisation hierarchy. Graph navigation\ncan be attractive for a small number of queries; list scans expose regular\ncode access and abundant batch work. Either can be bottlenecked by selection\nor movement. Which wins at a target recall is an empirical question for a\nspecified device, memory budget and workload. E1 tests that question at batch\n1,000; internal small-batch JHQ gains do not answer it for graph competitors.\n",
+      "after": "Graph ANN avoids most database scoring through data-dependent navigation.\nSONG separates GPU graph search into stages and controls dynamic memory\noverhead \\cite{song}. CAGRA designs graph construction and search for GPU\nparallelism, with connectivity and search width as tuning parameters\n\\cite{cagra}. Its edges and vectors create a capacity cost; E1 therefore\nincludes both fp32 and quantised-vector CAGRA.\n\nBANG instead keeps compressed vectors on the GPU and the graph in host\nmemory, trading complete device residency for communication and coordination\n\\cite{bang}. Its billion-scale results concern that distributed working\nstructure; JHQ's resident index has no comparable host-graph path.\n\nGraph navigation and regular list scans expose different access and\nconcurrency costs. Their ranking is tested at a specified recall, batch,\ndevice and call boundary: E1 uses batch 1,000, and T5 supplies the separate\nsmall-batch cross-system comparison (\\cref{sec:7-smallbatch}).\n",
+      "detector": "T71",
+      "report_pages": [
+        16
+      ],
+      "action": "compress",
+      "reason": "Retain SONG/CAGRA/BANG distinctions, memory regimes and the actual small-batch comparison",
+      "before_words": 293,
+      "after_words": 128
+    },
+    {
+      "id": "H25",
+      "language": "en",
+      "path": "chapters/02-6-quantised.tex",
+      "before": "\\subsection{Learning a representation versus exploiting its structure}\n\nOptimised product quantisation learns the space decomposition and codebooks\nto reduce quantisation distortion \\cite{opq}. Its rotation is optimised for\nthe data, whereas JHQ's random square rotation supports a cheap analytical\nprimary model. The trade-off involves fitting cost, reconstruction fidelity\nand scorer structure. Improving a general learned codebook does not\nautomatically preserve the internal Cartesian product needed by an exact\n16+16 decomposition.\n\nScaNN's anisotropic quantisation work instead weights error according to\nits relevance to maximum-inner-product retrieval, showing why reconstruction\nMSE is not the only useful objective \\cite{scann}. Its objective and\nimplementation setting differ from the squared-L2 hierarchical pipeline\nhere. The useful comparison is the choice of loss: a rank-sensitive\nrepresentation should be tested against actual retained-neighbour quality\nand execution cost. The stopped rank-oriented experiment in Chapter 8\nprovides an example of this distinction within JHQ.\n\n\\subsection{Small lookup tables have substantial prior art}\n\nPQ Fast Scan replaces reliance on cache-resident tables with tables suited\nto CPU SIMD registers \\cite{fastscan}. Quicker ADC generalises register\nlookup techniques and introduces irregular quantisers and split tables\n\\cite{quickeradc}. These works establish that table shape and the execution\ninstruction set must be designed together. This thesis's claim is the exact\ndecomposition available from its inherited Cartesian coordinate structure,\nand its measured implementation on a GPU. CPU SIMD results are conceptual\nprecedents, not throughput measurements on the tested GPU. FP32 table\nassociation and cutoff ties still require separate numerical checking.\n\nRaBitQ also uses randomised quantisation and compact sign information,\nwith a distance estimator and theoretical error analysis\n\\cite{rabitq}. Multi-bit extensions trade storage for estimator accuracy\n\\cite{rabitq_multi}. Their guarantees attach to their specified constructions\nand estimator assumptions. They cannot be transferred to JHQ merely because\nboth use rotations and binary components. In JHQ, primary signs select\nsurvivors and an explicitly stored residual supplies the next precision\nlevel; the resulting quality depends on both truncation and reconstruction.\n\nGPU IVF-RaBitQ brings this family into a complete GPU build/search design,\nincluding GPU-oriented distance computation and fused search\n\\cite{ivfrabitq}. It is therefore a particularly relevant contemporary\nbaseline, rather than background evidence of a missing GPU quantiser.\nIts fused execution makes clear that compact codes alone are insufficient:\nthe access and selection pipeline must also be competitive. E1 includes\nmultiple bit budgets, and its high-recall results limit any broad claim\nof JHQ dominance.\n\n\\subsection{Refinement effort and adaptive stopping}\n\nCandidate expansion and reranking already appear in Faiss's\n\\texttt{k\\_factor} and cuVS refinement controls\n\\cite{faiss_refine,cuvs_refinement}. Faiss autotuning can use GT-labelled\nqueries to search recall--time trade-offs \\cite{faiss_autotune}. Learned\nadaptive termination predicts sufficient search effort\n\\cite{li_termination}; DARTH frames early termination around declarative\nrecall targets \\cite{darth}. These are relevant alternatives to spending a\nuniform effort everywhere. Chapter 6's particular policy selects one\nworkload-level survivor multiplier using unlabelled agreement with a larger\nbudget. It avoids a trained predictor, while inheriting the reference's\nquality limits. This distinction is the policy's scope, rather than a claim\nthat adaptive search or refinement budgets are new ideas.\n",
+      "after": "\\subsection{Learning a representation versus exploiting its structure}\n\nOPQ learns rotation and subspace codebooks to reduce distortion\n\\cite{opq}; JHQ's random square rotation supports an analytical primary\nmodel. A learned replacement can improve reconstruction while losing the\nCartesian structure needed for exact 16+16 splitting.\nScaNN weights quantisation error for maximum-inner-product retrieval\n\\cite{scann}, illustrating why low reconstruction MSE need not preserve\nnearest-neighbour ranking. Chapter 8 tests that distinction within JHQ.\n\n\\subsection{Small lookup tables have substantial prior art}\n\nPQ Fast Scan targets CPU SIMD-register tables \\cite{fastscan};\nQuicker ADC extends register lookup with irregular quantisers and split\ntables \\cite{quickeradc}. These are precedents for co-designing table\nshape and execution, not GPU throughput measurements. JHQ's exact\nCartesian split still requires numerical and cutoff-tie checks.\n\nRaBitQ combines randomised compact codes with an analysed distance\nestimator \\cite{rabitq}; multi-bit extensions trade storage for accuracy\n\\cite{rabitq_multi}. JHQ instead uses signs for primary retention and\nstored residuals for refinement, so RaBitQ's guarantees do not transfer.\nGPU IVF-RaBitQ supplies GPU construction and fused search\n\\cite{ivfrabitq}, making it a contemporary end-to-end baseline. E1 tests\nmultiple bit budgets and reveals high-recall reversals.\n\n\\subsection{Refinement effort and adaptive stopping}\n\nFaiss's \\texttt{k\\_factor} and cuVS expose candidate expansion/refinement\n\\cite{faiss_refine,cuvs_refinement}. Faiss autotuning uses GT-labelled\nqueries \\cite{faiss_autotune}; learned termination predicts effort\n\\cite{li_termination}, while DARTH targets declarative recall\n\\cite{darth}. Chapter 6 calibrates one unlabelled workload-level multiplier\nfor reuse. It avoids a learned predictor but inherits reference error.\n",
+      "detector": "T71",
+      "report_pages": [
+        17
+      ],
+      "action": "compress",
+      "reason": "Retain all cited prior art and method-specific contrasts; remove repeated positioning rhetoric",
+      "before_words": 478,
+      "after_words": 213
+    },
+    {
+      "id": "H26",
+      "language": "en",
+      "path": "chapters/08-1-insights.tex",
+      "before": "The coordinate-group LUT in \\cref{sec:5-2} computes distances once for\nreuse across candidates. Yet the grouping results and Mailman case show\nthat storage savings alone do not determine throughput (\\cref{fig:7-lut}).\nShared-memory placement and word access must be considered together\n(\\cref{sec:5-2,sec:5-3}). Two groups are an empirical default on this GPU.\nA codebook change can remove Cartesian compatibility, so reconstruction\nerror must be assessed alongside the scorer's attainable recall--cost\nfrontier.\n\n",
+      "after": "Two groups win most measured cells, while the Mailman alternative loses\ndespite additional arithmetic reuse (\\cref{fig:7-lut}). Table size,\nshared-memory placement and packed access jointly determine the useful\nreuse unit (\\cref{sec:5-2,sec:5-3}). Changing the codebook must therefore\nbe judged on both reconstruction quality and the attainable scorer\nfrontier.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        29
+      ],
+      "action": "compress",
+      "reason": "Keep the interpretation connecting representation to execution without repeating resource exposition",
+      "before_words": 65,
+      "after_words": 44
+    },
+    {
+      "id": "H27",
+      "language": "en",
+      "path": "chapters/08-1-insights.tex",
+      "before": "The batch trend in \\cref{fig:7-batch} reflects the cost of duplicating\nstaging, selection and merging once query concurrency is sufficient.\nVogue's path-sensitive frontier and BGE's regret expose what CV misses:\nabsolute work and decomposition cost (\\cref{sec:7-2,sec:7-6}). These\nintegrated comparisons remain separate from the shared-bound ablation.\nA richer scheduler could combine candidate count, survivor capacity and\nlocal-buffer cost while retaining the query-centric path; its calibration\ncost and held-out workload performance would need evaluation.\n\n",
+      "after": "Once query concurrency is sufficient, duplicated staging, selection and\nmerging can outweigh extra parallelism (\\cref{fig:7-batch}).\nVogue and BGE expose the scheduler's missing features: absolute candidate\nwork and decomposition cost (\\cref{sec:7-2,sec:7-6}). A richer rule would\nneed to repay its own calibration cost on held-out workloads; the\nintegrated results do not isolate the shared-bound ablation.\n\n",
+      "detector": "T76",
+      "report_pages": [
+        29
+      ],
+      "action": "compress",
+      "reason": "Keep the cross-layer inference and unresolved scheduler feature instead of reciting its mechanism",
+      "before_words": 69,
+      "after_words": 51
+    },
+    {
+      "id": "H28",
+      "language": "en",
+      "path": "chapters/08-1-insights.tex",
+      "before": "For $F_h>F_\\ell$, faster refinement reduces the benefit of cutting its budget, while\nlower fixed cost increases it. This model holds non-refinement work\nconstant; budget-dependent scan maintenance and resource transitions\nrequire measurement. A causal kernel comparison would fix candidate sets\nand budget decisions (\\cref{sec:7-5,sec:7-stream-cost}).\n\nThe FULL results and sampled tails show why this cost decision also\nneeds a quality constraint and sufficient reuse\n(\\cref{tab:7-budget-full,fig:7-budget-risk}).\n",
+      "after": "For $F_h>F_\\ell$, faster refinement reduces the value of cutting its\nbudget; lower fixed cost increases it. The derivatives hold with\nnon-refinement work fixed. Budget-dependent scan maintenance and\nresource transitions require the controlled comparisons of\n\\cref{sec:7-5,sec:7-stream-cost}. Quality and reuse remain constraints\n(\\cref{tab:7-budget-full,fig:7-budget-risk}).\n",
+      "detector": "T76",
+      "report_pages": [
+        29
+      ],
+      "action": "compress",
+      "reason": "Let the unchanged cost model and derivatives carry the argument",
+      "before_words": 60,
+      "after_words": 38
+    },
+    {
+      "id": "H29",
+      "language": "en",
+      "path": "chapters/08-3-validity.tex",
+      "before": "External validity is limited by one GPU, squared-L2 top-10 and six\nprepared embedding datasets. The batch-dependent operating regions are\nreported in \\cref{sec:7-smallbatch}. Query removal by position does not\ncertify the absence of near-duplicate embeddings, and the exports are not\na relevance-labelled retrieval benchmark. Database updates, concurrent\ntraffic, deployment latency objectives and changing query populations\nremain untested. The resident-index results supply no billion-scale or\nmulti-device capacity evidence. These are the remaining checks before\ntransferring an observed region to deployment.\n",
+      "after": "Coverage is one GPU, squared-L2 top-10 and six prepared embedding\ndatasets (\\cref{sec:7-smallbatch}). Positional query removal does not\nexclude near-duplicate embeddings, and the exports lack relevance labels.\nUpdates, concurrent traffic, changing query populations and deployment\nlatency targets remain untested, as do billion-scale and multi-device\ncapacity.\n",
+      "detector": "T76",
+      "report_pages": [
+        31
+      ],
+      "action": "compress",
+      "reason": "Consolidate external-validity restrictions while preserving each actual limitation",
+      "before_words": 77,
+      "after_words": 43
+    },
+    {
+      "id": "H30",
+      "language": "en",
+      "path": "chapters/08-5-deployment.tex",
+      "before": "JHQ-GPU merits evaluation when a compressed resident hierarchy fits the\ndevice and the required recall lies within its measured competitive region.\nE1 supports high-recall throughput at batch 1,000; T5 instead favours\nCAGRA fp32 at recall 0.97 and batch 8 on all four datasets. At batch 32,\nOpenAI-3072 is close under interpolation and favourable to JHQ under the\nmeasured threshold; the other three favour CAGRA. Lower-recall JHQ\nadvantages also depend on dataset and grid. Grouped scheduling helps\nJHQ internally without guaranteeing a cross-system lead\n(\\cref{sec:7-smallbatch}).\n\nStart calibration from the recorded FULL working point, then validate\nquality and direct reuse cost on deployment queries. Compare total time\nand resident memory under the actual batch regime, subject to the\nexternal-validity limits in \\cref{sec:8-3}.\n",
+      "after": "Deployment should match the measured batch and recall regime.\nE1 supports high-recall throughput at batch 1,000; at batch 8 and recall\n0.97, T5 favours CAGRA fp32 on all four datasets. At batch 32,\nOpenAI-3072's near tie changes with the estimator; the other three\nfavour CAGRA (\\cref{sec:7-smallbatch}). Start from FULL calibration,\nthen validate quality, total reuse time and resident memory on deployment\nqueries under the limits in \\cref{sec:8-3}.\n",
+      "detector": "T76",
+      "report_pages": [
+        32
+      ],
+      "action": "compress",
+      "reason": "Keep concrete deployment boundaries and validation requirements without a second general recommendation",
+      "before_words": 114,
+      "after_words": 62
+    },
+    {
+      "id": "H01",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "相较于 CAGRA fp32，该目标下的插值比值从 arXiv 的 $1.317\\times$ 到两个 OpenAI 数据集的 $1.747\\times$ 不等。相较于 IVF-RaBitQ，对应数值分别为 $1.059\\times$、$0.996\\times$、$1.130\\times$ 和 $1.157\\times$。arXiv 接近平手，方向取决于估计方法。\n\n",
+      "after": "召回率0.97处，JHQ相对CAGRA fp32的插值速率比为$1.317$--$1.747\\times$，\n相对IVF-RaBitQ则在三个数据集领先；arXiv接近平手，方向随估计方法变化\n（\\cref{tab:7-matched}）。网格间距会影响比较：OpenAI-1536对CAGRA的比值，\n插值为$1.747\\times$，实测达标点为$2.294\\times$。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        11
+      ],
+      "action": "compress",
+      "reason": "Keep the comparative pattern and estimator discrepancy instead of repeating every table row",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H02",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "E1 同批单线程块测量把 RQ2 与这项 RQ4 结果连接起来。以 $\\gscan=0$ 重建 Vogue 前沿，0.97 处相对 RaBitQ 的比值从 $1.059$ 降到 $0.933$；0.96处对应比值为$1.250$与$1.072$。两者使用相同运行—预算网格、batch 1,000及log-QPS插值规则。因此，这份网格中的有利方向依赖调度后的分组路径。每对保持索引、探针、预算和最终输出不变；它测的是集成路径，未单独隔离共享界的贡献。\n\n\n",
+      "after": "Vogue的领先依赖分组执行路径。同一batch 1,000网格改用$\\gscan=0$后，\n召回率0.97处相对RaBitQ的比值从$1.059$降至$0.933$。\n每对固定索引、探针、预算及最终输出。这将RQ2与RQ4联系到集成路径，\n但未单独隔离共享界的贡献。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        11
+      ],
+      "action": "compress",
+      "reason": "Retain the unique path-sensitive reversal and its paired control",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H03",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "在有共同覆盖的比较中，目标召回率 0.90--0.985 范围内，JHQ 相对 CAGRA fp32 的插值优势约为 $1.10$--$2.44\\times$。但是，加入 CAGRA int8 后，低召回率区间的解释发生变化：在 0.90--0.92 附近，其低精度图搜索可以快于 JHQ。在更高召回率下，IVF-RaBitQ 常重新领先，包括若干 0.98 及以上目标。在 arXiv 约 0.99 的召回率处，记录网格中的 CAGRA fp32 也快于 JHQ。JHQ 的有利区间同时受到目标召回率与竞争表示的限制。\n\nCAGRA int8 在 Vogue、arXiv、OpenAI-1536 和 OpenAI-3072 上的最高实测召回率分别为 0.9453、0.9620、0.9667 和 0.9683，因此这些网格中没有达到 0.97 的配置。按相同插值规则，目标召回率 0.90--0.92 处，它约比 JHQ 快 $1.20$--$1.98\\times$；在 arXiv 的 0.95 和两个 OpenAI 数据集的 0.94 处也仍然更快。0.97 的结果针对具有测量覆盖的方法，不能推广为低于 0.97 的每个目标均领先。\n\n网格稀疏时，两种估计可能有明显差异。例如，OpenAI-1536 在召回率 0.97 处相对 CAGRA fp32 的比值，插值为 $1.747\\times$，而按满足阈值的实测点计算为 $2.294\\times$。实测估计支付基线下一个达标点的成本，两种估计之间的差距揭示网格敏感性。\n\n",
+      "after": "优势随召回率目标变化。0.90--0.92处，CAGRA int8约快$1.20$--$1.98\\times$，\n但这些网格中没有达到0.97的配置。IVF-RaBitQ在若干0.98及以上目标重新领先；\nCAGRA fp32也在arXiv约0.99处领先。\\Cref{fig:7-frontiers}因而支持一个\n高召回率工作区间，其解释需同时指定竞争表示的精度与实测覆盖。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        11,
+        12
+      ],
+      "action": "compress",
+      "reason": "Retain lower- and higher-recall counterexamples; archive detailed endpoint readouts",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H04",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "领先幅度反而与精排需求同向变化：E1 设置的 128 探针预算锚点，OpenAI 为 4--8、Vogue 为 64、arXiv 为 100（后来的全池规则在 arXiv 选择 200）；0.97 处相对 RaBitQ 的比值依次为 1.130--1.157、1.059、0.996。这四个数据集的观测关联符合选择性残差访问的设计；锚点既不是各同召回率前沿点的参数，也没有因果隔离主码质量。后文消融直接检查执行组件。\n\n",
+      "after": "四数据集上的优势与128探针精排锚点同向变化：OpenAI为4--8、Vogue为64、\narXiv为100（后来的FULL规则选200）。这些锚点并非匹配召回率前沿的参数，\n因此该关联没有因果隔离主码质量。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        13
+      ],
+      "action": "compress",
+      "reason": "Remove a second recital of the same RaBitQ ratios",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H05",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "一个重要反例是 arXiv。在 128 探针下，即使平均损失仅为 0.0009，仍有 40/64 次抽样的召回率损失超过 $10^{-3}$；512 探针下有 32/64 次超标。BGE 的 512 探针配置有 24/64 次超标，95 分位损失为 0.0014。Stella 超标次数较少，但两个探针数下的 95 分位损失均为 0.0030。OpenAI-3072 在这一有限池中未观察到超标。平均损失、越阈频率和尾部幅度区分这些结果。\n\n按\\cref{sec:a-budget-contract}中的较低次序统计量约定（从零起算第59项），四个非零尾部损失可与\n$L_{95}=0$并存，OpenAI-1536即如此。表中的越阈计数保留这一区别。\n\n\n",
+      "after": "arXiv暴露了采样风险：128／512探针分别有40/64、32/64次抽样超过$10^{-3}$\n损失阈值，尽管两个单元的平均损失均为0.0009。固定100本身损失0.0012／0.0016，\n因此优于默认配置仍可能未达更强目标。\\Cref{tab:7-budget-quality}保留其他尾部：\nBGE/512有24/64次越阈、$L_{95}=0.0014$；Stella两个探针数均为$L_{95}=0.0030$；\nOpenAI-3072未观察到越阈。按\\cref{sec:a-budget-contract}的分位数约定，\n四个非零损失仍可与$L_{95}=0$并存，OpenAI-1536即如此。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        19
+      ],
+      "action": "compress",
+      "reason": "Combine tail interpretation with its fixed-budget control; keep all scientific counterexamples",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H06",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "\\Cref{fig:7-budget-risk} 显示了样本大小的影响。更大的样本通常使选择更保守，但同时收紧了归一化允许量 $1/(10S)$。在全部 2,304 次抽样（$12\\times3\\times64$）中，同样本枚举与二分搜索一致，而打印日志显示枚举耗时为其 1.75--2.01 倍。\n\n\\Cref{cor:6-grouped-calibration}覆盖2,304次抽取中的2,176次。\n剩下128次为$S=128$的OpenAI-3072距离截断并列路径，经验上与枚举一致。\n八个单元校准到评测的换路涉及预算迁移，区别于本项核查。\n\n\n八个固定选项中，$\\alpha=64$ 和 100 各有 10/12 单元达标，200 为 12/12；\n各自达标单元相对诊断 oracle 的最大 QPS 缺口为 26.6\\%、40.9\\%、57.1\\%。\nVogue 的两个探针数下，FULL 选 100 而 oracle\n选 64，说明参考一致性与质量约束下最快选择具有不同目标。此处 $\\alpha=200$\n达到最佳实测 recall，12/12 达标来自其覆盖对照的定义。\n短计时中的 OpenAI 小预算反转经交替重复被解释为计时变化，并形成低预算平台\n（\\cref{sec:7-budget-trace}）；最小接纳预算未必使吞吐最大。\n\n\n",
+      "after": "增大$S$既收紧归一化容许量$1/(10S)$，也改变样本覆盖\n（\\cref{fig:7-budget-risk}）。分组路径保证覆盖2,304次抽取中的2,176次；\n其余128次距离路径属于经验核查（\\cref{cor:6-grouped-calibration}）。\n枚举及FULL核查见\\cref{sec:7-budget-trace}。\n\n固定64、固定100各有10/12单元满足诊断质量目标，固定200则全部满足。\nVogue的FULL选100，而最快达标oracle臂为64：最小参考不一致与\n质量约束下的最大吞吐是不同目标。观测到的低预算计时平台也支持这一区别。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        19,
+        20
+      ],
+      "action": "compress",
+      "reason": "Remove fixed-arm grid readout and duplicate enumeration discussion; retain tie-path scope and oracle distinction",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H07",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "更强的 $\\alpha=64$ 对照缩小了整体收益：所选配置的平均 QPS 在 9/12 个单元中胜出，几何平均比值为 $1.054\\times$，范围为 $0.821$--$1.367\\times$。Vogue 几乎不变；BGE 的 512 探针配置只提高 0.6\\%；OpenAI 的收益范围为 $1.052$--$1.367\\times$。固定 64 和固定 100 都在 10/12 个单元达标，失败的都是两个 arXiv 单元。校准的价值是适应不同精排需求，而不是始终击败已经合理的固定预算。\n\narXiv 的超标是相对最佳被测留出召回率，不是相对默认配置。固定 100 在 128 和 512 探针下本来分别损失 0.0012 和 0.0016，而抽样平均损失在两个单元均为 0.0009。因此，即使部分抽样超过相对 oracle 的目标，平均质量仍比默认配置更好。\n\n",
+      "after": "相对固定64，所选配置QPS在9/12单元胜出，几何平均$1.054\\times$，\n范围$0.821$--$1.367\\times$；OpenAI收益为$1.052$--$1.367\\times$。\n两个固定对照均未满足arXiv的两项目标。因此这些比较须联合质量与时间解释，\n不能视作相对可接受固定预算的一致提速。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        20
+      ],
+      "action": "compress",
+      "reason": "Keep the stronger fixed-64 control; avoid repeating the arXiv loss explanation",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H08",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "按\\cref{sec:a-budget-contract}的计时边界，校准成本为3.9--21.3\\,ms。\n对固定 $\\alpha=100$ 应用\\cref{eq:6-payback}，取毫秒单位的 $T_{\\rm rule}\\approx1000n/\\overline Q_{\\rm rule}$，得到\\cref{tab:7-budget-cost}中的估计：有利单元相对固定 100 约需 2.4--55.4 个留出池大小的后续批次。相对固定 64，九个有利单元约需 5.7--404.3 批，Vogue 的 512 探针配置没有吞吐量回本。两个 arXiv 对照也未满足质量目标，因此其计时比较是诊断，不是同质量比较。按对照速率换算，$S=128$ 的最大正回本估计相对固定 100 为 0.54\\,s、相对固定 64 为 2.72\\,s，约 27.7K 和 202.2K 查询。全池正收益项按自身校准成本计算，对应最多 1.52/2.25\\,s、64.9K/78.7K 查询。这些模型时域支持长稳定任务复用。\n\n\n这些估计沿用\\cref{sec:6-5}分析的平均速率倒数与稳定复用假设；\n下文直接执行核查它们在归档查询流上的净成本含义。\n\n\n较新的 lane 精排流水线比历史标量实现保留更少的可消除精排工作。\n各次运行共享预算协议与网格，但跨实验比较没有隔离精排作为变化的唯一原因。\n\n",
+      "after": "校准耗时3.9--21.3\\,ms。应用\\cref{eq:6-payback}得到\n\\cref{tab:7-budget-cost}的批次估计，前提是\\cref{sec:6-5}的稳定复用及\n平均速率倒数假设。$S=128$相对固定100／64的最大正回本估计对应0.54／2.72\\,s，\nFULL对应1.52／2.25\\,s。arXiv固定对照未达质量目标，故其时间比仅作诊断。\n下文直接复用测量在同时报告质量的情况下检验净成本。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        20,
+        21
+      ],
+      "action": "relocate",
+      "reason": "Keep the cost scale and assumptions; archive detailed unit conversions and historical cross-version commentary",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H09",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "扫描实验揭示了两种执行区间。每条查询使用一个线程块时，批大小 8 只在具有 170 个 SM 的设备上提供八个线程块。划分候选能增加可用线程块并行度。在 v62 实验中，批大小 8 使用八组后，端到端吞吐量为原来的 $2.06$--$2.76\\times$。剖析给出了阶段解释：arXiv 扫描约从 849 降至 216\\,$\\mu$s，Vogue 从 1,059 降至 246\\,$\\mu$s，OpenAI-3072 从 728 降至 155\\,$\\mu$s。额外合并分别约需 16.7、9.1 和 3.7\\,$\\mu$s。即使支付合并成本，净节省仍很大。\n\n批大小为 1,000 时，独立查询已足以提供较多线程块。增加分组会重复搬入查找表、接纳局部候选并排序，还产生额外合并流量。对于 arXiv 的 $\\alpha=200$ 配置，不共享界的 v62 路径可能降至单线程块基线的约 $0.46\\times$。全批次剖析显示，$\\alpha=100$ 的扫描从 2,922 增至 6,079\\,$\\mu$s，$\\alpha=200$ 从 3,530 增至 7,652\\,$\\mu$s，后者还增加了 2,624\\,$\\mu$s 合并时间。这一反向结果对设计至关重要：并行拆分能够解决并发不足，但当并发已经充足时，它引入的额外工作可能成为主导。共享界减少了这些额外工作，却没有消除执行区间的变化。\n\n",
+      "after": "固定工作负载及计时边界，将时间分为扫描、合并与其余执行：\n\\begin{equation}\n \\begin{aligned}\n T^{(g)}&=T_{\\rm scan}^{(g)}+T_{\\rm merge}^{(g)}+T_{\\rm other}^{(g)},\\\\\n \\Delta T(g)&=T^{(g)}-T^{(0)},\\qquad\n T^{(g)}<T^{(0)}\\iff\\Delta T(g)<0.\n \\end{aligned}\n \\label{eq:7-group-cost}\n\\end{equation}\n$g=0$表示查询级实现，$g>0$为分组路径。三个时间类别互斥：\n扫描已含暂存与局部选择，不再重复计费。这是成本记账恒等式，不是解析延迟预测器。\n\nbatch 8时，每查询一block仅在170个SM上暴露八个block；八组使端到端吞吐提高\n$2.06$--$2.76\\times$。例如arXiv扫描从849降至216\\,$\\mu$s，合并增加16.7\\,$\\mu$s。\nbatch 1,000、$\\alpha=200$时则相反：扫描从3,530增至7,652\\,$\\mu$s，\n另加2,624\\,$\\mu$s合并，独立界路径仅达单block吞吐的约$0.46\\times$。\n额外并行在前一区间抵消重复工作，在后一区间造成损失；共享界减轻成本，\n但没有消除区间变化。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        23
+      ],
+      "action": "formalise",
+      "reason": "Replace repeated regime explanation by a disjoint cost identity plus opposing measured examples",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H10",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "\\Cref{tab:7-scheduling} 从原始计时数组重新计算结果。批大小为 8、32、256 和 1,000 时，调度收益的几何平均分别为 $2.727\\times$、$2.356\\times$、$1.057\\times$ 和 $1.015\\times$。前三种批大小有十三个配置，含高预算 arXiv 对照；batch 1,000 只有十一个，因为 Stella 仅有 999 条查询。留出配置子集含九个和七个，故连线均值对应部分不同的配置集合。\n\n固定八组在批大小 8 时的均值接近调度结果，但在批大小 1,000 时降至 $0.886\\times$。调度大体保留了小批次收益，并避免上述大批次损失。批大小 256 时，在一个 BGE 配置上，“最佳固定吞吐量 / 调度吞吐量”的最差比值为 1.217。候选数 CV 无法描述列表遍历、选择或合并的全部成本。\n\n",
+      "after": "\\Cref{tab:7-scheduling}给出配对收益与评测子集。\n小批次均值使用十三个配置；batch 1,000因Stella只有999条查询而使用十一个，\n留出配置分别为九个／七个。调度保留batch 8收益并保护全批次执行，\n固定八组在batch 1,000降至$0.886\\times$。最大调度regret为BGE在batch 256的1.217，\n说明候选数CV遗漏部分遍历与选择成本。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        24
+      ],
+      "action": "compress",
+      "reason": "Let the table carry all four batch means; preserve sample composition and scheduler failures",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H11",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "每数据集固定128探针工作点的五次独立构建中，最大recall范围为arXiv的0.0012；正常计时范围只取三次无阶段插桩构建。较宽启动边界的差别明显：Stella热输入页18.2--18.6\\,s，本会话首次读取129.9\\,s。\n阶段诊断同步各阶段并改为一个流水缓冲区，因此其计时不混入正常构建范围。\n20\\,ms设备采样观察到BGE在add开头26.08\\,GiB、Stella在repack时22.58\\,GiB。\nBGE三个分配乘积缓冲区共12\\,GiB，属于早期流水生命周期，不能直接加到后期\n23.05\\,GiB的gather载荷（\\cref{eq:4-assignment-scratch}）。因此常驻显存不足以代表构建容量。\n\n",
+      "after": "五次独立构建的固定工作点recall最大范围为arXiv的0.0012；\n正常计时使用三次无阶段插桩构建。更宽的启动边界下，\nStella热输入页耗时18.2--18.6\\,s，本会话首次读取为129.9\\,s。\n20\\,ms设备采样观察到BGE在add开头26.08\\,GiB、Stella在repack时22.58\\,GiB。\nBGE三个分配缓冲区共12\\,GiB，生命周期早于23.05\\,GiB gather载荷\n（\\cref{eq:4-assignment-scratch}），两者不能相加作为同时峰值。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        25
+      ],
+      "action": "compress",
+      "reason": "Retain startup comparability, sampling and independent scratch lifetimes",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H12",
+      "language": "zh",
+      "path": "zh/chapters/07-evaluation.tex",
+      "before": "在大数据集上，残差码是主要占用：BGE 的已用总量为 11.93\\,GiB，其中约 80.7\\% 为残差码；Stella 为 20.44\\,GiB，其中约 82.9\\% 为残差码。仅对应的原始 FP32 向量数组就分别需要 38.50 和 67.81\\,GiB。因此，JHQ 通过保留压缩层次表示，使这些已测试的数据能够在单卡常驻搜索。降低 $\\alpha$ 会减少每条查询访问、评分的残差码，但不会释放已经存储的残差数组。同样，笛卡尔 LUT 因子化减少的是查询相关查找表存储，不是数据库残差码的精度。\n\n工作区同样重要。在这些 $\\alpha=100$ 测量中，报告的列表分组临时区约为 93.8\\,MiB，即使实际执行选择单线程块路径，也为批容量 1,024 和最多八组预留。因此，实际组数变小，不意味着分配按比例缩小。另一方面，这些常驻样本没有捕获临时构建峰值。基线测试程序也在测量索引显存之后才初始化部分搜索内存池，因此，不能把构建后的索引增量当作各方法完整进程峰值显存预算。\n\n",
+      "after": "残差码占BGE实测11.93\\,GiB的80.7\\%、Stella实测20.44\\,GiB的82.9\\%；\n仅原始FP32向量就需38.50／67.81\\,GiB。这些常驻总量包含上下文与查询工作区；\n降低$\\alpha$改变残差访问，不改变已存储数组。组件模型见\\cref{sec:4-4}。\n\n即使使用单block路径，分组工作区仍预留约93.8\\,MiB，对应批容量1,024及最多八组。\n实际组数因而不决定分配容量。构建峰值与构建后索引增量排除的分配也不同；\n部分基线搜索池在索引显存测量之后才初始化。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        25,
+        26
+      ],
+      "action": "compress",
+      "reason": "Keep measured totals, storage distinction and allocation-boundary caveats once",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H13",
+      "language": "zh",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before": "补证程序保留原网格、训练状态、查询划分与固定seed抽样，新增完整日志。\n十二单元的固定预算recall在归档精度下全部复现，全池选择、采样中位选择与越阈\n计数也全部复现。计时让两个近乎并列单元的GT oracle最快臂变化，说明这一诊断也\n依赖所测速度。\n\n2,304条采样不一致曲线均单调，选择全部与枚举一致；十二条全池曲线也通过两项\n检查。进一步，将全池逐查询计数按各次实际样本ID求和，18,432个网格计数全部\n复现。这比只核对最终预算更强，支持在这些观测中使用\\cref{eq:6-finite-pool}，\n包括换扫描路径的情形；它验证已记录子集的汇总计数，不证明任意子集的逐查询不变性。\n\n\n",
+      "after": "2,304条采样曲线全部单调，二分均选中枚举的最小值；十二次FULL调用也通过两项检查。\n将全池逐查询计数按实际样本ID求和，18,432个网格计数全部复现，\n支持在这些子集上使用\\cref{eq:6-finite-pool}。\n该汇总检查不证明任意子集或位置下的逐查询不变性。\n分组路径结构保证与距离路径例外仍按\\cref{sec:6-3}限定。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        21
+      ],
+      "action": "relocate",
+      "reason": "Keep finite validation counts and limits; archive run-by-run reproduction narrative",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H14",
+      "language": "zh",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before": "arXiv/128在$S=32,64,128$的有限池越阈预测为0.965、0.875、0.620，实测为\n0.984、0.875、0.625（\\cref{fig:7-finite-pool}）。接纳只用参考输出；将选择概率\n转为GT损失越阈率还要固定预算的留出质量映射，因此这是离线风险解释，不是无标签\nGT保证。36项比较中最大绝对差为BGE/512在$S=128$的0.144（预测0.519、实测0.375）。\n有限池计算隔离抽样风险，没有用留出recall差拟合总体模型。\n\n",
+      "after": "arXiv/128在$S=32,64,128$的预测越阈率为0.965／0.875／0.620，\n实测0.984／0.875／0.625（\\cref{fig:7-finite-pool}）。\n36项比较最大差为BGE/512在$S=128$的0.144（预测0.519、实测0.375）。\n预测以稳定逐查询计数为条件，并用固定预算的留出质量将接纳预算映射到GT损失；\n一致性决策本身不使用标签。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        21
+      ],
+      "action": "compress",
+      "reason": "Retain the finite-pool fit and its worst discrepancy without repeated scope narration",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H15",
+      "language": "zh",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before": "十轮交替重测也消除了表面的小预算速度反转。OpenAI-3072/128在$\\alpha=4/2$时\n为142.3／142.7 kQPS，原短计时为145.0／128.7；BGE/128与Vogue/512同样趋于平台。\n这支持将归档反转解释为计时变化，但不代表所有预算和资源阈值上的运行时间均单调。\n\n",
+      "after": "十轮交替重复将表面的小预算速度反转解释为低预算计时平台。\n该观测不要求所有预算和资源阈值上的运行时间单调。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        21
+      ],
+      "action": "relocate",
+      "reason": "Keep the timing conclusion; archive all repetition-specific rate readouts",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H16",
+      "language": "zh",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before": "四个单元直接执行固定64、固定100、采样$S=128$与FULL策略，五轮间轮换策略顺序。\n每个校准轮先收集样本、校准一次、显式设置所选乘数，再连续计时500个留出批次。\n首批包含可能的graph重新捕获，重复使用同一留出池，没有采样新流量。\n索引构建、此前预热及另行计时的调度校准不在该边界内。\\Cref{tab:7-stream-cost}报告累计测量。\n\n",
+      "after": "四个单元以五轮轮换策略顺序、500个留出批次比较固定64／100、采样和FULL校准。\n计时含样本收集、校准、预算设置及首批graph设置；\n不含构建、预热和扫描校准。查询池重复使用（\\cref{tab:7-stream-cost}）。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        22
+      ],
+      "action": "compress",
+      "reason": "Keep direct timing boundary and fixed-pool reuse without an execution diary",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H17",
+      "language": "zh",
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before": "从直接计时的校准和稳态批次拟合，采样策略相对固定100／64的回本分别为：\nOpenAI-1536的3.6／5.5批、OpenAI-3072的3.5／8.9批。小数值是稳态速率拟合，\n不是直接观测到的小数批次交点；\\cref{fig:7-stream-cost}绘制含首批设置的实测累计总时间。\n相对固定100／64，平均累计时间首次正节省在OpenAI-1536为4／6批，OpenAI-3072为4／9批。\nBGE/512采样收益较小，相对固定100为4,921／5,185\\,ms，平均recall为0.9658／0.9670；\nFULL恢复至0.9664，耗时5,062\\,ms。arXiv的FULL为提高质量选择200，慢于固定100／64，\n而两个固定控制均未达到质量目标。因此必须联合质量和时间判断校准价值。\n测量支持复用经济性，不要求旧模型回本值在每个单元精确吻合。\n\n",
+      "after": "相对固定100／64，实测平均累计成本首次正节省在OpenAI-1536为4／6批，\nOpenAI-3072为4／9批（\\cref{fig:7-stream-cost}）；小数稳态拟合属于另一模型估计。\nBGE/512以较低时间换取较低平均recall：采样／固定100为4,921／5,185\\,ms、\n0.9658／0.9670；FULL为5,062\\,ms、0.9664。\narXiv的FULL为质量选择200，比未达目标的固定100／64更慢。\n校准价值须同时取决于质量和总复用成本。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        22
+      ],
+      "action": "relocate",
+      "reason": "Retain actual cumulative crossings and negative quality/time cases; archive fractional-fit detail",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H18",
+      "language": "zh",
+      "path": "zh/chapters/06-2-agreement.tex",
+      "before": "对 $S$ 个校准查询 $\\mathcal Q_S$，定义\n\\begin{equation}\n D_S(\\alpha)=\\sum_{q\\in\\mathcal Q_S}\n \\left(k-|\\mathcal R_\\alpha(q)\\cap\\mathcal R_{\\rm ref}(q)|\\right),\n \\qquad D_S(\\alpha)\\leq\\epsilon.\n \\label{eq:6-agreement}\n\\end{equation}\n评测中的 $\\epsilon=1$ 允许整个样本共缺失一个参考 ID。它忽略结果顺序和距离差异；替换一个 ID 计一次，尽管对称差包含两个 ID。有限网格目标为\n",
+      "after": "对$S$个校准查询$\\mathcal Q_S$，定义\n\\begin{equation}\n \\begin{aligned}\n D_S(\\alpha)\n &=\\sum_{q\\in\\mathcal Q_S}\n   \\left(k-|\\mathcal R_\\alpha(q)\\cap\\mathcal R_{\\rm ref}(q)|\\right)\\\\\n &=\\frac12\\sum_{q\\in\\mathcal Q_S}\n   |\\mathcal R_\\alpha(q)\\triangle\\mathcal R_{\\rm ref}(q)|.\n \\end{aligned}\n \\label{eq:6-agreement}\n\\end{equation}\n当且仅当$D_S(\\alpha)\\leq\\epsilon$时接受预算，取$\\epsilon=1$：\n允许整个样本缺失一个参考ID，不计结果顺序或报告距离。有限网格目标为\n\n",
+      "detector": "T76",
+      "report_pages": [
+        4,
+        5
+      ],
+      "action": "formalise",
+      "reason": "The symmetric-difference identity replaces prose about replacement counting; valid unique k-element outputs remain the premise",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H19",
+      "language": "zh",
+      "path": "zh/chapters/06-2-agreement.tex",
+      "before": "对有效定长输出集合，令 $r_{\\mathcal Q_S}$ 为同一批查询的 GT recall。每个缺失参考 ID 至多损失一个 GT 命中，因此\n\\begin{equation}\n r_{\\mathcal Q_S}(\\alpha)\\geq r_{\\mathcal Q_S}({\\rm ref})\n                         -\\frac{D_S(\\alpha)}{Sk}.\n \\label{eq:6-relative-recall}\n\\end{equation}\n该界仅在样本内、相对参考成立。一致性控制相对参考的额外损失；参考自身质量仍需 GT 评价。\\Cref{sec:7-recall-attribution}用重建 pilot 量化这一区别。\n\n",
+      "after": "对有效的$k$元素输出，每个缺失参考ID至多损失一个GT命中。在同一样本上，\n\\begin{equation}\n \\begin{aligned}\n r_{\\mathcal Q_S}(\\alpha)\n &\\geq r_{\\mathcal Q_S}({\\rm ref})-\\frac{D_S(\\alpha)}{Sk},\\\\\n D_S(\\alpha)\\leq\\epsilon\n &\\implies r_{\\mathcal Q_S}(\\alpha)\n       \\geq r_{\\mathcal Q_S}({\\rm ref})-\\frac{\\epsilon}{Sk}.\n \\end{aligned}\n \\label{eq:6-relative-recall}\n\\end{equation}\n\\paragraph{适用范围。}\n该界仅在样本内、相对参考成立。参考自身剩余误差由GT评价\n（\\cref{sec:7-recall-attribution}）。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        5
+      ],
+      "action": "formalise",
+      "reason": "Use the existing recall inequality and its accepted-budget consequence instead of repeated prose; no population or absolute-GT claim",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H20",
+      "language": "zh",
+      "path": "zh/chapters/06-3-search.tex",
+      "before": "\\begin{proof}\n参考成员在最大保留集合中至多有 $k-1$ 个前驱。若它存在于较小集合，限制集合不会引入新前驱，因此仍处于该集合精确 top-$k$。与参考的交集，恰等于保留集合中存在的参考成员。嵌套只能增加这些成员；对查询求和缺失数即得不等式。\n\\end{proof}",
+      "after": "\\begin{proof}\n对$x\\in\\mathcal R_{\\rm ref}\\cap C_\\alpha$，共同全序给出\n\\begin{equation*}\n |\\{y\\in C_\\alpha:y\\prec x\\}|\n \\leq|\\{y\\in C_{\\alpha_{\\rm ref}}:y\\prec x\\}|<k.\n\\end{equation*}\n故$x\\in\\mathcal R_\\alpha$。结合$\\mathcal R_\\alpha\\subseteq C_\\alpha$，\n即得\\cref{eq:6-monotonicity}的交集恒等式。嵌套性给出\n$|C_\\alpha\\cap\\mathcal R_{\\rm ref}|\n \\leq|C_\\beta\\cap\\mathcal R_{\\rm ref}|$。\n对查询求和缺失参考数，即得$D_S(\\alpha)\\geq D_S(\\beta)$。\n\\end{proof}",
+      "detector": "T76",
+      "report_pages": [
+        6
+      ],
+      "action": "formalise",
+      "reason": "Write the predecessor-count implication explicitly; retain the proposition and all its assumptions unchanged",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H21",
+      "language": "zh",
+      "path": "zh/chapters/06-5-economics.tex",
+      "before": "严格超过 $B_{\\rm reuse}^*$ 才有正节省；若选中批次不更快，则没有吞吐回本。对 $n$ 查询批，由 QPS 换算毫秒为 $T=1000n/Q$。选择变化时，$1/\\mathbb E[Q]\\leq\\mathbb E[1/Q]$，因此使用 $1/\\overline Q$ 偏乐观。实测调用边界见\\cref{sec:a-budget-contract}；四个单元已用直接校准加查询流总成本验证这一模型，并同时报告质量（\\cref{sec:7-stream-cost}）。\\Cref{tab:7-budget-cost}给出当前实验估计。\n\n",
+      "after": "正节省需要$T_{\\rm chosen}<T_f$且$B_{\\rm reuse}>B_{\\rm reuse}^*$。\n批次毫秒数为$T=1000n/Q$。选择变化时，$1/\\mathbb E[Q]\\leq\\mathbb E[1/Q]$，\n故平均QPS倒数低估平均时间。计时边界见\\cref{sec:a-budget-contract}；\n\\cref{sec:7-stream-cost}在四个单元上直接检验校准加复用成本，同时报告质量。\n实验估计见\\cref{tab:7-budget-cost}。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        8,
+        9
+      ],
+      "action": "compress",
+      "reason": "Let the existing two cost equations carry the argument and retain Jensen/measurement boundaries",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H22",
+      "language": "zh",
+      "path": "zh/chapters/06-5-economics.tex",
+      "before": "\\paragraph{一个复用成本算例。}\nOpenAI-1536 在 128 探针时，全池校准选择 $\\alpha=8$，请求 80 个保留候选，固定 100 则为 1,000。两者 recall 均为 0.9280，速率分别为 267,690 和 167,451 QPS。500 查询时，由此得到 $T_{\\rm chosen}=1.868$\\,ms、$T_f=2.986$\\,ms；校准为 9.5\\,ms，故 $B_{\\rm reuse}^*=8.50$，随后九批有正模型节省。这些是归档预算的算术计算，不是直接计时的查询流成本。\n\n若每 $H$ 批重新校准，会增加每批 $T_{\\rm cal}/H$；漂移检测和自动重校准仍是后续工作。\n",
+      "after": "每$H$批重新校准增加每批$T_{\\rm cal}/H$成本。\n漂移检测与自动重校准仍是后续工作。\n",
+      "detector": "T76",
+      "report_pages": [
+        9
+      ],
+      "action": "relocate",
+      "reason": "Archive the worked arithmetic already represented by cost equations and measured reuse results",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H23",
+      "language": "zh",
+      "path": "zh/chapters/02-4-gpu.tex",
+      "before": "CUDA SIMT把线程组织成block与32线程warp，寄存器、block共享内存及global memory\n服务不同复用范围\\cite{cuda_programming_guide}。\nCoalescing把邻lane访问组织成合适事务，不要求逻辑码位更少。\nprimary扫描把lane分给相邻向量，精排则让多个lane合作处理一个survivor的坐标；\n两者利用不同并行度，一个映射不必同时适合两阶段。\n\n寄存器、共享状态和block几何限制occupancy。更多驻留线程能隐藏延迟，\n更多单查询block也会重复表与局部缓冲。数据复用足以抵消加载与同步时，共享内存才有价值。\n这些概念推动第5章拆表、packed访问与batch调度，吞吐消融测其组合效果。\n带宽饱和或具体cache瓶颈还需计数器及一致的物理字节模型。\n\n选择本身也是重要计算。Faiss GPU工作把高效距离与warp选择结合\\cite{johnson_gpu}。\nbitonic、radix和merge都是已有构件，对$k$、长度和状态成本有不同取舍。\nAIR top-$k$和GridSelect进一步展示全局选择如何取决于工作负载及分数是否流式产生\n\\cite{gpu_topk}。本文把这些思路适配到JHQ的probe与survivor保留，不把原语称为新发明。\n\nCUDA Graph回放降低重复launch设置；capture、工作区分配与图形状变化属于生命周期，\n不是数学打分规则。共享阈值发布同样需要排序和内存访问契约；\n标量分数正确并不足以证明并发准入安全。第5章把正确性条件与性能测量分开，\n第3章区分设备profile和主机可见搜索区间。\n",
+      "after": "CUDA将线程组织成block和32线程warp；寄存器、共享内存与global memory服务不同\n复用范围\\cite{cuda_programming_guide}。JHQ主码扫描将相邻候选映射到相邻线程，\n精排则将一个候选的坐标分给多个lane。更多block能隐藏延迟，却重复LUT与缓冲；\n寄存器和共享内存限制驻留。这些成本推动第5章的映射选择，具体带宽或cache归因\n还需吞吐之外的计数器。\n\n选择须与评分共同设计。Faiss采用warp选择\\cite{johnson_gpu}；\nbitonic、radix和merge原语在状态与工作量上有不同取舍。\nAIR top-$k$与GridSelect研究依赖工作负载的全局选择\\cite{gpu_topk}。\nJHQ将这些已有思路用于路由和候选保留。\n\nCUDA Graph回放减少launch设置，capture与工作区变化则属于执行生命周期。\n共享界准入还需第5章的排序及完整key访问契约。标量分数正确或设备侧剖析\n均不足以建立端到端正确性及主机可见性能。\n",
+      "detector": "T71",
+      "report_pages": [
+        15,
+        16
+      ],
+      "action": "compress",
+      "reason": "Keep the GPU concepts used by this thesis and selection prior art; remove textbook repetition",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H24",
+      "language": "zh",
+      "path": "zh/chapters/02-5-graphs.tex",
+      "before": "图ANN通过有希望的邻域导航替代列表扫描，以避免评分大多数向量。\nGPU难点在于“发现邻居”与“选择扩展哪个邻域”之间的数据依赖。\nSONG把搜索拆成阶段来暴露距离并行，并控制动态内存开销\\cite{song}。\n这是替代访问策略，不是JHQ固定路由全集的另一种实现。\n\nCAGRA针对GPU并行设计建图与搜索，覆盖小batch和大batch\\cite{cagra}。\n图连通性与search width形成不同于IVF probe的调参面。\n边与向量的存储形成容量取舍；量化向量CAGRA同样重要，所以只测fp32图索引不足以\n评价压缩索引。E1包含二者，在共同边界下报告不同工作区间，不拿跨论文提速比相除。\n\nBANG针对另一容量区间：GPU保存压缩向量，CPU/GPU合作访问主机图\\cite{bang}。\n拆分工作结构获得容量，同时引入传输与协调成本。其十亿规模说明完整常驻之外的\n替代方案，不构成本论文的容量证据。本文JHQ压缩搜索索引保留在单卡，\n没有相同的主机图执行路径。\n\n因此比较取决于访问规则性、表示与驻留方式，而不是图和量化的普遍优劣。\n少量查询时图导航可能有吸引力，列表扫描则暴露规则编码访问与batch并行。\n二者都可能受选择或移动限制；目标recall下谁更快，必须指定设备、显存和工作负载实测。\nE1只测试batch 1,000，JHQ内部小batch收益不能回答相对图基线的问题。\n",
+      "after": "图ANN通过依赖数据的导航避免对多数向量评分。\nSONG将GPU搜索分阶段以暴露距离并行，控制动态内存成本\\cite{song}；\nCAGRA共同设计建图与搜索，以覆盖小批和大批查询\\cite{cagra}。\n连通性与搜索宽度形成不同于IVF探针的调参面。CAGRA fp32与量化向量模式\n均是相关对照，表示方式改变速度与容量。\n\nBANG采用主机图与GPU压缩向量，扩大容量并引入传输和协调\\cite{bang}。\n本文JHQ将压缩搜索索引保留在单卡，没有相同的主机图路径。\n\n因此比较须指定访问规则性、表示、驻留方式和目标recall。\nE1评测batch 1,000；\\cref{sec:7-smallbatch}用共同小batch协议直接比较图与量化方法。\n单独的内部调度收益不能决定相对图基线的表现。\n",
+      "detector": "T71",
+      "report_pages": [
+        16
+      ],
+      "action": "compress",
+      "reason": "Retain SONG/CAGRA/BANG distinctions, memory regimes and the actual small-batch comparison",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H25",
+      "language": "zh",
+      "path": "zh/chapters/02-6-quantised.tex",
+      "before": "\\subsection{学习表示与利用表示结构}\nOPQ通过学习空间分解和码本降低失真\\cite{opq}，其旋转为数据优化；\nJHQ随机平方旋转支持廉价解析primary模型。取舍涉及拟合成本、重建保真和评分结构，\n更好的通用学习码本未必保留16+16精确分解所需的内部Cartesian乘积。\n\nScaNN的各向异性量化根据最大内积检索的重要性加权误差，说明重建MSE不是唯一有用\n目标\\cite{scann}。其目标与实现环境不同于本文平方L2层次流水线。\n可比的是损失选择：面向排序的表示仍须检验实际近邻保留及执行成本。\n第8章停止的排序研究在JHQ内部提供了例子。\n\n\\subsection{小查找表已有充分先行工作}\nPQ Fast Scan把依赖cache的表改造成适于CPU SIMD寄存器的表\\cite{fastscan}；\nQuicker ADC推广寄存器查找，引入不规则量化器与split tables\\cite{quickeradc}。\n这些工作说明表形状要与执行指令共同设计。本文的范围是继承Cartesian坐标结构所支持\n的精确分解及其GPU实测；CPU SIMD结果提供概念先例，不是本GPU的吞吐。\nFP32结合顺序和cutoff并列仍需独立数值检查。\n\nRaBitQ也使用随机化量化与紧凑符号信息，具有特定距离估计器及理论误差分析\n\\cite{rabitq}；多bit扩展以存储换估计精度\\cite{rabitq_multi}。\n其保证属于相应构造和假设，不能因双方都用旋转与二值组件就转移给JHQ。\nJHQ主符号选survivor，显式存储的残差提供下一精度层；质量同时依赖截断与重建。\n\nGPU IVF-RaBitQ把该族整合成GPU建库与搜索，包括GPU距离计算和融合搜索\n\\cite{ivfrabitq}，因此是直接相关的现代基线，不是“缺少GPU量化器”的背景证据。\n其融合执行说明紧凑编码还需要有竞争力的访问和选择流水线。\nE1纳入多个bit预算，其高recall结果限制JHQ的宽泛优势主张。\n\n\\subsection{精排工作量与自适应停止}\n候选扩张和重排已经存在于Faiss的\\texttt{k\\_factor}及cuVS refinement控制\n\\cite{faiss_refine,cuvs_refinement}。Faiss autotuning可用GT标签搜索recall--时间取舍\n\\cite{faiss_autotune}；学习式自适应终止预测足够搜索量\\cite{li_termination}，\nDARTH围绕声明式recall目标组织早停\\cite{darth}。\n这些都是均匀工作量之外的相关替代。第6章的具体策略用大预算参考的无标签一致性，\n为整个工作负载选择一个survivor倍率，省去预测器训练，却继承参考的质量局限。\n这是策略范围，不表示自适应搜索或精排预算是新概念。\n",
+      "after": "\\subsection{学习表示与利用表示结构}\nOPQ学习旋转和子空间码本以降低失真\\cite{opq}；JHQ的随机旋转则支持解析primary模型。\n通用学习码本未必保留$16+16$精确分解所需的Cartesian结构。\nScaNN按最大内积排序重要性加权量化误差\\cite{scann}，说明MSE不是唯一目标；\n本文评估平方L2下近邻保留与GPU执行成本。\n\n\\subsection{小查找表已有充分先行工作}\nPQ Fast Scan将表重组为适于CPU SIMD的寄存器查找\\cite{fastscan}，\nQuicker ADC扩展到不规则量化器和split tables\\cite{quickeradc}。\nJHQ利用内部Cartesian结构实现GPU因子化；FP32结合顺序及截断并列仍需数值检验。\n\nRaBitQ用随机化与紧凑符号信息建立特定距离估计器和误差界\\cite{rabitq}；\n多bit扩展以存储换精度\\cite{rabitq_multi}。GPU IVF-RaBitQ进一步融合GPU建库、\n评分与搜索\\cite{ivfrabitq}，是直接竞争基线。其理论保证不能因表示相似而转移给JHQ；\nJHQ以主符号筛选候选，再显式读取残差层。\n\n\\subsection{精排工作量与自适应停止}\nFaiss的\\texttt{k\\_factor}与cuVS refinement已提供候选扩张控制\n\\cite{faiss_refine,cuvs_refinement}。Faiss autotuning用GT探索recall--时间取舍\n\\cite{faiss_autotune}；学习式终止预测搜索充分性\\cite{li_termination}，\nDARTH以声明式recall目标组织早停\\cite{darth}。\n第6章以无标签参考一致性为整个工作负载选择一个倍率，无需预测器训练，\n但继承参考自身的误差。\n",
+      "detector": "T71",
+      "report_pages": [
+        17
+      ],
+      "action": "compress",
+      "reason": "Retain all cited prior art and method-specific contrasts; remove repeated positioning rhetoric",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H26",
+      "language": "zh",
+      "path": "zh/chapters/08-1-insights.tex",
+      "before": "\\cref{sec:5-2}的坐标组 LUT 将计算所得距离复用于多个候选；但分组结果与 Mailman\n表明，仅节省存储不足以决定吞吐（\\cref{fig:7-lut}）。共享内存放置与 word 访问须联合\n考虑（\\cref{sec:5-2,sec:5-3}）；两组是该 GPU 上的经验默认。码本改变可能破坏\nCartesian 兼容性，因此需将重建误差与评分器可达的 recall--成本前沿共同评价。\n\n",
+      "after": "两组在多数实测单元胜出，而Mailman虽增加算术复用仍更慢（\\cref{fig:7-lut}）。\n表大小、共享内存放置与packed访问共同决定有效复用单位\n（\\cref{sec:5-2,sec:5-3}）。因此码本变化需同时评价重建质量和可达评分器前沿。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        29
+      ],
+      "action": "compress",
+      "reason": "Keep the interpretation connecting representation to execution without repeating resource exposition",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H27",
+      "language": "zh",
+      "path": "zh/chapters/08-1-insights.tex",
+      "before": "\\cref{fig:7-batch}的批次趋势反映查询并发充足后，重复暂存、选择与合并的成本。\nVogue 的路径相关前沿与 BGE 的 regret 暴露 CV 未描述的绝对工作量及分解成本\n（\\cref{sec:7-2,sec:7-6}）。这些集成比较仍与单独共享界消融分开。\n更丰富的调度器可以结合候选数、保留容量与局部缓冲成本，同时保留查询级路径；\n其校准成本与留出工作负载性能仍需评测。\n\n",
+      "after": "查询并发充足后，重复暂存、选择与合并可超过额外并行的收益（\\cref{fig:7-batch}）。\nVogue与BGE暴露调度器缺失的绝对候选工作量及分解成本特征\n（\\cref{sec:7-2,sec:7-6}）。更丰富的规则需在留出工作负载上抵消自身校准成本；\n集成结果仍不单独隔离共享界消融。\n\n",
+      "detector": "T76",
+      "report_pages": [
+        29
+      ],
+      "action": "compress",
+      "reason": "Keep the cross-layer inference and unresolved scheduler feature instead of reciting its mechanism",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H28",
+      "language": "zh",
+      "path": "zh/chapters/08-1-insights.tex",
+      "before": "当 $F_h>F_\\ell$ 时，精排加快降低削减预算的收益，固定成本降低则提高该收益。\n模型固定了非精排工作；预算相关扫描维护和资源阈值仍需实测。\n因果内核比较应固定候选集合及预算决策（\\cref{sec:7-5,sec:7-stream-cost}）。\n\nFULL 结果与采样尾部说明，该成本决策还需质量约束及足够复用\n（\\cref{tab:7-budget-full,fig:7-budget-risk}）。\n",
+      "after": "当$F_h>F_\\ell$时，精排加快降低削减其预算的价值，固定成本降低则提高该价值。\n导数保持非精排工作不变；预算相关扫描维护与资源阈值需通过\n\\cref{sec:7-5,sec:7-stream-cost}的受控比较评价。\n质量与复用仍构成约束（\\cref{tab:7-budget-full,fig:7-budget-risk}）。\n",
+      "detector": "T76",
+      "report_pages": [
+        29
+      ],
+      "action": "compress",
+      "reason": "Let the unchanged cost model and derivatives carry the argument",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H29",
+      "language": "zh",
+      "path": "zh/chapters/08-3-validity.tex",
+      "before": "外部有效性限于一张GPU、平方L2 top-10和六份准备后的嵌入数据。\n批次相关工作区间见\\cref{sec:7-smallbatch}。按位置移除查询不认证没有近重复嵌入，\n这些导出也不是带相关性标签的检索基准。数据库更新、并发流量、部署延迟目标和变化查询总体\n仍未测试，常驻索引结果也不提供十亿规模或多设备容量证据。\n这些是把观测区间迁移到部署前仍需完成的检查。\n",
+      "after": "覆盖范围为一张GPU、平方L2 top-10与六份准备后的嵌入数据（\\cref{sec:7-smallbatch}）。\n按位置移除查询不排除近重复嵌入，导出也缺少相关性标签。\n更新、并发流量、查询总体变化和部署延迟目标，以及十亿规模与多设备容量均未测试。\n",
+      "detector": "T76",
+      "report_pages": [
+        31
+      ],
+      "action": "compress",
+      "reason": "Consolidate external-validity restrictions while preserving each actual limitation",
+      "before_words": null,
+      "after_words": null
+    },
+    {
+      "id": "H30",
+      "language": "zh",
+      "path": "zh/chapters/08-5-deployment.tex",
+      "before": "压缩常驻层次能放入设备、且目标 recall 位于已测竞争区间时，JHQ-GPU 值得评估。\nE1 支持 batch 1,000 的高 recall 吞吐；T5 则显示 recall 0.97、batch 8 下，\n四个数据集均由 CAGRA fp32 领先。batch 32 的 OpenAI-3072 在插值下接近平手、\n实测阈值有利于 JHQ，其余三个有利于 CAGRA。低 recall 优势同样依赖数据集和网格。\n分组调度能改善 JHQ 内部执行，但不保证跨系统领先（\\cref{sec:7-smallbatch}）。\n\n以已测FULL工作点开始校准，再用部署查询验证质量并直接计时复用成本。\n在实际批次制度下比较总时间与常驻显存，适用边界见\\cref{sec:8-3}。\n",
+      "after": "部署应匹配实测批次与recall区间。E1支持batch 1,000的高recall吞吐；\nbatch 8、recall 0.97时，T5四个数据集均由CAGRA fp32领先。\nbatch 32的OpenAI-3072接近平手且方向随估计方法变化，其余三个有利于CAGRA\n（\\cref{sec:7-smallbatch}）。从FULL校准开始，再按\\cref{sec:8-3}的边界，\n用部署查询验证质量、总复用时间及常驻显存。\n",
+      "detector": "T76",
+      "report_pages": [
+        32
+      ],
+      "action": "compress",
+      "reason": "Keep concrete deployment boundaries and validation requirements without a second general recommendation",
+      "before_words": null,
+      "after_words": null
+    }
+  ],
+  "files": [
+    {
+      "path": "chapters/07-evaluation.tex",
+      "before_sha256": "69a243637b9bcfba98ab20b64a3f66f249ba94c5935f00909efdf74e77fbf457",
+      "after_sha256": "8ce5021c27d5a5b73fcad5f0f61e4ed08b3cd5a9bd84132c3d0bcaa1211f9a1d",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/07-evaluation.tex"
+    },
+    {
+      "path": "chapters/07-supp-budget.tex",
+      "before_sha256": "6fd405845f0a8c369737c6ec9049b92988eec544949890ea081ee04d8e28e0a5",
+      "after_sha256": "2aafe5253c7e6e5f6c9d1a046828a56472925f8f94bb6c20caacd1c80a4bf2e2",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/07-supp-budget.tex"
+    },
+    {
+      "path": "chapters/06-2-agreement.tex",
+      "before_sha256": "28de73a04b342e3bf2576935405a33a3b9c79a4db12b5f054ee34c1768edb205",
+      "after_sha256": "3b6fbe395b3109cd9fed416acdff0c72a0daf07ebfbf4ab9301d82c8dbb6cbd8",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/06-2-agreement.tex"
+    },
+    {
+      "path": "chapters/06-3-search.tex",
+      "before_sha256": "7bf00307cdbd032775606174ba2c08acbf17fe37024def1d29362b87b59be85e",
+      "after_sha256": "45cdc3101449a47dc56088ad49b47c703b0e049becf4193d60b0e0597718b77a",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/06-3-search.tex"
+    },
+    {
+      "path": "chapters/06-5-economics.tex",
+      "before_sha256": "b4d75d0b7da657c07b674703051f3818cc81d73b90bc8a24be852f87c984e295",
+      "after_sha256": "7e7439b6cb2e6c05d068fa6909c441396f3d59bd62d8ab1643e38c7169a18855",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/06-5-economics.tex"
+    },
+    {
+      "path": "chapters/02-4-gpu.tex",
+      "before_sha256": "6302791c75bd65d4bb0f651896459950c8fecbbfd5c43da33bf581b6cb598ce5",
+      "after_sha256": "5cb401dff9651e713774b6913e9df5b8d486d5c49360651e7b88f0ebfab6c488",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/02-4-gpu.tex"
+    },
+    {
+      "path": "chapters/02-5-graphs.tex",
+      "before_sha256": "b299daa74607a0d58de77fea1063b4e751d1ffe09c4f539a9b891f1715716458",
+      "after_sha256": "7d0ce4a8f6fe9f328c1b5144bd2d192fd708a8110a2ead6655674049c6485896",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/02-5-graphs.tex"
+    },
+    {
+      "path": "chapters/02-6-quantised.tex",
+      "before_sha256": "222915c220e4fa8333fa4827f793dab40cc635c8fa02957956af85d717014d3f",
+      "after_sha256": "cc58dac166f06b441731477075113db0b7c9b47cb4b33e1587e61869f6e50062",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/02-6-quantised.tex"
+    },
+    {
+      "path": "chapters/08-1-insights.tex",
+      "before_sha256": "524984d85cf90d0d786b17b37e38c599ad85e82d5540e482106f7964a5920793",
+      "after_sha256": "d1b1d9ed18338d57170855e160c5eca91950d776f4cb80ecab49ee834b3ab257",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/08-1-insights.tex"
+    },
+    {
+      "path": "chapters/08-3-validity.tex",
+      "before_sha256": "96ba34dbcc2a66392b7154110ff8682b0ca107d2a58a49f746c527e8a4110acd",
+      "after_sha256": "865103d196ef9f6ffbac9b75485aeab612a8a912225975a98f4ecb38c5f29636",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/08-3-validity.tex"
+    },
+    {
+      "path": "chapters/08-5-deployment.tex",
+      "before_sha256": "af2ab79886c33438cd371a98bb987ceb43eb599610fa3ea6d3956460d015cdb2",
+      "after_sha256": "2e4f6032c972450bbf45391b2ac40081d1a11179bef6a98cfbecf45f2cdbecfe",
+      "before_archive": "evidence/editorial/9613db1/before/chapters/08-5-deployment.tex"
+    },
+    {
+      "path": "zh/chapters/07-evaluation.tex",
+      "before_sha256": "ac4ed0a579eef586d757ec984d5e1cb7a4aed6b08655ef593bd40c69a96dd143",
+      "after_sha256": "4fc1e33ca7a3fa3cad4aa4e73c7132c6cd49f7e8e5d5c31d4009f7862fe813dc",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/07-evaluation.tex"
+    },
+    {
+      "path": "zh/chapters/07-supp-budget.tex",
+      "before_sha256": "30fd4ee4ec68bbb4908ea6d6e54c3e20ed68f7436570fa5eeb373c72f6ea6aa9",
+      "after_sha256": "b7855606bcfe53cfb326c213ae47cad588cd1dbe895112f6b94886a48d1f489f",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/07-supp-budget.tex"
+    },
+    {
+      "path": "zh/chapters/06-2-agreement.tex",
+      "before_sha256": "310c3328f29c5cd8059c47c94d89d2c48578797b400209c6ec4369bddfd94914",
+      "after_sha256": "333cab55652255eca2837abf09d8be7c3fa8be39cfe3eab7c69fd776c5fbc0fc",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/06-2-agreement.tex"
+    },
+    {
+      "path": "zh/chapters/06-3-search.tex",
+      "before_sha256": "018dd27eb93fea0b3e7c057f9c902735b3c27ea92ae73e4d71140a67970135ef",
+      "after_sha256": "523afcc5d5e550ee96f02adad9fe4b09b9254836b7916cd2aa482de1d94bc92d",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/06-3-search.tex"
+    },
+    {
+      "path": "zh/chapters/06-5-economics.tex",
+      "before_sha256": "0271c3c70ad74ee0df387b0d7816ed41079c1da2e2696acf3f7b88ae5bdae4d6",
+      "after_sha256": "ee7e8d9b4d0ed6e24b805929a9aaeb312eb91d8627cd640dd6c76d4b9d42c90d",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/06-5-economics.tex"
+    },
+    {
+      "path": "zh/chapters/02-4-gpu.tex",
+      "before_sha256": "d9858ccd6cfb023fad41f8dce742abf6b7e9be088d8d46d79ccc70405a39875d",
+      "after_sha256": "b85be527733e824288ec53b26fa61a4871709190b2e21a05a1e290d511dd4a18",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/02-4-gpu.tex"
+    },
+    {
+      "path": "zh/chapters/02-5-graphs.tex",
+      "before_sha256": "1deabd2b3310c72b906b3e385a63f63bbd6415db3bf0be1e956894b56fc8b086",
+      "after_sha256": "e87ae06219ce90077fa9f072c0fce2c62240e5904f18c762cc70b28a4d2eabec",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/02-5-graphs.tex"
+    },
+    {
+      "path": "zh/chapters/02-6-quantised.tex",
+      "before_sha256": "ef46fa877e392401645c02812b583907b7d6e63d88c000286e95daa1310be350",
+      "after_sha256": "ddaa7f4d5943eee6c861d869758c87b741dfb1c02153232e43f6e7cf6c9affa6",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/02-6-quantised.tex"
+    },
+    {
+      "path": "zh/chapters/08-1-insights.tex",
+      "before_sha256": "cf2725731343b24aad04ca46fb7fc6f4d2c72511d7dbbfca64abdb3bfff31efa",
+      "after_sha256": "ec6c412c223c93d2c17193f91b5ac44194d1ca0a292dfbd361d91723192fae53",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/08-1-insights.tex"
+    },
+    {
+      "path": "zh/chapters/08-3-validity.tex",
+      "before_sha256": "1f8d6bba0a8c3b1dae25c4652b00b56829b60251528531c019ce89a665228f22",
+      "after_sha256": "3d8307a0d05dced9e5e4af9d19665de68bcae618987a0469292209496ec618c7",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/08-3-validity.tex"
+    },
+    {
+      "path": "zh/chapters/08-5-deployment.tex",
+      "before_sha256": "8ab89cb87bcf0d136eff5e0c6c15f6eb64630482a543dd604e3ae45b9e4773d9",
+      "after_sha256": "22d83ef41adccdebaab4606251503f8cc25aa32741fd80e84ff6c4c99a2cd73d",
+      "before_archive": "evidence/editorial/9613db1/before/zh/chapters/08-5-deployment.tex"
+    }
+  ],
+  "approved_formalisation_ids": [
+    "H09",
+    "H18",
+    "H19",
+    "H20"
+  ],
+  "protected": "All other display equations, statements, proofs, figures, table bodies and labels must be preserved. Existing theorem assumptions and the grouped corollary are unchanged.",
+  "counts": {
+    "english_blocks": 30,
+    "chinese_blocks": 30,
+    "files": 22,
+    "targeted_english_before": 3661,
+    "targeted_english_after": 1886,
+    "chapters_abstract_before": 24033,
+    "chapters_abstract_after": 22258
+  },
+  "new_detector_result": null,
+  "patch": "evidence/editorial/9613db1/highlight-remediation.patch",
+  "patch_sha256": "54f9d7812267ec1e7fe82199cc4e8c5fceb946c930754f05531143dd52b87272"
+}

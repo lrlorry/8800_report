@@ -1,0 +1,103 @@
+Let $\mathcal R_\alpha(q)$ be the set of $k$ valid, unique database IDs
+returned at budget $\alpha$ on a fixed index. Define
+$\mathcal R_{\rm ref}(q)=\mathcal R_{\alpha_{\rm ref}}(q)$. The descending grid is
+\begin{equation}
+ A=(200,100,64,32,16,8,4,2),\qquad \alpha_{\rm ref}=A[0]=200.
+ \label{eq:6-grid}
+\end{equation}
+For $S$ calibration queries $\mathcal Q_S$, define
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+ \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right),
+ \qquad D_S(\alpha)\leq\epsilon.
+ \label{eq:6-agreement}
+\end{equation}
+The evaluated $\epsilon=1$ permits one missing reference ID across the
+whole sample. It ignores output order and distance differences; replacing
+one ID counts once, although the symmetric difference contains two IDs.
+The finite-grid objective is
+\begin{equation}
+ \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
+ \label{eq:6-selection-objective}
+\end{equation}
+The reference supplies a nonempty fallback. The objective minimises an
+accepted multiplier; \cref{sec:6-3} states when bisection solves it exactly.
+
+At $k=10$, the normalised allowance $\epsilon/(Sk)$ is 0.003125,
+0.0015625 and 0.00078125 for $S=32,64,128$, and 0.0002 at $S=500$.
+Increasing $S$ therefore changes both coverage and effective strictness.
+Calibration and held-out evaluation use disjoint queries; subsamples
+reuse a finite calibration pool (\cref{sec:7-5}).
+
+\begin{figure}[htbp]
+\centering
+\input{figures/ch6/calibration-flow}
+\caption[Workload-level calibration and evaluation]{Workload-level calibration and its evaluation. Budget decisions
+use reference IDs; GT assesses held-out quality. Selected-arm results
+are looked up from timed fixed arms. Implementation boundaries are in
+\cref{sec:a-budget-contract}.}
+\label{fig:6-calibration}
+\end{figure}
+
+\subsection{What agreement controls}
+
+Under \Cref{prop:6-monotonicity}, disagreement counts reference answers
+excluded by primary screening:
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+       |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
+ \label{eq:6-reference-coverage}
+\end{equation}
+For valid fixed-size output sets, let $r_{\mathcal Q_S}$ denote GT recall
+on these same queries. Each missing reference ID removes at most one GT hit, so
+\begin{equation}
+ r_{\mathcal Q_S}(\alpha)\geq r_{\mathcal Q_S}({\rm ref})
+                         -\frac{D_S(\alpha)}{Sk}.
+ \label{eq:6-relative-recall}
+\end{equation}
+This bound is sample-local and reference-relative. Agreement controls
+additional loss relative to the reference; the reference's own quality
+requires GT evaluation. \Cref{sec:7-recall-attribution} quantifies that
+distinction with the reconstruction pilot.
+
+\subsection{Sampling resolution and ordered testing}
+
+Let $H_S$ count queries with any missing reference ID. Since $H_S\leq D_S$,
+acceptance implies $H_S\leq1$. For a prespecified budget and i.i.d.
+queries, the one-sided 95\% exact binomial upper limit after one event solves
+\cite{nist_binomial}
+\begin{equation}
+ (1-u)^S+Su(1-u)^{S-1}=0.05.
+ \label{eq:6-binomial-limit}
+\end{equation}
+The query-event limits are 0.03652 at $S=128$ and 0.009452 at 500.
+Treating all $Sk$ result indicators as homogeneous independent Bernoulli
+trials is stronger: the corresponding limits are 0.003701 and 0.0009484,
+approximately $4.74/(Sk)$. Query i.i.d. alone does not justify dividing
+the query-event limit by $k$; neither model certifies repeated subsamples
+of this fixed pool.
+
+For monotone disagreement and a fixed grid order, bisection selects the
+accepted prefix. If its per-arm decisions are valid level tests, the
+first-unsafe-arm argument gives fixed-sequence error control without a
+Bonferroni factor \cite{learn_then_test}. The implemented one-slot rule
+is a stability threshold; a GT-risk guarantee would require a valid test
+for that target.
+
+\paragraph{A finite-pool extension.}
+Suppose every query has a fixed disagreement count $X_q(\alpha)$ under
+the intended sample-size execution regime, unchanged by subset membership
+or position. Let $N_{\rm cal}$ be the pool size and $n_j$ count queries with $X_q=j$.
+Under uniform sampling without replacement, $D_S\leq1$ requires either
+only zero-count queries or one single-count query \cite{nist_hypergeometric}:
+\begin{equation}
+ \Pr\{D_S(\alpha)\leq1\}
+ =\frac{\binom{n_0}{S}+n_1\binom{n_0}{S-1}}{\binom{N_{\rm cal}}{S}}.
+ \label{eq:6-finite-pool}
+\end{equation}
+Out-of-range binomial coefficients are zero. This conditional acceptance
+model additionally needs the grid's acceptance structure and selected-arm
+quality map to predict selection risk. Acceptance uses no labels;
+GT-loss crossings use held-out fixed-arm quality. The subset-sum checks
+in \cref{sec:7-budget-trace} test the count-invariance assumption on the
+recorded draws.

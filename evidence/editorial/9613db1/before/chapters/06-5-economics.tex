@@ -1,0 +1,66 @@
+\subsection{Choosing a calibration scale}
+
+The full-pool working point is supported by the held-out results in
+\cref{tab:7-budget-full}; sampled alternatives are evaluated in
+\cref{fig:7-budget-risk}. The independent-slot model in \cref{sec:6-2}
+provides a planning scale: at $k=10$, $4.74/(Sk)\approx10^{-3}$ suggests
+$S$ of order 500, while 128 has coarser resolution. This strong model
+concerns reference disagreement, not GT loss, and does not make the
+empirical recommendation a prespecified quality guarantee.
+
+The path and common-order conditions for FULL are addressed in
+\cref{sec:6-3}.
+
+
+\subsection{Risk and selected-arm performance}
+
+Over $m$ calibration draws, let draw $r$ select $\widehat\alpha_r$.
+Define held-out loss and threshold-crossing frequency by
+\begin{equation}
+ L_r=\widehat r^*-\widehat r(\widehat\alpha_r),\qquad
+ \widehat p_\delta=\frac{1}{m}\sum_{r=1}^{m}\mathbf1\{L_r>\delta\}.
+ \label{eq:6-risk}
+\end{equation}
+Mean loss, crossing frequency and tail size answer different questions.
+\Cref{tab:7-budget-quality,fig:7-budget-risk} report the archived summaries;
+the largest supplementary per-draw losses are reported in \cref{sec:7-budget-trace}.
+
+Reported selected-arm rate is
+$\overline Q=m^{-1}\sum_r\widehat Q(\widehat\alpha_r)$, a lookup from timed
+fixed arms. It is distinct from the median budget's rate and from the
+throughput of a calibrated query stream. Quality and speed must be read
+together (\cref{tab:7-budget-cost}).
+
+\subsection{Cost of reuse}
+
+For $B_{\rm reuse}$ equal-sized subsequent batches, model
+\begin{equation}
+ T_{\rm policy}(B_{\rm reuse})=T_{\rm cal}+B_{\rm reuse}T_{\rm chosen},\qquad
+ T_{\rm fixed}(B_{\rm reuse})=B_{\rm reuse}T_f.
+ \label{eq:6-total-cost}
+\end{equation}
+When $T_{\rm chosen}<T_f$, the break-even count is
+\begin{equation}
+ B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
+ \label{eq:6-payback}
+\end{equation}
+Strictly exceeding $B_{\rm reuse}^*$ gives positive saving. If the chosen
+batch is no faster, there is no throughput payback. Convert QPS to milliseconds as
+$T=1000n/Q$ for an $n$-query batch. Using $1/\overline Q$ is optimistic
+when choices vary, because $1/\mathbb E[Q]\leq\mathbb E[1/Q]$.
+Measured call boundaries are in \cref{sec:a-budget-contract}; direct
+calibration-plus-stream totals validate this model in four measured cells
+(\cref{sec:7-stream-cost}), with quality reported alongside time.
+\Cref{tab:7-budget-cost} gives the campaign's estimates.
+
+\paragraph{A worked reuse calculation.}
+On OpenAI-1536 at 128 probes, full-pool calibration selects $\alpha=8$,
+requesting 80 survivors versus fixed 100's 1,000. Both arms have recall
+0.9280; their rates are 267,690 and 167,451 QPS. For 500 queries this
+gives $T_{\rm chosen}=1.868$\,ms and $T_f=2.986$\,ms. With 9.5\,ms
+calibration, $B_{\rm reuse}^*=8.50$: nine subsequent batches give positive
+modelled saving. These are calculations from archived arms, not directly
+timed stream costs.
+
+Recalibration every $H$ batches would add $T_{\rm cal}/H$ per batch;
+drift detection and automatic recalibration remain future work.

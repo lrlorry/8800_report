@@ -30,12 +30,9 @@ sub-interval allocations and full retrained frontiers remain unmeasured \\
 \end{tabularx}
 \end{minipage}\par\medskip
 
-External validity is limited by one GPU, squared-L2 top-10 and six
-prepared embedding datasets. The batch-dependent operating regions are
-reported in \cref{sec:7-smallbatch}. Query removal by position does not
-certify the absence of near-duplicate embeddings, and the exports are not
-a relevance-labelled retrieval benchmark. Database updates, concurrent
-traffic, deployment latency objectives and changing query populations
-remain untested. The resident-index results supply no billion-scale or
-multi-device capacity evidence. These are the remaining checks before
-transferring an observed region to deployment.
+Coverage is one GPU, squared-L2 top-10 and six prepared embedding
+datasets (\cref{sec:7-smallbatch}). Positional query removal does not
+exclude near-duplicate embeddings, and the exports lack relevance labels.
+Updates, concurrent traffic, changing query populations and deployment
+latency targets remain untested, as do billion-scale and multi-device
+capacity.

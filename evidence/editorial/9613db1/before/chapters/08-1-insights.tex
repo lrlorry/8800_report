@@ -1,0 +1,45 @@
+\subsection{A useful representation exposes a useful unit of reuse}
+
+The coordinate-group LUT in \cref{sec:5-2} computes distances once for
+reuse across candidates. Yet the grouping results and Mailman case show
+that storage savings alone do not determine throughput (\cref{fig:7-lut}).
+Shared-memory placement and word access must be considered together
+(\cref{sec:5-2,sec:5-3}). Two groups are an empirical default on this GPU.
+A codebook change can remove Cartesian compatibility, so reconstruction
+error must be assessed alongside the scorer's attainable recall--cost
+frontier.
+
+\subsection{Useful parallelism is bounded by duplicated state and selection}
+
+The batch trend in \cref{fig:7-batch} reflects the cost of duplicating
+staging, selection and merging once query concurrency is sufficient.
+Vogue's path-sensitive frontier and BGE's regret expose what CV misses:
+absolute work and decomposition cost (\cref{sec:7-2,sec:7-6}). These
+integrated comparisons remain separate from the shared-bound ablation.
+A richer scheduler could combine candidate count, survivor capacity and
+local-buffer cost while retaining the query-centric path; its calibration
+cost and held-out workload performance would need evaluation.
+
+\subsection{Execution speed changes the value of avoiding refinement}
+
+Consider a latency model with fixed non-refinement cost $T_0>0$,
+high-/low-budget refinement times $F_h\geq F_\ell>0$, and a common
+refinement-time multiplier $0<\eta\leq1$. The low-budget speedup and
+its derivatives are
+\begin{align}
+ S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
+ \label{eq:8-refinement-sensitivity}\\
+ \frac{\partial S}{\partial\eta}
+ &=\frac{T_0(F_h-F_\ell)}{(T_0+\eta F_\ell)^2}\geq0,\qquad
+ \frac{\partial S}{\partial T_0}
+ =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
+\end{align}
+For $F_h>F_\ell$, faster refinement reduces the benefit of cutting its budget, while
+lower fixed cost increases it. This model holds non-refinement work
+constant; budget-dependent scan maintenance and resource transitions
+require measurement. A causal kernel comparison would fix candidate sets
+and budget decisions (\cref{sec:7-5,sec:7-stream-cost}).
+
+The FULL results and sampled tails show why this cost decision also
+needs a quality constraint and sufficient reuse
+(\cref{tab:7-budget-full,fig:7-budget-risk}).
