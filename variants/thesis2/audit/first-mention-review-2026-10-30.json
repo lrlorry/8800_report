@@ -73,7 +73,7 @@
     {
       "path": "variants/thesis2/chapters/02-6-quantised.tex",
       "before": "\\subsection{Learning a representation versus exploiting its structure}\n\nOPQ may lose Cartesian separability \\cite{opq}; ScaNN targets inner-product error \\cite{scann}. Reconstruction error and neighbour order can disagree.\n\n\\subsection{Small lookup tables have substantial prior art}\n\nFast Scan/Quicker ADC use CPU register tables \\cite{fastscan,quickeradc}. JHQ splits GPU Cartesian tables and checks FP32 ties.\n\nRaBitQ's estimator \\cite{rabitq} and multi-bit extension \\cite{rabitq_multi} have their own guarantees. GPU IVF-RaBitQ provides the fused-search baseline \\cite{ivfrabitq}.\n\n\\subsection{Refinement effort and adaptive stopping}\n\nFaiss/cuVS expose refinement effort \\cite{faiss_refine,cuvs_refinement}. Other policies use GT \\cite{faiss_autotune}, learned stopping \\cite{li_termination} or recall targets \\cite{darth}; ours compares workload outputs.",
-      "after": "Optimised product quantisation (OPQ) learns a rotation and subcodebooks\nto reduce reconstruction error \\cite{opq}. ScaNN's anisotropic\nquantisation instead targets inner-product approximation \\cite{scann}.\nThe distinction matters because minimising vector reconstruction error\nneed not best preserve neighbour ordering.\n\nRaBitQ estimates distances using randomised binary codes \\cite{rabitq},\nwith a multi-bit extension offering a finer representation \\cite{rabitq_multi}.\nGPU IVF-RaBitQ combines compressed distance estimation with IVF routing\nand fused search \\cite{ivfrabitq}. It provides a direct compressed-search\nbaseline for testing whether JHQ's additional residual scoring is worthwhile.\n\nFast Scan and Quicker ADC accelerate CPU distance computation using\nsmall tables accessed through single-instruction, multiple-data (SIMD)\noperations \\cite{fastscan,quickeradc}. Table size and hardware lookup support are therefore central to speed.\nJHQ-GPU splits tables using its primary codebook's coordinate structure;\nChapter 5 analyses the identity and finite-precision effects.\n\nFaiss and the GPU search library cuVS expose parameters controlling the\nnumber of candidates refined \\cite{faiss_refine,cuvs_refinement}.\nFaiss autotuning uses labelled evaluation \\cite{faiss_autotune}; learned\nearly termination predicts when to stop \\cite{li_termination}; DARTH\nexpresses search effort through recall targets \\cite{darth}.\nThese approaches provide the comparison points for the label-free\ncalibration in Chapter 6.\n",
+      "after": "Optimised product quantisation (OPQ) learns a rotation and subcodebooks\nto reduce reconstruction error \\cite{opq}. ScaNN's anisotropic\nquantisation instead targets inner-product approximation \\cite{scann}.\nThe distinction matters because minimising vector reconstruction error\nneed not best preserve neighbour ordering.\n\nRaBitQ estimates distances using randomised binary codes \\cite{rabitq},\nwith a multi-bit extension offering a finer representation \\cite{rabitq_multi}.\nGPU IVF-RaBitQ combines compressed distance estimation with IVF routing\nand fused search \\cite{ivfrabitq}. Both the original one-bit RaBitQ\nconstruction and JHQ's evaluated primary code store signs after rotation.\nJHQ uses fixed reconstruction levels and residual-code refinement;\nthe IVF-RaBitQ baseline tests 4/8/9 bits per dimension.\n\\Cref{sec:7-2,sec:7-smallbatch} compare the complete systems'\nrecall--throughput trade-offs.\n\nFast Scan and Quicker ADC accelerate CPU distance computation using\nsmall tables accessed through single-instruction, multiple-data (SIMD)\noperations \\cite{fastscan,quickeradc}. Table size and hardware lookup support are therefore central to speed.\nJHQ-GPU splits tables using its primary codebook's coordinate structure;\nChapter 5 analyses the identity and finite-precision effects.\n\nFaiss and the GPU search library cuVS expose parameters controlling the\nnumber of candidates refined \\cite{faiss_refine,cuvs_refinement}.\nFaiss autotuning uses labelled evaluation \\cite{faiss_autotune}; learned\nearly termination predicts when to stop \\cite{li_termination}; DARTH\nexpresses search effort through recall targets \\cite{darth}.\nThese approaches provide the comparison points for the label-free\ncalibration in Chapter 6.\n",
       "heading_followup": "Author requested all headings be aligned with their actual contents; only the recorded heading strings changed in this pass.",
       "background_rewrite": true
     },
@@ -226,7 +226,7 @@
     {
       "path": "variants/thesis2-zh/chapters/02-6-quantised.tex",
       "before": "\\subsection{学习表示与利用结构的区别}\n\nOPQ 可能失去 Cartesian 可分性 \\cite{opq}；ScaNN 面向内积误差 \\cite{scann}。重建误差与近邻顺序可能不一致。\n\n\\subsection{小型查找表已有充分研究}\n\nFast Scan／Quicker ADC 使用 CPU 寄存器表 \\cite{fastscan,quickeradc}。JHQ 拆分 GPU Cartesian 表，并检查 FP32 并列情况。\n\nRaBitQ 估计器 \\cite{rabitq} 及其多位扩展 \\cite{rabitq_multi} 各有自身保证。GPU IVF-RaBitQ 是融合搜索的比较基线 \\cite{ivfrabitq}。\n\n\\subsection{精排开销与自适应停止}\n\nFaiss／cuVS 提供精排工作量参数 \\cite{faiss_refine,cuvs_refinement}。其他策略使用 GT \\cite{faiss_autotune}、学习式停止 \\cite{li_termination} 或召回目标 \\cite{darth}；本文的方法比较工作负载的输出。\n",
-      "after": "优化乘积量化（optimised product quantisation，OPQ）学习旋转和子码本，以减少重构误差 \\cite{opq}。ScaNN 的各向异性量化则面向内积近似 \\cite{scann}。这种区别很重要，因为最小化向量重构误差未必最有利于保持近邻排序。\n\nRaBitQ 用随机二进制编码估计距离 \\cite{rabitq}，其多位扩展提供更细致的表示 \\cite{rabitq_multi}。GPU IVF-RaBitQ 将压缩距离估计、IVF 路由与融合搜索结合 \\cite{ivfrabitq}，作为直接的压缩搜索基线，用来检验 JHQ 额外的残差评分是否值得。\n\nFast Scan 与 Quicker ADC 使用通过单指令多数据（single-instruction, multiple-data，SIMD）操作访问的小表，加速 CPU 距离计算 \\cite{fastscan,quickeradc}。因此，表大小与硬件查表支持对速度至关重要。JHQ-GPU 利用主码本内部的坐标结构拆表；第 5 章分析恒等式与有限精度影响。\n\nFaiss 和 GPU 搜索库 cuVS 提供控制精排候选数的参数 \\cite{faiss_refine,cuvs_refinement}。Faiss 自动调参使用带标签的评估 \\cite{faiss_autotune}；学习式提前终止预测何时停止 \\cite{li_termination}；DARTH 用召回目标表达搜索工作量 \\cite{darth}。这些方法为第 6 章的无标签校准提供比较依据。\n",
+      "after": "优化乘积量化（optimised product quantisation，OPQ）学习旋转和子码本，以减少重构误差 \\cite{opq}。ScaNN 的各向异性量化则面向内积近似 \\cite{scann}。这种区别很重要，因为最小化向量重构误差未必最有利于保持近邻排序。\n\nRaBitQ 用随机二进制编码估计距离 \\cite{rabitq}，其多位扩展提供更细致的表示 \\cite{rabitq_multi}。GPU IVF-RaBitQ 将压缩距离估计、IVF 路由与融合搜索结合 \\cite{ivfrabitq}。原始单比特 RaBitQ 与本文评测的 JHQ 主码均存储旋转后的符号。JHQ 使用固定重构等级及残差码精排；IVF-RaBitQ 基线测试每维 4/8/9 位的配置。\\Cref{sec:7-2,sec:7-smallbatch} 比较完整系统的召回率与吞吐权衡。\n\nFast Scan 与 Quicker ADC 使用通过单指令多数据（single-instruction, multiple-data，SIMD）操作访问的小表，加速 CPU 距离计算 \\cite{fastscan,quickeradc}。因此，表大小与硬件查表支持对速度至关重要。JHQ-GPU 利用主码本内部的坐标结构拆表；第 5 章分析恒等式与有限精度影响。\n\nFaiss 和 GPU 搜索库 cuVS 提供控制精排候选数的参数 \\cite{faiss_refine,cuvs_refinement}。Faiss 自动调参使用带标签的评估 \\cite{faiss_autotune}；学习式提前终止预测何时停止 \\cite{li_termination}；DARTH 用召回目标表达搜索工作量 \\cite{darth}。这些方法为第 6 章的无标签校准提供比较依据。\n",
       "heading_followup": "Author requested all headings be aligned with their actual contents; only the recorded heading strings changed in this pass.",
       "background_rewrite": true
     },
@@ -608,8 +608,8 @@
     "label_and_citation_sets_unchanged": true,
     "english_pages": 66,
     "chinese_pages": 64,
-    "english_sha256": "4ff4c02b4fbae54483db15e2334ef20230edef2dbb6b14bfbca6c12a8911bc17",
-    "chinese_sha256": "3ba62c8b28adb706f7defa57d04e8bce7c6aef56629f5f93adc9bac8e872f69b",
+    "english_sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715",
+    "chinese_sha256": "3d69e48cf14c8d91da6f6bbbff335d6fed69cd75f006e2a2fe0d3c621f66193f",
     "verifiers_passed": true,
     "compiler_issues": [],
     "figures": 28,
@@ -644,7 +644,8 @@
     ],
     "chapter1_unchanged_in_cross_chapter_dedup": true,
     "chapter2_prose_words_before_dedup": 1362,
-    "chapter2_prose_words_after_dedup": 1182
+    "chapter2_prose_words_after_dedup": 1182,
+    "rabitq_comparison_backed_by_existing_e1_and_t5": true
   },
   "heading_review": {
     "changes": [
@@ -1407,7 +1408,8 @@
     "retained_sign_derivation": "eq:4-sign-ranking",
     "added_cross_references": [
       "\\cref{eq:4-sign-ranking}",
-      "\\cref{eq:5-refined-constant}"
+      "\\cref{eq:5-refined-constant}",
+      "\\Cref{sec:7-2,sec:7-smallbatch}"
     ],
     "unchanged_later_sign_derivation_sha256": "7d6db39dff402d1725932cb9a4f90da2763fac5281021a9b228b6258d7506d46",
     "previous_sources_snapshot": "build/ch2-readability-before/sources.json",
@@ -1438,6 +1440,7 @@
       "variants/thesis2-zh/chapters/02-7-gap.tex",
       "variants/thesis2/chapters/02-5-graphs.tex",
       "variants/thesis2/chapters/02-7-gap.tex"
-    ]
+    ],
+    "rabitq_comparison": "Add comparison of original one-bit RaBitQ and evaluated JHQ primary signs, distinguish fixed-level/residual scoring from tested multi-bit IVF-RaBitQ baseline, and point to existing E1 and T5 end-to-end evidence. No isolated mechanism speedup claimed."
   }
 }

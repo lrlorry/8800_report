@@ -7,13 +7,13 @@
     "pages": 66,
     "body_pages": 56,
     "front_pages": 7,
-    "source_prose_word_estimate": 14384,
-    "sha256": "4ff4c02b4fbae54483db15e2334ef20230edef2dbb6b14bfbca6c12a8911bc17"
+    "source_prose_word_estimate": 14406,
+    "sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715"
   },
   "chinese": {
     "file": "thsis2-zh.pdf",
     "pages": 64,
-    "sha256": "3ba62c8b28adb706f7defa57d04e8bce7c6aef56629f5f93adc9bac8e872f69b"
+    "sha256": "3d69e48cf14c8d91da6f6bbbff335d6fed69cd75f006e2a2fe0d3c621f66193f"
   },
   "figures": 28,
   "tables": 28,
@@ -30,6 +30,6 @@
   "review_response": "assessment/thesis2-review-response-02a4467.txt",
   "frontmatter_review_record": "variants/thesis2/audit/frontmatter-review-2026-10-30.json",
   "style_previews_note": "Frozen dca4ff87-era style snapshots; their frontmatter predates this revision.",
-  "last_change": "Chapter 1 preserved byte-for-byte in English and Chinese. Deduplicated only Chapter 2: remove repeated objectives, small-batch challenge, capacity question, calibration procedure and contribution list. Retain technical definitions, all formulas, related-work comparisons and table payloads; align section headings to remaining content. Chapter 2 English prose estimator reduced by 180 words.",
+  "last_change": "Add a short RaBitQ comparison to Chapter 2.6 in both languages: original one-bit sign-code similarity, JHQ fixed-level reconstruction plus residual refinement, distinction from the tested 4/8/9-bit IVF-RaBitQ baseline, and cross-references to existing E1/T5 end-to-end experiments. Chapter 1 and all experimental results unchanged.",
   "first_mention_review_record": "variants/thesis2/audit/first-mention-review-2026-10-30.json"
 }

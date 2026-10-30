@@ -10,11 +10,11 @@
     },
     "variants/thesis2/checks.json": {
       "before_sha256": "b4d91c9a115cce4d1950c7e173db2c18ad4a33848538ff2720c2097fa8e1fdbf",
-      "after_sha256": "b8ddfc38d0062364d06d7ef67a0d654ade765c163f5b92b4b41777630d3f1835"
+      "after_sha256": "fd37a78143224e58c3f2aef2aea4893caa8285563993c11b923aacee0a2b0e7a"
     },
     "thesis2.pdf": {
       "before_sha256": "15b10bb12b558f9dc9962ac2911fb9f925c344ff3940cf6da3b115f5e1c36a32",
-      "after_sha256": "4ff4c02b4fbae54483db15e2334ef20230edef2dbb6b14bfbca6c12a8911bc17"
+      "after_sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715"
     },
     "variants/thesis2/chapters/01-2-scope.tex": {
       "before_sha256": "9e79a10f78bd4e84d036ee5edbcae469eb87c1f66778fe67b230323f50fd6e06",
@@ -58,7 +58,7 @@
     },
     "variants/thesis2/chapters/02-6-quantised.tex": {
       "before_sha256": "13562544a9b2d8780d430f8e65ecb4f39837f845bcc9e142ab64ba0db97cd990",
-      "after_sha256": "dc7db7ecf688e593b9972fd40e1542bc7e8e2bcb933d469f041a2d491bdd95ab"
+      "after_sha256": "3bfbcf3069248d12a405e71a96b1493eb62d3b4c9dd54148536387b982b83f5b"
     },
     "variants/thesis2/chapters/07-evaluation.tex": {
       "before_sha256": "d4ec719e00a0f11bcc4416792d56c19393106bc6c46fc36a85dfa443b8f5a09d",

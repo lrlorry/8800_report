@@ -3,7 +3,7 @@
   "pages": 66,
   "body_pages": 56,
   "front_pages": 7,
-  "sha256": "4ff4c02b4fbae54483db15e2334ef20230edef2dbb6b14bfbca6c12a8911bc17",
+  "sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715",
   "protected_files_unchanged": 887,
   "missing_preexisting_derived_files": [
     "thesis1-part1.pdf",
@@ -57,7 +57,7 @@
   "words_outside_page": 0,
   "counts": {
     "body_abstract_before": 14119,
-    "body_abstract_after": 14384,
+    "body_abstract_after": 14406,
     "appendix_prose_removed": 1042,
     "edited_blocks": 201,
     "word_count_scope": "Same source-level prose estimator applied to reachable chapters and abstract; not an official word count",

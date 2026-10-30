@@ -7,8 +7,12 @@ need not best preserve neighbour ordering.
 RaBitQ estimates distances using randomised binary codes \cite{rabitq},
 with a multi-bit extension offering a finer representation \cite{rabitq_multi}.
 GPU IVF-RaBitQ combines compressed distance estimation with IVF routing
-and fused search \cite{ivfrabitq}. It provides a direct compressed-search
-baseline for testing whether JHQ's additional residual scoring is worthwhile.
+and fused search \cite{ivfrabitq}. Both the original one-bit RaBitQ
+construction and JHQ's evaluated primary code store signs after rotation.
+JHQ uses fixed reconstruction levels and residual-code refinement;
+the IVF-RaBitQ baseline tests 4/8/9 bits per dimension.
+\Cref{sec:7-2,sec:7-smallbatch} compare the complete systems'
+recall--throughput trade-offs.
 
 Fast Scan and Quicker ADC accelerate CPU distance computation using
 small tables accessed through single-instruction, multiple-data (SIMD)

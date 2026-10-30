@@ -1,6 +1,6 @@
 优化乘积量化（optimised product quantisation，OPQ）学习旋转和子码本，以减少重构误差 \cite{opq}。ScaNN 的各向异性量化则面向内积近似 \cite{scann}。这种区别很重要，因为最小化向量重构误差未必最有利于保持近邻排序。
 
-RaBitQ 用随机二进制编码估计距离 \cite{rabitq}，其多位扩展提供更细致的表示 \cite{rabitq_multi}。GPU IVF-RaBitQ 将压缩距离估计、IVF 路由与融合搜索结合 \cite{ivfrabitq}，作为直接的压缩搜索基线，用来检验 JHQ 额外的残差评分是否值得。
+RaBitQ 用随机二进制编码估计距离 \cite{rabitq}，其多位扩展提供更细致的表示 \cite{rabitq_multi}。GPU IVF-RaBitQ 将压缩距离估计、IVF 路由与融合搜索结合 \cite{ivfrabitq}。原始单比特 RaBitQ 与本文评测的 JHQ 主码均存储旋转后的符号。JHQ 使用固定重构等级及残差码精排；IVF-RaBitQ 基线测试每维 4/8/9 位的配置。\Cref{sec:7-2,sec:7-smallbatch} 比较完整系统的召回率与吞吐权衡。
 
 Fast Scan 与 Quicker ADC 使用通过单指令多数据（single-instruction, multiple-data，SIMD）操作访问的小表，加速 CPU 距离计算 \cite{fastscan,quickeradc}。因此，表大小与硬件查表支持对速度至关重要。JHQ-GPU 利用主码本内部的坐标结构拆表；第 5 章分析恒等式与有限精度影响。
 
