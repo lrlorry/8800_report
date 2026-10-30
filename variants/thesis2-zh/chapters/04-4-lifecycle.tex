@@ -10,7 +10,7 @@ ID／校正项贡献 $8N$ bytes。当 $M=d/8$、$B_r=8$ 时，
 \[
  b_{\rm code}=d/8+d=9d/8=1.125d.
 \]
-编码载荷比 SQ8 多 12.5\%；不存图并不必然比 int8 更小。
+编码载荷比 8 位标量量化（SQ8）多 12.5\%；不存图并不必然比 int8 更小。
 
 \begin{table}[!htbp]
 \centering
@@ -46,7 +46,7 @@ $d$ & 主码 & 残差 & ID＋校正 & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP3
 \]
 分配临时区在 gather 前结束生命周期（\cref{eq:4-staging-rows,eq:4-assignment-scratch}）。
 
-\subsection{复用、恢复与失效}
+\subsection{缓存复用与失效处理}
 
 缓存键不含代码版本／全量数据哈希。代码／数据变化后需使缓存失效。扫描共享状态，冷构建重新拟合。召回率相近不能证明模型相同。
 

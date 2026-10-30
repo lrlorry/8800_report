@@ -43,6 +43,6 @@ No qualifying measured point means undefined. For adjacent frontier points,
 \qquad \lambda=\frac{r-R_a}{R_b-R_a}.
 \label{eq:3-interpolated-frontier}
 \end{equation}
-Within $5\times10^{-4}$, the parser snaps; otherwise it interpolates without extrapolation. Qualifying endpoints remain eligible in T5. Near ties report both estimators; memory is unmatched.
+Within $5\times10^{-4}$, the parser snaps; otherwise it interpolates without extrapolation. Qualifying endpoints remain eligible in the small-batch comparison. Near ties report both estimators; memory is unmatched.
 
 Failed/invalid outputs are excluded; repeat-ID flags alone are not. Isolated reruns replace contaminated builds; skipped Stella batch-1,000 runs add no points (\cref{sec:a-e1-protocol}). Int8 remains included (\cref{fig:7-frontiers}); ADC/poster plots have separate scopes.

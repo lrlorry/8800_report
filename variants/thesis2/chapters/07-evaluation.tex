@@ -22,7 +22,7 @@ $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
 
 
 
-\section{Modern GPU ANN Recall--QPS Frontiers}
+\section{Cross-System Recall--Throughput Comparison}
 \label{sec:7-2}
 
 \subsection{Comparison scope and frontier construction}
@@ -33,7 +33,7 @@ using the first four datasets in \cref{tab:3-data}. E1 uses batch 1,000/common G
 
 
 
-E1 dispatches 105 arXiv/OpenAI cells to $\gscan=0$ and 27 Vogue cells to $\gscan=4$, triggered by CV 0.338--0.622. Only Vogue exercises grouped retention/bounds/merging (\cref{sec:5-5}).
+E1 dispatches 105 arXiv/OpenAI cells to $\gscan=0$ and 27 Vogue cells to $\gscan=4$, triggered by a coefficient of variation (CV) of 0.338--0.622. Only Vogue exercises grouped retention/bounds/merging (\cref{sec:5-5}).
 
 E1 has 1,590 valid points: JHQ 27--39/dataset, baseline families 54--264. No failure/invalid-ID/duplicate-row flags occur. Sweeps share indexes (\cref{sec:3-4}).
 
@@ -58,7 +58,7 @@ measured points; throughput uses a logarithmic axis.}
 \label{fig:7-frontiers}
 \end{figure}
 
-\subsection{Matched recall and opposing operating regions}
+\subsection{Throughput at matched recall}
 
 \Cref{tab:7-matched} reports recall 0.97 using the interpolated and
 qualifying-measured estimators defined in \cref{sec:3-4}.
@@ -98,7 +98,7 @@ Gains accompany smaller 128-probe anchors: OpenAI 4--8, Vogue 64, arXiv 100 (lat
 
 The RQ2 ablations measure both kernel and application effects.
 
-\subsection{Exact table factorization and its throughput consequence}
+\subsection{LUT factorisation and throughput}
 
 The LUT ablation tests the cost model in \cref{sec:5-2} and FP32 ranking
 effects.
@@ -174,7 +174,7 @@ ArXiv/OpenAI-3072 $f=0.529/0.168$ predicts $1.787/1.175\times$, versus measured 
 
 Lane FP32 reassociation reaches relative distance error $\approx1.6\times10^{-6}$ and occasionally changes order. Sanitizer coverage is limited to recorded subsets; general bit identity is not claimed.
 
-\section{Global Top-c, Shared Bound and Probe Correctness/Ablation}
+\section{Selection Correctness and Performance}
 \label{sec:7-4}
 
 
@@ -190,7 +190,7 @@ All 48 outputs agree; QPS ratios span $0.994$--$1.562\times$. At arXiv $\alpha=2
 
 The pilot's first group holds 46--81\% of winners. Equal quotas need fallback; unequal ones retain a bottleneck. Bounds avoid fixed quotas.
 
-\subsection{Exact probe selection and the limits of pipeline identity}
+\subsection{Probe selection and output consistency}
 
 Radix retains score arithmetic/OpenAI TF32 (\cref{sec:7-precision}). All 1,792 synthetic cases pass. Probes and primary scores/positions match on all 1,000 arXiv/Vogue/OpenAI-3072 queries.
 
@@ -318,7 +318,7 @@ Calibration costs 3.9--21.3\,ms. Maximum positive estimated paybacks against fix
 
 \input{variants/thesis2/chapters/07-supp-budget}
 
-\section{Batch Regimes, G Scheduling and Workload Skew}
+\section{Batch Size, Scheduling and Workload Imbalance}
 \label{sec:7-6}
 
 
@@ -475,7 +475,7 @@ Stella gives JHQ 185.4 kQPS at 0.978679 recall versus int8 66.3 at 0.978278. The
 
 
 
-\section{Numerical Robustness, Anomalies and Recall Attribution}
+\section{Numerical Checks and Recall Analysis}
 \label{sec:7-8}
 
 
@@ -498,7 +498,7 @@ At recall 0.97, the resulting JHQ/RaBitQ ratios are 1.063, 0.995,
 1.118 and 1.100. The three favourable directions and arXiv near parity
 remain, so the result is not solely a consequence of long calls.
 
-\subsection{Exactness is attached to a particular stage}
+\subsection{Reconstructed scores and recall loss}
 \label{sec:7-recall-attribution}
 
 The stage contracts in \cref{tab:5-query-stages} distinguish computed-score

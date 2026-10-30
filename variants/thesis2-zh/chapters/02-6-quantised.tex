@@ -1,13 +1,7 @@
-\subsection{学习表示与利用结构的区别}
+优化乘积量化（optimised product quantisation，OPQ）学习旋转和子码本，以减少重构误差 \cite{opq}。ScaNN 的各向异性量化则面向内积近似 \cite{scann}。这种区别很重要，因为最小化向量重构误差未必最有利于保持近邻排序。
 
-OPQ 可能失去 Cartesian 可分性 \cite{opq}；ScaNN 面向内积误差 \cite{scann}。重建误差与近邻顺序可能不一致。
+RaBitQ 用随机二进制编码估计距离 \cite{rabitq}，其多位扩展提供更细致的表示 \cite{rabitq_multi}。GPU IVF-RaBitQ 将压缩距离估计、IVF 路由与融合搜索结合 \cite{ivfrabitq}，作为直接的压缩搜索基线，用来检验 JHQ 额外的残差评分是否值得。
 
-\subsection{小型查找表已有充分研究}
+Fast Scan 与 Quicker ADC 使用通过单指令多数据（single-instruction, multiple-data，SIMD）操作访问的小表，加速 CPU 距离计算 \cite{fastscan,quickeradc}。因此，表大小与硬件查表支持对速度至关重要。JHQ-GPU 利用主码本内部的坐标结构拆表；第 5 章分析恒等式与有限精度影响。
 
-Fast Scan／Quicker ADC 使用 CPU 寄存器表 \cite{fastscan,quickeradc}。JHQ 拆分 GPU Cartesian 表，并检查 FP32 并列情况。
-
-RaBitQ 估计器 \cite{rabitq} 及其多位扩展 \cite{rabitq_multi} 各有自身保证。GPU IVF-RaBitQ 是融合搜索的比较基线 \cite{ivfrabitq}。
-
-\subsection{精排开销与自适应停止}
-
-Faiss／cuVS 提供精排工作量参数 \cite{faiss_refine,cuvs_refinement}。其他策略使用 GT \cite{faiss_autotune}、学习式停止 \cite{li_termination} 或召回目标 \cite{darth}；本文的方法比较工作负载的输出。
+Faiss 和 GPU 搜索库 cuVS 提供控制精排候选数的参数 \cite{faiss_refine,cuvs_refinement}。Faiss 自动调参使用带标签的评估 \cite{faiss_autotune}；学习式提前终止预测何时停止 \cite{li_termination}；DARTH 用召回目标表达搜索工作量 \cite{darth}。这些方法为第 6 章的无标签校准提供比较依据。

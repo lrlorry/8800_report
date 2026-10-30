@@ -1,31 +1,7 @@
-\Cref{fig:1-challenges} 将三个挑战与解决它们的机制及验证证据连接起来。
+将 JHQ 移植到 GPU 会遇到三个技术挑战。
 
-第一，主码本具有直接移植到 GPU 时容易忽略的数学结构。每个八位子空间编码索引 256 个距离。Cartesian 坐标允许在实数运算下精确拆成 16+16 项，但更细的拆分会增加查表和算术操作。挑战在于利用可分性，同时不预设表越小扫描就越快。候选并行的 word 访问与残差的 lane 协作也需要不同的数据映射。
+第一，压缩编码减少了存储，但扫描编码仍可能代价较高。每个八位主码索引一张 256 项的距离查找表（lookup table，LUT）；这些表需要构造，且可能无法放入快速的片上内存。由于 JHQ 通过组合各坐标的量化等级形成编码，这张表可以在实数运算下精确拆成两张 16 项表，分别对应一个字节的前、后四位。挑战在于：更小的表能否抵消额外查表和加法的开销。
 
-第二，局部配额可能丢失全局优胜者。对不相交的分组 $U_1,U_2$ 和 $c=4$，考虑
-\[
- \begin{aligned}
- \operatorname{Top}_4(U)&\subseteq U_1,\\
- \left|\operatorname{Top}_4(U)\cap
- \bigl(\operatorname{Top}_2(U_1)\cup\operatorname{Top}_2(U_2)\bigr)\right|
- &=2<4.
- \end{aligned}
-\]
-合并前，各组必须保证覆盖。阈值减少维护工作，调度控制并行度，IVF 路由则属于独立阶段。
+第二，小批量可能只有少量查询，不足以充分利用 GPU。将每条查询的候选分给多个线程块可以增加并行工作，但如果各块仅保留相同份额，最好的候选又集中在一个块中，就可能丢失全局优胜者。一种办法是在归并前，让每组各自保留完整的候选短名单，代价是增加显存和归并开销。挑战在于保留所有可能胜出的候选，同时让这些开销低于并行带来的收益。本文研究共享截断阈值和随批量变化的调度，以降低这些开销。
 
-第三，与参考结果一致，无法修复参考本身的错误。一个 $k=1$ 的反例是
-\[
- \mathcal R_\alpha=\mathcal R_{\rm ref}=\{a\},\quad
- \mathcal T_1=\{b\},\quad a\ne b
- \ \Longrightarrow\ 
- D_S(\alpha)=0,\quad \Recall@1=0
- \qquad(S=1).
-\]
-因此，本文同时评估质量与校准／复用成本。
-
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/challenges-layout}}
-\captionof{figure}[问题、机制与证据]{问题、机制与证据。箭头用于组织研究问题，不表示独立测得的加速比可以相乘，也不表示无标签一致性规则能保证 GT 召回率。}
-\label{fig:1-challenges}
-\end{minipage}\par\medskip
+第三，达到目标召回率所需的精排工作量随工作负载变化。候选过少可能丢失真实近邻，过多则可能花时间读取和计算残差编码，却不改善答案。目标是在不使用真值标签的情况下选择可复用预算。较大预算搜索可以提供参考，但它自身也可能漏掉真实近邻。因此，既要在独立测试查询上核查召回率，也要测量校准和后续搜索的成本。

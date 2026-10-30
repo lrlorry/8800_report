@@ -1,17 +1,28 @@
-\paragraph{RQ1: Construction and capacity.}
-How can JHQ be built on a GPU, and what cost, resident capacity and build peak result (\cref{sec:7-7})?
+This thesis asks how representation-aware execution and workload-level
+refinement calibration can make JHQ an efficient, memory-resident GPU ANN
+system. Representation-aware execution exploits the code structure in
+data layout and scoring; workload-level calibration chooses one reusable
+refinement budget from unlabelled queries. Construction and capacity
+establish the system's foundation, while cross-system comparisons assess
+its practical value. Four research questions follow.
 
-\paragraph{RQ2: Correct and efficient execution.}
-Which execution choices speed up search while preserving score/tie contracts (\cref{sec:7-3,sec:7-4,sec:7-6})?
+\paragraph{RQ1: GPU index construction and capacity.}
+Can a complete JHQ index be built and kept resident on one GPU, and at
+what construction time, peak memory and resident capacity (\cref{sec:7-7})?
 
-\paragraph{RQ3: Budget quality and total cost.}
-Can unlabelled calibration preserve held-out quality and repay its cost (\cref{sec:7-5})? The GT-labelled oracle is an evaluation control.
+\paragraph{RQ2: Representation-aware execution.}
+How can JHQ's code structure guide GPU table lookup, memory access and
+candidate selection to improve throughput while maintaining each stage's
+specified ranking and tie rules (\cref{sec:7-3,sec:7-4,sec:7-6})?
 
-\paragraph{RQ4: Competitive operating regions.}
-Under host-to-host timing, where does JHQ lead at matched recall?
-The answer uses independently tuned E1 frontiers and explicit memory
-definitions (\cref{sec:7-2}). Int8 graph competitors, high-recall reversals
-and absent coverage are part of the answer.
+\paragraph{RQ3: Workload-level refinement calibration.}
+Can a refinement budget calibrated once per workload without ground-truth
+labels keep recall on separate test queries close to that of a larger-budget
+search and repay its calibration cost (\cref{sec:7-5})?
+
+\paragraph{RQ4: Cross-system search performance.}
+Under host-to-host timing, at which recall targets and batch sizes does
+JHQ-GPU outperform the tested GPU ANN baselines (\cref{sec:7-2})?
 
 Chapter 3 turns these questions into controlled comparisons. Together they
 separate what was built, whether its execution is correct, what effort a

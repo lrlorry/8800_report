@@ -60,6 +60,94 @@ for x in review['changes']:
  assert re.findall(r'\\\[[\s\S]*?\\\]',x['before'])==re.findall(r'\\\[[\s\S]*?\\\]',x['after']),vr
  expected[vr]=x['after']
 for rel,content in review['added_files'].items():assert (r/rel).read_text()==content,('New reference file',rel)
+front_record=json.loads((v/'audit/frontmatter-review-2026-10-30.json').read_text())
+mention_path=v/'audit/first-mention-review-2026-10-30.json'
+mention_record=json.loads(mention_path.read_text()) if mention_path.exists() else {}
+mention_changes={x['path']:x for x in mention_record.get('changes',[])}
+background=mention_record.get('background_review',{})
+background_paths=set(background.get('paths',[]))
+if background_paths:
+ assert background_paths=={'variants/'+lang+'/chapters/'+name for lang in ['thesis2','thesis2-zh'] for name in ['02-background.tex','02-1-objective.tex','02-2-hierarchy.tex','02-3-jhq.tex','02-4-gpu.tex','02-5-graphs.tex','02-6-quantised.tex','02-7-gap.tex']},'Chapter-2 scope'
+ assert sha(v/'chapters/04-2-training.tex')==background['unchanged_later_sign_derivation_sha256'],'Retained sign derivation changed'
+ for lang in ['thesis2','thesis2-zh']:
+  edits=[mention_changes[p] for p in sorted(background_paths) if p.startswith('variants/'+lang+'/')]
+  old='\n'.join(x['before'] for x in edits);new='\n'.join(x['after'] for x in edits)
+  for env in ['lemma','proposition','corollary','proof']:
+   pat=r'\\begin\{'+env+r'\}[\s\S]*?\\end\{'+env+r'\}'
+   assert re.findall(pat,old)==re.findall(pat,new),('Chapter-2 formal proof',lang,env)
+  def equations(s):
+   return {re.search(r'\\label\{([^}]+)\}',block)[1]:block for block in re.findall(r'\\begin\{equation\}[\s\S]*?\\end\{equation\}',s)}
+  eq_old,eq_new=equations(old),equations(new)
+  assert set(eq_old)-set(eq_new)=={'eq:2-sign-order'} and not set(eq_new)-set(eq_old),('Duplicate equation scope',lang)
+  assert {k:val for k,val in eq_old.items() if k!='eq:2-sign-order'}==eq_new,('Core background equations changed',lang)
+  old_labels=collections.Counter(re.findall(r'\\label\{[^}]+\}',old));old_labels.subtract([r'\label{eq:2-sign-order}'])
+  assert +old_labels==collections.Counter(re.findall(r'\\label\{[^}]+\}',new)),('Background labels',lang)
+  pat=r'\\cite(?:\[[^]]*\])?\{[^}]+\}'
+  assert collections.Counter(re.findall(pat,old))==collections.Counter(re.findall(pat,new)),('Background citations',lang)
+  old_refs=collections.Counter(re.findall(r'\\[Cc]ref\{[^}]+\}',old));old_refs.update(background['added_cross_references'])
+  assert old_refs==collections.Counter(re.findall(r'\\[Cc]ref\{[^}]+\}',new)),('Background cross-references',lang)
+  displays_old=re.findall(r'\\\[[\s\S]*?\\\]',old);displays_new=re.findall(r'\\\[[\s\S]*?\\\]',new)
+  retained=[block for block in displays_old if any(key in block for key in ['U(q)=','r_{\\rm IVF','|\\mathcal R_\\alpha','W_{\\rm primary}','a_{\\rm MSE}'])]
+  primary='\\[\n \\primarydist=\\|q\'-\\widehat p\\|^2.\n\\]'
+  assert len(retained)==5 and collections.Counter(displays_new)==collections.Counter(retained+[primary]),('Background display moves/deduplication',lang)
+def validate_intro_table(before,after,edit,rel):
+ assert rel=='chapters/01-5-contributions.tex' and before==edit['before'] and after==edit['after'],('Unapproved table rewrite',rel)
+ def numbers(s):
+  return [[collections.Counter(re.findall(r'\d+(?:[,.]\d+)*',c)) for c in row.split('&')] for row in s.split('\\midrule',1)[1].split('\\\\') if row.strip()]
+ a,b=numbers(before),numbers(after);assert len(a)==len(b)==3
+ for i,(ra,rb) in enumerate(zip(a,b)):
+  assert len(ra)==len(rb)==4
+  for j,(ca,cb) in enumerate(zip(ra,rb)):
+   target=ca+collections.Counter({'0.0006':1}) if (i,j)==(2,3) else ca
+   assert target==cb,(rel,i,j,ca,cb)
+ losses=[float(line.split('&')[3]) for line in (r/'tables/ch7/budget_full.tex').read_text().splitlines() if re.match(r'^(Vogue|arXiv|OpenAI|BGE|Stella)',line)]
+ assert len(losses)==12 and max(losses)==0.0006,'Introductory calibration loss must match existing measurements'
+for rel,h in mention_record.get('frozen_records',{}).items():assert sha(r/rel)==h,('Prior readability input changed',rel)
+for rel,h in mention_record.get('unchanged_source_hashes',{}).items():assert sha(r/rel)==h,('Unrecorded readability source change',rel)
+for group in ['chapter_sources_unchanged','shared_frontmatter_unchanged','historical_ledgers_unchanged','frozen_style_previews']:
+ for rel,h in front_record[group].items():
+  before=mention_changes.get(rel,{}).get('before')
+  observed=hashlib.sha256(before.encode()).hexdigest() if before is not None else sha(r/rel)
+  assert observed==h,('Frontmatter scope changed before readability follow-up',rel)
+for x in front_record['changes']:
+ if not x['path'].startswith('variants/thesis2/'):continue
+ vr=str(Path(x['path']).relative_to('variants/thesis2'))
+ assert expected.get(vr)==x['before'],('Frontmatter before-image',vr)
+ expected[vr]=x['after']
+for x in mention_record.get('changes',[]):
+ if not x['path'].startswith('variants/thesis2/'):continue
+ vr=str(Path(x['path']).relative_to('variants/thesis2'))
+ assert expected[vr]==x['before'],('First-mention before-image',vr)
+ if x['path'] in background_paths:
+  expected[vr]=x['after'];continue
+ for env in ['equation','equation*','align','align*','lemma','proposition','corollary','proof']:
+  pat=r'\\begin\{'+re.escape(env)+r'\}[\s\S]*?\\end\{'+re.escape(env)+r'\}'
+  assert re.findall(pat,x['before'])==re.findall(pat,x['after']),(vr,env)
+ display_before=x['before']
+ for edit in x.get('authorised_display_edits',[]):
+  assert vr in ['chapters/01-1-context.tex','chapters/01-2-scope.tex','chapters/01-3-challenges.tex'] and display_before.count(edit['before'])==1,('Unapproved introductory display edit',vr)
+  if vr=='chapters/01-1-context.tex':assert edit['after']==edit['before'].replace(r'=\frac{32607}{1024}',r'\simeq31.8')
+  else:assert edit['after']=='',('Only introductory display removal approved',vr)
+  display_before=display_before.replace(edit['before'],edit['after'],1)
+ pat=r'\\\[[\s\S]*?\\\]';assert re.findall(pat,display_before)==re.findall(pat,x['after']),(vr,pat)
+ pat=r'\\toprule([\s\S]*?)\\bottomrule';old_tables,new_tables=re.findall(pat,x['before']),re.findall(pat,x['after'])
+ if x.get('authorised_table_rewording'):
+  assert len(old_tables)==len(new_tables)==1
+  validate_intro_table(old_tables[0],new_tables[0],x['authorised_table_rewording'],vr)
+ else:assert old_tables==new_tables,(vr,pat)
+ for cmd in ['label','cite','Cref','cref']:
+  pat=r'\\'+cmd+r'(?:\[[^]]*\])?\{[^}]*\}'
+  before_refs=collections.Counter(re.findall(pat,x['before']))
+  for added in x.get('added_reference_commands',[]):
+   assert added==r'\cref{tab:1-contributions}' and vr=='chapters/01-5-contributions.tex',('Unapproved reference addition',vr,added)
+   if re.fullmatch(pat,added):before_refs.update([added])
+  for removed in x.get('removed_reference_commands',[]):
+   assert removed in [r'\Cref{fig:1-challenges}',r'\label{fig:1-challenges}'] and vr=='chapters/01-3-challenges.tex',('Unapproved reference removal',vr,removed)
+   if re.fullmatch(pat,removed):
+    assert before_refs[removed]==1,(vr,removed)
+    before_refs.subtract([removed])
+  assert +before_refs==collections.Counter(re.findall(pat,x['after'])),(vr,cmd)
+ expected[vr]=x['after']
 for rel,s in expected.items():assert (v/rel).read_text()==s,('Unrecorded source change',rel)
 assert {str(p.relative_to(v)) for p in v.rglob('*.tex')}==set(expected),'Unrecorded TeX source'
 from validate_figure_layout import validate
@@ -70,7 +158,16 @@ for rel,old in b['variant_source_before'].items():
  if not rel.startswith('chapters/') or rel.endswith('03-5-ledger.tex'):continue
  new=(v/rel).read_text()
  # Column declarations are formatting; the complete numerical/text cell payload is protected.
- pat=r'\\toprule([\s\S]*?)\\bottomrule';assert re.findall(pat,old)==re.findall(pat,new),rel
+ pat=r'\\toprule([\s\S]*?)\\bottomrule';old_tables,new_tables=re.findall(pat,old),re.findall(pat,new)
+ edit=mention_changes.get('variants/thesis2/'+rel,{}).get('authorised_table_rewording')
+ if 'variants/thesis2/'+rel in background_paths and rel=='chapters/02-7-gap.tex':
+  assert len(old_tables)==len(new_tables)==1
+  assert re.findall(r'\d+(?:[,.]\d+)*',old_tables[0])==re.findall(r'\d+(?:[,.]\d+)*',new_tables[0])==[], 'The related-work table contains no measured results'
+  for method in ['IVF-PQ / OPQ','Fast Scan / Quicker ADC','SONG / CAGRA','BANG','IVF-RaBitQ','Adaptive effort']:assert method in new_tables[0],method
+ elif edit:
+  assert len(old_tables)==len(new_tables)==1
+  validate_intro_table(old_tables[0],new_tables[0],edit,rel)
+ else:assert old_tables==new_tables,rel
 pdf=r/'build/thesis2/thesis2.pdf';log=pdf.with_suffix('.log').read_text();issues=[s for s in log.splitlines() if re.search(r'Warning|Overfull|Underfull|Missing character|^!',s)];assert not issues,issues
 info=subprocess.check_output(['pdfinfo',str(pdf)],text=True);pages=int(re.search(r'^Pages:\s*(\d+)',info,re.M)[1]);t=subprocess.check_output(['pdftotext',str(pdf),'-'],text=True);flat=re.sub(r'\s+','',t)
 assert not re.search(r'\[cite:|\?\?',flat)
@@ -93,7 +190,11 @@ for i,page in enumerate(tree.findall('.//{*}page'),1):
   positions.append(dict(page=i,heading_x=x,body_x=bodyx))
 assert not outside,outside
 assert sum(proof.values())==6 and proof==stmt,(proof,stmt)
-figs=pdf.with_suffix('.lof').read_text().count('contentsline {figure}');tables=pdf.with_suffix('.lot').read_text().count('contentsline {table}');assert (figs,tables)==(round_record['expected']['figures'],round_record['expected']['tables']),(figs,tables)
+removed_figures=mention_record.get('removed_figure_labels',[])
+assert len(removed_figures)==len(set(removed_figures)) and set(removed_figures)<={"fig:1-challenges"},removed_figures
+for label in removed_figures:
+ assert label not in pdf.with_suffix('.aux').read_text(),('Removed figure still compiled',label)
+figs=pdf.with_suffix('.lof').read_text().count('contentsline {figure}');tables=pdf.with_suffix('.lot').read_text().count('contentsline {table}');assert (figs,tables)==(round_record['expected']['figures']-len(removed_figures),round_record['expected']['tables']),(figs,tables)
 for fact in ['17.78','20.44','0.0006','0.0050','0.0046','0.0294','55,296','13,824','69,120','26.08','22.58','0.641','0.893','1.328','1.316']:assert fact in t,fact
 # Confirm no appendix destinations remain; the bibliography ends the document.
 dest=subprocess.check_output(['pdfinfo','-dests',str(pdf)],text=True);assert '"appendix.' not in dest
@@ -113,6 +214,13 @@ checks['individual_contribution_author_confirmed']=True
 checks['individual_contribution_record']='audit/individual-contribution-2026-10-30.json'
 checks['targeted_review_record']='audit/review-02a4467-2026-10-30.json'
 checks['targeted_review_preserves_proofs_and_tables']=True
+checks['frontmatter_review_record']='audit/frontmatter-review-2026-10-30.json'
+checks['all_chapter_sources_unchanged_in_frontmatter_round']=True
+if mention_record:
+ checks['first_mention_review_record']='audit/first-mention-review-2026-10-30.json'
+ checks['first_mention_review_preserves_formal_proofs_and_table_numbers']=True
+if background_paths:
+ checks['chapter2_readability_review']=dict(core_equations_preserved=True,duplicate_sign_derivation_retained_in_chapter4=True,all_measured_tables_unchanged=True,figure_and_table_counts_unchanged=True)
 if previous.get('sha256')==checks['sha256']:
  for key in ['derived_parts','visual_review_pages','completed_date']:
   if key in previous:checks[key]=previous[key]

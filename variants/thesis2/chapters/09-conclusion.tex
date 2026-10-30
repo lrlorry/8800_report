@@ -3,21 +3,21 @@
 
 \section{Answers to the Four Research Questions}
 \label{sec:9-1}
-\paragraph{RQ1: Construction and capacity.}
+\paragraph{RQ1: GPU index construction and capacity.}
 GPU construction produces a searchable resident hierarchy. The largest test holds 17.78 million vectors at 20.44\,GiB, built in 10.54--10.65\,s; \cref{sec:7-7} reports construction peaks.
 
-\paragraph{RQ2: Correct and efficient execution.}
+\paragraph{RQ2: Representation-aware execution.}
 Cartesian splitting preserves real-arithmetic scores; complete-key retention/merge and witnessed bounds preserve grouped selection under their premises. Two-group LUTs win 22/24 cells. Scheduling gains $2.727/1.015\times$ at batch 8/1,000 against lane refinement (\cref{sec:7-3,sec:7-6}). Strict CPU checks confirm grouped order; one-block differences are cutoff ties (\cref{sec:7-strict-selection}).
 
-\paragraph{RQ3: Refinement budget and quality.}
+\paragraph{RQ3: Workload-level refinement calibration.}
 FULL calibration meets the tested relative
 recall-loss target in 12/12 cells, with maximum observed loss 0.0006.
 $S=128$ reaches 40/64 crossings in one cell (\cref{sec:7-5}). FULL matches enumeration; ten distance-only cells lack general nesting. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.
 
-\paragraph{RQ4: Competitive operating regions.}
+\paragraph{RQ4: Cross-system search performance.}
 At batch 1,000/recall 0.97, JHQ leads on three datasets and nearly ties RaBitQ on arXiv; Vogue's lead needs grouping (\cref{sec:7-2}). OpenAI E1 uses TF32. FP32 checks retain gains on the TF32-trained cache (\cref{sec:b-precision-anchors}). Int8/RaBitQ win other recall regions; CAGRA fp32 wins all batch-8 datasets. Batch-32 near ties depend on the estimator (\cref{sec:7-smallbatch}).
 
-\section{Closing Principle and Outlook}
+\section{Summary and Outlook}
 \label{sec:9-2}
 JHQ's Cartesian structure is useful when the execution path makes its
 small tables and packed codes cheap to access. Parallel decomposition

@@ -1,6 +1,6 @@
 A signed-32-bit $n_td$ overflow at $2^{31}$ zeroed scale; a version-blind cache reloaded it. Chunked FP64 norms fixed the fault; routing success alone missed it.
 
-\subsection{Completed representation evidence}
+\subsection{Representation consistency checks}
 
 Pilot exports cover Vogue, arXiv and OpenAI-3072.
 
@@ -24,7 +24,7 @@ the export method. This source
 correspondence covers the shared path, leaving later model identity and
 large-dataset two-pass construction to separate checks.
 
-\subsection{Independent input and placement audit}
+\subsection{Input encoding and data placement checks}
 \label{sec:4-representation-audit}
 
 The supplementary exporter audit uses the shared construction path on
@@ -50,7 +50,7 @@ At 768/1,024 dimensions, recoding mismatches fall within $1.12\times10^{-7}$ of 
 
 ID-joined builds have identical codes on three smaller databases, corrections within $8.94\times10^{-8}$, and 1/1/40 Vogue/arXiv/OpenAI assignment differences. Stella checks only two-pass construction. Missing exported centroids leave membership unverified.
 
-\subsection{Contract coverage and remaining checks}
+\subsection{Validation coverage and limitations}
 % Keep this float after the preceding fixed-position recoding-audit table.
 \suppressfloats[t]
 

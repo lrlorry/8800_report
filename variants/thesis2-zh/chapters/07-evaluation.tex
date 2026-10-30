@@ -17,14 +17,14 @@ CPU JHQ 的设置／协议未匹配：十月 Vogue 使用 1,024 个列表、$[8,
 
 指标与前沿估计器遵循 \cref{sec:3-2,sec:3-4}；$\glut$ 和 $\gscan$ 保持 \cref{sec:5-1} 中不同的含义。
 
-\section{现代 GPU ANN 的召回率—QPS 前沿}
+\section{跨系统召回率与吞吐比较}
 \label{sec:7-2}
 
 \subsection{比较范围与前沿构造}
 
 \Cref{fig:7-frontiers} 在 \cref{tab:3-data} 的前四个数据集上，将 JHQ-GPU 与 \cref{sec:3-4} 的图、压缩 IVF 和暴力搜索基线比较 \cite{cagra,pq,ivfrabitq}。E1 使用 batch 1,000 和共同 GT；T5 覆盖小 batch（\cref{sec:7-smallbatch}），内部消融见 \cref{sec:7-6}。
 
-E1 将 105 个 arXiv／OpenAI 单元分派到 $\gscan=0$，27 个 Vogue 单元因 CV 0.338--0.622 分派到 $\gscan=4$。只有 Vogue 使用分组保留、共享阈值和归并（\cref{sec:5-5}）。
+E1 将 105 个 arXiv／OpenAI 单元分派到 $\gscan=0$，27 个 Vogue 单元因变异系数（coefficient of variation，CV）为 0.338--0.622 分派到 $\gscan=4$。只有 Vogue 使用分组保留、共享阈值和归并（\cref{sec:5-5}）。
 
 E1 有 1,590 个有效点：JHQ 每数据集 27--39 个，各基线家族 54--264 个。未出现失败、无效 ID 或重复行标记。参数扫描共享索引（\cref{sec:3-4}）。
 
@@ -39,7 +39,7 @@ E1 有 1,590 个有效点：JHQ 每数据集 27--39 个，各基线家族 54--26
 \label{fig:7-frontiers}
 \end{figure}
 
-\subsection{匹配召回率与胜负相反的工作区间}
+\subsection{相同召回率下的吞吐}
 
 \Cref{tab:7-matched} 使用 \cref{sec:3-4} 定义的插值和满足阈值的实测估计器报告召回率 0.97。
 
@@ -74,7 +74,7 @@ CAGRA int8 在 0.90--0.92 领先 $1.20$--$1.98\times$，但不覆盖 0.97。RaBi
 
 RQ2 消融同时测量内核与应用效应。
 
-\subsection{精确表分解及其吞吐影响}
+\subsection{LUT 分解与吞吐}
 
 LUT 消融测试 \cref{sec:5-2} 成本模型与 FP32 排序效应。
 
@@ -121,7 +121,7 @@ arXiv／OpenAI-3072 的 $f=0.529/0.168$ 预测 $1.787/1.175\times$，实测为 $
 
 Lane FP32 重新结合运算的相对距离误差达到 $\approx1.6\times10^{-6}$，偶尔改变顺序。Sanitizer 只覆盖记录的子集，未声称普遍逐位相同。
 
-\section{全局 Top-c、共享阈值及 Probe 正确性与消融}
+\section{选择正确性与性能}
 \label{sec:7-4}
 
 \input{variants/thesis2-zh/chapters/07-supp-selection}
@@ -132,7 +132,7 @@ Lane FP32 重新结合运算的相对距离误差达到 $\approx1.6\times10^{-6}
 
 试验第一组包含 46--81\% 的优胜者。相同配额需要回退，不同配额仍留有瓶颈。阈值避免固定配额。
 
-\subsection{精确 Probe 选择与流水线一致性的限制}
+\subsection{探测列表选择与输出一致性}
 
 Radix 保持评分算术／OpenAI TF32（\cref{sec:7-precision}）。全部 1,792 个合成用例通过。对 arXiv／Vogue／OpenAI-3072 的全部 1,000 个查询，probes 以及主码分数／位置均匹配。
 
@@ -215,7 +215,7 @@ arXiv 在 128/512 probes 下分别有 40/64、32/64 次损失越阈，尽管平�
 
 \input{variants/thesis2-zh/chapters/07-supp-budget}
 
-\section{Batch 区间、G 调度与负载偏斜}
+\section{批量大小、调度与负载不均}
 \label{sec:7-6}
 
 \subsection{并行度与重复选择工作}
@@ -319,7 +319,7 @@ CAGRA int8 可容纳 Stella。在 BGE 召回率 0.88--0.95 上，它领先 $1.35
 
 Stella 上，JHQ 在召回 0.978679 时为 185.4 kQPS，int8 在 0.978278 时为 66.3。$2.80\times$ 的测点比并未匹配召回；int8 不覆盖更高区间（\cref{fig:7-large}）。
 
-\section{数值稳健性、异常与召回归因}
+\section{数值检查与召回分析}
 \label{sec:7-8}
 
 \subsection{质量分辨率与重复执行}
@@ -339,7 +339,7 @@ RaBitQ 在 Vogue／arXiv／OpenAI-1536/3072 上，五轮范围占中位 QPS 的�
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \setlength{\parindent}{2em}
-\subsection{精确性绑定到具体阶段}
+\subsection{重建评分与召回损失}
 \label{sec:7-recall-attribution}
 
 \cref{tab:5-query-stages} 的阶段约束区分计算分数选择与原始空间 kNN；lane 舍入、cutoff 并列和进程变化分别限定不同阶段。

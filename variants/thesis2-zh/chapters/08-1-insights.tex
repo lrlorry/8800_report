@@ -1,12 +1,12 @@
-\subsection{有用的表示暴露有用的复用单元}
+\subsection{码本结构与查表开销}
 
-更多复用并未帮助 Mailman，两组 LUT 通常获胜（\cref{fig:7-lut}）。因此，码本质量必须结合可实现的表放置／访问成本评估（\cref{sec:5-2,sec:5-3}）。
+Mailman 是一种复用有限字母表编码中间和的方法，在这里并未获得速度收益；两组 LUT 通常获胜（\cref{fig:7-lut}）。因此，码本质量必须结合可实现的表放置／访问成本评估（\cref{sec:5-2,sec:5-3}）。
 
-\subsection{重复状态与选择限制有效并行度}
+\subsection{并行度与选择开销}
 
 当查询已提供足够并行度，暂存／选择／归并开销可能主导（\cref{fig:7-batch}）。Vogue／BGE 暴露了调度缺少绝对工作量／分解特征（\cref{sec:7-2,sec:7-6}）。更复杂调度必须收回校准成本；共享阈值的独立作用尚未分离。
 
-\subsection{执行速度改变减少精排的价值}
+\subsection{精排速度与预算收益}
 
 假设固定 $T_0>0$、精排时间 $F_h\geq F_\ell>0$ 及共同倍率 $\eta\in(0,1]$。低预算加速比及导数为
 \begin{align}

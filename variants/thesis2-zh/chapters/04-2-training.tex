@@ -1,13 +1,13 @@
 \subsection{变换与抽样}
 
-对带种子的高斯矩阵在主机上做 QR，得到方形 $\Pi$：
+对带种子的高斯矩阵在主机上做 QR 分解，得到方形 $\Pi$：
 \begin{equation}
  Y_t=X_t\Pi^{\mathsf T},\qquad y=\Pi x,\qquad
  \|\Pi(q-x)\|_2^2=\|q-x\|_2^2
  \quad\text{when }\Pi^{\mathsf T}\Pi=I.
  \label{eq:4-transform}
 \end{equation}
-C0 检查有限精度 QR／GEMM 误差；维度仍为 $d$（\cref{sec:4-6}）。
+几何契约 C0 检查有限精度 QR／GEMM 误差；维度仍为 $d$（\cref{sec:4-6}）。
 
 主码／IVF 训练按步长选取 $n_t=39n_{\rm list}$：
 \[
@@ -17,7 +17,7 @@ C0 检查有限精度 QR／GEMM 误差；维度仍为 $d$（\cref{sec:4-6}）。
 
 较早的十二单元 Vogue／OpenAI-3072 扫描（$B_r=4/8$，probe 为 32/128/256）固定主码／IVF 模型。在 25 次 Lloyd 迭代下，以 100K 行替代全部行最多损失 0.0018 召回率（十一个下降、一个持平）。中间样本量的结果并非单调；该结果只在这一协议内支持有界训练。
 
-\subsection{为什么保留解析主码模型？}
+\subsection{解析主码本}
 
 样本尺度和 Cartesian 等级为
 \begin{equation}

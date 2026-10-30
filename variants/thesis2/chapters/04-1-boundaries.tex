@@ -13,7 +13,7 @@ representation resides on the device. Dashed arrows: model reuse. The staging bo
 
 Hosts prepare samples/rotation/primary codebooks; GPUs rotate, fit IVF/residual models and encode bounded batches into list order.
 
-Models hold rotation, codebooks and centroids; database state holds offsets, IDs, codes and corrections. Graphs reference reused query buffers.
+Models hold rotation, codebooks and centroids; database state holds offsets, IDs, codes and corrections. CUDA Graphs replay recorded GPU operations and reference reused query buffers.
 
 One successful \texttt{add} fixes positions. Further adds are rejected; updates require rebuilding. Mutable/transactional publication is unimplemented.
 

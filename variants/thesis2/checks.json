@@ -1,9 +1,9 @@
 {
   "output": "thesis2.pdf",
-  "pages": 65,
-  "body_pages": 55,
+  "pages": 66,
+  "body_pages": 56,
   "front_pages": 7,
-  "sha256": "e47242aeff2f275c61b9aabb5e8722c551a0fda5a463f8924f57cfffbf9400b0",
+  "sha256": "4ff4c02b4fbae54483db15e2334ef20230edef2dbb6b14bfbca6c12a8911bc17",
   "protected_files_unchanged": 887,
   "missing_preexisting_derived_files": [
     "thesis1-part1.pdf",
@@ -15,38 +15,38 @@
   "unmarked_mapped_sentences_preserved": true,
   "theorem_statements_preserved": true,
   "body_numerical_tables_preserved": true,
-  "figures": 29,
+  "figures": 28,
   "tables": 28,
   "proofs": 6,
   "statement_proof_same_page": true,
   "proof_alignment": [
     {
-      "page": 20,
+      "page": 21,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 32,
+      "page": 33,
       "heading_x": 76.535,
       "body_x": 76.143
     },
     {
-      "page": 32,
+      "page": 33,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 34,
+      "page": 35,
       "heading_x": 76.535,
       "body_x": 76.132
     },
     {
-      "page": 41,
+      "page": 42,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 42,
+      "page": 43,
       "heading_x": 76.535,
       "body_x": 76.535
     }
@@ -57,7 +57,7 @@
   "words_outside_page": 0,
   "counts": {
     "body_abstract_before": 14119,
-    "body_abstract_after": 13775,
+    "body_abstract_after": 14384,
     "appendix_prose_removed": 1042,
     "edited_blocks": 201,
     "word_count_scope": "Same source-level prose estimator applied to reachable chapters and abstract; not an official word count",
@@ -101,5 +101,15 @@
   "individual_contribution_author_confirmed": true,
   "individual_contribution_record": "audit/individual-contribution-2026-10-30.json",
   "targeted_review_record": "audit/review-02a4467-2026-10-30.json",
-  "targeted_review_preserves_proofs_and_tables": true
+  "targeted_review_preserves_proofs_and_tables": true,
+  "frontmatter_review_record": "audit/frontmatter-review-2026-10-30.json",
+  "all_chapter_sources_unchanged_in_frontmatter_round": true,
+  "first_mention_review_record": "audit/first-mention-review-2026-10-30.json",
+  "first_mention_review_preserves_formal_proofs_and_table_numbers": true,
+  "chapter2_readability_review": {
+    "core_equations_preserved": true,
+    "duplicate_sign_derivation_retained_in_chapter4": true,
+    "all_measured_tables_unchanged": true,
+    "figure_and_table_counts_unchanged": true
+  }
 }

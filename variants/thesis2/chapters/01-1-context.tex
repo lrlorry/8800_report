@@ -1,16 +1,25 @@
 Vector search returns nearby embeddings from a large database. GPU
 parallelism can accelerate distance calculations, but raw high-dimensional
-vectors can exceed device memory. Compression makes larger indexes
-resident; its benefit then depends on how codes are read, candidates are
-selected and survivors are refined. This thesis asks how JHQ's compact
-hierarchy can become an efficient GPU search system while keeping those
-operations correct and measuring the resulting quality--speed trade-off.
+vectors can exceed device memory. Compression can make larger indexes
+resident, but search still has to read codes and select promising vectors.
+JHQ is a hierarchical quantisation method that first compares compact
+primary codes to form a shortlist, then uses residual codes for a more
+detailed comparison \cite{jhq}. This thesis studies how to execute these
+stages efficiently on a GPU while respecting their scoring and selection
+rules, and measures the resulting quality--speed trade-off.
 
-CAGRA navigates a graph; compressed IVF scans chosen lists \cite{cagra,johnson_gpu,ivfrabitq}. Stella shows why compact storage matters (\cref{sec:7-7}):
+Graph-based GPU indexes store vectors and graph links; inverted-file
+(IVF) indexes store the representations searched within selected database
+partitions \cite{cagra,johnson_gpu,ivfrabitq}. If these structures exceed
+device memory, the complete index cannot remain resident.
+Our largest benchmark, Stella, contains 17.78 million 1,024-dimensional
+text embeddings. Its raw FP32 storage, available device memory and
+JHQ-GPU resident allocation, respectively, illustrate the capacity
+constraint (\cref{sec:7-7}):
 \[
  S_{\rm raw}=67.81\,\mathrm{GiB}
- >S_{\rm GPU}=\frac{32607}{1024}\,\mathrm{GiB}
+ >S_{\rm GPU}\simeq31.8\,\mathrm{GiB}
  >S_{\rm resident}=20.44\,\mathrm{GiB}.
 \]
-
-JHQ screens with primary codes and refines survivors with residuals \cite{jhq}. We vary execution and survivor count on the same trained index, measuring recall, speed, memory and construction cost, including losses.
+This motivates a GPU-resident index that searches compressed codes
+instead of keeping the full FP32 database on the device.

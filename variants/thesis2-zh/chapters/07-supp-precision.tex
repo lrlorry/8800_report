@@ -21,7 +21,7 @@
 \label{fig:7-precision}
 \end{minipage}\par\medskip
 
-\subsection{同会话基线锚点}
+\subsection{同会话基线比较}
 \label{sec:b-precision-anchors}
 T1 使用 E1 内存池，每个 OpenAI 数据集十二个成对配置。基线运行前后各有一次五轮 JHQ 重复；中位数以几何方式组合。相同配置 FP32／TF32 均值为 0.956/0.964。两者均复用 TF32 训练缓存，改变 add／查询算术。
 \par\medskip\noindent\begin{minipage}{\linewidth}

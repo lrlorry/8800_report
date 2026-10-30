@@ -33,6 +33,6 @@ Q_{\rm meas}(r)=\max\{Q_i:R_i\geq r\}.
 \qquad \lambda=\frac{r-R_a}{R_b-R_a}.
 \label{eq:3-interpolated-frontier}
 \end{equation}
-在 $5\times10^{-4}$ 内，解析器吸附到测点；否则只做插值，不外推。T5 中满足阈值的端点仍可入选。接近持平时同时报告两个估计器；显存未做匹配。
+在 $5\times10^{-4}$ 内，解析器吸附到测点；否则只做插值，不外推。小批量比较中满足阈值的端点仍可入选。接近持平时同时报告两个估计器；显存未做匹配。
 
 失败／无效输出被排除；仅有重复 ID 标记不会导致排除。隔离重跑替代受污染的构建；跳过的 Stella batch-1,000 运行不产生测点（\cref{sec:a-e1-protocol}）。Int8 仍纳入比较（\cref{fig:7-frontiers}）；ADC／海报图使用各自范围。

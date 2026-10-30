@@ -1,13 +1,25 @@
-\subsection{Learning a representation versus exploiting its structure}
+Optimised product quantisation (OPQ) learns a rotation and subcodebooks
+to reduce reconstruction error \cite{opq}. ScaNN's anisotropic
+quantisation instead targets inner-product approximation \cite{scann}.
+The distinction matters because minimising vector reconstruction error
+need not best preserve neighbour ordering.
 
-OPQ may lose Cartesian separability \cite{opq}; ScaNN targets inner-product error \cite{scann}. Reconstruction error and neighbour order can disagree.
+RaBitQ estimates distances using randomised binary codes \cite{rabitq},
+with a multi-bit extension offering a finer representation \cite{rabitq_multi}.
+GPU IVF-RaBitQ combines compressed distance estimation with IVF routing
+and fused search \cite{ivfrabitq}. It provides a direct compressed-search
+baseline for testing whether JHQ's additional residual scoring is worthwhile.
 
-\subsection{Small lookup tables have substantial prior art}
+Fast Scan and Quicker ADC accelerate CPU distance computation using
+small tables accessed through single-instruction, multiple-data (SIMD)
+operations \cite{fastscan,quickeradc}. Table size and hardware lookup support are therefore central to speed.
+JHQ-GPU splits tables using its primary codebook's coordinate structure;
+Chapter 5 analyses the identity and finite-precision effects.
 
-Fast Scan/Quicker ADC use CPU register tables \cite{fastscan,quickeradc}. JHQ splits GPU Cartesian tables and checks FP32 ties.
-
-RaBitQ's estimator \cite{rabitq} and multi-bit extension \cite{rabitq_multi} have their own guarantees. GPU IVF-RaBitQ provides the fused-search baseline \cite{ivfrabitq}.
-
-\subsection{Refinement effort and adaptive stopping}
-
-Faiss/cuVS expose refinement effort \cite{faiss_refine,cuvs_refinement}. Other policies use GT \cite{faiss_autotune}, learned stopping \cite{li_termination} or recall targets \cite{darth}; ours compares workload outputs.
+Faiss and the GPU search library cuVS expose parameters controlling the
+number of candidates refined \cite{faiss_refine,cuvs_refinement}.
+Faiss autotuning uses labelled evaluation \cite{faiss_autotune}; learned
+early termination predicts when to stop \cite{li_termination}; DARTH
+expresses search effort through recall targets \cite{darth}.
+These approaches provide the comparison points for the label-free
+calibration in Chapter 6.

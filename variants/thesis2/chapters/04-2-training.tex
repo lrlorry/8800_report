@@ -1,13 +1,14 @@
 \subsection{Transform and sampling}
 
-Host QR of a seeded Gaussian matrix produces square $\Pi$:
+Host QR factorisation of a seeded Gaussian matrix produces square $\Pi$:
 \begin{equation}
  Y_t=X_t\Pi^{\mathsf T},\qquad y=\Pi x,\qquad
  \|\Pi(q-x)\|_2^2=\|q-x\|_2^2
  \quad\text{when }\Pi^{\mathsf T}\Pi=I.
  \label{eq:4-transform}
 \end{equation}
-C0 checks finite-precision QR/GEMM error; dimension remains $d$ (\cref{sec:4-6}).
+The geometry contract (C0) checks finite-precision QR/GEMM error;
+dimension remains $d$ (\cref{sec:4-6}).
 
 Strided primary/IVF training takes $n_t=39n_{\rm list}$:
 \[
@@ -17,7 +18,7 @@ This is Faiss's warning threshold, not a quality guarantee \cite{faiss_clusterin
 
 An older twelve-cell Vogue/OpenAI-3072 sweep ($B_r=4/8$, probes 32/128/256) fixed primary/IVF models. With 25 Lloyd iterations, 100K rather than all rows lost at most 0.0018 recall (eleven losses/one tie). Intermediate sizes were non-monotone; this supports bounded training only within that protocol.
 
-\subsection{Why retain the analytical primary model?}
+\subsection{Analytical primary codebook}
 
 Sample scale and Cartesian levels are
 \begin{equation}

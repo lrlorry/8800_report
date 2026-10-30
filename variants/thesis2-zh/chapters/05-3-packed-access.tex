@@ -34,6 +34,6 @@ nibbles 索引 \cref{eq:5-lut-factorisation}。
 \]
 重打包不计入搜索时间。
 
-\subsection{打包访问节省什么、保留什么}
+\subsection{访存开销与评分一致性}
 
 一次 word 载入／解包代替四次 byte 载入。逻辑 warp 窗口为 $32\times4=128$ bytes；事务依赖对齐和活跃 lanes。每候选载荷仍为 $M$ bytes。两条路径均为 subspace-major，因此没有单独分离转置／缓存效应。

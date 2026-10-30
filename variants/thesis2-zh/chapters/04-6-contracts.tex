@@ -1,6 +1,6 @@
 有符号 32 位的 $n_td$ 在 $2^{31}$ 溢出，使尺度归零；不检查版本的缓存再次载入了该值。分块 FP64 范数修复了错误；仅观察路由成功无法发现它。
 
-\subsection{已完成的表示证据}
+\subsection{表示一致性检查}
 
 试验导出覆盖 Vogue、arXiv 和 OpenAI-3072。
 
@@ -10,7 +10,7 @@
 
 规范化命名空间并移除导出方法后，编码器、主码／残差训练及构建源码与评测实现相符。这种源码对应覆盖共享路径；后续模型身份与大数据集两遍构建另行检查。
 
-\subsection{独立的输入与放置审计}
+\subsection{输入编码与数据放置检查}
 \label{sec:4-representation-audit}
 
 补充导出器审计在 Vogue、arXiv、OpenAI-3072 和 Stella 上使用共享构建路径。offsets 单调，端点为 0 和 $N$；四个数据集的 ID 均构成所有数据库行的排列。对存储旋转做 FP64 乘积，$\|\Pi\Pi^{\mathsf T}-I\|$ 的最大逐元素误差为 $3.96$--$4.34\times10^{-7}$。抽样范数检查使用 FP64 旋转，而非 GPU GEMM，因此测量的是存储矩阵的几何性质。\Cref{tab:4-representation-audit} 汇总抽样重编码。
@@ -27,7 +27,7 @@
 
 按 ID 连接后，三个较小数据库的构建编码完全相同，校正项差不超过 $8.94\times10^{-8}$，Vogue／arXiv／OpenAI 的分配差异为 1/1/40。Stella 仅检查两遍构建。没有导出的质心，因此成员归属尚未验证。
 
-\subsection{约束覆盖与剩余检查}
+\subsection{验证覆盖范围与局限}
 \suppressfloats[t]
 
 \par\medskip\noindent\begin{minipage}{\linewidth}

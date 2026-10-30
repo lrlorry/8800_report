@@ -1,48 +1,43 @@
-IVF routes to $n_{\rm probe}$ lists:
+An inverted-file (IVF) index partitions the database into lists, usually
+by assigning each vector to a nearby centroid. A query searches
+$n_{\rm probe}$ selected lists. If $\mathcal L(q)$ is their index set,
+the vectors available for scoring are
 \[
  U(q)=\bigcup_{\ell\in\mathcal L(q)}\mathrm{list}_\ell,\qquad n_c=|U(q)|.
 \]
-A neighbour outside $U$ cannot be recovered by later scoring.
+Any true neighbour outside $U(q)$ is excluded before vector scoring begins.
 
-PQ learns codebooks by subspace \cite{pq}. With unquantised $q$, ADC uses
+Product quantisation (PQ) compresses each vector by dividing its coordinates
+into $M$ subspaces and learning a codebook for each \cite{pq}. In subspace
+$m$, the code $z_m$ identifies the representative vector
+$\mathcal C_m[z_m]$; together these representatives reconstruct
+$\widehat x$. Asymmetric distance computation (ADC) keeps the query
+unquantised and evaluates
 \begin{equation}
  \|q-\widehat x\|^2=\sum_{m=0}^{M-1}\|q_m-\mathcal C_m[z_m]\|^2.
  \label{eq:2-adc}
 \end{equation}
-Lookups replace coordinate scoring. A learned subcodebook need not itself be Cartesian; Chapter 5 relies on that extra structure.
+Here $q_m$ is the query's subvector. Distances to codewords are tabulated
+once per query, so scanning database codes uses lookups. PQ separates
+subspaces, but an arbitrary learned codebook need not separate coordinates
+\emph{within} a subspace. JHQ's primary codebook has this additional structure.
 
-The residual definitions differ:
-\[
- r_{\rm IVF\text{-}PQ}=x-\mu_{\ell(x)},\qquad
- r_{\rm JHQ}=\Pi x-\widehat p(x).
-\]
-JHQ therefore adds no IVF centroid during reconstruction. Candidate expansion/refinement is established \cite{johnson_gpu,faiss_refine}.
-
-With $|U(q)|\geq k$ and $c=\max\{k,\lceil\alpha k\rceil\}$,
+Refinement spends more work on a shortlist selected by an initial score
+\cite{johnson_gpu,faiss_refine}. Let $\alpha$ be the refinement multiplier
+and $c=\max\{k,\lceil\alpha k\rceil\}$ the requested shortlist size.
+For $|U(q)|\geq k$, write $C_\alpha(q)$ for up to $c$ retained candidates
+and $\mathcal R_\alpha(q)$ for the final $k$ returned vectors. Then
 \begin{equation}
  \mathcal R_\alpha(q)\subseteq C_\alpha(q)\subseteq U(q)\subseteq\mathcal X.
  \label{eq:2-cascade}
 \end{equation}
-For GT set $\mathcal T_k$, set inclusion gives
+If $\mathcal T_k$ is the GT set for the query, inclusion gives
 \[
  |\mathcal R_\alpha\cap\mathcal T_k|
  \leq |C_\alpha\cap\mathcal T_k|
  \leq |U\cap\mathcal T_k|.
 \]
-Loss attribution requires fixed-universe counterfactual scores.
-
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
-\captionof{figure}[Candidate and precision cascade]{Candidate and precision cascade. IVF selects lists;
-primary scoring selects vectors; only survivors read residuals. The hierarchy
-is inherited. This diagram defines logical sets and score fidelity,
-not measured recall losses or GPU kernel boundaries.}
-\label{fig:2-cascade}
-\end{minipage}\par\medskip
-
-\[
- W_{\rm primary}=O(n_cM)\ \text{lookups},\qquad
- W_{\rm refine}=O(cd)\ \text{coordinates}.
-\]
-Probes change $U$; $\alpha$ changes retention. Access/selection add latency.
+Increasing probes expands the routed pool; increasing $\alpha$ expands
+the requested shortlist. To attribute recall loss to routing, shortlisting
+or reconstruction, each stage must be compared while holding the others
+fixed. The next section defines JHQ's two scoring stages.

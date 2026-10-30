@@ -38,7 +38,7 @@ Construction maps $[M,N]$ bytes to $[M/4,N]$ words ($4\mid M$). Casting would co
 \]
 Repacking is outside search timing.
 
-\subsection{What packed access saves, and what it preserves}
+\subsection{Memory traffic and score consistency}
 
 One word load/unpack replaces four byte loads. The logical warp window is $32\times4=128$ bytes; transactions depend on alignment/active lanes. Payload stays $M$ bytes per candidate. Both arms are subspace-major, so transpose/cache effects are not isolated.
 

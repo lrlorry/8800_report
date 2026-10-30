@@ -26,7 +26,7 @@ Times are in seconds:
  \qquad Q=\operatorname{median}_r Q_r.
  \label{eq:3-throughput}
 \end{equation}
-E1: batch 1,000, five rounds, normally 24 calls. JHQ warms once per variant/round; baselines three times initially. Slow baseline points use fewer calls. JIT/capture are excluded; call percentiles do not describe concurrent requests.
+E1: batch 1,000, five rounds, normally 24 calls. JHQ warms once per variant/round; baselines three times initially. Slow baseline points use fewer calls. Just-in-time (JIT) compilation and CUDA Graph capture are excluded; call percentiles do not describe concurrent requests.
 
 Slow valid calls stay. For illustrative call times $(1,1,10)$\,ms,
 \[
@@ -35,7 +35,7 @@ Slow valid calls stay. For illustrative call times $(1,1,10)$\,ms,
 \]
 Shared indexes/pools do not provide independent builds.
 
-RTX 5090/32,607\,MiB; driver 595.71.05; CUDA 13.0; cuVS 26.08.01. OpenMP uses 16 of 25 CPUs; E1 records 575\,W. Clocks/load can vary. JHQ JITs compute\_80 PTX \cite{cuda_platform}; library builds/device profiles are separate.
+RTX 5090/32,607\,MiB; driver 595.71.05; CUDA 13.0; cuVS 26.08.01. OpenMP uses 16 of 25 CPUs; E1 records 575\,W. Clocks/load can vary. JHQ supplies compute\_80 PTX intermediate GPU code for driver compilation \cite{cuda_platform}; library builds/device profiles are separate.
 
 Resident totals include model, workspace and context. CAGRA index deltas and JHQ context-subtracted totals differ (\cref{sec:4-4,sec:7-7}). Pools/scratch prevent peak matching. Build peaks use 20\,ms sampling; train/add excludes loading/host setup.
 

@@ -1,40 +1,27 @@
-\Cref{fig:1-challenges} connects three challenges to the mechanisms and
-evidence used to address them.
+Moving JHQ to a GPU raises three technical challenges.
 
-First, the primary codebook has useful mathematical structure that a direct
-GPU port can overlook. Each eight-bit subspace code indexes 256 distances.
-Its Cartesian coordinates permit an exact 16+16 factorisation, but more
-aggressive splitting adds lookups and arithmetic. The challenge is to exploit
-separability without assuming that the smallest table gives the fastest
-scan. Candidate-parallel word access and residual lane cooperation also need
-different data mappings.
+First, compressed codes reduce storage but can still be expensive to scan.
+Each eight-bit primary code addresses a 256-entry distance lookup table
+(LUT); these tables must be built and may be too large for fast on-chip memory.
+Because JHQ combines per-coordinate quantisation levels, this table can
+be split exactly in real arithmetic into two 16-entry tables, one for
+each four-bit half of the byte. The challenge is whether the smaller
+tables repay the extra lookups and additions on the GPU.
 
-Second, local quotas can lose global winners. For disjoint groups $U_1,U_2$ and $c=4$, consider
-\[
- \begin{aligned}
- \operatorname{Top}_4(U)&\subseteq U_1,\\
- \left|\operatorname{Top}_4(U)\cap
- \bigl(\operatorname{Top}_2(U_1)\cup\operatorname{Top}_2(U_2)\bigr)\right|
- &=2<4.
- \end{aligned}
-\]
-Groups need coverage before merging. Bounds reduce maintenance; scheduling controls parallelism. IVF routing is separate.
+Second, small batches can contain too few queries to keep the GPU busy.
+Splitting each query's candidates across thread blocks creates parallel
+work, but equal local quotas can discard global winners if the best
+candidates fall in one block. One solution is to let each group retain
+its own full shortlist before merging, at the cost of memory and merging
+work. The challenge
+is to retain all potential winners while keeping this overhead below
+the parallelism gain. This thesis studies shared cutoffs and batch-dependent
+scheduling as ways to reduce that overhead.
 
-Third, reference agreement cannot fix reference error. A $k=1$ counterexample is
-\[
- \mathcal R_\alpha=\mathcal R_{\rm ref}=\{a\},\quad
- \mathcal T_1=\{b\},\quad a\ne b
- \ \Longrightarrow\ 
- D_S(\alpha)=0,\quad \Recall@1=0
- \qquad(S=1).
-\]
-We test quality alongside calibration/reuse cost.
-
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\centering\captionsetup{hypcap=false}
-\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/challenges-layout}}
-\captionof{figure}[Problem, mechanism and evidence]{Problem, mechanism and evidence. The arrows organise
-research questions; they do not imply that independently measured speedups
-multiply or that an unlabelled agreement rule guarantees GT recall.}
-\label{fig:1-challenges}
-\end{minipage}\par\medskip
+Third, the refinement work needed for a target recall varies by workload.
+Too few candidates can discard true neighbours; too many spend time
+reading and scoring residual codes without improving the answers.
+The aim is to choose a reusable budget without ground-truth labels.
+A larger-budget search provides a reference, but can itself miss true
+neighbours. Agreement with it therefore needs separate checks of recall
+on test queries, alongside the cost of calibration and subsequent search.

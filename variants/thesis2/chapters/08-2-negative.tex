@@ -1,4 +1,4 @@
-\subsection{Mailman-style shared sums: arithmetic reuse meets scatter cost}
+\subsection{Mailman-style shared-sum scoring}
 \label{sec:8-mailman}
 
 Mailman reuses finite-alphabet sums \cite{mailman}. Frozen Vogue/arXiv/OpenAI-3072 streams compare atomic buckets/private histograms at widths 4/6/8 with packed two-table scoring: 128 probes, batches 8/1,000, fixed codes/mathematical scores.
@@ -24,10 +24,10 @@ offline test split. The candidate reduction is not a GPU speedup.}
 \label{fig:8-negative}
 \end{minipage}\par\medskip
 
-\subsection{Rank-oriented coding: a local gain is not a general replacement}
+\subsection{Rank-oriented coding experiments}
 \label{sec:8-rank}
 
-FP64 candidate replay uses 400/200/400 calibration/\allowbreak{}validation/\allowbreak{}test queries. It tests weighted scores, median/list thresholds, learned losses and linear-MMSE decoding. Lower MSE can worsen neighbour order; primary-level changes also move residual reference points.
+FP64 candidate replay uses 400/200/400 calibration/\allowbreak{}validation/\allowbreak{}test queries. It tests weighted scores, median/list thresholds, learned losses and linear minimum mean-square-error (MMSE) decoding. Lower MSE can worsen neighbour order; primary-level changes also move residual reference points.
 
 Median thresholds reduce arXiv's minimum tested qualifying count 875$\to$375; two other workloads fail. For orthogonal $\Pi$,
 \[

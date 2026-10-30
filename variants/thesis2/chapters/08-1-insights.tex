@@ -1,12 +1,13 @@
-\subsection{A useful representation exposes a useful unit of reuse}
+\subsection{Codebook structure and lookup cost}
 
-More reuse does not help Mailman; two-group LUTs usually win (\cref{fig:7-lut}). Codebook quality must therefore be evaluated with achievable table placement/access cost (\cref{sec:5-2,sec:5-3}).
+Mailman, a method that reuses sums for finite-alphabet codes, gains no
+speed here; two-group LUTs usually win (\cref{fig:7-lut}). Codebook quality must therefore be evaluated with achievable table placement/access cost (\cref{sec:5-2,sec:5-3}).
 
-\subsection{Useful parallelism is bounded by duplicated state and selection}
+\subsection{Parallelism and selection overhead}
 
 Once queries supply enough parallelism, staging/selection/merge overhead can dominate (\cref{fig:7-batch}). Vogue/BGE expose missing absolute-work/decomposition features (\cref{sec:7-2,sec:7-6}). Richer scheduling must repay calibration; bounds alone are not isolated.
 
-\subsection{Execution speed changes the value of avoiding refinement}
+\subsection{Refinement speed and budget savings}
 
 Assume fixed $T_0>0$, refinement times $F_h\geq F_\ell>0$ and common multiplier $\eta\in(0,1]$. The low-budget speedup and
 its derivatives are

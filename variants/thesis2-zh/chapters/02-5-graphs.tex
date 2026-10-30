@@ -1,3 +1,3 @@
-HNSW 利用分层邻近图，使搜索从粗粒度导航逐步进入更细的邻域 \cite{hnsw}。GPU 图搜索还需在遍历过程中暴露足够的并行工作：SONG 并行化图搜索 \cite{song}，CAGRA 则调整连通性与搜索宽度 \cite{cagra}。CAGRA 的 GPU 常驻搜索适合作为本文的图索引对手；测试包含 fp32 和量化配置。
+图索引连接相近向量，沿这些边寻找有希望的候选，而不是扫描选中列表中的全部向量。HNSW 使用分层邻近图进行由粗到细的导航 \cite{hnsw}。在 GPU 上，难点是在遍历过程中提供足够的并行工作。SONG 研究并行图搜索 \cite{song}；CAGRA 面向 GPU 设计图构建与搜索 \cite{cagra}。本文以 CAGRA 作为常驻图索引基线，测试 FP32 和量化向量两种配置。
 
-DiskANN 将图索引与 SSD 存储结合，搜索超过主存容量的数据库 \cite{diskann}。BANG 借助主机图扩展 GPU 搜索容量 \cite{bang}。这些系统跨越了存储边界，而 JHQ 将压缩层级保持在 GPU 上。因此，本文比较的是常驻执行，而非 SSD 后备搜索。
+其他设计通过跨越存储边界扩展容量。DiskANN 将图搜索与 SSD 结合，用于超过主存容量的数据库 \cite{diskann}；BANG 将主机上的图与压缩 GPU 评分结合 \cite{bang}。这些容量增益依赖跨存储边界的通信。

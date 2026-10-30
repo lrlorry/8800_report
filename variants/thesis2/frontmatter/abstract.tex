@@ -1,11 +1,24 @@
 \frontchapter{Abstract}
-JHQ-GPU studies how to execute JHQ's compressed primary/residual search efficiently within GPU memory. For fixed computed primary scores, grouped retention, merging and witnessed shared bounds preserve global top-$c$ selection under the stated ordering and memory-access conditions. Cartesian splitting replaces 256 LUT entries with $16+16$, giving a storage ratio $32/256=1/8$ with the same real-arithmetic score. Calibration compares sampled top-$k$ IDs with a larger-budget reference, without GT or a learned predictor.
+Approximate nearest-neighbour (ANN) search supports similarity retrieval
+over large collections of embedding vectors. GPUs accelerate this search,
+but limited device memory makes compressed indexes attractive. JHQ is a
+hierarchical quantisation method that screens candidates with compact
+codes and refines a smaller set using residual codes. This thesis develops
+JHQ-GPU to study how this representation can support efficient GPU
+construction and search.
 
-On six RTX 5090 datasets, two-group LUTs lead in 22/24 cells; the largest index holds 17.78 million vectors at 20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
-recall-loss target relative to the best tested budget in 12/12 cells, with
-maximum loss 0.0006; smaller samples expose workload-dependent quality risk.
-At recall 0.97 and batch 1,000, JHQ leads in three of four datasets and is
-near parity with IVF-RaBitQ on arXiv. OpenAI runs use TF32; FP32 checks
-retain favourable comparisons under a TF32-trained cache. At batch 8 and
-the same recall, CAGRA fp32 leads on all four datasets. These results
-locate the execution, quality and capacity trade-offs of GPU JHQ.
+The implementation combines GPU model fitting and batched encoding with
+bounded input staging and a packed, list-ordered layout. Its scan replaces
+each 256-entry distance table with two 16-entry tables, preserving scores
+in real arithmetic. Grouped scanning preserves exact global candidate
+selection under a fixed ordering of computed scores and positions. Calibration chooses how
+many candidates to refine without ground-truth labels, by comparing
+returned neighbours with a larger-budget reference.
+
+Evaluation on an NVIDIA RTX~5090 compares methods on Vogue, arXiv,
+OpenAI-1536 and OpenAI-3072. At recall 0.97 and batch 1,000, JHQ-GPU
+delivers $1.32$--$1.75\times$ the host-to-host throughput of the CAGRA fp32 graph index
+across all four datasets and is the fastest tested method on three.
+For the larger BGE and Stella text-embedding datasets, whose raw FP32 vectors exceed
+device memory, JHQ-GPU enables single-GPU search; the largest index
+contains 17.78 million vectors and uses 20.44\,GiB of resident GPU memory.

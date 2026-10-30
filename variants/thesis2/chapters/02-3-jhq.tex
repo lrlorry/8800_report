@@ -1,6 +1,8 @@
-\subsection{What is inherited}
+\subsection{Rotation and hierarchical codes}
 
-JHQ uses square $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}:
+JHQ first applies a square orthogonal transform
+$\Pi\in\mathbb R^{d\times d}$ to both database vectors and queries
+\cite{jhq}. Write $y=\Pi x$ and $q'=\Pi q$. In real arithmetic,
 \begin{equation}
  \begin{aligned}
  \Pi^\top\Pi=I
@@ -10,40 +12,91 @@ JHQ uses square $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}:
  \end{aligned}
  \label{eq:2-isometry}
 \end{equation}
-Dimension stays $d$. Finite-precision geometry, GEMMs and quantisation are checked separately.
+Thus rotation preserves dimension and distances before quantisation.
+Finite-precision matrix multiplication is evaluated separately in Chapter 4.
 
-Partition $y$ into $M$ subspaces of dimension $D_s=d/M$. With $B$ bits per
-primary subspace, $K=2^B$ labels are formed from $L=2^{B/D_s}$ scalar levels,
-requiring the implemented Cartesian parameters to make $L$ an integer.
-Writing $\Phi$ for the standard normal CDF, the constructor uses
+The primary code gives a coarse reconstruction $\widehat p(x)$ of $y$.
+In the evaluated configuration, each eight-coordinate subspace uses one
+byte: each coordinate takes one of two levels, $-a$ or $+a$, so the byte
+records eight signs. More generally, $M$ subspaces have dimension
+$D_s=d/M$, with $B$ bits selecting one of $K=2^B$ combinations of
+$L=2^{B/D_s}$ scalar levels. For supported parameters with integer $L$,
+JHQ uses the Cartesian product
 \begin{equation}
  a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
  i=1,\ldots,L,\qquad
  \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
  \label{eq:2-cartesian}
 \end{equation}
-At the evaluated $B=D_s=8$, $L=2$ and $\mathcal C_m=\{-a,+a\}^8$,
-with $a\simeq0.67449\sigma$. Each byte records eight coordinate signs.
-The implementation estimates $\sigma$ from vector energy; unit-normalised
-inputs motivate the scale $1/\sqrt d$. This representation is prior art,
-not an invention of the GPU execution layer.
+Here $\Phi$ is the standard normal cumulative distribution function and
+$\sigma$ is a scale estimated from vector energy. At $B=D_s=8$, this
+gives $L=2$, $\mathcal C_m=\{-a,+a\}^8$ and
+$a\simeq0.67449\sigma$. Unit-normalised inputs motivate a scale near
+$1/\sqrt d$. The transform and hierarchical representation are inherited
+from JHQ.
 
-Residuals are $r=y-\widehat p$, giving reconstruction $\widehat y=\widehat p+\widehat r$. The evaluated codes use $d/8$ primary bytes and $d$ residual bytes per vector, before metadata. Refining fewer rows reduces reads, not stored residual size.
+Residual coding approximates the remaining error,
+$r=y-\widehat p$, by $\widehat r$, giving
+$\widehat y=\widehat p+\widehat r$. The evaluated residual quantiser learns
+scalar levels shared across coordinates within each subspace and uses one
+byte per coordinate. Each vector therefore stores $d/8$ primary bytes
+and $d$ residual bytes before metadata. A smaller refinement budget reduces
+residual reads, while these stored codes remain unchanged.
 
-\subsection{Model assumptions and score semantics}
+This residual is relative to the primary reconstruction. By contrast,
+residual-coded IVF-PQ subtracts the centroid $\mu_{\ell(x)}$ of the list
+containing $x$:
+\[
+ r_{\rm IVF\text{-}PQ}=x-\mu_{\ell(x)},\qquad
+ r_{\rm JHQ}=\Pi x-\widehat p(x).
+\]
+JHQ uses IVF for routing; its reconstructed vector does not add an IVF centroid.
 
-Random rotation can spread coordinate energy, motivating a shared
-Gaussian-inspired scalar model. It does not force an arbitrary realised
-database to have independent, zero-mean Gaussian coordinates. For a fixed
-rotation and empirical database mean $\mu$, the transformed mean is
-$\Pi\mu$ and $\|\Pi\mu\|=\|\mu\|$. Averaging over random rotations is
-different from centring one fixed corpus. Even a uniformly random point on
-a sphere has dependent coordinates through its fixed norm. Consequently,
-isometry is an algebraic guarantee; the distributional approximation is a
-modelling assumption. Chapter 8's centred-coding pilot examines one practical
-consequence of that distinction.
+\subsection{Primary and refined scoring}
 
-The inherited primary levels are Gaussian mid-quantiles. For $X\sim\mathcal N(0,\sigma^2)$ and a zero threshold,
+Primary screening compares $q'$ with the coarse reconstruction:
+\[
+ \primarydist=\|q'-\widehat p\|^2.
+\]
+Only shortlisted candidates are rescored with both primary and residual
+codes. The implemented refined score is
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+The extra term $\|q'\|^2$ is constant across candidates for one query,
+so the score orders reconstructed vectors by squared distance. It need
+not reproduce the raw-vector ordering used for GT. The score expansion
+appears in \cref{eq:5-refined-constant}.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}[Candidate and scoring cascade]{Candidate and scoring cascade in JHQ.
+IVF selects lists, primary scores form a shortlist, and residual codes
+refine that shortlist before the final top-$k$ selection.}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+With $n_c$ routed vectors, $M$ primary subspaces and up to $c$ survivors,
+the score work is
+\[
+ W_{\rm primary}=O(n_cM)\ \text{lookups},\qquad
+ W_{\rm refine}=O(cd)\ \text{coordinates}.
+\]
+Memory access and candidate selection also contribute to search time.
+
+\subsection{Modelling assumptions}
+
+Random rotation can spread coordinate energy, motivating the Gaussian-inspired
+levels above. Distance preservation does not imply independent, zero-mean
+Gaussian coordinates: a fixed transform maps a database mean $\mu$ to
+$\Pi\mu$, with $\|\Pi\mu\|=\|\mu\|$. Chapter 8 examines centring as an
+alternative coding choice.
+
+The primary level is a Gaussian mid-quantile, rather than the level that
+minimises reconstruction mean-squared error (MSE). For
+$X\sim\mathcal N(0,\sigma^2)$ and a zero decision threshold, the latter is
 \[
  \begin{aligned}
  a_{\rm MSE}
@@ -51,31 +104,9 @@ The inherited primary levels are Gaussian mid-quantiles. For $X\sim\mathcal N(0,
  &=\mathbb E[X\mid X>0]
  =\sigma\sqrt{2/\pi}\simeq0.79788\sigma.
  \end{aligned}
-\] For fixed signs and positive scale, however,
-\begin{equation}
- \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
- \qquad s\in\{-1,+1\}^d.
- \label{eq:2-sign-order}
-\end{equation}
-For fixed signs,
-\[
- a>0\Longrightarrow
- \arg\min_x\primarydist(q,x)
- =\arg\max_x\langle q',s(x)\rangle.
 \]
-Residuals still depend on scale; separability alone gives no optimality.
-
-The scores use different vectors:
-\[
- \rawdist=\|q-x\|^2,\qquad
- \primarydist=\|q'-\widehat p\|^2.
-\]
-\begin{equation}
- \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
- \label{eq:2-refined}
-\end{equation}
-Thus, for a fixed query,
-\[
- \arg\min_x\refineddist=\arg\min_x\|q'-\widehat p-\widehat r\|^2,
-\]
-while raw-vector recall remains empirical.
+These values serve different objectives. For fixed sign codes, any
+positive common primary scale preserves primary ranking
+(\cref{eq:4-sign-ranking}); residual reconstruction still depends on the
+scale. Thus the algebraic scoring properties do not establish optimal
+quantisation or raw-vector recall.

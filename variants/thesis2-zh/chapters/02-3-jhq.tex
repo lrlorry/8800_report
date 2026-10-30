@@ -1,6 +1,6 @@
-\subsection{继承的表示}
+\subsection{旋转与层级编码}
 
-JHQ 使用方形 $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}：
+JHQ 首先对数据库向量和查询应用方形正交变换 $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}。记 $y=\Pi x$、$q'=\Pi q$，则在实数运算下，
 \begin{equation}
  \begin{aligned}
  \Pi^\top\Pi=I
@@ -10,24 +10,58 @@ JHQ 使用方形 $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}：
  \end{aligned}
  \label{eq:2-isometry}
 \end{equation}
-维度仍为 $d$。有限精度几何、GEMM 与量化分别检查。
+因此，量化之前的旋转保持维度和距离。有限精度矩阵乘法在第 4 章单独评估。
 
-将 $y$ 划为 $M$ 个维度为 $D_s=d/M$ 的子空间。每个主码子空间使用 $B$ 位，$K=2^B$ 个标签由 $L=2^{B/D_s}$ 个标量等级组合而成；实现的 Cartesian 参数要求 $L$ 为整数。以 $\Phi$ 表示标准正态 CDF，构造器使用
+主码给出 $y$ 的粗略重构 $\widehat p(x)$。在评测配置中，每八个坐标组成的子空间使用一个 byte：每个坐标取 $-a$ 或 $+a$ 两档，因此该 byte 记录八个符号位。一般而言，$M$ 个子空间各有 $D_s=d/M$ 维，用 $B$ 位从 $L=2^{B/D_s}$ 个标量等级的 $K=2^B$ 种组合中选择。对 $L$ 为整数的支持参数，JHQ 使用 Cartesian 积
 \begin{equation}
  a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
  i=1,\ldots,L,\qquad
  \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
  \label{eq:2-cartesian}
 \end{equation}
-在评测配置 $B=D_s=8$、$L=2$、$\mathcal C_m=\{-a,+a\}^8$ 下，有 $a\simeq0.67449\sigma$。每个 byte 记录八个坐标的符号。实现从向量能量估计 $\sigma$；单位归一化输入对应尺度 $1/\sqrt d$ 的动机。这是已有表示，并非 GPU 执行层的发明。
+其中 $\Phi$ 为标准正态累积分布函数，$\sigma$ 为根据向量能量估计的尺度。当 $B=D_s=8$ 时，$L=2$、$\mathcal C_m=\{-a,+a\}^8$，且 $a\simeq0.67449\sigma$。单位归一化输入使尺度接近 $1/\sqrt d$。变换与层级表示均继承自 JHQ。
 
-残差为 $r=y-\widehat p$，重建为 $\widehat y=\widehat p+\widehat r$。不计元数据，每个向量在评测编码下使用 $d/8$ 个主码 byte 和 $d$ 个残差 byte。减少精排行数会减少读取量，不会减少存储的残差大小。
+残差编码用 $\widehat r$ 近似剩余误差 $r=y-\widehat p$，形成重构 $\widehat y=\widehat p+\widehat r$。评测中的残差量化器学习每个子空间内各坐标共享的标量等级，每个坐标使用一个 byte。因此，每个向量在元数据之外存储 $d/8$ 个主码 byte 和 $d$ 个残差 byte。降低精排预算减少残差读取，已存储的编码保持不变。
 
-\subsection{模型假设与分数含义}
+该残差相对于主码重构计算。相比之下，使用残差编码的 IVF-PQ 减去向量 $x$ 所属列表的质心 $\mu_{\ell(x)}$：
+\[
+ r_{\rm IVF\text{-}PQ}=x-\mu_{\ell(x)},\qquad
+ r_{\rm JHQ}=\Pi x-\widehat p(x).
+\]
+JHQ 使用 IVF 路由，重构向量时不加回 IVF 质心。
 
-随机旋转可以分散坐标能量，为共享的高斯启发标量模型提供动机，但不会强制任意实际数据库都具有独立、零均值的高斯坐标。对固定旋转与经验数据库均值 $\mu$，变换后的均值为 $\Pi\mu$，且 $\|\Pi\mu\|=\|\mu\|$。对随机旋转取平均，与对一个固定语料中心化不同。即使点在球面上均匀随机分布，各坐标也因固定范数而相互依赖。因此，等距性是代数保证，分布近似则是建模假设。第 8 章的中心化编码试验考察了这一区别的一个实际后果。
+\subsection{主码与精排评分}
 
-继承的主码等级是高斯分位区间的中点。对 $X\sim\mathcal N(0,\sigma^2)$ 和零阈值，
+主码粗筛比较 $q'$ 与粗略重构：
+\[
+ \primarydist=\|q'-\widehat p\|^2.
+\]
+只有短名单中的候选才使用主码和残差码重新评分。实现中的精排分数为
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+附加项 $\|q'\|^2$ 对同一查询的所有候选都是常数，因此该分数按重构向量的平方距离排序；这一顺序未必与 GT 使用的原始向量顺序相同。分数展开见\cref{eq:5-refined-constant}。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}[候选与评分级联]{JHQ 的候选与评分级联。IVF 选择列表，主码评分形成短名单，残差码精排该短名单，再执行最终 top-$k$ 选择。}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+若路由得到 $n_c$ 个向量、主码有 $M$ 个子空间、保留至多 $c$ 个候选，评分工作量为
+\[
+ W_{\rm primary}=O(n_cM)\ \text{lookups},\qquad
+ W_{\rm refine}=O(cd)\ \text{coordinates}.
+\]
+内存访问和候选选择也会增加搜索时间。
+
+\subsection{建模假设}
+
+随机旋转可以分散坐标能量，为上述高斯启发的等级提供动机。距离保持并不意味着坐标独立且服从零均值高斯分布：固定变换将数据库均值 $\mu$ 映为 $\Pi\mu$，且 $\|\Pi\mu\|=\|\mu\|$。第 8 章将中心化作为另一种编码选择进行考察。
+
+主码等级取自高斯分位区间的中点，而非使重构均方误差（mean-squared error，MSE）最小的等级。对 $X\sim\mathcal N(0,\sigma^2)$ 和零判定阈值，后者为
 \[
  \begin{aligned}
  a_{\rm MSE}
@@ -35,31 +69,5 @@ JHQ 使用方形 $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}：
  &=\mathbb E[X\mid X>0]
  =\sigma\sqrt{2/\pi}\simeq0.79788\sigma.
  \end{aligned}
-\] 但当符号固定、尺度为正时，
-\begin{equation}
- \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
- \qquad s\in\{-1,+1\}^d.
- \label{eq:2-sign-order}
-\end{equation}
-对固定符号，
-\[
- a>0\Longrightarrow
- \arg\min_x\primarydist(q,x)
- =\arg\max_x\langle q',s(x)\rangle.
 \]
-残差仍取决于尺度；可分性本身并不保证最优。
-
-不同分数使用不同的向量：
-\[
- \rawdist=\|q-x\|^2,\qquad
- \primarydist=\|q'-\widehat p\|^2.
-\]
-\begin{equation}
- \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
- \label{eq:2-refined}
-\end{equation}
-因此，对固定查询，
-\[
- \arg\min_x\refineddist=\arg\min_x\|q'-\widehat p-\widehat r\|^2,
-\]
-而原始向量上的召回率仍需实验测量。
+这些数值服务于不同目标。对固定的符号码，任意正的公共主码尺度保持主码排序（\cref{eq:4-sign-ranking}），但残差重构仍取决于尺度。因此，这些代数评分性质不能证明量化最优或原始向量上的召回率。

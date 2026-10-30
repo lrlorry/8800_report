@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-30",
+  "frontmatter_record": "variants/thesis2/audit/frontmatter-review-2026-10-30.json",
+  "previous_review_update_sha256": "265928f8cff0fef5b4fd9858525a3d6fab72000c3dc986b5b03e03794f9710d0",
+  "scope": "Frontmatter-only bilingual review; preserve original translation and prior update records.",
+  "updated_protected": {
+    "variants/thesis2/main.tex": {
+      "before_sha256": "e1dc47c13cf26c8af866eabf2c97d4254d41a35caacda07626b5935c72c65edc",
+      "after_sha256": "af544a37f98117605e805aa8d63eb40fd06b1f3aa7e90d3ccc7b29f380c42891"
+    },
+    "variants/thesis2/checks.json": {
+      "before_sha256": "7b69a79bcaf51e157238b9b6881b5d7cd05344cf23ac40498aeb737222c0cd45",
+      "after_sha256": "b4d91c9a115cce4d1950c7e173db2c18ad4a33848538ff2720c2097fa8e1fdbf"
+    },
+    "variants/thesis2/verify.py": {
+      "before_sha256": "ea5dca3d46d855fbdff4100b3c09aeae8210daccc52d5e11b1b26f4d3df4b80c",
+      "after_sha256": "d2138ece9f20657befa3a131690f3bd72aef28330993a3c25a5c8d3323261311"
+    },
+    "variants/thesis2/frontmatter/abstract.tex": {
+      "before_sha256": "c07726dae5632f8e5ef134bf720086a7c8527f4c30a586259dc2c7ecfc1d2c2c",
+      "after_sha256": "7de139c44760816b46deebc1d46a1c72f38ba3c1c5688e456282be08e464c917"
+    },
+    "thesis2.pdf": {
+      "before_sha256": "e47242aeff2f275c61b9aabb5e8722c551a0fda5a463f8924f57cfffbf9400b0",
+      "after_sha256": "15b10bb12b558f9dc9962ac2911fb9f925c344ff3940cf6da3b115f5e1c36a32"
+    }
+  }
+}
