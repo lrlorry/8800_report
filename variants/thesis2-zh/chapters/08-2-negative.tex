@@ -1,0 +1,34 @@
+\subsection{Mailman 共享和：算术复用遇到 Scatter 成本}
+\label{sec:8-mailman}
+
+Mailman 复用有限字母表求和 \cite{mailman}。固定的 Vogue／arXiv／OpenAI-3072 流比较宽度 4/6/8 的原子桶／私有直方图和打包双表评分：128 probes、batch 8/1,000，编码／数学分数固定。
+
+最佳替代仅达到基线 QPS 的 0.187--0.581（\cref{fig:8-negative}）。偏斜的桶目标主导剖析；私有直方图增加状态／共享更新。更窄分组有时有益，但没有获胜方案。其他有限字母表设计仍值得研究。
+
+测试仅覆盖分数，因此 cutoff 检查不证明近邻流水线等价。替换模型给出
+\[
+ \frac{T'}T=1+f\left(\frac1s-1\right)>1
+ \quad(0<f\leq1,\ 0<s<1).
+\]
+该模型不是实测端到端性能，集成已停止。字典研究也停在结构统计。二者都不产生系统前沿测点。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\includegraphics[width=\linewidth]{ch8/negative-evidence.pdf}
+\captionof{figure}[Mailman 与面向排名的编码]{两个不同的证据边界。左：RTX 5090 上，Vogue、arXiv 和 OpenAI-3072、两个 batch、128 probes 时，最佳实测 Mailman 评分器／打包表评分器速度比，全部小于一。右：arXiv 400 查询 FP64 离线测试划分上，达到原 JHQ 召回目标的最小保留数。候选减少不是 GPU 加速。}
+\label{fig:8-negative}
+\end{minipage}\par\medskip
+
+\subsection{面向排名的编码：局部收益不等于通用替代}
+\label{sec:8-rank}
+
+FP64 候选重放使用 400/200/400 个校准／\allowbreak{}验证／\allowbreak{}测试查询，测试加权分数、中位数／列表阈值、学习式损失和线性 MMSE 解码。更低 MSE 可能恶化近邻顺序；主码等级变化也会移动残差参考点。
+
+中位阈值将 arXiv 达标的最小已测保留数从 875$\to$375，但另两个工作负载失败。对正交 $\Pi$，
+\[
+ \bar y=\frac1N\sum_i\Pi x_i=\Pi\bar x,
+ \qquad \|\bar y\|^2=\bar x^\top\Pi^\top\Pi\bar x=\|\bar x\|^2.
+\]
+因此旋转保持均值向量范数，而不消除偏置。中心化也必须保持精排分数上限。
+
+中位等级 GPU 后续实验重新训练残差。对 arXiv 原 $\alpha=100$ 目标，batch 8/1,000 下提升 $1.40/1.21\times$；Vogue 仅达到 0.9630，低于 0.9644；OpenAI-3072 持平。三轮使用独立状态／查询，不属于 E1。

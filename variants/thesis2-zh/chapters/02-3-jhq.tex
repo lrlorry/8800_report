@@ -1,0 +1,65 @@
+\subsection{继承的表示}
+
+JHQ 使用方形 $\Pi\in\mathbb R^{d\times d}$ \cite{jhq}：
+\begin{equation}
+ \begin{aligned}
+ \Pi^\top\Pi=I
+ &\Longrightarrow
+ \|\Pi(q-x)\|^2\\
+ &=(q-x)^\top\Pi^\top\Pi(q-x)=\|q-x\|^2.
+ \end{aligned}
+ \label{eq:2-isometry}
+\end{equation}
+维度仍为 $d$。有限精度几何、GEMM 与量化分别检查。
+
+将 $y$ 划为 $M$ 个维度为 $D_s=d/M$ 的子空间。每个主码子空间使用 $B$ 位，$K=2^B$ 个标签由 $L=2^{B/D_s}$ 个标量等级组合而成；实现的 Cartesian 参数要求 $L$ 为整数。以 $\Phi$ 表示标准正态 CDF，构造器使用
+\begin{equation}
+ a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
+ i=1,\ldots,L,\qquad
+ \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
+ \label{eq:2-cartesian}
+\end{equation}
+在评测配置 $B=D_s=8$、$L=2$、$\mathcal C_m=\{-a,+a\}^8$ 下，有 $a\simeq0.67449\sigma$。每个 byte 记录八个坐标的符号。实现从向量能量估计 $\sigma$；单位归一化输入对应尺度 $1/\sqrt d$ 的动机。这是已有表示，并非 GPU 执行层的发明。
+
+残差为 $r=y-\widehat p$，重建为 $\widehat y=\widehat p+\widehat r$。不计元数据，每个向量在评测编码下使用 $d/8$ 个主码 byte 和 $d$ 个残差 byte。减少精排行数会减少读取量，不会减少存储的残差大小。
+
+\subsection{模型假设与分数含义}
+
+随机旋转可以分散坐标能量，为共享的高斯启发标量模型提供动机，但不会强制任意实际数据库都具有独立、零均值的高斯坐标。对固定旋转与经验数据库均值 $\mu$，变换后的均值为 $\Pi\mu$，且 $\|\Pi\mu\|=\|\mu\|$。对随机旋转取平均，与对一个固定语料中心化不同。即使点在球面上均匀随机分布，各坐标也因固定范数而相互依赖。因此，等距性是代数保证，分布近似则是建模假设。第 8 章的中心化编码试验考察了这一区别的一个实际后果。
+
+继承的主码等级是高斯分位区间的中点。对 $X\sim\mathcal N(0,\sigma^2)$ 和零阈值，
+\[
+ \begin{aligned}
+ a_{\rm MSE}
+ &=\arg\min_a\mathbb E[(X-a)^2\mid X>0]\\
+ &=\mathbb E[X\mid X>0]
+ =\sigma\sqrt{2/\pi}\simeq0.79788\sigma.
+ \end{aligned}
+\] 但当符号固定、尺度为正时，
+\begin{equation}
+ \primarydist=\|q'\|^2+da^2-2a\langle q',s\rangle,
+ \qquad s\in\{-1,+1\}^d.
+ \label{eq:2-sign-order}
+\end{equation}
+对固定符号，
+\[
+ a>0\Longrightarrow
+ \arg\min_x\primarydist(q,x)
+ =\arg\max_x\langle q',s(x)\rangle.
+\]
+残差仍取决于尺度；可分性本身并不保证最优。
+
+不同分数使用不同的向量：
+\[
+ \rawdist=\|q-x\|^2,\qquad
+ \primarydist=\|q'-\widehat p\|^2.
+\]
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+因此，对固定查询，
+\[
+ \arg\min_x\refineddist=\arg\min_x\|q'-\widehat p-\widehat r\|^2,
+\]
+而原始向量上的召回率仍需实验测量。

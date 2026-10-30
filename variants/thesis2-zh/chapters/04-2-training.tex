@@ -1,0 +1,107 @@
+\subsection{变换与抽样}
+
+对带种子的高斯矩阵在主机上做 QR，得到方形 $\Pi$：
+\begin{equation}
+ Y_t=X_t\Pi^{\mathsf T},\qquad y=\Pi x,\qquad
+ \|\Pi(q-x)\|_2^2=\|q-x\|_2^2
+ \quad\text{when }\Pi^{\mathsf T}\Pi=I.
+ \label{eq:4-transform}
+\end{equation}
+C0 检查有限精度 QR／GEMM 误差；维度仍为 $d$（\cref{sec:4-6}）。
+
+主码／IVF 训练按步长选取 $n_t=39n_{\rm list}$：
+\[
+ n_t=\begin{cases}159{,}744,&\text{Vogue},\\319{,}488,&\text{arXiv/OpenAI},\\1{,}277{,}952,&\text{BGE/Stella}.\end{cases}
+\]
+这是 Faiss 的警告阈值，不是质量保证 \cite{faiss_clustering}。残差拟合使用 100,000 行。
+
+较早的十二单元 Vogue／OpenAI-3072 扫描（$B_r=4/8$，probe 为 32/128/256）固定主码／IVF 模型。在 25 次 Lloyd 迭代下，以 100K 行替代全部行最多损失 0.0018 召回率（十一个下降、一个持平）。中间样本量的结果并非单调；该结果只在这一协议内支持有界训练。
+
+\subsection{为什么保留解析主码模型？}
+
+样本尺度和 Cartesian 等级为
+\begin{equation}
+ \sigma^2=\frac{1}{n_t d}\sum_{i=0}^{n_t-1}\|x_i\|_2^2,
+ \qquad D_s=d/M,\qquad K=2^B.
+ \label{eq:4-scale}
+\end{equation}
+\[
+ B=D_s=8\Longrightarrow
+ \mathcal C_m=\{-a,+a\}^{8},\quad a=0.674\sigma.
+\]
+八个符号可放入一个 byte，支持 $O(d)$ 编码与拆分 LUT \cite{jhq}（\cref{sec:5-2}）。任意 Lloyd 更新可能破坏 Cartesian 结构。
+
+对固定符号向量 $s\in\{-1,+1\}^d$，
+\begin{equation}
+ \|q'-a s\|^2=\|q'\|^2+da^2-2a\langle q',s\rangle.
+ \label{eq:4-sign-ranking}
+\end{equation}
+\[
+ a>0\Longrightarrow
+ \arg\min_s\|q'-as\|^2=\arg\max_s\langle q',s\rangle.
+\]
+这一排序需要 $a>0$，而不需要数据为高斯分布。残差依赖 $a$；零尺度和 FP32 并列另行处理。
+
+\subsection{粗分配中的筛选与精确计算}
+
+IVF 用间隔选取的旋转行初始化，并以 $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$ 运行八次迭代。支持的维度使用 int8 筛选，在 FP32 中处理不确定情况。
+
+\begin{resultblock}
+\begin{lemma}[具有认证分数区间的分配]
+\label{lem:4-assignment-bound}
+设 $\widetilde y,\widetilde\mu_\ell$ 为反量化近似，$e=y-\widetilde y$，$f_\ell=\mu_\ell-\widetilde\mu_\ell$。保持质心范数精确时，近似分数
+$\widetilde s_\ell=\|\mu_\ell\|^2-2\langle\widetilde y,\widetilde\mu_\ell\rangle$
+的实数算术误差由下式界定：
+\begin{equation}
+ E_\ell=2\bigl(\|y\|\|f_\ell\|+\|e\|\|\widetilde\mu_\ell\|\bigr).
+ \label{eq:4-assignment-bound}
+\end{equation}
+给定包含每个目标分数的有效区间 $[L_\ell,U_\ell]$，仅丢弃 $L_\ell>\min_j U_j$，并对其余分数精确求解，即可保留最小值及规定的并列规则。
+\end{lemma}
+\begin{proof}
+使用 $e=y-\widetilde y$ 和 $f_\ell=\mu_\ell-\widetilde\mu_\ell$，
+\[
+ \begin{aligned}
+ \langle y,\mu_\ell\rangle-
+ \langle\widetilde y,\widetilde\mu_\ell\rangle
+ &=\langle y,f_\ell\rangle
+   +\langle e,\widetilde\mu_\ell\rangle,\\
+ |s_\ell-\widetilde s_\ell|
+ &\leq2\bigl(\|y\|\|f_\ell\|
+       +\|e\|\|\widetilde\mu_\ell\|\bigr)=E_\ell .
+ \end{aligned}
+\]
+对 $j^*\in\arg\min_j U_j$，
+\[
+ L_\ell>U_{j^*}
+ \Longrightarrow
+ s_\ell\geq L_\ell>U_{j^*}\geq s_{j^*}.
+\]
+严格不等号排除 $\ell$；等号情况仍可入选。
+\end{proof}
+\end{resultblock}
+
+若无累加误差界，FP32 裕量不构成逐位认证。FP16 的尾部分配差异分别为 Vogue 的 0/14,838、BGE 的 6/31,748 和 Stella 的 3/16,359。冷构建日志未标明精度。
+
+\subsection{残差拟合与迭代预算}
+
+残差仍为 $r=\Pi x-\widehat p(x)$。每个子空间通过 GPU 排序／Lloyd 拟合 $K_r=2^{B_r}$ 个有序标量等级，在坐标间共享，最多更新 2,000 次。
+
+历史 100K 训练在 25$\to$2,000 次更新时增加 0.0063--0.0076 召回率。尾部 bin／BGE／Stella 的变化仍在继续：达到上限不代表收敛，这不违背精确 Lloyd 的下降性质。20,000 次更新时，历史 Stella 全量／100K 召回率为 0.9921/0.9920。
+
+\subsection{构建工作量与观测到的不均衡}
+
+\[
+ W_{\rm QR}=O(d^3),\qquad W_{\rm rotate}=O(n_t d^2).
+\]
+直接粗分配每次迭代成本为 $O(n_t n_{\rm list}d)$。
+\[
+ W_{\rm primary}=O(MKD_s),\qquad
+ W_{\rm residual\ extraction}=O(n_rd),
+\]
+随后进行排序与标量更新。它们描述工作量，而非预测延迟。同步阶段诊断表明，BGE／Stella 训练约 83\% 的时间在 IVF k-means（约 2.97\,s）。该诊断使用一个 add 缓冲并强制同步，不同于 \cref{sec:7-7} 中正常的重叠计时。
+
+列表长度不均衡进入 \cref{sec:5-5} 的扫描规则。本文未单独分离八次 IVF 迭代、间隔种子和有限抽样各自对不均衡的影响。
+
+\paragraph{实测实现使用的算术。}
+评测实现 v69 存储 FP32 矩阵，但在 $d\geq1{,}536$ 时启用 cuBLAS TF32 tensor-core 运算。其编译后的 faithful 分支中，空覆盖值落入按维度选择的默认分支。这影响两个 OpenAI 数据集在训练／add／查询中的旋转和质心 GEMM；环境变量无法关闭该分支。因此，FP32 存储并不表示完全采用 FP32 乘法。补充 FP32 变体 v72 修正了这一开关。敏感性实验复用同一个 TF32 训练缓存，改变 add／查询算术，并非以 FP32 重新训练模型（\cref{sec:7-precision}）。

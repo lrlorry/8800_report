@@ -7,7 +7,7 @@ Maximum loss is 0.0050 (arXiv/512), 0.0046 (BGE/512) at $S=128$, and 0.0294 at $
 
 ArXiv/128 predicted/observed crossings are 0.965/0.984, 0.875/0.875, 0.620/0.625 at $S=32/64/128$ (\cref{fig:7-finite-pool}). The largest of 36 gaps is BGE/512: 0.144 (0.519/0.375). GT-loss prediction needs stable counts/held-out arm quality; calibration uses no labels.
 
-\begin{figure}[tbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
 \caption[Finite-pool risk prediction and observation]{Finite-pool prediction and observed arXiv loss crossings. Bars
@@ -37,12 +37,13 @@ Both OpenAI-3072 policies select 4 at recall 0.9252, matching fixed 100. OpenAI-
 
 Direct savings start after 4/6 OpenAI-1536 batches and 4/9 OpenAI-3072 batches versus fixed 100/64 (\cref{fig:7-stream-cost}); fractional fits differ. BGE sampling/fixed 100/FULL recall is 0.9658/0.9670/0.9664. ArXiv FULL selects slower 200 for quality; fixed controls fail.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
-\caption[Direct cumulative calibrated-reuse time]{Direct mean cumulative time, including budget calibration and
+\captionof{figure}[Direct cumulative calibrated-reuse time]{Direct mean cumulative time, including budget calibration and
 first-batch setup. Each curve replays one fixed held-out query pool.
 Policies can have different recall; timings alone are not a quality-matched
 ranking. Dataset/probe settings match \cref{tab:7-stream-cost}.}
 \label{fig:7-stream-cost}
-\end{figure}
+\end{minipage}\par\medskip

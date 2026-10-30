@@ -1,0 +1,234 @@
+[
+  {
+    "label": "fig:1-challenges",
+    "number": "1.1",
+    "body_page": 2,
+    "pdf_page": 9,
+    "chapter_source": "variants/thesis2/chapters/01-3-challenges.tex",
+    "asset": "variants/thesis2/figures/challenges-layout.tex"
+  },
+  {
+    "label": "fig:2-cascade",
+    "number": "2.1",
+    "body_page": 3,
+    "pdf_page": 10,
+    "chapter_source": "variants/thesis2/chapters/02-2-hierarchy.tex",
+    "asset": "figures/ch2/candidate-cascade.tex"
+  },
+  {
+    "label": "fig:3-boundary",
+    "number": "3.1",
+    "body_page": 8,
+    "pdf_page": 15,
+    "chapter_source": "variants/thesis2/chapters/03-3-measurement.tex",
+    "asset": "figures/ch3/measurement-boundary.tex"
+  },
+  {
+    "label": "fig:4-architecture",
+    "number": "4.1",
+    "body_page": 10,
+    "pdf_page": 17,
+    "chapter_source": "variants/thesis2/chapters/04-1-boundaries.tex",
+    "asset": "figures/ch4/architecture.tex"
+  },
+  {
+    "label": "fig:4-layout",
+    "number": "4.2",
+    "body_page": 13,
+    "pdf_page": 20,
+    "chapter_source": "variants/thesis2/chapters/04-3-layout.tex",
+    "asset": "variants/thesis2/figures/physical-layout.tex"
+  },
+  {
+    "label": "fig:2-add-paths",
+    "number": "4.3",
+    "body_page": 15,
+    "pdf_page": 22,
+    "chapter_source": "variants/thesis2/chapters/04-5-construction.tex",
+    "asset": "variants/thesis2/figures/add-paths.tex"
+  },
+  {
+    "label": "fig:2-memory-lifetimes",
+    "number": "4.4",
+    "body_page": 16,
+    "pdf_page": 23,
+    "chapter_source": "variants/thesis2/chapters/04-5-construction.tex",
+    "asset": "variants/thesis2/figures/memory-lifetimes.tex"
+  },
+  {
+    "label": "fig:5-query-path",
+    "number": "5.1",
+    "body_page": 18,
+    "pdf_page": 25,
+    "chapter_source": "variants/thesis2/chapters/05-1-query-path.tex",
+    "asset": "figures/ch5/query-path.tex"
+  },
+  {
+    "label": "fig:5-cartesian-lut",
+    "number": "5.2",
+    "body_page": 20,
+    "pdf_page": 27,
+    "chapter_source": "variants/thesis2/chapters/05-2-lut.tex",
+    "asset": "variants/thesis2/figures/cartesian-lut.tex"
+  },
+  {
+    "label": "fig:5-packed-access",
+    "number": "5.3",
+    "body_page": 21,
+    "pdf_page": 28,
+    "chapter_source": "variants/thesis2/chapters/05-3-packed-access.tex",
+    "asset": "figures/ch5/packed-access.tex"
+  },
+  {
+    "label": "fig:5-global-selection",
+    "number": "5.4",
+    "body_page": 24,
+    "pdf_page": 31,
+    "chapter_source": "variants/thesis2/chapters/05-4-global-selection.tex",
+    "asset": "figures/ch5/global-selection.tex"
+  },
+  {
+    "label": "fig:5-shared-bound",
+    "number": "5.5",
+    "body_page": 26,
+    "pdf_page": 33,
+    "chapter_source": "variants/thesis2/chapters/05-5-bound-scheduling.tex",
+    "asset": "figures/ch5/shared-bound.tex"
+  },
+  {
+    "label": "fig:5-lane-refinement",
+    "number": "5.6",
+    "body_page": 28,
+    "pdf_page": 35,
+    "chapter_source": "variants/thesis2/chapters/05-6-refinement.tex",
+    "asset": "figures/ch5/lane-refinement.tex"
+  },
+  {
+    "label": "fig:6-budget-scope",
+    "number": "6.1",
+    "body_page": 30,
+    "pdf_page": 37,
+    "chapter_source": "variants/thesis2/chapters/06-1-motivation.tex",
+    "asset": "variants/thesis2/figures/budget-scope-layout.tex"
+  },
+  {
+    "label": "fig:6-calibration",
+    "number": "6.2",
+    "body_page": 31,
+    "pdf_page": 38,
+    "chapter_source": "variants/thesis2/chapters/06-2-agreement.tex",
+    "asset": "variants/thesis2/figures/calibration-flow-layout.tex"
+  },
+  {
+    "label": "fig:6-nesting",
+    "number": "6.3",
+    "body_page": 33,
+    "pdf_page": 40,
+    "chapter_source": "variants/thesis2/chapters/06-3-search.tex",
+    "asset": "figures/ch6/nesting-example.tex"
+  },
+  {
+    "label": "fig:7-frontiers",
+    "number": "7.1",
+    "body_page": 36,
+    "pdf_page": 43,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/frontiers.pdf"
+  },
+  {
+    "label": "fig:7-lut",
+    "number": "7.4",
+    "body_page": 39,
+    "pdf_page": 46,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/lutgroups.pdf"
+  },
+  {
+    "label": "fig:7-packing-refinement",
+    "number": "7.5",
+    "body_page": 40,
+    "pdf_page": 47,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/packing_refinement.pdf"
+  },
+  {
+    "label": "fig:7-budget-risk",
+    "number": "7.6",
+    "body_page": 43,
+    "pdf_page": 50,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/budget_risk.pdf"
+  },
+  {
+    "label": "fig:7-batch",
+    "number": "7.9",
+    "body_page": 46,
+    "pdf_page": 53,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/batch_execution.pdf"
+  },
+  {
+    "label": "fig:7-build",
+    "number": "7.10",
+    "body_page": 47,
+    "pdf_page": 54,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/construction.pdf"
+  },
+  {
+    "label": "fig:7-memory",
+    "number": "7.11",
+    "body_page": 47,
+    "pdf_page": 54,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/memory.pdf"
+  },
+  {
+    "label": "fig:7-large",
+    "number": "7.12",
+    "body_page": 48,
+    "pdf_page": 55,
+    "chapter_source": "variants/thesis2/chapters/07-evaluation.tex",
+    "asset": "figures/ch7/large_frontiers.pdf"
+  },
+  {
+    "label": "fig:7-finite-pool",
+    "number": "7.7",
+    "body_page": 44,
+    "pdf_page": 51,
+    "chapter_source": "variants/thesis2/chapters/07-supp-budget.tex",
+    "asset": "figures/supplement/finite-pool.pdf"
+  },
+  {
+    "label": "fig:7-stream-cost",
+    "number": "7.8",
+    "body_page": 45,
+    "pdf_page": 52,
+    "chapter_source": "variants/thesis2/chapters/07-supp-budget.tex",
+    "asset": "figures/supplement/stream-cost.pdf"
+  },
+  {
+    "label": "fig:7-precision",
+    "number": "7.2",
+    "body_page": 37,
+    "pdf_page": 44,
+    "chapter_source": "variants/thesis2/chapters/07-supp-precision.tex",
+    "asset": "figures/supplement/precision.pdf"
+  },
+  {
+    "label": "fig:7-smallbatch",
+    "number": "7.3",
+    "body_page": 38,
+    "pdf_page": 45,
+    "chapter_source": "variants/thesis2/chapters/07-supp-smallbatch.tex",
+    "asset": "figures/t4-t5/smallbatch.pdf"
+  },
+  {
+    "label": "fig:8-negative",
+    "number": "8.1",
+    "body_page": 51,
+    "pdf_page": 58,
+    "chapter_source": "variants/thesis2/chapters/08-2-negative.tex",
+    "asset": "figures/ch8/negative-evidence.pdf"
+  }
+]

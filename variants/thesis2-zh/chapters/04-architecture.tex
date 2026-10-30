@@ -1,0 +1,27 @@
+\chapter{GPU 索引设计与构建}
+\label{ch:architecture}
+训练／编码生成有界内存、按列表排序的 GPU 数组 \cite{jhq}；搜索与成本见 \cref{ch:gpu-execution,sec:7-7}。
+
+\section{端到端构建与搜索边界}
+\label{sec:4-1}
+\input{variants/thesis2-zh/chapters/04-1-boundaries}
+
+\section{训练、旋转与码本生成}
+\label{sec:4-2}
+\input{variants/thesis2-zh/chapters/04-2-training}
+
+\section{IVF 分配、ID 与物理内存布局}
+\label{sec:4-3}
+\input{variants/thesis2-zh/chapters/04-3-layout}
+
+\section{常驻存储、工作区与索引生命周期}
+\label{sec:4-4}
+\input{variants/thesis2-zh/chapters/04-4-lifecycle}
+
+\section{构建成本与已测规模}
+\label{sec:4-5}
+\input{variants/thesis2-zh/chapters/04-5-construction}
+
+\section{索引表示与安全约束}
+\label{sec:4-6}
+\input{variants/thesis2-zh/chapters/04-6-contracts}

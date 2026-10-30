@@ -4,7 +4,7 @@
 T4 sorts GPU-produced scores by $(\primarydist,\mathrm{position})$ on CPU. The exporter follows scan layout/accumulation and matches valid returned scores bitwise; source comparison finds only export changes from the table-sweep version. Its 270 configurations cover Vogue/arXiv/OpenAI-3072, probes 1/8/128, $\alpha\in\{4,100,200\}$, $\gscan\in\{0,1,2,4,8\}$ and both bound settings: 69,120 instances (\cref{tab:7-strict-selection}).
 
 \suppressfloats[t]
-\begin{table}[htbp]
+\begin{table}[!htbp]
 \centering
 \caption[Strict computed-score selection checks]{T4 CPU-reference checks.
 Set and order equality use the complete primary key. Valid count checks

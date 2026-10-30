@@ -1,0 +1,52 @@
+查询经过旋转、路由、筛选和精排，返回 $k$ 个 ID／分数。\Cref{fig:5-query-path} 区分运行时的三个选择决策；真实近邻排序是外部评估对象。
+
+必须区分四个量：
+\begin{align}
+ s_i(q)&=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+                   &&\text{centroid routing score},\nonumber\\
+ \primarydist(q,x)&=\|q'-\widehat p(x)\|_2^2,
+                   &&\text{primary score},\nonumber\\
+ \refineddist(q,x)&=\|q'-\widehat p(x)-\widehat r(x)\|_2^2
+                       +\|q'\|_2^2,
+                   &&\text{refined ranking score},\nonumber\\
+ \rawdist(q,x)&=\|q-x\|_2^2,
+                   &&\text{raw-space distance}.
+ \label{eq:5-ranking-objects}
+\end{align}
+$\mu_i$ 是变换后的质心，$\widehat p,\widehat r$ 是解码的主码／残差向量。运行时精排分数包含一个仅依赖查询的常数，\Cref{sec:5-6} 从实现中的校正项推导该常数。对固定查询，它保持重建距离的顺序，但它和主码分数都不是原始向量距离。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{figures/ch5/query-path}
+\captionof{figure}[查询阶段及其选择边界]{查询执行及独立的选择边界。路由选择列表，主码筛选选择向量候选，最终选择对精排保留候选排序。原始空间 GT 用于评估，不参与这些搜索决策。}
+\label{fig:5-query-path}
+\end{minipage}\par\medskip
+
+路由定义已访问空间 $U$，含 $n_c$ 个候选出现实例；主码筛选最多保留 $c=\max\{k,\lceil\alpha k\rceil\}$ 个供残差评分。\Cref{tab:5-query-stages} 记录各阶段的输入、读取和成本；实现详见 \cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}。
+
+\cref{tab:5-query-stages} 的排序与精确性列将每项主张绑定到对应分数和并列规则。第 7 章分别测试保留集合、有序输出与原始空间召回率。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[查询阶段的选择约束]{查询阶段约束。$c_v=\min(c,n_c)$ 计数有效主码保留候选。精确性针对所说明的计算分数；路由与量化重建决定原始空间近似。}
+\label{tab:5-selection-contracts}
+\label{tab:5-query-stages}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.1cm}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+阶段 & 输入 $\to$ 输出 & 读取数据 & 主要工作 & 顺序／精确性 \\
+\midrule
+变换 & $q\to q'$ & 查询；变换 & 应用 $\Pi$ & 变换精度见 \cref{sec:7-precision} \\
+Probe & $n_{\rm list}\to n_{\rm probe}$ 个列表 & FP32 质心；列表长度 & 评分；radix；排名计数 & $(s_i,i)$；精确 probe 选择 \\
+LUT & $q'\to$ 表 & 主码本 & $MD_s2^{8/\glut}$ 项 & 实数算术分解；FP32 舍入 \\
+主码，$\gscan=0$ & $n_c\to c_v$ & 打包主码；LUT & $O(n_cM)$ 评分；压缩 & 按距离精确选择；cutoff 并列任取 \\
+主码，$\gscan\geq1$ & $n_c\to c_v$ & 相同主码表示 & 评分；压缩；归并 & $(\primarydist,p)$；指定前提下精确 \\
+精排 & $c_v\to c_v$ 个分数 & 残差码；校正 & $O(c_vd)$ & 计算的 $\refineddist$；FP32 结合顺序依赖 lane \\
+最终 & $c_v\to k$ & 精排分数；ID & $O(kc)$ 槽位扫描 & $(\refineddist,\mathrm{ID})$；有 $k$ 个有限有效项时精确 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+\Cref{tab:5-query-stages} 给出阶段约束。E1／预算 harness 显式选择 16 个精排 lanes 和扫描策略 $-1$（在 0/2/4/8 之间调度），而库默认使用标量精排与策略 0。共享阈值已启用，但只在 $\gscan>1$ 时使用；harness 用 512 个数据库伪查询校准调度，库不会自动执行这一步。组件覆盖配置和实现版本见 \cref{tab:a-components}。

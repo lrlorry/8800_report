@@ -1,0 +1,31 @@
+\chapter{面向表示的 GPU 搜索}
+\label{ch:gpu-execution}
+GPU 评分／选择使用 JHQ 的层级结构 \cite{jhq}。\Cref{ch:evaluation,ch:refinement} 分别评估执行并设置预算。
+
+\section{查询路径与四种不同的排序对象}
+\label{sec:5-1}
+\input{variants/thesis2-zh/chapters/05-1-query-path}
+
+\section{精确的 Cartesian LUT 分解}
+\label{sec:5-2}
+\input{variants/thesis2-zh/chapters/05-2-lut}
+
+\section{打包编码与候选并行内存访问}
+\label{sec:5-3}
+\input{variants/thesis2-zh/chapters/05-3-packed-access}
+
+\section{多 block 扫描中的精确全局主码 Top-c}
+\label{sec:5-4}
+\input{variants/thesis2-zh/chapters/05-4-global-selection}
+
+\section{共享完整键阈值与执行调度}
+\label{sec:5-5}
+\input{variants/thesis2-zh/chapters/05-5-bound-scheduling}
+
+\section{Lane 协作残差评分与最终 Top-k}
+\label{sec:5-6}
+\input{variants/thesis2-zh/chapters/05-6-refinement}
+
+\section{作为独立原语的 IVF Probe 选择}
+\label{sec:5-7}
+\input{variants/thesis2-zh/chapters/05-7-probe}

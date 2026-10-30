@@ -1,0 +1,8 @@
+CAGRA 通过图进行导航，压缩 IVF 则扫描选定的倒排列表 \cite{cagra,johnson_gpu,ivfrabitq}。Stella 说明了紧凑存储为何重要（\cref{sec:7-7}）：
+\[
+ S_{\rm raw}=67.81\,\mathrm{GiB}
+ >S_{\rm GPU}=\frac{32607}{1024}\,\mathrm{GiB}
+ >S_{\rm resident}=20.44\,\mathrm{GiB}.
+\]
+
+JHQ 用主码筛选候选，再以残差对保留下来的候选精排 \cite{jhq}。本文在同一训练索引上改变执行方式和保留候选数，测量召回率、速度、显存和构建成本，也如实报告退步的情况。

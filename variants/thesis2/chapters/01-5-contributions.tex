@@ -4,12 +4,14 @@ evaluation of a particular representation--execution--budget combination.
 JHQ, Cartesian quantisation, IVF, bitonic/radix selection, merging and CUDA
 Graph execution retain their prior-art status.
 
+\par\noindent\begin{minipage}{\linewidth}
+\setlength{\parindent}{1.2em}
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
 \captionof{table}[Technical contributions and evidence boundaries]{Technical contributions and their evidence boundaries.}
 \label{tab:1-contributions}
-\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\linewidth}{@{}l*{3}{>{\raggedright\arraybackslash}X}@{}}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}p{.23\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
 \toprule
  & Inherited foundation & Project contribution & Evidence \\
 \midrule
@@ -29,3 +31,15 @@ smaller samples expose risk; four cells directly measure calibrated reuse \\
 \end{tabularx}
 \end{minipage}\par\medskip
 
+\paragraph*{Individual contribution.}
+My supervisor, Dr Mengxuan Zhang, proposed the direction of bringing JHQ
+to GPUs and provided guidance through regular discussions. I undertook
+the GPU system development, including index construction and layout,
+query execution optimisations, and refinement-budget calibration. I also
+carried out the experimental design, baseline comparisons and analysis,
+and decided which approaches and conclusions to retain. AI tools
+provided substantial assistance with code development, experiment
+automation, analysis, review and thesis drafting, as detailed in the
+\hyperref[front:provenance]{research and AI assistance statement}.
+
+\end{minipage}\par

@@ -1,0 +1,20 @@
+\chapter{结论}
+\label{ch:conclusion}
+
+\section{对四个研究问题的回答}
+\label{sec:9-1}
+\paragraph{RQ1：构建与容量。}
+GPU 构建生成可搜索的常驻层级。最大测试容纳 17.78 百万个向量，常驻 20.44\,GiB，构建耗时 10.54--10.65\,s；构建峰值见 \cref{sec:7-7}。
+
+\paragraph{RQ2：正确且高效的执行。}
+Cartesian 拆分保持实数算术分数；完整键保留／归并和见证阈值在其前提下保持分组选择。两组 LUT 在 22/24 单元获胜。调度在 batch 8/1,000 下相对 lane 精排提升 $2.727/1.015\times$（\cref{sec:7-3,sec:7-6}）。严格 CPU 检查确认分组顺序；单 block 差异均为 cutoff 并列（\cref{sec:7-strict-selection}）。
+
+\paragraph{RQ3：精排预算与质量。}
+FULL 在 12/12 单元满足已测试的相对召回损失目标，最大观测损失 0.0006。$S=128$ 在一个单元有 40/64 次越阈（\cref{sec:7-5}）。FULL 与枚举一致；十个仅距离单元缺少一般嵌套保证。参考一致性不是总体 GT 召回率。四项直接复用测试显示质量／时间收益依赖工作负载。
+
+\paragraph{RQ4：竞争工作区间。}
+batch 1,000／召回率 0.97 时，JHQ 在三个数据集领先，在 arXiv 与 RaBitQ 接近持平；Vogue 的领先依赖分组（\cref{sec:7-2}）。OpenAI E1 使用 TF32。在 TF32 训练缓存上，FP32 检查保持有利方向（\cref{sec:b-precision-anchors}）。Int8／RaBitQ 在其他召回区间获胜；CAGRA fp32 赢得全部 batch-8 数据集。batch-32 接近持平时依赖估计器（\cref{sec:7-smallbatch}）。
+
+\section{总体原则与展望}
+\label{sec:9-2}
+表示、执行和计算量必须共享质量目标。未来工作聚焦校准后复用及残差放置（\cref{sec:8-4}）。

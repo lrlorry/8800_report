@@ -53,16 +53,17 @@ $D_S(\alpha)\geq D_S(\beta)$.
 
 Fixed-key exact primary top-$c$ gives nesting; fixed-key refinement then gives monotone agreement. This supports bisection, without making GT recall or runtime monotone as the pool grows.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{figures/ch6/nesting-example}
-\caption[Nested and non-nested candidate pools]{Constructed $k=1$ example with refined order $a\prec b\prec c$
+\captionof{figure}[Nested and non-nested candidate pools]{Constructed $k=1$ example with refined order $a\prec b\prec c$
 and reference $\{a\}$. The nested case preserves reference membership.
 With all primary scores tied, different tie choices can produce the
 non-nested middle pool and break monotonicity. These are explanatory
 sets, not measured GPU outputs.}
 \label{fig:6-nesting}
-\end{figure}
+\end{minipage}\par\medskip
 
 \subsection{A corollary for the evaluated grouped path}
 

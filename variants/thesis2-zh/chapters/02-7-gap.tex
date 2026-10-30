@@ -1,0 +1,23 @@
+\Cref{tab:2-position} 按各方法解决的约束比较设计选择。已有文献已提供 GPU 图搜索、压缩距离计算、寄存器查表、快速选择和自适应计算量。因此，有用的贡献必须明确表示约束、集成决策及其证据。仅称其为“GPU 版本”不足以说明贡献。
+
+在表示固定的前提下，本文测试执行正确性、扫描并行度与精排质量／成本。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\setstretch{1.0}
+\captionof{table}[设计选择与研究空白]{设计选择及本文更具体的研究空白。此处比较机制；实测性能排名见第 7 章。}
+\label{tab:2-position}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.14\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+方案 & 可利用结构 & 主要权衡 & JHQ-GPU 的问题 \\
+\midrule
+IVF-PQ / OPQ & 学习式子空间码；ADC & 失真和训练；任意子码本可能耦合坐标 & 内部 Cartesian 主码允许怎样的 GPU 评分？ \\
+Fast Scan / Quicker ADC & 小表和 SIMD 查表 & 表精度、形状与 ISA 约束 & 精确拆分能否抵消额外 GPU 查表？ \\
+SONG / CAGRA & 选择性图导航 & 依赖访问、图存储与构建 & 常驻层级扫描在哪些区间有竞争力？ \\
+BANG & 压缩 GPU 评分与主机图 & 容量与通信 & 完整压缩常驻能实现什么？ \\
+IVF-RaBitQ & GPU 编码构建与融合搜索 & 位预算、估计器与 probe 工作量 & 哪些召回区间值得使用残差层级？ \\
+自适应计算量 & 精排倍率、自动调参、学习式或声明式停止 & 标签、参考精度、预测或校准成本 & 无标签工作负载一致性能否在可接受风险和总成本下选择有效计算量？ \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

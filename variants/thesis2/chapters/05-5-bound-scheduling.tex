@@ -67,17 +67,18 @@ On this non-NaN domain, monotone float bits give
 \]
 Finite keys precede infinity and the all-one sentinel. Invalid positions cannot publish.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{figures/ch5/shared-bound}
-\caption[Shared complete-key filtering]{Shared complete-key filtering for one scan group. A candidate's
+\captionof{figure}[Shared complete-key filtering]{Shared complete-key filtering for one scan group. A candidate's
 full primary score is computed before admission. A valid $c$-candidate
 witness set can tighten the per-query bound; a stale but complete bound
 only weakens filtering. Final prefix trimming reduces the valid merge
 input, while the allocated workspace capacity remains unchanged.
 The whole-key-read premise is qualified in the text.}
 \label{fig:5-shared-bound}
-\end{figure}
+\end{minipage}\par\medskip
 
 A thread polls each chunk. After compaction, $c$ valid keys permit 64-bit \texttt{atomicMin}. Final publication/search trims the prefix; exact merge handles stale extras. In-stream reset precedes scanning, then merging; groups never wait.
 

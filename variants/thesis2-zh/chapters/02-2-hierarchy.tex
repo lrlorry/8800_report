@@ -1,0 +1,45 @@
+IVF 将查询路由到 $n_{\rm probe}$ 个列表：
+\[
+ U(q)=\bigcup_{\ell\in\mathcal L(q)}\mathrm{list}_\ell,\qquad n_c=|U(q)|.
+\]
+位于 $U$ 之外的近邻，无法被后续评分找回。
+
+PQ 按子空间学习码本 \cite{pq}。使用未量化的 $q$ 时，ADC 为
+\begin{equation}
+ \|q-\widehat x\|^2=\sum_{m=0}^{M-1}\|q_m-\mathcal C_m[z_m]\|^2.
+ \label{eq:2-adc}
+\end{equation}
+查表代替逐坐标评分。学习得到的子码本不一定具有 Cartesian 结构；第 5 章依赖的正是这一额外结构。
+
+两种残差的定义不同：
+\[
+ r_{\rm IVF\text{-}PQ}=x-\mu_{\ell(x)},\qquad
+ r_{\rm JHQ}=\Pi x-\widehat p(x).
+\]
+因此，JHQ 重建时不加回 IVF 质心。候选扩展与精排属于已有方法 \cite{johnson_gpu,faiss_refine}。
+
+令 $|U(q)|\geq k$、$c=\max\{k,\lceil\alpha k\rceil\}$，则
+\begin{equation}
+ \mathcal R_\alpha(q)\subseteq C_\alpha(q)\subseteq U(q)\subseteq\mathcal X.
+ \label{eq:2-cascade}
+\end{equation}
+对 GT 集合 $\mathcal T_k$，由集合包含关系可得
+\[
+ |\mathcal R_\alpha\cap\mathcal T_k|
+ \leq |C_\alpha\cap\mathcal T_k|
+ \leq |U\cap\mathcal T_k|.
+\]
+损失归因需要在固定候选空间上计算反事实分数。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}[候选与评分精度的级联]{候选与评分精度的级联。IVF 选择列表，主码评分选择向量，只有保留候选才读取残差。这一层级结构继承自已有方法。图中定义的是逻辑集合和分数精度，不是实测召回损失或 GPU 内核边界。}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+\[
+ W_{\rm primary}=O(n_cM)\ \text{lookups},\qquad
+ W_{\rm refine}=O(cd)\ \text{coordinates}.
+\]
+probe 数改变 $U$，$\alpha$ 改变保留数量。访问和选择也会增加延迟。

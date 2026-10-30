@@ -1,0 +1,48 @@
+主码筛选将坐标工作量从 $O(n_cd)$ 改为 $O(cd)$。lanes 在相同预算下协作。
+
+\subsection{重建评分与查询常数}
+
+对 $\gamma=2\langle\widehat p,\widehat r\rangle$，按实数算术展开：
+\begin{align}
+ \refineddist(q,x)
+ &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
+ \label{eq:5-refined-score}\\
+ &=2\|q'\|_2^2+\|\widehat p+\widehat r\|_2^2-2\langle q',\widehat p+\widehat r\rangle\nonumber\\
+ &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
+ \label{eq:5-refined-constant}
+\end{align}
+该查询常数保持重建距离顺序 \cite{jhq}。
+
+标量评分先累加残差差值平方，再加主码分数／校正项。查询及可放入的码本使用 shared memory。
+
+\subsection{Lane 到 word 的映射与部分和归约}
+
+对 $\lrefine=L\in\{1,8,16,32\}$，
+\[
+ d_{\rm word}=32/B_R,\qquad
+ \text{words of lane }a:\ a,a+L,a+2L,\ldots.
+\]
+一个 word 包含四个八位或八个四位码。蝶形 shuffle 累加 lane 部分和；lane zero 写分数。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{figures/ch5/lane-refinement}
+\captionof{figure}[十六 lane 残差精排]{十六 lane 残差精排。一个 warp 处理两个候选；候选内 lane $a$ 读取残差 words $a,a+16,\ldots$。每个八位编码 word 解码四个坐标。子组求部分和，再加主码分数／校正项。候选位置仍可能分散。}
+\label{fig:5-lane-refinement}
+\end{minipage}\par\medskip
+
+行按 word 对齐且满足 $d_{\rm word}\mid D_s$，保证 word 不越过码本范围。所有 lanes 都参与 shuffle；无效槽位贡献零，随后输出无穷。$L=16$ 对应每 warp 两个候选。
+
+L0 载入 bytes；L1 载入 words，但保持相同的单 lane 累加。L8／L16／L32 用更短的遍历换取 shuffle 和更少的并发候选。FP32 运算结合顺序及局部性会影响结果。
+
+\subsection{最终选择与数值边界}
+
+在至少有 $k$ 个有限、有效且 ID 唯一的保留候选时，每轮计算
+\[
+ i^*=\arg\min_{i<c}(D_{H,i},\mathrm{ID}_i),\quad d^*=D_{H,i^*},\quad
+ D_{H,i^*}\leftarrow+\infty
+\]
+使用全部槽位，输出 $(\mathrm{ID}_{i^*},d^*)$：这是保留池内精确的 top-$k$，没有线程配额。不足额池可能在无穷距离处重复最小有效 ID；全无效池返回无效 ID。测试配置满足有限项前提。
+
+主码并列使用位置，最终并列使用 ID。路由排除／量化仍存在；lane FP32 结合顺序可能改变近并列结果。

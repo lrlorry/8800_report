@@ -1,0 +1,20 @@
+\Cref{tab:8-threats} 汇总主要解释的有效性威胁。对照见第 3 章，重复／构建／精度检查见 \cref{sec:7-8}。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[有效性威胁]{可能逆转结论或缩小适用范围的威胁。}
+\label{tab:8-threats}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+受威胁主张 & 替代解释或反转 & 对照与剩余测试 \\
+\midrule
+执行收益 & 分数、并列或索引状态变化解释表观加速 & 严格 T4 CPU 排序与表形式诊断；覆盖有限，候选转储已不保留 \\
+预算质量 & 有限池抽样或漂移隐藏有害查询 & 不相交 GT 评估、完整轨迹、子集和检查及 FULL 枚举；未来查询和任意子集不变性未测试 \\
+竞争优势 & 网格密度、调用尾部或 API 开销改变排序 & 两种召回估计器、保留慢调用及 int8 基线；TF32／FP32 敏感性；T5 暴露小 batch 反转；跨设备未测 \\
+容量／构建主张 & 瞬时分配超过常驻采样 & 阶段字节、重复空缓存构建和 20\,ms 设备峰值；采样间分配及完整重训练前沿未测 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+证据覆盖一张 GPU、六个准备后的数据集和平方 L2 top-10（\cref{sec:7-smallbatch}）。可能仍有近重复，没有相关性标签。更新、并发、漂移、服务延迟、十亿规模和多设备均未测试。

@@ -1,0 +1,50 @@
+\frontchapter{符号与缩略语}
+\begingroup\small\setstretch{1.0}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
+\toprule
+符号 & 含义 \\
+\midrule
+$N,d$ & 数据库向量数与原始维度 \\
+$M,D_s$ & 主码子空间数与每子空间维度 \\
+$a_{\rm add},a_{\rm in},a_{\rm assign}$ & 配置 add 行数、输入暂存行数及分配评分缓冲的独立容量（行数） \\
+$n_b,S_{\rm stage}$ & 流水缓冲数及每个输入／旋转数组的字节预算 \\
+$\Pi$ & 方形正交变换；$q'=\Pi q$ \\
+$B,B_r$ & 每主码子空间位数与每残差坐标位数 \\
+$\rho(p),o_\ell$ & 物理位置 $p$ 的输入 ID，及 IVF 列表 $\ell$ 的起点 \\
+$k$ & 返回近邻数 \\
+$n_c,c$ & 路由候选数及接受精排的主码保留数 \\
+$\alpha$ & 精排倍率，$c=\max\{k,\lceil\alpha k\rceil\}$ \\
+$S,\epsilon$ & 样本数；允许缺失的参考槽位数 \\
+$C_\alpha,\mathcal R_\alpha$ & 有效保留集合；预算 $\alpha$ 下返回的 ID \\
+$\alpha_{\rm ref},B_{\rm reuse}$ & 参考精排预算与后续复用 batch 数 \\
+$\glut$ & 分解查找表的组数 \\
+$\gscan$ & 每查询扫描组数；零表示单 block 路径 \\
+$C_{\rm buf},T_{\rm blk}$ & 缓冲容量；每 block 线程数 \\
+$n_{\rm LUT}(\glut)$ & 每主码子空间 LUT 项数 \\
+$\kappa(D,p)$ & 阈值使用的打包完整键 \\
+$\lrefine$ & 每个保留候选的协作 lanes 数 \\
+$\rawdist$ & $\|q-x\|_2^2$ \\
+$\primarydist$ & $\|q'-\widehat p\|_2^2$ \\
+$\refineddist$ & $\|q'-\widehat p-\widehat r\|_2^2+\|q'\|_2^2$ \\
+\bottomrule
+\end{longtable}
+
+\bigskip
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.25\linewidth}>{\raggedright\arraybackslash}p{.70\linewidth}@{}}
+\toprule
+缩略语 & 含义 \\
+\midrule
+ANN & 近似最近邻 \\
+ADC & 非对称距离计算 \\
+IVF & 倒排文件 \\
+JHQ & Johnson--Lindenstrauss 增强的层级量化 \\
+LUT & 查找表 \\
+PQ & 乘积量化 \\
+QPS & 每秒查询数 \\
+GT & 真实近邻 \\
+FP32 & IEEE binary32；GEMM 模式另行说明 \\
+TF32 & 低精度 Tensor Core 输入；FP32 累加 \\
+CV & $\operatorname{sd}(n_c)/\operatorname{mean}(n_c)$ \\
+\bottomrule
+\end{longtable}
+\endgroup

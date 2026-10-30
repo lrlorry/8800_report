@@ -110,13 +110,14 @@ Induction over the merge tree establishes the claim.
 \end{proof}
 \end{resultblock}
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{figures/ch5/global-selection}
-\caption[Local coverage and truncated pairwise merging]{Local coverage and truncated pairwise merging, illustrated with
+\captionof{figure}[Local coverage and truncated pairwise merging]{Local coverage and truncated pairwise merging, illustrated with
 $c=3$ and $\gscan=4$. Entries are illustrative $(\primarydist,p)$ keys; bold ones are global winners. Short/empty groups contribute their valid prefixes. Merges keep at most $c$ in the same order.}
 \label{fig:5-global-selection}
-\end{figure}
+\end{minipage}\par\medskip
 
 The CUDA implementation maintains a shared-memory buffer of $C_{\rm buf}$ key
 pairs, where $C_{\rm buf}$ is a power of two and $C_{\rm buf}\geq c+T_{\rm blk}$ for a scan block of

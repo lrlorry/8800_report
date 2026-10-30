@@ -1,0 +1,30 @@
+对路由集合 $U(q)$，精排倍率设置为 \cite{jhq}
+\begin{equation}
+ c(\alpha)=\max\{k,\lceil\alpha k\rceil\},\qquad
+ C_\alpha(q)=\operatorname{Top}^{\rm primary}_{\min\{c(\alpha),|U(q)|\}}U(q).
+ \label{eq:6-budget}
+\end{equation}
+分析要求 $|C_\alpha|\geq k$；不足额槽位填哨兵。预算改变保留数，probes 改变 $U$。
+
+当 $k=10$ 时，网格保留 20--2,000 个候选，无需重新训练。更低预算节省读取量，不减少残差存储或已预留工作区。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/thesis2/figures/budget-scope-layout}
+\captionof{figure}[受精排预算影响的工作]{精排预算改变主码分数生成后的工作。在查询、索引及 probe 数固定时，路由候选空间不变。高亮阶段依赖保留容量；这是逻辑工作分解，不是实测延迟分解。扫描内核也执行依赖预算的准入和压缩。候选少于 $c$ 时需要补位。}
+\label{fig:6-budget-scope}
+\end{minipage}\par\medskip
+
+在 batch／路由固定时，记
+\begin{equation}
+ T(\alpha)=T_{\rm base}+T_{\rm select}(c(\alpha))+
+ T_{\rm refine}(c(\alpha))+T_{\rm final}(c(\alpha)).
+ \label{eq:6-cost-model}
+\end{equation}
+$T_{\rm base}$ 包含传输、旋转、路由和主码算术（\cref{fig:6-budget-scope}）。选择／资源转换使延迟不单调；规则最小化的是被接受预算（\cref{sec:7-budget-trace}）。
+
+试验复用索引，但重新执行完整搜索，包括旋转、probes 和主码评分；校准成本不只是残差工作。
+
+\paragraph{在自适应 ANN 方法中的定位。}
+$\alpha$ 对应 Faiss \texttt{k\_factor} 和 cuVS 精排中的候选扩展作用 \cite{faiss_refine,cuvs_refinement}。其他方案使用 GT 调参 \cite{faiss_autotune}、学习式逐查询停止 \cite{li_termination} 或预测召回率 \cite{darth}。本文用无标签一致性选择一个可复用的工作负载预算。分数仍来自重建向量，不同于 cuVS 使用原向量精排的示例。

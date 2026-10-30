@@ -1,0 +1,40 @@
+测量区间为主机搜索调用：
+\[
+ t_{\rm call}=t_{\rm return}-t_{\rm entry},
+ \quad
+ \begin{cases}
+ \text{entry: FP32 queries in host memory},\\
+ \text{return: host IDs/scores after stream completion}.
+ \end{cases}
+\]
+暂存、传输、查询计算和 int8 查询量化均计时；构建／拟合不计入（\cref{fig:3-boundary}）。句柄和输出缓冲复用。JHQ 使用 pageable 内存／C++，CAGRA／PQ 使用 pinned 内存／Python，RaBitQ 使用 pinned 内存／C++；这些成本会影响小幅领先。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
+\captionof{figure}[主机与设备计时边界]{计时边界。主机区间包含传输和查询专属计算。设备阶段剖析解释其中部分时间；独立剖析和同步可能改变执行，因此阶段时间之和不能替代端到端延迟。}
+\label{fig:3-boundary}
+\end{minipage}\par\medskip
+
+时间单位为秒：
+\begin{equation}
+ \bar t_r=\frac1{m_r}\sum_{i=1}^{m_r}t_{ri},
+ \qquad Q_r=\frac b{\bar t_r},
+ \qquad Q=\operatorname{median}_r Q_r.
+ \label{eq:3-throughput}
+\end{equation}
+E1：batch 1,000，五轮，通常每轮 24 次调用。JHQ 每个变体／轮次预热一次，基线起初预热三次；较慢的基线测点调用更少。JIT／图捕获不计入，调用时间分位数不代表并发请求。
+
+有效的慢调用保留。以示意调用时间 $(1,1,10)$\,ms 为例，
+\[
+ \bar t=4\,\mathrm{ms}\ne\operatorname{median}(t)=1\,\mathrm{ms},
+ \qquad b/\bar t\ne b/\operatorname{median}(t).
+\]
+共享索引／查询池不能提供独立构建样本。
+
+RTX 5090／32,607\,MiB；驱动 595.71.05；CUDA 13.0；cuVS 26.08.01。OpenMP 使用 25 个 CPU 中的 16 个；E1 记录功率 575\,W。频率／负载可能变化。JHQ 对 compute\_80 PTX 做 JIT \cite{cuda_platform}；库构建与设备剖析另行处理。
+
+常驻总量包含模型、工作区和上下文。CAGRA 索引增量与 JHQ 扣除上下文后的总量口径不同（\cref{sec:4-4,sec:7-7}）。内存池／临时区妨碍等峰值比较。构建峰值每 20\,ms 采样；train／add 不包含数据载入和主机准备。
+
+\paragraph{补充实验会话。}
+各 campaign 独立（\cref{sec:a-supplement}）；缓存状态／精度变化见 \cref{sec:4-2,sec:7-precision}。与历史基线的比值仍是跨会话比较。

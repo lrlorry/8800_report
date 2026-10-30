@@ -27,12 +27,14 @@ Lower-bound searches give offsets, with
 \]
 Positions are stable within a snapshot, not across builds. All arrays use the same $\rho(p)$.
 
-\begin{figure}[tbp]
+\begin{figure}[!htbp]
 \centering
-\input{figures/ch4/physical-layout}
-\caption[List-ordered physical index layout]{One common physical position joins IDs, packed primary words,
-residual rows and correction factors. This illustrative eight-row index
-has offsets $[0,3,3,8]$, including an empty list. Words pack subspaces of one vector; values are schematic.}
+\input{variants/thesis2/figures/physical-layout}
+\caption[Physical GPU index layout]{Physical GPU index layout (schematic).
+IVF offsets delimit contiguous physical-position ranges. Independent ID,
+word-group-major primary, row-major residual and correction arrays share
+position $p$. Byte offsets are relative to each allocation; the illustration
+implies neither interleaved allocation nor measured memory transactions.}
 \label{fig:4-layout}
 \end{figure}
 

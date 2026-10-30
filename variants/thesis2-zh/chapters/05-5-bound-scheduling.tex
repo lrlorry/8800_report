@@ -1,0 +1,122 @@
+局部 top-$c$ 可能为 $c$ 个优胜者输出 $\gscan c$ 个中间条目。共享阈值减少维护工作，调度器随后选择扫描并行度。二者均在固定精排预算下工作；预算选择是 \Cref{ch:refinement} 的独立问题。
+
+\subsection{具有显式见证的完整键上界}
+
+当 $|U|\geq c$ 时，令 $K_{(c)}$ 为全局第 $c$ 个键。若某组持有 $c$ 个不同、已完整评分的候选，其见证最大键 $\tau_j$ 满足 $K_{(c)}\preceq\tau_j$。全局空间中已有 $c$ 个候选不晚于 $\tau_j$。共享阈值初始化为顶部哨兵，并通过下式更新：
+\begin{equation}
+ \tau\leftarrow\min_{\prec}(\tau,\tau_j).
+ \label{eq:5-shared-update}
+\end{equation}
+有效候选少于 $c$ 时不发布阈值。若整个空间少于 $c$，则没有组能发布该阈值，所有有效候选仍可准入。
+
+\begin{resultblock}
+\begin{proposition}[见证阈值下的安全拒绝]
+\label{prop:5-shared-bound}
+假设键固定，发布值由 $c$ 个不同候选支持，读取返回初始哨兵或某个完整的已发布键。仅在 $K_q(x)\succ\tau$ 时拒绝候选，无论发布时序如何，都不会移除全局 top-$c$ 候选。
+\end{proposition}
+\begin{proof}
+一次发布具有含 $c$ 个不同见证的集合 $W_\tau$：
+\[
+ \max_{x\in W_\tau}K_q(x)\preceq\tau
+ \quad\Longrightarrow\quad K_{(c)}\preceq\tau.
+\]
+哨兵读取及已发布键的最小值满足同一不等式。因此
+\[
+ x\in\operatorname{Top}_c(U)
+ \ \Longrightarrow\ K_q(x)\preceq K_{(c)}\preceq\tau_{\rm seen}
+ \ \Longrightarrow\ x\text{ is not rejected}.
+\]
+陈旧读取只会放宽阈值。先前安全拒绝后的发布仍然有效：保留的任意 $c$ 个不同候选仍提供 $c$ 个见证，无论它们是否是该组最佳的 $c$ 个。
+\end{proof}
+\end{resultblock}
+
+共享过滤保持全局覆盖（\cref{prop:5-local-coverage}）。准入条件为
+\begin{equation}
+ K_q(x)\prec\lambda_j
+ \quad\text{and}\quad
+ K_q(x)\preceq\tau_{\rm seen},
+ \label{eq:5-admission}
+\end{equation}
+其中 $\lambda_j$ 为局部压缩阈值，$\tau_{\rm seen}$ 为最后读取的共享键。共享比较保留等号。
+
+\subsection{发布、过滤与实现限制}
+
+对非负 FP32 分数、规范化正零和有效非负位置，
+\begin{equation}
+ \kappa(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
+ \label{eq:5-packed-key}
+\end{equation}
+在此非 NaN 定义域上，浮点 bits 单调性给出
+\[
+ (D_1,p_1)\prec(D_2,p_2)\iff\kappa(D_1,p_1)<\kappa(D_2,p_2).
+\]
+有限键排在无穷与全一哨兵之前。无效位置不能发布。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{figures/ch5/shared-bound}
+\captionof{figure}[共享完整键过滤]{一个扫描组中的共享完整键过滤。候选在准入前已计算完整主码分数。有效的 $c$ 候选见证集可收紧逐查询阈值；陈旧但完整的阈值只会减弱过滤。最终前缀裁剪减少有效归并输入，但分配的工作区容量不变。完整键读取的前提限定见正文。}
+\label{fig:5-shared-bound}
+\end{minipage}\par\medskip
+
+每个 chunk 由一个线程轮询。压缩后，$c$ 个有效键允许执行 64 位 \texttt{atomicMin}。最终发布／搜索裁剪前缀，精确归并处理陈旧额外项。流内重置先于扫描，扫描后归并；组之间从不等待。
+
+完整键前提依赖对齐八字节强 PTX \path{ld.volatile.global.u64}/\path{atom.global.min.u64} \cite{ptx_isa}，超出 C++ \texttt{volatile} 自身保证 \cite{cuda_programming_guide}。CUDA 13.0.88 的 \texttt{ptxas}、\texttt{sm\_120} 提供佐证；没有捕获驱动 JIT 后的 SASS。
+
+过滤发生在完整主码评分后（\cref{fig:5-shared-bound}）：维护节省与轮询／原子操作开销相互竞争（\cref{sec:7-4}）。
+
+\subsection{不改变预算地选择并行度}
+
+$b\gscan$ 个 block 增加并行度，也增加暂存／选择／归并成本。更小配额需要证明或回退。试验中优胜者集中分布，促成了见证阈值设计（\cref{sec:7-4}）。
+
+定义
+\[
+ T_{\rm blk}=\text{scan threads/block},\quad
+ H=n_{\rm SM}T_{\rm resident/SM},\quad
+ v=\frac{\operatorname{sd}(n_c)}{\operatorname{mean}(n_c)}.
+\] 对应规则为
+\begin{align}
+ g_{\rm fill}
+ &=\max\!\left(\{1\}\cup
+       \{h\in\{2,4,8\}:bhT_{\rm blk}\leq0.6H\}\right),
+       \label{eq:5-fill-rule}\\
+ g_{\rm skew}&=
+   \begin{cases}4,&v\geq0.3,\\1,&v<0.3,\end{cases}
+ \qquad
+ g_{\rm chosen}=\max(g_{\rm fill},g_{\rm skew}).
+ \label{eq:5-skew-rule}
+\end{align}
+偏斜规则可覆盖填充上限。评测 harness 使用 512 个数据库向量作为伪查询，在固定路由配置下校准 $v$，不使用 GT 标签。这不同于第 6 章的抽样输出一致性校准。校准后，调度仅用 batch 大小和存储统计量，无需每次搜索额外主机回读。常数由四个试验配置拟合，再在更多配置上评估。一次性伪查询校准不计入报告的稳态搜索时间。启动耗时观测范围独立于精排预算校准（\cref{sec:a-supplement}），为
+\[
+ T_{\rm gather}\in[0.81,7.04]\,\mathrm{ms},\quad
+ T_{\rm first}\in[6.00,27.77]\,\mathrm{ms},\quad
+ \operatorname{median}(T_{\rm repeat})\in[2.72,18.13]\,\mathrm{ms}.
+\]
+
+选择一组时，在索引／probes／预算固定下分派 $\gscan=0$。它仅按距离处理并列；要获得相同保留集合，需检查共同排序。集成收益／regret 见 \cref{sec:7-6}。
+
+\subsection{观测到的执行路径}
+
+对有 170 个 SM、每 SM 48 个 warp 的 RTX 5090 \cite{blackwell_tuning}，
+\[
+ 1000\cdot2\cdot512=1{,}024{,}000
+ >0.6\cdot170\cdot48\cdot32=156{,}672.
+\]
+因此填充规则选择一组；偏斜可覆盖为四组。
+
+E1 中，9/38 条记录超过 $v=0.3$，全部为 Vogue（$0.338$--$0.622$）。Vogue 的 27 个单元使用四组，105 个 arXiv／OpenAI 单元使用 $\gscan=0$。后者的收益来自 LUT、打包、lanes 和 probe 选择，不涉及分组保留／共享阈值。
+
+Vogue 每 1,000 个查询有 3--15 个纯并列差异，非并列差异为零，最终输出完全相同。128 probes 下，并列范围为 7--11。
+
+观测到的单元数为
+\[
+ \begin{array}{c|rrr}
+ &G=0&G=2&G=4\\\hline
+ \text{held-out}&10&0&2\\
+ S=128&2&8&2
+ \end{array}
+\]
+十二个单元中有八个换路径。收益取决于负载大小／偏斜，不存在固定 batch-256 分界。
+
+启发式未计入驻留、压缩和归并成本；伪查询统计也可能过时。最大实测 regret 为 batch 256 时的 1.217。预算保持固定；\cref{sec:5-6} 处理精排。

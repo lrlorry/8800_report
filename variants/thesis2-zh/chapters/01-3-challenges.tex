@@ -1,0 +1,31 @@
+\Cref{fig:1-challenges} 将三个挑战与解决它们的机制及验证证据连接起来。
+
+第一，主码本具有直接移植到 GPU 时容易忽略的数学结构。每个八位子空间编码索引 256 个距离。Cartesian 坐标允许在实数运算下精确拆成 16+16 项，但更细的拆分会增加查表和算术操作。挑战在于利用可分性，同时不预设表越小扫描就越快。候选并行的 word 访问与残差的 lane 协作也需要不同的数据映射。
+
+第二，局部配额可能丢失全局优胜者。对不相交的分组 $U_1,U_2$ 和 $c=4$，考虑
+\[
+ \begin{aligned}
+ \operatorname{Top}_4(U)&\subseteq U_1,\\
+ \left|\operatorname{Top}_4(U)\cap
+ \bigl(\operatorname{Top}_2(U_1)\cup\operatorname{Top}_2(U_2)\bigr)\right|
+ &=2<4.
+ \end{aligned}
+\]
+合并前，各组必须保证覆盖。阈值减少维护工作，调度控制并行度，IVF 路由则属于独立阶段。
+
+第三，与参考结果一致，无法修复参考本身的错误。一个 $k=1$ 的反例是
+\[
+ \mathcal R_\alpha=\mathcal R_{\rm ref}=\{a\},\quad
+ \mathcal T_1=\{b\},\quad a\ne b
+ \ \Longrightarrow\ 
+ D_S(\alpha)=0,\quad \Recall@1=0
+ \qquad(S=1).
+\]
+因此，本文同时评估质量与校准／复用成本。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/challenges-layout}}
+\captionof{figure}[问题、机制与证据]{问题、机制与证据。箭头用于组织研究问题，不表示独立测得的加速比可以相乘，也不表示无标签一致性规则能保证 GT 召回率。}
+\label{fig:1-challenges}
+\end{minipage}\par\medskip

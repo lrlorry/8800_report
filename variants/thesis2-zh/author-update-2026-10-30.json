@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-30",
+  "ownership_record": "variants/thesis2/audit/individual-contribution-2026-10-30.json",
+  "scope": "Synchronise the author-confirmed individual-role paragraph; preserve the initial translation baseline and original thesis/thesis1.",
+  "updated_protected": {
+    "variants/thesis2/checks.json": {
+      "before_sha256": "ffebbfe8bf601d131c004145a077b6eff7cc6db92a46aa0b0695327e3bfff753",
+      "after_sha256": "1e5c7f4e0ae00d7a7e188f5d5472d6c8449a9dde87cb3abac9a455cffcc8aef2"
+    },
+    "variants/thesis2/verify.py": {
+      "before_sha256": "a991f911278f09ab667bdaeaf8dfb65f5cb2ab911aed7cbdaa8924afe6b9716e",
+      "after_sha256": "c8db01669c3491e3149b2190b722959bd1cb56e56d07ea1afd9b15f469286d00"
+    },
+    "variants/thesis2/chapters/01-5-contributions.tex": {
+      "before_sha256": "08e1a20f919e2ff684e93cec64fd581eb9a2efc19fab5effb01b33577aa9b46e",
+      "after_sha256": "d7ceb1097e18e10afea41e3672843c0dc3d388669d045ab26a5948146f9d1f2e"
+    },
+    "thesis2.pdf": {
+      "before_sha256": "b5532e25c4fc31cd2481f3301f69314da7f0c1a6554c1dfc872d97cc43fc464f",
+      "after_sha256": "4fbb6b62b8e8af28d4b1255c25ea3fe927f304ac9429c7db5a827c691c6b19ee"
+    }
+  }
+}

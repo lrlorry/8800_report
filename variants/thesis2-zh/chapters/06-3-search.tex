@@ -1,0 +1,77 @@
+\subsection{二分与完整枚举}
+
+记 $J=|A|$。实现先计算一次样本参考结果，再在降序网格中寻找最大的可接受索引：
+\par\noindent\begin{minipage}{\linewidth}
+\begin{enumerate}[leftmargin=*,itemsep=0.15em]
+\item 设置 $l=0$、$h=J-1$。零是回退项。
+\item 当 $l<h$ 时，运行 $A[j]$ 并计算 $D_S(A[j])$，以测试 $j=\lfloor(l+h+1)/2\rfloor$。
+\item 若 $D_S(A[j])\leq\epsilon$，设置 $l=j$；否则设置 $h=j-1$。
+\item 返回 $A[l]$，复用前应用它。
+\end{enumerate}
+\end{minipage}\par\medskip
+八点网格除参考搜索外，最多需要三次完整候选搜索。调用／计时见 \Cref{sec:a-budget-contract}。
+
+枚举在相同样本上重跑参考及七个实验臂。它能处理接受集合中的空洞；二分只有在接受索引构成前缀时才能找到其最小预算。两种计时都包含参考搜索。
+
+\subsection{单调性的一个充分条件}
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{proposition}[嵌套保留集合保持参考成员资格]
+\label{prop:6-monotonicity}
+对一个查询，假设路由固定，且每当 $\alpha\leq\beta\leq\alpha_{\rm ref}$ 时保留集合满足 $C_\alpha\subseteq C_\beta\subseteq C_{\alpha_{\rm ref}}$。假设至少有 $k$ 个有效保留候选、精排分数固定、最终并列使用同一确定性全序。各结果均是该顺序下精确 top-$k$。则
+\begin{equation}
+ |\mathcal R_\alpha\cap\mathcal R_{\rm ref}|
+ =|C_\alpha\cap\mathcal R_{\rm ref}|,
+ \qquad D_S(\alpha)\geq D_S(\beta).
+ \label{eq:6-monotonicity}
+\end{equation}
+当上述条件对每个抽样查询都成立时，后一陈述成立。
+\end{proposition}
+\begin{proof}
+对 $x\in\mathcal R_{\rm ref}\cap C_\alpha$，共同全序给出
+\begin{equation*}
+ |\{y\in C_\alpha:y\prec x\}|
+ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
+\end{equation*}
+故 $x\in\mathcal R_\alpha$。结合 $\mathcal R_\alpha\subseteq C_\alpha$，得到 \cref{eq:6-monotonicity} 中的交集恒等式。由嵌套性可得 $|C_\alpha\cap\mathcal R_{\rm ref}|
+ \leq|C_\beta\cap\mathcal R_{\rm ref}|$。对查询的缺失参考计数求和，得到 $D_S(\alpha)\geq D_S(\beta)$。
+\end{proof}
+\end{minipage}\par\medskip
+
+固定键下精确主码 top-$c$ 产生嵌套；固定键精排进一步产生单调一致性。这支持二分，但不意味着池扩大时 GT 召回率或运行时间单调。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{figures/ch6/nesting-example}
+\captionof{figure}[嵌套与非嵌套候选池]{构造的 $k=1$ 示例，精排顺序为 $a\prec b\prec c$，参考为 $\{a\}$。嵌套情况保持参考成员资格。当主码分数全部并列时，不同并列选择可产生非嵌套中间池，破坏单调性。这些是解释性集合，不是实测 GPU 输出。}
+\label{fig:6-nesting}
+\end{minipage}\par\medskip
+
+\subsection{已评测分组路径的推论}
+
+同次抽样内，$S$、路由和扫描线程固定；\texttt{scheduled\_groups(S)} 不依赖 $c$。分组预算使用相同 LUT 求和。固定 $B_r$、16 lanes 及最终 $(\refineddist,\mathrm{ID})$ 顺序，使候选分数固定。
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{corollary}[分组校准]
+\label[corollary]{cor:6-grouped-calibration}
+对已评测分组配置，在第 4、5 章的表示与共享阈值约束下，各预算的主码保留集合嵌套。因此 \Cref{prop:6-monotonicity} 适用，二分与枚举返回相同的网格最小接受预算。
+\end{corollary}
+\begin{proof}
+\Cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} 在共同键 $(\primarydist,\mathrm{position})$ 下给出精确主码 top-$c$。其前缀随 $c$ 增大而嵌套。固定精排／最终顺序满足 \cref{prop:6-monotonicity} 的其余前提。
+\end{proof}
+\end{minipage}\par\medskip
+
+推论覆盖 2,176 次抽样；128 次 OpenAI-3072／$S=128$ 抽样仅按距离选择。记录的全部 2,304 条曲线均单调并与枚举一致（\cref{sec:7-budget-trace}）；这是有限实验证据。
+
+\paragraph{全池覆盖。}
+两个 FULL 单元对 Vogue 分组，十个使用 $\gscan=0$。十二个均与枚举一致。十个仅按距离的单元不在 \cref{cor:6-grouped-calibration} 范围内：嵌套需要共同 cutoff 顺序，或没有跨截断并列。校准与留出使用相同路径并不能保证这一点。
+
+\paragraph{基于排名的扩展。}
+在同样的嵌套／固定分数前提下，从一开始的主码排名给出
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}\sum_{x\in\mathcal R_{\rm ref}(q)}
+ \mathbf1\{\operatorname{rank}_{\rm P}(x)>c(\alpha)\}.
+ \label{eq:6-rank-curve}
+\end{equation}
+导出参考排名可以替代重复预算搜索。这尚未实现。

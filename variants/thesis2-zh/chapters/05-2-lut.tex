@@ -1,0 +1,97 @@
+主码 ADC 使用 FP32 $q'$ 与存储的重建 \cite{pq,jhq}：
+\begin{equation}
+ T_m[z]=\|q'_m-\mathcal C_m[z]\|_2^2,\qquad
+ \primarydist(q,x)=\sum_{m=0}^{M-1}T_m[z_m(x)].
+ \label{eq:5-primary-lut}
+\end{equation}
+因为每个子码本具有 Cartesian 结构，256 项表可以缩小。
+
+对 $K=256$、$D_s=8$，解析码本给出
+\begin{equation}
+ \begin{aligned}
+ a&=\sigma\Phi^{-1}(3/4)\simeq0.67449\sigma,\qquad
+ \mathcal C_m=\{-a,+a\}^{8},\\
+ \primarydist(q,x)&=\|q'\|_2^2+da^2
+       -2a\sum_{j=0}^{d-1}s_j(x)q'_j.
+ \end{aligned}
+ \label{eq:5-sign-codebook}
+\end{equation}
+其中 $\Phi$ 是标准正态 CDF；一个 byte 存八个符号，高位在前。因此
+\[
+ a>0\quad\Longrightarrow\quad
+ \arg\min_x\primarydist(q,x)=\arg\max_x\sum_j s_j(x)q'_j.
+\]
+四路／八路拆分保持相同的实数算术分数。学习式替代码本需要兼容性检查。
+
+\subsection{不改变量化器的分解}
+
+写成 $z=16h+l$，其中 $h,l\in\{0,\ldots,15\}$、$\mathcal C_m[z]=(A_m[h],B_m[l])$。于是
+\begin{equation}
+ T_m^{\rm hi}[h]=\|q'_{m,\rm hi}-A_m[h]\|_2^2,\qquad
+ T_m^{\rm lo}[l]=\|q'_{m,\rm lo}-B_m[l]\|_2^2.
+ \label{eq:5-lut-halves}
+\end{equation}
+由坐标分离可得
+\begin{equation}
+ T_m[z]=T_m^{\rm hi}[z\!\gg\!4]
+        +T_m^{\rm lo}[z\mathbin{\&}15].
+ \label{eq:5-lut-factorisation}
+\end{equation}
+存储降为 $16+16=32$ 项；编码、候选及实数算术分数保持不变（\cref{fig:5-cartesian-lut}）。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/thesis2/figures/cartesian-lut}
+\captionof{figure}[Cartesian 主码 LUT 分解]{Cartesian 主码 LUT 分解示意。一个 byte 选择 256 项表中的一项，或用高／低 nibble 分别选择两个 16 项表中的一项。坐标分离在实数运算下给出加法恒等式；FP32 舍入可能改变 top-$c$ 和最终 ID。T4 中各表形式的最大相对分数差为 $4.64\times10^{-7}$；Vogue 有 2--4/256 个查询的最终 ID 不同，arXiv／OpenAI-3072 没有差异（\cref{sec:7-3}）。读取和求和描述的是查表表达式。}
+\label{fig:5-cartesian-lut}
+\end{minipage}\par\medskip
+
+构造器切分码字 $16h,l$；\texttt{verify\_split\_lut} 检查 nibble／切片兼容性。任意学习得到的 256 质心 PQ 子码本不一定满足该条件：将编码标签分成 nibbles，并不使质心坐标自动可分。
+
+\cref{sec:7-3} 的同候选 FP32 审计测量不同表形式的数值与排序差异，包括主码保留集合相同后出现的变化。
+
+\subsection{分组、构造工作量与资源成本}
+
+表分组消融将拆分推广到 $\glut\in\{1,2,4,8\}$ 个连续坐标组，其 bit 字段与 Cartesian 数字对应。对八位及 $D_s=8$，每组有 $2^{8/\glut}$ 项；每查询的总项数和 FP32 存储为
+\begin{equation}
+ n_{\rm LUT}(\glut)=\glut 2^{8/\glut},\qquad S_{\rm LUT}(\glut)=4Mn_{\rm LUT}(\glut)\ \text{bytes}.
+ \label{eq:5-lut-cost}
+\end{equation}
+独立构造表项时，每子空间计算 $D_s2^{8/\glut}$ 个坐标贡献。因此，相较逐项独立构造整表，两组将表存储减为八分之一、坐标工作量减为十六分之一。这是表级成本比，不是应用加速预测。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Cartesian 查找表的权衡]{八位、八坐标主码子空间的 Cartesian 表权衡。合并加法是连接查得值所需的代数最小值，不含跨子空间累加；不是实测指令计数。}
+\label{tab:5-lut-resources}
+\small
+\begin{tabular}{@{}rrrrrr@{}}
+\toprule
+$\glut$ & 项数 & FP32 字节 & 查表数 & 合并加法 & 构造项数 \\
+\midrule
+1 & 256 & 1,024 & 1 & 0 & 2,048 \\
+2 & 32 & 128 & 2 & 1 & 128 \\
+4 & 16 & 64 & 4 & 3 & 32 \\
+8 & 16 & 64 & 8 & 7 & 16 \\
+\bottomrule
+\end{tabular}
+\end{minipage}\par\medskip
+
+表先在全局工作区构建；若完整共享内存占用符合查询到的每 block 可选上限 $S_{\max}$，则协作暂存到 shared memory。缓冲容量为 $C_{\rm buf}$ 时，普通／分组扫描占用为
+\begin{equation}
+ S_0=8C_{\rm buf}+8+S_{\rm LUT}(\glut),\qquad
+ S_{\rm grp}=8C_{\rm buf}+24+S_{\rm LUT}(\glut)
+ \quad\text{bytes}.
+ \label{eq:5-shared-footprint}
+\end{equation}
+对已评测路径（不含可选融合精排／提前退出临时区），
+\[
+ \text{shared lookup}\iff S_{\rm path}\leq S_{\max}.
+\]
+
+表扫描实验中，$c=1{,}000$，block 大小为 512 或 1,024，$C_{\rm buf}=2{,}048$。整表占 96--384\,KiB，两组为 12--48\,KiB。NVIDIA 对计算能力 12.0 规定每 block 上限 99\,KiB \cite{blackwell_tuning}。按此上限，即使 $M=96$，整表占用仍超容量（query-centric 路径为 $114{,}696$ bytes），而最大两组占用在分组路径中为 $65{,}560$ bytes。因此，这些配置下的源码放置规则将整表放在 global memory，将两组表放在 shared memory。这是依据启动规则和公开上限推断的放置；测量记录未保存设备属性查询。
+
+四组和八组每子空间均存 16 项，但查表和合并更多。位提取、依赖、暂存、同步和驻留共同决定权衡。每个扫描组可能暂存一份副本。
+
+$16+16$ nibble LUT 沿用小表先例 \cite{fastscan,quickeradc,ivfrabitq}。本文通过 GPU 保留／精排将其与 JHQ 两级分数集成；实测权衡见 \cref{sec:7-3}。

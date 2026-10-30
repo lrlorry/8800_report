@@ -1,0 +1,835 @@
+{
+  "date": "2026-10-30",
+  "english_pdf_sha256": "b5532e25c4fc31cd2481f3301f69314da7f0c1a6554c1dfc872d97cc43fc464f",
+  "source_files": {
+    "chapters/05-1-query-path.tex": "03804f4368ca9bd6865a358fd888fad0c78ad4feafaa401b88e213f7cc61b77e",
+    "chapters/06-refinement.tex": "98fcc99346ee6c054046f8cd74bd19964fe2070902a2939090b032e832e9b3aa",
+    "chapters/01-introduction.tex": "6f0748e1026b170f97aaf0205bd202f7e23324f6a502e4de3a45aeb664079c77",
+    "chapters/05-6-refinement.tex": "f5d5054a77ff0391334722a5a86ffe614c3714afde8351bee733cc8b8f94865c",
+    "chapters/07-supp-budget.tex": "99ed5dc483733ae43536ec386c1803a62eb56375c16e81db84d92eb7535765b6",
+    "chapters/01-2-scope.tex": "9e79a10f78bd4e84d036ee5edbcae469eb87c1f66778fe67b230323f50fd6e06",
+    "chapters/08-1-insights.tex": "fac0e1d3f7cb9108872b8870468f16094e29fd8016dff3311eb194a6d4c0bcf6",
+    "chapters/07-supp-selection.tex": "0605323d8cfcc0511b5c9f9208769a7aeebd6e55274538426a9c4df1aa7beb6e",
+    "chapters/02-5-graphs.tex": "bc607aa5479f0792e1d575553a8d3561dbe446caa9f025b5ea3448a74b544aa6",
+    "chapters/06-1-motivation.tex": "e97364a32dbe6e8fbc400e3b27e707c9f67a025fe98bc25846c80a3195da64f8",
+    "chapters/02-1-objective.tex": "6bea79e8046f405fb0b84ae53fc660cae4a6f6b2007ff0a2a4445b3171b1999f",
+    "chapters/03-6-validity.tex": "179e02a8ef5476721a87f68ae03085a5fed5c9faaab6becdc53c073ea3eb0545",
+    "chapters/06-6-scope.tex": "291e4deb25346ff9e3a552529a0dbf2b7ac034a40e52cb9c3eabf8f0e517cc34",
+    "chapters/03-2-data.tex": "cbd15ecd9aa4d30690fb0a411a0262fbb5ad83b5c939e3e69a184527fe0994ae",
+    "chapters/02-4-gpu.tex": "b5128a1f9998877e6ba2e1a585a2683725cba6a9c92ba1369d1f8f24126f1e17",
+    "chapters/03-5-ledger.tex": "a152b61b7a03cf63c7ff8592a45b27440a9dea539620ae0c8e0001e94af4cf23",
+    "chapters/07-supp-smallbatch.tex": "62874353c5b50a9b270f7d41d52be3be9955e8f5c892a05311e58c2bc20f9e36",
+    "chapters/03-1-comparisons.tex": "e7cad5f93cffb81cc6b2fad3d39cd0dc042b2899b8de855dba0c083d4542f155",
+    "chapters/08-4-directions.tex": "0d1cab6450f9e3daf83019800654ad27823456e2a9436cc6f92da08a617caff6",
+    "chapters/03-4-frontiers.tex": "a6cb7e3706ce5ff3b69db4c86914b30dd64f0bce0252804025d8dfdf4a935638",
+    "chapters/05-5-bound-scheduling.tex": "889533722cbae13cad0db555fb1e505ca926b3044f670a3402db7c4d0a889482",
+    "chapters/03-3-measurement.tex": "5bcc2f8dbc68cc077ca684ac3083e0d6c8d752fb9bf13e9abe9950cc474b153d",
+    "chapters/05-3-packed-access.tex": "8dde5fdc3fc2fadd696e281ab790e800fa14c1860acbf8e5bf7b7042dfa99873",
+    "chapters/02-3-jhq.tex": "74dc5f2b1ce4db4fbba2198752422dc0ea184cacad020e9f7daead2e8c841f6c",
+    "chapters/04-architecture.tex": "c8753f19dea22faa89e2a2fef05459c73cde9832b1d5efb5ecdebcd03c1a0ef4",
+    "chapters/04-6-contracts.tex": "32126962a774a060442fe5b88155a4f8fbca50ac8ccd8732281f0828bf68ec1d",
+    "chapters/02-2-hierarchy.tex": "80baefe11c29e36acacdda3b542257f14aa1ac19844551360d9df2f62f47aec1",
+    "chapters/04-1-boundaries.tex": "896e0be0d8fad7ce08c8f0bf899f04591cbf675baf4d979a37509fe6ab757d03",
+    "chapters/05-gpu-execution.tex": "8cc56f87778e70da803c2d52bd8e8028c54b1ecb2231095ebebd05ddd4e1cbe7",
+    "chapters/02-6-quantised.tex": "13562544a9b2d8780d430f8e65ecb4f39837f845bcc9e142ab64ba0db97cd990",
+    "chapters/07-evaluation.tex": "d4ec719e00a0f11bcc4416792d56c19393106bc6c46fc36a85dfa443b8f5a09d",
+    "chapters/08-5-deployment.tex": "70768671c1fe19c88d4ccd2dba450df313e743f51d0ab7f6cef9d0e6e73c0d47",
+    "chapters/06-2-agreement.tex": "c1c67be506f4dcd3efd4aaa165a224b061e478cc59c43c8d2332490d54c96c4c",
+    "chapters/07-supp-precision.tex": "e98408f730c3d5ab5c90ce503851f0177d48f00c5ed2d98b88a9327ac96e3fa4",
+    "chapters/01-3-challenges.tex": "1b27f8110bf1eeda50c0e276feab99b4d683e44424aeb1e3dca7effd1cac28fa",
+    "chapters/05-4-global-selection.tex": "964cc61966c07c2bcb9a7ec4dd6f770abc01d75c8bcf12c9a9b1f6b957a2bdc1",
+    "chapters/03-methodology.tex": "9129f3526a48abe811c4f8b19f4825f5790473246518abdd5fa8b2282ed286c7",
+    "chapters/06-4-controls.tex": "c951f5915674cbd26d0bd90bdd22a20c2312682b7ae4e941dd5a2e0a06a5ff41",
+    "chapters/05-2-lut.tex": "889e75b5b4c7f6efa5c8c94368ca120434539bfad2ce3dc8279510c4ff3244bf",
+    "chapters/09-conclusion.tex": "d87e6b52ca2dedfbe165eccf527eda3a797e81f801c878c5a16a3d16d63a7c45",
+    "chapters/02-background.tex": "ab400e8399675c7324f00a3660203c18bc5dfc713ffc6a334c5ae0a2f9f626a6",
+    "chapters/02-7-gap.tex": "e9fdb307ffedd20da7b7af8072aa7a0324f25cdca28848bd54f16989f2577fd4",
+    "chapters/05-7-probe.tex": "d186d8c8da3ebf9a602b38fa58083a01aa09d6e1462a593fe731f3dc78ad2866",
+    "chapters/01-1-context.tex": "df13189b606f779d340658fbefcb3c465c1e6a3cd52e8c8f11959c7ae4c4a106",
+    "chapters/01-5-contributions.tex": "08e1a20f919e2ff684e93cec64fd581eb9a2efc19fab5effb01b33577aa9b46e",
+    "chapters/04-4-lifecycle.tex": "33762358fe50095adcb13e0fd6592ee6e0be8c12e6b0e138d7304363b8f80ba9",
+    "chapters/08-discussion.tex": "2e7b01895dd53048cad4e41e474d76bb4991d1138d0b56550b3768dfb63a3b43",
+    "chapters/01-4-questions.tex": "9514e89b231a374170ed6817bcdb5af76eb0699b1b5af81d4595b34fc644cfbb",
+    "chapters/06-5-economics.tex": "d1f9ca6939d07f987524f2f268a795a11bce50352cd5f7545ac243b828903e0b",
+    "chapters/08-3-validity.tex": "a150f74adbbd4d4d7de3107f0c9f340746814f1f05aa1ab395e679cde12ba24a",
+    "chapters/04-3-layout.tex": "4b5becae76071ce615fd8e6088ad1ee4804520ab2652fb5dff41ba30d44f8b37",
+    "chapters/04-2-training.tex": "c86e615d80175d550d615ae08abad7c831c8ae63bbcaa3f2d1f72d9d860fa9a1",
+    "chapters/08-2-negative.tex": "4cc1a7d8f2682160e8b8d388c241e148cf0f38dd60ac5916962f4822863da590",
+    "chapters/06-3-search.tex": "2a9a5cf4366bdf57abfc9e35c4d0b07e7c6563bdafcc82c7302eb59a5830402f",
+    "chapters/04-5-construction.tex": "138947b57d998049692ab34f9cbd60f39382f5e5d6903aecd0e058ceb543aec9",
+    "frontmatter/notation.tex": "0430c95f66221eb87a762fdd8153d67b8f1deeade8e61c5fd4675d3479cd1eff",
+    "frontmatter/abstract.tex": "4c7378264df4c16d18fe3b891735f3d89ac8b161f925bd4808cc1894621765c7"
+  },
+  "inline_table_translations": [
+    {
+      "path": "chapters/01-5-contributions.tex",
+      "block": 0,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}p{.23\\linewidth}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n & Inherited foundation & Project contribution & Evidence \\\\\n\\midrule\nC1 & JHQ rotation, codebooks and hierarchy & GPU training/encoding,\nbounded batch construction and list-ordered packed representation\n& Search of 17.78M vectors at 20.44\\,GiB resident; repeated train+add\n10.54--10.65\\,s; sampled construction peak 22.58\\,GiB \\\\\nC2 & Cartesian additivity and established GPU primitives & Integrated\nfactorised scoring, complete-key grouped retention/bounds, lane refinement\nand execution scheduling & Two-group LUTs lead in 22/24 cells;\nscheduled execution $2.727\\times$ at batch 8; explicit correctness scope \\\\\nC3 & Candidate expansion and output-agreement ideas & Workload-level\nbudget rule, conditional selection analysis, held-out controls and cost/risk\nevaluation & FULL meets the relative-loss target in 12/12 cells;\nsmaller samples expose risk; four cells directly measure calibrated reuse \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}p{.23\\linewidth}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n& 继承基础 & 项目贡献 & 证据 \\\\\n\\midrule\nC1 & JHQ 旋转、码本与层级 & GPU 训练／编码、有界 batch 构建及列表顺序的打包表示 & 17.78M 向量搜索，常驻 20.44\\,GiB；重复 train+add 为 10.54--10.65\\,s；采样构建峰值 22.58\\,GiB \\\\\nC2 & Cartesian 可加性与已有 GPU 原语 & 集成分解评分、完整键分组保留／阈值、lane 精排和执行调度 & 两组 LUT 在 22/24 单元领先；batch 8 调度执行为 $2.727\\times$；明确正确性范围 \\\\\nC3 & 候选扩展与输出一致性思想 & 工作负载级预算规则、有条件选择分析、留出对照及成本／风险评估 & FULL 在 12/12 单元满足相对损失目标；小样本暴露风险；四个单元直接测量校准后复用 \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/02-7-gap.tex",
+      "block": 0,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.14\\linewidth}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nAlternative & Useful structure & Principal trade-off & JHQ-GPU question \\\\\n\\midrule\nIVF-PQ / OPQ & Learned subspace codes; ADC & Distortion and training;\narbitrary subcodebooks couple coordinates & What does an internally\nCartesian primary code permit in GPU scoring? \\\\\nFast Scan / Quicker ADC & Small tables and SIMD lookup & Table precision,\nshape and ISA constraints & Does exact splitting repay extra GPU lookups? \\\\\nSONG / CAGRA & Selective graph navigation & Dependent access, graph\nstorage and construction & Where does a resident hierarchical scan compete? \\\\\nBANG & Compressed GPU scoring with host graph & Capacity versus\ncommunication & What can complete compressed residency achieve? \\\\\nIVF-RaBitQ & GPU code construction and fused search & Bit budget,\nestimator and probe effort & Which recall regions justify the residual hierarchy? \\\\\nAdaptive effort & Refine ratios, autotuning, learned or declarative stopping\n& Labels, reference fidelity, prediction or calibration cost & Can unlabelled\nworkload agreement select useful effort at an acceptable risk and total cost? \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.14\\linewidth}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n方案 & 可利用结构 & 主要权衡 & JHQ-GPU 的问题 \\\\\n\\midrule\nIVF-PQ / OPQ & 学习式子空间码；ADC & 失真和训练；任意子码本可能耦合坐标 & 内部 Cartesian 主码允许怎样的 GPU 评分？ \\\\\nFast Scan / Quicker ADC & 小表和 SIMD 查表 & 表精度、形状与 ISA 约束 & 精确拆分能否抵消额外 GPU 查表？ \\\\\nSONG / CAGRA & 选择性图导航 & 依赖访问、图存储与构建 & 常驻层级扫描在哪些区间有竞争力？ \\\\\nBANG & 压缩 GPU 评分与主机图 & 容量与通信 & 完整压缩常驻能实现什么？ \\\\\nIVF-RaBitQ & GPU 编码构建与融合搜索 & 位预算、估计器与 probe 工作量 & 哪些召回区间值得使用残差层级？ \\\\\n自适应计算量 & 精排倍率、自动调参、学习式或声明式停止 & 标签、参考精度、预测或校准成本 & 无标签工作负载一致性能否在可接受风险和总成本下选择有效计算量？ \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/03-1-comparisons.tex",
+      "block": 3,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.11\\linewidth}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nQuestion & Intervention / comparison & Held fixed or accounted for & Measure and counter-evidence \\\\\n\\midrule\nRQ1: build and capacity & GPU construction; cached versus cold lifecycle;\ncompressed versus raw storage & $N,d$, representation, routing and timed\nconstruction boundary & Train/add time and resident bytes; failed builds\nor model--allocation gaps delimit feasibility \\\\\nRQ2: execution & LUT grouping, word access, refinement lanes, grouped scan,\nshared bound and probe selection & Paired state, workload and score;\nreference output semantics & Wall QPS, stage time and output checks;\nslowdowns or non-tie mismatches challenge the mechanism \\\\\nRQ3: budget & Sampled / full-pool rule versus fixed 64, 100, 200,\nenumeration and GT oracle & One index and route; disjoint calibration\nand held-out query positions & Held-out recall loss, selected-arm QPS\nand calibration cost; threshold crossings challenge reliability \\\\\nRQ4: operating region & Independently tuned JHQ, CAGRA, IVF-PQ and\nIVF-RaBitQ & Exported vectors, GT, $k$, device and host-to-host boundary;\nmemory reported separately & Matched-recall QPS and coverage; stronger\ncompetitors at other recall targets challenge broad superiority \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.11\\linewidth}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n问题 & 干预／比较 & 固定或统计的量 & 指标与反证 \\\\\n\\midrule\nRQ1：构建与容量 & GPU 构建；缓存与冷生命周期；压缩与原始存储 & $N,d$、表示、路由及构建计时边界 & Train／add 时间与常驻字节；构建失败或模型—分配差距界定可行性 \\\\\nRQ2：执行 & LUT 分组、word 访问、精排 lanes、分组扫描、共享阈值与 probe 选择 & 成对状态、负载、分数及参考输出含义 & Wall QPS、阶段时间和输出检查；减速或非并列不一致会挑战机制 \\\\\nRQ3：预算 & 抽样／全池规则，对照固定 64、100、200、枚举及 GT oracle & 同一索引与路由；不相交的校准和留出查询位置 & 留出召回损失、所选臂 QPS 与校准成本；越阈挑战可靠性 \\\\\nRQ4：竞争区间 & 独立调优的 JHQ、CAGRA、IVF-PQ 和 IVF-RaBitQ & 导出向量、GT、$k$、设备及主机到主机边界；显存单独报告 & 匹配召回 QPS 与覆盖；其他召回目标上的更强对手挑战广泛优越性 \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/03-4-frontiers.tex",
+      "block": 0,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.22\\linewidth}>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\nFamily & Recorded search dimensions \\\\\n\\midrule\nJHQ & Probes and $\\alpha$; initial probes 64/128/256 and\n$0.5/1/2$ times the workload budget; coverage extensions reach probe\n1,024 and larger/smaller budgets \\\\\nCAGRA fp32/int8 & Graph degree 32/64; search width 1/2/4/8;\nintermediate top-$k$ capacity 32--512 \\\\\nIVF-PQ & Eight-bit subcodes; 192/384/768-byte codes at $d=768$,\n384/768/1,536 at higher dimensions; fp16/fp32 lookup settings;\nprobes 16--512 \\\\\nIVF-RaBitQ & 4/8/9 bits per dimension, supported search modes,\nprobes 16--1,024; additional 4,096-list OpenAI indexes \\\\\nGPU brute force & Exhaustive FP32 squared-L2 search, common host boundary \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.22\\linewidth}>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\n家族 & 记录的搜索维度 \\\\\n\\midrule\nJHQ & Probes 与 $\\alpha$；初始 probes 为 64/128/256，预算为工作负载预算的 $0.5/1/2$ 倍；覆盖扩展至 probe 1,024 和更大／更小预算 \\\\\nCAGRA fp32/int8 & 图度数 32/64；搜索宽度 1/2/4/8；中间 top-$k$ 容量 32--512 \\\\\nIVF-PQ & 八位子码；$d=768$ 时编码 192/384/768 bytes，更高维为 384/768/1,536；fp16/fp32 查表；probes 16--512 \\\\\nIVF-RaBitQ & 每维 4/8/9 位、支持的搜索模式、probes 16--1,024；额外 4,096 列表 OpenAI 索引 \\\\\nGPU 暴力搜索 & FP32 平方 L2 穷举，共同主机边界 \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/03-5-ledger.tex",
+      "block": 0,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\nVersion & Mechanism / experimental role\\\\\\midrule\nv61 & Word-load and lane-refinement controls\\\\\nv62 / v63 & Grouped full-key selection / shared bound\\\\\nv65 / v69 & Batch/skew scheduling / radix probe selection\\\\\nv69 / v71 / v73 & Budget calibration / LUT sweep / strict-score export\\\\\nv69 / v72 & OpenAI: TF32 versus FP32 add/query arithmetic on the same trained cache\\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\n版本 & 机制／实验作用\\\\\\midrule\nv61 & Word 载入与 lane 精排对照\\\\\nv62 / v63 & 分组完整键选择／共享阈值\\\\\nv65 / v69 & Batch／偏斜调度及 radix probe 选择\\\\\nv69 / v71 / v73 & 预算校准／LUT 扫描／严格分数导出\\\\\nv69 / v72 & OpenAI：同一训练缓存上的 TF32 与 FP32 add／查询算术\\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/04-4-lifecycle.tex",
+      "block": 5,
+      "before": "\\begin{tabular}{@{}rrrrrrrr@{}}\n\\toprule\n$d$ & Primary & Residual & ID + corr. & JHQ & SQ8 & \\shortstack{CAGRA\\\\int8} & FP32 \\\\\n\\midrule\n768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\\\\n1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\\\\n1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\\\\n3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\\\\n\\bottomrule\n\\end{tabular}",
+      "after": "\\begin{tabular}{@{}rrrrrrrr@{}}\n\\toprule\n$d$ & 主码 & 残差 & ID＋校正 & JHQ & SQ8 & \\shortstack{CAGRA\\\\int8} & FP32 \\\\\n\\midrule\n768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\\\\n1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\\\\n1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\\\\n3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\\\\n\\bottomrule\n\\end{tabular}"
+    },
+    {
+      "path": "chapters/04-5-construction.tex",
+      "block": 12,
+      "before": "\\begin{tabular}{@{}lrrr@{}}\n\\toprule\nDataset & Final row payload & One-pass gather & Two-pass repack \\\\\n\\midrule\nBGE & 10.90 & 23.05 & 12.11 \\\\\nStella & 19.20 & 40.59 & 21.32 \\\\\n\\bottomrule\n\\end{tabular}",
+      "after": "\\begin{tabular}{@{}lrrr@{}}\n\\toprule\n数据集 & 最终行载荷 & 一遍 Gather & 两遍重打包 \\\\\n\\midrule\nBGE & 10.90 & 23.05 & 12.11 \\\\\nStella & 19.20 & 40.59 & 21.32 \\\\\n\\bottomrule\n\\end{tabular}"
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "block": 15,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{1.8cm}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nBoundary & Required property & Evidence / remaining check \\\\\n\\midrule\nC0:\\newline geometry & Common transform with bounded floating-point isometry error & Stored-matrix orthogonality checked on four datasets; TF32 GPU arithmetic distinguished \\\\\nC1:\\newline codebooks / correction & Cartesian levels, sorted residual codebooks, correction matches decoded codes & Pilot checks completed on three databases; all-row correction errors in \\cref{sec:4-6} \\\\\nC1:\\newline input encoding & Stored codes encode the intended original input row & FP64 original-input recoding on four samples; boundary and TF32 discrepancies quantified \\\\\nC1:\\newline placement & Offsets cover rows; IDs form a permutation; all fields follow it & All-row offsets/ID checks; three ID-joined path comparisons; centroid membership unverified \\\\\nExecution & Valid indexing, synchronisation and score-order contracts & Archived query and sanitizer checks; finite coverage, detailed in \\cref{sec:7-4} \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{1.8cm}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n边界 & 必要性质 & 证据／剩余检查 \\\\\n\\midrule\nC0：\\newline 几何 & 共同变换及有界浮点等距误差 & 四个数据集检查存储矩阵正交性；区分 TF32 GPU 算术 \\\\\nC1：\\newline 码本／校正 & Cartesian 等级、有序残差码本、校正符合解码编码 & 三个数据库完成试验检查；全行校正误差见 \\cref{sec:4-6} \\\\\nC1：\\newline 输入编码 & 存储码对应预期原始输入行 & 四个样本的 FP64 原始输入重编码；量化边界和 TF32 差异 \\\\\nC1：\\newline 放置 & Offsets 覆盖各行；ID 构成排列；所有字段随之移动 & 全行 offsets／ID 检查；三个按 ID 连接的路径比较；质心归属未验证 \\\\\n执行 & 有效索引、同步和分数顺序约束 & 存档查询和 Sanitizer 检查；覆盖有限，详见 \\cref{sec:7-4} \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/05-1-query-path.tex",
+      "block": 8,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{1.7cm}>{\\raggedright\\arraybackslash}p{2.1cm}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nStage & Input $\\to$ output & Data read & Main work & Order / exactness \\\\\n\\midrule\nTransform & $q\\to q'$ & Query; transform & Apply $\\Pi$ & Transform (precision in \\cref{sec:7-precision}) \\\\\nProbe & $n_{\\rm list}\\to n_{\\rm probe}$ lists & FP32 centroids; list lengths & Score; radix; rank count & $(s_i,i)$; exact probe selection \\\\\nLUT & $q'\\to$ tables & Primary codebook & $MD_s2^{8/\\glut}$ terms & Real-arithmetic factorisation; FP32 rounding \\\\\nPrimary, $\\gscan=0$ & $n_c\\to c_v$ & Packed primary codes; LUT & $O(n_cM)$ scoring; compaction & Exact distance-order selection; arbitrary cutoff ties \\\\\nPrimary, $\\gscan\\geq1$ & $n_c\\to c_v$ & Same primary representation & Score; compact; merge & $(\\primarydist,p)$; exact under stated premises \\\\\nRefine & $c_v\\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed $\\refineddist$; lane-dependent FP32 association \\\\\nFinal & $c_v\\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\\refineddist,\\mathrm{ID})$; exact with $k$ finite valid entries \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{1.7cm}>{\\raggedright\\arraybackslash}p{2.1cm}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n阶段 & 输入 $\\to$ 输出 & 读取数据 & 主要工作 & 顺序／精确性 \\\\\n\\midrule\n变换 & $q\\to q'$ & 查询；变换 & 应用 $\\Pi$ & 变换精度见 \\cref{sec:7-precision} \\\\\nProbe & $n_{\\rm list}\\to n_{\\rm probe}$ 个列表 & FP32 质心；列表长度 & 评分；radix；排名计数 & $(s_i,i)$；精确 probe 选择 \\\\\nLUT & $q'\\to$ 表 & 主码本 & $MD_s2^{8/\\glut}$ 项 & 实数算术分解；FP32 舍入 \\\\\n主码，$\\gscan=0$ & $n_c\\to c_v$ & 打包主码；LUT & $O(n_cM)$ 评分；压缩 & 按距离精确选择；cutoff 并列任取 \\\\\n主码，$\\gscan\\geq1$ & $n_c\\to c_v$ & 相同主码表示 & 评分；压缩；归并 & $(\\primarydist,p)$；指定前提下精确 \\\\\n精排 & $c_v\\to c_v$ 个分数 & 残差码；校正 & $O(c_vd)$ & 计算的 $\\refineddist$；FP32 结合顺序依赖 lane \\\\\n最终 & $c_v\\to k$ & 精排分数；ID & $O(kc)$ 槽位扫描 & $(\\refineddist,\\mathrm{ID})$；有 $k$ 个有限有效项时精确 \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/05-2-lut.tex",
+      "block": 21,
+      "before": "\\begin{tabular}{@{}rrrrrr@{}}\n\\toprule\n$\\glut$ & Entries & FP32 bytes & Lookups & Combining adds & Build terms \\\\\n\\midrule\n1 & 256 & 1,024 & 1 & 0 & 2,048 \\\\\n2 & 32 & 128 & 2 & 1 & 128 \\\\\n4 & 16 & 64 & 4 & 3 & 32 \\\\\n8 & 16 & 64 & 8 & 7 & 16 \\\\\n\\bottomrule\n\\end{tabular}",
+      "after": "\\begin{tabular}{@{}rrrrrr@{}}\n\\toprule\n$\\glut$ & 项数 & FP32 字节 & 查表数 & 合并加法 & 构造项数 \\\\\n\\midrule\n1 & 256 & 1,024 & 1 & 0 & 2,048 \\\\\n2 & 32 & 128 & 2 & 1 & 128 \\\\\n4 & 16 & 64 & 4 & 3 & 32 \\\\\n8 & 16 & 64 & 8 & 7 & 16 \\\\\n\\bottomrule\n\\end{tabular}"
+    },
+    {
+      "path": "chapters/06-4-controls.tex",
+      "block": 0,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{2.7cm}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nControl & Selection information & Question \\\\\n\\midrule\nFixed 100 & No calibration & Gain relative to the inherited default? \\\\\nFixed 64 and smaller grid arms & No calibration & Does a simple fixed choice remove the need for calibration? \\\\\nSampled bisection & $S$ unlabelled queries; slot agreement & How well does a low-cost sample choose a reusable budget? \\\\\nSame-sample enumeration & Same $S$, reference and threshold; all grid arms & Did bisection miss the smallest accepted grid budget? \\\\\nFull-pool calibration & All 500 calibration queries; same bisection rule & What changes with broader coverage and a stricter normalised allowance? \\\\\nHeld-out oracle & GT recall and timed QPS for all arms & Which measured arm is fastest under the diagnostic quality constraint? \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{2.7cm}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n对照 & 选择信息 & 问题 \\\\\n\\midrule\n固定 100 & 不校准 & 相对继承默认值的收益？ \\\\\n固定 64 及更小网格臂 & 不校准 & 简单固定选择能否消除校准需求？ \\\\\n抽样二分 & $S$ 个无标签查询；槽位一致性 & 低成本样本能否选出可复用预算？ \\\\\n同样本枚举 & 相同 $S$、参考及阈值；全部网格臂 & 二分是否漏掉网格最小接受预算？ \\\\\n全池校准 & 全部 500 个校准查询；相同二分规则 & 更广覆盖及更严格归一化容许量带来什么变化？ \\\\\n留出 Oracle & 全部臂的 GT 召回及计时 QPS & 哪个已测实验臂在诊断质量约束下最快？ \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "chapters/08-3-validity.tex",
+      "block": 0,
+      "before": "\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nClaim at risk & Alternative or reversal & Control and remaining test \\\\\n\\midrule\nExecution gain & Changed scores, ties or index state explain an apparent\nspeedup & Strict T4 CPU sorting and table-form diagnostics; finite\ncoverage, with candidate dumps no longer retained \\\\\nBudget quality & Finite-pool sampling or drift hides damaging queries\n& Disjoint GT evaluation, full traces, subset-sum checks and FULL\nenumeration; future-query and arbitrary-subset invariance remain untested \\\\\nCompetitive margin & Grid density, call tails or API overhead changes\nthe ordering & Both recall estimators, retained slow calls and int8\nbaseline; TF32/FP32 sensitivity; T5 exposes small-batch reversals;\ncross-device comparisons remain unmeasured \\\\\nCapacity/build claim & Transient allocations exceed a resident sample\n& Phase bytes, repeated empty-cache builds and 20\\,ms device peaks;\nsub-interval allocations and full retrained frontiers remain unmeasured \\\\\n\\bottomrule\n\\end{tabularx}",
+      "after": "\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n受威胁主张 & 替代解释或反转 & 对照与剩余测试 \\\\\n\\midrule\n执行收益 & 分数、并列或索引状态变化解释表观加速 & 严格 T4 CPU 排序与表形式诊断；覆盖有限，候选转储已不保留 \\\\\n预算质量 & 有限池抽样或漂移隐藏有害查询 & 不相交 GT 评估、完整轨迹、子集和检查及 FULL 枚举；未来查询和任意子集不变性未测试 \\\\\n竞争优势 & 网格密度、调用尾部或 API 开销改变排序 & 两种召回估计器、保留慢调用及 int8 基线；TF32／FP32 敏感性；T5 暴露小 batch 反转；跨设备未测 \\\\\n容量／构建主张 & 瞬时分配超过常驻采样 & 阶段字节、重复空缓存构建和 20\\,ms 设备峰值；采样间分配及完整重训练前沿未测 \\\\\n\\bottomrule\n\\end{tabularx}"
+    },
+    {
+      "path": "frontmatter/notation.tex",
+      "block": 0,
+      "before": "\\begin{longtable}{@{}>{\\raggedright\\arraybackslash}p{.25\\linewidth}>{\\raggedright\\arraybackslash}p{.70\\linewidth}@{}}\n\\toprule\nSymbol & Meaning \\\\\n\\midrule\n$N,d$ & Number of database vectors and original dimension \\\\\n$M,D_s$ & Number of primary subspaces and dimensions per subspace \\\\\n$a_{\\rm add},a_{\\rm in},a_{\\rm assign}$ & Configured add, staged input, and independently allocated assignment rows \\\\\n$n_b,S_{\\rm stage}$ & Pipeline buffer count and byte budget per input/rotated array \\\\\n$\\Pi$ & Square orthogonal transform; $q'=\\Pi q$ \\\\\n$B,B_r$ & Primary bits per subspace and residual bits per coordinate \\\\\n$\\rho(p),o_\\ell$ & Input ID at physical position $p$, and start of IVF list $\\ell$ \\\\\n$k$ & Number of returned neighbours \\\\\n$n_c,c$ & Routed candidates and primary survivors receiving refinement \\\\\n$\\alpha$ & Refinement multiplier, with $c=\\max\\{k,\\lceil\\alpha k\\rceil\\}$ \\\\\n$S,\\epsilon$ & Sample count; allowed missing-reference slots \\\\\n$C_\\alpha,\\mathcal R_\\alpha$ & Valid survivors; returned IDs at budget $\\alpha$ \\\\\n$\\alpha_{\\rm ref},B_{\\rm reuse}$ & Reference refinement budget and number of subsequent reuse batches \\\\\n$\\glut$ & Number of groups in a factorised lookup table \\\\\n$\\gscan$ & Number of scan groups per query; zero labels the one-block path \\\\\n$C_{\\rm buf},T_{\\rm blk}$ & Buffer capacity; threads per block \\\\\n$n_{\\rm LUT}(\\glut)$ & LUT entries per primary subspace \\\\\n$\\kappa(D,p)$ & Packed full key for bounds \\\\\n$\\lrefine$ & Lanes cooperating on one survivor \\\\\n$\\rawdist$ & $\\|q-x\\|_2^2$ \\\\\n$\\primarydist$ & $\\|q'-\\widehat p\\|_2^2$ \\\\\n$\\refineddist$ & $\\|q'-\\widehat p-\\widehat r\\|_2^2+\\|q'\\|_2^2$ \\\\\n\\bottomrule\n\\end{longtable}",
+      "after": "\\begin{longtable}{@{}>{\\raggedright\\arraybackslash}p{.25\\linewidth}>{\\raggedright\\arraybackslash}p{.70\\linewidth}@{}}\n\\toprule\n符号 & 含义 \\\\\n\\midrule\n$N,d$ & 数据库向量数与原始维度 \\\\\n$M,D_s$ & 主码子空间数与每子空间维度 \\\\\n$a_{\\rm add},a_{\\rm in},a_{\\rm assign}$ & 配置 add 行数、输入暂存行数及独立分配的分配评分行数 \\\\\n$n_b,S_{\\rm stage}$ & 流水缓冲数及每个输入／旋转数组的字节预算 \\\\\n$\\Pi$ & 方形正交变换；$q'=\\Pi q$ \\\\\n$B,B_r$ & 每主码子空间位数与每残差坐标位数 \\\\\n$\\rho(p),o_\\ell$ & 物理位置 $p$ 的输入 ID，及 IVF 列表 $\\ell$ 的起点 \\\\\n$k$ & 返回近邻数 \\\\\n$n_c,c$ & 路由候选数及接受精排的主码保留数 \\\\\n$\\alpha$ & 精排倍率，$c=\\max\\{k,\\lceil\\alpha k\\rceil\\}$ \\\\\n$S,\\epsilon$ & 样本数；允许缺失的参考槽位数 \\\\\n$C_\\alpha,\\mathcal R_\\alpha$ & 有效保留集合；预算 $\\alpha$ 下返回的 ID \\\\\n$\\alpha_{\\rm ref},B_{\\rm reuse}$ & 参考精排预算与后续复用 batch 数 \\\\\n$\\glut$ & 分解查找表的组数 \\\\\n$\\gscan$ & 每查询扫描组数；零表示单 block 路径 \\\\\n$C_{\\rm buf},T_{\\rm blk}$ & 缓冲容量；每 block 线程数 \\\\\n$n_{\\rm LUT}(\\glut)$ & 每主码子空间 LUT 项数 \\\\\n$\\kappa(D,p)$ & 阈值使用的打包完整键 \\\\\n$\\lrefine$ & 每个保留候选的协作 lanes 数 \\\\\n$\\rawdist$ & $\\|q-x\\|_2^2$ \\\\\n$\\primarydist$ & $\\|q'-\\widehat p\\|_2^2$ \\\\\n$\\refineddist$ & $\\|q'-\\widehat p-\\widehat r\\|_2^2+\\|q'\\|_2^2$ \\\\\n\\bottomrule\n\\end{longtable}"
+    },
+    {
+      "path": "frontmatter/notation.tex",
+      "block": 1,
+      "before": "\\begin{longtable}{@{}>{\\raggedright\\arraybackslash}p{.25\\linewidth}>{\\raggedright\\arraybackslash}p{.70\\linewidth}@{}}\n\\toprule\nAbbreviation & Meaning \\\\\n\\midrule\nANN & Approximate nearest neighbour \\\\\nADC & Asymmetric distance computation \\\\\nIVF & Inverted file \\\\\nJHQ & Johnson--Lindenstrauss enhanced hierarchical quantisation \\\\\nLUT & Lookup table \\\\\nPQ & Product quantisation \\\\\nQPS & Queries per second \\\\\nGT & Ground truth \\\\\nFP32 & IEEE binary32; GEMM mode stated separately \\\\\nTF32 & Reduced-precision Tensor Core inputs; FP32 accumulation \\\\\nCV & $\\operatorname{sd}(n_c)/\\operatorname{mean}(n_c)$ \\\\\n\\bottomrule\n\\end{longtable}",
+      "after": "\\begin{longtable}{@{}>{\\raggedright\\arraybackslash}p{.25\\linewidth}>{\\raggedright\\arraybackslash}p{.70\\linewidth}@{}}\n\\toprule\n缩略语 & 含义 \\\\\n\\midrule\nANN & 近似最近邻 \\\\\nADC & 非对称距离计算 \\\\\nIVF & 倒排文件 \\\\\nJHQ & Johnson--Lindenstrauss 增强的层级量化 \\\\\nLUT & 查找表 \\\\\nPQ & 乘积量化 \\\\\nQPS & 每秒查询数 \\\\\nGT & 真实近邻 \\\\\nFP32 & IEEE binary32；GEMM 模式另行说明 \\\\\nTF32 & 低精度 Tensor Core 输入；FP32 累加 \\\\\nCV & $\\operatorname{sd}(n_c)/\\operatorname{mean}(n_c)$ \\\\\n\\bottomrule\n\\end{longtable}"
+    }
+  ],
+  "external_tables": [
+    {
+      "source": "tables/ch3/datasets.tex",
+      "destination": "variants/thesis2-zh/tables/ch3/datasets.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/budget_cost.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/budget_cost.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/budget_full.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/budget_full.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/budget_quality.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/budget_quality.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/build_memory.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/build_memory.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/e1_memory.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/e1_memory.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/matched97.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/matched97.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/probe.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/probe.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/refinement.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/refinement.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/ch7/scheduling.tex",
+      "destination": "variants/thesis2-zh/tables/ch7/scheduling.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/full-review/precision-anchors.tex",
+      "destination": "variants/thesis2-zh/tables/full-review/precision-anchors.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/supplement/precision.tex",
+      "destination": "variants/thesis2-zh/tables/supplement/precision.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/supplement/representation.tex",
+      "destination": "variants/thesis2-zh/tables/supplement/representation.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/supplement/stream.tex",
+      "destination": "variants/thesis2-zh/tables/supplement/stream.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/t4-t5/smallbatch.tex",
+      "destination": "variants/thesis2-zh/tables/t4-t5/smallbatch.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    },
+    {
+      "source": "tables/t4-t5/strict-selection.tex",
+      "destination": "variants/thesis2-zh/tables/t4-t5/strict-selection.tex",
+      "numeric_rows_preserved": true,
+      "math_preserved": true
+    }
+  ],
+  "protected_originals": {
+    "variants/thesis2/export_parts.py": "f54a7aafcdad52afa91b6a8812c2693bfcc5cd44a7d5b345ee25a8ea5567138f",
+    "variants/thesis2/validate_figure_layout.py": "361c019ff52224b9bb6ee7b251f8420d5e1ecb4d32ad14a1f2e588b77d1aa210",
+    "variants/thesis2/main.tex": "9b5777dbbe389c6bdede9d479eeb0c164d7054d40cce09883b6b3a5f4686afa2",
+    "variants/thesis2/checks.json": "ffebbfe8bf601d131c004145a077b6eff7cc6db92a46aa0b0695327e3bfff753",
+    "variants/thesis2/format-59.tex": "970fff5ae853d15ddd7b4edd0c95af7c1221d66e93beef5d27c9b0fa14b9a338",
+    "variants/thesis2/README.txt": "112ec1471ce194141a59e8245294a40e55872ecbc9cc8f8e5b726dcf3e699af4",
+    "variants/thesis2/verify.py": "a991f911278f09ab667bdaeaf8dfb65f5cb2ab911aed7cbdaa8924afe6b9716e",
+    "variants/thesis2/chapters/05-1-query-path.tex": "03804f4368ca9bd6865a358fd888fad0c78ad4feafaa401b88e213f7cc61b77e",
+    "variants/thesis2/chapters/06-refinement.tex": "98fcc99346ee6c054046f8cd74bd19964fe2070902a2939090b032e832e9b3aa",
+    "variants/thesis2/chapters/01-introduction.tex": "6f0748e1026b170f97aaf0205bd202f7e23324f6a502e4de3a45aeb664079c77",
+    "variants/thesis2/chapters/05-6-refinement.tex": "f5d5054a77ff0391334722a5a86ffe614c3714afde8351bee733cc8b8f94865c",
+    "variants/thesis2/chapters/07-supp-budget.tex": "99ed5dc483733ae43536ec386c1803a62eb56375c16e81db84d92eb7535765b6",
+    "variants/thesis2/chapters/01-2-scope.tex": "9e79a10f78bd4e84d036ee5edbcae469eb87c1f66778fe67b230323f50fd6e06",
+    "variants/thesis2/chapters/08-1-insights.tex": "fac0e1d3f7cb9108872b8870468f16094e29fd8016dff3311eb194a6d4c0bcf6",
+    "variants/thesis2/chapters/07-supp-selection.tex": "0605323d8cfcc0511b5c9f9208769a7aeebd6e55274538426a9c4df1aa7beb6e",
+    "variants/thesis2/chapters/02-5-graphs.tex": "bc607aa5479f0792e1d575553a8d3561dbe446caa9f025b5ea3448a74b544aa6",
+    "variants/thesis2/chapters/06-1-motivation.tex": "e97364a32dbe6e8fbc400e3b27e707c9f67a025fe98bc25846c80a3195da64f8",
+    "variants/thesis2/chapters/02-1-objective.tex": "6bea79e8046f405fb0b84ae53fc660cae4a6f6b2007ff0a2a4445b3171b1999f",
+    "variants/thesis2/chapters/03-6-validity.tex": "179e02a8ef5476721a87f68ae03085a5fed5c9faaab6becdc53c073ea3eb0545",
+    "variants/thesis2/chapters/06-6-scope.tex": "291e4deb25346ff9e3a552529a0dbf2b7ac034a40e52cb9c3eabf8f0e517cc34",
+    "variants/thesis2/chapters/03-2-data.tex": "cbd15ecd9aa4d30690fb0a411a0262fbb5ad83b5c939e3e69a184527fe0994ae",
+    "variants/thesis2/chapters/02-4-gpu.tex": "b5128a1f9998877e6ba2e1a585a2683725cba6a9c92ba1369d1f8f24126f1e17",
+    "variants/thesis2/chapters/03-5-ledger.tex": "a152b61b7a03cf63c7ff8592a45b27440a9dea539620ae0c8e0001e94af4cf23",
+    "variants/thesis2/chapters/07-supp-smallbatch.tex": "62874353c5b50a9b270f7d41d52be3be9955e8f5c892a05311e58c2bc20f9e36",
+    "variants/thesis2/chapters/03-1-comparisons.tex": "e7cad5f93cffb81cc6b2fad3d39cd0dc042b2899b8de855dba0c083d4542f155",
+    "variants/thesis2/chapters/08-4-directions.tex": "0d1cab6450f9e3daf83019800654ad27823456e2a9436cc6f92da08a617caff6",
+    "variants/thesis2/chapters/03-4-frontiers.tex": "a6cb7e3706ce5ff3b69db4c86914b30dd64f0bce0252804025d8dfdf4a935638",
+    "variants/thesis2/chapters/05-5-bound-scheduling.tex": "889533722cbae13cad0db555fb1e505ca926b3044f670a3402db7c4d0a889482",
+    "variants/thesis2/chapters/03-3-measurement.tex": "5bcc2f8dbc68cc077ca684ac3083e0d6c8d752fb9bf13e9abe9950cc474b153d",
+    "variants/thesis2/chapters/05-3-packed-access.tex": "8dde5fdc3fc2fadd696e281ab790e800fa14c1860acbf8e5bf7b7042dfa99873",
+    "variants/thesis2/chapters/02-3-jhq.tex": "74dc5f2b1ce4db4fbba2198752422dc0ea184cacad020e9f7daead2e8c841f6c",
+    "variants/thesis2/chapters/04-architecture.tex": "c8753f19dea22faa89e2a2fef05459c73cde9832b1d5efb5ecdebcd03c1a0ef4",
+    "variants/thesis2/chapters/04-6-contracts.tex": "32126962a774a060442fe5b88155a4f8fbca50ac8ccd8732281f0828bf68ec1d",
+    "variants/thesis2/chapters/02-2-hierarchy.tex": "80baefe11c29e36acacdda3b542257f14aa1ac19844551360d9df2f62f47aec1",
+    "variants/thesis2/chapters/04-1-boundaries.tex": "896e0be0d8fad7ce08c8f0bf899f04591cbf675baf4d979a37509fe6ab757d03",
+    "variants/thesis2/chapters/05-gpu-execution.tex": "8cc56f87778e70da803c2d52bd8e8028c54b1ecb2231095ebebd05ddd4e1cbe7",
+    "variants/thesis2/chapters/02-6-quantised.tex": "13562544a9b2d8780d430f8e65ecb4f39837f845bcc9e142ab64ba0db97cd990",
+    "variants/thesis2/chapters/07-evaluation.tex": "d4ec719e00a0f11bcc4416792d56c19393106bc6c46fc36a85dfa443b8f5a09d",
+    "variants/thesis2/chapters/08-5-deployment.tex": "70768671c1fe19c88d4ccd2dba450df313e743f51d0ab7f6cef9d0e6e73c0d47",
+    "variants/thesis2/chapters/06-2-agreement.tex": "c1c67be506f4dcd3efd4aaa165a224b061e478cc59c43c8d2332490d54c96c4c",
+    "variants/thesis2/chapters/07-supp-precision.tex": "e98408f730c3d5ab5c90ce503851f0177d48f00c5ed2d98b88a9327ac96e3fa4",
+    "variants/thesis2/chapters/01-3-challenges.tex": "1b27f8110bf1eeda50c0e276feab99b4d683e44424aeb1e3dca7effd1cac28fa",
+    "variants/thesis2/chapters/05-4-global-selection.tex": "964cc61966c07c2bcb9a7ec4dd6f770abc01d75c8bcf12c9a9b1f6b957a2bdc1",
+    "variants/thesis2/chapters/03-methodology.tex": "9129f3526a48abe811c4f8b19f4825f5790473246518abdd5fa8b2282ed286c7",
+    "variants/thesis2/chapters/06-4-controls.tex": "c951f5915674cbd26d0bd90bdd22a20c2312682b7ae4e941dd5a2e0a06a5ff41",
+    "variants/thesis2/chapters/05-2-lut.tex": "889e75b5b4c7f6efa5c8c94368ca120434539bfad2ce3dc8279510c4ff3244bf",
+    "variants/thesis2/chapters/09-conclusion.tex": "d87e6b52ca2dedfbe165eccf527eda3a797e81f801c878c5a16a3d16d63a7c45",
+    "variants/thesis2/chapters/02-background.tex": "ab400e8399675c7324f00a3660203c18bc5dfc713ffc6a334c5ae0a2f9f626a6",
+    "variants/thesis2/chapters/02-7-gap.tex": "e9fdb307ffedd20da7b7af8072aa7a0324f25cdca28848bd54f16989f2577fd4",
+    "variants/thesis2/chapters/05-7-probe.tex": "d186d8c8da3ebf9a602b38fa58083a01aa09d6e1462a593fe731f3dc78ad2866",
+    "variants/thesis2/chapters/01-1-context.tex": "df13189b606f779d340658fbefcb3c465c1e6a3cd52e8c8f11959c7ae4c4a106",
+    "variants/thesis2/chapters/01-5-contributions.tex": "08e1a20f919e2ff684e93cec64fd581eb9a2efc19fab5effb01b33577aa9b46e",
+    "variants/thesis2/chapters/04-4-lifecycle.tex": "33762358fe50095adcb13e0fd6592ee6e0be8c12e6b0e138d7304363b8f80ba9",
+    "variants/thesis2/chapters/08-discussion.tex": "2e7b01895dd53048cad4e41e474d76bb4991d1138d0b56550b3768dfb63a3b43",
+    "variants/thesis2/chapters/01-4-questions.tex": "9514e89b231a374170ed6817bcdb5af76eb0699b1b5af81d4595b34fc644cfbb",
+    "variants/thesis2/chapters/06-5-economics.tex": "d1f9ca6939d07f987524f2f268a795a11bce50352cd5f7545ac243b828903e0b",
+    "variants/thesis2/chapters/08-3-validity.tex": "a150f74adbbd4d4d7de3107f0c9f340746814f1f05aa1ab395e679cde12ba24a",
+    "variants/thesis2/chapters/04-3-layout.tex": "4b5becae76071ce615fd8e6088ad1ee4804520ab2652fb5dff41ba30d44f8b37",
+    "variants/thesis2/chapters/04-2-training.tex": "c86e615d80175d550d615ae08abad7c831c8ae63bbcaa3f2d1f72d9d860fa9a1",
+    "variants/thesis2/chapters/08-2-negative.tex": "4cc1a7d8f2682160e8b8d388c241e148cf0f38dd60ac5916962f4822863da590",
+    "variants/thesis2/chapters/06-3-search.tex": "2a9a5cf4366bdf57abfc9e35c4d0b07e7c6563bdafcc82c7302eb59a5830402f",
+    "variants/thesis2/chapters/04-5-construction.tex": "138947b57d998049692ab34f9cbd60f39382f5e5d6903aecd0e058ceb543aec9",
+    "variants/thesis2/frontmatter/notation.tex": "0430c95f66221eb87a762fdd8153d67b8f1deeade8e61c5fd4675d3479cd1eff",
+    "variants/thesis2/frontmatter/abstract.tex": "4c7378264df4c16d18fe3b891735f3d89ac8b161f925bd4808cc1894621765c7",
+    "variants/thesis2/appendices/a-reproducibility.tex": "cf318de6926c56d6484b1b8cc93a2d2aa7dee1d0ebc23252a9825b9dfeeeb34b",
+    "variants/thesis2/appendices/b-supplementary.tex": "538f6694dc3f1bc880023e1da0171afbd8d57a93b8822308fb70e2d32badd726",
+    "variants/thesis2/__pycache__/validate_figure_layout.cpython-313.pyc": "d3315f7ee5b7095109f15ebf861635068df8459635750622d1459cec78e7a0b2",
+    "variants/thesis2/audit/report-mapping.json": "e0d49695dbc3d151e63d6982780e11f7ee47cd239305cdd1bcc9907e27388884",
+    "variants/thesis2/audit/baseline.json": "0fa5b8bc2fc8957f985794e38b5b76e66776579c2eb676f61a30fe2a1b4d89c2",
+    "variants/thesis2/audit/edits.json": "a3a9e4773bb3b569efe3b9c94325abb78555eb66a398ee07de531a5b92781068",
+    "variants/thesis2/audit/figure-inventory-2026-10-30.json": "134cad2b38c36e8dd5bab7635cc3189423d484331f2d1c0525da879dbd5e4c77",
+    "variants/thesis2/audit/figure-layout-2026-10-30.json": "962456eef18ad6fb06535d84c07c6433f2eefba280fb27e8807789e529faaaeb",
+    "variants/thesis2/figures/memory-lifetimes.tex": "b0f1a7683e98f53d486368aeb61d8e2efdc9bc8f4ce344e43fa035876b9b9b27",
+    "variants/thesis2/figures/physical-layout.tex": "7df8cd5632d2ffb8351303a91fa70759118ef5239684ab4525d5ff621dd8266c",
+    "variants/thesis2/figures/calibration-flow-layout.tex": "9b4ebf11f976644f1828e9684062ab92303beb7059112dfdbf7c54bb0ea62a17",
+    "variants/thesis2/figures/cartesian-lut.tex": "0735da00bea84620caa40d831181617caff329c1ef6871e47d7186cf96f1742f",
+    "variants/thesis2/figures/add-paths.tex": "b092f6b0e06ac633c358a567ba8aab5bccc0e6c2c19fde5255dab6318f42e72f",
+    "variants/thesis2/figures/challenges-layout.tex": "9e0d75c4c59b495a61e029aba0fdd552879c631e58116f9467e3c5ad7c425eff",
+    "variants/thesis2/figures/budget-scope-layout.tex": "570abe21e95e4076a6880d8e8a5c0fac98a43a221cf0b5f4c940e5fb84476388",
+    "thesis.pdf": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72",
+    "thesis1.pdf": "44bf7050af1e429cf28287a32facd85e70e07510f4ce357343beb9269f942a09",
+    "thesis2.pdf": "b5532e25c4fc31cd2481f3301f69314da7f0c1a6554c1dfc872d97cc43fc464f",
+    "thesis2-part1.pdf": "9868c4d9fa165188767f56c693d0117222f8a7c9d64fcca4942d4d664fa947f3",
+    "thesis2-part2.pdf": "f22debe90aef34a66c17f8124901c59fd14daf301183ff50c523b7d8d66da26a",
+    "thesis-zh.pdf": "81f326d805074ef51092d6541a104e57c9968be79426c0930e727ef0a8c0b578"
+  },
+  "source_restoration_checks": [
+    {
+      "path": "chapters/05-1-query-path.tex",
+      "kept_blocks": 11,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-refinement.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/01-introduction.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-6-refinement.tex",
+      "kept_blocks": 14,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/07-supp-budget.tex",
+      "kept_blocks": 3,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/01-2-scope.tex",
+      "kept_blocks": 4,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/08-1-insights.tex",
+      "kept_blocks": 5,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/07-supp-selection.tex",
+      "kept_blocks": 5,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-5-graphs.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-1-motivation.tex",
+      "kept_blocks": 9,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-1-objective.tex",
+      "kept_blocks": 2,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-6-validity.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-6-scope.tex",
+      "kept_blocks": 2,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-2-data.tex",
+      "kept_blocks": 11,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-4-gpu.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-5-ledger.tex",
+      "kept_blocks": 3,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/07-supp-smallbatch.tex",
+      "kept_blocks": 2,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-1-comparisons.tex",
+      "kept_blocks": 4,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/08-4-directions.tex",
+      "kept_blocks": 1,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-4-frontiers.tex",
+      "kept_blocks": 5,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-5-bound-scheduling.tex",
+      "kept_blocks": 43,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-3-measurement.tex",
+      "kept_blocks": 4,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-3-packed-access.tex",
+      "kept_blocks": 16,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-3-jhq.tex",
+      "kept_blocks": 32,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-architecture.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-6-contracts.tex",
+      "kept_blocks": 17,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-2-hierarchy.tex",
+      "kept_blocks": 14,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-1-boundaries.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-gpu-execution.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-6-quantised.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/07-evaluation.tex",
+      "kept_blocks": 111,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/08-5-deployment.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-2-agreement.tex",
+      "kept_blocks": 29,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/07-supp-precision.tex",
+      "kept_blocks": 2,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/01-3-challenges.tex",
+      "kept_blocks": 5,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-4-global-selection.tex",
+      "kept_blocks": 89,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/03-methodology.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-4-controls.tex",
+      "kept_blocks": 7,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-2-lut.tex",
+      "kept_blocks": 32,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/09-conclusion.tex",
+      "kept_blocks": 2,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-background.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/02-7-gap.tex",
+      "kept_blocks": 1,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/05-7-probe.tex",
+      "kept_blocks": 21,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/01-1-context.tex",
+      "kept_blocks": 1,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/01-5-contributions.tex",
+      "kept_blocks": 1,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-4-lifecycle.tex",
+      "kept_blocks": 13,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/08-discussion.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/01-4-questions.tex",
+      "kept_blocks": 0,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-5-economics.tex",
+      "kept_blocks": 15,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/08-3-validity.tex",
+      "kept_blocks": 1,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-3-layout.tex",
+      "kept_blocks": 29,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-2-training.tex",
+      "kept_blocks": 35,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/08-2-negative.tex",
+      "kept_blocks": 6,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/06-3-search.tex",
+      "kept_blocks": 36,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "chapters/04-5-construction.tex",
+      "kept_blocks": 18,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "frontmatter/notation.tex",
+      "kept_blocks": 2,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    },
+    {
+      "path": "frontmatter/abstract.tex",
+      "kept_blocks": 4,
+      "labels_and_citations_preserved": true,
+      "missing_numbers": {},
+      "extra_numbers": {}
+    }
+  ],
+  "figure_labels_remain_english": true,
+  "missing_derived_outputs_observed_during_translation": [
+    "thesis2-part1.pdf",
+    "thesis2-part2.pdf"
+  ],
+  "missing_outputs_note": "Both split PDFs existed at translation start but were absent at verification. No command in this translation round deleted or rewrote either file; the full English PDF and every remaining protected file are unchanged. Do not recreate removed derived outputs as part of a Chinese translation request.",
+  "chinese_source_sha256": {
+    "preamble.tex": "37eded810e6f89a3be4f7a2c01ca95b183094546d20cdcd4792f11ff6547c795",
+    "main.tex": "fda8e6731d3516d065fc5b824facdd63d6e1b4c04a2b3181d967d4a04f9030db",
+    "chapters/05-1-query-path.tex": "a9c11e56cf007b35d18e5482935f1a2df4f3b396f89025de5ee9ace7bb435bca",
+    "chapters/06-refinement.tex": "d2335ee507c3257830585b2f5686015ff3bfb74aed569c0bb3ccdf4d3877d7bc",
+    "chapters/01-introduction.tex": "15744eb0fdded1992318673b2bd1b6636f1086d0f069cc6b2293d5ea786aecd7",
+    "chapters/05-6-refinement.tex": "a9229519fd5c48a7ecd33e268882c0b10c2a7a3dc95dbd9ec08423304a779494",
+    "chapters/07-supp-budget.tex": "7299387d1d1fce8a53be5550a4ce14b2a94f78bbed2c66bd6f00afcd68e55c6f",
+    "chapters/01-2-scope.tex": "449ba9b99bbc98dd15278d4f244808e155de73bbe7f8f037d003b2dc172ceba3",
+    "chapters/08-1-insights.tex": "57e5e523eb39f390ee04c133926b3d1f83cfb4c837b93f9e5d69b3bf5a1d1f07",
+    "chapters/07-supp-selection.tex": "90c5e2bb968ad37c81bf04f788f39e5ab2df291492279194ba695c7e8e65f8e4",
+    "chapters/02-5-graphs.tex": "39ecd060652abb02b6d4466c29e44cb685b1f63997d68248bfe8b45b174da239",
+    "chapters/06-1-motivation.tex": "d3d480bf70f089829187104c74edcbed20f062c85f8542d9077d2221e654a6a1",
+    "chapters/02-1-objective.tex": "b22596b29ba8ef642af422e2cc7442cf72f3f2e480cb448654f476e700583380",
+    "chapters/03-6-validity.tex": "5157a7331405e1861cb2d0af94ec1dea2b3e8cad38463790627b3e44a218bd5c",
+    "chapters/06-6-scope.tex": "6b7b37767df6741012135b0cd4b40cd0e15ee0f3af5a4317b8462ffab46b22f2",
+    "chapters/03-2-data.tex": "14cfc1a4af2959c2bfa441e4e155866160c2f70f5d61ed6eb616003647cd5669",
+    "chapters/02-4-gpu.tex": "802902c2686b92ec376befd9adc9c9b7fc69e512b0eb7e2e9e5a3353d1ec38a3",
+    "chapters/03-5-ledger.tex": "7d3a408abbbbad160b138c297436da9af501da9743e5e1a6e99a655c385e3afd",
+    "chapters/07-supp-smallbatch.tex": "6216002f4b7e8c69f8f05977df506208f469ad81f5661e2f67a7241f26428dd9",
+    "chapters/03-1-comparisons.tex": "e63c71b7ca3c1b7a4d7fa1f6940b830948cf335414bba39658cdbbfcc73580b1",
+    "chapters/08-4-directions.tex": "ecfa1c8a28650d0a199c3de373087c107630f902557187d49d4cdaf9e7bb1b31",
+    "chapters/03-4-frontiers.tex": "87b5cccf185b67f5602c5ab9db47f3b1692a950c1f995954d63991b920098020",
+    "chapters/05-5-bound-scheduling.tex": "fd1b9b31d04e63b0fdca61f49306e0f9d5dedd4e48cf643c1d665dfa0ee4c410",
+    "chapters/03-3-measurement.tex": "e0ae505ac49695b3951c89dc90135a32249d6e362f1793ef73af15fb22e96167",
+    "chapters/05-3-packed-access.tex": "fc1ad506042cedbb88ba70181030fd7c4e76279d04cb4b85812750a6d3b018b2",
+    "chapters/02-3-jhq.tex": "f06284fb29840e9ef29ee15ee16b3b26220897005ce2141f14c2675d9f69643c",
+    "chapters/04-architecture.tex": "65298312201362b24da7ce01a634c7e7a454251d94a5c187e6ea0df788ba028d",
+    "chapters/04-6-contracts.tex": "e864173ba2dfce5883f2946ad24240868e61ebf5b98e771c2d84562d9ef49626",
+    "chapters/02-2-hierarchy.tex": "865e0e5e80ab4c74300c5f914a2b30109bb815f0aab5d04f6f9d971317ba2210",
+    "chapters/04-1-boundaries.tex": "2685a315d847583d752f5736fe6c007187ec4f5cd41df541565696e58ce6b39c",
+    "chapters/05-gpu-execution.tex": "23244c1c40a04375086596e27b61260197ddc4d52b32683a625be490c7dd8c48",
+    "chapters/02-6-quantised.tex": "9d0f2da4bb92b9c9ff1a1c2709485b9ed04652c49b9dd77e6efa075cf6591669",
+    "chapters/07-evaluation.tex": "b0570502f80871f7426e73a8231dbe01a9ea8e31643a9e23d5a00acc964ee814",
+    "chapters/08-5-deployment.tex": "a569441194382949cdc5bf7d816e6c869af229077fc286a2be1b110a7c4c9526",
+    "chapters/06-2-agreement.tex": "2908c4f3cdd38ba95a4938ee3390e7e9e67bcacb7a7c1badf746193f21313b8c",
+    "chapters/07-supp-precision.tex": "30c5b3a56717def4d102776e0ca231e675000b7ca52b4cedcb1260efdc72e964",
+    "chapters/01-3-challenges.tex": "23d4bb9ac0750d8547ebe3250e710d2a49feabf376720969103476df6ead1e30",
+    "chapters/05-4-global-selection.tex": "7477ba1bf33f89fc0e7ad7a66889af5d98e27c87817a3bcb1d4be5e646998e07",
+    "chapters/03-methodology.tex": "9fe2adc7e80eb82af0972335229aefd2c256fd8079e6d35bfb7fb4bcfbce9d0f",
+    "chapters/06-4-controls.tex": "beb4e6e022cc5a043d3e361e0e91a9a5b3b34a4fe7469e70e46d77acc16a933e",
+    "chapters/05-2-lut.tex": "b5a455d864bee55a749736f8bcc9a10594e4105cc9109cbc3832a447de8bb11f",
+    "chapters/09-conclusion.tex": "6bfd6fb61c18307d83d241b46e563c533571b36c553f608c5842938d07bfc5f5",
+    "chapters/02-background.tex": "5a12f8c1668d29c46f7f0196df8bb8cc431d28313e92e27a4d6f58946a813707",
+    "chapters/02-7-gap.tex": "310d7692df124e3bc292fb0a5d5237ed284380429a97f10a640bb25706ad0d74",
+    "chapters/05-7-probe.tex": "f187be683d7e0710becebb5665bb67f627ea73c15973bf0b5f52ce8948921a42",
+    "chapters/01-1-context.tex": "bb7426fd95ad5a587d83e73788d43310a22dcf4bc8fff7b4aedf39b24f9311e4",
+    "chapters/01-5-contributions.tex": "a062c41a1422a640bbd4943d2a63dd18767bd4ff26ed3a87faec0d732eac6bc9",
+    "chapters/04-4-lifecycle.tex": "184d23ab99aaadbde34acbebedffe726da9d298a515ab370b42929d0ffe1cc49",
+    "chapters/08-discussion.tex": "95eb1759398aad3819fea77b705b947ed373e6148bea9e114c22ad8b57adff84",
+    "chapters/01-4-questions.tex": "28ba2b282fbfdaa812309d2b119473aa4cc62b45e00d384787575420a289bf28",
+    "chapters/06-5-economics.tex": "5d59b007c010d4b81480d37304c12b008a6d0bb8806002839ea78ef56fb9964f",
+    "chapters/08-3-validity.tex": "712bcf9e137c2c16ff8a324b96884d3b4add5a4663c1048fcdd10695a63ad1bb",
+    "chapters/04-3-layout.tex": "3b56dd958b9405a4f7f5fe59be27b0270887b3d300a51654300db1aab34f9771",
+    "chapters/04-2-training.tex": "4715567a9f3ce64a66ed8cf2bbfa4c4af2e9af0e6106a797a35691e815676a8c",
+    "chapters/08-2-negative.tex": "4aeadd1733853012f8b154783afab277cbe0e29d0a888bdeda08c2d5c801fd0f",
+    "chapters/06-3-search.tex": "461f3e486f126f6b6e728267b7866be91d844e44fb78a2fe33ed503c5c67bcff",
+    "chapters/04-5-construction.tex": "9462edec6d35e8e52a286e79a1b1adfb40d7833f4850122b6250cd44a114fce7",
+    "frontmatter/notation.tex": "3859c931789585fc5f1bb74cb198561b6b0d7167cf02d4d185a783a4b09881f4",
+    "frontmatter/title.tex": "00217050aa7c8ef05bf0c2a7f29782c8d3e8b80ff5039f545940c6a7218c14c8",
+    "frontmatter/abstract.tex": "b00278a4bbbfb7fc5427b3d8cdf69e5824966dd6124687ceb01ab669e1e7acd3",
+    "frontmatter/acknowledgements.tex": "337057c40fbc98c1457ee9da8e01d6b3b163abbbd77a4158ba812bc921e6e5be",
+    "tables/ch7/budget_full.tex": "1e4a1d01d265cbbe6698408ded12562986dcd2e540c9589ce2b8b0f6dcf92b42",
+    "tables/ch7/budget_cost.tex": "a46c8fa657dead9f8b591aac8407d368ef98ad681fe6cba5ce27351aa4bc21fa",
+    "tables/ch7/budget_quality.tex": "6311ce9f0876cda650b822e16953f566648407ca71d89827bf2119be8fc1bf24",
+    "tables/ch7/scheduling.tex": "bb0b1f12b6d6cb084654ce6255b8c5c0f07211b0844e47217ac452813ebedd14",
+    "tables/ch7/probe.tex": "806b9f6936267f85fdfba09e154e89a583bdda10b3c43f6a2afc6674ad4e5e72",
+    "tables/ch7/refinement.tex": "e97ba0bf691c61f67ee3ee1381135723912c37f4933c7b6e0c4384bbe7bac392",
+    "tables/ch7/e1_memory.tex": "745e0cb6afe36a058ae9d2fe01f97de7e8d78573c91e1a8da867a7c772172e10",
+    "tables/ch7/matched97.tex": "93c41674f6b7ccd71ddd3868b26bbdb48e6dc2ee8f528898cb2a7f86f64d99de",
+    "tables/ch7/build_memory.tex": "31e85b24995889006f96f584cf811a9ea78c796e147ab23f8a29ef18e0498ca4",
+    "tables/t4-t5/strict-selection.tex": "f04252eb7bafc381031b54dbeb5a12bd316ccdaa238aa1ca245bd1cdf1881884",
+    "tables/t4-t5/smallbatch.tex": "422d32f54bdd6de256e182443d5ad9a6defbe2fe983e0e0d9cd837b15c92a87f",
+    "tables/full-review/precision-anchors.tex": "029370b9f12f0bdc7c1742d733ac69f458481a1f3fa899f30631edf5409e73ea",
+    "tables/ch3/datasets.tex": "6aa6eae048a6eaccfedbbdb8256ace12f50fe99c564de8379ae7742f256dab48",
+    "tables/supplement/stream.tex": "db1a750a3739a585aaae9cc1d1ec0d792802971db36cc94718f3928a2ade595d",
+    "tables/supplement/precision.tex": "f2c9381f8672c0fb1f06e52ee2a5410ce7db1d952cae17d10a7bc5cbe2114bc0",
+    "tables/supplement/representation.tex": "f6429bac128b6143ef3c60e24d7879f354a9e2f6f4e4686de2aecd44947a8805"
+  },
+  "layout_adjustments": [
+    "Chinese leading 1.15, with English body size/margins retained",
+    "Local single-spaced background comparison table to avoid an isolated table page",
+    "Keep final Ch7 attribution subsection intact",
+    "Chinese grouped and range cross-reference labels"
+  ],
+  "output": {
+    "path": "thsis2-zh.pdf",
+    "sha256": "a8dbb0b12675d878ebb51ee902f9f200998f63c7e0e33f43150df21650f448fd",
+    "pages": 63,
+    "body_pages": 53,
+    "figures": 29,
+    "tables": 28,
+    "proofs": 6
+  }
+}

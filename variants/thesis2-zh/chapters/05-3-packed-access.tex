@@ -1,0 +1,39 @@
+subspace-major 编码使相邻 lanes／候选对齐；拆分减少 LUT 存储。
+
+\subsection{地址映射与四字节打包}
+
+列表 $\ell$ 的行 $r$ 映射为
+\[
+ p=o_\ell+r,\qquad \operatorname{offset}(Z[m,p])=mN+p.
+\]
+固定 $m$ 时，$\Delta\operatorname{offset}=\Delta p$。列表边界可能破坏相邻性。
+
+为每个候选打包四个子空间 byte：
+\begin{equation}
+ \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
+ \label{eq:5-packed-layout}
+\end{equation}
+对 $0\leq t<4$ 和八位 $Z$，
+\[
+ (\mathsf w[j,p]\gg8t)\mathbin{\&}255=Z[4j+t,p].
+\]
+nibbles 索引 \cref{eq:5-lut-factorisation}。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{figures/ch5/packed-access}
+\captionof{figure}[候选并行的打包访问]{候选并行的打包访问，展示部分 warp lanes。固定 word group $j$ 时，连续位置访问相邻四字节 word。每个 word 含同一候选的四个子空间码。解包保留各编码 byte；LUT 拆分在其后进行。该图示意地址，不表示实测内存事务次数。}
+\label{fig:5-packed-access}
+\end{minipage}\par\medskip
+
+构建将 $[M,N]$ bytes 映射为 $[M/4,N]$ words（$4\mid M$）。直接类型转换会将不同候选的 bytes 混在一起。编码 byte 成本为
+\[
+ R=W=NM,\qquad S_{\rm old+new}=2NM.
+\]
+重打包不计入搜索时间。
+
+\subsection{打包访问节省什么、保留什么}
+
+一次 word 载入／解包代替四次 byte 载入。逻辑 warp 窗口为 $32\times4=128$ bytes；事务依赖对齐和活跃 lanes。每候选载荷仍为 $M$ bytes。两条路径均为 subspace-major，因此没有单独分离转置／缓存效应。

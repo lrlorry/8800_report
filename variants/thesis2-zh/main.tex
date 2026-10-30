@@ -1,0 +1,45 @@
+% Chinese reading copy: use XeLaTeX, not pdfLaTeX.
+% Build: latexmk -xelatex -outdir=build/thesis2-zh -jobname=thsis2-zh variants/thesis2-zh/main.tex
+\documentclass[a4paper,11pt,oneside,openany,parskip=half-,bibliography=totoc]{scrbook}
+
+\input{config/metadata}
+\renewcommand{\thesistitle}{JHQ-GPU：面向表示的 GPU 近似最近邻搜索与工作负载级精排预算校准}
+\input{variants/thesis2-zh/preamble}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{variants/thesis2-zh/frontmatter/title}
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\input{variants/thesis2-zh/frontmatter/abstract}
+\input{variants/thesis2-zh/frontmatter/acknowledgements}
+
+\begingroup
+\setstretch{1.0}
+\tableofcontents
+\begingroup
+\renewcommand{\addvspace}[1]{}
+\small
+\listoffigures
+\listoftables
+\endgroup
+\endgroup
+\input{variants/thesis2-zh/frontmatter/notation}
+
+\clearpage
+\pagenumbering{arabic}
+\input{variants/thesis2-zh/chapters/01-introduction}
+\input{variants/thesis2-zh/chapters/02-background}
+\input{variants/thesis2-zh/chapters/03-methodology}
+\input{variants/thesis2-zh/chapters/04-architecture}
+\input{variants/thesis2-zh/chapters/05-gpu-execution}
+\input{variants/thesis2-zh/chapters/06-refinement}
+\input{variants/thesis2-zh/chapters/07-evaluation}
+\input{variants/thesis2-zh/chapters/08-discussion}
+\input{variants/thesis2-zh/chapters/09-conclusion}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

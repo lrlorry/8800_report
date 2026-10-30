@@ -1,0 +1,42 @@
+% Schematic indexing paths; exact identity is conditional on Cartesian coordinates.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\footnotesize\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!60,rounded corners=2pt,fill=ThesisNavy!4,inner sep=4pt,align=center},
+ arr/.style={-{Stealth[length=4pt]},semithick,ThesisNavy!80}]
+\node[font=\small] at (7.3,5.40)
+ {Cartesian premise: $\mathcal C_m[z]=(A_m[h],B_m[l])$};
+\node[box,fill=ThesisNavy!12] (byte) at (7.3,4.50) {$z=(hhhh\ llll)_2=16h+l$};
+\node[anchor=west,font=\bfseries] at (.15,4.95) {Full table};
+\node[anchor=east,font=\bfseries] at (14.7,4.95) {Two small tables};
+\node[box] (fullindex) at (2.8,3.35) {index $z\in[0,255]$};
+\node[box] (hiindex) at (9.25,3.35) {$h=z\gg4$\\$hhhh$: four signs\\$2^4=16$ patterns};
+\node[box] (loindex) at (12.65,3.35) {$l=z\mathbin{\&}15$\\$llll$: four signs\\$2^4=16$ patterns};
+\draw[arr] (byte.west)-|(fullindex.north);
+\draw[arr] (byte.east)-|(loindex.north);
+\draw[arr] (byte.south)-|(hiindex.north);
+
+\draw[ThesisNavy!55] (1.05,1.40) rectangle (4.55,2.65);
+\node at (2.8,2.42) {$T_m[0],\ldots,T_m[255]$};
+\draw[ThesisNavy!35] (1.05,2.17)--(4.55,2.17);
+\node[fill=ThesisNavy!12,minimum width=3.4cm,minimum height=.42cm]
+ (fullread) at (2.8,1.87) {$T_m[z]$};
+\draw[arr] (fullindex.south)--(2.8,2.65);
+\node[align=center] at (2.8,.88) {256 entries\quad 1 read\\1,024 bytes (FP32)};
+
+\foreach \xx/\name/\idx in {9.25/hi/h,12.65/lo/l} {
+ \draw[ThesisNavy!55] (\xx-1.45,1.40) rectangle (\xx+1.45,2.65);
+ \node at (\xx,2.42) {$T_m^{\rm \name}[0..15]$};
+ \draw[ThesisNavy!35] (\xx-1.45,2.17)--(\xx+1.45,2.17);
+ \node[fill=ThesisNavy!12,minimum width=2.8cm,minimum height=.42cm]
+  (read\name) at (\xx,1.87) {$T_m^{\rm \name}[\idx]$};
+}
+\draw[arr] (hiindex.south)--(9.25,2.65);
+\draw[arr] (loindex.south)--(12.65,2.65);
+\node[draw=ThesisNavy,circle,inner sep=2pt] (sum) at (10.95,.88) {$+$};
+\draw[arr] (9.25,1.40)|-(sum.west);
+\draw[arr] (12.65,1.40)|-(sum.east);
+\node[align=center] at (10.95,.10) {16+16 entries\quad 2 reads + 1 sum\\128 bytes (FP32): $1/8$ of full-table storage};
+\draw[dashed,ThesisNavy!40] (6.25,.1)--(6.25,3.45);
+\node[align=center] at (7.3,-.86)
+ {Same byte codes and routed candidates; equal scores in real arithmetic.\\
+ FP32 evaluation can differ in rounding and ties (T4, \cref{sec:7-3}).};
+\end{tikzpicture}

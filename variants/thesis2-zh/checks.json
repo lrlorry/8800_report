@@ -1,0 +1,31 @@
+{
+  "output": "thsis2-zh.pdf",
+  "pages": 64,
+  "english_pdf_sha256": "4fbb6b62b8e8af28d4b1255c25ea3fe927f304ac9429c7db5a827c691c6b19ee",
+  "initial_translation_english_sha256": "b5532e25c4fc31cd2481f3301f69314da7f0c1a6554c1dfc872d97cc43fc464f",
+  "sha256": "e458f0f0cd369f122ef73d3ec88f95a954760da3f31c0051db54ad2438505ec2",
+  "translated_source_files": 57,
+  "original_files_unchanged": 79,
+  "missing_derived_outputs": [
+    "thesis2-part1.pdf",
+    "thesis2-part2.pdf"
+  ],
+  "english_thesis2_unchanged": false,
+  "authorised_english_updates": [
+    "variants/thesis2/checks.json",
+    "variants/thesis2/verify.py",
+    "variants/thesis2/chapters/01-5-contributions.tex",
+    "thesis2.pdf"
+  ],
+  "individual_contribution_author_confirmed": true,
+  "math_blocks_identical": true,
+  "numerical_cells_preserved": true,
+  "labels_numbers_and_citations_match": true,
+  "figures": 29,
+  "tables": 28,
+  "proofs": 6,
+  "compiler_issues": [],
+  "fonts_embedded": true,
+  "words_outside_page": [],
+  "figures_keep_english_labels": true
+}

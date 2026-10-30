@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-30",
+  "confirmation_source": "Current user message",
+  "confirmed_facts": [
+    "Supervisor proposed the direction of bringing JHQ to the GPU",
+    "Supervisor set the direction and held regular discussions",
+    "User states that the other research work was theirs; existing substantive AI assistance remains acknowledged"
+  ],
+  "user_confirmation_excerpts": [
+    "导师提的",
+    "定方向、定期讨论。其他都是我做的"
+  ],
+  "scope": "Research responsibility and work undertaken, with substantive AI assistance; no claim of sole manual coding, invention of inherited methods, or personal rerun of every experiment.",
+  "changes": [
+    {
+      "path": "variants/thesis2/chapters/01-5-contributions.tex",
+      "before": "\\Cref{tab:1-contributions} states three linked project contributions and\ntheir inherited foundations. The core contribution is the adaptation and\nevaluation of a particular representation--execution--budget combination.\nJHQ, Cartesian quantisation, IVF, bitonic/radix selection, merging and CUDA\nGraph execution retain their prior-art status.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Technical contributions and evidence boundaries]{Technical contributions and their evidence boundaries.}\n\\label{tab:1-contributions}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}p{.23\\linewidth}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n & Inherited foundation & Project contribution & Evidence \\\\\n\\midrule\nC1 & JHQ rotation, codebooks and hierarchy & GPU training/encoding,\nbounded batch construction and list-ordered packed representation\n& Search of 17.78M vectors at 20.44\\,GiB resident; repeated train+add\n10.54--10.65\\,s; sampled construction peak 22.58\\,GiB \\\\\nC2 & Cartesian additivity and established GPU primitives & Integrated\nfactorised scoring, complete-key grouped retention/bounds, lane refinement\nand execution scheduling & Two-group LUTs lead in 22/24 cells;\nscheduled execution $2.727\\times$ at batch 8; explicit correctness scope \\\\\nC3 & Candidate expansion and output-agreement ideas & Workload-level\nbudget rule, conditional selection analysis, held-out controls and cost/risk\nevaluation & FULL meets the relative-loss target in 12/12 cells;\nsmaller samples expose risk; four cells directly measure calibrated reuse \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n",
+      "addition": "\\paragraph*{Individual contribution.}\nMy supervisor, Dr Mengxuan Zhang, proposed the direction of bringing JHQ\nto GPUs and provided guidance through regular discussions. I undertook\nthe GPU system development, including index construction and layout,\nquery execution optimisations, and refinement-budget calibration. I also\ncarried out the experimental design, baseline comparisons and analysis,\nand decided which approaches and conclusions to retain. AI tools\nprovided substantial assistance with code development, experiment\nautomation, analysis, review and thesis drafting, as detailed in the\n\\hyperref[front:provenance]{research and AI assistance statement}.\n",
+      "after": "\\Cref{tab:1-contributions} states three linked project contributions and\ntheir inherited foundations. The core contribution is the adaptation and\nevaluation of a particular representation--execution--budget combination.\nJHQ, Cartesian quantisation, IVF, bitonic/radix selection, merging and CUDA\nGraph execution retain their prior-art status.\n\n\\par\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{1.2em}\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Technical contributions and evidence boundaries]{Technical contributions and their evidence boundaries.}\n\\label{tab:1-contributions}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}p{.23\\linewidth}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n & Inherited foundation & Project contribution & Evidence \\\\\n\\midrule\nC1 & JHQ rotation, codebooks and hierarchy & GPU training/encoding,\nbounded batch construction and list-ordered packed representation\n& Search of 17.78M vectors at 20.44\\,GiB resident; repeated train+add\n10.54--10.65\\,s; sampled construction peak 22.58\\,GiB \\\\\nC2 & Cartesian additivity and established GPU primitives & Integrated\nfactorised scoring, complete-key grouped retention/bounds, lane refinement\nand execution scheduling & Two-group LUTs lead in 22/24 cells;\nscheduled execution $2.727\\times$ at batch 8; explicit correctness scope \\\\\nC3 & Candidate expansion and output-agreement ideas & Workload-level\nbudget rule, conditional selection analysis, held-out controls and cost/risk\nevaluation & FULL meets the relative-loss target in 12/12 cells;\nsmaller samples expose risk; four cells directly measure calibrated reuse \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\paragraph*{Individual contribution.}\nMy supervisor, Dr Mengxuan Zhang, proposed the direction of bringing JHQ\nto GPUs and provided guidance through regular discussions. I undertook\nthe GPU system development, including index construction and layout,\nquery execution optimisations, and refinement-budget calibration. I also\ncarried out the experimental design, baseline comparisons and analysis,\nand decided which approaches and conclusions to retain. AI tools\nprovided substantial assistance with code development, experiment\nautomation, analysis, review and thesis drafting, as detailed in the\n\\hyperref[front:provenance]{research and AI assistance statement}.\n\n\\end{minipage}\\par\n",
+      "kind": "addition_and_layout",
+      "layout_wrapper": {
+        "marker": "\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}",
+        "prefix": "\\par\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{1.2em}\n",
+        "suffix": "\n\\end{minipage}\\par\n"
+      }
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/01-5-contributions.tex",
+      "before": "\\Cref{tab:1-contributions} 列出三个相互关联的项目贡献及其继承基础。核心贡献是适配并评估一个具体的“表示—执行—预算”组合。JHQ、Cartesian 量化、IVF、bitonic／radix 选择、归并及 CUDA Graph 执行仍属于已有工作。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[技术贡献与证据边界]{技术贡献及其证据边界。}\n\\label{tab:1-contributions}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}p{.23\\linewidth}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n& 继承基础 & 项目贡献 & 证据 \\\\\n\\midrule\nC1 & JHQ 旋转、码本与层级 & GPU 训练／编码、有界 batch 构建及列表顺序的打包表示 & 17.78M 向量搜索，常驻 20.44\\,GiB；重复 train+add 为 10.54--10.65\\,s；采样构建峰值 22.58\\,GiB \\\\\nC2 & Cartesian 可加性与已有 GPU 原语 & 集成分解评分、完整键分组保留／阈值、lane 精排和执行调度 & 两组 LUT 在 22/24 单元领先；batch 8 调度执行为 $2.727\\times$；明确正确性范围 \\\\\nC3 & 候选扩展与输出一致性思想 & 工作负载级预算规则、有条件选择分析、留出对照及成本／风险评估 & FULL 在 12/12 单元满足相对损失目标；小样本暴露风险；四个单元直接测量校准后复用 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n",
+      "addition": "\\paragraph*{个人贡献。}\n导师 Mengxuan Zhang 博士提出了将 JHQ 移植到 GPU 的研究方向，并通过定期讨论提供指导。我承担 GPU 系统开发，包括索引构建与布局、查询执行优化和精排预算校准；同时完成实验设计、基线比较与结果分析，并决定采用哪些方案和结论。AI 工具在代码开发、实验自动化、分析、审核和论文起草中提供了实质性辅助，具体见\\hyperref[front:provenance]{研究与 AI 辅助说明}。\n",
+      "after": "\\Cref{tab:1-contributions} 列出三个相互关联的项目贡献及其继承基础。核心贡献是适配并评估一个具体的“表示—执行—预算”组合。JHQ、Cartesian 量化、IVF、bitonic／radix 选择、归并及 CUDA Graph 执行仍属于已有工作。\n\n\\par\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{2em}\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[技术贡献与证据边界]{技术贡献及其证据边界。}\n\\label{tab:1-contributions}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}p{.23\\linewidth}*{2}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n& 继承基础 & 项目贡献 & 证据 \\\\\n\\midrule\nC1 & JHQ 旋转、码本与层级 & GPU 训练／编码、有界 batch 构建及列表顺序的打包表示 & 17.78M 向量搜索，常驻 20.44\\,GiB；重复 train+add 为 10.54--10.65\\,s；采样构建峰值 22.58\\,GiB \\\\\nC2 & Cartesian 可加性与已有 GPU 原语 & 集成分解评分、完整键分组保留／阈值、lane 精排和执行调度 & 两组 LUT 在 22/24 单元领先；batch 8 调度执行为 $2.727\\times$；明确正确性范围 \\\\\nC3 & 候选扩展与输出一致性思想 & 工作负载级预算规则、有条件选择分析、留出对照及成本／风险评估 & FULL 在 12/12 单元满足相对损失目标；小样本暴露风险；四个单元直接测量校准后复用 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\paragraph*{个人贡献。}\n导师 Mengxuan Zhang 博士提出了将 JHQ 移植到 GPU 的研究方向，并通过定期讨论提供指导。我承担 GPU 系统开发，包括索引构建与布局、查询执行优化和精排预算校准；同时完成实验设计、基线比较与结果分析，并决定采用哪些方案和结论。AI 工具在代码开发、实验自动化、分析、审核和论文起草中提供了实质性辅助，具体见\\hyperref[front:provenance]{研究与 AI 辅助说明}。\n\n\\end{minipage}\\par\n",
+      "kind": "addition_and_layout",
+      "layout_wrapper": {
+        "marker": "\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}",
+        "prefix": "\\par\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{2em}\n",
+        "suffix": "\n\\end{minipage}\\par\n"
+      }
+    }
+  ],
+  "historical_ledger_hashes": {
+    "variants/thesis2/audit/edits.json": "a3a9e4773bb3b569efe3b9c94325abb78555eb66a398ee07de531a5b92781068",
+    "variants/thesis2/audit/figure-layout-2026-10-30.json": "962456eef18ad6fb06535d84c07c6433f2eefba280fb27e8807789e529faaaeb"
+  },
+  "protected_original_pdfs": {
+    "thesis.pdf": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72",
+    "thesis1.pdf": "44bf7050af1e429cf28287a32facd85e70e07510f4ce357343beb9269f942a09"
+  },
+  "validation": {
+    "english_pdf": "thesis2.pdf",
+    "chinese_pdf": "thsis2-zh.pdf",
+    "english_sha256": "4fbb6b62b8e8af28d4b1255c25ea3fe927f304ac9429c7db5a827c691c6b19ee",
+    "chinese_sha256": "e458f0f0cd369f122ef73d3ec88f95a954760da3f31c0051db54ad2438505ec2",
+    "pages_each": 64,
+    "visual_review_pdf_pages": [
+      9,
+      10,
+      11
+    ],
+    "table_and_paragraph_together_on_printed_page": 3,
+    "english_verifier_passed": true,
+    "chinese_verifier_passed": true,
+    "declaration_page_added": false,
+    "table_1_1_payload_unchanged": true,
+    "existing_ai_disclosure_unchanged": true
+  }
+}

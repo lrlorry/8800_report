@@ -24,14 +24,15 @@ For $\lrefine=L\in\{1,8,16,32\}$,
 \]
 A word holds four eight-bit or eight four-bit codes. Butterfly shuffles sum lane partials; lane zero writes the score.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{figures/ch5/lane-refinement}
-\caption[Sixteen-lane residual refinement]{Sixteen-lane residual refinement. A warp handles two candidates;
+\captionof{figure}[Sixteen-lane residual refinement]{Sixteen-lane residual refinement. A warp handles two candidates;
 lane $a$ within a candidate reads residual words $a,a+16,\ldots$.
 Each eight-bit-code word decodes four coordinates. Subgroups sum partials, then add primary score/correction. Candidate positions may remain scattered.}
 \label{fig:5-lane-refinement}
-\end{figure}
+\end{minipage}\par\medskip
 
 Word-aligned rows and $d_{\rm word}\mid D_s$ keep words within codebooks. All lanes shuffle; invalid slots contribute zero, then output infinity. $L=16$ gives two candidates/warp.
 

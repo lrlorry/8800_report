@@ -37,7 +37,22 @@ Coordinate separation gives
         +T_m^{\rm lo}[z\mathbin{\&}15].
  \label{eq:5-lut-factorisation}
 \end{equation}
-Storage falls to $16+16=32$ entries; codes, candidates and real-arithmetic scores stay fixed.
+Storage falls to $16+16=32$ entries; codes, candidates and real-arithmetic scores stay fixed (\cref{fig:5-cartesian-lut}).
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/thesis2/figures/cartesian-lut}
+\captionof{figure}[Cartesian primary-LUT factorisation]{Cartesian
+primary-LUT factorisation (schematic). A byte selects one entry in a
+256-entry table, or one high- and one low-nibble entry in two 16-entry
+tables. Coordinate separation gives the additive identity in real
+arithmetic; FP32 rounding can change top-$c$ and final IDs. T4's maximum
+relative score difference across table forms is $4.64\times10^{-7}$;
+Vogue has 2--4/256 final-ID differences, arXiv/OpenAI-3072 none
+(\cref{sec:7-3}). Reads and sum describe the lookup expression.}
+\label{fig:5-cartesian-lut}
+\end{minipage}\par\medskip
 
 The builder slices codewords $16h,l$; \texttt{verify\_split\_lut} checks nibble/slice compatibility.
 An arbitrary learned 256-centroid PQ subcodebook need not satisfy this
@@ -65,9 +80,10 @@ eightfold and coordinate work sixteenfold relative to independently
 constructing every full-table entry. These are table-level cost ratios,
 not predicted application speedups.
 
-\begin{table}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\caption[Cartesian lookup-table trade-offs]{Cartesian table trade-offs for an eight-bit, eight-coordinate
+\captionof{table}[Cartesian lookup-table trade-offs]{Cartesian table trade-offs for an eight-bit, eight-coordinate
 primary subspace. Combining additions are the algebraic minimum for
 joining the looked-up values, excluding accumulation across subspaces;
 they are not measured instruction counts.}
@@ -83,7 +99,7 @@ $\glut$ & Entries & FP32 bytes & Lookups & Combining adds & Build terms \\
 8 & 16 & 64 & 8 & 7 & 16 \\
 \bottomrule
 \end{tabular}
-\end{table}
+\end{minipage}\par\medskip
 
 The table is built in global workspace and staged cooperatively when
 its complete shared-memory footprint fits the queried per-block opt-in

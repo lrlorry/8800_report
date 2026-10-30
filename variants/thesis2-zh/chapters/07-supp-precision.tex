@@ -1,0 +1,35 @@
+\subsection{OpenAI 数据集上的精度敏感性}
+\label{sec:7-precision}
+
+补充源码检查确定，虽然输入／存储为 FP32，且源码注释有误导，E1 实现对 OpenAI 旋转和质心 GEMM 使用 TF32 乘法与 FP32 累加（\cref{sec:4-2}）。主 E1 前沿仍是该实现的历史测量。campaign D 中，独立 FP32 变体修改 cuBLAS 运算模式开关，在 batch 1,000 下重放 37/39 个 OpenAI 配置，每个五轮。不同 probe 设置间交替变体执行顺序。两者复用同一 TF32 训练模型；干预改变 add／查询算术，包括数据库编码与路由，并非比较独立 FP32 训练的模型。\Cref{tab:7-precision} 汇总成对变化。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[匹配配置下的 FP32 敏感性]{FP32 敏感性。QPS 比为相同配置下 FP32／TF32 的几何平均；召回差采用同一方向。末两列比较召回率 0.97 下的 FP32 前沿与存档 E1 IVF-RaBitQ、CAGRA fp32 前沿。campaign D 未重测基线。}
+\label{tab:7-precision}
+\scriptsize\setlength{\tabcolsep}{3pt}
+\input{variants/thesis2-zh/tables/supplement/precision}
+\end{minipage}\par\medskip
+
+相同配置下，FP32 吞吐降低约 5\%，召回增加 0--0.0005。召回率 0.97 时，FP32 比同会话 TF32 慢约 3\%，但仍为存档 RaBitQ 的 $1.086/1.079\times$、存档 CAGRA fp32 的 $1.679/1.629\times$。新会话 v69 对存档 RaBitQ 为 1.118/1.114，历史为 1.130/1.157。D 对基线的比较跨会话；仅 v69／v72 同会话。\Cref{fig:7-precision} 展示两条 JHQ 前沿与存档对照。T1 单独重测同会话锚点，网格敏感结果见 \cref{sec:b-precision-anchors}。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{supplement/precision.pdf}
+\captionof{figure}[TF32 与 FP32 精度前沿]{campaign D 的精度前沿。实线为同会话 JHQ 变体；虚线／点线基线为历史 E1 测量。均使用本章前沿与插值规则。}
+\label{fig:7-precision}
+\end{minipage}\par\medskip
+
+\subsection{同会话基线锚点}
+\label{sec:b-precision-anchors}
+T1 使用 E1 内存池，每个 OpenAI 数据集十二个成对配置。基线运行前后各有一次五轮 JHQ 重复；中位数以几何方式组合。相同配置 FP32／TF32 均值为 0.956/0.964。两者均复用 TF32 训练缓存，改变 add／查询算术。
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[同会话精度锚点]{T1，召回率 0.97、batch 1,000。基线比值为插值／严格实测阈值；FP32／TF32 为插值。所有方法处于同一会话，不同于 D 的存档基线。}
+\label{tab:b-precision-anchors}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{variants/thesis2-zh/tables/full-review/precision-anchors}
+\end{minipage}\par\medskip
+OpenAI-3072 的 RaBitQ 括区间 0.9669--0.9796 召回体现网格敏感性。这些锚点不替代 E1，也不提供 FP32 重训练结果。

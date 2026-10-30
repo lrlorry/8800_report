@@ -1,0 +1,53 @@
+\subsection{从数据库 ID 到列表顺序的物理位置}
+
+输入行的标识为 $i\in\{0,\ldots,N-1\}$。粗分配根据计算得到的质心分数，将其变换向量放入某个列表。数学分配目标为
+\begin{equation}
+ a(i)=\operatorname*{arg\,min}_{0\leq\ell<n_{\rm list}}
+       \|\Pi x_i-\mu_\ell\|_2^2.
+ \label{eq:4-assignment}
+\end{equation}
+实现采用选定的数值分配路径。主码和残差编码时不减去 $\mu_{a(i)}$；列表归属独立于这些重建，限制后续搜索空间。
+
+构建器将分配结果与输入 ID 序列一同排序。令 $\rho(p)$ 为排序后物理位置 $p$ 上的输入 ID，$o_\ell$ 为列表 $\ell$ 的起点。完成的数组满足
+\begin{equation}
+ 0=o_0\leq o_1\leq\cdots\leq o_{n_{\rm list}}=N,
+ \qquad p\in[o_\ell,o_{\ell+1})\Longrightarrow a(\rho(p))=\ell.
+ \label{eq:4-offsets}
+\end{equation}
+通过 lower-bound 搜索得到 offsets，其中
+\[
+ o_\ell=o_{\ell+1}\Longleftrightarrow\text{list }\ell\text{ is empty}.
+\]
+位置只在一个快照内稳定，跨构建未必稳定。所有数组使用同一个 $\rho(p)$。
+
+\begin{figure}[!htbp]
+\centering
+\input{variants/thesis2/figures/physical-layout}
+\caption[GPU 索引的物理布局]{GPU 索引物理布局示意。IVF offsets 划定连续物理位置区间。独立的 ID、word-group-major 主码、row-major 残差和校正数组共享位置 $p$。byte 偏移相对各自分配起点；图示既不表示交织分配，也不表示实测显存事务。}
+\label{fig:4-layout}
+\end{figure}
+
+ID 将 $p\mapsto\rho(p)$ 映射到原行。两遍 add 为 scatter 暂时构造 $\rho^{-1}$。主码并列使用物理位置，最终并列使用数据库 ID。
+
+\subsection{精确地址与表示宽度}
+
+对主码 byte $Z[m,p]$，
+\[
+ \operatorname{offset}_{\rm byte}(Z[m,p])=mN+p.
+\] 最终打包得到
+\begin{equation}
+ \mathsf w[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{addr}_{\rm byte}(\mathsf w[j,p])=4(jN+p).
+ \label{eq:4-primary-address}
+\end{equation}
+这里 $j=0,\ldots,M/4-1$。$\text{word-layout build}\Longrightarrow M\bmod4=0$；其余 $M$ 被拒绝。独立的 byte-layout 编译保留 byte 表示。每个打包数组占 $NM$ bytes，但重打包暂时同时持有新旧副本，成本为 $2NM$。一遍构建器暂时 gather 一个 vector-major 的 $[N,M]$ 主码数组，转置后重打包，并释放过期副本。两遍构建器直接 scatter 到 subspace-major 数组，再进行相同的最终重打包。搜索时的 lane 映射见 \Cref{sec:5-3}。
+
+残差码保持 row-major，每向量占 $b_r=\lceil dB_r/8\rceil$ bytes。八位配置中，行 $p$ 的坐标 $t$ 位于 byte 偏移 $pb_r+t$。四位路径中，它位于 byte $pb_r+\lfloor t/2\rfloor$，偶数坐标在低 nibble、奇数坐标在高 nibble。每个物理行有四个 byte 的校正项，存储
+\begin{equation}
+ \gamma[ p ]=2\langle\widehat p(x_{\rho(p)}),
+                              \widehat r(x_{\rho(p)})\rangle.
+ \label{eq:4-correction}
+\end{equation}
+gather 或 scatter 时，这个值必须与该行编码一同移动。
+
+列表顺序的主码扫描只为保留候选获取残差。若使用原始 FP32 重排序，还需增加 $4Nd$ 个设备 bytes。本文精排压缩重建；第 7 章测量召回率。

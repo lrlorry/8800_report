@@ -8,17 +8,18 @@ Analysis requires $|C_\alpha|\geq k$; underfull slots are sentinels. Budgets cha
 
 At $k=10$, the grid retains 20--2,000 survivors without retraining. Lower budgets save reads, not residual storage or previously reserved workspace.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\input{figures/ch6/budget-scope}
-\caption[Work affected by the refinement budget]{The refinement budget changes work after primary-score
+\input{variants/thesis2/figures/budget-scope-layout}
+\captionof{figure}[Work affected by the refinement budget]{The refinement budget changes work after primary-score
 production. With a fixed query, index and probe count, it leaves the
 routed candidate universe unchanged. The highlighted stages depend on
 survivor capacity; this is a logical work decomposition, not a measured
 latency breakdown. The scan kernel also performs budget-dependent
 admission and compaction. Padding applies when fewer than $c$ candidates exist.}
 \label{fig:6-budget-scope}
-\end{figure}
+\end{minipage}\par\medskip
 
 At fixed batch/routing, write
 \begin{equation}

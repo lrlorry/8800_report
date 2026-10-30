@@ -20,16 +20,17 @@ For $0\leq t<4$ and eight-bit $Z$,
 \]
 Nibbles index \cref{eq:5-lut-factorisation}.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{figures/ch5/packed-access}
-\caption[Packed candidate-parallel access]{Packed candidate-parallel access, showing a subset of warp lanes.
+\captionof{figure}[Packed candidate-parallel access]{Packed candidate-parallel access, showing a subset of warp lanes.
 At fixed word group $j$, consecutive positions access adjacent four-byte
 words. Each word contains four subspace codes of one candidate. Unpacking
 preserves each code byte; LUT splitting happens afterwards. The diagram
 illustrates addresses, not a measured number of memory transactions.}
 \label{fig:5-packed-access}
-\end{figure}
+\end{minipage}\par\medskip
 
 Construction maps $[M,N]$ bytes to $[M/4,N]$ words ($4\mid M$). Casting would combine candidate bytes. Code-byte costs:
 \[

@@ -1,0 +1,348 @@
+\chapter{实验评估}
+\label{ch:evaluation}
+\chaptermark{实验评估}
+
+本文测试构建／容量（RQ1）、执行（RQ2）、预算质量／复用（RQ3）和竞争区间（RQ4）。
+
+\section{实验协议}
+\label{sec:7-1}
+
+\subsection{比较协议与可复现性}
+
+\Cref{sec:3-2,sec:3-3,sec:3-5} 定义协议。搜索不计构建／校准；各消融使用自己的基线。
+
+CPU JHQ 的设置／协议未匹配：十月 Vogue 使用 1,024 个列表、$[8,4]$ 位，而 E1 为 4,096 个列表。因此没有可匹配的 CPU／GPU 加速比。
+
+自适应调用／仅设备计时见 \cref{sec:a-e1-protocol}。
+
+指标与前沿估计器遵循 \cref{sec:3-2,sec:3-4}；$\glut$ 和 $\gscan$ 保持 \cref{sec:5-1} 中不同的含义。
+
+\section{现代 GPU ANN 的召回率—QPS 前沿}
+\label{sec:7-2}
+
+\subsection{比较范围与前沿构造}
+
+\Cref{fig:7-frontiers} 在 \cref{tab:3-data} 的前四个数据集上，将 JHQ-GPU 与 \cref{sec:3-4} 的图、压缩 IVF 和暴力搜索基线比较 \cite{cagra,pq,ivfrabitq}。E1 使用 batch 1,000 和共同 GT；T5 覆盖小 batch（\cref{sec:7-smallbatch}），内部消融见 \cref{sec:7-6}。
+
+E1 将 105 个 arXiv／OpenAI 单元分派到 $\gscan=0$，27 个 Vogue 单元因 CV 0.338--0.622 分派到 $\gscan=4$。只有 Vogue 使用分组保留、共享阈值和归并（\cref{sec:5-5}）。
+
+E1 有 1,590 个有效点：JHQ 每数据集 27--39 个，各基线家族 54--264 个。未出现失败、无效 ID 或重复行标记。参数扫描共享索引（\cref{sec:3-4}）。
+
+\Cref{tab:3-grids,sec:b-grids} 定义有限覆盖，超出目标未测量。
+
+存储不同：九位 RaBitQ 的名义编码字节为 $9d/8$；4/8 位码更少。\Cref{tab:4-bytes,sec:7-7} 在性能包络之外给出表示成本和实测分配。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{ch7/frontiers.pdf}
+\caption[E1 召回率—吞吐前沿]{四个 E1 数据集上的实测主机到主机召回率—QPS 前沿。显示范围从 0.90 开始，0.97 处画垂线。包括 CAGRA int8 在内的所有基线家族均参与前沿构造。线连接实测点；吞吐轴为对数。}
+\label{fig:7-frontiers}
+\end{figure}
+
+\subsection{匹配召回率与胜负相反的工作区间}
+
+\Cref{tab:7-matched} 使用 \cref{sec:3-4} 定义的插值和满足阈值的实测估计器报告召回率 0.97。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[召回率 0.97 时的跨系统比较]{召回率 0.97 的比较。每个比值为“插值／实测”；大于一有利于 JHQ。JHQ kQPS 为插值估计。arXiv 与 RaBitQ 的小幅差异随估计器改变方向。}
+\label{tab:7-matched}
+\small\setlength{\tabcolsep}{4pt}
+\input{variants/thesis2-zh/tables/ch7/matched97}
+\end{minipage}\par\medskip
+
+在索引、probes、预算及最终输出固定、batch 1,000 下，去掉分组使 Vogue 在召回率 0.97 时的 JHQ／RaBitQ 比从 1.059 降至 0.933。这分离的是集成分组路径，不只是共享阈值。
+
+CAGRA int8 在 0.90--0.92 领先 $1.20$--$1.98\times$，但不覆盖 0.97。RaBitQ 赢得部分 0.98+ 目标；CAGRA fp32 在 arXiv 接近 0.99 时领先（\cref{fig:7-frontiers}）。
+
+\newpage
+\input{variants/thesis2-zh/chapters/07-supp-precision}
+
+\subsection{解释与比较限制}
+
+两个 OpenAI 数据集均使用 Qdrant DBpedia 嵌入 \cite{data_openai1536,data_openai3072}。截断／重新归一化后，1,000 个查询行与 10,299 个抽样基础行的余弦为 $\geq0.9980$，中位数 1.000000，GT 重合度 9.046/10。没有实体 ID，这些检查支持行序对齐。维度翻倍后，CAGRA 比值仍为 1.747，RaBitQ 为 1.130/1.157，因此仅凭维度无法解释。
+
+收益伴随更小的 128-probe 预算锚点：OpenAI 为 4--8，Vogue 为 64，arXiv 为 100，后续 FULL 为 200。这是相关观察，不是独立效应，也不是匹配前沿的参数设置。
+
+\Cref{sec:7-8} 检查小幅领先的敏感性，以及 \cref{sec:3-3} 中接口、显存和编译差异的影响。
+
+\input{variants/thesis2-zh/chapters/07-supp-smallbatch}
+
+\section{Cartesian LUT、打包载入与 Lane 精排}
+\label{sec:7-3}
+
+RQ2 消融同时测量内核与应用效应。
+
+\subsection{精确表分解及其吞吐影响}
+
+LUT 消融测试 \cref{sec:5-2} 成本模型与 FP32 排序效应。
+
+\Cref{fig:7-lut} 比较六个数据集上的 Cartesian 表分组，probe 数为 8/32/128/512，固定 $\alpha=100$，$\glut\in\{1,2,4,8\}$。五轮使用 batch 1,000，Stella 为 999。两组在 22/24 单元领先，例外接近持平：arXiv／128 的一组快 0.23\%，OpenAI-3072／8 的四组快 0.84\%。两组对一组成对获胜 23/24，全部数据集几何平均大于一，范围 1.021--1.318。共享索引单元并非独立试验。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{ch7/lutgroups.pdf}
+\caption[Cartesian 查找表分组]{固定 $\alpha=100$ 下的 Cartesian 表分组（v71）。组数表示 $\glut$，不是并行扫描组。曲线为各数据集相对一组实验臂 QPS 比的中位数；阴影表示范围。}
+\label{fig:7-lut}
+\end{figure}
+
+两组／一组比值从 $0.998$ 到 $1.914$。四组和八组均存 16 项，但需要更多查表与加法。这说明表更小不一定提高吞吐；占用率和指令成本未被单独分离。任意四臂单元中报告的最大召回差为 $10^{-4}$。128 probes、$\alpha=100$ 下，T4 在 Vogue、arXiv 和 OpenAI-3072 上比较相同候选。整表与 $16+16$ 表有 22.6--26.1\% 的候选分数 bit 模式不同，最大相对误差 $4.53\times10^{-7}$。跨全部形式，20.5--29.4\% 不同，最大相对误差 $4.64\times10^{-7}$。Vogue 有 2--4/256 个最终 ID 差异，arXiv／OpenAI 没有。主码保留集合不变时，最终 ID 仍可变化，因为舍入后的主码分数进入精排（\cref{sec:a-t4-t5}）。
+
+\subsection{打包访问与协作残差评分}
+
+打包在 48 对匹配配置中获胜 $1.012$--$1.658\times$，覆盖六个数据集、四个 probe 数及 $\glut\in\{1,2\}$，召回差最多 $10^{-4}$。两个布局均为 subspace-major。打包／载入／解包一起改变。每臂仅一个汇总计时，比五轮 v71 的计时证据少。
+
+\Cref{fig:7-packing-refinement,tab:7-refinement} 进一步区分残差精排中的宽载入和 lane 协作。L0 是原始标量路径；L1 只改变载入路径，不把一个候选分到多个 lanes；L16 为每候选分配 16 lanes。同一进程在五轮计时中轮换实验臂顺序，每轮每臂三次搜索。十二个普通单元中，L16 整体提升 $1.015$--$1.789\times$；独立的高预算 arXiv／$\alpha=200$ 对照达到 $2.383\times$。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{ch7/packing_refinement.pdf}
+\caption[打包访问与精排对照]{打包与精排对照。左：各表分组／probe 数下，六个数据集的打包载入 QPS 收益中位数及最小—最大阴影范围。右：128 probes、各数据集普通预算下，仅改变载入和16-lane 的实测端到端收益。两个面板使用不同实验家族。}
+\label{fig:7-packing-refinement}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption[128 probes 下的精排收益]{128 probes 下的精排。比值为相对 L0 的成对端到端收益；末列除外，它是剖析得到的精排内核收益。内核与应用收益不能互换。}
+\label{tab:7-refinement}
+\small\setlength{\tabcolsep}{4pt}
+\input{variants/thesis2-zh/tables/ch7/refinement}
+\end{table}
+
+仅改变载入的 L1 与 L0 逐位相同，却在 arXiv 获得 $1.368\times$。在 $\alpha=100$ 下使用 lanes，精排从 4,277.5$\to$716.8\,$\mu$s，内核提升 $5.97\times$，而整体为 $1.789\times$。OpenAI-3072 的内核／整体提升分别为 $8.81\times$／$1.171\times$。其他阶段仍存在。
+
+基线 wall time 占比为 $f$、精排加速比为 $s$ 时，替换模型给出
+\[
+ \frac{T'}T=(1-f)+\frac f s,\qquad
+ \frac T{T'}=\frac1{1-f+f/s}.
+\]
+arXiv／OpenAI-3072 的 $f=0.529/0.168$ 预测 $1.787/1.175\times$，实测为 $1.789/1.171\times$。独立剖析提供解释性估计。
+
+Lane FP32 重新结合运算的相对距离误差达到 $\approx1.6\times10^{-6}$，偶尔改变顺序。Sanitizer 只覆盖记录的子集，未声称普遍逐位相同。
+
+\section{全局 Top-c、共享阈值及 Probe 正确性与消融}
+\label{sec:7-4}
+
+\input{variants/thesis2-zh/chapters/07-supp-selection}
+
+\subsection{共享阈值保持选择目标}
+
+48 组输出全部一致，QPS 比为 $0.994$--$1.562\times$。在 arXiv $\alpha=200$、batch 1,000、八组下，共享使归并从 2,629$\to$471\,$\mu$s，扫描从 7,968$\to$5,513\,$\mu$s。部分单元略有退步。
+
+试验第一组包含 46--81\% 的优胜者。相同配额需要回退，不同配额仍留有瓶颈。阈值避免固定配额。
+
+\subsection{精确 Probe 选择与流水线一致性的限制}
+
+Radix 保持评分算术／OpenAI TF32（\cref{sec:7-precision}）。全部 1,792 个合成用例通过。对 arXiv／Vogue／OpenAI-3072 的全部 1,000 个查询，probes 以及主码分数／位置均匹配。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Probe 选择吞吐比]{精确计算分数 probe 改动的 v69／v65 端到端吞吐比。每个工作负载—batch 比较中，每个二进制有十轮计时，交替运行收集。$>1$ 的比值有利于 v69。}
+\label{tab:7-probe}
+\small
+\input{variants/thesis2-zh/tables/ch7/probe}
+\end{minipage}\par\medskip
+
+\Cref{tab:7-probe} 显示端到端提升 $1.034$--$1.167\times$。batch 8 下，剖析的 probe 阶段在 arXiv 从 56.5 降至 22.6\,$\mu$s，Vogue 从 52.7 降至 14.7\,$\mu$s，OpenAI-3072 从 77.8 降至 16.7\,$\mu$s。未改阶段限制全 batch 收益，各比值使用自己的基线。
+
+Vogue 在跨二进制的 1,000 查询转储中，probe／主码逐字节一致（一组／batch-8），最终召回却为 0.9642/0.9644。基线自身在一致性／计时运行间也由 0.9642 变为 0.9644。本次检查中，变化发生在主码选择之后，原因未解决。同进程内调度／单 block 输出匹配（\cref{app:reproducibility}）。
+
+可选 FP16 probe 集合在 arXiv／Vogue／OpenAI-3072 的 1,000 查询中分别有 936/979/998 个与 v69 一致。高度重合不等于精确。这些结果不纳入主 E1 前沿，也不纳入精确 probe 主张。
+
+\section{留出预算质量、吞吐与回本}
+\label{sec:7-5}
+
+RQ3 将 \cref{ch:refinement} 的策略与固定 $\alpha=100$ 及更强的通用对照 $\alpha=64$ 比较。
+
+\subsection{无标签选择与有标签诊断 Oracle}
+
+六个数据集在 128、512 probes 下测试 \cref{sec:6-4} 的固定、抽样、FULL、枚举和 oracle 对照。不相交查询池及每样本量 64 次抽样遵循 \cref{sec:3-2}。
+
+所有规则变体均使用 \cref{eq:6-agreement}，取 $k=10$、$\epsilon=1$。FULL 使用全部校准查询；诊断 oracle 使用留出标签（\cref{tab:6-controls}）。
+
+\subsection{全池校准作为质量优先工作点}
+
+每个单元对全部 500 个校准查询执行一次全池校准。所选实验臂在 12/12 单元满足留出 $10^{-3}$ 损失目标，最大观测损失为 0.0006。其速率为 GT oracle 的 0.908--1.000，校准成本 9.5--60.3\,ms。相对固定 100 的速率几何平均比为 $1.111\times$；只看固定 100 也达标的十个单元，则为 $1.193\times$。\Cref{tab:7-budget-full} 给出完整比较。相对固定 64，全池选择在六个单元更快、两个持平、四个更慢；主要优势是观测中覆盖了全部十二个质量目标。
+
+这些单元支持质量优先时用 FULL，校准成本优先时用 $S=128$（\cref{sec:6-2}）。
+
+\begin{table}[!htbp]
+\centering
+\caption[全池预算校准]{全池校准（$S=500$）。损失相对最佳实测留出召回率；速率为所选固定臂的 kQPS。“Cal.”是每单元一次全池校准调用，不是重复查询流计时。留出查询为 500 个，Stella 为 499 个。}
+\label{tab:7-budget-full}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{variants/thesis2-zh/tables/ch7/budget_full}
+\end{table}
+
+\subsection{低成本抽样及其质量风险}
+
+\Cref{tab:7-budget-quality} 报告 $S=128$ 结果。十二个单元中，十个所选预算中位数匹配 oracle；arXiv／128 probes 和 OpenAI-3072／512 不同。预算跨工作负载为 4--200。预算中位数与平均召回不一定对应同一实验臂。平均召回由打印的最佳召回减去平均损失重建，约保留四位小数。
+
+\begin{table}[!htbp]
+\centering
+\caption[抽样预算的留出质量]{$S=128$ 下的留出质量。规则 $\alpha$ 为 64 次抽样中位数；oracle $\alpha$ 使用留出标签。$\overline R_{\rm rule}$ 为重建的平均召回。“Losses”计数相对最佳已测留出召回损失 $>10^{-3}$ 的抽样次数；$L_{95}$ 为日志中的较低次序 95 分位损失估计。$R_{100}$ 为固定预算召回。}
+\label{tab:7-budget-quality}
+\small\setlength{\tabcolsep}{3pt}
+\input{variants/thesis2-zh/tables/ch7/budget_quality}
+\end{table}
+
+arXiv 在 128/512 probes 下分别有 40/64、32/64 次损失越阈，尽管平均损失只有 0.0009。固定 100 损失 0.0012/0.0016：比默认更好未必达标。BGE／512 有 24 次越阈且 $L_{95}=0.0014$；Stella 达到 0.0030；OpenAI-3072 没有越阈（\cref{tab:7-budget-quality}）。四次损失可与报告 $L_{95}=0$ 同时出现（\cref{sec:a-budget-contract}）。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{ch7/budget_risk.pdf}
+\caption[不同样本量下的留出风险]{不同样本量下的留出风险。纵轴为相对最佳已测预算，留出召回损失超过 $10^{-3}$ 的校准抽样百分比。因为 \cref{eq:6-agreement} 保持阈值为一，增加 $S$ 也会收紧允许的槽位不一致比例。}
+\label{fig:7-budget-risk}
+\end{figure}
+
+\subsection{吞吐估计与校准经济性}
+
+按 \cref{sec:a-budget-contract} 的平均所选臂估计，$S=128$ 在十个单元超过固定 100，幅度 $1.028$--$1.691\times$。arXiv 为 0.908/0.917，但平均召回更好，没有吞吐回本。
+
+相对固定 64，抽样赢得 9/12 单元：几何平均 $1.054\times$，范围 $0.821$--$1.367\times$，OpenAI 为 $1.052$--$1.367\times$。两个固定对照均未满足 arXiv 质量，无法作统一质量匹配比较。
+
+\begin{table}[!htbp]
+\centering
+\caption[抽样校准经济性]{$S=128$ 下的校准经济性。速率单位为 kQPS；规则速率是平均所选臂 QPS。比值分别比较固定 100 和 64。“Batches”用 500 查询、Stella 为 499，给出相对固定 100 的回本次数；“Never”表示无吞吐回本。质量列单独标明固定 100 是否满足留出损失目标。}
+\label{tab:7-budget-cost}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{variants/thesis2-zh/tables/ch7/budget_cost}
+\end{table}
+
+校准成本 3.9--21.3\,ms。相对固定 100/64，最大正收益预计回本时间为 0.54/2.72\,s，FULL 为 1.52/2.25\,s（\cref{sec:6-5,eq:6-payback,tab:7-budget-cost}）。arXiv 固定对照质量不达标；下面的直接复用同时测成本和召回。
+
+\input{variants/thesis2-zh/chapters/07-supp-budget}
+
+\section{Batch 区间、G 调度与负载偏斜}
+\label{sec:7-6}
+
+\subsection{并行度与重复选择工作}
+
+batch-8 的八组提升 $2.06$--$2.76\times$；arXiv 扫描从 849$\to$216\,$\mu$s，另加 16.7\,$\mu$s 归并。batch 1,000、$\alpha=200$ 时，独立分组反而将扫描从 3,530$\to$7,652\,$\mu$s，另加 2,624\,$\mu$s 归并，仅达到单 block QPS 的 $0.46\times$。共享阈值减少工作，但未消除区间变化。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{ch7/batch_execution.pdf}
+\caption[依赖 Batch 的执行区间]{执行区间。左：固定共享阈值组数及调度执行，相对 lane 精排单 block 基线的速率；小 batch 有 13 单元，batch 1,000 有 11。右：arXiv 预算 100、200 在 batch 8、1,000 下的成对扫描／归并剖析。斜纹表示归并。右侧来自独立阈值扫描实验，解释一种成本，不是调度器的完整加速。}
+\label{fig:7-batch}
+\end{figure}
+
+\subsection{在更多配置上评估固定规则}
+
+调度遵循 \cref{sec:5-5} 的填充／偏斜规则与伪查询校准。四个配置先确定常数，再测量其他配置。
+
+\begin{table}[!htbp]
+\centering
+\caption[集成执行与调度收益]{相对 v61 L16 的集成执行收益。条目为五轮逐单元成对加速比中位数的几何平均。“Held out”排除确定规则的四个配置，表示留出配置，而非预算实验的留出查询划分。}
+\label{tab:7-scheduling}
+\small\setlength{\tabcolsep}{4pt}
+\input{variants/thesis2-zh/tables/ch7/scheduling}
+\end{table}
+
+平均值使用十三个小 batch 配置、十一个全 batch 配置；Stella 有 999 查询。留出子集分别为九／七个（\cref{tab:7-scheduling}）。batch 1,000 下，八组为 $0.886\times$；最坏 regret 为 1.217（BGE／256）。
+
+Vogue 的 CV 0.338--0.622 在 batch 1,000 时选择四组。比值范围 0.895--1.175；$(n_{\rm probe},\alpha)=(16,16),(16,64),(32,64)$ 对应 0.955、0.895、0.955。CV 测量离散程度，而非总工作量：它使 0.97 处领先，却在低 probe 负载上过度分组（\cref{sec:7-2}）。
+
+250 个变体／配置对、234,320 次查询比较中，没有非并列主码差异或最终 ID 集合差异。并列输出顺序可能不同。这些是顺序同步吞吐测试，不是开放到达流尾延迟测试。
+
+\section{冷构建、常驻显存与已测规模}
+\label{sec:7-7}
+
+冷构建、常驻显存和完成的大数据集搜索用于评估 RQ1；E1 显存比较也支持 RQ4。
+
+\subsection{冷构建与生命周期边界}
+
+三次空缓存重复得到 Vogue 训练 298--303\,ms，总计 $\approx0.56$\,s，而较慢存档为 1.33\,s。Stella 为 10.54--10.65\,s，存档为 10.40\,s（\cref{tab:7-build-memory}）。
+
+\begin{table}[!htbp]
+\centering
+\caption[冷构建与常驻显存]{冷 JHQ 构建与单独测量的常驻显存。Train／add 为三次补充正常构建的组件中位数；Total 为成对总和中位数。显存来自 v71 的两组、128 probes、$\alpha=100$ 运行，包含上下文和工作区。“Residual”是残差编码模型大小占实测使用总量的比例，不是每查询读取比例。}
+\label{tab:7-build-memory}
+\small\setlength{\tabcolsep}{3pt}
+\input{variants/thesis2-zh/tables/ch7/build_memory}
+\end{table}
+
+\Cref{sec:3-3,sec:a-e1-protocol} 定义启动／构建边界；\cref{fig:7-build} 比较重复构建。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{ch7/construction.pdf}
+\captionof{figure}[记录的构建成本]{记录的构建成本，纳入 CAGRA int8。JHQ 为输入页已热时三次补充正常冷构建的中位数及范围；其他柱为成功测量索引配置的中位数，误差线为最小—最大值。Int8 包含数据集量化；RaBitQ 不含所需序列化往返。缺失大数据集柱表示未尝试，不是实测构建失败。纵轴为对数。}
+\label{fig:7-build}
+\end{minipage}\par\medskip
+
+Stella 的隔离 CAGRA int8 为 74.55/82.45\,s，含量化；三个 IVF-PQ 配置的中位数为 86.59\,s，而 JHQ 为 10.54--10.65\,s。质量／常驻显存另行比较。
+
+五次 arXiv 构建的召回范围为 0.0012。Stella 启动在热页下为 18.2--18.6\,s，首次读取为 129.9\,s。20\,ms 采样峰值为 BGE 26.08\,GiB、Stella 22.58\,GiB。BGE 的 12\,GiB 分配缓冲先于 23.05\,GiB gather 载荷存活，不能相加（\cref{eq:4-assignment-scratch}）。
+
+\subsection{常驻分配与压缩的作用}
+
+\Cref{fig:7-memory} 将 \cref{sec:4-4} 组件模型与实测常驻总量结合，保留未归属余量。前述构建测量给出采样峰值。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{ch7/memory.pdf}
+\captionof{figure}[常驻显存分解]{两组表、128 probes、$\alpha=100$ 下的常驻显存分解。组件大小为模型值，标记为实测使用总量，斜纹为未归属余量。总量包含上下文和工作区。前述构建测量给出采样峰值；这些常驻标记不是峰值。}
+\label{fig:7-memory}
+\end{minipage}\par\medskip
+
+残差占 BGE 11.93\,GiB 总量的 80.7\%，占 Stella 20.44\,GiB 的 82.9\%，总量含上下文／工作区。原向量需要 38.50/67.81\,GiB。更小 $\alpha$ 节省读取，不减少存储残差 bytes（\cref{sec:4-4}）。
+
+E1 测量在 \cref{tab:7-e1-memory} 提供独立跨系统视角。从 JHQ 进程总量减去基线测得的 507.2\,MiB 上下文，约为 CAGRA fp32 索引分配的 0.29--0.39。JHQ 包含工作区，CAGRA 则为构建时索引增量。这些是参数扫描范围，不是显存匹配召回点或等峰值预算比较。同表 CAGRA int8 与 JHQ 分配同量级：相对 fp32 的压缩并非 JHQ 独有。\cref{tab:4-bytes} 组件模型解释这一比较。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[E1 分配范围]{E1 分配范围。JHQ 为进程总量减去估计的 507.2\,MiB 上下文，包含查询工作区；两个 CAGRA 列是构建时测得的索引分配。范围覆盖参数扫描。}
+\label{tab:7-e1-memory}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{variants/thesis2-zh/tables/ch7/e1_memory}
+\end{minipage}\par\medskip
+
+\subsection{大数据集可行性与竞争区间}
+
+BGE 包含 10,091,524 个向量，Stella 为 17,776,615；二者均为 1,024 维、32,768 个 IVF 列表。Stella 查询从语料中抽取，因此结果刻画这一基准，不是独立采集的外部查询分布。\Cref{fig:7-large} 纳入成功的 CAGRA int8 与 IVF-PQ 测量。预计存储超容量时，完整精度 CAGRA／RaBitQ／FP32 暴力搜索被预先排除。这是计划排除，不是实测 OOM 或召回失败。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{ch7/large_frontiers.pdf}
+\captionof{figure}[大数据集搜索前沿]{大数据集主机到主机前沿，纳入成功的隔离 CAGRA int8 重跑。BGE／Stella 使用 1,000/999 查询。端点标记已测网格覆盖。}
+\label{fig:7-large}
+\end{minipage}\par\medskip
+
+CAGRA int8 可容纳 Stella。在 BGE 召回率 0.88--0.95 上，它领先 $1.35$--$2.96\times$；在 int8 最高召回率 0.9579 处，JHQ 领先 $1.086\times$。BGE／Stella 最高召回分别为：int8 0.9579/0.9783，JHQ 0.9663/0.9952，PQ 0.9525/0.9896。
+
+Stella 上，JHQ 在召回 0.978679 时为 185.4 kQPS，int8 在 0.978278 时为 66.3。$2.80\times$ 的测点比并未匹配召回；int8 不覆盖更高区间（\cref{fig:7-large}）。
+
+\section{数值稳健性、异常与召回归因}
+\label{sec:7-8}
+
+\subsection{质量分辨率与重复执行}
+
+一个 GT 命中使 Recall@10 改变
+\[
+ \Delta r=\frac1{nk}=
+ \begin{cases}10^{-4},&n=1000,\\2\times10^{-4},&n=500.\end{cases}
+\]
+Stella 的 $n=499$ 步长略大。这个步长不是不确定区间。
+
+全部 369 个 E1 基线重复 ID 标记均保留，包括并列重排。401 口径增加跨协议差异（\cref{sec:a-e1-protocol}）；这些不是独立构建。
+
+0.97 附近，吸附前的局部斜率对应每 $10^{-3}$ 召回变化 1.01--3.17\% QPS。五次构建的召回范围在 Vogue／arXiv／OpenAI-1536/3072 上为 0.0008/0.0012/0.0004/0.0002。这提示局部敏感性，不是重新训练前沿的界。缓存模型 FP32 检查保持 OpenAI 优势（\cref{sec:7-precision}）；arXiv／LUT 的接近持平仍无定论。
+
+RaBitQ 在 Vogue／arXiv／OpenAI-1536/3072 上，五轮范围占中位 QPS 的中位数为 3.79\%、3.34\%、2.87\%、5.25\%。这些离散范围不是置信区间。为降低偶发 30--60\,ms 调用的影响，本文将 1,000 查询速率重算为 $10^6/\operatorname{median}(\text{call ms})$。召回率 0.97 时，所得 JHQ／RaBitQ 比为 1.063、0.995、1.118、1.100。三个有利方向和 arXiv 接近持平仍保持，因此结果并非仅由长调用造成。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\setlength{\parindent}{2em}
+\subsection{精确性绑定到具体阶段}
+\label{sec:7-recall-attribution}
+
+\cref{tab:5-query-stages} 的阶段约束区分计算分数选择与原始空间 kNN；lane 舍入、cutoff 并列和进程变化分别限定不同阶段。
+
+存档重建试验测量距全 probe 重建评分的剩余差距。七个工作负载—预算臂各有 128 查询，对全部 probed 候选做 FP64 评分，相比所选预算的 GPU 输出，召回提高 0--0.002344。arXiv／128 probes 下，$\alpha=200$ 在全部 128 查询上匹配全 IVF 重建答案集。预算为 100 时，召回 0.9734375，全 IVF 为 0.9750；在路由／重建共同缺口 0.0250 之外，还有 0.0015625 的预算缺口（\cref{sec:6-2}）。这些汇总包含同一数据集—probe 工作负载的两个预算。FP64／GPU 算术差异使部分实验臂不能纯粹归因为预算。分离路由／表示需要逐阶段 GT 覆盖。
+\end{minipage}\par

@@ -1,0 +1,55 @@
+\subsection{存储字节与分配字节}
+
+主码以 byte 存储时，
+\begin{equation}
+ S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
+ \qquad S_{\rm offsets}=4(n_{\rm list}+1).
+ \label{eq:4-row-storage}
+\end{equation}
+ID／校正项贡献 $8N$ bytes。当 $M=d/8$、$B_r=8$ 时，
+\[
+ b_{\rm code}=d/8+d=9d/8=1.125d.
+\]
+编码载荷比 SQ8 多 12.5\%；不存图并不必然比 int8 更小。
+
+\begin{table}[!htbp]
+\centering
+\caption[每向量存储模型]{每向量字节数。JHQ 包含编码、ID 和校正项；SQ8 仅含向量编码；CAGRA int8 模型包含向量编码及 32 个四字节邻居。不含 offsets、模型参数、工作区及其他运行时分配。这些组件不是完整进程总量。}
+\label{tab:4-bytes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrrrrrrr@{}}
+\toprule
+$d$ & 主码 & 残差 & ID＋校正 & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP32 \\
+\midrule
+768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\
+1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\
+1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\
+3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+图度数为 $d_g=32$ 时，CAGRA 每行使用 $d+4d_g$ bytes。Stella 的 JHQ 载荷 19.20\,GiB 接近 int8 CAGRA 的 19,656\,MiB，但统计口径不同。$\alpha$ 改变残差读取量，不改变存储字节。
+
+基本模型存储为
+\[
+ S_{\rm model}
+ =4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)
+ \quad\text{bytes}.
+\]
+派生数组另计。工作区保存两个查询矩阵，以及质心分数、LUT、probes 和保留候选。可选残差 LUT 增加 $4b_{\rm cap}dK_r$ bytes；默认直接评分。即使未使用，128 probes 下的分组容量仍约 93.8\,MiB（\cref{eq:5-group-workspace}）。
+
+输入归调用方所有。独立暂存／排序存储为
+\[
+ S_{\rm pinned}=4n_ba_{\rm in}d,\qquad
+ S_{\rm order}=S_{\rm inverse}=4N.
+\]
+分配临时区在 gather 前结束生命周期（\cref{eq:4-staging-rows,eq:4-assignment-scratch}）。
+
+\subsection{复用、恢复与失效}
+
+缓存键不含代码版本／全量数据哈希。代码／数据变化后需使缓存失效。扫描共享状态，冷构建重新拟合。召回率相近不能证明模型相同。
+
+缓存命中仍需 QR、预热、模型上传和 add。Stella 的 6.67\,s add 包含初始工作区，不含扫描校准／搜索预热，也不是重启时间。
+
+改变 $\alpha$ 无需重训。工作区在图捕获前扩容；改变 batch 大小、保留数、probes、lanes、groups 或 bounds 会触发重新捕获。校准可能绕过捕获。索引拥有的缓冲复用直至释放。

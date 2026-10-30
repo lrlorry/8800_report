@@ -20,15 +20,16 @@ constant, as derived from the implemented correction in \Cref{sec:5-6}.
 It preserves the ordering of reconstructed distances for a fixed query,
 but neither it nor the primary score is the original-vector distance.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{figures/ch5/query-path}
-\caption[Query stages and selection boundaries]{Query execution and its separate selection boundaries. Routing
+\captionof{figure}[Query stages and selection boundaries]{Query execution and its separate selection boundaries. Routing
 selects lists, primary screening selects vector candidates, and final
 selection ranks refined survivors. Raw-space ground truth is used for
 evaluation; it is not an input to these search decisions.}
 \label{fig:5-query-path}
-\end{figure}
+\end{minipage}\par\medskip
 
 Routing defines the visited universe $U$ of $n_c$ candidate occurrences;
 primary screening retains up to $c=\max\{k,\lceil\alpha k\rceil\}$ for
@@ -41,9 +42,10 @@ attach each claim to its score and tie rule. Chapter 7 tests survivor
 sets, ordered outputs and raw-space recall separately.
 
 
-\begin{table}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\caption[Query-stage selection contracts]{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
+\captionof{table}[Query-stage selection contracts]{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
 survivors. Exactness refers to the stated computed scores; routing and
 quantised reconstruction determine raw-space approximation.}
 \label{tab:5-selection-contracts}
@@ -62,7 +64,7 @@ Refine & $c_v\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed
 Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\mathrm{ID})$; exact with $k$ finite valid entries \\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{minipage}\par\medskip
 
 
 \Cref{tab:5-query-stages} gives the stage contracts. The E1/budget

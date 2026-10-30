@@ -1,0 +1,24 @@
+\Cref{tab:1-contributions} 列出三个相互关联的项目贡献及其继承基础。核心贡献是适配并评估一个具体的“表示—执行—预算”组合。JHQ、Cartesian 量化、IVF、bitonic／radix 选择、归并及 CUDA Graph 执行仍属于已有工作。
+
+\par\noindent\begin{minipage}{\linewidth}
+\setlength{\parindent}{2em}
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[技术贡献与证据边界]{技术贡献及其证据边界。}
+\label{tab:1-contributions}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}p{.23\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+& 继承基础 & 项目贡献 & 证据 \\
+\midrule
+C1 & JHQ 旋转、码本与层级 & GPU 训练／编码、有界 batch 构建及列表顺序的打包表示 & 17.78M 向量搜索，常驻 20.44\,GiB；重复 train+add 为 10.54--10.65\,s；采样构建峰值 22.58\,GiB \\
+C2 & Cartesian 可加性与已有 GPU 原语 & 集成分解评分、完整键分组保留／阈值、lane 精排和执行调度 & 两组 LUT 在 22/24 单元领先；batch 8 调度执行为 $2.727\times$；明确正确性范围 \\
+C3 & 候选扩展与输出一致性思想 & 工作负载级预算规则、有条件选择分析、留出对照及成本／风险评估 & FULL 在 12/12 单元满足相对损失目标；小样本暴露风险；四个单元直接测量校准后复用 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+\paragraph*{个人贡献。}
+导师 Mengxuan Zhang 博士提出了将 JHQ 移植到 GPU 的研究方向，并通过定期讨论提供指导。我承担 GPU 系统开发，包括索引构建与布局、查询执行优化和精排预算校准；同时完成实验设计、基线比较与结果分析，并决定采用哪些方案和结论。AI 工具在代码开发、实验自动化、分析、审核和论文起草中提供了实质性辅助，具体见\hyperref[front:provenance]{研究与 AI 辅助说明}。
+
+\end{minipage}\par

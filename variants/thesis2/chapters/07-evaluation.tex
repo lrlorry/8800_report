@@ -31,6 +31,8 @@ $\glut$ and $\gscan$ retain the distinct meanings in \cref{sec:5-1}.
 and brute-force baselines of \cref{sec:3-4} \cite{cagra,pq,ivfrabitq},
 using the first four datasets in \cref{tab:3-data}. E1 uses batch 1,000/common GT; T5 covers small batches (\cref{sec:7-smallbatch}), with internal ablations in \cref{sec:7-6}.
 
+
+
 E1 dispatches 105 arXiv/OpenAI cells to $\gscan=0$ and 27 Vogue cells to $\gscan=4$, triggered by CV 0.338--0.622. Only Vogue exercises grouped retention/bounds/merging (\cref{sec:5-5}).
 
 E1 has 1,590 valid points: JHQ 27--39/dataset, baseline families 54--264. No failure/invalid-ID/duplicate-row flags occur. Sweeps share indexes (\cref{sec:3-4}).
@@ -38,7 +40,14 @@ E1 has 1,590 valid points: JHQ 27--39/dataset, baseline families 54--264. No fai
 \Cref{tab:3-grids,sec:b-grids} define finite coverage; targets beyond it remain unmeasured.
 
 
-\begin{figure}[tbp]
+
+
+Storage differs: nine-bit RaBitQ shares $9d/8$ nominal code bytes; 4/8-bit codes use less.
+\Cref{tab:4-bytes,sec:7-7} give representation costs and measured
+allocations alongside this performance envelope.
+
+
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/frontiers.pdf}
 \caption[E1 recall--throughput frontiers]{Measured host-to-host recall--QPS frontiers on the four E1 datasets.
@@ -49,31 +58,28 @@ measured points; throughput uses a logarithmic axis.}
 \label{fig:7-frontiers}
 \end{figure}
 
-Storage differs: nine-bit RaBitQ shares $9d/8$ nominal code bytes; 4/8-bit codes use less.
-\Cref{tab:4-bytes,sec:7-7} give representation costs and measured
-allocations alongside this performance envelope.
-
-
 \subsection{Matched recall and opposing operating regions}
 
 \Cref{tab:7-matched} reports recall 0.97 using the interpolated and
 qualifying-measured estimators defined in \cref{sec:3-4}.
 
 
-\begin{table}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\caption[Cross-system comparison at recall 0.97]{Recall 0.97 comparison. Each ratio is interpolated / measured;
+\captionof{table}[Cross-system comparison at recall 0.97]{Recall 0.97 comparison. Each ratio is interpolated / measured;
 values above one favour JHQ. JHQ kQPS is the interpolated estimate.
 The small arXiv--RaBitQ difference changes direction with the estimator.}
 \label{tab:7-matched}
 \small\setlength{\tabcolsep}{4pt}
 \input{tables/ch7/matched97}
-\end{table}
+\end{minipage}\par\medskip
 
 Removing grouping lowers Vogue's JHQ/RaBitQ ratio at recall 0.97 from 1.059 to 0.933 at fixed index/probes/budget/final outputs (batch 1,000). This isolates the integrated grouping path, not bounds alone.
 
 CAGRA int8 leads $1.20$--$1.98\times$ at 0.90--0.92, without 0.97 coverage. RaBitQ wins some 0.98+ targets; CAGRA fp32 wins near 0.99 on arXiv (\cref{fig:7-frontiers}).
 
+\newpage
 \input{variants/thesis2/chapters/07-supp-precision}
 
 \subsection{Interpretation and comparison limits}
@@ -101,7 +107,7 @@ effects.
 probe counts 8/32/128/512,
 fixed $\alpha=100$, and $\glut\in\{1,2,4,8\}$. Five rounds use batch 1,000 (Stella 999). Two groups lead in 22/24 cells. Exceptions are near ties: arXiv/128 favours one group by 0.23\%; OpenAI-3072/8 favours four by 0.84\%. Paired two-versus-one wins are 23/24; all dataset geometric means exceed one (1.021--1.318). Shared-index cells are not independent trials.
 
-\begin{figure}[tbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/lutgroups.pdf}
 \caption[Cartesian lookup-table grouping]{Cartesian table grouping at fixed $\alpha=100$ (v71).
@@ -136,7 +142,7 @@ multiple lanes; L16 assigns 16 lanes to a candidate. The same process
 rotates arm order across five timing rounds, with three search calls per
 arm per round. Across twelve ordinary cells, L16 gains $1.015$--$1.789\times$ overall. The separate high-budget arXiv/$\alpha=200$ control reaches $2.383\times$.
 
-\begin{figure}[tbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/packing_refinement.pdf}
 \caption[Packed access and refinement controls]{Packing and refinement controls. Left: median packed-load QPS
@@ -147,7 +153,7 @@ arm per round. Across twelve ordinary cells, L16 gains $1.015$--$1.789\times$ ov
 \label{fig:7-packing-refinement}
 \end{figure}
 
-\begin{table}[tbp]
+\begin{table}[!htbp]
 \centering
 \caption[Refinement gains at 128 probes]{Refinement at 128 probes. Ratios are paired end-to-end gains over
  L0, except the last column, which is the profiled refinement-kernel gain.
@@ -188,15 +194,16 @@ The pilot's first group holds 46--81\% of winners. Equal quotas need fallback; u
 
 Radix retains score arithmetic/OpenAI TF32 (\cref{sec:7-precision}). All 1,792 synthetic cases pass. Probes and primary scores/positions match on all 1,000 arXiv/Vogue/OpenAI-3072 queries.
 
-\begin{table}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\caption[Probe-selection throughput ratios]{v69/v65 end-to-end throughput ratios for the exact computed-score probe
+\captionof{table}[Probe-selection throughput ratios]{v69/v65 end-to-end throughput ratios for the exact computed-score probe
  change. Each workload--batch comparison has ten timing rounds per binary,
  collected in alternating runs. Ratios $>1$ favour v69.}
 \label{tab:7-probe}
 \small
 \input{tables/ch7/probe}
-\end{table}
+\end{minipage}\par\medskip
 
 \Cref{tab:7-probe} shows end-to-end improvements of $1.034$--$1.167\times$.
 At batch 8, the profiled probe stage falls from 56.5 to 22.6\,$\mu$s
@@ -241,7 +248,7 @@ is the observed coverage of all twelve quality targets.
 These cells favour FULL for quality and $S=128$ for calibration cost (\cref{sec:6-2}).
 
 
-\begin{table}[tbp]
+\begin{table}[!htbp]
 \centering
 \caption[Full-pool budget calibration]{Full-pool calibration ($S=500$). Loss is relative to the best
 measured held-out recall; rates are kQPS from the selected fixed arm.
@@ -259,7 +266,7 @@ budget matches the oracle budget in ten of twelve cells; it differs on
 arXiv at 128 probes and OpenAI-3072 at 512. Budgets span 4--200 across workloads. Median budget and
 mean recall need not describe one arm. Mean recall uses printed best recall minus mean loss, approximately to four decimals.
 
-\begin{table}[tbp]
+\begin{table}[!htbp]
 \centering
 \caption[Sampled-budget held-out quality]{Held-out quality at $S=128$. Rule $\alpha$ is the median across
 64 draws; oracle $\alpha$ uses held-out labels. $\overline R_{\rm rule}$
@@ -274,7 +281,7 @@ fixed-budget recall.}
 
 ArXiv has 40/64 and 32/64 loss crossings at 128/512 probes, despite mean loss 0.0009. Fixed 100 loses 0.0012/0.0016: better than default need not meet the target. BGE/512 has 24 crossings and $L_{95}=0.0014$; Stella reaches 0.0030; OpenAI-3072 has none (\cref{tab:7-budget-quality}). Four losses can coexist with reported $L_{95}=0$ (\cref{sec:a-budget-contract}).
 
-\begin{figure}[tbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.82\linewidth]{ch7/budget_risk.pdf}
 \caption[Held-out risk across sample sizes]{Held-out risk across sample sizes. The vertical axis is the
@@ -294,7 +301,7 @@ With \cref{sec:a-budget-contract}'s mean selected-arm estimate, $S=128$ beats fi
 
 Against fixed 64, sampling wins 9/12 cells: geometric mean $1.054\times$, range $0.821$--$1.367\times$ (OpenAI $1.052$--$1.367\times$). Both fixed controls fail arXiv quality, preventing a uniformly quality-matched comparison.
 
-\begin{table}[tbp]
+\begin{table}[!htbp]
 \centering
 \caption[Sampled-calibration economics]{Calibration economics, $S=128$. Rates are kQPS and rule rate is
 mean selected-arm QPS. Ratios compare with fixed 100 and fixed 64.
@@ -320,7 +327,7 @@ Calibration costs 3.9--21.3\,ms. Maximum positive estimated paybacks against fix
 
 Batch-8 eight-group gains are $2.06$--$2.76\times$; arXiv scan is 849$\to$216\,$\mu$s plus 16.7\,$\mu$s merge. At batch 1,000 and $\alpha=200$, independent grouping instead raises scan 3,530$\to$7,652\,$\mu$s plus 2,624\,$\mu$s merging, reaching only $0.46\times$ one-block QPS. Shared bounds reduce work, without removing this regime change.
 
-\begin{figure}[tbp]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{ch7/batch_execution.pdf}
 \caption[Batch-dependent execution regimes]{Execution regimes. Left: fixed shared-bound group counts and
@@ -339,7 +346,7 @@ in \cref{sec:5-5}. Four configurations set the constants before the
 additional configurations were measured.
 
 
-\begin{table}[tbp]
+\begin{table}[!htbp]
 \centering
 \caption[Integrated execution and scheduling gains]{Integrated execution gains over v61 L16. Entries are geometric
  means of per-cell median paired speedups from five rounds. ``Held out''
@@ -366,7 +373,7 @@ large-dataset searches; the E1 memory comparison also informs RQ4.
 
 Three empty-cache repeats give Vogue 298--303\,ms training and $\approx0.56$\,s total, versus the slow archived 1.33\,s. Stella takes 10.54--10.65\,s versus archived 10.40\,s (\cref{tab:7-build-memory}).
 
-\begin{table}[tbp]
+\begin{table}[!htbp]
 \centering
 \caption[Cold construction and resident memory]{Cold JHQ construction and separately measured resident memory.
 Train/add are component medians of three supplementary normal builds;
@@ -382,10 +389,11 @@ measured used total, not the fraction read per query.}
 \Cref{sec:3-3,sec:a-e1-protocol} define startup/build boundaries; \cref{fig:7-build} compares repeated builds.
 
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \includegraphics[width=\linewidth]{ch7/construction.pdf}
-\caption[Recorded construction costs]{Recorded construction costs, with CAGRA int8 included. JHQ is
+\captionof{figure}[Recorded construction costs]{Recorded construction costs, with CAGRA int8 included. JHQ is
 the median and range of three supplementary normal cold builds with warm
 input pages; other bars are medians across successful
 measured index configurations, with minimum--maximum whiskers. Int8
@@ -393,7 +401,7 @@ includes dataset quantization; RaBitQ excludes the required serialization
 round trip. Missing large-dataset bars denote unattempted configurations,
 not measured build failures. The vertical axis is logarithmic.}
 \label{fig:7-build}
-\end{figure}
+\end{minipage}\par\medskip
 
 Stella takes 74.55/82.45\,s with isolated CAGRA int8 (quantisation included), and median 86.59\,s across three IVF-PQ configurations, versus JHQ's 10.54--10.65\,s. Quality/resident memory are separate comparisons.
 
@@ -406,16 +414,17 @@ with measured resident totals. Its unattributed remainder is retained,
 and the preceding construction measurements give the sampled peaks.
 
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \includegraphics[width=\linewidth]{ch7/memory.pdf}
-\caption[Resident-memory decomposition]{Resident-memory decomposition at two-group tables, 128 probes
+\captionof{figure}[Resident-memory decomposition]{Resident-memory decomposition at two-group tables, 128 probes
 and $\alpha=100$. Component sizes are modelled, markers are measured used
 totals, and hatching is the unattributed remainder. The totals include
 context and workspace. The preceding construction measurements give sampled peaks; these
 resident markers are not peaks.}
 \label{fig:7-memory}
-\end{figure}
+\end{minipage}\par\medskip
 
 Residuals occupy 80.7\% of BGE's 11.93\,GiB and 82.9\% of Stella's 20.44\,GiB totals, including context/workspace. Raw vectors need 38.50/67.81\,GiB. Smaller $\alpha$ saves reads, not stored residual bytes (\cref{sec:4-4}).
 
@@ -431,15 +440,16 @@ The CAGRA int8 allocations in the same table are of a similar order to
 JHQ's: compression relative to fp32 is shared by competing designs.
 The component model in \cref{tab:4-bytes} explains this comparison.
 
-\begin{table}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\caption[E1 allocation ranges]{E1 allocation ranges. JHQ is process total minus a 507.2\,MiB
+\captionof{table}[E1 allocation ranges]{E1 allocation ranges. JHQ is process total minus a 507.2\,MiB
 context estimate, including query workspace; both CAGRA columns are index
 allocations measured during build. Ranges cover the parameter sweep.}
 \label{tab:7-e1-memory}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \input{tables/ch7/e1_memory}
-\end{table}
+\end{minipage}\par\medskip
 
 \subsection{Large-dataset feasibility and competitive regions}
 
@@ -450,13 +460,14 @@ than an independently collected external-query distribution.
 \Cref{fig:7-large} includes
 successful CAGRA int8 and IVF-PQ measurements. Full-precision CAGRA/RaBitQ/FP32 brute force were excluded where predicted storage exceeded capacity. These are planned exclusions; no out-of-memory or recall failure was measured.
 
-\begin{figure}[tbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \includegraphics[width=\linewidth]{ch7/large_frontiers.pdf}
-\caption[Large-dataset search frontiers]{Large-dataset host-to-host frontiers, including the successful
+\captionof{figure}[Large-dataset search frontiers]{Large-dataset host-to-host frontiers, including the successful
 isolated CAGRA int8 reruns. BGE/Stella use 1,000/999 queries. Endpoints mark tested-grid coverage.}
 \label{fig:7-large}
-\end{figure}
+\end{minipage}\par\medskip
 
 CAGRA int8 fits Stella. On BGE it leads $1.35$--$2.96\times$ at recall 0.88--0.95; JHQ leads $1.086\times$ at int8's maximum 0.9579. Maximum BGE/Stella recall: int8 0.9579/0.9783, JHQ 0.9663/0.9952, PQ 0.9525/0.9896.
 

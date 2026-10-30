@@ -1,0 +1,42 @@
+\subsection{完整决策轨迹与有限池风险}
+\label{sec:7-budget-trace}
+
+全部 2,304 条抽样曲线和十二条 FULL 曲线均单调，选择与枚举一致。记录的子集和复现 18,432 个网格计数（\cref{eq:6-finite-pool}）。这验证已记录汇总；任意子集／位置不变性及一般的仅距离嵌套仍有条件（\cref{sec:6-3}）。
+
+$S=128$ 下最大损失为 arXiv／512 的 0.0050、BGE／512 的 0.0046，$S=32$ 下为 0.0294。FULL 保持在 0.0006 内。
+
+arXiv／128 在 $S=32/64/128$ 下预测／观测越阈分别为 0.965/0.984、0.875/0.875、0.620/0.625（\cref{fig:7-finite-pool}）。36 个差距中最大为 BGE／512 的 0.144，即 0.519/0.375。GT 损失预测需要稳定计数／留出臂质量；校准本身不使用标签。
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
+\caption[有限池风险预测与观测]{有限池预测与观测到的 arXiv 损失越阈。误差条为固定池条件下 64 个独立抽样子集的一倍估计标准误，不表示未来工作负载的不确定性。}
+\label{fig:7-finite-pool}
+\end{figure}
+
+十次交替重复支持低预算计时平台，而非一般运行时间单调性。
+
+\subsection{直接测量校准加复用}
+\label{sec:7-stream-cost}
+
+四个单元在五轮轮换顺序中，对 500 个重复留出 batches 比较固定 64/100、抽样和 FULL。计时包含查询收集、校准、预算应用和首次图，不含构建、预热及扫描校准（\cref{tab:7-stream-cost}）。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[500 个复用 Batch 的直接成本]{500 个复用 batches 的直接总毫秒数，取五轮平均，抽样与 FULL 策略包含预算校准。每 batch 有 500 查询。质量与计时结果一同讨论。}
+\label{tab:7-stream-cost}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{variants/thesis2-zh/tables/supplement/stream}
+\end{minipage}\par\medskip
+
+OpenAI-3072 两种策略均选 4，召回 0.9252，与固定 100 相同。OpenAI-1536 的 FULL／固定 100 为 0.9280，抽样为 0.9276。时间见 \Cref{tab:7-stream-cost}。
+
+相对固定 100/64，直接节省分别从 OpenAI-1536 的 4/6 个 batches、OpenAI-3072 的 4/9 个 batches 开始（\cref{fig:7-stream-cost}）；分数批次拟合结果有所不同。BGE 抽样／固定 100／FULL 召回为 0.9658/0.9670/0.9664。arXiv FULL 为质量选择更慢的 200，固定对照不达标。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
+\captionof{figure}[校准后复用的直接累计时间]{直接测得的平均累计时间，包含预算校准和首 batch 准备。每条曲线重放一个固定留出查询池。不同策略可能有不同召回率；仅靠时间不能形成质量匹配排名。数据集／probe 设置与 \cref{tab:7-stream-cost} 相同。}
+\label{fig:7-stream-cost}
+\end{minipage}\par\medskip

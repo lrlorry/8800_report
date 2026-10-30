@@ -1,0 +1,48 @@
+\subsection{选择校准规模}
+
+较强的独立槽位模型提示
+\[
+ \frac{4.74}{Sk}\simeq10^{-3},\quad k=10
+ \quad\Longrightarrow\quad S\simeq474\approx500.
+\]
+这分辨的是参考不一致，不是 GT 风险（\cref{sec:6-2}）。FULL 质量与抽样风险见 \cref{tab:7-budget-full,fig:7-budget-risk}。
+
+FULL 仍需满足 \cref{sec:6-3} 的路径／排序条件。
+
+\subsection{风险与所选实验臂性能}
+
+在 $m$ 次校准抽样中，令第 $r$ 次选择 $\widehat\alpha_r$。定义留出损失与越阈频率为
+\begin{equation}
+ L_r=\widehat r^*-\widehat r(\widehat\alpha_r),\qquad
+ \widehat p_\delta=\frac{1}{m}\sum_{r=1}^{m}\mathbf1\{L_r>\delta\}.
+ \label{eq:6-risk}
+\end{equation}
+平均损失、越阈频率和尾部大小回答不同问题。\Cref{tab:7-budget-quality,fig:7-budget-risk} 报告存档汇总；补充逐抽样最大损失见 \cref{sec:7-budget-trace}。
+
+报告的所选实验臂速率为 $\overline Q=m^{-1}\sum_r\widehat Q(\widehat\alpha_r)$，由已计时固定臂查表得到。它不同于中位预算的速率，也不同于校准后查询流的吞吐。质量与速度必须结合阅读（\cref{tab:7-budget-cost}）。
+
+\subsection{复用成本}
+
+对后续 $B_{\rm reuse}$ 个等大小 batches，建立模型
+\begin{equation}
+ T_{\rm policy}(B_{\rm reuse})=T_{\rm cal}+B_{\rm reuse}T_{\rm chosen},\qquad
+ T_{\rm fixed}(B_{\rm reuse})=B_{\rm reuse}T_f.
+ \label{eq:6-total-cost}
+\end{equation}
+当 $T_{\rm chosen}<T_f$ 时，回本次数为
+\begin{equation}
+ B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
+ \label{eq:6-payback}
+\end{equation}
+确有
+\[
+ \begin{aligned}
+ T_{\rm policy}<T_{\rm fixed}
+ &\iff T_{\rm cal}<B_{\rm reuse}(T_f-T_{\rm chosen})\\
+ &\iff B_{\rm reuse}>B_{\rm reuse}^*
+ \qquad(T_{\rm chosen}<T_f).
+ \end{aligned}
+\]
+若 $T_{\rm chosen}\geq T_f$，则没有吞吐回本。batch 时间为 $T=1000n/Q$ 毫秒。选择变化时，凸性给出 $1/\mathbb E[Q]\leq\mathbb E[1/Q]$：平均 QPS 的倒数低估平均时间。边界／直接检查见 \cref{sec:a-budget-contract,sec:7-stream-cost}，该 campaign 的估计见 \cref{tab:7-budget-cost}。
+
+周期校准为每个 batch 增加 $T_{\rm cal}/H$。自动漂移检测／更新留待后续工作。

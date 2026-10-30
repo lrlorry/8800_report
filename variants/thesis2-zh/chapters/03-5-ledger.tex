@@ -1,0 +1,38 @@
+记录保留版本、配置、时间和输出。成对运行共享状态；状态／精度变化定义独立实验家族。缺失的历史二进制／模型哈希限制精确复现（\cref{app:reproducibility}）。分数／并列正确性不同于原始召回率，后者还依赖路由／重建。抽样、排序和测量限制见 \cref{sec:6-2,sec:6-3,sec:8-3}。
+
+\subsection{来源与可用记录}
+\label{app:reproducibility}
+\label{sec:b-artifacts}
+\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目资料库}保存源码／测量快照，以及选定的 T1、T4/T5 和 A2 输入。完整向量、训练状态与历史可执行文件并非全部可用。T4 候选转储已删除，保留的汇总无法支持独立重新排序。
+
+\begin{table}[!htbp]
+\centering
+\caption[组件实现]{组件测试使用的实现家族。各实验有自己的对照；版本号不表示连续累积的整系统加速。}
+\label{tab:a-components}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
+\toprule
+版本 & 机制／实验作用\\\midrule
+v61 & Word 载入与 lane 精排对照\\
+v62 / v63 & 分组完整键选择／共享阈值\\
+v65 / v69 & Batch／偏斜调度及 radix probe 选择\\
+v69 / v71 / v73 & 预算校准／LUT 扫描／严格分数导出\\
+v69 / v72 & OpenAI：同一训练缓存上的 TF32 与 FP32 add／查询算术\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{其他计时约定}
+\label{sec:a-e1-protocol}
+预热使 E1 中 274 个测点的调用数减少；首次转换／验证不同于稳态计时。369 个重复 ID 标记包含并列重排；401 的口径还计入跨协议差异。仅凭标记不排除测点，JHQ 没有同样的标记。
+
+\subsection{校准与后续实验的约束}
+\label{sec:a-budget-contract}
+\label{sec:a-supplement}
+\label{sec:a-t4-t5}
+实验显式设置以 200 开始的网格。固定实验臂预热一次、计时三次。校准计时包含完整搜索与 $O(Sk^2)$ 主机比较，不含查询收集／扫描调度校准，且绕过图捕获。预热遍历全部查询，但不将输出／GT 传入一致性判定。调用方使用 \texttt{set\_alpha(A[index])} 应用返回的索引；所选实验臂速率复用固定臂计时（\cref{sec:6-5}）。对排序后的 64 个损失，记录分位数为
+\[
+ L_{95}=L^{\rm sorted}_{\lfloor0.95(64-1)\rfloor}
+       =L^{\rm sorted}_{59}\qquad\text{(zero-based)}.
+\]
+除非另有说明，后续会话使用独立状态／边界。A2 佐证 PTX 约束（\cref{sec:5-5}）；T4 分数导出的范围见 \cref{sec:7-strict-selection}。T5 包含空调用／int8 查询量化，也存在 API／预热差异（\cref{sec:7-smallbatch}）。

@@ -32,14 +32,15 @@ At $k=10$, $\epsilon=1$ gives
 \]
 Larger samples change coverage and strictness. Disjoint held-out queries evaluate draws from one finite pool (\cref{sec:7-5}).
 
-\begin{figure}[htbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
-\input{figures/ch6/calibration-flow}
-\caption[Workload-level calibration and evaluation]{Workload-level calibration and its evaluation. Budget decisions
+\input{variants/thesis2/figures/calibration-flow-layout}
+\captionof{figure}[Workload-level calibration and evaluation]{Workload-level calibration and its evaluation. Budget decisions
 use reference IDs; GT assesses held-out quality. Selected-arm timing comes from fixed-arm measurements. Implementation boundaries are in
 \cref{sec:a-budget-contract}.}
 \label{fig:6-calibration}
-\end{figure}
+\end{minipage}\par\medskip
 
 \subsection{What agreement controls}
 

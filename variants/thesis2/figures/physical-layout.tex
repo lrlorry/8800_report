@@ -1,0 +1,78 @@
+% Source-level schematic: v69 gather/repack and separate allocations.
+% All addresses below are byte offsets relative to each allocation's base.
+\begin{tikzpicture}[x=1cm,y=1cm,font=\footnotesize\linespread{1}\selectfont,
+ cell/.style={draw=ThesisNavy!50,minimum width=.88cm,minimum height=.48cm,inner sep=1pt},
+ panel/.style={draw=ThesisNavy!40,rounded corners=2pt,fill=ThesisNavy!2},
+ link/.style={-{Stealth[length=4pt]},ThesisNavy!80,semithick}]
+\node[anchor=west,font=\small\bfseries] at (0,1.0) {List ranges and physical positions (schematic, $N=8$)};
+\node[anchor=west] at (0,.13) {$o=[0,3,3,8]$};
+\node[anchor=west] at (0,-.32) {list 1: $[3,3)=\varnothing$};
+\foreach \p in {0,...,7} {
+ \node[cell,fill=ThesisNavy!5] (pos\p) at (4.4+.88*\p,-.3) {$\p$};
+}
+\draw[decorate,decoration={brace,amplitude=3pt}] (3.96,.12)--(6.60,.12)
+ node[midway,above=4pt] {list 0: $[0,3)$};
+\draw[decorate,decoration={brace,amplitude=3pt}] (6.60,.12)--(11.00,.12)
+ node[midway,above=4pt] {list 2: $[3,8)$};
+\node[anchor=west,align=left] at (11.55,-.05) {Each range indexes\\all four buffers.};
+\node[draw=ThesisNavy,fill=ThesisNavy!12,rounded corners=2pt,
+ minimum height=.5cm] (chosen) at (1.25,-1.02) {example $p=3$};
+\draw[link] (pos3.south)--(7.04,-.72)-|(chosen.north);
+\node[anchor=west] at (4.0,-1.02) {Separate allocations; links below denote an index join.};
+
+% ID allocation.
+\draw[panel] (1.05,-1.53) rectangle (14.85,-2.57);
+\node[anchor=west,align=left] at (1.3,-2.04) {\textbf{IDs}\\$\mathrm{IDs}[p]=\rho(p)$};
+\foreach \p/\id in {0/5,1/1,2/7,3/0,4/6,5/3,6/4,7/2} {
+ \node[cell,fill=white] at (4.4+.88*\p,-2.04) {$\id$};
+}
+\node[cell,draw=ThesisNavy,fill=ThesisNavy!17] (id3) at (7.04,-2.04) {$0$};
+\node[anchor=west,align=left] at (11.5,-2.04) {int32: $4p$\\$p=3:\ 12$ bytes};
+
+% Primary allocation, word-group-major. The example shows M >= 8.
+\draw[panel] (1.05,-2.88) rectangle (14.85,-5.45);
+\node[anchor=west,align=left] at (1.3,-3.62) {\textbf{Primary words}\\group-major\\(shown: $M\geq8$)};
+\foreach \j/\yy in {0/-3.36,1/-3.96} {
+ \foreach \p in {0,...,7} {
+  \node[cell,fill=white] at (4.4+.88*\p,\yy) {$\mathsf w_{\j,\p}$};
+ }
+ \node[cell,draw=ThesisNavy,fill=ThesisNavy!17] (word\j) at (7.04,\yy) {$\mathsf w_{\j,3}$};
+}
+\node[anchor=west,align=left] at (11.5,-3.65) {$4(jN+p)$\\$p=3,N=8:$\\$j=0:\ 12$ bytes\\$j=1:\ 44$ bytes};
+\draw[link] (4.0,-4.43)--(10.95,-4.43)
+ node[midway,below=2pt] {fixed $j$: adjacent $p$ give consecutive 32-bit words};
+\node[anchor=west] at (1.3,-5.12)
+ {One word: $Z[4j,p]$, $Z[4j+1,p]$, $Z[4j+2,p]$, $Z[4j+3,p]$ (one candidate).};
+
+% Residual allocation; each displayed cell represents a whole row.
+\draw[panel] (1.05,-5.76) rectangle (14.85,-7.53);
+\node[anchor=west,align=left] at (1.3,-6.33) {\textbf{Residual codes}\\row-major (8-bit)};
+\foreach \p in {0,...,7} {
+ \node[cell,fill=white] at (4.4+.88*\p,-6.33) {row $\p$};
+}
+\node[cell,draw=ThesisNavy,fill=ThesisNavy!17] (res3) at (7.04,-6.33) {row 3};
+\node[anchor=west,align=left] at (11.5,-6.33) {$pb_r+t$\\$p=3:\ 3b_r+t$};
+\node[anchor=west] at (1.3,-7.10) {row 3 contains $b_r$ consecutive bytes:};
+\node[draw=ThesisNavy!50,fill=white,minimum height=.45cm,inner sep=3pt]
+ (expanded) at (9.05,-7.10) {$R[3,0]\quad R[3,1]\quad\cdots\quad R[3,b_r-1]$};
+\draw[link] (res3.south)--(expanded.north west);
+
+% Correction allocation.
+\draw[panel] (1.05,-7.84) rectangle (14.85,-9.12);
+\node[anchor=west,align=left] at (1.3,-8.48) {\textbf{Correction}\\$\mathrm{correction}[p]$\\$=\gamma[p]$};
+\foreach \p in {0,...,7} {
+ \node[cell,fill=white] at (4.4+.88*\p,-8.36) {$\gamma[\p]$};
+}
+\node[cell,draw=ThesisNavy,fill=ThesisNavy!17] (corr3) at (7.04,-8.36) {$\gamma[3]$};
+\node[anchor=west,align=left] at (11.5,-8.36) {FP32: $4p$\\$p=3:\ 12$ bytes};
+
+% One physical-position key points into four independent buffers.
+\draw[ThesisNavy!80,semithick] (chosen.west)--(.35,-1.02)--(.35,-7.69);
+\draw[link] (.35,-1.38)-|(id3.north);
+\draw[link] (.35,-2.73)-|(word0.north);
+\draw[link] (.35,-5.61)-|(res3.north);
+\draw[link] (.35,-7.69)-|(corr3.north);
+\node[anchor=west,align=left] at (0,-9.65)
+ {All offsets are relative to each buffer's base. Refinement fetches survivor rows only;\\
+ survivor positions can be scattered. Highlighted entries share $p=3$, not an interleaved allocation.};
+\end{tikzpicture}
