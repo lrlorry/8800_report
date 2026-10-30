@@ -1,0 +1,77 @@
+{
+  "preview_sha256": "e36ee96781a987d0ebcd348fcf13a813444da93a679015a85dbcac943a125b68",
+  "original_sha256": "e47242aeff2f275c61b9aabb5e8722c551a0fda5a463f8924f57cfffbf9400b0",
+  "pages": 65,
+  "protected_existing_files": 1058,
+  "original_files_unchanged": true,
+  "figures": 29,
+  "tables": 28,
+  "proofs": 6,
+  "all_label_numbers_and_pages_identical": true,
+  "unaffected_page_text_identical": 61,
+  "changes_confined_to_four_figures": {
+    "46": {
+      "figure": "7.2",
+      "changed_pixel_box": [
+        130,
+        210,
+        861,
+        457
+      ],
+      "changes_confined_to_figure": true
+    },
+    "53": {
+      "figure": "7.7",
+      "changed_pixel_box": [
+        130,
+        135,
+        862,
+        359
+      ],
+      "changes_confined_to_figure": true
+    },
+    "54": {
+      "figure": "7.8",
+      "changed_pixel_box": [
+        130,
+        135,
+        862,
+        561
+      ],
+      "changes_confined_to_figure": true
+    },
+    "60": {
+      "figure": "8.1",
+      "changed_pixel_box": [
+        136,
+        141,
+        857,
+        388
+      ],
+      "changes_confined_to_figure": true
+    }
+  },
+  "source_arrays_and_archived_hashes_checked": true,
+  "fonts_embedded": true,
+  "type3_fonts": 0,
+  "compiler_issues": [],
+  "plot_labels_within_canvas": true,
+  "plot_geometry_preserved": true,
+  "deliverables": {
+    "thesis2-figure-preview.pdf": {
+      "pages": 65,
+      "sha256": "e36ee96781a987d0ebcd348fcf13a813444da93a679015a85dbcac943a125b68"
+    },
+    "thesis2-figure-comparison.pdf": {
+      "pages": 4,
+      "sha256": "3769e2c960a93d4ce0a02da8633c03ca099622e7ea163f1efbbd44db0e6df3d0"
+    }
+  },
+  "visual_review_pages": [
+    46,
+    53,
+    54,
+    60
+  ],
+  "comparison_visual_review_page": 3
+}

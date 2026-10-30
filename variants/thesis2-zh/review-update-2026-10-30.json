@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-30",
+  "review_record": "variants/thesis2/audit/review-02a4467-2026-10-30.json",
+  "previous_update_sha256": "001a85d13d763acd49fc5dd004398f0fcc498573c7c0d2ef9223ab0abcb4a17d",
+  "scope": "Bilingual response to the subsequent review; no rewriting of the original translation or author-confirmation baseline.",
+  "updated_protected": {
+    "variants/thesis2/main.tex": {
+      "before_sha256": "9b5777dbbe389c6bdede9d479eeb0c164d7054d40cce09883b6b3a5f4686afa2",
+      "after_sha256": "e1dc47c13cf26c8af866eabf2c97d4254d41a35caacda07626b5935c72c65edc"
+    },
+    "variants/thesis2/checks.json": {
+      "before_sha256": "1e5c7f4e0ae00d7a7e188f5d5472d6c8449a9dde87cb3abac9a455cffcc8aef2",
+      "after_sha256": "7b69a79bcaf51e157238b9b6881b5d7cd05344cf23ac40498aeb737222c0cd45"
+    },
+    "variants/thesis2/verify.py": {
+      "before_sha256": "c8db01669c3491e3149b2190b722959bd1cb56e56d07ea1afd9b15f469286d00",
+      "after_sha256": "ea5dca3d46d855fbdff4100b3c09aeae8210daccc52d5e11b1b26f4d3df4b80c"
+    },
+    "variants/thesis2/chapters/02-5-graphs.tex": {
+      "before_sha256": "bc607aa5479f0792e1d575553a8d3561dbe446caa9f025b5ea3448a74b544aa6",
+      "after_sha256": "9624b524a36f1f30ca688adae5d6ec7a912d9407044a931f5b5e0d62b774b2ee"
+    },
+    "variants/thesis2/chapters/02-4-gpu.tex": {
+      "before_sha256": "b5128a1f9998877e6ba2e1a585a2683725cba6a9c92ba1369d1f8f24126f1e17",
+      "after_sha256": "e70114ae18f2ed1a5237cc4bd8fee9828375c0d20729ad0fe2213b2f253b19a9"
+    },
+    "variants/thesis2/chapters/03-5-ledger.tex": {
+      "before_sha256": "a152b61b7a03cf63c7ff8592a45b27440a9dea539620ae0c8e0001e94af4cf23",
+      "after_sha256": "edf5f01e29ab3b0df763d51d3253aa9c4c05445c0a6bbe914664db663e26854e"
+    },
+    "variants/thesis2/chapters/09-conclusion.tex": {
+      "before_sha256": "d87e6b52ca2dedfbe165eccf527eda3a797e81f801c878c5a16a3d16d63a7c45",
+      "after_sha256": "561386e573036c35e5eb6999c40e8c4bc8b083d53351d7f28519fe5d5fa260ba"
+    },
+    "variants/thesis2/chapters/01-1-context.tex": {
+      "before_sha256": "df13189b606f779d340658fbefcb3c465c1e6a3cd52e8c8f11959c7ae4c4a106",
+      "after_sha256": "c4456242a28748c445da52491fc96519fc7902e155ca112595631af27d4350af"
+    },
+    "variants/thesis2/chapters/08-3-validity.tex": {
+      "before_sha256": "a150f74adbbd4d4d7de3107f0c9f340746814f1f05aa1ab395e679cde12ba24a",
+      "after_sha256": "d556397c103382cfdfa308ac5e0798fabdb55dfa68acbb46c09b232923f2bae8"
+    },
+    "variants/thesis2/frontmatter/abstract.tex": {
+      "before_sha256": "4c7378264df4c16d18fe3b891735f3d89ac8b161f925bd4808cc1894621765c7",
+      "after_sha256": "c07726dae5632f8e5ef134bf720086a7c8527f4c30a586259dc2c7ecfc1d2c2c"
+    },
+    "thesis2.pdf": {
+      "before_sha256": "4fbb6b62b8e8af28d4b1255c25ea3fe927f304ac9429c7db5a827c691c6b19ee",
+      "after_sha256": "e47242aeff2f275c61b9aabb5e8722c551a0fda5a463f8924f57cfffbf9400b0"
+    }
+  }
+}

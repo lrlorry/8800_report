@@ -1,4 +1,9 @@
-Warps have 32 threads with bounded block resources \cite{cuda_programming_guide}. JHQ scans candidates and refines coordinates in parallel; extra blocks duplicate state.
+GPU search can parallelise across queries, candidates and coordinates.
+Warps have 32 threads with bounded block resources \cite{cuda_programming_guide}.
+JHQ's broad primary scan and narrower residual refinement expose
+different amounts of work. More blocks can improve utilisation for small
+query batches, but duplicate tables, local state and merging add work.
+Scheduling must account for both available parallelism and this overhead.
 
 Faiss uses warp selection \cite{johnson_gpu}; bitonic/radix/merge choices trade state for work, alongside global selectors AIR/GridSelect \cite{gpu_topk}.
 

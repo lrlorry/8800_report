@@ -1,3 +1,3 @@
-warp 包含 32 个线程，block 可用资源有限 \cite{cuda_programming_guide}。JHQ 分别沿候选和坐标并行扫描与精排；额外的 block 会复制状态。
+GPU 搜索可沿查询、候选和坐标三个方向并行。warp 包含 32 个线程，block 可用资源有限 \cite{cuda_programming_guide}。JHQ 的广泛主码扫描与较窄的残差精排暴露了不同规模的工作量。更多 block 可以提高小 batch 下的利用率，但也会增加查找表、局部状态的复制和归并工作。调度需要同时考虑可用并行度和这些开销。
 
 Faiss 使用 warp 级选择 \cite{johnson_gpu}；bitonic、radix 和归并在状态与工作量之间权衡，另有 AIR／GridSelect 等全局选择器 \cite{gpu_topk}。

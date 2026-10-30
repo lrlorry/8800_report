@@ -1,9 +1,9 @@
 {
   "output": "thesis2.pdf",
-  "pages": 64,
-  "body_pages": 54,
+  "pages": 65,
+  "body_pages": 55,
   "front_pages": 7,
-  "sha256": "4fbb6b62b8e8af28d4b1255c25ea3fe927f304ac9429c7db5a827c691c6b19ee",
+  "sha256": "e47242aeff2f275c61b9aabb5e8722c551a0fda5a463f8924f57cfffbf9400b0",
   "protected_files_unchanged": 887,
   "missing_preexisting_derived_files": [
     "thesis1-part1.pdf",
@@ -21,32 +21,32 @@
   "statement_proof_same_page": true,
   "proof_alignment": [
     {
-      "page": 19,
+      "page": 20,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 31,
+      "page": 32,
       "heading_x": 76.535,
       "body_x": 76.143
     },
     {
-      "page": 31,
+      "page": 32,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 33,
+      "page": 34,
       "heading_x": 76.535,
       "body_x": 76.132
     },
     {
-      "page": 40,
+      "page": 41,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 41,
+      "page": 42,
       "heading_x": 76.535,
       "body_x": 76.535
     }
@@ -57,7 +57,7 @@
   "words_outside_page": 0,
   "counts": {
     "body_abstract_before": 14119,
-    "body_abstract_after": 13446,
+    "body_abstract_after": 13775,
     "appendix_prose_removed": 1042,
     "edited_blocks": 201,
     "word_count_scope": "Same source-level prose estimator applied to reachable chapters and abstract; not an official word count",
@@ -99,5 +99,7 @@
   },
   "new_detector_result": null,
   "individual_contribution_author_confirmed": true,
-  "individual_contribution_record": "audit/individual-contribution-2026-10-30.json"
+  "individual_contribution_record": "audit/individual-contribution-2026-10-30.json",
+  "targeted_review_record": "audit/review-02a4467-2026-10-30.json",
+  "targeted_review_preserves_proofs_and_tables": true
 }

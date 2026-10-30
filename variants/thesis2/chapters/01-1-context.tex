@@ -1,3 +1,11 @@
+Vector search returns nearby embeddings from a large database. GPU
+parallelism can accelerate distance calculations, but raw high-dimensional
+vectors can exceed device memory. Compression makes larger indexes
+resident; its benefit then depends on how codes are read, candidates are
+selected and survivors are refined. This thesis asks how JHQ's compact
+hierarchy can become an efficient GPU search system while keeping those
+operations correct and measuring the resulting quality--speed trade-off.
+
 CAGRA navigates a graph; compressed IVF scans chosen lists \cite{cagra,johnson_gpu,ivfrabitq}. Stella shows why compact storage matters (\cref{sec:7-7}):
 \[
  S_{\rm raw}=67.81\,\mathrm{GiB}

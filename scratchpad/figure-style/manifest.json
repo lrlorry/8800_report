@@ -1,0 +1,78 @@
+{
+  "scope": "Four style-only previews; original chapter/figure/table/data files unchanged.",
+  "width_mm": 156,
+  "method_colours": {
+    "JHQ": "#184e77",
+    "JHQ FP32": "#397da7",
+    "CAGRA fp32": "#d77919",
+    "CAGRA int8": "#659429",
+    "IVF-RaBitQ": "#b53434",
+    "IVF-PQ": "#7252a3"
+  },
+  "font_family": "Computer Modern Roman (TrueType)",
+  "label_size_pt": 8.7,
+  "tick_and_legend_size_pt": 8.1,
+  "input_hashes": {
+    "report/data/supplement/audit.json": "6b37b210ec6fe00a90a466be83eed4832ef913ad4efaf6b1594a887cd4b0c685",
+    "report/data/ch8/audit.json": "0e6a418394716cee91613773ff3578e4ef639cb6d0981495e4efe91291d47fe1",
+    "report/scripts/audit_supplement.py": "3ee82dfa9fb28b261fb35c770b8a415b00bfa8d6f2a83849508304fca72d2a5f",
+    "JHQ_GPU/experiments/comp8800_poster_e1/E1_points.csv": "7217dd52d1956b41e502328226e3333f883b9e29a822c5b255d919ddea6f6545",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-1536_np1024.json": "13c3038279121a75d54d22fe691020f0a646f4b9f533c5dbb519ec79ff17ebfb",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-1536_np128.json": "6a5f028f8d2c838859ad7144b9b6e3d9b48e230f96e6d2924b80dc7886ee0585",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-1536_np256.json": "34d091a27330974b7a52741e387e1100c7243c3a817b13674dd427b7374843a2",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-1536_np32.json": "e53b03b0bcc91bcd14c6b78047ba8723710c1e56774d892cc695852099e3a09b",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-1536_np512.json": "a651d9f3016c6be4c85f81a72b2dc917407af7b702d905c10225ba3f05095daa",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-1536_np64.json": "33fcde94c7cd8d162a4e185c92696779e54aa25c93b03ff0d5c9086b17847c1e",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-1536_np1024.json": "43a4ca628538866b0c348db6ea82464e7fe51d01148e2834da98859bd8dbb910",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-1536_np128.json": "f7e1e198142f5553797cc3ddca89c5ef7f7fb26777b2072ef81faa5dbcef63d1",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-1536_np256.json": "67dfbbc9472e408642eae025d466453523c9ed1bbb202a5dcc3c1c1872bf189a",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-1536_np32.json": "db47ee3fb46410d1b25cb34eaa0362c4b2dd85ca93bec9b8cb127f16422ccdea",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-1536_np512.json": "6e53baacb51d9d488c6857124c2c603fdde9529e73f498d8ad2ccf1784e7f037",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-1536_np64.json": "80846fba7092b44986e6573e69e9d6995e1de36a6d5143cd45683d48cfe1c352",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-3072_np1024.json": "891b18c896acab92b3d37318c51e943d54849fcdedc0c13e73184874881f07dd",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-3072_np128.json": "2aa46bc4eded1e411be4370432a423c835e0cd02ffdc5c9755f91c7186704ef1",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-3072_np256.json": "bc0704c7f041733120e033b27f86c11b87bdb899e47b14ee97065233b0f060e3",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-3072_np32.json": "8c482ef2b07fc8a2de69c782d757a3c99820e5e6ee47a4f2152f61df5d1f0686",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-3072_np512.json": "cfc0ed8fc6abdff1e6ee832b544d575903f774a915537986f5a39eb950328744",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v69_openai3-3072_np64.json": "bc03f08f82c75181286df53c9bc84402bd2153783eb6fed46731b4f5db5b9787",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-3072_np1024.json": "9f269f28679a1b1ec4c23d7c0d1f7441ced0cc797b156f82c46bbdd8ed420ed2",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-3072_np128.json": "aad209f8f8aeea32f8e847ae4d3f7dd8ece4dc410d0f37df8a7185ef8c9e9f4e",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-3072_np256.json": "012bb8d445acad6efbf5cdab8cd22ff719d5f31352efece645520fd8c31c1e09",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-3072_np32.json": "6af27ca9f31819ccff8dc9dc071968b3cca99275eb31651a474e01c1484cde92",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-3072_np512.json": "e739107a45c27dd00a6209a02c65b609e46ac5551a515eda96c2ad51813b7861",
+    "JHQ_GPU/experiments/thesis_evidence/RAW_D/jhq_v72_openai3-3072_np64.json": "a6d0e51cff1f8de1e1cced6e8ecd61d2b5a7d489ad012492c2bdf0faa61947cb"
+  },
+  "figures": {
+    "supplement/precision.pdf": {
+      "sha256": "814d79177b9dc3c1e3ee08a0fe21db2736892df410cb7087e94405b31ac6f1d6",
+      "width_inches": 6.141732283464568,
+      "height_inches": 2.1154855643044623,
+      "original_sha256": "93207061c78da16ba0fdc3d1f14725006837a78bebbd0e1a70819681016b2cc0"
+    },
+    "supplement/finite-pool.pdf": {
+      "sha256": "4941b3694a87f40aa5b78ebe561fbf6dfa9dedd8eee33ecb52091778e7f2c0a7",
+      "width_inches": 6.141732283464568,
+      "height_inches": 1.9107611548556434,
+      "original_sha256": "17a465180a95f3bb3f9a901bb9cc94aefad5c68e587754426abb017302f131e5"
+    },
+    "supplement/stream-cost.pdf": {
+      "sha256": "43b5809a49e24fbed55fea4c411dd2328eec760d322aa3a50f4cdb172768f94f",
+      "width_inches": 6.141732283464568,
+      "height_inches": 3.6167979002624677,
+      "original_sha256": "3d1128b45ed53662b289326090e4f4923bbfd1ebe90afea28aeef5fb2d4285b7"
+    },
+    "ch8/negative-evidence.pdf": {
+      "sha256": "6bd621464b9cd8a0068c657adb07ff67b41404c7e7350df7bcd16c80e82a44eb",
+      "width_inches": 6.141732283464568,
+      "height_inches": 2.2190682420975762,
+      "original_sha256": "7bc3158ead5654f9a1a40b94cd25df60cd2c65328f264d997b41e56ff42fb1de"
+    }
+  },
+  "plot_data_sha256": "0ed8e1ac5eaace762ecfea4368391824fd2bf0e2c955b8cb792ce5a2de6a7471",
+  "semantics": {
+    "precision": "D: paired JHQ on a TF32-trained cache; archived E1 baselines.",
+    "finite_pool": "The same finite-pool probabilities and 64-draw standard errors.",
+    "streams": "All original 500 cumulative values per policy and workload.",
+    "negative": "Six GPU scorer ratios and a separate FP64 offline survivor comparison."
+  }
+}

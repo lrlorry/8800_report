@@ -19,4 +19,12 @@ At batch 1,000/recall 0.97, JHQ leads on three datasets and nearly ties RaBitQ o
 
 \section{Closing Principle and Outlook}
 \label{sec:9-2}
-Representation, execution and effort must share a quality target. Future work targets calibrated reuse and residual placement (\cref{sec:8-4}).
+JHQ's Cartesian structure is useful when the execution path makes its
+small tables and packed codes cheap to access. Parallel decomposition
+then depends on workload: grouping exposes work for small batches,
+while large batches can already provide enough independent queries.
+Refinement calibration adds a separate quality decision, since agreement
+on a finite query pool does not ensure future recall. The next step is
+to join risk-controlled calibration with measured reuse cost, then study
+residual placement when device memory becomes the limiting resource
+(\cref{sec:8-4}).

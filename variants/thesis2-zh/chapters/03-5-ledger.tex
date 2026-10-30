@@ -1,9 +1,9 @@
-记录保留版本、配置、时间和输出。成对运行共享状态；状态／精度变化定义独立实验家族。缺失的历史二进制／模型哈希限制精确复现（\cref{app:reproducibility}）。分数／并列正确性不同于原始召回率，后者还依赖路由／重建。抽样、排序和测量限制见 \cref{sec:6-2,sec:6-3,sec:8-3}。
+实验代号区分不同的测量家族。E1 是 batch-1,000 的主要前沿扫描；D 将 TF32／FP32 JHQ 与存档基线比较，T1 则在同一会话重测基线。T4 对 GPU 分数进行 CPU 排序；T5 测试小 batch。A1／A2／A3 分别表示重复建库、共享阈值指令和数据集对齐；B 记录预算决策；C1 审计表示。
 
 \subsection{来源与可用记录}
 \label{app:reproducibility}
 \label{sec:b-artifacts}
-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目资料库}保存源码／测量快照，以及选定的 T1、T4/T5 和 A2 输入。完整向量、训练状态与历史可执行文件并非全部可用。T4 候选转储已删除，保留的汇总无法支持独立重新排序。
+\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目资料库}保留版本、配置、计时、输出，以及选定的 T1、T4/T5 和 A2 输入。成对运行共享索引状态。完整向量、训练状态和历史可执行文件／哈希并非全部可用。T4 候选转储已删除，保留的汇总无法支持独立重新排序。抽样与泛化限制见 \cref{sec:6-2,sec:6-3,sec:8-3}。
 
 \begin{table}[!htbp]
 \centering
@@ -22,11 +22,10 @@ v69 / v72 & OpenAI：同一训练缓存上的 TF32 与 FP32 add／查询算术\\
 \end{tabularx}
 \end{table}
 
-\subsection{其他计时约定}
+\subsection{计时与校准约定}
 \label{sec:a-e1-protocol}
 预热使 E1 中 274 个测点的调用数减少；首次转换／验证不同于稳态计时。369 个重复 ID 标记包含并列重排；401 的口径还计入跨协议差异。仅凭标记不排除测点，JHQ 没有同样的标记。
 
-\subsection{校准与后续实验的约束}
 \label{sec:a-budget-contract}
 \label{sec:a-supplement}
 \label{sec:a-t4-t5}

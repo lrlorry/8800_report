@@ -4,11 +4,17 @@ r=Path(__file__).resolve().parents[2];v=r/'variants/thesis2-zh';en=r/'variants/t
 missing=[]
 update_path=v/'author-update-2026-10-30.json'
 update=json.loads(update_path.read_text()) if update_path.exists() else {}
+review_update_path=v/'review-update-2026-10-30.json'
+review_update=json.loads(review_update_path.read_text()) if review_update_path.exists() else {}
 def expected_hash(name,old):
  change=update.get('updated_protected',{}).get(name)
  if change:
   assert change['before_sha256']==old,('Author-update before hash',name)
-  return change['after_sha256']
+  old=change['after_sha256']
+ change=review_update.get('updated_protected',{}).get(name)
+ if change:
+  assert change['before_sha256']==old,('Review-update before hash',name)
+  old=change['after_sha256']
  return old
 for name,h in ledger['protected_originals'].items():
  if not (r/name).exists():
@@ -21,6 +27,12 @@ if update:
  for change in ownership['changes']:
   if change['path'].startswith('variants/thesis2-zh/'):
    assert (r/change['path']).read_text()==change['after'],('Chinese ownership source',change['path'])
+if review_update:
+ assert sha(update_path)==review_update['previous_update_sha256'],'Previous author-update changed'
+ review=json.loads((r/review_update['review_record']).read_text())
+ for change in review['changes']:
+  if change['path'].startswith('variants/thesis2-zh/'):
+   assert (r/change['path']).read_text()==change['after'],('Chinese review source',change['path'])
 mathpat=re.compile(r'\\begin\{(?:equation\*?|align\*?)\}[\s\S]*?\\end\{(?:equation\*?|align\*?)\}|\\\[[\s\S]*?\\\]|(?<!\\)\$(?:\\.|[^$])*?(?<!\\)\$')
 for rel in ledger['source_files']:
  a=(en/rel).read_text();b=(v/rel).read_text()
@@ -61,6 +73,9 @@ current_english=expected_hash('thesis2.pdf',ledger['english_pdf_sha256'])
 assert sha(r/'thesis2.pdf')==current_english,'English PDF does not match recorded source update'
 result=dict(output='thsis2-zh.pdf',pages=pages,english_pdf_sha256=current_english,initial_translation_english_sha256=ledger['english_pdf_sha256'],sha256=sha(pdf),translated_source_files=len(ledger['source_files']),original_files_unchanged=sum(1 for name,h in ledger['protected_originals'].items() if (r/name).exists() and sha(r/name)==h),missing_derived_outputs=missing,english_thesis2_unchanged=current_english==ledger['english_pdf_sha256'],authorised_english_updates=list(update.get('updated_protected',{})),individual_contribution_author_confirmed=bool(update),math_blocks_identical=True,numerical_cells_preserved=True,labels_numbers_and_citations_match=True,figures=figs,tables=tables,proofs=6,compiler_issues=issues,fonts_embedded=True,words_outside_page=outside,figures_keep_english_labels=True)
 p=v/'checks.json';previous=json.loads(p.read_text()) if p.exists() else {}
+if review_update:
+ result['authorised_english_updates']=sorted(set(result['authorised_english_updates'])|set(review_update.get('updated_protected',{})))
+ result['targeted_review_record']=review_update['review_record']
 if previous.get('sha256')==result['sha256']:
  for key in ['visual_review_pages','completed_date']:
   if key in previous:result[key]=previous[key]

@@ -1,7 +1,9 @@
 # Thesis 2 figure and layout changes — 30 October 2026
 
-Baseline HEAD: `1ff 5b 01cbdcf 4c 0b 6788914c 9eb 89d 1db 6a 44ce 9`.
-The root PDF before this round had 66 pages; the final PDF has **63 pages: 7 preliminary, 53 body, 3 bibliography**. The body font and global margins are unchanged. There are **29 figures,28 tables and six complete statement/proof pairs**.
+**Historical figure/layout snapshot.** The counts and page locations below describe the 63-page build before the personal-contribution paragraph. Commit `02a44677` subsequently contained 64 pages. Current candidate counts and review decisions are recorded in `assessment/thesis2-review-response-02a4467.txt` and `variants/thesis2/checks.json`; the old page locations are not a current-PDF index.
+
+Baseline HEAD: `1ff5b01cbdcf4c0b6788914c9eb89d1db6a44ce9`.
+The root PDF before this round had 66 pages; the figure/layout-stage PDF had **63 pages: 7 preliminary, 53 body, 3 bibliography**. The body font and global margins are unchanged. There are **29 figures,28 tables and six complete statement/proof pairs**.
 
 ## Scientific drawings
 

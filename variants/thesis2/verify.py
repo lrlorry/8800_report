@@ -46,6 +46,20 @@ for x in personal['changes']:
   pat=r'\\begin\{'+env+r'\}[\s\S]*?\\end\{'+env+r'\}';assert re.findall(pat,x['before'])==re.findall(pat,x['after']),(vr,env)
  assert re.findall(r'\\toprule([\s\S]*?)\\bottomrule',x['before'])==re.findall(r'\\toprule([\s\S]*?)\\bottomrule',x['after']),vr
  expected[vr]=x['after']
+# Targeted response to the subsequent review; preserve the earlier audit layers.
+review_path=v/'audit/review-02a4467-2026-10-30.json'
+review=json.loads(review_path.read_text())
+for rel,h in review['historical_hashes'].items():assert sha(r/rel)==h,('Historical review input changed',rel)
+for x in review['changes']:
+ if not x['path'].startswith('variants/thesis2/'):continue
+ vr=str(Path(x['path']).relative_to('variants/thesis2'));assert expected[vr]==x['before'],('Review before-image',vr)
+ for env in ['lemma','proposition','corollary','proof','equation','equation*','align','align*']:
+  pat=r'\\begin\{'+re.escape(env)+r'\}[\s\S]*?\\end\{'+re.escape(env)+r'\}'
+  assert re.findall(pat,x['before'])==re.findall(pat,x['after']),(vr,env)
+ assert re.findall(r'\\toprule([\s\S]*?)\\bottomrule',x['before'])==re.findall(r'\\toprule([\s\S]*?)\\bottomrule',x['after']),vr
+ assert re.findall(r'\\\[[\s\S]*?\\\]',x['before'])==re.findall(r'\\\[[\s\S]*?\\\]',x['after']),vr
+ expected[vr]=x['after']
+for rel,content in review['added_files'].items():assert (r/rel).read_text()==content,('New reference file',rel)
 for rel,s in expected.items():assert (v/rel).read_text()==s,('Unrecorded source change',rel)
 assert {str(p.relative_to(v)) for p in v.rglob('*.tex')}==set(expected),'Unrecorded TeX source'
 from validate_figure_layout import validate
@@ -97,6 +111,8 @@ checks=dict(output='thesis2.pdf',pages=pages,body_pages=bib-1,front_pages=front,
 previous=json.loads((v/'checks.json').read_text())
 checks['individual_contribution_author_confirmed']=True
 checks['individual_contribution_record']='audit/individual-contribution-2026-10-30.json'
+checks['targeted_review_record']='audit/review-02a4467-2026-10-30.json'
+checks['targeted_review_preserves_proofs_and_tables']=True
 if previous.get('sha256')==checks['sha256']:
  for key in ['derived_parts','visual_review_pages','completed_date']:
   if key in previous:checks[key]=previous[key]

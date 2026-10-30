@@ -1,9 +1,14 @@
-Records retain versions/settings/times/outputs. Paired runs share states; state/precision changes define separate families. Missing historical binary/model hashes limit exact reproduction (\cref{app:reproducibility}). Score/tie correctness differs from raw recall, which also depends on routing/reconstruction. Sampling/ordering/measurement limits are in \cref{sec:6-2,sec:6-3,sec:8-3}.
+Experiment labels identify distinct measurement families. E1 names the main
+batch-1,000 frontier sweep; D compares TF32/FP32 JHQ against archived
+baselines, while T1 remeasures the baselines in-session. T4 sorts GPU
+scores on CPU; T5 covers small batches. A1/A2/A3 denote construction
+repeats, shared-bound instructions and dataset alignment; B records
+budget decisions; C1 audits representation.
 
 \subsection{Sources and available records}
 \label{app:reproducibility}
 \label{sec:b-artifacts}
-The \href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project archive} holds source/measurement snapshots and selected T1, T4/T5 and A2 inputs. Complete vectors, trained states and historical executables are not all available. T4 candidate dumps were deleted; retained summaries cannot support an independent resort.
+The \href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project archive} retains versions, settings, timings, outputs and selected T1, T4/T5 and A2 inputs. Paired runs share index state. Complete vectors, trained states and historical executables/hashes are not all available. T4 candidate dumps were deleted; retained summaries cannot support an independent resort. Sampling and generalisation limits follow \cref{sec:6-2,sec:6-3,sec:8-3}.
 
 \begin{table}[!htbp]
 \centering
@@ -22,11 +27,10 @@ v69 / v72 & OpenAI: TF32 versus FP32 add/query arithmetic on the same trained ca
 \end{tabularx}
 \end{table}
 
-\subsection{Additional timing conventions}
+\subsection{Timing and calibration conventions}
 \label{sec:a-e1-protocol}
 Warm-up reduces E1 call counts at 274 points; initial conversion/validation differs from steady-state timing. The 369 repeat-ID flags include tied reordering; 401 also counts cross-protocol differences. Flags alone exclude no points, and JHQ lacks the same flag.
 
-\subsection{Calibration and follow-up contracts}
 \label{sec:a-budget-contract}
 \label{sec:a-supplement}
 \label{sec:a-t4-t5}

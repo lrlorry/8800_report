@@ -1,5 +1,5 @@
 \frontchapter{Abstract}
-JHQ-GPU runs JHQ's primary/residual search on a GPU. Cartesian splitting replaces 256 LUT entries with $16+16$, giving a storage ratio $32/256=1/8$ with the same real-arithmetic score. Calibration compares sampled top-$k$ IDs with a larger-budget reference, without GT or a learned predictor.
+JHQ-GPU studies how to execute JHQ's compressed primary/residual search efficiently within GPU memory. For fixed computed primary scores, grouped retention, merging and witnessed shared bounds preserve global top-$c$ selection under the stated ordering and memory-access conditions. Cartesian splitting replaces 256 LUT entries with $16+16$, giving a storage ratio $32/256=1/8$ with the same real-arithmetic score. Calibration compares sampled top-$k$ IDs with a larger-budget reference, without GT or a learned predictor.
 
 On six RTX 5090 datasets, two-group LUTs lead in 22/24 cells; the largest index holds 17.78 million vectors at 20.44\,GiB resident memory. Full-pool calibration meets a $10^{-3}$ held-out
 recall-loss target relative to the best tested budget in 12/12 cells, with
