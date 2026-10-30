@@ -1,0 +1,21 @@
+\begin{tikzpicture}[
+ font=\footnotesize\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+ text width=3.5cm,minimum height=1.20cm,inner sep=3pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[font=\bfseries] at (0,.80) {Challenge};
+\node[font=\bfseries] at (4.6,.80) {Mechanism};
+\node[font=\bfseries] at (9.2,.80) {Evidence};
+\node[box] (a) at (0,0) {Primary codes\\Broad scan cost};
+\node[box,fill=ThesisNavy!7] (b) at (4.6,0) {Cartesian tables\\Packed word scan};
+\node[box] (c) at (9.2,0) {Table / load tests\\Score checks};
+\node[box] (d) at (0,-1.45) {Uneven query work\\Global top-$c$};
+\node[box,fill=ThesisNavy!7] (e) at (4.6,-1.45) {Grouped scan\\Shared bound\\Global merge};
+\node[box] (f) at (9.2,-1.45) {Output checks\\Batch / skew tests};
+\node[box] (g) at (0,-2.90) {Refinement effort\\Quality / reuse cost};
+\node[box,fill=ThesisNavy!7] (h) at (4.6,-2.90) {Sampled agreement\\Workload budget};
+\node[box] (i) at (9.2,-2.90) {Held-out quality\\Calibration cost};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);
+\draw[arr] (d)--(e);\draw[arr] (e)--(f);
+\draw[arr] (g)--(h);\draw[arr] (h)--(i);
+\end{tikzpicture}

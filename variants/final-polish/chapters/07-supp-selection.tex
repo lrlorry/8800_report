@@ -1,0 +1,35 @@
+\subsection{Strict CPU reference for computed-score selection}
+\label{sec:7-strict-selection}
+
+All 55,296 grouped query instances exactly match the CPU reference's
+primary order. One-block selection satisfies distance order throughout,
+with 56 set differences confined to tied cut-offs; the final selection
+of retained refined scores is exact in all 69,120 instances
+(\cref{tab:7-strict-selection}).
+
+The strict selection check sorts GPU-produced scores by
+$(\primarydist,\mathrm{position})$. Its exporter follows the scan layout
+and accumulation order, and exported scores for valid returned candidates
+match bitwise. Source comparison finds only export changes from the
+table-sweep version. The 270 configurations cover Vogue, arXiv and
+OpenAI-3072, probes 1, 8 and 128, $\alpha\in\{4,100,200\}$,
+$\gscan\in\{0,1,2,4,8\}$ and both bound settings.
+
+\suppressfloats[t]
+\begin{table}[!htbp]
+\centering
+\caption[Strict computed-score selection checks]{Strict selection checks against a CPU reference.
+Set and order equality use the complete primary key. Valid count checks
+$\min(c,n_c)$ survivors; final equality sorts retained computed refined
+scores by $(\refineddist,\mathrm{ID})$, including their FP32 bits. Counts
+are query instances, with queries reused across configurations.}
+\label{tab:7-strict-selection}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\input{tables/t4-t5/strict-selection}
+\end{table}
+
+All 19,120 underfull cases have the correct valid-candidate count.
+These results test \cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}
+for the recorded cases. Final-selection equality concerns retained
+computed scores, not original-space exact neighbours; sanitizer coverage
+is limited to its recorded subsets (\cref{sec:a-t4-t5}).

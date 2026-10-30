@@ -1,0 +1,15 @@
+% One column is one independent lane; there is no cross-lane reduction.
+\begin{tikzpicture}[font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!55,rounded corners=2pt,align=center,
+ text width=3.1cm,minimum height=1.05cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[font=\small\bfseries] at (5.7,1.05) {Fixed word group $j$; consecutive candidate positions};
+\foreach \a in {0,1,2,3} {
+ \node[box,fill=ThesisNavy!8] (w\a) at (3.8*\a,0) {lane $\a$: position $p+\a$\\$\mathsf w[j,p+\a]$};
+ \node[box] (u\a) at (3.8*\a,-1.65) {Unpack own word\\4 code bytes};
+ \node[box,fill=ThesisNavy!3] (l\a) at (3.8*\a,-3.30) {LUT lookups\\Accumulate score};
+ \draw[arr] (w\a)--(u\a);\draw[arr] (u\a)--(l\a);}
+\node[anchor=west,align=left] at (-1.55,-4.65)
+ {Byte layout: 4 byte-load instructions per lane for 4 codes\\[3pt]
+  Packed layout: 1 word-load instruction per lane for the same 4 codes};
+\end{tikzpicture}

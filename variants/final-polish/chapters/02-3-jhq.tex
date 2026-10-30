@@ -1,0 +1,111 @@
+\subsection{Rotation and hierarchical codes}
+
+JHQ first applies a square orthogonal transform
+$\Pi\in\mathbb R^{d\times d}$ to both database vectors and queries
+\cite{jhq}. Write $y=\Pi x$ and $q'=\Pi q$. In real arithmetic,
+\begin{equation}
+ \begin{aligned}
+ \Pi^\top\Pi=I
+ &\Longrightarrow
+ \|\Pi(q-x)\|^2\\
+ &=(q-x)^\top\Pi^\top\Pi(q-x)=\|q-x\|^2.
+ \end{aligned}
+ \label{eq:2-isometry}
+\end{equation}
+Thus rotation preserves dimension and distances before quantisation.
+Finite-precision matrix multiplication is evaluated separately in Chapter 4.
+
+The primary code gives a coarse reconstruction $\widehat p(x)$ of $y$.
+In the evaluated configuration, each eight-coordinate subspace uses one
+byte: each coordinate takes one of two levels, $-a$ or $+a$, so the byte
+records eight signs. More generally, $M$ subspaces have dimension
+$D_s=d/M$, with $B$ bits selecting one of $K=2^B$ combinations of
+$L=2^{B/D_s}$ scalar levels. For supported parameters with integer $L$,
+JHQ uses the Cartesian product
+\begin{equation}
+ a_i=\sigma\Phi^{-1}\!\left(\frac{i-1/2}{L}\right),\quad
+ i=1,\ldots,L,\qquad
+ \mathcal C_m=\{a_1,\ldots,a_L\}^{D_s}.
+ \label{eq:2-cartesian}
+\end{equation}
+Here $\Phi$ is the standard normal cumulative distribution function and
+$\sigma$ is a scale estimated from vector energy. At $B=D_s=8$, this
+gives $L=2$, $\mathcal C_m=\{-a,+a\}^8$ and
+$a\simeq0.67449\sigma$. Unit-normalised inputs motivate a scale near
+$1/\sqrt d$. The transform and hierarchical representation are inherited
+from JHQ.
+
+Residual coding approximates the remaining error,
+$r=y-\widehat p$, by $\widehat r$, giving
+$\widehat y=\widehat p+\widehat r$. The evaluated residual quantiser learns
+scalar levels shared across coordinates within each subspace and uses one
+byte per coordinate. Each vector therefore stores $d/8$ primary bytes
+and $d$ residual bytes before metadata. A smaller refinement budget reduces
+residual reads, while these stored codes remain unchanged.
+
+This residual is relative to the primary reconstruction. By contrast,
+residual-coded IVF-PQ subtracts the centroid $\mu_{\ell(x)}$ of the list
+containing $x$:
+\[
+ r_{\rm IVF\text{-}PQ}=x-\mu_{\ell(x)},\qquad
+ r_{\rm JHQ}=\Pi x-\widehat p(x).
+\]
+JHQ uses IVF for routing; its reconstructed vector does not add an IVF centroid.
+
+\subsection{Primary and refined scoring}
+
+Primary screening compares $q'$ with the coarse reconstruction:
+\[
+ \primarydist=\|q'-\widehat p\|^2.
+\]
+Only shortlisted candidates are rescored with both primary and residual
+codes. The implemented refined score is
+\begin{equation}
+ \refineddist=\|q'-\widehat p-\widehat r\|^2+\|q'\|^2.
+ \label{eq:2-refined}
+\end{equation}
+The extra term $\|q'\|^2$ is constant across candidates for one query,
+so the score orders reconstructed vectors by squared distance. It need
+not reproduce the raw-vector ordering used for GT. The score expansion
+appears in \cref{eq:5-refined-constant}.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\resizebox{\linewidth}{!}{\input{figures/ch2/candidate-cascade}}
+\captionof{figure}[Candidate and scoring cascade]{Candidate and scoring cascade in JHQ.
+IVF selects lists, primary scores form a shortlist, and residual codes
+refine that shortlist before the final top-$k$ selection.}
+\label{fig:2-cascade}
+\end{minipage}\par\medskip
+
+With $n_c$ routed vectors, $M$ primary subspaces and up to $c$ survivors,
+the score work is
+\[
+ W_{\rm primary}=O(n_cM)\ \text{lookups},\qquad
+ W_{\rm refine}=O(cd)\ \text{coordinates}.
+\]
+Memory access and candidate selection also contribute to search time.
+
+\subsection{Modelling assumptions}
+
+Random rotation can spread coordinate energy, motivating the Gaussian-inspired
+levels above. Distance preservation does not imply independent, zero-mean
+Gaussian coordinates: a fixed transform maps a database mean $\mu$ to
+$\Pi\mu$, with $\|\Pi\mu\|=\|\mu\|$. Chapter 8 examines centring as an
+alternative coding choice.
+
+The primary level is a Gaussian mid-quantile, rather than the level that
+minimises reconstruction mean-squared error (MSE). For
+$X\sim\mathcal N(0,\sigma^2)$ and a zero decision threshold, the latter is
+\[
+ \begin{aligned}
+ a_{\rm MSE}
+ &=\arg\min_a\mathbb E[(X-a)^2\mid X>0]\\
+ &=\mathbb E[X\mid X>0]
+ =\sigma\sqrt{2/\pi}\simeq0.79788\sigma.
+ \end{aligned}
+\]
+These values serve different objectives. For fixed sign codes, any
+positive common primary scale preserves primary ranking
+(\cref{eq:4-sign-ranking}); residual reconstruction still depends on the
+scale.

@@ -1,53 +1,53 @@
 \subsection{从数据库 ID 到列表顺序的物理位置}
 
-输入行的标识为 $i\in\{0,\ldots,N-1\}$。粗分配根据计算得到的质心分数，将其变换向量放入某个列表。数学分配目标为
+列表排序使分配给同一 IVF 质心的向量连续存储。输入行的标识为 $i\in\{0,\ldots,N-1\}$；粗分配使用计算得到的质心分数，其数学目标为
 \begin{equation}
  a(i)=\operatorname*{arg\,min}_{0\leq\ell<n_{\rm list}}
        \|\Pi x_i-\mu_\ell\|_2^2.
  \label{eq:4-assignment}
 \end{equation}
-实现采用选定的数值分配路径。主码和残差编码时不减去 $\mu_{a(i)}$；列表归属独立于这些重建，限制后续搜索空间。
+实现采用上文说明的数值分配路径。主码和残差编码不减去 $\mu_{a(i)}$；列表归属独立于这些重建，限制后续搜索空间。
 
-构建器将分配结果与输入 ID 序列一同排序。令 $\rho(p)$ 为排序后物理位置 $p$ 上的输入 ID，$o_\ell$ 为列表 $\ell$ 的起点。完成的数组满足
+构建器将分配结果与输入 ID 一同排序。令 $\rho(p)$ 为排序后物理位置 $p$ 上的输入 ID，$o_\ell$ 为列表 $\ell$ 的起点。完成的数组满足
 \begin{equation}
  0=o_0\leq o_1\leq\cdots\leq o_{n_{\rm list}}=N,
  \qquad p\in[o_\ell,o_{\ell+1})\Longrightarrow a(\rho(p))=\ell.
  \label{eq:4-offsets}
 \end{equation}
-通过 lower-bound 搜索得到 offsets，其中
+lower-bound 搜索找到各列表的首个位置，因此相同偏移表示空列表：
 \[
  o_\ell=o_{\ell+1}\Longleftrightarrow\text{list }\ell\text{ is empty}.
 \]
-位置只在一个快照内稳定，跨构建未必稳定。所有数组使用同一个 $\rho(p)$。
+位置在完成的索引中保持固定，重建后可能改变。所有数组使用同一个 $\rho(p)$，ID 通过 $p\mapsto\rho(p)$ 映射回输入行。两遍 add 暂时构造 $\rho^{-1}$，将新编码直接写入目标位置，称为 scatter。主码并列使用物理位置，最终并列使用数据库 ID。
 
-\begin{figure}[!htbp]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
 \centering
 \input{variants/thesis2/figures/physical-layout}
-\caption[GPU 索引的物理布局]{GPU 索引物理布局示意。IVF offsets 划定连续物理位置区间。独立的 ID、word-group-major 主码、row-major 残差和校正数组共享位置 $p$。byte 偏移相对各自分配起点；图示既不表示交织分配，也不表示实测显存事务。}
+\captionof{figure}[GPU 索引的物理布局]{GPU 索引的物理布局.}
 \label{fig:4-layout}
-\end{figure}
+\end{minipage}\par\medskip
 
-ID 将 $p\mapsto\rho(p)$ 映射到原行。两遍 add 为 scatter 暂时构造 $\rho^{-1}$。主码并列使用物理位置，最终并列使用数据库 ID。
+图中示例取 $N=8$，offsets $o=[0,3,3,8]$ 使 list~1 为空。浅色列标出 $p=3$：四个独立数组均以相同物理位置索引，右侧 byte 偏移相对各自数组的起点。固定 word group $j$ 时，相邻候选对应连续的 32 位 word，使扫描相邻候选的线程可以合并访存；八位残差配置下，每行存放同一向量的 $b_r$ 个编码 bytes。
 
 \subsection{精确地址与表示宽度}
 
-对主码 byte $Z[m,p]$，
+主码表示按子空间组织候选。对主码 byte $Z[m,p]$，地址为
 \[
  \operatorname{offset}_{\rm byte}(Z[m,p])=mN+p.
-\] 最终打包得到
+\]
+最终打包将同一向量的四个子空间 byte 合为一个 word：
 \begin{equation}
  \mathsf w[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
  \operatorname{addr}_{\rm byte}(\mathsf w[j,p])=4(jN+p).
  \label{eq:4-primary-address}
 \end{equation}
-这里 $j=0,\ldots,M/4-1$。$\text{word-layout build}\Longrightarrow M\bmod4=0$；其余 $M$ 被拒绝。独立的 byte-layout 编译保留 byte 表示。每个打包数组占 $NM$ bytes，但重打包暂时同时持有新旧副本，成本为 $2NM$。一遍构建器暂时 gather 一个 vector-major 的 $[N,M]$ 主码数组，转置后重打包，并释放过期副本。两遍构建器直接 scatter 到 subspace-major 数组，再进行相同的最终重打包。搜索时的 lane 映射见 \Cref{sec:5-3}。
+这里 $j=0,\ldots,M/4-1$。$\text{word-layout build}\Longrightarrow M\bmod4=0$；其余 $M$ 被拒绝，独立的 byte-layout 编译则保留 byte 表示。每个数组占 $NM$ bytes，重打包暂时同时持有两份副本，成本为 $2NM$。一遍构建将已有编码重排（gather）到 vector-major 的 $[N,M]$ 数组，转置并重打包，逐次释放旧副本；两遍构建直接 scatter 到 subspace-major 存储，再进行相同重打包。搜索时的 lane 映射见 \Cref{sec:5-3}。
 
-残差码保持 row-major，每向量占 $b_r=\lceil dB_r/8\rceil$ bytes。八位配置中，行 $p$ 的坐标 $t$ 位于 byte 偏移 $pb_r+t$。四位路径中，它位于 byte $pb_r+\lfloor t/2\rfloor$，偶数坐标在低 nibble、奇数坐标在高 nibble。每个物理行有四个 byte 的校正项，存储
+残差码保持 row-major，每向量占 $b_r=\lceil dB_r/8\rceil$ bytes。八位配置中，行 $p$ 的坐标 $t$ 位于 byte 偏移 $pb_r+t$；四位路径中，它位于 byte $pb_r+\lfloor t/2\rfloor$，偶数坐标在低四位（low nibble），奇数坐标在高四位（high nibble）。每个物理行有四个 byte 的校正项，存储
 \begin{equation}
  \gamma[ p ]=2\langle\widehat p(x_{\rho(p)}),
                               \widehat r(x_{\rho(p)})\rangle.
  \label{eq:4-correction}
 \end{equation}
-gather 或 scatter 时，这个值必须与该行编码一同移动。
-
-列表顺序的主码扫描只为保留候选获取残差。若使用原始 FP32 重排序，还需增加 $4Nd$ 个设备 bytes。本文精排压缩重建；第 7 章测量召回率。
+gather 或 scatter 时，校正项必须与该行编码一同移动。按列表扫描随后只为保留候选读取残差。精排使用压缩重建；原始 FP32 重排序还需增加 $4Nd$ 个设备 bytes。第 7 章评估其召回率。

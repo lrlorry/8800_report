@@ -1,0 +1,16 @@
+GPU work is organised into thread blocks; threads within a block can
+cooperate through shared memory. A warp is a group of 32 threads scheduled
+together. Blocks run on streaming multiprocessors (SMs). Registers, shared memory
+and block limits constrain concurrent work \cite{cuda_programming_guide}.
+Occupancy is the fraction of an SM's supported warps that are active.
+Nearby addresses accessed by a warp can share memory transactions
+(coalesced access); large per-block tables can reduce concurrent work.
+Within this hierarchy, threads can process separate queries, score
+different candidates for the same query, or share the coordinate
+calculations for one candidate.
+
+Candidate selection keeps the smallest scores from the scanned pool.
+Faiss uses warp-level selection \cite{johnson_gpu}; other GPU top-$k$
+methods distribute selection over larger arrays \cite{gpu_topk}.
+Chapter 5 explains the selection and scheduling used by JHQ-GPU.
+

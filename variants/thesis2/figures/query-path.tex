@@ -1,0 +1,16 @@
+\begin{tikzpicture}[font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!60,rounded corners=2pt,align=center,
+ text width=3.7cm,minimum height=3.3cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box,fill=ThesisNavy!3] (route) at (0,0)
+ {\textbf{Route: $s_i$}\\[4pt]Rotate the query\\Score centroids\\Select $n_{\rm probe}$ lists\\Visited candidates $U$};
+\node[box,fill=ThesisNavy!3] (primary) at (5.45,0)
+ {\textbf{Primary screen: $D_P$}\\[4pt]Build LUTs; score $U$\\[3pt]
+  \colorbox{ThesisNavy!14}{\strut Retain primary top-$c$}};
+\node[box,fill=ThesisNavy!14] (refine) at (10.9,0)
+ {\textbf{Refine: $D_H$}\\[4pt]Read residual codes\\Score survivors\\Select final top-$k$\\Return IDs and scores};
+\draw[arr] (route)--node[above,align=center,font=\footnotesize] {$n_c$\\candidates}(primary);
+\draw[arr] (primary)--node[above,align=center,font=\footnotesize] {$c$\\survivors}(refine);
+\node[draw=ThesisNavy!35,rounded corners=2pt,align=center,text width=14.5cm,inner sep=4pt] at (5.45,-2.4)
+ {Evaluation: compare returned IDs with raw-vector ground truth};
+\end{tikzpicture}

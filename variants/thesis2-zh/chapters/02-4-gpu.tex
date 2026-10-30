@@ -1,5 +1,3 @@
-GPU 工作组织为线程块；块内线程可通过共享内存协作。warp 是一起调度的 32 个线程。寄存器、共享内存以及常驻线程块数量的限制，共同约束可并发执行的工作量 \cite{cuda_programming_guide}。
-
-搜索可沿查询、候选和向量坐标三个方向分配工作。
+GPU 工作组织为线程块；块内线程可通过共享内存协作。warp 是一起调度的 32 个线程。线程块在流式多处理器（streaming multiprocessor，SM）上执行。寄存器、共享内存和线程块数量上限约束并发工作量 \cite{cuda_programming_guide}。占用率（occupancy）是活跃 warp 数占 SM 可支持 warp 数上限的比例。同一 warp 访问邻近地址时可共用内存事务，称为合并访存（coalesced access）；每块占用较大的表可能减少并发工作量。在这一组织方式下，线程可以分别处理不同查询、为同一查询的不同候选评分，或共同计算一个候选的不同坐标。
 
 候选选择从扫描池中保留最小分数。Faiss 使用 warp 级选择 \cite{johnson_gpu}；其他 GPU top-$k$ 方法将选择工作分布到更大的数组上 \cite{gpu_topk}。第 5 章解释 JHQ-GPU 使用的选择与调度方法。

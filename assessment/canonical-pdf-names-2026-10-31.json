@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-31",
+  "scope": "Repository-root thesis PDF names and superseded root outputs only; sources, experiment evidence and build archives preserved.",
+  "retained": {
+    "thesis.pdf": {
+      "sha256": "8c6ca83968e1aa136aceaa5b05d41fc799c6855762b62cc062f07b9e5c36d60d",
+      "renamed_from": "thesis2.pdf",
+      "bytes": 1029684
+    },
+    "thesis-zh.pdf": {
+      "sha256": "c8a15cfe4d7ef9afe8c0eb7cac98ab0ac9c68a490aa3e3d55d0098e5b59c2233",
+      "renamed_from": "thsis2-zh.pdf",
+      "bytes": 1066803
+    }
+  },
+  "replaced_previous_outputs": {
+    "thesis.pdf": "9e683b291a0c73908a5c14dac00666f90d4f501505330aae63afa00c7c37fb72",
+    "thesis-zh.pdf": "81f326d805074ef51092d6541a104e57c9968be79426c0930e727ef0a8c0b578"
+  },
+  "deleted_root_versions": {
+    "thesis1.pdf": "44bf7050af1e429cf28287a32facd85e70e07510f4ce357343beb9269f942a09",
+    "thesis2-figure-comparison.pdf": "3769e2c960a93d4ce0a02da8633c03ca099622e7ea163f1efbbd44db0e6df3d0",
+    "thesis2-figure-preview.pdf": "e36ee96781a987d0ebcd348fcf13a813444da93a679015a85dbcac943a125b68",
+    "u8076655_Rui_Luo_COMP8800_Thesis_revised.pdf": "2e60729b4ce256495fec6b297f8a698a3c9eadd6629c36ddb3e0000e5eeafdc1"
+  },
+  "reference_pdf_preserved": "6.pdf",
+  "english_source": "variants/thesis2/main.tex",
+  "chinese_source": "variants/thesis2-zh/main.tex",
+  "later_english_revision_source_retained": "variants/final-polish/main.tex",
+  "outline": {
+    "file": "thesis-outline.pdf",
+    "renamed_from": "6.pdf",
+    "sha256": "3f637e9b8ddbfc8f1b0321c61972bc453ca10a959a928bd435102bf60a01a037"
+  }
+}

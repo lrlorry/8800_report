@@ -1,31 +1,40 @@
-Probe selection precedes primary scanning and selects inverted lists,
-not database-vector survivors. For IVF centroid $\mu_i$, the selector
-orders the FP32-valued computed routing scores
+Routing must choose a small number of IVF lists from thousands of
+centroids. Sorting every centroid score does more work than finding the
+required prefix. The implemented selector first finds the cutoff by
+radix passes, then orders only the chosen lists. It selects lists before
+the primary scan, separately from selecting vector survivors.
+
+For centroid $\mu_i$, the computed routing score and tie order are
 \begin{equation}
  s_i=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
  \qquad (s_i,i)\ \text{ordered lexicographically}.
  \label{eq:5-probe-score}
 \end{equation}
-Omitting the common query norm preserves centroid ordering. In contrast
-to primary squared-distance tables, these scores can be negative. The output is
+Dropping the common query norm leaves centroid ranking unchanged.
+Unlike primary squared distances, these scores can be negative. The
+selector returns
 \[
  n_{\rm sel}=\min(n_{\rm probe},n_{\rm list}),\qquad
  I=\operatorname{Top}^{(s_i,i)}_{n_{\rm sel}}\{0,\ldots,n_{\rm list}-1\},
 \]
-with list-length prefix offsets.
-
-OpenAI v69 uses TF32 rotation/centroid GEMMs with FP32 accumulation. Probe exactness concerns their computed scores; FP32 \texttt{fma} retains earlier rounding (\cref{sec:7-precision}).
+together with prefix offsets of the selected list lengths. On OpenAI,
+the evaluated rotation and centroid GEMMs use TF32 with FP32 accumulation;
+exactness here refers to those computed scores, with the precision check
+in \cref{sec:7-precision}.
 
 \subsection{Radix selection followed by deterministic ordering}
 
-One block makes four MSB-first radix passes. For prefix-restricted histogram $H_t$ and one-based residual rank $r_t$ ($r_0=n_{\rm sel}$),
+One block makes four radix passes, from the most significant byte to
+the least. A histogram counts the keys with the already-selected prefix;
+the next byte is the first bin that reaches the remaining target rank.
+For that histogram $H_t$ and rank $r_t$, with $r_0=n_{\rm sel}$,
 \[
  b_t=\min\Bigl\{b:\sum_{a\leq b}H_t[a]\geq r_t\Bigr\},\qquad
  r_{t+1}=r_t-\sum_{a<b_t}H_t[a].
 \]
-The chosen bin extends the prefix. Four bytes fix the cutoff/equal-key count.
-
-Canonicalise signed zeros to positive zero, then map bits $u$ by
+Repeating this step fixes the cutoff key after four bytes. To make
+integer byte comparisons follow the ordering of signed floating-point
+scores, canonicalise signed zero to positive zero and map score bits $u$ by
 \begin{equation}
  F(u)=\begin{cases}
        \mathop{\sim}u,&\text{if the sign bit is set},\\
@@ -33,7 +42,7 @@ Canonicalise signed zeros to positive zero, then map bits $u$ by
       \end{cases}
  \label{eq:5-probe-key}
 \end{equation}
-For non-NaN scores, monotonicity follows by cases:
+For non-NaN scores, the negative, nonnegative and opposite-sign cases give
 \[
  \begin{aligned}
  D_1<D_2<0&\Rightarrow u_1>u_2\Rightarrow{\sim}u_1<{\sim}u_2,\\
@@ -42,36 +51,46 @@ For non-NaN scores, monotonicity follows by cases:
  D_1<0\leq D_2&\Rightarrow F(u_1)<2^{31}\leq F(u_2).
  \end{aligned}
 \]
-Infinities/zeros are covered, unlike the nonnegative-only \cref{eq:5-packed-key}. Repeated \texttt{fma} fixes recomputed keys.
+This mapping handles negative values, infinity and zero, whereas
+\cref{eq:5-packed-key} applies to nonnegative scores. Every pass recomputes
+scores with the same fused multiply-add rounding, so cutoff detection
+and collection compare identical computed keys.
 
-Histogram storage is
+Each warp lane has a histogram replica to reduce collisions. Together
+the replicas require
 \[
  256\ \text{bins}\times32\ \text{lane replicas}\times4\ \text{bytes}=32\,\mathrm{KiB}.
 \]
-Replication reduces same-warp collisions, leaving inter-warp contention/reduction cost.
-
-Let $h$ be the cutoff key. Collection forms
+They still need reduction and can contend between warps. After cutoff
+$h$ is known, collection separates keys below it from those equal to it:
 \[
  A_< =\{i:F(u_i)<h\},\quad A_= =\{i:F(u_i)=h\},\quad
  m=n_{\rm sel}-|A_<|.
 \]
-Take $A_<$ plus the $m$ smallest IDs in $A_=$, using ordered ballots/prefix counts rather than atomic arrival. For the resulting set $A$,
+Keep $A_<$ and the $m$ smallest IDs in $A_=$. Ordered warp ballots,
+which record lane decisions in bit masks, and prefix counts make this
+choice independent of atomic arrival order. For the selected set $A$,
+each member's exact rank determines its output slot:
 \[
  \operatorname{rank}(i)=|\{j\in A:(s_j,j)\prec(s_i,i)\}|,
  \qquad\mathrm{out}[\operatorname{rank}(i)]=i.
 \]
-
-Selected lengths produce prefix offsets. For excess probes,
+Finally, list lengths form the probe-prefix offsets. If more probes are
+requested than lists exist, padded entries have zero length:
 \[
  i_j=i_{n_{\rm sel}-1},\quad L_j=0\quad(j\geq n_{\rm sel}),
  \qquad\omega_{j+1}=\omega_j+L_j.
 \]
-Zero lengths prevent rescans. Require $n_{\rm list},n_{\rm probe}>0$.
+Repeating the last list ID is harmless because its padded length is
+zero; it cannot cause another scan. Both $n_{\rm list},n_{\rm probe}>0$
+are required.
 
 \subsection{Costs and separate correctness contracts}
 
-Histogram/collection reread scores; ranking is $O(n_{\rm sel}^2)$ with growing shared memory. Small selections still pay fixed histogram storage; this is deterministic integration, not uniform linear cost.
-
-Tests cover ties/zeros/infinities/extremes/excess probes (\cref{sec:7-4}).
-
-FP16 approximation and cross-process checks are separate (\cref{sec:7-4}).
+Radix passes and collection read scores repeatedly. Ordering the chosen
+lists costs $O(n_{\rm sel}^2)$ and uses growing shared storage, so a
+small selection still pays fixed histogram overhead. \Cref{sec:7-4}
+compares throughput and checks ties, signed zeros, infinities, extreme
+values and excess probes. FP16 approximations and cross-process
+variation are separate checks there; a deterministic selector does not
+remove differences in the scores it receives.

@@ -1,8 +1,13 @@
-\Cref{tab:2-position} relates the preceding methods to JHQ-GPU.
-Small-table methods motivate exploiting code structure; graph and
-binary-code indexes provide alternative speed--capacity trade-offs;
-adaptive-effort methods provide the quality-control comparison.
-Chapters 4--6 develop these design choices, and Chapter 7 evaluates them.
+\Cref{tab:2-position} summarises the design trade-offs of the preceding
+graph, compressed-search and adaptive-effort methods. For JHQ, the issue
+is how its two-level representation affects GPU construction, candidate
+selection and workload-level refinement. Chapters 4--6 develop JHQ-GPU's
+methods; Chapter 7 evaluates them using the experimental baselines and
+controls specified in Chapter 3.
+
+At nine bits per dimension, IVF-RaBitQ matches JHQ's nominal one-bit
+primary plus eight-bit residual payload. The performance frontiers also
+include four- and eight-bit IVF-RaBitQ; total memory use is assessed separately.
 
 \begin{table}[!htbp]
 \centering
@@ -13,11 +18,11 @@ Chapters 4--6 develop these design choices, and Chapter 7 evaluates them.
 \toprule
 Approach & Main trade-off & Question for JHQ-GPU \\
 \midrule
-IVF-PQ / OPQ & Learned codebooks reduce distortion but need not separate coordinates internally & How can the primary code's coordinate structure simplify GPU scoring? \\
+IVF-PQ / OPQ & Codebooks are trained for low reconstruction error; coordinates within a subspace may be coupled & How can the primary code's coordinate structure simplify GPU scoring? \\
 Fast Scan / Quicker ADC & Small tables accelerate lookup under hardware and precision constraints & Does splitting tables repay extra GPU lookups? \\
 SONG / CAGRA & Graph navigation reduces scoring but adds graph storage and dependent access & Where can a compressed scan compete with resident graph search? \\
 BANG & Host storage extends capacity at the cost of communication & What can a complete compressed index resident on one GPU achieve? \\
-IVF-RaBitQ & Code size and probe effort balance distance-estimation quality and speed & When does residual refinement justify its extra work? \\
+IVF-RaBitQ & Multi-bit codes trade storage and probe effort against distance-estimation quality & How does JHQ's two-stage search compare with IVF-RaBitQ at matched recall? \\
 Adaptive effort & Quality control may require labels, prediction or calibration & Can workload agreement select a useful budget at acceptable quality and cost? \\
 \bottomrule
 \end{tabularx}

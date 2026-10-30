@@ -1,40 +1,21 @@
-测量区间为主机搜索调用：
-\[
- t_{\rm call}=t_{\rm return}-t_{\rm entry},
- \quad
- \begin{cases}
- \text{entry: FP32 queries in host memory},\\
- \text{return: host IDs/scores after stream completion}.
- \end{cases}
-\]
-暂存、传输、查询计算和 int8 查询量化均计时；构建／拟合不计入（\cref{fig:3-boundary}）。句柄和输出缓冲复用。JHQ 使用 pageable 内存／C++，CAGRA／PQ 使用 pinned 内存／Python，RaBitQ 使用 pinned 内存／C++；这些成本会影响小幅领先。
+搜索吞吐采用\cref{fig:3-boundary} 中同步的主机到主机边界，计入查询暂存、传输和预处理，例如 JHQ 的旋转与 CAGRA int8 的查询量化。各方法均通过页锁定（pinned）主机缓冲上传查询；JHQ 将结果返回普通可换页（pageable）内存，基线返回页锁定内存。JHQ／RaBitQ 由 C++ 调用，CAGRA／IVF-PQ 由 Python 调用，句柄和输出缓冲复用。这些接口成本计入测量，对小 batch 和接近持平的比较尤其重要。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
-\captionof{figure}[主机与设备计时边界]{计时边界。主机区间包含传输和查询专属计算。设备阶段剖析解释其中部分时间；独立剖析和同步可能改变执行，因此阶段时间之和不能替代端到端延迟。}
+\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/measurement-boundary}}
+\captionof{figure}[主机与设备计时边界]{计时从主机内存中的 FP32 查询开始，到结果返回主机结束，包含输入暂存、主机到设备（host-to-device，H2D）传输、查询预处理、GPU 搜索、设备到主机（device-to-host，D2H）传输及同步。构建、预热和预算校准不计入；构建与校准成本另行报告。GPU 各阶段时间来自单独的剖析运行，其和不一定等于这一端到端时间。}
 \label{fig:3-boundary}
 \end{minipage}\par\medskip
 
-时间单位为秒：
+主比较 使用大小为 1,000 的 batch，预热后测量五轮，通常每轮 24 次调用。对大小为 $b$ 的 batch，第 $r$ 轮有 $m_r$ 次调用，每次耗时 $t_{ri}$ 秒。先用 batch 大小除以轮内平均调用时间，再取各轮吞吐的中位数：
 \begin{equation}
  \bar t_r=\frac1{m_r}\sum_{i=1}^{m_r}t_{ri},
  \qquad Q_r=\frac b{\bar t_r},
  \qquad Q=\operatorname{median}_r Q_r.
  \label{eq:3-throughput}
 \end{equation}
-E1：batch 1,000，五轮，通常每轮 24 次调用。JHQ 每个变体／轮次预热一次，基线起初预热三次；较慢的基线测点调用更少。即时编译（just-in-time，JIT）和 CUDA Graph 捕获不计入，调用时间分位数不代表并发请求。
+均值保留有效的慢调用。结果衡量同步 batch 吞吐，而非并发请求的尾延迟。各轮共享同一索引；独立冷构建用于评估训练波动（\cref{sec:7-7}）。预热与运行准备细则见 \cref{sec:a-e1-protocol}。
 
-有效的慢调用保留。以示意调用时间 $(1,1,10)$\,ms 为例，
-\[
- \bar t=4\,\mathrm{ms}\ne\operatorname{median}(t)=1\,\mathrm{ms},
- \qquad b/\bar t\ne b/\operatorname{median}(t).
-\]
-共享索引／查询池不能提供独立构建样本。
+主比较 使用 RTX 5090（32,607\,MiB，功率上限 575\,W）、驱动 595.71.05、CUDA 13.0 和 cuVS 26.08.01。OpenMP 使用 16 个线程，环境提供 25 个逻辑 CPU。JHQ 内核以 compute\_80 PTX 为目标，由驱动在计时前编译为该 GPU 的指令 \cite{cuda_platform}。GPU 时钟与主机后台活动未受控制，可能带来计时波动。补充实验在后续会话中运行；各项报告说明哪些方法一同计时、是否复用训练模型，以及采用何种数值精度（\cref{sec:a-supplement,sec:4-2,sec:7-precision}）。
 
-RTX 5090／32,607\,MiB；驱动 595.71.05；CUDA 13.0；cuVS 26.08.01。OpenMP 使用 25 个 CPU 中的 16 个；E1 记录功率 575\,W。频率／负载可能变化。JHQ 提供 compute\_80 PTX 中间 GPU 代码，由驱动编译 \cite{cuda_platform}；库构建与设备剖析另行处理。
-
-常驻总量包含模型、工作区和上下文。CAGRA 索引增量与 JHQ 扣除上下文后的总量口径不同（\cref{sec:4-4,sec:7-7}）。内存池／临时区妨碍等峰值比较。构建峰值每 20\,ms 采样；train／add 不包含数据载入和主机准备。
-
-\paragraph{补充实验会话。}
-各 campaign 独立（\cref{sec:a-supplement}）；缓存状态／精度变化见 \cref{sec:4-2,sec:7-precision}。与历史基线的比值仍是跨会话比较。
+显存统计区分索引分配、包含上下文和工作区的搜索时进程总占用，以及构建峰值。JHQ 的净值扣除背景分配，CAGRA 的数值则衡量索引分配，二者边界不同（\cref{sec:4-4,sec:7-7}）。构建峰值每 20\,ms 采样，可能遗漏更短的瞬时峰值；构建时间覆盖 train／add 调用，不含输入载入。

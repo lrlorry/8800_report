@@ -1,9 +1,47 @@
+\subsection{Mean-aware representations}
+
+The centring result suggests testing when the primary signs should
+encode deviations from a mean (\cref{sec:8-centring}). Repeated cold
+builds of centred and uncentred data should first separate this effect
+from training variation. List-dependent means are another candidate,
+but require consistent query scoring and residual reconstruction.
+The test should compare shortlist coverage, the best attainable refined
+recall, selected budgets and total throughput, so a cheaper shortlist
+cannot conceal a lower quality ceiling.
+
 \subsection{Calibration risk and reuse cost}
 
-Future cost-aware calibration needs valid query-level bounds, matched-regime counts, fixed reference, sampling/order assumptions and drift renewal. Absolute GT risk additionally needs labels or a justified reference-to-GT link.
-
-Compare sampling/rank reuse/cost-aware choice by held-out total time and tail agreement. A four-cell sequential controller lost to extra launches. A replacement must beat a quality-matched control while meeting its risk bound.
+Can a statistically controlled budget choice save more query time than
+it costs to obtain? Under the nesting conditions of
+\cref{eq:6-rank-curve}, reference-neighbour primary ranks could replace
+repeated trial searches. An earlier four-setting offline replay found
+that sequential sampling added searches; a model fitted to measured
+calibration times estimated higher cost despite fewer sampled queries.
+It was not an integrated GPU controller measurement. A replacement
+should test batched trials or rank reuse against a quality-matched fixed
+budget using direct calibration-plus-reuse time. Its risk analysis must
+cover the sampling and budget-selection procedure, and drift should
+trigger renewal. Reference-relative control still needs a link to labels
+to provide absolute recall guarantees.
 
 \subsection{Residual storage across GPU and host memory}
 
-A future residual cache could fetch host blocks under a device cap. Fix representation, routing, survivors and arithmetic; vary cap, batch and locality; measure bytes, hits, overlap, tails and QPS. This capacity study is unimplemented; lowering $\alpha$ does not relocate stored residuals.
+Residuals account for 80.7--82.9\% of the total resident process memory
+on BGE and Stella (\cref{sec:7-7}), but only shortlisted rows are read.
+Keeping routing and primary codes on the GPU while fetching residual
+blocks from host memory could increase capacity. The difficulty is
+turning scattered shortlist positions into efficient block transfers.
+Under fixed scoring and selection, vary the device budget and measure
+extra bytes, cache hits, transfer overlap, throughput and tail latency.
+This would establish the capacity--latency trade-off rather than assume
+that offloading improves speed.
+
+\subsection{Explaining the small-batch boundary}
+
+At recall 0.97, grouping improves JHQ's small-batch execution yet does
+not close the gap to CAGRA fp32 (\cref{sec:7-smallbatch}). Candidate
+work, selection overhead and interface costs could each contribute.
+A matched study should count candidates scored by both indexes and
+separate kernel time from transfers and host-call overhead. Comparing
+those costs across batches would test whether fewer probed candidates,
+cheaper selection or a different index is the useful next step.

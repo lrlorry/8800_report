@@ -1,0 +1,26 @@
+\frontchapter{Abstract}
+Approximate nearest-neighbour (ANN) search supports similarity retrieval
+over large collections of embedding vectors. GPUs accelerate this search,
+but limited device memory makes compressed indexes attractive. JHQ is a
+hierarchical quantisation method that screens candidates with compact
+codes and refines a smaller set using residual codes. This thesis develops
+JHQ-GPU to study how this representation can support efficient GPU
+construction and search.
+
+The implementation combines GPU model fitting and batched encoding with
+bounded input staging and a packed, list-ordered layout. Its scan replaces
+each 256-entry distance table with two 16-entry tables, preserving scores
+in real arithmetic. Grouped scanning preserves exact global candidate
+selection under a fixed ordering of computed scores and positions. Calibration chooses how
+many candidates to refine without ground-truth labels, by comparing
+returned neighbours with a larger-budget reference.
+
+Evaluation on an NVIDIA RTX~5090 compares methods on Vogue, arXiv,
+OpenAI-1536 and OpenAI-3072. At recall 0.97 and batch 1,000, JHQ-GPU
+delivers $1.32$--$1.75\times$ the host-to-host throughput of the CAGRA fp32 graph index
+across all four datasets and is the fastest tested method on three.
+For the larger BGE and Stella text-embedding datasets, whose raw FP32 vectors exceed
+device memory, JHQ-GPU enables single-GPU search; the largest index
+contains 17.78 million vectors and uses 20.44\,GiB of resident GPU memory.
+Using 500 unlabelled calibration queries keeps test-query recall within
+$10^{-3}$ of the best tested budget in all twelve dataset--probe settings.

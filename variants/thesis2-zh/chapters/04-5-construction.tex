@@ -1,6 +1,6 @@
 \subsection{有界输入 batch 与两遍构建}
 
-全库原始／旋转向量存储为 $4Nd+4Nd=8Nd$ bytes。有界暂存避免了这一开销。对 $n_b$ 个流水缓冲、配置的 add 行数 $a_{\rm add}$ 及每数组 byte 预算 $S_{\rm stage}$，源码暂存量为
+若将全库原始和旋转数组都放在 GPU 上，需要 $4Nd+4Nd=8Nd$ bytes。有界暂存限制这些数组，而压缩索引仍需常驻。对 $n_b$ 个流水缓冲、配置的 add 行数 $a_{\rm add}$ 和每数组预算 $S_{\rm stage}$，暂存行数及原始／旋转设备存储为
 \begin{equation}
  a_{\rm in}=\max\!\left\{1,\min\!\left(a_{\rm add},
  \left\lfloor\frac{S_{\rm stage}}{4d}\right\rfloor\right)\right\},
@@ -11,35 +11,35 @@
  4d\leq S_{\rm stage},\quad n_b=3,\ S_{\rm stage}=128\,\mathrm{MiB}
  \Longrightarrow S_{\rm float}\leq2n_bS_{\rm stage}=768\,\mathrm{MiB}.
 \]
-分配／编码器临时区另计。
+上界只覆盖这些浮点数组，分配和编码器临时区另计。一遍构建按输入顺序编码，再 gather 为列表顺序；两遍构建先分配和排序，再重读并直接编码到最终位置，以额外遍历换取较少的压缩副本。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
 \input{variants/thesis2/figures/add-paths}
-\captionof{figure}[一遍与两遍构建]{构建路径。一遍构建短暂同时持有输入顺序和 gather 后的编码；两遍构建重新读取／旋转，直接编码为列表顺序。用反向旋转质心对原始向量分配，依赖正交性。}
+\captionof{figure}[一遍与两遍构建]{一遍与两遍构建.}
 \label{fig:2-add-paths}
 \end{minipage}\par\medskip
 
+对 Stella，解析模型给出的行数组占用为：一遍 gather 需要 40.59\,GiB，两遍 repack 需要 21.32\,GiB（\cref{tab:4-phase-storage}）。一遍路径同时保留输入顺序与列表顺序的编码；两遍路径直接写入列表顺序。在首遍分配中，质心通过 $\Pi^\top$ 变回原坐标系，因而无需先旋转数据库行。
+
 \subsection{构建各阶段的显存占用}
 
-一遍构建的估计为
+实现根据行数组及其他分配的预留量，估计一遍构建所需显存：
 \begin{equation}
  H_{\rm single}=N(2b_r+3M+20)+2^{30}\quad\text{bytes}.
  \label{eq:4-peak-heuristic}
 \end{equation}
-其十个存活数组合计
+十个存活数组贡献
 \[
  3NM+2Nb_r+20N=N(3M+2b_r+20).
 \]
-1\,GiB 余量是启发式，并非进程峰值上界。
-
-两遍构建的最终重打包计入 ID、残差、校正项和两份主码：
+1\,GiB 预留量是启发式。两遍构建的最终重打包阶段计入 ID、残差、校正项和两份主码，所需存储为
 \begin{equation}
  S_{\rm repack,2}=N(b_r+2M+8).
  \label{eq:4-two-pass-repack}
 \end{equation}
-整个构建峰值还需考虑更早的流水／逆置换临时区、模型、排序、上下文和后续工作区分配。
+整个构建峰值还包括模型、排序、上下文、更早的流水／逆置换临时区和后续查询工作区。\Cref{tab:4-phase-storage} 的阶段值单独计算行数组，并非整个进程峰值。
 
 \begin{table}[!htbp]
 \centering
@@ -56,22 +56,16 @@ Stella & 19.20 & 40.59 & 21.32 \\
 \end{tabular}
 \end{table}
 
-\Cref{tab:4-phase-storage} 量化压缩副本的节省。Stella 冷构建日志选择两遍，并对 \cref{eq:4-peak-heuristic} 打印 41.6\,GiB，而尾部可用量为 30.6\,GiB。单独采样的常驻进程总量包含上下文和查询工作区：BGE 为 11.93\,GiB，Stella 为 20.44\,GiB（\cref{sec:4-4}）。补充的 20\,ms 设备采样在 BGE add 开头附近观察到 26.08\,GiB 峰值，在 Stella 重打包时观察到 22.58\,GiB 峰值。这些是包含上下文的设备采样总量，可能漏掉更短暂的峰值。
-
-分配乘积缓冲容量使用独立配置行数 $a_{\rm assign}$，由 \texttt{JHQ\_ASSIGN\_BATCH} 或源码默认值选择：至少 8,192 个列表时为 32,768，否则为 8,192。
+分配乘积缓冲使用独立容量 $a_{\rm assign}$，由 \texttt{JHQ\_ASSIGN\_BATCH} 或源码默认值选择：至少 8,192 个列表时为 32,768，否则为 8,192。其存储为
 \begin{equation}
  S_{\rm dots}=4n_b n_{\rm list}a_{\rm assign}\quad\text{bytes}.
  \label{eq:4-assignment-scratch}
 \end{equation}
-分配容量独立于当前活跃／暂存行数。在 $d=1536/3072$ 下，两个默认值均分配 3\,GiB。BGE／Stella 的 $3\times4=12$\,GiB 分配临时区先于 gather 存活；\cref{fig:2-memory-lifetimes} 区分这些生命周期。
+分配容量独立于当前活跃／暂存行数。在 $d=1536/3072$ 下，两个默认值均分配 3\,GiB。BGE／Stella 的 $3\times4=12$\,GiB 分配临时区在 gather 前释放。对 BGE，12\,GiB 临时区与 23.05\,GiB 行数组 gather 不会同时占用显存。峰值是同一时刻存活分配之和的最大值：
 \[
  S_{\rm peak}=\max_t\sum_{A\ {\rm live\ at}\ t}|A|.
 \]
-Stella 较小的重打包量加模型／上下文，对应较低的实测峰值。
-\par\medskip\noindent\begin{minipage}{\linewidth}
-\captionsetup{hypcap=false}
-\centering
-\input{variants/thesis2/figures/memory-lifetimes}
-\captionof{figure}[独立的构建分配生命周期]{选定构建分配的生命周期，不是进程总占用。BGE 的 12\,GiB 分配缓冲在其 23.05\,GiB 行数组 gather 之前释放。这两项不能相加为并发占用。}
-\label{fig:2-memory-lifetimes}
-\end{minipage}\par\medskip
+
+
+
+Stella 冷构建日志选择两遍：\cref{eq:4-peak-heuristic} 的一遍估计为 41.6\,GiB，同一日志报告尾部阶段可用量为 30.6\,GiB。单独采样的常驻进程总量包含上下文和查询工作区：BGE 为 11.93\,GiB，Stella 为 20.44\,GiB（\cref{sec:4-4}）。补充的 20\,ms 设备采样在 BGE add 开头附近观察到 26.08\,GiB 峰值，在 Stella 重打包时观察到 22.58\,GiB 峰值。较小的两遍重打包量与 Stella 较低的实测峰值一致。这些采样设备总量包含上下文，可能遗漏更短暂的峰值。

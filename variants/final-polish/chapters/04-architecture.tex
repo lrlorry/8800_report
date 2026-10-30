@@ -1,0 +1,32 @@
+% Section structure adapted from 6.pdf; draft prompts are not thesis prose.
+\chapter{GPU Index Design and Construction}
+\label{ch:architecture}
+A compressed GPU index needs both a searchable representation and a
+construction process that fits device memory. This chapter develops
+JHQ's training, encoding and list-ordered storage \cite{jhq}, then checks
+the resulting representation. Query execution and measured construction
+cost follow in \cref{ch:gpu-execution,sec:7-7}.
+
+\section{Build and Search Workflow}
+\label{sec:4-1}
+\input{variants/final-polish/chapters/04-1-boundaries}
+
+\section{Training, Rotation and Codebook Generation}
+\label{sec:4-2}
+\input{variants/final-polish/chapters/04-2-training}
+
+\section{IVF Assignment, IDs and Physical Memory Layout}
+\label{sec:4-3}
+\input{variants/final-polish/chapters/04-3-layout}
+
+\section{Resident Storage, Workspace and Index Lifecycle}
+\label{sec:4-4}
+\input{variants/final-polish/chapters/04-4-lifecycle}
+
+\section{Construction Cost and Tested Scale}
+\label{sec:4-5}
+\input{variants/final-polish/chapters/04-5-construction}
+
+\section{Index Representation and Validation}
+\label{sec:4-6}
+\input{variants/final-polish/chapters/04-6-contracts}

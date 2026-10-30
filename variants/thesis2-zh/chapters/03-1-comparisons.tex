@@ -1,4 +1,6 @@
-\Cref{tab:3-design} 定义比较单元，以及什么结果会挑战各项研究主张。一个\emph{配置单元（cell）}固定数据集、索引配置和工作负载设置；同一单元内的实验臂对应不同实现或预算。对成对执行测量，除被明确指定的处理外，索引状态、查询、probe 数、精排预算及评分表示均保持固定。记录的成对比值为 $Q_{\rm treatment}/Q_{\rm control}$。对所说明的 $J$ 个单元等权汇总，得到
+每个测试配置，即\emph{配置单元（cell）}，固定数据集、索引和工作负载。组件比较改变待研究的机制，并在适用情况下固定训练索引、查询、probe 数、精排预算和评分表示；跨系统比较则使用各系统自己的参数网格（\cref{sec:7-2}）。\Cref{tab:3-design} 将研究问题对应到这些对照和测量指标。成对测试衡量执行改变带来的效果，而缓存行为等硬件原因需要单独剖析。
+
+以 $Q$ 表示每秒查询数（QPS），成对加速比为 $Q_{\rm treatment}/Q_{\rm control}$，大于一时表示处理方案更快。对 $J$ 个配置使用比值的几何平均，各配置权重相同：
 \[
  G=\exp\!\left(\frac1J\sum_{j=1}^{J}
  \log\frac{Q_{{\rm treatment},j}}{Q_{{\rm control},j}}\right).
@@ -6,19 +8,25 @@
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[研究问题与实验对照]{将研究问题转化为可测试的比较。容量观察与成对执行干预使用不同的对照。}
+\captionof{table}[研究问题与实验对照]{研究问题、受控比较与检查。构建、执行、预算选择和跨系统搜索需要不同的对照。}
 \label{tab:3-design}
 \footnotesize\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.11\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.19\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
 \toprule
-问题 & 干预／比较 & 固定或统计的量 & 指标与反证 \\
+研究问题 & 比较 & 共同条件 & 指标与检查 \\
 \midrule
-RQ1：构建与容量 & GPU 构建；缓存与冷生命周期；压缩与原始存储 & $N,d$、表示、路由及构建计时边界 & Train／add 时间与常驻字节；构建失败或模型—分配差距界定可行性 \\
-RQ2：执行 & LUT 分组、word 访问、精排 lanes、分组扫描、共享阈值与 probe 选择 & 成对状态、负载、分数及参考输出含义 & Wall QPS、阶段时间和输出检查；减速或非并列不一致会挑战机制 \\
-RQ3：预算 & 抽样／全池规则，对照固定 64、100、200、枚举及 GT oracle & 同一索引与路由；不相交的校准和留出查询位置 & 留出召回损失、所选臂 QPS 与校准成本；越阈挑战可靠性 \\
-RQ4：竞争区间 & 独立调优的 JHQ、CAGRA、IVF-PQ 和 IVF-RaBitQ & 导出向量、GT、$k$、设备及主机到主机边界；显存单独报告 & 匹配召回 QPS 与覆盖；其他召回目标上的更强对手挑战广泛优越性 \\
+RQ1：GPU 索引构建与容量 & 冷构建与训练模型复用；压缩与原始存储
+& $N,d$、表示、路由及构建计时边界
+& 训练／编码时间及常驻／峰值显存；实测与模型估算的显存对比 \\
+RQ2：面向表示结构的执行 & 查表分组、打包读取、协作精排、分组扫描、共享阈值与 probe 选择
+& 相同索引、负载与预算；共同的评分定义
+& 主机调用 QPS、阶段时间，以及按对应并列规则核对的分数和返回 ID 差异 \\
+RQ3：工作负载级精排校准 & 无标签抽样／全池校准；固定 64、100、200；完整预算网格搜索及使用 GT 的诊断选择
+& 相同索引与路由；分开的校准和评估查询
+& 测试查询相对最佳已测预算的召回损失、所选预算 QPS 与校准成本；检验质量与回本 \\
+RQ4：跨系统搜索性能 & 不同 batch 大小下分别调优的 JHQ、CAGRA、IVF-PQ 与 IVF-RaBitQ；暴力搜索参照
+& 相同导出向量、GT、$k$、GPU 和主机调用边界；显存单独报告
+& 匹配召回率 QPS、显存与覆盖范围；记录胜负 \\
 \bottomrule
 \end{tabularx}
 \end{minipage}\par\medskip
-
-消融估计速度效应，不直接测量缓存／占用率变化。跨系统比较另行进行（\cref{sec:7-6}）。

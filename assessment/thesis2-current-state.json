@@ -3,33 +3,45 @@
   "baseline_commit": "dca4ff878406b13c18fadb778198c31f3190dac8",
   "working_tree_candidate": true,
   "english": {
-    "file": "thesis2.pdf",
-    "pages": 66,
-    "body_pages": 56,
+    "file": "thesis.pdf",
+    "pages": 71,
+    "body_pages": 61,
     "front_pages": 7,
-    "source_prose_word_estimate": 14406,
-    "sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715"
+    "source_prose_word_estimate": 19502,
+    "sha256": "8c6ca83968e1aa136aceaa5b05d41fc799c6855762b62cc062f07b9e5c36d60d"
   },
   "chinese": {
-    "file": "thsis2-zh.pdf",
-    "pages": 64,
-    "sha256": "3d69e48cf14c8d91da6f6bbbff335d6fed69cd75f006e2a2fe0d3c621f66193f"
+    "file": "thesis-zh.pdf",
+    "pages": 69,
+    "sha256": "c8a15cfe4d7ef9afe8c0eb7cac98ab0ac9c68a490aa3e3d55d0098e5b59c2233"
   },
-  "figures": 28,
-  "tables": 28,
+  "figures": 25,
+  "tables": 31,
   "proofs": 6,
   "english_and_chinese_verifiers_passed": true,
   "no_compiler_issues": true,
   "english_visual_review_pages": [
-    13,
-    14
+    18,
+    19,
+    49,
+    68
   ],
   "chinese_visual_review_pages": [
-    13
+    18,
+    47
   ],
   "review_response": "assessment/thesis2-review-response-02a4467.txt",
   "frontmatter_review_record": "variants/thesis2/audit/frontmatter-review-2026-10-30.json",
   "style_previews_note": "Frozen dca4ff87-era style snapshots; their frontmatter predates this revision.",
-  "last_change": "Add a short RaBitQ comparison to Chapter 2.6 in both languages: original one-bit sign-code similarity, JHQ fixed-level reconstruction plus residual refinement, distinction from the tested 4/8/9-bit IVF-RaBitQ baseline, and cross-references to existing E1/T5 end-to-end experiments. Chapter 1 and all experimental results unchanged.",
-  "first_mention_review_record": "variants/thesis2/audit/first-mention-review-2026-10-30.json"
+  "last_change": "Final numerical and editorial review: recomputed 1,590 main-comparison points, 270 strict-selection configurations, 2,304 sampled calibration decisions and 12 full-pool decisions from raw records. Corrected one rounded LUT error, removed redundant prose, replaced reader-facing campaign/version codes with descriptive names, replaced the existing navigation table and relabelled/redrew only the precision figure using identical numerical series. All measured table cells, formal mathematics, proofs, labels, input paths and original plot/data artifacts preserved. English/Chinese 71/69 pages; English body 61 pages, source prose estimate 19,502 words. Both verifiers and page-layout checks pass. No GPU rerun or GitHub push.",
+  "first_mention_review_record": "variants/thesis2/audit/first-mention-review-2026-10-30.json",
+  "technical_figure_review_record": "variants/thesis2/audit/figure-review-2026-10-30.json",
+  "chapter3_readability_followup_record": "variants/thesis2/audit/ch3-readability-followup-2026-10-30.json",
+  "chapter56_structure_review_record": "variants/thesis2/audit/ch56-structure-review-2026-10-30.json",
+  "cpu_conclusion_review_record": "variants/thesis2/audit/cpu-conclusion-review-2026-10-30.json",
+  "chapter8_structure_review_record": "variants/thesis2/audit/ch8-review-2026-10-30.json",
+  "chapter7_structure_review_record": "variants/thesis2/audit/ch7-review-2026-10-30.json",
+  "final_review_record": "variants/thesis2/audit/final-review-2026-10-30.json",
+  "canonical_names_record": "assessment/canonical-pdf-names-2026-10-31.json",
+  "canonical_names_date": "2026-10-31"
 }

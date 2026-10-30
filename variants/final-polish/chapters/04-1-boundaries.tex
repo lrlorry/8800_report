@@ -1,0 +1,23 @@
+Index construction separates reusable models from database-specific
+arrays. Training fits the models; add encodes the database and places
+each row in IVF-list order. Search then uses this completed, GPU-resident
+representation.
+
+\begin{figure}[!htbp]
+\centering
+\resizebox{\linewidth}{!}{\input{variants/final-polish/figures/architecture-layout}}
+\caption[Build and search workflow]{Build and search workflow.}
+\label{fig:4-architecture}
+\end{figure}
+
+The host prepares samples, the rotation matrix and the analytical primary
+codebook; the GPU applies the rotation, fits or loads the IVF/residual
+models, and encodes database batches into the resident index. Reusable
+model state comprises the rotation, codebooks and centroids. The dashed
+path shows saving and loading this state: a cache hit skips model fitting,
+while add still encodes and orders database rows.
+
+One successful \texttt{add} fixes the physical positions. Further adds
+are rejected, and updates require rebuilding. Returned scores and the
+host-call timing boundary are defined in
+\cref{eq:5-refined-constant,sec:3-3}.

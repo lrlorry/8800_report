@@ -1,8 +1,14 @@
-Primary screening changes coordinate work from $O(n_cd)$ to $O(cd)$. Lanes cooperate at the same budget.
+Primary screening reduces coordinate work from $O(n_cd)$ to $O(cd)$,
+but each survivor still requires a full residual-distance calculation.
+Sharing one candidate among several lanes shortens each lane's loop.
+The budget stays fixed while this section changes how that work is
+distributed.
 
 \subsection{Reconstructed scoring and the query-only constant}
 
-For $\gamma=2\langle\widehat p,\widehat r\rangle$, expand in real arithmetic:
+The stored correction $\gamma=2\langle\widehat p,\widehat r\rangle$
+combines primary and residual contributions into the refined score.
+Expanding in real arithmetic explains what this score ranks:
 \begin{align}
  \refineddist(q,x)
  &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
@@ -11,41 +17,61 @@ For $\gamma=2\langle\widehat p,\widehat r\rangle$, expand in real arithmetic:
  &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
  \label{eq:5-refined-constant}
 \end{align}
-The query constant preserves reconstructed-distance order \cite{jhq}.
-
-Scalar scoring sums squared residual differences, then adds primary score/correction. Queries and fitting codebooks use shared memory.
+The added query norm is the same for every candidate, so the ranking is
+that of reconstructed squared distance \cite{jhq}. Scalar execution
+sums residual squared differences before adding the primary score and
+correction. The query and any codebooks that fit are staged in shared
+memory.
 
 \subsection{Mapping lanes to words and reducing partial sums}
 
-For $\lrefine=L\in\{1,8,16,32\}$,
+Let $\lrefine=L\in\{1,8,16,32\}$ be the lanes assigned to one candidate.
+Each lane visits a strided sequence of residual-code words:
 \[
  d_{\rm word}=32/B_R,\qquad
  \text{words of lane }a:\ a,a+L,a+2L,\ldots.
 \]
-A word holds four eight-bit or eight four-bit codes. Butterfly shuffles sum lane partials; lane zero writes the score.
+A word holds four eight-bit codes or eight four-bit codes. Lanes sum
+their own decoded contributions, then exchange partial sums using
+butterfly shuffles, a sequence of pairwise lane exchanges. Subgroup lane
+zero adds the primary score and correction and writes the result.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch5/lane-refinement}
-\captionof{figure}[Sixteen-lane residual refinement]{Sixteen-lane residual refinement. A warp handles two candidates;
-lane $a$ within a candidate reads residual words $a,a+16,\ldots$.
-Each eight-bit-code word decodes four coordinates. Subgroups sum partials, then add primary score/correction. Candidate positions may remain scattered.}
+\input{variants/thesis2/figures/lane-refinement}
+\captionof{figure}[Sixteen-lane residual refinement]{Sixteen-lane residual refinement.}
 \label{fig:5-lane-refinement}
 \end{minipage}\par\medskip
+With sixteen lanes, a warp processes two candidates independently, as
+shown in \cref{fig:5-lane-refinement}. Local lane $a$ visits words
+$a,a+16,\ldots$; warp lanes 0 and 16 write the separate outputs.
+Word-aligned rows and $d_{\rm word}\mid D_s$ keep each word within its
+codebook. All lanes participate in shuffles; invalid slots contribute
+zero and ultimately receive an infinite output score.
 
-Word-aligned rows and $d_{\rm word}\mid D_s$ keep words within codebooks. All lanes shuffle; invalid slots contribute zero, then output infinity. $L=16$ gives two candidates/warp.
-
-L0 loads bytes; L1 loads words with the same one-lane accumulation. L8/L16/L32 trade shorter walks for shuffles/fewer concurrent candidates. FP32 association and locality matter.
+The experimental names describe this mapping: L0 reads bytes with one
+lane, L1 reads words with one lane, and L8/L16/L32 use that many lanes
+per candidate. More lanes shorten local loops but add shuffle work and
+reduce the candidates processed concurrently. \Cref{sec:7-3} compares
+these choices and their numerical effects.
 
 \subsection{Final selection and the numerical boundary}
 
-For at least $k$ finite valid survivors with unique IDs, each round computes
+Final selection scans all retained slots in each output round. Assuming
+at least $k$ finite valid survivors with unique IDs, it chooses
 \[
  i^*=\arg\min_{i<c}(D_{H,i},\mathrm{ID}_i),\quad d^*=D_{H,i^*},\quad
  D_{H,i^*}\leftarrow+\infty
 \]
-using all slots and emits $(\mathrm{ID}_{i^*},d^*)$: exact retained-pool top-$k$, without thread quotas. Underfull pools may repeat the smallest valid ID at infinity; all-invalid pools return invalid IDs. Tests meet the finite-entry premise.
+and emits $(\mathrm{ID}_{i^*},d^*)$. Replacing that score by infinity
+makes the next round select the next candidate, yielding the exact
+retained-pool top-$k$ without per-thread quotas. With too few finite
+entries, the kernel can repeat the smallest valid ID at infinity;
+all-invalid pools return invalid IDs. The evaluated settings satisfy
+the finite-entry premise.
 
-Primary ties use positions, final ties IDs. Exclusions/quantisation remain; lane FP32 association may move near ties.
-
+Primary ties use physical position and final ties use database ID.
+This final selector is exact for its input scores, while routing and
+quantised reconstruction still determine raw-vector recall. Changing
+the summation order can change FP32 rounding and reorder near ties.

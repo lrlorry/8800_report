@@ -1,7 +1,11 @@
 % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{GPU Index Design and Construction}
 \label{ch:architecture}
-Training/encoding produces bounded-memory, list-ordered GPU arrays \cite{jhq}; \cref{ch:gpu-execution,sec:7-7} give search and cost.
+A compressed GPU index needs both a searchable representation and a
+construction process that fits device memory. This chapter develops
+JHQ's training, encoding and list-ordered storage \cite{jhq}, then checks
+the resulting representation. Query execution and measured construction
+cost follow in \cref{ch:gpu-execution,sec:7-7}.
 
 \section{Build and Search Workflow}
 \label{sec:4-1}

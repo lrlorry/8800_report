@@ -1,34 +1,68 @@
-\subsection{Mailman 式共享和评分}
+\subsection{Mailman 式共享求和评分}
 \label{sec:8-mailman}
 
-Mailman 复用有限字母表求和 \cite{mailman}。固定的 Vogue／arXiv／OpenAI-3072 流比较宽度 4/6/8 的原子桶／私有直方图和打包双表评分：128 probes、batch 8/1,000，编码／数学分数固定。
+JHQ 的有限符号模式提示，可以参照 Mailman 思想在候选之间复用部分和 \cite{mailman}。四位半码只有 16 种模式，因此许多候选可以共享中间计算。测试在 Vogue、arXiv 和 OpenAI-3072 上固定主码及候选流，将分组宽度为 4、6、8 的原子桶和私有直方图，与按字打包的两表评分比较，采用 128 probes 和 8、1,000 两种 batch。
 
-最佳替代仅达到基线 QPS 的 0.187--0.581（\cref{fig:8-negative}）。偏斜的桶目标主导剖析；私有直方图增加状态／共享更新。更窄分组有时有益，但没有获胜方案。其他有限字母表设计仍值得研究。
-
-测试仅覆盖分数，因此 cutoff 检查不证明近邻流水线等价。替换模型给出
+最佳替代方案的吞吐也只有评分基线的 0.187--0.581。剖析显示桶更新集中；私有直方图则增加状态和共享内存更新。当实现复用的成本超过省下的查表工作，算术复用就不足以带来收益。这些是评分器测量，并非完整搜索对比。若 $f$ 为基线中评分占用的时间比例，$s$ 为替代评分器的相对速度，其余部分不变的模型给出
 \[
  \frac{T'}T=1+f\left(\frac1s-1\right)>1
  \quad(0<f\leq1,\ 0<s<1).
 \]
-该模型不是实测端到端性能，集成已停止。字典研究也停在结构统计。二者都不产生系统前沿测点。
+因此，即使这个模型也预测不了整体搜索收益。集成在此停止，其他有限字母表实现仍值得探索。\cref{fig:8-negative} 左图展示六组评分器比较。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
 \includegraphics[width=\linewidth]{ch8/negative-evidence.pdf}
-\captionof{figure}[Mailman 与面向排名的编码]{两个不同的证据边界。左：RTX 5090 上，Vogue、arXiv 和 OpenAI-3072、两个 batch、128 probes 时，最佳实测 Mailman 评分器／打包表评分器速度比，全部小于一。右：arXiv 400 查询 FP64 离线测试划分上，达到原 JHQ 召回目标的最小保留数。候选减少不是 GPU 加速。}
+\captionof{figure}[Mailman 与面向排序的编码]{Mailman 评分器吞吐（左）与离线短名单大小（右）。}
 \label{fig:8-negative}
 \end{minipage}\par\medskip
 
 \subsection{面向排序的编码实验}
 \label{sec:8-rank}
 
-FP64 候选重放使用 400/200/400 个校准／\allowbreak{}验证／\allowbreak{}测试查询，测试加权分数、中位数／列表阈值、学习式损失和线性最小均方误差（minimum mean-square error，MMSE）解码。更低 MSE 可能恶化近邻顺序；主码等级变化也会移动残差参考点。
+最小化重建误差未必保持近邻顺序。FP64 离线回放采用 400 条校准、200 条验证和 400 条测试查询，检查加权分数、中位数及列表相关阈值、学习损失和线性最小均方误差解码。arXiv 上，中位数阈值将达到召回率 0.97775 所需的最小已测短名单从 875 个候选降至 375 个；另外两个工作负载未达各自目标。这些是 \cref{fig:8-negative} 右图的离线计数。
 
-中位阈值将 arXiv 达标的最小已测保留数从 875$\to$375，但另两个工作负载失败。对正交 $\Pi$，
+独立的 GPU 后续实验同时改变主码表示并重训残差码。在它自己的 arXiv 目标 0.9766 下，batch 为 8 时吞吐提升 $1.40\times$，batch 为 1,000 时提升 $1.21\times$。Vogue 的最高召回率却只有 0.9630，低于目标 0.9644；OpenAI-3072 接近持平。离线候选减少与 GPU 加速使用不同的查询、训练态和目标，不能据此得到只改变阈值的加速比。主码改变后，残差需要重建的对象也会改变。
+
+\subsection{移除共同均值}
+\label{sec:8-centring}
+
+全局数据均值可能占用符号码的分辨能力。旋转保持均值的范数：对于正交的 $\Pi$，
 \[
  \bar y=\frac1N\sum_i\Pi x_i=\Pi\bar x,
  \qquad \|\bar y\|^2=\bar x^\top\Pi^\top\Pi\bar x=\|\bar x\|^2.
 \]
-因此旋转保持均值向量范数，而不消除偏置。中心化也必须保持精排分数上限。
+在实数算术中，从查询和数据库向量中减去相同均值 $\mu$，保持距离
+$\|(q-\mu)-(x-\mu)\|^2=\|q-x\|^2$，
+却会改变待量化的问题。
 
-中位等级 GPU 后续实验重新训练残差。对 arXiv 原 $\alpha=100$ 目标，batch 8/1,000 下提升 $1.40/1.21\times$；Vogue 仅达到 0.9630，低于 0.9644；OpenAI-3072 持平。三轮使用独立状态／查询，不属于 E1。
+后续实验将存档的原始索引与在中心化数据上新训的索引比较，在同一会话交替测量。arXiv 的均值范数为 0.837，采用 128 probes 时，全池校准从 $\alpha=200$ 改选 $\alpha=64$，召回率 0.97 处的前沿吞吐提升 $1.266\times$。512 probes 时所选预算变为 100，并非 64。这一变化并非总有利：Vogue 在 512 probes 下的高预算召回率从 0.9918 降至 0.9896；OpenAI-1536 的所选预算从 8 升到 16，尽管召回率 0.97 处吞吐比 0.995，几乎不变。arXiv 的结果支持将去均值作为有用的表示改动。重训同时改变质心和残差，因此还需对两种数据做同样的重复重训，才能分离其贡献。这些测试扩展的是分析，并未并入与其他系统的主比较。
+
+\subsection{安全下界仍可能剪枝不足}
+\label{sec:8-residual-bound}
+
+另一项 FP64 pilot 仅根据主码，为到重建向量的平方距离构造下界。它按符号模式统计覆盖全部已索引向量的残差坐标范围。将包围盒加上对应的主码重建后，以查询到它的距离作为下界。在七个搜索配置、7,280 万次候选检查中未观察到违反；但下界与距离之比的中位数只有 0.13--0.24。即使用理想的最终阈值，几乎所有已探测候选仍要精排，通常远多于现有短名单。因此 pilot 在完整 GPU 实现之前停止。安全性还不够：剪枝必须足够有选择性，才能补偿下界计算和存活残差读取的成本。GPU 版本还需采用考虑舍入安全的包络。
+
+\subsection{其他替代方案与停止决定}
+\label{sec:8-stopped}
+
+\Cref{tab:8-stopped} 汇总代表性的早期替代方案。它们各用自己的版本和对照，而非最终跨系统协议。GPU 计时与离线成本估算分别标明；后者不是额外的系统前沿测量。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[替代设计与停止决定]{替代设计与停止决定。}
+\label{tab:8-stopped}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}p{.24\linewidth}X@{}}
+\toprule
+替代方案 & 预期节省 & 证据与决定 \\
+\midrule
+更大的选择缓冲区 & 减少压缩排序 & GPU 测试吞吐最多下降 24\%；增加共享内存后，受影响配置可常驻的 block 数减少 \\
+扫描与精排融合 & 减少启动和中间传输 & GPU 测试最多下降 15\%；省下的传输较少，却增加了合并内核的资源需求 \\
+部分分数提前退出 & 跳过后续子空间 & GPU 变化为 $-2.8$ 至 $+4.2\%$；warp 级检查没有稳定收益 \\
+免表符号评分 & 去掉查找表存储 & 尽管共享内存更少，GPU 吞吐仍下降 30--52\% \\
+渐进读取主码 & 只为存活候选读取完整编码 & 离线回放和访存估算显示第二阶段散乱读取的成本；未计时新的 GPU 搜索内核 \\
+列表内优先精排 & 避免全局主码归并 & 离线配额策略在相同工作量下未超过全局选择；有利的 oracle 分配在线不可得 \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

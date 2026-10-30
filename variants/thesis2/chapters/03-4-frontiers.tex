@@ -1,11 +1,14 @@
-CAGRA fp32/int8, IVF-PQ and IVF-RaBitQ \cite{cagra,pq,ivfrabitq} use separate grids (\cref{tab:3-grids}); FP32 brute force is exhaustive. Storage/reconstruction fidelity may differ.
-Consequently the main frontier measures achievable speed at a quality
-target within these grids. A separate memory account accompanies it.
+CAGRA fp32/int8, IVF-PQ and IVF-RaBitQ \cite{cagra,pq,ivfrabitq}
+use separate parameter grids (\cref{tab:3-grids}); FP32 brute force is
+exhaustive. Comparisons match recall within these grids, with memory
+reported separately, rather than imposing equal storage or tuning cost. The initial JHQ refinement multipliers are 64, 100, 8 and 4 for
+Vogue/arXiv/OpenAI-1536/OpenAI-3072. Additional points extend JHQ's grid
+to higher and lower recall; all are retained in the raw records.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[Principal E1 tuning dimensions]{Principal E1 tuning dimensions. Exact per-point parameters and
-coverage extensions remain in the raw records. The grid is finite and
+\captionof{table}[Principal tuning dimensions of the main comparison]{Principal tuning dimensions of the main comparison. Exact per-point parameters and
+additional points remain in the raw records. The grid is finite and
 differs between methods.}
 \label{tab:3-grids}
 \footnotesize\setlength{\tabcolsep}{4pt}
@@ -14,8 +17,8 @@ differs between methods.}
 Family & Recorded search dimensions \\
 \midrule
 JHQ & Probes and $\alpha$; initial probes 64/128/256 and
-$0.5/1/2$ times the workload budget; coverage extensions reach probe
-1,024 and larger/smaller budgets \\
+$0.5/1/2$ times the workload budget; additional points use up to
+1,024 probes and larger/smaller budgets \\
 CAGRA fp32/int8 & Graph degree 32/64; search width 1/2/4/8;
 intermediate top-$k$ capacity 32--512 \\
 IVF-PQ & Eight-bit subcodes; 192/384/768-byte codes at $d=768$,
@@ -28,21 +31,39 @@ GPU brute force & Exhaustive FP32 squared-L2 search, common host boundary \\
 \end{tabularx}
 \end{minipage}\par\medskip
 
-Dominance and the measured frontier are
+For measured points $a,b$, let $R$ be recall and $Q$ throughput.
+The frontier keeps non-dominated points: a point is dominated if another
+has no lower recall or throughput and improves at least one:
 \[
  a\succ b\iff R_a\geq R_b,\ Q_a\geq Q_b,\
  (R_a,Q_a)\ne(R_b,Q_b).
 \]
+For target recall $r$, the qualifying measured throughput is
 \begin{equation}
 Q_{\rm meas}(r)=\max\{Q_i:R_i\geq r\}.
 \label{eq:3-measured-frontier}
 \end{equation}
-No qualifying measured point means undefined. For adjacent frontier points,
+Without a qualifying point, this value is undefined. Between adjacent
+frontier points bracketing the target, log-throughput interpolation gives
 \begin{equation}
 \log Q_{\rm int}(r)=(1-\lambda)\log Q_a+\lambda\log Q_b,
 \qquad \lambda=\frac{r-R_a}{R_b-R_a}.
 \label{eq:3-interpolated-frontier}
 \end{equation}
-Within $5\times10^{-4}$, the parser snaps; otherwise it interpolates without extrapolation. Qualifying endpoints remain eligible in the small-batch comparison. Near ties report both estimators; memory is unmatched.
+For the interpolated estimate, a measured frontier point within
+$5\times10^{-4}$ of the target recall is used directly, taking the first
+in increasing-recall order even if it is slightly below the target.
+This tolerance applies only to the interpolated estimate; the qualifying
+measured throughput above still requires recall at or above the target.
+Otherwise, throughput is interpolated on a logarithmic scale between
+the adjacent frontier points on either side. Without a nearby point or
+a bracket, no interpolated estimate is reported.
 
-Failed/invalid outputs are excluded; repeat-ID flags alone are not. Isolated reruns replace contaminated builds; skipped Stella batch-1,000 runs add no points (\cref{sec:a-e1-protocol}). Int8 remains included (\cref{fig:7-frontiers}); ADC/poster plots have separate scopes.
+Small-batch comparisons also use a qualifying measured endpoint: when
+the lowest measured recall already exceeds the target, that point's
+throughput is used without extrapolation. Both estimates are reported
+when a comparison is close to parity or their rankings differ.
+Runs with failed or invalid outputs are excluded from the frontier.
+Changes in returned-ID order between repeated calls alone do not
+exclude a point (\cref{sec:a-e1-protocol}). CAGRA int8 remains included
+(\cref{fig:7-frontiers}).

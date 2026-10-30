@@ -1,16 +1,16 @@
 \subsection{存储字节与分配字节}
 
-主码以 byte 存储时，
+常驻行数据只是设备分配的一部分，模型、查询工作区和临时副本另计。主码以 byte 存储时，行与列表偏移的存储为
 \begin{equation}
  S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
  \qquad S_{\rm offsets}=4(n_{\rm list}+1).
  \label{eq:4-row-storage}
 \end{equation}
-ID／校正项贡献 $8N$ bytes。当 $M=d/8$、$B_r=8$ 时，
+ID 和校正项贡献 $8N$ bytes。当 $M=d/8$、$B_r=8$ 时，仅编码载荷为
 \[
  b_{\rm code}=d/8+d=9d/8=1.125d.
 \]
-编码载荷比 8 位标量量化（SQ8）多 12.5\%；不存图并不必然比 int8 更小。
+这比 8 位标量量化（SQ8）多 12.5\%，因此图存储和向量编码字节数需要一起比较。
 
 \begin{table}[!htbp]
 \centering
@@ -29,27 +29,25 @@ $d$ & 主码 & 残差 & ID＋校正 & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP3
 \end{tabular}
 \end{table}
 
-图度数为 $d_g=32$ 时，CAGRA 每行使用 $d+4d_g$ bytes。Stella 的 JHQ 载荷 19.20\,GiB 接近 int8 CAGRA 的 19,656\,MiB，但统计口径不同。$\alpha$ 改变残差读取量，不改变存储字节。
+图度数为 $d_g=32$ 时，CAGRA int8 每行使用 $d+4d_g$ bytes。Stella 的 JHQ 行载荷为 19.20\,GiB，接近 int8 CAGRA 报告的 19,656\,MiB 索引分配，但统计边界不同。改变 $\alpha$ 影响残差读取量，不改变已存储的行字节数。
 
-基本模型存储为
+基本模型存储计入旋转矩阵、主码与残差码本，以及质心和其范数：
 \[
  S_{\rm model}
  =4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)
  \quad\text{bytes}.
 \]
-派生数组另计。工作区保存两个查询矩阵，以及质心分数、LUT、probes 和保留候选。可选残差 LUT 增加 $4b_{\rm cap}dK_r$ bytes；默认直接评分。即使未使用，128 probes 下的分组容量仍约 93.8\,MiB（\cref{eq:5-group-workspace}）。
+派生数组另计。查询工作区包含两个查询矩阵、质心分数、LUT、probes 和保留候选。对预留查询容量 $b_{\rm cap}$，可选残差 LUT 增加 $4b_{\rm cap}dK_r$ bytes，默认直接评分。报告的 128-probe 配置为扫描分组预留约 93.8\,MiB，即使未使用也保留该分配（\cref{eq:5-group-workspace}）；这一大小取决于已分配容量。
 
-输入归调用方所有。独立暂存／排序存储为
+输入归调用方所有。对 $n_b$ 个流水缓冲、每缓冲暂存 $a_{\rm in}$ 行，页锁定主机暂存与设备排序数组的存储为
 \[
  S_{\rm pinned}=4n_ba_{\rm in}d,\qquad
  S_{\rm order}=S_{\rm inverse}=4N.
 \]
-分配临时区在 gather 前结束生命周期（\cref{eq:4-staging-rows,eq:4-assignment-scratch}）。
+逆映射是临时数组。分配临时区在 gather 前释放（\cref{eq:4-staging-rows,eq:4-assignment-scratch}），因此主机暂存、常驻数据和构建峰值具有不同生命周期。
 
 \subsection{缓存复用与失效处理}
 
-缓存键不含代码版本／全量数据哈希。代码／数据变化后需使缓存失效。扫描共享状态，冷构建重新拟合。召回率相近不能证明模型相同。
+缓存键不含代码版本和全量数据哈希，因此代码或数据变化后需使缓存失效。参数扫描复用模型，冷构建重新拟合；仅凭召回率相近不能证明模型相同。缓存命中仍需 QR、预热、模型上传和 add。Stella 的 6.67\,s add 包含初始工作区，不含扫描校准与搜索预热，衡量的是编码调用，而非完整重启时间。
 
-缓存命中仍需 QR、预热、模型上传和 add。Stella 的 6.67\,s add 包含初始工作区，不含扫描校准／搜索预热，也不是重启时间。
-
-改变 $\alpha$ 无需重训。工作区在图捕获前扩容；改变 batch 大小、保留数、probes、lanes、groups 或 bounds 会触发重新捕获。校准可能绕过捕获。索引拥有的缓冲复用直至释放。
+改变 $\alpha$ 无需重训。CUDA Graph 重放会复用查询缓冲，工作区在捕获前扩容。固定返回数量时，改变 batch 大小、保留数、probes、lanes、groups 或 bounds 会触发重新捕获。校准可能绕过捕获，索引拥有的缓冲在释放前保留分配。

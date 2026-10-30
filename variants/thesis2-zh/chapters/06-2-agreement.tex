@@ -1,9 +1,9 @@
-设 $\mathcal R_\alpha(q)$ 为固定索引上预算 $\alpha$ 返回的 $k$ 个有效且互异数据库 ID 的集合。定义 $\mathcal R_{\rm ref}(q)=\mathcal R_{\alpha_{\rm ref}}(q)$。降序网格为
+校准需要一种不依赖近邻标签的比较对象，这里采用同一训练索引在较大预算下返回的 ID。令 $\mathcal R_\alpha(q)$ 包含 $k$ 个有效、互异的返回 ID，并写成 $\mathcal R_{\rm ref}(q)=\mathcal R_{\alpha_{\rm ref}}(q)$。测试网格和参考预算为
 \begin{equation}
  A=(200,100,64,32,16,8,4,2),\qquad \alpha_{\rm ref}=A[0]=200.
  \label{eq:6-grid}
 \end{equation}
-对 $S$ 个校准查询 $\mathcal Q_S$，定义
+对同一组 $S$ 个查询 $\mathcal Q_S$，忽略结果顺序和距离，计数小预算未能返回的参考 ID：
 \begin{equation}
  \begin{aligned}
  D_S(\alpha)
@@ -14,44 +14,44 @@
  \end{aligned}
  \label{eq:6-agreement}
 \end{equation}
-当且仅当 $D_S(\alpha)\leq\epsilon=1$ 时接受：忽略顺序／距离，最多缺一个参考 ID。有限网格目标为
-
+接受规则 $D_S(\alpha)\leq\epsilon=1$ 表示整个样本最多缺失一个参考 ID。目标是找到通过该规则的最小网格预算：
 \begin{equation}
  \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
  \label{eq:6-selection-objective}
 \end{equation}
-参考预算是回退选择。\Cref{sec:6-3} 给出精确二分的条件。
+没有较小预算被接受时，使用参考预算 200。\Cref{sec:6-3} 说明二分何时能精确找到这一最小值。
 
-当 $k=10$ 时，$\epsilon=1$ 得到
+由于容许量始终只有一个 ID，增大样本会降低允许缺失的参考答案比例。当 $k=10$ 时，
 \[
  \begin{array}{c|rrrr}S&32&64&128&500\\\hline
  \epsilon/(Sk)&0.003125&0.0015625&0.00078125&0.0002
  \end{array}
 \]
-更大样本改变覆盖与严格程度。独立留出查询用于评估同一有限池抽样的结果（\cref{sec:7-5}）。
+大样本既覆盖更多查询，也施加更严格的相对阈值。\cref{sec:7-5} 中独立的测试查询评估从校准池选出的预算能否保持质量。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
 \input{variants/thesis2/figures/calibration-flow-layout}
-\captionof{figure}[工作负载级校准与评估]{工作负载级校准及其评估。预算决策使用参考 ID；GT 评估留出质量。所选实验臂计时来自固定臂测量。实现边界见 \cref{sec:a-budget-contract}。}
+\captionof{figure}[工作负载级校准与评估]{工作负载级校准与评估.}
 \label{fig:6-calibration}
 \end{minipage}\par\medskip
+\cref{fig:6-calibration} 中参考搜索和试验搜索使用同一组 $S$ 个查询。GT 在预算选择后、于留出查询上评估质量，所选预算的吞吐来自固定预算测量。\Cref{sec:a-budget-contract} 定义这些计时包含的调用。
 
 \subsection{一致性控制什么}
 
-在 \Cref{prop:6-monotonicity} 条件下，不一致数等于被主码筛选排除的参考答案数：
+当保留候选嵌套且最终排序固定时，不一致有直接解释：它计数被主码筛选排除的参考答案。在 \Cref{prop:6-monotonicity} 下，
 \begin{equation}
  D_S(\alpha)=\sum_{q\in\mathcal Q_S}
        |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
  \label{eq:6-reference-coverage}
 \end{equation}
-对含 $k$ 个元素的输出与 GT 集合 $\mathcal T_k$，集合差给出
+对任意含 $k$ 个元素的输出和 GT 集合 $\mathcal T_k$，GT 命中损失不会超过缺失的参考 ID 数：
 \[
  |\mathcal R_{\rm ref}\cap\mathcal T_k|-|\mathcal R_\alpha\cap\mathcal T_k|
  \leq|\mathcal R_{\rm ref}\setminus\mathcal R_\alpha|.
 \]
-求和再除以 $Sk$，得到相对界。在同一样本上，
+在样本上求和再除以 $Sk$，得到
 \begin{equation}
  \begin{aligned}
  r_{\mathcal Q_S}(\alpha)
@@ -62,17 +62,16 @@
  \end{aligned}
  \label{eq:6-relative-recall}
 \end{equation}
-\paragraph{范围。}
-该界是相对参考、限定在本样本上的界。GT 评估测量参考剩余误差（\cref{sec:7-recall-attribution}）。
+这是校准样本上相对参考的召回率界。参考本身的误差仍由 GT 评估（\cref{sec:7-recall-attribution}），该界不会自动迁移至未见查询。
 
 \subsection{抽样分辨率与有序检验}
 
-令 $H_S$ 计数缺失任意参考 ID 的查询。因为 $H_S\leq D_S$，接受意味着 $H_S\leq1$。对预先指定预算和 i.i.d. 查询，容许一次事件的单侧 95\% 二项上限满足 \cite{nist_binomial}
+小样本可能漏掉不常发生的返回 ID 变化。下面的模型说明，这些变化能以多高概率仍未被观察到。首先，令 $H_S$ 计数缺失任意参考 ID 的查询数。由于 $H_S\leq D_S$，被接受预算满足 $H_S\leq1$。对预先指定的预算及独立同分布查询，以 $u$ 表示该查询事件概率，容许一次事件的单侧 95\% 二项上限满足 \cite{nist_binomial}
 \begin{equation}
  (1-u)^S+Su(1-u)^{S-1}=0.05.
  \label{eq:6-binomial-limit}
 \end{equation}
-依赖模型的分辨率为
+更强的模型将每个返回近邻位置视为概率相同的独立事件。把上限应用到全部结果槽位，得到下表第二行：
 \[
  \begin{array}{c|cc}
  &S=128&S=500\\\hline
@@ -80,15 +79,15 @@
  \text{i.i.d. homogeneous result slots}&0.003701&0.0009484
  \end{array}
 \]
-更强的结果槽位模型给出约 $4.74/(Sk)$。查询 i.i.d. 不意味着槽位独立。这两个模型都不认证固定池抽样。
+槽位模型给出约 $4.74/(Sk)$：$S=500$ 时相当于千分之一左右的参考结果缺失率，$S=128$ 时则约为千分之四。查询独立并不使各结果槽位独立。这些是模型下的参考不一致分辨率，而非重复使用固定池样本的保证。
 
-只有逐实验臂检验有效时，单调性才允许固定序列控制 \cite{learn_then_test}。本文的一槽位阈值测量一致性，不认证 GT 风险。
+只有每个预算检验具有有效的统计误差界时，单调性才允许按固定序列检验预算 \cite{learn_then_test}。实现中的一个 ID 接受阈值检查的是一致性，本身不认证未来查询的 GT 召回率。
 
 \paragraph{有限池扩展。}
-假设每查询 $X_q(\alpha)$ 在该执行区间内固定，与子集／位置无关。池大小为 $N_{\rm cal}$，计数为 $n_j=|\{q:X_q=j\}|$，均匀无放回抽样仅在全零样本或恰有一个单计数查询时接受 \cite{nist_hypergeometric}：
+对实际抽样方式，可以改为从校准池的构成计算接受概率。令 $X_q(\alpha)$ 计数查询 $q$ 缺失的参考 ID，假设它在该执行区间内不随查询进入的子集或位置改变。池大小为 $N_{\rm cal}$，令 $n_j=|\{q:X_q=j\}|$。均匀无放回样本仅在全部查询无缺失，或恰有一个查询缺失一个 ID 时通过 \cite{nist_hypergeometric}：
 \begin{equation}
  \Pr\{D_S(\alpha)\leq1\}
  =\frac{\binom{n_0}{S}+n_1\binom{n_0}{S-1}}{\binom{N_{\rm cal}}{S}}.
  \label{eq:6-finite-pool}
 \end{equation}
-越界二项系数取零。预测 GT 风险还需网格接受结构和留出固定臂质量。记录的子集和对这些条件进行经验检查（\cref{sec:7-budget-trace}）。
+越界二项系数取零。将接受概率转为 GT 损失预测，还需知道哪些预算通过及各预算的留出质量。\Cref{sec:7-budget-trace} 将记录的子集和与这一计算对照。

@@ -1,12 +1,24 @@
 \subsection{Strict CPU reference for computed-score selection}
 \label{sec:7-strict-selection}
 
-T4 sorts GPU-produced scores by $(\primarydist,\mathrm{position})$ on CPU. The exporter follows scan layout/accumulation and matches valid returned scores bitwise; source comparison finds only export changes from the table-sweep version. Its 270 configurations cover Vogue/arXiv/OpenAI-3072, probes 1/8/128, $\alpha\in\{4,100,200\}$, $\gscan\in\{0,1,2,4,8\}$ and both bound settings: 69,120 instances (\cref{tab:7-strict-selection}).
+All 55,296 grouped query instances exactly match the CPU reference's
+primary order. One-block selection satisfies distance order throughout,
+with 56 set differences confined to tied cut-offs; the final selection
+of retained refined scores is exact in all 69,120 instances
+(\cref{tab:7-strict-selection}).
+
+The strict selection check sorts GPU-produced scores by
+$(\primarydist,\mathrm{position})$. Its exporter follows the scan layout
+and accumulation order, and exported scores for valid returned candidates
+match bitwise. Source comparison finds only export changes from the
+table-sweep version. The 270 configurations cover Vogue, arXiv and
+OpenAI-3072, probes 1, 8 and 128, $\alpha\in\{4,100,200\}$,
+$\gscan\in\{0,1,2,4,8\}$ and both bound settings.
 
 \suppressfloats[t]
 \begin{table}[!htbp]
 \centering
-\caption[Strict computed-score selection checks]{T4 CPU-reference checks.
+\caption[Strict computed-score selection checks]{Strict selection checks against a CPU reference.
 Set and order equality use the complete primary key. Valid count checks
 $\min(c,n_c)$ survivors; final equality sorts retained computed refined
 scores by $(\refineddist,\mathrm{ID})$, including their FP32 bits. Counts
@@ -16,4 +28,8 @@ are query instances, with queries reused across configurations.}
 \input{tables/t4-t5/strict-selection}
 \end{table}
 
-\Cref{tab:7-strict-selection} confirms grouped full-key order and one-block distance order (56 tie-only set differences). All 19,120 underfull counts and 69,120 retained-score final selections pass, testing \cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}. Scan/bound and sanitizer coverage remains separate (\cref{sec:a-t4-t5}).
+All 19,120 underfull cases have the correct valid-candidate count.
+These results test \cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}
+for the recorded cases. Final-selection equality concerns retained
+computed scores, not original-space exact neighbours; sanitizer coverage
+is limited to its recorded subsets (\cref{sec:a-t4-t5}).

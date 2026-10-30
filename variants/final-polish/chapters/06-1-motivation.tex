@@ -1,0 +1,38 @@
+The multiplier controls how many candidates are refined after routing.
+For the visited universe $U(q)$, JHQ defines \cite{jhq}
+\begin{equation}
+ c(\alpha)=\max\{k,\lceil\alpha k\rceil\},\qquad
+ C_\alpha(q)=\operatorname{Top}^{\rm primary}_{\min\{c(\alpha),|U(q)|\}}U(q).
+ \label{eq:6-budget}
+\end{equation}
+Probe selection determines $U$; the budget determines how much of it
+survives primary screening. The analysis assumes $|C_\alpha|\geq k$;
+insufficient candidates leave sentinel slots. At $k=10$, the tested
+grid spans 20--2,000 slots without retraining the index.
+
+\Cref{fig:5-query-path} highlights the budget-dependent work. The routed
+candidates and number of primary scores stay fixed, but the scan's
+admission and compaction work can change. A logical cost model at fixed
+batch size and routing is
+\begin{equation}
+ T(\alpha)=T_{\rm base}+T_{\rm select}(c(\alpha))+
+ T_{\rm refine}(c(\alpha))+T_{\rm final}(c(\alpha)).
+ \label{eq:6-cost-model}
+\end{equation}
+Here $T_{\rm base}$ covers transfers, rotation, routing and primary-score
+arithmetic; the other terms cover candidate selection, residual scoring
+and final selection. Resource changes mean that smaller budgets need
+not give shorter searches. The rule therefore chooses the smallest
+acceptable budget, rather than the fastest measured one
+(\cref{sec:7-budget-trace}). Each trial reruns a complete search,
+including rotation, routing and primary scoring, even though it reuses
+the trained index.
+
+\paragraph{Position among adaptive ANN methods.}
+The multiplier $\alpha$ expands the retained candidate set, like Faiss's
+\texttt{k\_factor} and cuVS refinement \cite{faiss_refine,cuvs_refinement}.
+Other controls use GT tuning \cite{faiss_autotune}, learned per-query
+stopping \cite{li_termination} or predicted recall \cite{darth}. Here,
+agreement with reference outputs selects one reusable budget for the
+workload. Refinement still scores reconstructed vectors, whereas the
+cuVS example refines with source vectors.

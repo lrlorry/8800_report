@@ -1,0 +1,66 @@
+A query first chooses IVF lists, screens their candidates with primary
+codes, and refines the retained candidates before returning $k$ IDs and
+scores. These decisions use different scores. Ground truth supplies a
+fourth ordering for evaluation, outside the search itself:
+\begin{align}
+ s_i(q)&=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
+                   &&\text{centroid routing score},\nonumber\\
+ \primarydist(q,x)&=\|q'-\widehat p(x)\|_2^2,
+                   &&\text{primary score},\nonumber\\
+ \refineddist(q,x)&=\|q'-\widehat p(x)-\widehat r(x)\|_2^2
+                       +\|q'\|_2^2,
+                   &&\text{refined ranking score},\nonumber\\
+ \rawdist(q,x)&=\|q-x\|_2^2,
+                   &&\text{raw-space distance}.
+ \label{eq:5-ranking-objects}
+\end{align}
+Here $\mu_i$ is a transformed centroid and $\widehat p,\widehat r$ are
+the decoded primary and residual reconstructions. The refined score adds
+a query-only constant to reconstructed squared distance, so it preserves
+that distance's ordering for one query (\cref{sec:5-6}). Original-vector
+recall is evaluated separately in Chapter 7.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/final-polish/figures/query-path}
+\captionof{figure}[Query workflow]{Query workflow.}
+\label{fig:5-query-path}
+\end{minipage}\par\medskip
+Routing defines a visited universe $U$ of $n_c$ candidate occurrences.
+Primary screening keeps up to $c=\max\{k,\lceil\alpha k\rceil\}$ for
+residual scoring. Shading in \cref{fig:5-query-path} marks the work that
+depends on this capacity: candidate retention, residual scoring and
+final selection. At fixed query, index and probe count, routing and the
+number of primary scores stay fixed. The stage comparison below gives
+the data read, work and ordering used at each step.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Query-stage selection contracts]{Query-stage contracts. $c_v=\min(c,n_c)$ counts valid primary
+survivors. Exactness refers to the stated computed scores; routing and
+quantised reconstruction determine raw-space approximation.}
+\label{tab:5-selection-contracts}
+\label{tab:5-query-stages}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.1cm}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Stage & Input $\to$ output & Data read & Main work & Order / exactness \\
+\midrule
+Transform & $q\to q'$ & Query; transform & Apply $\Pi$ & Transform (precision in \cref{sec:7-precision}) \\
+Probe & $n_{\rm list}\to n_{\rm probe}$ lists & FP32 centroids; list lengths & Score; radix; rank count & $(s_i,i)$; exact probe selection \\
+LUT & $q'\to$ tables & Primary codebook & $MD_s2^{8/\glut}$ terms & Real-arithmetic factorisation; FP32 rounding \\
+Primary, $\gscan=0$ & $n_c\to c_v$ & Packed primary codes; LUT & $O(n_cM)$ scoring; compaction & Exact distance-order selection; tied candidates at the cutoff may differ \\
+Primary, $\gscan\geq1$ & $n_c\to c_v$ & Same primary representation & Score; compact; merge & $(\primarydist,p)$; exact under stated premises \\
+Refine & $c_v\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed $\refineddist$; FP32 rounding varies with lane grouping \\
+Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\mathrm{ID})$; exact if $k$ finite valid entries exist \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+The evaluated searches use sixteen-lane refinement and automatic scan
+scheduling. These settings differ from the library defaults; their
+configuration is recorded in \cref{sec:a-e1-protocol,tab:a-components}.
+The following sections develop table lookup, packed access, grouped
+selection, shared bounds, refinement and probe selection
+(\cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}).

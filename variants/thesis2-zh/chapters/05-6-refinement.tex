@@ -1,8 +1,8 @@
-主码筛选将坐标工作量从 $O(n_cd)$ 改为 $O(cd)$。lanes 在相同预算下协作。
+主码筛选将坐标工作量从 $O(n_cd)$ 降为 $O(cd)$，但每个保留候选仍需完整的残差距离计算。让多个 lane 共同处理一个候选可以缩短各 lane 的循环。本节固定预算，只改变这些工作的分配方式。
 
-\subsection{重建评分与查询常数}
+\subsection{重建评分与仅依赖查询的常数}
 
-对 $\gamma=2\langle\widehat p,\widehat r\rangle$，按实数算术展开：
+存储校正项 $\gamma=2\langle\widehat p,\widehat r\rangle$ 将主码与残差贡献组合为精排分数。在实数算术下展开，可看出该分数实际排序的对象：
 \begin{align}
  \refineddist(q,x)
  &=\primarydist(q,x)+\|q'-\widehat r(x)\|_2^2+\gamma(x)
@@ -11,38 +11,35 @@
  &=\|q'-\widehat p(x)-\widehat r(x)\|_2^2+\|q'\|_2^2.
  \label{eq:5-refined-constant}
 \end{align}
-该查询常数保持重建距离顺序 \cite{jhq}。
-
-标量评分先累加残差差值平方，再加主码分数／校正项。查询及可放入的码本使用 shared memory。
+增加的查询范数对全部候选相同，因此排名等同于重建平方距离 \cite{jhq}。标量执行先累加残差平方差，再加主码分数与校正项；查询及能够放入共享内存的码本在共享内存中暂存。
 
 \subsection{Lane 到 word 的映射与部分和归约}
 
-对 $\lrefine=L\in\{1,8,16,32\}$，
+以 $\lrefine=L\in\{1,8,16,32\}$ 表示分配给一个候选的 lane 数。各 lane 按步长访问残差编码 word：
 \[
  d_{\rm word}=32/B_R,\qquad
  \text{words of lane }a:\ a,a+L,a+2L,\ldots.
 \]
-一个 word 包含四个八位或八个四位码。蝶形 shuffle 累加 lane 部分和；lane zero 写分数。
+一个 word 包含四个八位码或八个四位码。各 lane 先累加自身解码贡献，再通过蝶形 shuffle，即一系列成对 lane 交换，合并部分和。子组 lane 零加上主码分数与校正项并写出结果。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch5/lane-refinement}
-\captionof{figure}[十六 lane 残差精排]{十六 lane 残差精排。一个 warp 处理两个候选；候选内 lane $a$ 读取残差 words $a,a+16,\ldots$。每个八位编码 word 解码四个坐标。子组求部分和，再加主码分数／校正项。候选位置仍可能分散。}
+\input{variants/thesis2/figures/lane-refinement}
+\captionof{figure}[十六 lane 残差精排]{十六 lane 残差精排.}
 \label{fig:5-lane-refinement}
 \end{minipage}\par\medskip
+十六 lane 时，一个 warp 独立处理两个候选，如 \cref{fig:5-lane-refinement} 所示。局部 lane $a$ 访问 words $a,a+16,\ldots$，warp 的 lane 0 和 lane 16 分别写出结果。行按 word 对齐且满足 $d_{\rm word}\mid D_s$，保证每个 word 不跨码本。所有 lane 都参加 shuffle，无效槽位贡献零，并在最终获得无穷输出分数。
 
-行按 word 对齐且满足 $d_{\rm word}\mid D_s$，保证 word 不越过码本范围。所有 lanes 都参与 shuffle；无效槽位贡献零，随后输出无穷。$L=16$ 对应每 warp 两个候选。
-
-L0 载入 bytes；L1 载入 words，但保持相同的单 lane 累加。L8／L16／L32 用更短的遍历换取 shuffle 和更少的并发候选。FP32 运算结合顺序及局部性会影响结果。
+实验名称对应这一映射：L0 用单 lane 读 bytes，L1 用单 lane 读 words，L8／L16／L32 则为每个候选使用对应数量的 lane。更多 lane 缩短局部循环，但增加 shuffle 工作，并减少同时处理的候选数。\Cref{sec:7-3} 对比这些选择及其数值影响。
 
 \subsection{最终选择与数值边界}
 
-在至少有 $k$ 个有限、有效且 ID 唯一的保留候选时，每轮计算
+最终选择每一轮扫描全部保留槽位。假设至少有 $k$ 个有限、有效且 ID 唯一的保留候选，每轮选择
 \[
  i^*=\arg\min_{i<c}(D_{H,i},\mathrm{ID}_i),\quad d^*=D_{H,i^*},\quad
  D_{H,i^*}\leftarrow+\infty
 \]
-使用全部槽位，输出 $(\mathrm{ID}_{i^*},d^*)$：这是保留池内精确的 top-$k$，没有线程配额。不足额池可能在无穷距离处重复最小有效 ID；全无效池返回无效 ID。测试配置满足有限项前提。
+并输出 $(\mathrm{ID}_{i^*},d^*)$。将该分数替换为无穷，使下一轮选中下一候选，从而得到保留池内精确的 top-$k$，无需每线程配额。有限项不足时，内核可能在无穷分数处重复最小有效 ID；全无效池返回无效 ID。评测配置满足有限项前提。
 
-主码并列使用位置，最终并列使用 ID。路由排除／量化仍存在；lane FP32 结合顺序可能改变近并列结果。
+主码并列按物理位置，最终并列按数据库 ID。最终选择对输入分数精确，而路由和量化重建仍决定原向量召回率。改变求和顺序可改变 FP32 舍入，并重排近并列结果。

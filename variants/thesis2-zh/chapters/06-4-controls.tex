@@ -1,9 +1,9 @@
-\Cref{tab:6-controls} 区分预算选择与评估。固定实验臂共享索引、路由和留出查询；调用和计时细节见 \cref{sec:a-budget-contract}。
+对照区分三个问题：校准能否优于固定预算，二分能否与完整枚举选出同一预算，以及在可接受留出质量下还剩多少速度空间。\Cref{tab:6-controls} 列出各自使用的选择信息。固定预算比较共享索引、路由和留出查询，计时边界见 \cref{sec:a-budget-contract}。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\captionof{table}[预算对照及其作用]{预算对照及回答的问题。留出 GT 用于评估每个结果，但只有诊断 oracle 使用它选择预算。一致性实验臂的参考固定为 200。}
+\captionof{table}[预算对照及其作用]{预算对照及回答的问题。留出 GT 用于评估每个结果，但只有诊断 oracle 使用它选择预算。一致性搜索的参考固定为 200。}
 \label{tab:6-controls}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.7cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
@@ -11,24 +11,19 @@
 对照 & 选择信息 & 问题 \\
 \midrule
 固定 100 & 不校准 & 相对继承默认值的收益？ \\
-固定 64 及更小网格臂 & 不校准 & 简单固定选择能否消除校准需求？ \\
-抽样二分 & $S$ 个无标签查询；槽位一致性 & 低成本样本能否选出可复用预算？ \\
-同样本枚举 & 相同 $S$、参考及阈值；全部网格臂 & 二分是否漏掉网格最小接受预算？ \\
+固定 64 及更小网格预算 & 不校准 & 简单固定选择能否消除校准需求？ \\
+抽样二分 & $S$ 个无标签查询；返回 ID 一致性 & 低成本样本能否选出可复用预算？ \\
+同样本枚举 & 相同 $S$、参考及阈值；全部网格预算 & 二分是否漏掉网格最小接受预算？ \\
 全池校准 & 全部 500 个校准查询；相同二分规则 & 更广覆盖及更严格归一化容许量带来什么变化？ \\
-留出 Oracle & 全部臂的 GT 召回及计时 QPS & 哪个已测实验臂在诊断质量约束下最快？ \\
+留出 Oracle & 全部预算的 GT 召回及计时 QPS & 哪个已测预算在诊断质量约束下最快？ \\
 \bottomrule
 \end{tabularx}
 \end{minipage}\par\medskip
-
-对留出召回率／QPS $\widehat r,\widehat Q$ 及 $\widehat r^*=\max_{\alpha\in A}\widehat r(\alpha)$，
+对有标签诊断，以 $\widehat r,\widehat Q$ 表示留出召回率和实测 QPS，并令 $\widehat r^*=\max_{\alpha\in A}\widehat r(\alpha)$ 为测试网格上的最佳召回率。Oracle 选择损失不超过容许量的最快预算：
 \begin{equation}
  \alpha_{\rm oracle}\in\operatorname*{arg\,max}_{\alpha\in A}
  \left\{\widehat Q(\alpha):
  \widehat r(\alpha)\geq\widehat r^*-\delta\right\},\qquad\delta=10^{-3}.
  \label{eq:6-oracle}
 \end{equation}
-这一有标签／计时的诊断使用召回容差 $\delta$，而非槽位容许量 $\epsilon$。
-
-FULL 在无标签下收紧 $\epsilon/(Sk)$；枚举检查搜索正确性。一致性最小化接受预算，oracle 则最大化质量约束下的速度。
-
-固定 64/200 分别测试更小／更高预算（\cref{sec:7-5,tab:7-budget-quality}）。
+这个 oracle 使用 GT 和计时，是评估基准；校准本身不使用这些标签。它的召回容差 $\delta$ 不同于一致性容许量 $\epsilon$。一致性规则最小化被接受预算，oracle 则在质量约束下最大化速度。枚举检查预算搜索，全池校准在更严格比例 $\epsilon/(Sk)$ 下检验更广样本覆盖；固定 64/200 提供更小和更高预算对比（\cref{sec:7-5,tab:7-budget-quality}）。

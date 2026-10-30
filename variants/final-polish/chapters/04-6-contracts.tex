@@ -1,0 +1,95 @@
+Validation must check the representation independently of successful
+searches. A signed-32-bit $n_td$ overflow at $2^{31}$ previously set the
+codebook scale to zero, and a cache without version checks reloaded it.
+Chunked FP64 norm accumulation fixed the fault; routing success alone
+had not exposed it.
+
+\subsection{Representation consistency checks}
+
+Pilot exports cover Vogue, arXiv and OpenAI-3072. The exporter shares
+the evaluated implementation's encoding, training and construction code;
+this source comparison covers the shared path, while trained-model
+identity and large-dataset two-pass construction need separate checks.
+The first checks therefore examine the exported representation rather
+than re-encoding original input vectors.
+
+Codebooks passed separability, scalar-level and sorting checks. An FP64
+loop checked $\gamma=2\langle\widehat p,\widehat r\rangle$ on every exported
+row, with maximum absolute error $1.28\times10^{-7}$--$2.77\times10^{-7}$.
+Sampled GPU-returned top-10 scores have maximum relative errors from
+$2.38\times10^{-7}$ to $4.85\times10^{-5}$, using
+$|s_{\rm GPU}-s_{64}|/s_{64}$ with the query-norm constant included.
+These top-10 returned-score checks skip IDs absent from the routed map, so
+they do not fully check output membership.
+
+The pilot also checked proposed residual-distance bounds against FP64
+reconstructed distances across seven workloads, 896 query instances
+and 72,800,590 routed candidate instances, with zero reported violations.
+The same candidates support the FP64 composite-score identity check;
+these representation checks are separate from the selection tests below.
+
+\subsection{Input encoding and data placement checks}
+\label{sec:4-representation-audit}
+
+The supplementary input audit extends to Vogue, arXiv, OpenAI-3072 and
+Stella. Offsets are monotone with endpoints 0 and $N$, and IDs form a
+permutation of all database rows in each dataset. FP64 products of the
+stored rotation give maximum entrywise $\|\Pi\Pi^{\mathsf T}-I\|$ errors
+of $3.96$--$4.34\times10^{-7}$. Sampled norm checks use FP64 rotation
+rather than GPU GEMM, measuring the stored matrix's geometry.
+\Cref{tab:4-representation-audit} summarises recoding from original inputs.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Original-input FP64 recoding audit]{Original-input FP64 recoding audit. Flips count coordinate
+decisions; the final column is the largest residual-boundary distance
+among mismatches. Structural checks cover all rows; recoding is sampled.}
+\label{tab:4-representation-audit}
+\scriptsize\setlength{\tabcolsep}{3pt}
+\input{tables/supplement/representation}
+\end{minipage}\par\medskip
+
+At 768/1,024 dimensions, recoding mismatches lie within
+$1.12\times10^{-7}$ of decision boundaries. OpenAI-3072 has 2.68\%
+residual mismatches, up to $2.67\times10^{-5}$ from boundaries,
+consistent with TF32. Residual recoding uses stored primary digits so
+that primary flips are not counted again as residual errors.
+
+Comparing one-pass and two-pass builds by original ID gives identical
+codes on the three smaller databases, corrections within
+$8.94\times10^{-8}$, and 1/1/40 Vogue/arXiv/OpenAI assignment differences.
+Stella checks cover only two-pass construction. Exported centroids are
+missing, so list membership remains unverified.
+
+\subsection{Validation coverage and limitations}
+\suppressfloats[t]
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Representation contracts and audit coverage]{Representation contracts after the pilot and supplementary input audit.
+Checks separate geometry, arithmetic and row placement.}
+\label{tab:4-contracts}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{1.8cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Boundary & Required property & Evidence / remaining check \\
+\midrule
+K0:\newline geometry & Common transform with bounded floating-point isometry error & Stored-matrix orthogonality checked on four datasets; TF32 GPU arithmetic distinguished \\
+K1:\newline codebooks / correction & Cartesian levels, sorted residual codebooks, correction matches decoded codes & Pilot checks completed on three databases; all-row correction errors in \cref{sec:4-6} \\
+K1:\newline input encoding & Stored codes encode the intended original input row & FP64 original-input recoding on four samples; boundary and TF32 discrepancies quantified \\
+K1:\newline placement & Offsets cover rows; IDs form a permutation; all fields follow it & All-row offsets/ID checks; three ID-joined path comparisons; centroid membership unverified \\
+Execution & Valid indexing, synchronisation and score-order contracts & Archived query and sanitizer checks; finite coverage, detailed in \cref{sec:7-4} \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The evaluated packed implementation requires
+\[
+ M\mid d,\quad D_s\mid B,\quad M\bmod4=0.
+\]
+Inputs must be finite and counts valid; unused slots need sentinel
+values marking missing entries. IDs are signed 32-bit and address
+products use wider arithmetic. The strict selection check validates candidate selection
+(\cref{sec:7-strict-selection}); centroid membership, empty-list
+behaviour and adversarial tails remain uncertified.

@@ -1,0 +1,42 @@
+% Build and search workflow: host lane above, GPU lane below, stages left to right.
+\begin{tikzpicture}[
+ font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+   text width=3.25cm,minimum height=1.6cm,inner sep=4pt,fill=white},
+ gpu/.style={box,fill=ThesisNavy!10},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick},
+ lab/.style={font=\footnotesize,fill=white,inner sep=1.5pt},
+ lane/.style={font=\small\bfseries,text=ThesisNavy,align=center}]
+% lanes
+\fill[ThesisNavy!3] (-3.2,1.15) rectangle (14.55,-1.6);
+\fill[ThesisNavy!7] (-3.2,-1.6) rectangle (14.55,-4.85);
+\draw[densely dashed,ThesisNavy!60] (-3.2,-1.6) -- (14.55,-1.6);
+\node[lane] at (-2.45,-0.2) {Host\\(CPU)};
+\node[lane] at (-2.45,-3.2) {GPU};
+% stage headers
+\node[font=\small\bfseries] at (0,1.75) {1\quad Train};
+\node[font=\small\bfseries] at (6.0,1.75) {2\quad Build (\texttt{add})};
+\node[font=\small\bfseries] at (12.1,1.75) {3\quad Search};
+\draw[ThesisNavy!60] (-1.65,1.45) -- (1.65,1.45);
+\draw[ThesisNavy!60] (2.45,1.45) -- (9.65,1.45);
+\draw[ThesisNavy!60] (10.45,1.45) -- (13.75,1.45);
+% host lane
+\node[box] (hmodel) at (0,-0.2) {Samples; rotation $\Pi$\\Primary codebook\\Model cache};
+\node[box] (hdata) at (4.05,-0.2) {Database vectors,\\read in bounded\\batches};
+\node[box] (hquery) at (12.1,-0.2) {Query batch;\\returned IDs\\and scores};
+% GPU lane
+\node[gpu] (gtrain) at (0,-3.2) {Fit or load\\IVF centroids and\\residual codebooks};
+\node[gpu] (gbuild) at (4.05,-3.2) {Assign and encode\\Order and pack\\(1 or 2 build passes)};
+\node[gpu] (gindex) at (8.05,-3.2) {Resident index:\\offsets, IDs,\\codes, corrections};
+\node[gpu] (gsearch) at (12.1,-3.2) {Search pipeline\\(Chapter~5)};
+% GPU flow
+\draw[arr] (gtrain) -- (gbuild);
+\draw[arr] (gbuild) -- (gindex);
+\draw[arr] (gindex) -- (gsearch);
+% host <-> GPU transfers
+\draw[arr] ([xshift=-8mm]hmodel.south) -- node[lab,pos=.45,left=1pt] {samples, models} ([xshift=-8mm]gtrain.north);
+\draw[{Latex[length=2mm]}-{Latex[length=2mm]},draw=ThesisNavy!80,thick,dashed] ([xshift=8mm]gtrain.north) -- node[lab,pos=.55,right=1pt] {save/load} ([xshift=8mm]hmodel.south);
+\draw[arr] (hdata) -- node[lab,pos=.45,right=1pt] {batches} (gbuild);
+\draw[arr] ([xshift=-8mm]hquery.south) -- node[lab,pos=.45,left=1pt] {queries} ([xshift=-8mm]gsearch.north);
+\draw[arr] ([xshift=8mm]gsearch.north) -- node[lab,pos=.55,right=1pt] {results} ([xshift=8mm]hquery.south);
+\end{tikzpicture}

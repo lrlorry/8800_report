@@ -1,15 +1,17 @@
 \subsection{计算分数选择的严格 CPU 参考}
 \label{sec:7-strict-selection}
 
-T4 在 CPU 上按 $(\primarydist,\mathrm{position})$ 排序 GPU 生成分数。导出器遵循扫描布局／累加顺序，有效返回分数逐位匹配；源码比较发现相对表扫描版本只增加导出。270 个配置覆盖 Vogue／arXiv／OpenAI-3072，probes 1/8/128、$\alpha\in\{4,100,200\}$、$\gscan\in\{0,1,2,4,8\}$ 和两种阈值设置，共 69,120 个实例（\cref{tab:7-strict-selection}）。
+全部 55,296 个分组查询实例的主码顺序与 CPU 参考精确一致。单 block 始终满足距离顺序，56 个集合差异均限于截断并列；全部 69,120 个实例对已保留精排分数的最终选择均精确（\cref{tab:7-strict-selection}）。
+
+严格 CPU 检查对 GPU 生成的分数按 $(\primarydist,\mathrm{position})$ 排序。导出器遵循扫描布局和累加顺序，有效返回候选的导出分数逐位匹配。源码比较发现相对表扫描版本只增加导出。270 个配置覆盖 Vogue、arXiv 和 OpenAI-3072，probes 为 1、8、128，$\alpha\in\{4,100,200\}$、$\gscan\in\{0,1,2,4,8\}$ 以及两种阈值设置。
 
 \suppressfloats[t]
 \begin{table}[!htbp]
 \centering
-\caption[严格计算分数选择检查]{T4 CPU 参考检查。集合与顺序相等使用完整主码键。有效计数检查 $\min(c,n_c)$ 个保留候选；最终相等按 $(\refineddist,\mathrm{ID})$ 对保留的计算精排分数排序，包含其 FP32 bits。计数为查询实例，同一查询跨配置复用。}
+\caption[严格计算分数选择检查]{严格选择检查 CPU 参考检查。集合与顺序相等使用完整主码键。有效计数检查 $\min(c,n_c)$ 个保留候选；最终相等按 $(\refineddist,\mathrm{ID})$ 对保留的计算精排分数排序，包含其 FP32 bits。计数为查询实例，同一查询跨配置复用。}
 \label{tab:7-strict-selection}
 \footnotesize\setlength{\tabcolsep}{3pt}
 \input{variants/thesis2-zh/tables/t4-t5/strict-selection}
 \end{table}
 
-\Cref{tab:7-strict-selection} 确认分组完整键顺序与单 block 距离顺序；集合有 56 个纯并列差异。全部 19,120 个不足额计数及 69,120 个保留分数最终选择通过，测试 \cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound}。扫描／阈值及 Sanitizer 覆盖仍独立（\cref{sec:a-t4-t5}）。
+全部 19,120 个候选不足案例的有效候选数正确。这些结果检验了 \cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} 在记录案例中的表现。最终选择相等针对已保留的计算分数，而非原始空间精确近邻；sanitizer 覆盖限于其记录子集（\cref{sec:a-t4-t5}）。

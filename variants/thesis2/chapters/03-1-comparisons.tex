@@ -1,10 +1,16 @@
-\Cref{tab:3-design} defines the comparison unit and what would challenge
-each research claim. A \emph{cell} fixes a dataset, index configuration and
-workload setting; arms are alternative implementations or budgets within
-that cell. For paired execution measurements, the index state, queries,
-probe count, refinement budget and scoring representation are held fixed
-unless the named treatment changes them. The recorded paired ratio is
-$Q_{\rm treatment}/Q_{\rm control}$. Across $J$ stated cells, equal weighting gives
+Each test configuration, or \emph{cell}, fixes a dataset, index and
+workload. Component comparisons vary the mechanism under study while
+holding the trained index, queries, probes, refinement budget and scoring
+representation fixed where applicable. Cross-system comparisons use each
+system's own parameter grid (\cref{sec:7-2}). \Cref{tab:3-design} maps the
+research questions to these controls and their measurements. Paired tests
+measure the effect of an execution change; explaining hardware causes,
+such as cache behaviour, requires separate profiling.
+
+Let $Q$ denote throughput in queries per second (QPS). A paired speed
+ratio is $Q_{\rm treatment}/Q_{\rm control}$; values above one favour
+the treatment. We summarise $J$ configurations with the geometric mean
+of these ratios, weighting each configuration equally:
 \[
  G=\exp\!\left(\frac1J\sum_{j=1}^{J}
  \log\frac{Q_{{\rm treatment},j}}{Q_{{\rm control},j}}\right).
@@ -12,33 +18,26 @@ $Q_{\rm treatment}/Q_{\rm control}$. Across $J$ stated cells, equal weighting gi
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[Research questions and experimental controls]{Research questions as testable comparisons. A capacity observation
-has a different control from a paired execution intervention.}
+\captionof{table}[Research questions and experimental controls]{Research questions, controlled comparisons and checks. Construction,
+execution, budget selection and cross-system search require different controls.}
 \label{tab:3-design}
 \footnotesize\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.11\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.19\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
 \toprule
-Question & Intervention / comparison & Held fixed or accounted for & Measure and counter-evidence \\
+Research question & Comparison & Shared conditions & Measures and checks \\
 \midrule
-RQ1: build and capacity & GPU construction; cached versus cold lifecycle;
-compressed versus raw storage & $N,d$, representation, routing and timed
-construction boundary & Train/add time and resident bytes; failed builds
-or model--allocation gaps delimit feasibility \\
-RQ2: execution & LUT grouping, word access, refinement lanes, grouped scan,
-shared bound and probe selection & Paired state, workload and score;
-reference output semantics & Wall QPS, stage time and output checks;
-slowdowns or non-tie mismatches challenge the mechanism \\
-RQ3: budget & Sampled / full-pool rule versus fixed 64, 100, 200,
-enumeration and GT oracle & One index and route; disjoint calibration
-and held-out query positions & Held-out recall loss, selected-arm QPS
-and calibration cost; threshold crossings challenge reliability \\
-RQ4: operating region & Independently tuned JHQ, CAGRA, IVF-PQ and
-IVF-RaBitQ & Exported vectors, GT, $k$, device and host-to-host boundary;
-memory reported separately & Matched-recall QPS and coverage; stronger
-competitors at other recall targets challenge broad superiority \\
+RQ1: GPU index construction and capacity & Cold construction and reuse of trained models; compressed versus raw storage
+& $N,d$, representation, routing and construction timing boundary
+& Training/encoding time and resident/peak memory; measured versus modelled memory \\
+RQ2: Representation-aware execution & Table grouping, packed reads, cooperative refinement, grouped scanning, shared bounds and probe selection
+& Same index, workload and budget; common score definitions
+& Host-call QPS, stage times and differences in scores and returned IDs under the relevant tie rule \\
+RQ3: Workload-level refinement calibration & Unlabelled sampled/full-pool calibration; fixed 64, 100, 200; full budget-grid search and a GT-based diagnostic choice
+& Same index and routing; separate calibration and evaluation queries
+& Test-query recall loss versus the best tested budget, selected-budget QPS and calibration cost; assess quality and payback \\
+RQ4: Cross-system search performance & Separately tuned JHQ, CAGRA, IVF-PQ and IVF-RaBitQ across batch sizes; brute-force reference
+& Same exported vectors, GT, $k$, GPU and host-call boundary; memory reported separately
+& Matched-recall QPS, memory and coverage; record wins and losses \\
 \bottomrule
 \end{tabularx}
 \end{minipage}\par\medskip
-
-Ablations estimate speed effects, not unmeasured cache/occupancy changes. System comparisons are separate (\cref{sec:7-6}).
-

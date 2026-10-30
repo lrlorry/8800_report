@@ -1,0 +1,126 @@
+\subsection{Bisection and complete enumeration}
+
+Budgets are listed from largest to smallest, so the desired answer is
+the last acceptable grid index. Put $J=|A|$. After computing the sample
+reference once, the implementation searches as follows:
+\par\noindent\begin{minipage}{\linewidth}
+\begin{enumerate}[leftmargin=*,itemsep=0.15em]
+\item Set $l=0$, $h=J-1$. Zero is the fallback.
+\item While $l<h$, test $j=\lfloor(l+h+1)/2\rfloor$ by running
+$A[j]$ and computing $D_S(A[j])$.
+\item If $D_S(A[j])\leq\epsilon$, set $l=j$; otherwise set $h=j-1$.
+\item Return $A[l]$. Apply it before reuse.
+\end{enumerate}
+\end{minipage}\par\medskip
+The eight-point grid needs at most three trial searches plus the
+reference. Enumeration instead tries the reference and all seven other
+budgets on the same sample. It finds the minimum even if accepted
+budgets are separated by rejected ones; bisection is guaranteed to find it when
+all accepted indices form a prefix. Both timers include the reference
+search (\cref{sec:a-budget-contract}).
+
+\subsection{A sufficient condition for monotonicity}
+
+A sufficient structure is nested shortlists: every candidate retained at
+a smaller budget is also present at a larger one. With fixed refined
+scores and final tie ordering, a reference answer that survives the
+shortlist must survive final selection. The proposition makes this
+precise and shows why disagreement then falls as the budget grows.
+
+\par\noindent\begin{minipage}{\linewidth}
+\begin{proposition}[Nested survivors preserve reference membership]
+\label{prop:6-monotonicity}
+For one query, assume fixed routing and survivor sets
+$C_\alpha\subseteq C_\beta\subseteq C_{\alpha_{\rm ref}}$ whenever
+$\alpha\leq\beta\leq\alpha_{\rm ref}$. Assume at least $k$ valid
+survivors, fixed refined scores and one deterministic total order for
+final ties. Each result is the exact top-$k$ in that order. Then
+\begin{equation}
+ |\mathcal R_\alpha\cap\mathcal R_{\rm ref}|
+ =|C_\alpha\cap\mathcal R_{\rm ref}|,
+ \qquad D_S(\alpha)\geq D_S(\beta).
+ \label{eq:6-monotonicity}
+\end{equation}
+The latter statement holds when these conditions hold for every sampled
+query.
+\end{proposition}
+\begin{proof}
+For $x\in\mathcal R_{\rm ref}\cap C_\alpha$, the common total order gives
+\begin{equation*}
+ |\{y\in C_\alpha:y\prec x\}|
+ \leq|\{y\in C_{\alpha_{\rm ref}}:y\prec x\}|<k.
+\end{equation*}
+Hence $x\in\mathcal R_\alpha$. Together with
+$\mathcal R_\alpha\subseteq C_\alpha$, this proves the intersection
+identity in \cref{eq:6-monotonicity}. Nestedness gives
+$|C_\alpha\cap\mathcal R_{\rm ref}|
+ \leq|C_\beta\cap\mathcal R_{\rm ref}|$.
+Summing missing reference counts over queries proves
+$D_S(\alpha)\geq D_S(\beta)$.
+\end{proof}
+\end{minipage}\par\medskip
+Exact primary top-$c$ under one fixed key gives nested prefixes. This
+makes the reference-agreement test monotone under the proposition's
+other premises; GT recall and runtime need not be monotone.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Nested and non-nested candidate pools]{Nested and non-nested candidate pools.}
+\label{tab:6-nesting}
+\input{variants/final-polish/figures/nesting-example}
+\end{minipage}\par\medskip
+\Cref{tab:6-nesting} gives a $k=1$ example with refined order
+$a\prec b\prec c$ and reference $\{a\}$. Nested pools preserve reference
+membership. If primary scores all tie, changing cutoff choices can
+instead make the middle pool exclude an answer retained by the smaller
+pool; overlap falls from 1 to 0 before returning to 1.
+
+\subsection{A corollary for the evaluated grouped path}
+
+Within one calibration sample, $S$, routing and the scan thread count
+are fixed. The scheduler chooses group count without using $c$, so
+reference and trial budgets use the same scan path and LUT sums.
+Fixed $B_r$, sixteen-lane refinement and final
+$(\refineddist,\mathrm{ID})$ ordering keep each candidate's refined
+score and tie order independent of the budget. Grouped selection then
+supplies the nested primary shortlists required above.
+
+\par\addvspace{7pt}\noindent\begin{minipage}{\linewidth}
+\begin{corollary}[Grouped calibration]
+\label[corollary]{cor:6-grouped-calibration}
+For the evaluated grouped configuration, under the representation and
+shared-bound contracts of Chapters 4 and 5, primary survivors are nested
+across budgets. Consequently \Cref{prop:6-monotonicity} applies and
+bisection returns the same minimum accepted grid budget as enumeration.
+\end{corollary}
+\begin{proof}
+\Cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} give exact
+primary top-$c$ under the common key $(\primarydist,\mathrm{position})$.
+Its prefixes nest as $c$ grows. Fixed refinement/final order supplies \cref{prop:6-monotonicity}'s remaining premises.
+\end{proof}
+\end{minipage}\par\medskip
+The corollary covers 2,176 calibration samples. Another 128 samples,
+OpenAI-3072 at $S=128$, use distance-only selection, where cutoff ties
+can break nesting. In the recorded experiment, all 2,304 curves were
+monotone and bisection matched enumeration
+(\cref{sec:7-budget-trace}). This validates the recorded choices, while
+the corollary supplies the guarantee for the grouped path.
+
+\paragraph{Full-pool coverage.}
+Two full-pool settings use grouped scans on Vogue; the other ten use
+$\gscan=0$. All twelve match enumeration. The ten distance-only settings
+still lie outside \cref{cor:6-grouped-calibration}: they need a common
+cutoff order, or no tied reference answers that cross the cutoff.
+Using the same path for calibration and testing does not establish nesting.
+
+\paragraph{A rank-based extension.}
+Under the same nesting and fixed-score premises, storing the primary
+rank of each reference answer would reveal when each budget loses it:
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}\sum_{x\in\mathcal R_{\rm ref}(q)}
+ \mathbf1\{\operatorname{rank}_{\rm P}(x)>c(\alpha)\}.
+ \label{eq:6-rank-curve}
+\end{equation}
+This could produce the whole agreement curve from exported reference
+ranks instead of repeated searches; it is not implemented.

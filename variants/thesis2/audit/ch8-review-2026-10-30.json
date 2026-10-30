@@ -1,0 +1,1234 @@
+{
+  "date": "2026-10-30",
+  "scope": "Chapter 8 discussion and evidence review, with T2 navigation in Chapter 3",
+  "changes": [
+    {
+      "path": "variants/thesis2/chapters/03-5-ledger.tex",
+      "before": "\\subsection{Sources and available records}\n\\label{app:reproducibility}\n\\label{sec:b-artifacts}\nThe \\href{https://github.com/lrlorry/8800_report/blob/001579c9771759b672ef377b10dbc3dd959c7979/docs/artifact-access.md}{project archive}\nprovides source, settings, timings and selected inputs. Complete vectors,\ntrained states and historical executable hashes are not all available.\nDeleted T4 candidate arrays require regeneration for an independent\nre-sort. \\Cref{tab:a-components} maps versions to component controls;\ntheir speedups cannot be multiplied into a whole-system result.\nSampling and generalisation limits follow \\cref{sec:6-2,sec:6-3,sec:8-3}.\n\n\\Cref{tab:3-campaigns} maps experiment labels to their purpose and results.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Experiment labels and result locations]{Experiment labels and result locations.}\n\\label{tab:3-campaigns}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{2.1cm}>{\\raggedright\\arraybackslash}Xl@{}}\n\\toprule\nLabel & Comparison or check & Results \\\\\n\\midrule\nE1 & Main cross-system comparison, batch 1,000 & \\cref{sec:7-2} \\\\\nD & FP32/TF32 execution check; archived E1 baselines & \\cref{sec:7-precision} \\\\\nT1 & JHQ and baselines remeasured in one session & \\cref{sec:b-precision-anchors} \\\\\nT4 & CPU re-sort of GPU-computed candidate scores & \\cref{sec:7-strict-selection} \\\\\nT5 & Cross-system comparison at batches 8 and 32 & \\cref{sec:7-smallbatch} \\\\\nA1 & Repeated cold builds and construction peaks & \\cref{sec:7-7} \\\\\nA2 & Generated instructions for shared-bound reads/updates & \\cref{sec:5-5} \\\\\nA3 & Row-alignment checks for the OpenAI exports & \\cref{sec:7-2} \\\\\nB & Full record of refinement-budget decisions & \\cref{sec:7-budget-trace} \\\\\nR1 (C1 in records) & Original-input encoding and placement audit & \\cref{sec:4-representation-audit} \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\n\\captionsetup{hypcap=false}\n\\captionof{table}[Component implementations]{Implementation families used by component tests. Each experiment retains its own control; versions are not successive whole-system speedups.}\n\\label{tab:a-components}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\nVersion & Mechanism / experimental role\\\\\\midrule\nv61 & Word-load and lane-refinement controls\\\\\nv62 / v63 & Grouped full-key selection / shared bound\\\\\nv65 / v69 & Batch/skew scheduling / radix probe selection\\\\\nv69 / v71 / v73 & Budget calibration / LUT sweep / strict-score export\\\\\nv69 / v72 & OpenAI: TF32 versus FP32 add/query arithmetic on the same trained cache\\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\subsection{Timing and calibration conventions}\n\\label{sec:a-e1-protocol}\nThe evaluation explicitly enables sixteen-lane refinement and automatic\nscan scheduling among one block and 2/4/8 groups, with shared bounds for\nmultiple groups. The library defaults to scalar refinement and one block;\nthe optional quota-based approximate selector is disabled. One-time\nscheduler calibration is excluded from steady-state timing. These scheduler-only ranges cover\npseudoquery gathering, the first calibration call and the median of repeated calls:\n\\[\n T_{\\rm gather}\\in[0.81,7.04]\\,\\mathrm{ms},\\quad\n T_{\\rm first}\\in[6.00,27.77]\\,\\mathrm{ms},\\quad\n \\operatorname{median}(T_{\\rm repeat})\\in[2.72,18.13]\\,\\mathrm{ms}.\n\\]\n\nFor E1, JHQ warms once per variant/round and baselines warm three times\ninitially. Driver just-in-time (JIT) compilation and JHQ CUDA Graph\ncapture, which records GPU operations for replay, precede timing.\nSlow baseline configurations use fewer timed calls based on a warm-up\nestimate. Repeat-call ID-order changes can include tied reordering and\nexclude no points by themselves; this differs from duplicate IDs within\none result. JHQ lacks the same repeat-call diagnostic flag.\n\n\\label{sec:a-budget-contract}\n\\label{sec:a-supplement}\n\\label{sec:a-t4-t5}\nBudget experiments use one warm-up and three timed calls per fixed\nbudget. Calibration time includes the reference search, searches at trial\nbudgets and the host-side comparison of their results ($O(Sk^2)$). It\nexcludes gathering the sample queries, the one-time scheduler calibration\nand graph capture. Warm-up runs over all queries, but its outputs are\nnot used for budget selection, and calibration never uses GT. Selected-budget QPS uses fixed-budget timing; direct\nreuse tests follow \\cref{sec:6-5}. For 64 sorted recall losses, the\nreported percentile uses\n\\[\n L_{95}=L^{\\rm sorted}_{\\lfloor0.95(64-1)\\rfloor}\n       =L^{\\rm sorted}_{59}\\qquad\\text{(zero-based)}.\n\\]\n",
+      "after": "\\subsection{Sources and available records}\n\\label{app:reproducibility}\n\\label{sec:b-artifacts}\nThe \\href{https://github.com/lrlorry/8800_report/blob/001579c9771759b672ef377b10dbc3dd959c7979/docs/artifact-access.md}{project archive}\nprovides source, settings, timings and selected inputs. Complete vectors,\ntrained states and historical executable hashes are not all available.\nDeleted T4 candidate arrays require regeneration for an independent\nre-sort. \\Cref{tab:a-components} maps versions to component controls;\ntheir speedups cannot be multiplied into a whole-system result.\nSampling and generalisation limits follow \\cref{sec:6-2,sec:6-3,sec:8-3}.\n\n\\Cref{tab:3-campaigns} maps experiment labels to their purpose and results.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Experiment labels and result locations]{Experiment labels and result locations.}\n\\label{tab:3-campaigns}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{2.1cm}>{\\raggedright\\arraybackslash}Xl@{}}\n\\toprule\nLabel & Comparison or check & Results \\\\\n\\midrule\nE1 & Main cross-system comparison, batch 1,000 & \\cref{sec:7-2} \\\\\nD & FP32/TF32 execution check; archived E1 baselines & \\cref{sec:7-precision} \\\\\nT1 & JHQ and baselines remeasured in one session & \\cref{sec:b-precision-anchors} \\\\\nT2 & JHQ on original versus mean-centred data & \\cref{sec:8-centring} \\\\\nT4 & CPU re-sort of GPU-computed candidate scores & \\cref{sec:7-strict-selection} \\\\\nT5 & Cross-system comparison at batches 8 and 32 & \\cref{sec:7-smallbatch} \\\\\nA1 & Repeated cold builds and construction peaks & \\cref{sec:7-7} \\\\\nA2 & Generated instructions for shared-bound reads/updates & \\cref{sec:5-5} \\\\\nA3 & Row-alignment checks for the OpenAI exports & \\cref{sec:7-2} \\\\\nB & Full record of refinement-budget decisions & \\cref{sec:7-budget-trace} \\\\\nR1 (C1 in records) & Original-input encoding and placement audit & \\cref{sec:4-representation-audit} \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\n\\captionsetup{hypcap=false}\n\\captionof{table}[Component implementations]{Implementation families used by component tests. Each experiment retains its own control; versions are not successive whole-system speedups.}\n\\label{tab:a-components}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\nVersion & Mechanism / experimental role\\\\\\midrule\nv61 & Word-load and lane-refinement controls\\\\\nv62 / v63 & Grouped full-key selection / shared bound\\\\\nv65 / v69 & Batch/skew scheduling / radix probe selection\\\\\nv69 / v71 / v73 & Budget calibration / LUT sweep / strict-score export\\\\\nv69 / v72 & OpenAI: TF32 versus FP32 add/query arithmetic on the same trained cache\\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\subsection{Timing and calibration conventions}\n\\label{sec:a-e1-protocol}\nThe evaluation explicitly enables sixteen-lane refinement and automatic\nscan scheduling among one block and 2/4/8 groups, with shared bounds for\nmultiple groups. The library defaults to scalar refinement and one block;\nthe optional quota-based approximate selector is disabled. One-time\nscheduler calibration is excluded from steady-state timing. These scheduler-only ranges cover\npseudoquery gathering, the first calibration call and the median of repeated calls:\n\\[\n T_{\\rm gather}\\in[0.81,7.04]\\,\\mathrm{ms},\\quad\n T_{\\rm first}\\in[6.00,27.77]\\,\\mathrm{ms},\\quad\n \\operatorname{median}(T_{\\rm repeat})\\in[2.72,18.13]\\,\\mathrm{ms}.\n\\]\n\nFor E1, JHQ warms once per variant/round and baselines warm three times\ninitially. Driver just-in-time (JIT) compilation and JHQ CUDA Graph\ncapture, which records GPU operations for replay, precede timing.\nSlow baseline configurations use fewer timed calls based on a warm-up\nestimate. Repeat-call ID-order changes can include tied reordering and\nexclude no points by themselves; this differs from duplicate IDs within\none result. JHQ lacks the same repeat-call diagnostic flag.\n\n\\label{sec:a-budget-contract}\n\\label{sec:a-supplement}\n\\label{sec:a-t4-t5}\nBudget experiments use one warm-up and three timed calls per fixed\nbudget. Calibration time includes the reference search, searches at trial\nbudgets and the host-side comparison of their results ($O(Sk^2)$). It\nexcludes gathering the sample queries, the one-time scheduler calibration\nand graph capture. Warm-up runs over all queries, but its outputs are\nnot used for budget selection, and calibration never uses GT. Selected-budget QPS uses fixed-budget timing; direct\nreuse tests follow \\cref{sec:6-5}. For 64 sorted recall losses, the\nreported percentile uses\n\\[\n L_{95}=L^{\\rm sorted}_{\\lfloor0.95(64-1)\\rfloor}\n       =L^{\\rm sorted}_{59}\\qquad\\text{(zero-based)}.\n\\]\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-1-insights.tex",
+      "before": "\\subsection{Codebook structure and lookup cost}\n\nMailman, a method that reuses sums for codes with finitely many coordinate\nvalues, gains no\nspeed here; two-group LUTs usually win (\\cref{fig:7-lut}). Codebook quality must therefore be evaluated with achievable table placement/access cost (\\cref{sec:5-2,sec:5-3}).\n\n\\subsection{Parallelism and selection overhead}\n\nOnce queries supply enough parallelism, staging/selection/merge overhead can dominate (\\cref{fig:7-batch}). The Vogue and BGE results suggest also considering candidate counts\nand partition/merge costs when scheduling (\\cref{sec:7-2,sec:7-6}). Richer scheduling must repay calibration; bounds alone are not isolated.\n\n\\subsection{Refinement speed and budget savings}\n\nAssume fixed $T_0>0$, refinement times $F_h\\geq F_\\ell>0$ and common multiplier $\\eta\\in(0,1]$. The low-budget speedup and\nits derivatives are\n\\begin{align}\n S(\\eta,T_0)&=\\frac{T_0+\\eta F_h}{T_0+\\eta F_\\ell},\n \\label{eq:8-refinement-sensitivity}\\\\\n \\frac{\\partial S}{\\partial\\eta}\n &=\\frac{T_0(F_h-F_\\ell)}{(T_0+\\eta F_\\ell)^2}\\geq0,\\qquad\n \\frac{\\partial S}{\\partial T_0}\n =\\frac{\\eta(F_\\ell-F_h)}{(T_0+\\eta F_\\ell)^2}\\leq0.\\nonumber\n\\end{align}\nFor $F_h>F_\\ell$, faster refinement reduces the value of cutting its\nbudget; lower fixed cost increases it. The derivatives hold with\nnon-refinement work fixed. Budget-dependent scan maintenance and\nresource transitions require the controlled comparisons of\n\\cref{sec:7-5,sec:7-stream-cost}. Quality and reuse remain constraints\n(\\cref{tab:7-budget-full,fig:7-budget-risk}).\n",
+      "after": "\\subsection{Index residency and construction workspace}\n\nCompression determines whether an index can remain on the GPU, but\nconstruction has its own capacity constraint. BGE occupies 11.93\\,GiB\nduring search yet reaches a sampled 26.08\\,GiB during construction.\nAssignment buffers cause this peak before the gather buffers are\nallocated. The two-pass build limits gather storage; it does not remove\nall other temporary allocations. Feasibility therefore requires both\na resident-byte model and a phase-by-phase allocation model\n(\\cref{sec:4-5,sec:7-7}).\n\n\\subsection{Codebook structure and lookup cost}\n\nThe smallest table is not the fastest. Four- and eight-way splitting\nstore 16 entries per subspace, compared with 32 for the two-way split,\nbut need more lookups and additions. Two tables are fastest in 22 of\n24 settings (\\cref{sec:7-3}). Likewise, removing the table altogether\nsaves shared memory but loses speed in the earlier tests summarised in\n\\cref{tab:8-stopped}. A codebook must be judged together with the\nexecution cost of its distances, as well as its reconstruction error;\nsmaller storage alone does not identify the fastest implementation.\n\n\\subsection{Parallelism must repay selection and merging}\n\nSmall batches leave too few independent queries to fill the GPU.\nSplitting each query across blocks supplies more work, but repeats table\nstaging and local selection and adds a merge. Eight groups gain\n$2.06$--$2.76\\times$ at batch 8; at batch 1,000, independent-bound\ngrouping falls to $0.46\\times$ one-block throughput in the profiled\nhigh-budget case (\\cref{sec:7-6}). This does not mean that large batches\nshould always use one block: grouping also handles uneven workloads,\nand supplies Vogue's lead at recall 0.97. Its 0.895 throughput ratio on\na low-probe setting shows the rule's limit. The spread of candidate\ncounts does not measure their total volume; a better scheduler would\nprice scan, selection and merge work together.\n\n\\subsection{Selection correctness and search quality}\n\nExact selection of computed scores is a separate requirement from\nfinding the nearest original vectors. The grouped selector's proof and\nCPU sorting checks establish that parallel decomposition retains the\nspecified primary shortlist (\\cref{sec:5-4,sec:7-strict-selection}).\nThey do not remove IVF routing losses or quantisation error. Testing\nthese layers separately distinguishes an implementation defect from a\nlimitation of the representation or refinement budget.\n\n\\subsection{Refinement speed and budget savings}\n\nHow much a smaller budget saves depends on the rest of the search.\nLet $T_0>0$ be fixed non-refinement time, $F_h\\geq F_\\ell>0$ the\nrefinement times at high and low budgets, and $\\eta\\in(0,1]$ a common\nmultiplier that makes both refinement kernels faster. The low-budget\nspeedup and its derivatives are\n\\begin{align}\n S(\\eta,T_0)&=\\frac{T_0+\\eta F_h}{T_0+\\eta F_\\ell},\n \\label{eq:8-refinement-sensitivity}\\\\\n \\frac{\\partial S}{\\partial\\eta}\n &=\\frac{T_0(F_h-F_\\ell)}{(T_0+\\eta F_\\ell)^2}\\geq0,\\qquad\n \\frac{\\partial S}{\\partial T_0}\n =\\frac{\\eta(F_\\ell-F_h)}{(T_0+\\eta F_\\ell)^2}\\leq0.\\nonumber\n\\end{align}\nFor $F_h>F_\\ell$, reducing $\\eta$ reduces the relative benefit of\ncutting the budget, whereas reducing $T_0$ increases it. This model\nexplains why kernel optimisation and budget reduction cannot be treated\nas independent multiplicative gains. It assumes the same refinement\nspeedup at both budgets and fixed non-refinement work. Actual scan\nmaintenance can change with the budget, so adoption still depends on\nmeasured total time and quality (\\cref{sec:7-5,sec:7-stream-cost}).\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-2-negative.tex",
+      "before": "\\subsection{Mailman-style shared-sum scoring}\n\\label{sec:8-mailman}\n\nMailman reuses finite-alphabet sums \\cite{mailman}. Frozen Vogue/arXiv/OpenAI-3072 streams compare atomic buckets/private histograms at widths 4/6/8 with packed two-table scoring: 128 probes, batches 8/1,000, fixed codes/mathematical scores.\n\nThe best alternatives reach only 0.187--0.581 of baseline QPS (\\cref{fig:8-negative}). Biased bucket destinations dominate profiles; private histograms add state/shared updates. Narrower groups sometimes help, but none wins. Other finite-alphabet designs remain open.\n\nOnly scores were tested, so cutoff checks do not establish neighbour-pipeline equivalence. Let $f$ be the baseline time fraction spent scoring and $s$ the replacement\nscorer's speed relative to the baseline. The replacement model gives\n\\[\n \\frac{T'}T=1+f\\left(\\frac1s-1\\right)>1\n \\quad(0<f\\leq1,\\ 0<s<1).\n\\]\nThis model is not measured end-to-end performance; integration stopped. A dictionary study also stopped at structural statistics. Neither contributes a system-frontier point.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\includegraphics[width=\\linewidth]{ch8/negative-evidence.pdf}\n\\captionof{figure}[Mailman and rank-oriented coding]{Two distinct evidence boundaries. Left: best measured\nMailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,\narXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below\none. Right: minimum survivor\ncounts meeting the original JHQ recall target on arXiv's 400-query FP64\noffline test split. The candidate reduction is not a GPU speedup.}\n\\label{fig:8-negative}\n\\end{minipage}\\par\\medskip\n\n\\subsection{Rank-oriented coding experiments}\n\\label{sec:8-rank}\n\nFP64 candidate replay uses 400/200/400 calibration/\\allowbreak{}validation/\\allowbreak{}test queries. It tests weighted scores, median/list thresholds, learned losses and linear minimum mean-square-error (MMSE) decoding. Lower MSE can worsen neighbour order; primary-level changes also move residual reference points.\n\nMedian thresholds reduce arXiv's minimum tested qualifying count 875$\\to$375; two other workloads fail. For orthogonal $\\Pi$,\n\\[\n \\bar y=\\frac1N\\sum_i\\Pi x_i=\\Pi\\bar x,\n \\qquad \\|\\bar y\\|^2=\\bar x^\\top\\Pi^\\top\\Pi\\bar x=\\|\\bar x\\|^2.\n\\]\nRotation therefore preserves mean-vector norm rather than removing bias. Centring must also preserve the refined-score ceiling.\n\nMedian-level GPU follow-up retrains residuals. ArXiv's original $\\alpha=100$ target gains $1.40/1.21\\times$ at batch 8/1,000; Vogue reaches 0.9630 below 0.9644, OpenAI-3072 ties. Three rounds use separate states/queries, outside E1.\n",
+      "after": "\\subsection{Mailman-style shared-sum scoring}\n\\label{sec:8-mailman}\n\nJHQ's finite sign patterns suggest reusing partial sums across\ncandidates, following the Mailman idea \\cite{mailman}. A four-bit half-code\nhas only 16 patterns, so many candidates can share intermediate work.\nThe test freezes the primary codes and candidate streams on Vogue,\narXiv and OpenAI-3072. Atomic buckets and private histograms at group\nwidths 4, 6 and 8 are compared with packed two-table scoring, using\n128 probes and batches of 8 and 1,000.\n\nThe best replacement reaches only 0.187--0.581 of the scorer baseline's\nthroughput. Profiles show concentrated bucket updates, while private\nhistograms introduce more state and shared-memory updates. Arithmetic\nreuse is insufficient when obtaining it costs more than the saved\nlookup work. These are scorer measurements, not an integrated search\ncomparison. If $f$ is the baseline time fraction spent scoring and $s$\nthe replacement's relative scorer speed, the unchanged-rest model gives\n\\[\n \\frac{T'}T=1+f\\left(\\frac1s-1\\right)>1\n \\quad(0<f\\leq1,\\ 0<s<1).\n\\]\nThus even this model predicts no whole-search gain. Integration stopped;\nother finite-alphabet implementations remain possible. The left panel\nof \\cref{fig:8-negative} shows the six scorer comparisons.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\includegraphics[width=\\linewidth]{ch8/negative-evidence.pdf}\n\\captionof{figure}[Mailman and rank-oriented coding]{Mailman scorer throughput (left) and offline shortlist size (right).}\n\\label{fig:8-negative}\n\\end{minipage}\\par\\medskip\n\n\\subsection{Rank-oriented coding experiments}\n\\label{sec:8-rank}\n\nMinimising reconstruction error need not preserve neighbour order.\nFP64 offline replay tests weighted scores, median and list-dependent\nthresholds, learned losses and linear minimum mean-square-error decoding,\nwith 400 calibration, 200 validation and 400 test queries. On arXiv,\nmedian thresholds reduce the smallest tested shortlist reaching recall\n0.97775 from 875 to 375 candidates; the other two workloads fail their\nrespective targets. These are the offline counts in the right panel of\n\\cref{fig:8-negative}.\n\nA separate GPU follow-up changes the primary representation and retrains\nthe residual codes. At its own arXiv target of 0.9766, throughput improves\n$1.40\\times$ at batch 8 and $1.21\\times$ at batch 1,000. Vogue instead\npeaks at recall 0.9630, below its 0.9644 target, and OpenAI-3072 nearly\nties. The offline count reduction and GPU speedup use different queries,\nstates and targets; they do not establish a threshold-only speedup.\nChanging primary codes also changes what the residuals must reconstruct.\n\n\\subsection{Removing a shared mean}\n\\label{sec:8-centring}\n\nA global data mean can consume sign-code resolution. Rotation preserves\nthat mean's norm: for orthogonal $\\Pi$,\n\\[\n \\bar y=\\frac1N\\sum_i\\Pi x_i=\\Pi\\bar x,\n \\qquad \\|\\bar y\\|^2=\\bar x^\\top\\Pi^\\top\\Pi\\bar x=\\|\\bar x\\|^2.\n\\]\nIn real arithmetic, subtracting the same mean $\\mu$ from queries and\ndatabase vectors preserves distances,\n$\\|(q-\\mu)-(x-\\mu)\\|^2=\\|q-x\\|^2$,\nbut changes the quantisation problem.\n\nA follow-up compares the archived original index with a fresh index\ntrained on centred data, alternating both in one session. On arXiv,\nwhose mean norm is 0.837, full-pool calibration at 128 probes changes\n$\\alpha=200$ to $\\alpha=64$, and the recall-0.97 frontier improves\n$1.266\\times$. At 512 probes the selected budget becomes 100, not 64.\nThe change is not uniformly beneficial: Vogue's high-budget recall at\n512 probes falls from 0.9918 to 0.9896, and OpenAI-1536's selected budget\nrises from 8 to 16 despite a nearly unchanged recall-0.97 throughput\nratio of 0.995. The arXiv result supports mean removal as a useful\nrepresentation change. Retraining also changes centroids and residuals,\nso repeated, equally retrained controls are needed to isolate its\ncontribution. These runs extend the analysis, not the main comparison\nwith other systems.\n\n\\subsection{A safe bound can still prune too little}\n\\label{sec:8-residual-bound}\n\nA separate FP64 pilot constructs a lower bound on squared distance to\nthe reconstructed vector using only primary codes. For each sign\npattern, a box encloses residual coordinates from all indexed vectors.\nShifting it by the primary reconstruction gives a lower bound via\ndistance from the query. Across seven search\nsettings and 72.8 million candidate checks, no violation is observed.\nYet median bound-to-distance ratios are only 0.13--0.24. Even an ideal\nfinal threshold leaves almost all probed candidates for refinement,\nusually far more than the existing shortlist. The pilot therefore\nstopped before an integrated GPU implementation. Safety alone is\ninsufficient: pruning must be selective enough to repay evaluating the\nbound and reading surviving residuals. A GPU version would also need\nrounding-safe envelopes.\n\n\\subsection{Further alternatives and stopping decisions}\n\\label{sec:8-stopped}\n\n\\Cref{tab:8-stopped} summarises representative earlier alternatives.\nThey use their own versions and controls rather than the final\ncross-system protocol. GPU timings and offline cost estimates are\nidentified separately; the latter are not additional system-frontier\nmeasurements.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Alternative designs and stopping decisions]{Alternative designs and stopping decisions.}\n\\label{tab:8-stopped}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.24\\linewidth}>{\\raggedright\\arraybackslash}p{.24\\linewidth}X@{}}\n\\toprule\nAlternative & Expected saving & Evidence and decision \\\\\n\\midrule\nLarger selection buffer & Fewer compaction sorts & GPU tests lose up to 24\\% throughput; added shared memory reduces the possible resident blocks in affected cases \\\\\nFused scan and refinement & Fewer launches and intermediate transfers & GPU tests lose up to 15\\%; the saved transfer is small relative to the combined kernel's resource demand \\\\\nPartial-score early exit & Skip remaining subspaces & GPU changes range from $-2.8$ to $+4.2\\%$; warp-wide checks give no consistent gain \\\\\nTable-free sign scoring & Remove lookup-table storage & GPU throughput falls 30--52\\% despite the smaller shared-memory footprint \\\\\nProgressive primary reads & Read full codes only for survivors & Offline replay and traffic estimates expose scattered second-stage reads; no new GPU search kernel was timed \\\\\nLocal-first refinement & Avoid a global primary merge & Offline quota policies do not beat global selection at equal work; a favourable oracle allocation is unavailable online \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-3-validity.tex",
+      "before": "\\Cref{tab:8-threats} consolidates threats to the main interpretations.\nControls are in Chapter 3; repeat/build/precision checks are in \\cref{sec:7-8}.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Threats to validity]{Threats that can reverse or narrow a conclusion.}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nClaim at risk & Alternative or reversal & Control and remaining test \\\\\n\\midrule\nExecution gain & Changed scores, ties or index state explain an apparent\nspeedup & Strict T4 CPU sorting and table-form diagnostics; finite\ncoverage, with candidate dumps no longer retained \\\\\nBudget quality & Finite-pool sampling or drift hides damaging queries\n& Disjoint GT evaluation, full traces, subset-sum checks and FULL\nenumeration; future-query and arbitrary-subset invariance remain untested \\\\\nCompetitive margin & Grid density, call tails or API overhead changes\nthe ordering & Both recall estimators, retained slow calls and int8\nbaseline; TF32/FP32 sensitivity; T5 exposes small-batch reversals;\ncross-device comparisons remain unmeasured \\\\\nCapacity/build claim & Transient allocations exceed a resident sample\n& Phase bytes, repeated empty-cache builds and 20\\,ms device peaks;\nsub-interval allocations and full retrained frontiers remain unmeasured \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\nThe earlier CPU comparison in \\cref{sec:7-1} establishes the observed\nthroughput difference at matched recall for historical implementations.\nSeparate training, unequal list counts on the OpenAI datasets and sparse\nCPU timing repeats limit its interpretation. A comparison against the\nevaluated GPU version with matched index and timing controls remains\nunmeasured.\n\nEvidence covers one GPU, six prepared datasets and squared-L2 top-10 (\\cref{sec:7-smallbatch}). Near duplicates may remain; relevance labels are absent. Updates, concurrency, drift, service latency, billion-scale and multi-device use are untested.\n",
+      "after": "\\Cref{tab:8-threats} identifies how the main interpretations could fail\nand which controls address them. Measurement definitions remain in\nChapter 3; repeated build and precision checks are in \\cref{sec:7-8}.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Threats to validity]{Threats to validity and remaining checks.}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nClaim at risk & Alternative explanation & Control and remaining test \\\\\n\\midrule\nExecution gain & Changed scores, ties or index state cause the apparent gain & CPU re-sorting and table-score checks; finite coverage, with candidate arrays requiring regeneration for further tests \\\\\nBudget quality & Calibration samples miss difficult queries or the workload changes & Separate labelled test queries, recorded decision curves and full-pool enumeration; untested query subsets and future distributions remain \\\\\nCompetitive margin & Parameter grids, slow calls or interface overhead change the ranking & Both recall estimators, retained slow calls, int8 and precision checks; small-batch comparison; other devices untested \\\\\nCapacity/build claim & Short-lived allocations escape peak sampling & Allocation lifetimes, repeated cold builds and 20\\,ms memory sampling; shorter peaks and complete retrained frontiers remain unmeasured \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\nThe earlier CPU comparison in \\cref{sec:7-1} establishes the observed\nthroughput difference at matched recall for historical implementations.\nSeparate training, unequal list counts on the OpenAI datasets and sparse\nCPU timing repeats limit its interpretation. A comparison against the\nevaluated GPU version with matched index and timing controls remains\nunmeasured.\n\nSix datasets do not represent six independent user workloads. The two\nOpenAI exports share a DBpedia corpus, and Stella uses queries held out\nfrom its corpus rather than the original query set (\\cref{sec:3-2}).\nThe comparisons include transfers and host interfaces; differences in\nmemory types and C++ versus Python calling costs can affect small-batch\nmargins, so those margins cannot all be attributed to GPU search kernels\n(\\cref{sec:3-3}). Evidence covers one GPU, static indexes and squared-L2\ntop-10 search. Near duplicates may remain and relevance labels are\nabsent; updates, concurrent services, drift, billion-scale capacity and\nmultiple GPUs have not been evaluated.\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-4-directions.tex",
+      "before": "\\subsection{Calibration risk and reuse cost}\n\nFuture cost-aware calibration needs valid query-level bounds, matched-regime counts, fixed reference, sampling/order assumptions and drift renewal. Absolute GT risk additionally needs labels or a justified reference-to-GT link.\n\nCompare sampling/rank reuse/cost-aware choice by held-out total time and tail agreement. A four-cell sequential controller lost to extra launches. A replacement must beat a quality-matched control while meeting its risk bound.\n\n\\subsection{Residual storage across GPU and host memory}\n\nA future residual cache could fetch host blocks under a device cap. Fix representation, routing, survivors and arithmetic; vary cap, batch and locality; measure bytes, hits, overlap, tails and QPS. This capacity study is unimplemented; lowering $\\alpha$ does not relocate stored residuals.",
+      "after": "\\subsection{Mean-aware representations}\n\nThe centring result suggests testing when the primary signs should\nencode deviations from a mean (\\cref{sec:8-centring}). Repeated cold\nbuilds of centred and uncentred data should first separate this effect\nfrom training variation. List-dependent means are another candidate,\nbut require consistent query scoring and residual reconstruction.\nThe test should compare shortlist coverage, the best attainable refined\nrecall, selected budgets and total throughput, so a cheaper shortlist\ncannot conceal a lower quality ceiling.\n\n\\subsection{Calibration risk and reuse cost}\n\nCan a statistically controlled budget choice save more query time than\nit costs to obtain? Under the nesting conditions of\n\\cref{eq:6-rank-curve}, reference-neighbour primary ranks could replace\nrepeated trial searches. An earlier four-setting offline replay found\nthat sequential sampling added searches; a model fitted to measured\ncalibration times estimated higher cost despite fewer sampled queries.\nIt was not an integrated GPU controller measurement. A replacement\nshould test batched trials or rank reuse against a quality-matched fixed\nbudget using direct calibration-plus-reuse time. Its risk analysis must\ncover the sampling and budget-selection procedure, and drift should\ntrigger renewal. Reference-relative control still needs a link to labels\nto provide absolute recall guarantees.\n\n\\subsection{Residual storage across GPU and host memory}\n\nResiduals account for 80.7--82.9\\% of the total resident process memory\non BGE and Stella (\\cref{sec:7-7}), but only shortlisted rows are read.\nKeeping routing and primary codes on the GPU while fetching residual\nblocks from host memory could increase capacity. The difficulty is\nturning scattered shortlist positions into efficient block transfers.\nUnder fixed scoring and selection, vary the device budget and measure\nextra bytes, cache hits, transfer overlap, throughput and tail latency.\nThis would establish the capacity--latency trade-off rather than assume\nthat offloading improves speed.\n\n\\subsection{Explaining the small-batch boundary}\n\nAt recall 0.97, grouping improves JHQ's small-batch execution yet does\nnot close the gap to CAGRA fp32 (\\cref{sec:7-smallbatch}). Candidate\nwork, selection overhead and interface costs could each contribute.\nA matched study should count candidates scored by both indexes and\nseparate kernel time from transfers and host-call overhead. Comparing\nthose costs across batches would test whether fewer probed candidates,\ncheaper selection or a different index is the useful next step.\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-5-deployment.tex",
+      "before": "For recall 0.97, E1 supports batch-1,000 throughput; at batch 8, T5 favours CAGRA fp32. Batch-32 OpenAI-3072 depends on the estimator (\\cref{sec:7-smallbatch}). Begin with FULL, then validate quality/reuse cost/memory (\\cref{sec:8-3}).",
+      "after": "The tested results make JHQ-GPU a candidate for memory-limited,\nbatch-throughput workloads near recall 0.97 (\\cref{sec:7-2,sec:7-7}).\nThey do not establish a uniform advantage up to that recall: compressed\nbaselines win some lower-recall regions, and CAGRA fp32 wins at batch 8\nand recall 0.97. For a stable workload, the tested 500-query calibration\nis a useful initial setting, followed by an independent quality check\nand a comparison of total reuse time with a fixed budget. Changes to\nthe index or query distribution require renewed validation.\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-discussion.tex",
+      "before": "\\chapter{Discussion and Future Work}\n\\label{ch:discussion}\n\\chaptermark{Discussion and Future Work}\n\n\\section{Design Implications}\n\\label{sec:8-1}\n\\input{variants/thesis2/chapters/08-1-insights}\n\n\\section{Alternative Scoring and Coding Experiments}\n\\label{sec:8-2}\n\\input{variants/thesis2/chapters/08-2-negative}\n\n\\par\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{1.2em}\n\\section{Threats to Internal and External Validity}\n\\label{sec:8-3}\n\\input{variants/thesis2/chapters/08-3-validity}\n\\end{minipage}\\par\n\n\\section{Future Research Directions}\n\\label{sec:8-4}\n\\input{variants/thesis2/chapters/08-4-directions}\n\n\\section{Deployment Considerations}\n\\label{sec:8-5}\n\\input{variants/thesis2/chapters/08-5-deployment}\n",
+      "after": "\\chapter{Discussion and Future Work}\n\\label{ch:discussion}\n\\chaptermark{Discussion and Future Work}\n\nThe results reveal trade-offs between compressed representation, GPU\nexecution and refinement effort. This chapter explains those trade-offs,\nexamines alternatives that did not justify adoption, and identifies the\nevidence and experiments needed for further progress.\n\n\\section{Design Implications}\n\\label{sec:8-1}\n\\input{variants/thesis2/chapters/08-1-insights}\n\n\\section{Alternative Scoring and Coding Experiments}\n\\label{sec:8-2}\n\\input{variants/thesis2/chapters/08-2-negative}\n\n\\section{Threats to Internal and External Validity}\n\\label{sec:8-3}\n\\input{variants/thesis2/chapters/08-3-validity}\n\n\\section{Future Research Directions}\n\\label{sec:8-4}\n\\input{variants/thesis2/chapters/08-4-directions}\n\n\\section{Deployment Considerations}\n\\label{sec:8-5}\n\\input{variants/thesis2/chapters/08-5-deployment}\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/03-5-ledger.tex",
+      "before": "\\subsection{来源与可用记录}\n\\label{app:reproducibility}\n\\label{sec:b-artifacts}\n\\href{https://github.com/lrlorry/8800_report/blob/001579c9771759b672ef377b10dbc3dd959c7979/docs/artifact-access.md}{项目资料库}提供源码、配置、计时和选定输入。完整向量、训练状态及历史可执行文件哈希并非全部可用。已删除的 T4 候选数组需要重新生成，才能独立重新排序。\\Cref{tab:a-components} 将版本对应到组件对照；各加速比不能相乘得到整系统结果。抽样与泛化限制见\\cref{sec:6-2,sec:6-3,sec:8-3}。\n\n\\Cref{tab:3-campaigns} 将实验代号对应到其目的和结果位置。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[实验代号与结果位置]{实验代号与结果位置.}\n\\label{tab:3-campaigns}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{2.1cm}>{\\raggedright\\arraybackslash}Xl@{}}\n\\toprule\n代号 & 检查内容 & 结果位置 \\\\\n\\midrule\nE1 & 主跨系统比较，batch 为 1,000 & \\cref{sec:7-2} \\\\\nD & FP32／TF32 执行检查；基线沿用 E1 存档 & \\cref{sec:7-precision} \\\\\nT1 & 同一会话内重测 JHQ 和基线 & \\cref{sec:b-precision-anchors} \\\\\nT4 & CPU 重新排序 GPU 已计算的候选分数 & \\cref{sec:7-strict-selection} \\\\\nT5 & batch 为 8、32 的跨系统比较 & \\cref{sec:7-smallbatch} \\\\\nA1 & 重复冷建库与构建峰值 & \\cref{sec:7-7} \\\\\nA2 & 共享界读写的生成指令 & \\cref{sec:5-5} \\\\\nA3 & 两组 OpenAI 导出的行对齐检查 & \\cref{sec:7-2} \\\\\nB & 精排预算决策的完整记录 & \\cref{sec:7-budget-trace} \\\\\nR1（记录中为 C1） & 原始输入编码与放置审计 & \\cref{sec:4-representation-audit} \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\n\\captionsetup{hypcap=false}\n\\captionof{table}[组件实现]{组件测试使用的实现家族。各实验有自己的对照；版本号不表示连续累积的整系统加速。}\n\\label{tab:a-components}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\n版本 & 机制／实验作用\\\\\\midrule\nv61 & Word 载入与 lane 精排对照\\\\\nv62 / v63 & 分组完整键选择／共享阈值\\\\\nv65 / v69 & Batch／偏斜调度及 radix probe 选择\\\\\nv69 / v71 / v73 & 预算校准／LUT 扫描／严格分数导出\\\\\nv69 / v72 & OpenAI：同一训练缓存上的 TF32 与 FP32 add／查询算术\\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\subsection{计时与校准约定}\n\\label{sec:a-e1-protocol}\n评测配置显式启用十六 lane 精排及自动扫描调度，在单 block 与 2／4／8 组之间选择，多组时启用共享界；库默认使用标量精排及单 block。可选配额式近似选择器关闭。一次性调度器校准不计入稳态搜索时间，下列三项分别为伪查询收集、首次调用及重复调用中位数的调度器启动耗时：\n\\[\n T_{\\rm gather}\\in[0.81,7.04]\\,\\mathrm{ms},\\quad\n T_{\\rm first}\\in[6.00,27.77]\\,\\mathrm{ms},\\quad\n \\operatorname{median}(T_{\\rm repeat})\\in[2.72,18.13]\\,\\mathrm{ms}.\n\\]\n\nE1 中，JHQ 每个变体／轮次预热一次，基线起初预热三次。驱动即时（just-in-time，JIT）编译和 JHQ CUDA Graph 捕获均在计时前完成；后者记录 GPU 操作，供后续重复执行。慢基线配置依据预热耗时估计，使用较少的计时调用。重复调用间的 ID 顺序变化可能包括并列重排，本身不排除测点；这不同于单次结果内部含有重复 ID。JHQ 没有同样的重复调用诊断标记。\n\n\\label{sec:a-budget-contract}\n\\label{sec:a-supplement}\n\\label{sec:a-t4-t5}\n预算实验中，每个固定预算预热一次、计时三次。校准时间包括参考搜索、试验预算下的搜索，以及在主机上比较这些搜索的结果（$O(Sk^2)$）；不包括收集样本查询、一次性的调度器校准和图捕获。预热遍历全部查询，但其输出不参与预算选择，校准过程也不使用 GT。所选预算 QPS 使用固定预算计时，直接复用测试见 \\cref{sec:6-5}。对排序后的 64 个召回损失，报告分位数采用\n\\[\n L_{95}=L^{\\rm sorted}_{\\lfloor0.95(64-1)\\rfloor}\n       =L^{\\rm sorted}_{59}\\qquad\\text{(zero-based)}.\n\\]\n",
+      "after": "\\subsection{来源与可用记录}\n\\label{app:reproducibility}\n\\label{sec:b-artifacts}\n\\href{https://github.com/lrlorry/8800_report/blob/001579c9771759b672ef377b10dbc3dd959c7979/docs/artifact-access.md}{项目资料库}提供源码、配置、计时和选定输入。完整向量、训练状态及历史可执行文件哈希并非全部可用。已删除的 T4 候选数组需要重新生成，才能独立重新排序。\\Cref{tab:a-components} 将版本对应到组件对照；各加速比不能相乘得到整系统结果。抽样与泛化限制见\\cref{sec:6-2,sec:6-3,sec:8-3}。\n\n\\Cref{tab:3-campaigns} 将实验代号对应到其目的和结果位置。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[实验代号与结果位置]{实验代号与结果位置.}\n\\label{tab:3-campaigns}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{2.1cm}>{\\raggedright\\arraybackslash}Xl@{}}\n\\toprule\n代号 & 检查内容 & 结果位置 \\\\\n\\midrule\nE1 & 主跨系统比较，batch 为 1,000 & \\cref{sec:7-2} \\\\\nD & FP32／TF32 执行检查；基线沿用 E1 存档 & \\cref{sec:7-precision} \\\\\nT1 & 同一会话内重测 JHQ 和基线 & \\cref{sec:b-precision-anchors} \\\\\nT2 & 原始与中心化数据上的 JHQ 比较 & \\cref{sec:8-centring} \\\\\nT4 & CPU 重新排序 GPU 已计算的候选分数 & \\cref{sec:7-strict-selection} \\\\\nT5 & batch 为 8、32 的跨系统比较 & \\cref{sec:7-smallbatch} \\\\\nA1 & 重复冷建库与构建峰值 & \\cref{sec:7-7} \\\\\nA2 & 共享界读写的生成指令 & \\cref{sec:5-5} \\\\\nA3 & 两组 OpenAI 导出的行对齐检查 & \\cref{sec:7-2} \\\\\nB & 精排预算决策的完整记录 & \\cref{sec:7-budget-trace} \\\\\nR1（记录中为 C1） & 原始输入编码与放置审计 & \\cref{sec:4-representation-audit} \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\n\\captionsetup{hypcap=false}\n\\captionof{table}[组件实现]{组件测试使用的实现家族。各实验有自己的对照；版本号不表示连续累积的整系统加速。}\n\\label{tab:a-components}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}l>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\n版本 & 机制／实验作用\\\\\\midrule\nv61 & Word 载入与 lane 精排对照\\\\\nv62 / v63 & 分组完整键选择／共享阈值\\\\\nv65 / v69 & Batch／偏斜调度及 radix probe 选择\\\\\nv69 / v71 / v73 & 预算校准／LUT 扫描／严格分数导出\\\\\nv69 / v72 & OpenAI：同一训练缓存上的 TF32 与 FP32 add／查询算术\\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\subsection{计时与校准约定}\n\\label{sec:a-e1-protocol}\n评测配置显式启用十六 lane 精排及自动扫描调度，在单 block 与 2／4／8 组之间选择，多组时启用共享界；库默认使用标量精排及单 block。可选配额式近似选择器关闭。一次性调度器校准不计入稳态搜索时间，下列三项分别为伪查询收集、首次调用及重复调用中位数的调度器启动耗时：\n\\[\n T_{\\rm gather}\\in[0.81,7.04]\\,\\mathrm{ms},\\quad\n T_{\\rm first}\\in[6.00,27.77]\\,\\mathrm{ms},\\quad\n \\operatorname{median}(T_{\\rm repeat})\\in[2.72,18.13]\\,\\mathrm{ms}.\n\\]\n\nE1 中，JHQ 每个变体／轮次预热一次，基线起初预热三次。驱动即时（just-in-time，JIT）编译和 JHQ CUDA Graph 捕获均在计时前完成；后者记录 GPU 操作，供后续重复执行。慢基线配置依据预热耗时估计，使用较少的计时调用。重复调用间的 ID 顺序变化可能包括并列重排，本身不排除测点；这不同于单次结果内部含有重复 ID。JHQ 没有同样的重复调用诊断标记。\n\n\\label{sec:a-budget-contract}\n\\label{sec:a-supplement}\n\\label{sec:a-t4-t5}\n预算实验中，每个固定预算预热一次、计时三次。校准时间包括参考搜索、试验预算下的搜索，以及在主机上比较这些搜索的结果（$O(Sk^2)$）；不包括收集样本查询、一次性的调度器校准和图捕获。预热遍历全部查询，但其输出不参与预算选择，校准过程也不使用 GT。所选预算 QPS 使用固定预算计时，直接复用测试见 \\cref{sec:6-5}。对排序后的 64 个召回损失，报告分位数采用\n\\[\n L_{95}=L^{\\rm sorted}_{\\lfloor0.95(64-1)\\rfloor}\n       =L^{\\rm sorted}_{59}\\qquad\\text{(zero-based)}.\n\\]\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-1-insights.tex",
+      "before": "\\subsection{码本结构与查表开销}\n\nMailman 为坐标取值来自有限集合的编码复用中间和，在这里并未获得速度收益；两组 LUT 通常获胜（\\cref{fig:7-lut}）。因此，码本质量必须结合可实现的表放置／访问成本评估（\\cref{sec:5-2,sec:5-3}）。\n\n\\subsection{并行度与选择开销}\n\n当查询已提供足够并行度，暂存／选择／归并开销可能主导（\\cref{fig:7-batch}）。Vogue 和 BGE 的结果提示，调度还应考虑候选数及划分／归并成本（\\cref{sec:7-2,sec:7-6}）。更复杂调度必须收回校准成本；共享阈值的独立作用尚未分离。\n\n\\subsection{精排速度与预算收益}\n\n假设固定 $T_0>0$、精排时间 $F_h\\geq F_\\ell>0$ 及共同倍率 $\\eta\\in(0,1]$。低预算加速比及导数为\n\\begin{align}\n S(\\eta,T_0)&=\\frac{T_0+\\eta F_h}{T_0+\\eta F_\\ell},\n \\label{eq:8-refinement-sensitivity}\\\\\n \\frac{\\partial S}{\\partial\\eta}\n &=\\frac{T_0(F_h-F_\\ell)}{(T_0+\\eta F_\\ell)^2}\\geq0,\\qquad\n \\frac{\\partial S}{\\partial T_0}\n =\\frac{\\eta(F_\\ell-F_h)}{(T_0+\\eta F_\\ell)^2}\\leq0.\\nonumber\n\\end{align}\n当 $F_h>F_\\ell$ 时，更快的精排降低削减预算的价值，而更低固定成本提高这一价值。导数成立的前提是非精排工作固定。依赖预算的扫描维护和资源转换需要 \\cref{sec:7-5,sec:7-stream-cost} 的受控比较。质量和复用仍是约束（\\cref{tab:7-budget-full,fig:7-budget-risk}）。\n",
+      "after": "\\subsection{索引常驻与构建工作区}\n\n压缩决定索引能否常驻 GPU，但构建还有独立的容量约束。BGE 搜索时占用 11.93\\,GiB，构建采样峰值却达到 26.08\\,GiB。这一峰值来自分配缓冲区，发生在 gather 缓冲区分配之前。两遍构建限制了 gather 存储，并未消除其他临时分配。因此，可行性需要同时依据常驻字节模型和逐阶段分配模型判断（\\cref{sec:4-5,sec:7-7}）。\n\n\\subsection{码本结构与查表开销}\n\n最小的表并非最快。四路和八路拆分每个子空间存 16 项，少于两路拆分的 32 项，却需要更多查表和加法。两张表在 24 个配置中的 22 个最快（\\cref{sec:7-3}）。类似地，完全去掉查找表虽然节省共享内存，在 \\cref{tab:8-stopped} 汇总的早期测试中仍然变慢。因此，码本除了重建误差，还应结合实际距离计算成本评价；存储更少并不能直接确定最快的实现。\n\n\\subsection{并行度必须补偿选择与归并开销}\n\n小 batch 中独立查询太少，难以填满 GPU。把每个查询分到多个 block 能增加工作量，但会重复暂存查找表和局部选择，还要增加归并。batch 为 8 时，八组获得 $2.06$--$2.76\\times$ 加速；batch 为 1,000 时，采用独立阈值的分组在已剖析的高预算配置中，吞吐降至单 block 的 $0.46\\times$（\\cref{sec:7-6}）。这不意味着大 batch 总应使用单 block：分组也能处理不均衡负载，并带来了 Vogue 在召回率 0.97 处的领先。其低 probe 配置上的吞吐比 0.895 则体现了规则的局限。候选数的离散程度并不等于总量；更好的调度应同时估算扫描、选择和归并成本。\n\n\\subsection{选择正确性与检索质量}\n\n按已计算分数精确选择，与找到原始向量的最近邻，是两个不同要求。分组选择器的证明和 CPU 排序检查说明，并行拆分仍能保留规定的主码短名单（\\cref{sec:5-4,sec:7-strict-selection}）。这不会消除 IVF 路由损失或量化误差。分开验证这些层次，才能区分实现缺陷与表示、精排预算的局限。\n\n\\subsection{精排速度与预算收益}\n\n较小预算能够省下多少时间，取决于搜索的其他部分。令 $T_0>0$ 为固定的非精排时间，$F_h\\geq F_\\ell>0$ 为高、低预算的精排时间，$\\eta\\in(0,1]$ 为使两个精排内核一起加速的共同倍率。低预算加速比及其导数为\n\\begin{align}\n S(\\eta,T_0)&=\\frac{T_0+\\eta F_h}{T_0+\\eta F_\\ell},\n \\label{eq:8-refinement-sensitivity}\\\\\n \\frac{\\partial S}{\\partial\\eta}\n &=\\frac{T_0(F_h-F_\\ell)}{(T_0+\\eta F_\\ell)^2}\\geq0,\\qquad\n \\frac{\\partial S}{\\partial T_0}\n =\\frac{\\eta(F_\\ell-F_h)}{(T_0+\\eta F_\\ell)^2}\\leq0.\\nonumber\n\\end{align}\n当 $F_h>F_\\ell$ 时，降低 $\\eta$ 会降低削减预算的相对收益，而降低 $T_0$ 会增大这一收益。这个模型解释了为何不能把内核优化和预算削减当作独立、可直接相乘的收益。它假设两个预算下精排加速相同，并且非精排工作固定。实际扫描维护成本可能随预算改变，因此是否采用仍应依据总时间和质量的实测（\\cref{sec:7-5,sec:7-stream-cost}）。\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-2-negative.tex",
+      "before": "\\subsection{Mailman 式共享和评分}\n\\label{sec:8-mailman}\n\nMailman 复用有限字母表求和 \\cite{mailman}。固定的 Vogue／arXiv／OpenAI-3072 流比较宽度 4/6/8 的原子桶／私有直方图和打包双表评分：128 probes、batch 8/1,000，编码／数学分数固定。\n\n最佳替代仅达到基线 QPS 的 0.187--0.581（\\cref{fig:8-negative}）。偏斜的桶目标主导剖析；私有直方图增加状态／共享更新。更窄分组有时有益，但没有获胜方案。其他有限字母表设计仍值得研究。\n\n测试仅覆盖分数，因此 cutoff 检查不证明近邻流水线等价。令 $f$ 为原系统用于评分的时间比例，$s$ 为替代评分器相对原评分器的速度比。替换模型给出\n\\[\n \\frac{T'}T=1+f\\left(\\frac1s-1\\right)>1\n \\quad(0<f\\leq1,\\ 0<s<1).\n\\]\n该模型不是实测端到端性能，集成已停止。字典研究也停在结构统计。二者都不产生系统前沿测点。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\includegraphics[width=\\linewidth]{ch8/negative-evidence.pdf}\n\\captionof{figure}[Mailman 与面向排名的编码]{两个不同的证据边界。左：RTX 5090 上，Vogue、arXiv 和 OpenAI-3072、两个 batch、128 probes 时，最佳实测 Mailman 评分器／打包表评分器速度比，全部小于一。右：arXiv 400 查询 FP64 离线测试划分上，达到原 JHQ 召回目标的最小保留数。候选减少不是 GPU 加速。}\n\\label{fig:8-negative}\n\\end{minipage}\\par\\medskip\n\n\\subsection{面向排序的编码实验}\n\\label{sec:8-rank}\n\nFP64 候选重放使用 400/200/400 个校准／\\allowbreak{}验证／\\allowbreak{}测试查询，测试加权分数、中位数／列表阈值、学习式损失和线性最小均方误差（minimum mean-square error，MMSE）解码。更低 MSE 可能恶化近邻顺序；主码等级变化也会移动残差参考点。\n\n中位阈值将 arXiv 达标的最小已测保留数从 875$\\to$375，但另两个工作负载失败。对正交 $\\Pi$，\n\\[\n \\bar y=\\frac1N\\sum_i\\Pi x_i=\\Pi\\bar x,\n \\qquad \\|\\bar y\\|^2=\\bar x^\\top\\Pi^\\top\\Pi\\bar x=\\|\\bar x\\|^2.\n\\]\n因此旋转保持均值向量范数，而不消除偏置。中心化也必须保持精排分数上限。\n\n中位等级 GPU 后续实验重新训练残差。对 arXiv 原 $\\alpha=100$ 目标，batch 8/1,000 下提升 $1.40/1.21\\times$；Vogue 仅达到 0.9630，低于 0.9644；OpenAI-3072 持平。三轮使用独立状态／查询，不属于 E1。\n",
+      "after": "\\subsection{Mailman 式共享求和评分}\n\\label{sec:8-mailman}\n\nJHQ 的有限符号模式提示，可以参照 Mailman 思想在候选之间复用部分和 \\cite{mailman}。四位半码只有 16 种模式，因此许多候选可以共享中间计算。测试在 Vogue、arXiv 和 OpenAI-3072 上固定主码及候选流，将分组宽度为 4、6、8 的原子桶和私有直方图，与按字打包的两表评分比较，采用 128 probes 和 8、1,000 两种 batch。\n\n最佳替代方案的吞吐也只有评分基线的 0.187--0.581。剖析显示桶更新集中；私有直方图则增加状态和共享内存更新。当实现复用的成本超过省下的查表工作，算术复用就不足以带来收益。这些是评分器测量，并非完整搜索对比。若 $f$ 为基线中评分占用的时间比例，$s$ 为替代评分器的相对速度，其余部分不变的模型给出\n\\[\n \\frac{T'}T=1+f\\left(\\frac1s-1\\right)>1\n \\quad(0<f\\leq1,\\ 0<s<1).\n\\]\n因此，即使这个模型也预测不了整体搜索收益。集成在此停止，其他有限字母表实现仍值得探索。\\cref{fig:8-negative} 左图展示六组评分器比较。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\includegraphics[width=\\linewidth]{ch8/negative-evidence.pdf}\n\\captionof{figure}[Mailman 与面向排序的编码]{Mailman 评分器吞吐（左）与离线短名单大小（右）。}\n\\label{fig:8-negative}\n\\end{minipage}\\par\\medskip\n\n\\subsection{面向排序的编码实验}\n\\label{sec:8-rank}\n\n最小化重建误差未必保持近邻顺序。FP64 离线回放采用 400 条校准、200 条验证和 400 条测试查询，检查加权分数、中位数及列表相关阈值、学习损失和线性最小均方误差解码。arXiv 上，中位数阈值将达到召回率 0.97775 所需的最小已测短名单从 875 个候选降至 375 个；另外两个工作负载未达各自目标。这些是 \\cref{fig:8-negative} 右图的离线计数。\n\n独立的 GPU 后续实验同时改变主码表示并重训残差码。在它自己的 arXiv 目标 0.9766 下，batch 为 8 时吞吐提升 $1.40\\times$，batch 为 1,000 时提升 $1.21\\times$。Vogue 的最高召回率却只有 0.9630，低于目标 0.9644；OpenAI-3072 接近持平。离线候选减少与 GPU 加速使用不同的查询、训练态和目标，不能据此得到只改变阈值的加速比。主码改变后，残差需要重建的对象也会改变。\n\n\\subsection{移除共同均值}\n\\label{sec:8-centring}\n\n全局数据均值可能占用符号码的分辨能力。旋转保持均值的范数：对于正交的 $\\Pi$，\n\\[\n \\bar y=\\frac1N\\sum_i\\Pi x_i=\\Pi\\bar x,\n \\qquad \\|\\bar y\\|^2=\\bar x^\\top\\Pi^\\top\\Pi\\bar x=\\|\\bar x\\|^2.\n\\]\n在实数算术中，从查询和数据库向量中减去相同均值 $\\mu$，保持距离\n$\\|(q-\\mu)-(x-\\mu)\\|^2=\\|q-x\\|^2$，\n却会改变待量化的问题。\n\n后续实验将存档的原始索引与在中心化数据上新训的索引比较，在同一会话交替测量。arXiv 的均值范数为 0.837，采用 128 probes 时，全池校准从 $\\alpha=200$ 改选 $\\alpha=64$，召回率 0.97 处的前沿吞吐提升 $1.266\\times$。512 probes 时所选预算变为 100，并非 64。这一变化并非总有利：Vogue 在 512 probes 下的高预算召回率从 0.9918 降至 0.9896；OpenAI-1536 的所选预算从 8 升到 16，尽管召回率 0.97 处吞吐比 0.995，几乎不变。arXiv 的结果支持将去均值作为有用的表示改动。重训同时改变质心和残差，因此还需对两种数据做同样的重复重训，才能分离其贡献。这些测试扩展的是分析，并未并入与其他系统的主比较。\n\n\\subsection{安全下界仍可能剪枝不足}\n\\label{sec:8-residual-bound}\n\n另一项 FP64 pilot 仅根据主码，为到重建向量的平方距离构造下界。它按符号模式统计覆盖全部已索引向量的残差坐标范围。将包围盒加上对应的主码重建后，以查询到它的距离作为下界。在七个搜索配置、7,280 万次候选检查中未观察到违反；但下界与距离之比的中位数只有 0.13--0.24。即使用理想的最终阈值，几乎所有已探测候选仍要精排，通常远多于现有短名单。因此 pilot 在完整 GPU 实现之前停止。安全性还不够：剪枝必须足够有选择性，才能补偿下界计算和存活残差读取的成本。GPU 版本还需采用考虑舍入安全的包络。\n\n\\subsection{其他替代方案与停止决定}\n\\label{sec:8-stopped}\n\n\\Cref{tab:8-stopped} 汇总代表性的早期替代方案。它们各用自己的版本和对照，而非最终跨系统协议。GPU 计时与离线成本估算分别标明；后者不是额外的系统前沿测量。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[替代设计与停止决定]{替代设计与停止决定。}\n\\label{tab:8-stopped}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}p{.24\\linewidth}>{\\raggedright\\arraybackslash}p{.24\\linewidth}X@{}}\n\\toprule\n替代方案 & 预期节省 & 证据与决定 \\\\\n\\midrule\n更大的选择缓冲区 & 减少压缩排序 & GPU 测试吞吐最多下降 24\\%；增加共享内存后，受影响配置可常驻的 block 数减少 \\\\\n扫描与精排融合 & 减少启动和中间传输 & GPU 测试最多下降 15\\%；省下的传输较少，却增加了合并内核的资源需求 \\\\\n部分分数提前退出 & 跳过后续子空间 & GPU 变化为 $-2.8$ 至 $+4.2\\%$；warp 级检查没有稳定收益 \\\\\n免表符号评分 & 去掉查找表存储 & 尽管共享内存更少，GPU 吞吐仍下降 30--52\\% \\\\\n渐进读取主码 & 只为存活候选读取完整编码 & 离线回放和访存估算显示第二阶段散乱读取的成本；未计时新的 GPU 搜索内核 \\\\\n列表内优先精排 & 避免全局主码归并 & 离线配额策略在相同工作量下未超过全局选择；有利的 oracle 分配在线不可得 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-3-validity.tex",
+      "before": "\\Cref{tab:8-threats} 汇总主要解释的有效性威胁。对照见第 3 章，重复／构建／精度检查见 \\cref{sec:7-8}。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[有效性威胁]{可能逆转结论或缩小适用范围的威胁。}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n受威胁主张 & 替代解释或反转 & 对照与剩余测试 \\\\\n\\midrule\n执行收益 & 分数、并列或索引状态变化解释表观加速 & 严格 T4 CPU 排序与表形式诊断；覆盖有限，候选转储已不保留 \\\\\n预算质量 & 有限池抽样或漂移隐藏有害查询 & 不相交 GT 评估、完整轨迹、子集和检查及 FULL 枚举；未来查询和任意子集不变性未测试 \\\\\n竞争优势 & 网格密度、调用尾部或 API 开销改变排序 & 两种召回估计器、保留慢调用及 int8 基线；TF32／FP32 敏感性；T5 暴露小 batch 反转；跨设备未测 \\\\\n容量／构建主张 & 瞬时分配超过常驻采样 & 阶段字节、重复空缓存构建和 20\\,ms 设备峰值；采样间分配及完整重训练前沿未测 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\cref{sec:7-1} 中较早的 CPU 比较给出了历史实现在相同召回率下的吞吐差异。独立训练、OpenAI 数据集的列表数不等以及 CPU 计时重复较少，限制了这些比值的解释。针对本文评测 GPU 版本、匹配索引和计时条件的比较仍未完成。\n\n证据覆盖一张 GPU、六个准备后的数据集和平方 L2 top-10（\\cref{sec:7-smallbatch}）。可能仍有近重复，没有相关性标签。更新、并发、漂移、服务延迟、十亿规模和多设备均未测试。\n",
+      "after": "\\Cref{tab:8-threats} 列出主要解释可能失效的原因以及对应对照。测量定义仍见第 3 章；重复构建和精度检查见 \\cref{sec:7-8}。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[有效性威胁]{有效性威胁与剩余检查。}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n受威胁主张 & 替代解释 & 对照与剩余测试 \\\\\n\\midrule\n执行收益 & 分数、并列或索引状态改变造成表观收益 & CPU 重排序与表分数检查；覆盖有限，进一步测试需重新生成候选数组 \\\\\n预算质量 & 校准样本遗漏困难查询，或工作负载改变 & 独立的带标签测试查询、已记录决策曲线和全池枚举；仍有未测查询子集与未来分布 \\\\\n竞争优势 & 参数网格、慢调用或接口开销改变排序 & 两种召回估计器、保留慢调用、int8 与精度检查、小 batch 比较；其他设备未测 \\\\\n容量／构建主张 & 短生命周期分配逃过峰值采样 & 分配生命周期、重复冷建和 20\\,ms 显存采样；更短峰值及完整重训练前沿仍未测 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\cref{sec:7-1} 中较早的 CPU 比较给出了历史实现在相同召回率下的吞吐差异。独立训练、OpenAI 数据集的列表数不等以及 CPU 计时重复较少，限制了这些比值的解释。针对本文评测 GPU 版本、匹配索引和计时条件的比较仍未完成。\n\n六个数据集不代表六种独立用户工作负载。两个 OpenAI 导出共享 DBpedia 语料，Stella 的查询从语料中留出，而非原始查询集（\\cref{sec:3-2}）。比较包含传输与主机接口；内存类型及 C++ 与 Python 调用成本的差异可能影响小 batch 的小幅差距，因此不能全部归因于 GPU 搜索内核（\\cref{sec:3-3}）。证据覆盖一张 GPU、静态索引和平方 L2 top-10 搜索。可能仍有近重复，并且缺少相关性标签；更新、并发服务、漂移、十亿规模容量和多 GPU 均未评估。\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-4-directions.tex",
+      "before": "\\subsection{校准风险与复用成本}\n\n未来成本感知校准需要有效的查询级界、匹配执行区间的计数、固定参考、抽样／排序假设及漂移更新。绝对 GT 风险还需要标签，或有根据的参考到 GT 联系。\n\n可通过留出总时间和尾部一致性，比较抽样、排名复用和成本感知选择。四单元顺序控制器因额外启动而落败。替代方案必须满足风险界，并超过质量匹配对照。\n\n\\subsection{GPU 与主机内存间的残差存储}\n\n未来残差缓存可在设备容量上限下获取主机数据块。固定表示、路由、保留集合和算术，改变容量、batch 和局部性，测量字节数、命中、重叠、尾部和 QPS。这项容量研究尚未实现；降低 $\\alpha$ 并不会迁移已存残差。\n",
+      "after": "\\subsection{考虑均值的表示}\n\n中心化结果提示，应研究主码符号何时应编码相对均值的偏差（\\cref{sec:8-centring}）。首先需要对中心化和未中心化数据重复冷建，以区分其效果与训练波动。列表相关的均值也是候选方向，但要求查询评分与残差重建保持一致。测试应比较短名单覆盖率、可达到的最佳精排召回率、所选预算和总吞吐，防止较便宜的短名单掩盖质量上限下降。\n\n\\subsection{校准风险与复用成本}\n\n具有统计控制的预算选择，能否省下比获取预算更大的查询时间？在 \\cref{eq:6-rank-curve} 的嵌套条件下，参考近邻的主码排名可代替反复试搜。早期四配置离线回放发现，序贯抽样增加了搜索次数；用已测校准时间拟合的模型估算，即使样本更少，成本仍然更高。这不是完整 GPU 控制器的测量。替代方案应测试批量试验或排名复用，并以直接校准加复用总时间，对比质量匹配的固定预算。风险分析必须覆盖抽样和预算选择程序，发生漂移时应更新校准；相对参考的控制仍需与标签建立联系，才能给出绝对召回保证。\n\n\\subsection{GPU 与主机内存间的残差存储}\n\nBGE 和 Stella 的残差占进程总常驻显存的 80.7--82.9\\%（\\cref{sec:7-7}），但只有短名单中的行需要读取。将路由和主码留在 GPU，按块从主机内存取回残差，有望增加容量。难点在于把分散的短名单位置转成高效块传输。在评分与选择固定时，改变设备容量上限，测量额外字节、缓存命中、传输重叠、吞吐和尾延迟。由此才能确定容量与延迟的取舍，而非假定卸载会提高速度。\n\n\\subsection{解释小 batch 的边界}\n\n在召回率 0.97 处，分组改善了 JHQ 的小 batch 执行，却没有消除与 CAGRA fp32 的差距（\\cref{sec:7-smallbatch}）。候选工作量、选择开销和接口成本都可能参与其中。匹配的研究应统计两种索引评分的候选数，并区分内核时间、传输和主机调用开销。跨 batch 比较这些成本，才能检验下一步应减少已探测候选、降低选择成本，还是使用不同索引。\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-5-deployment.tex",
+      "before": "召回率 0.97 时，E1 支持 batch-1,000 吞吐结论；batch 8 下 T5 有利于 CAGRA fp32。batch-32 的 OpenAI-3072 取决于估计器（\\cref{sec:7-smallbatch}）。可以从 FULL 开始，再验证质量、复用成本和显存（\\cref{sec:8-3}）。\n",
+      "after": "已测结果使 JHQ-GPU 成为显存受限、召回率接近 0.97 的批吞吐工作负载的候选（\\cref{sec:7-2,sec:7-7}）。这不代表到该召回率之前都占优：压缩基线在部分低召回区间获胜，CAGRA fp32 则在 batch 为 8、召回率为 0.97 时获胜。对于稳定工作负载，已测的 500 查询校准可作为初始设置，随后独立核查质量，并与固定预算比较复用总时间。索引或查询分布改变后，需要重新验证。\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-discussion.tex",
+      "before": "\\chapter{讨论与未来工作}\n\\label{ch:discussion}\n\\chaptermark{讨论与未来工作}\n\n\\section{设计启示}\n\\label{sec:8-1}\n\\input{variants/thesis2-zh/chapters/08-1-insights}\n\n\\section{替代评分与编码实验}\n\\label{sec:8-2}\n\\input{variants/thesis2-zh/chapters/08-2-negative}\n\n\\par\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{2em}\n\\section{内部与外部有效性的威胁}\n\\label{sec:8-3}\n\\input{variants/thesis2-zh/chapters/08-3-validity}\n\\end{minipage}\\par\n\n\\section{未来研究方向}\n\\label{sec:8-4}\n\\input{variants/thesis2-zh/chapters/08-4-directions}\n\n\\section{部署建议}\n\\label{sec:8-5}\n\\input{variants/thesis2-zh/chapters/08-5-deployment}\n",
+      "after": "\\chapter{讨论与未来工作}\n\\label{ch:discussion}\n\\chaptermark{讨论与未来工作}\n\n实验揭示了压缩表示、GPU 执行与精排投入之间的取舍。本章解释这些取舍，考察未能支持采用的替代方案，并提出继续研究所需的证据和实验。\n\n\\section{设计启示}\n\\label{sec:8-1}\n\\input{variants/thesis2-zh/chapters/08-1-insights}\n\n\\section{替代评分与编码实验}\n\\label{sec:8-2}\n\\input{variants/thesis2-zh/chapters/08-2-negative}\n\n\\section{内部与外部有效性的威胁}\n\\label{sec:8-3}\n\\input{variants/thesis2-zh/chapters/08-3-validity}\n\n\\section{未来研究方向}\n\\label{sec:8-4}\n\\input{variants/thesis2-zh/chapters/08-4-directions}\n\n\\section{部署建议}\n\\label{sec:8-5}\n\\input{variants/thesis2-zh/chapters/08-5-deployment}\n"
+    }
+  ],
+  "unchanged_source_sha256": {
+    "variants/thesis2/appendices/a-reproducibility.tex": "cf318de6926c56d6484b1b8cc93a2d2aa7dee1d0ebc23252a9825b9dfeeeb34b",
+    "variants/thesis2/appendices/b-supplementary.tex": "538f6694dc3f1bc880023e1da0171afbd8d57a93b8822308fb70e2d32badd726",
+    "variants/thesis2/chapters/01-1-context.tex": "e16cdd35989c4b3ac7d4d548d0663fa14a719bbde9ec4388e449392236b74cf0",
+    "variants/thesis2/chapters/01-2-scope.tex": "b15b700673c198bbcd7cce37172915c7a3041e5d89a6233e94e315915758cdd3",
+    "variants/thesis2/chapters/01-3-challenges.tex": "beee66498a4c66d0ee536661c488a6d58c07dc68d01fa1ddd90cce75b7ae19b7",
+    "variants/thesis2/chapters/01-4-questions.tex": "e890a75cad4a4b90298074076424f1c6cf1c15f7ff2c067f86f63944ab36c26c",
+    "variants/thesis2/chapters/01-5-contributions.tex": "4f29ae7313fcf48cd3b70114a538649224e38abbb55320370b11a85f0d83ff27",
+    "variants/thesis2/chapters/01-introduction.tex": "00ff7fdde6d4b2a7e77e4d0ce881c3cc106f78d1cf3135ac99a085ad6afa7c08",
+    "variants/thesis2/chapters/02-1-objective.tex": "f928fb403f0f5353d10a9c31dc9b356f9b5a24dd7d1864dfb8ca47e41020267e",
+    "variants/thesis2/chapters/02-2-hierarchy.tex": "b4466c59c56adc0abfb4bc103eb993efbcddb8eb0a337d376e0c89c7ae26a1a5",
+    "variants/thesis2/chapters/02-3-jhq.tex": "52b72b8239c65a1c2e07961504d377c245730da851eb5a8e65065571de008877",
+    "variants/thesis2/chapters/02-4-gpu.tex": "20d107d81e623e611ca360ee930323fd6016368a4dc33fa9fed7834322d858e2",
+    "variants/thesis2/chapters/02-5-graphs.tex": "bf2d2cd9e978e1b2dbad26b4b1accacf6bb305c885ce4ce7df2d1857d01611fa",
+    "variants/thesis2/chapters/02-6-quantised.tex": "3bfbcf3069248d12a405e71a96b1493eb62d3b4c9dd54148536387b982b83f5b",
+    "variants/thesis2/chapters/02-7-gap.tex": "6479141ea0ea172fab2bdf7f1ff191d41542941fcf3503e561a2934d39ce71fd",
+    "variants/thesis2/chapters/02-background.tex": "fcf72e7f6b7b702d8a332f5682554f7d6080243388d8b2ecf25b7dcad62a133f",
+    "variants/thesis2/chapters/03-1-comparisons.tex": "4f17d6ce9b565180b205a74931f99cf0a07a099cdf49de61763ebfa469caf5c2",
+    "variants/thesis2/chapters/03-2-data.tex": "446ed487db20d60a9f8da3f66cd30982c62404980e3d4f7c60ad083fd546ef9f",
+    "variants/thesis2/chapters/03-3-measurement.tex": "a9c232b89792725074961e19e05f18e27342203bcda0cf2f81c7c9dea1e52e67",
+    "variants/thesis2/chapters/03-4-frontiers.tex": "6e4814217440efbfc42d9d1a2f4b347fccdf16bdb9570dbb3dd3919be07b5bd2",
+    "variants/thesis2/chapters/03-6-validity.tex": "179e02a8ef5476721a87f68ae03085a5fed5c9faaab6becdc53c073ea3eb0545",
+    "variants/thesis2/chapters/03-methodology.tex": "1040c4124175462107253204a5672cf0b7b3b48b1f32e5dfd424d09953a99b76",
+    "variants/thesis2/chapters/04-1-boundaries.tex": "7e27cb5217c2a22dc700b43a78db86fd3b1dc2e1e34aabbb87cb017d102a99f7",
+    "variants/thesis2/chapters/04-2-training.tex": "5dfb719e92caaabea31b29993be233acaa9996ed2d39940715301e614eef4536",
+    "variants/thesis2/chapters/04-3-layout.tex": "764d7af6b1abca37a46c482a5a8a7e8d232356499e24599c243467de11861a71",
+    "variants/thesis2/chapters/04-4-lifecycle.tex": "303498a1f246dbd82988ac6cc52320d4d56ab55c492a0707db8889bbaefdde55",
+    "variants/thesis2/chapters/04-5-construction.tex": "3bef76d872e48d5301faafde014a513e156de66b2c55d78f504217a95dda6b1d",
+    "variants/thesis2/chapters/04-6-contracts.tex": "08dc621a9de5f3b669c610ba578782e8397b2ef1fcb38ab88418acba450a5e42",
+    "variants/thesis2/chapters/04-architecture.tex": "7c1cc299358496dd81aa337c70c65cfc539881e5f6d267a928ee825000993035",
+    "variants/thesis2/chapters/05-1-query-path.tex": "3cac427de8d67343783377af6b3bff59c3d354c1a6dbd428e6fe5826c193d07e",
+    "variants/thesis2/chapters/05-2-lut.tex": "65a1b57ad5d7e9c723cef2d3f25c9f82dbe3c98202e7afc7ad7b3d299b49995c",
+    "variants/thesis2/chapters/05-3-packed-access.tex": "a567654185296f977b54448647c255974319d16c6146eb30df1662e211ee5773",
+    "variants/thesis2/chapters/05-4-global-selection.tex": "fb82951c6bf4db78b25dba6c6ca4b77bc8a2ccc49dfc0c24b6a0d6a33adfc5ad",
+    "variants/thesis2/chapters/05-5-bound-scheduling.tex": "9ef05c1b9df2b7220d6e43aee4326c6d8412a7b94024c96234877e9a505e9f91",
+    "variants/thesis2/chapters/05-6-refinement.tex": "2d8466f9daa15ba337d80f793875099595355c03326c634cb4dc00149e84d906",
+    "variants/thesis2/chapters/05-7-probe.tex": "f9352ba1f1b8fdd6186f1d65aea5e9a05ee559df73bde9b1bc9221c472e1421f",
+    "variants/thesis2/chapters/05-gpu-execution.tex": "ca008d7326f0e13a2eaac10236e5840557dbeb08d4076de6ecaa7591284412ed",
+    "variants/thesis2/chapters/06-1-motivation.tex": "3657c956a4db4cbda3a98ddce928c6cb9e19a34906b10a9902f11b7f991a58ac",
+    "variants/thesis2/chapters/06-2-agreement.tex": "d06af234b2b6854234987362b74fc1385ee1b91b2f5936d86c2e48f4933e7baf",
+    "variants/thesis2/chapters/06-3-search.tex": "dbbc64358018f0c8eade87b416d110994fa95e72a4d26e33b9f067ffc2c3833f",
+    "variants/thesis2/chapters/06-4-controls.tex": "f90fd87840576e7b580d8300a327728e09d6ee34200073ad2e538c56a17f9de1",
+    "variants/thesis2/chapters/06-5-economics.tex": "bbfc9663cf37214a939ec8e8034829f0b161a2013d5d905159ee5842d2fc54df",
+    "variants/thesis2/chapters/06-6-scope.tex": "b7628b6784b27d7bbca7e464ca4a1a82fbb52ac1ef1f30787c2150929a732600",
+    "variants/thesis2/chapters/06-refinement.tex": "49e9d56aae82bd79348e50bef2313389a9ca2c3f741d284ac7c680e5cf36b135",
+    "variants/thesis2/chapters/07-evaluation.tex": "a2ad9ac860d5f132311d9c7eecd88c1a6aa11d435c5ca10b2cf6f70354833ccf",
+    "variants/thesis2/chapters/07-supp-budget.tex": "99ed5dc483733ae43536ec386c1803a62eb56375c16e81db84d92eb7535765b6",
+    "variants/thesis2/chapters/07-supp-precision.tex": "b4ba5003f92275f4eed708cf4b199c09db1617dc61abd563f099425fa3ca60e7",
+    "variants/thesis2/chapters/07-supp-selection.tex": "0605323d8cfcc0511b5c9f9208769a7aeebd6e55274538426a9c4df1aa7beb6e",
+    "variants/thesis2/chapters/07-supp-smallbatch.tex": "be19b70140a2d8a5169cf829ccd7894de105462d7be504b4697f6f7091027fa3",
+    "variants/thesis2/chapters/09-conclusion.tex": "9e1cbc584f3c35d7eb2a88b019d083ef6d3d6f3e59b407bbf0f41add90fc39ec",
+    "variants/thesis2/figures/add-paths.tex": "65b1f7b00b7d769542c28c70d487f1d28b9090f204848f9292b5bf95dd2adf24",
+    "variants/thesis2/figures/architecture-layout.tex": "6396652d47a240e82033298652583d15cd3cbc420c2589da043580e02cf627dc",
+    "variants/thesis2/figures/budget-scope-layout.tex": "570abe21e95e4076a6880d8e8a5c0fac98a43a221cf0b5f4c940e5fb84476388",
+    "variants/thesis2/figures/calibration-flow-layout.tex": "031ee5a5874c2994ae2a88702dd30457d248c0c23ecf7431c5d3943fcf125d51",
+    "variants/thesis2/figures/cartesian-lut.tex": "2865799df544891da913fcc72d1caba13ff22c83ad7d831e82763e3986bd1ee8",
+    "variants/thesis2/figures/challenges-layout.tex": "9e0d75c4c59b495a61e029aba0fdd552879c631e58116f9467e3c5ad7c425eff",
+    "variants/thesis2/figures/lane-refinement.tex": "ddbed74a4927edf31ed9e6a12ad183824634bb100fe2988e864490a1c01ac74c",
+    "variants/thesis2/figures/measurement-boundary.tex": "6a43b9b84e8d1daca8d60a308031a72e2f31a003e327694da3fffaec1c6fd5bc",
+    "variants/thesis2/figures/memory-lifetimes.tex": "b0f1a7683e98f53d486368aeb61d8e2efdc9bc8f4ce344e43fa035876b9b9b27",
+    "variants/thesis2/figures/nesting-example.tex": "9672b6a82748da142c498cbeec9244288142f304b0db6b560ca61657240b459d",
+    "variants/thesis2/figures/packed-access.tex": "1c143ff90375aca2a0632fdf8c08bc64ae3c9c0092214b683a5751abfa5cf60f",
+    "variants/thesis2/figures/physical-layout.tex": "d370b8381cf9b99b782f14188db9db6f0076721228b95a0c64eb2698b54f19aa",
+    "variants/thesis2/figures/query-path.tex": "f5212833c3a541905a02f72fc108eaa63f73860cb1033adff74d404c4615c40b",
+    "variants/thesis2/figures/shared-bound.tex": "9343aba6676aee93fa281a83c7faf91c13e0ef3afe7c689d40127af002fcd68d",
+    "variants/thesis2/format-59.tex": "970fff5ae853d15ddd7b4edd0c95af7c1221d66e93beef5d27c9b0fa14b9a338",
+    "variants/thesis2/frontmatter/abstract.tex": "372c2d74ee127fe3d8faa2428377306f53716c8231c9058548de2e8b2bf2fc2d",
+    "variants/thesis2/frontmatter/acknowledgements.tex": "a470ffcbdcb9548562980f68a235570b2b5ba5249f874a3a176387778e1c6491",
+    "variants/thesis2/frontmatter/notation.tex": "0430c95f66221eb87a762fdd8153d67b8f1deeade8e61c5fd4675d3479cd1eff",
+    "variants/thesis2/frontmatter/research-assistance.tex": "c0b387002b46848e818ed71d3941ba08fbc70e9b246317f1c0cff116f76a15f4",
+    "variants/thesis2/main.tex": "af544a37f98117605e805aa8d63eb40fd06b1f3aa7e90d3ccc7b29f380c42891",
+    "variants/thesis2-zh/chapters/01-1-context.tex": "dc5a8dcd95b01af60250821d766b612d74c554b6077253ef1b2dd5a6e27f6bf1",
+    "variants/thesis2-zh/chapters/01-2-scope.tex": "0b1ede93c3835736a791ca253bdd91a97bb9bb6be73f3622f0312252c5b5aa0a",
+    "variants/thesis2-zh/chapters/01-3-challenges.tex": "4001c57c0e7cbe005326b2badee84c54c8d60ba61d98057312f9c237d6bd24fc",
+    "variants/thesis2-zh/chapters/01-4-questions.tex": "c565cbc3dd53d0f7992941d8ea86a141d3fd879b960976b1d8bf058b0f6da9d3",
+    "variants/thesis2-zh/chapters/01-5-contributions.tex": "528c9fed8a78ad139cecf5352c4ee46c1854b25a1d124452ec1790288f7f18a5",
+    "variants/thesis2-zh/chapters/01-introduction.tex": "8b2a1228fdd4bc696ea93a3c38e833d765e3b3c89f1799bdb43678c95f0c5004",
+    "variants/thesis2-zh/chapters/02-1-objective.tex": "7ede173ce47a4ed9382d6528d6e533005023b48983703991fed4c77f34faac46",
+    "variants/thesis2-zh/chapters/02-2-hierarchy.tex": "5ff1c606e8cfa01a73a4a4250194e93adabae5e4f87ab4afd95d35ed71043b61",
+    "variants/thesis2-zh/chapters/02-3-jhq.tex": "68cb41daf42a2097c3a913dac22f6b4114728c38abb86d19871c4e8ba2f81838",
+    "variants/thesis2-zh/chapters/02-4-gpu.tex": "884f7c82c854172eb7f068a90885f74bed5899d27638b5cbf60c84ca58be8746",
+    "variants/thesis2-zh/chapters/02-5-graphs.tex": "b4a48c5762f3a36d8091ee55e435ebd0eed381789e85c96339fea2ce58f4e937",
+    "variants/thesis2-zh/chapters/02-6-quantised.tex": "a21ed751ad1b1a938477326ed0e830642ba8b884c93130016b4ef2b08c619838",
+    "variants/thesis2-zh/chapters/02-7-gap.tex": "bb7abe091bfd90bcb8487e51a503bdec9ec13b6c5432258fa0cac83f2b2c03b7",
+    "variants/thesis2-zh/chapters/02-background.tex": "be50983f23371838d48b81e5076b5eb0a008a0c3e0dc5bb429ec46a42702d6aa",
+    "variants/thesis2-zh/chapters/03-1-comparisons.tex": "7cbb9f1da019af666d06912ae4da4e1dc9a49aaeff178cb21052918373767789",
+    "variants/thesis2-zh/chapters/03-2-data.tex": "7a13b64ab31b4afed45525c95beb745945b830849cc0a5245a3eabcd9b65199d",
+    "variants/thesis2-zh/chapters/03-3-measurement.tex": "c2a1eceba547b6239f982219ed0194b2bc1fc039627569fb2f226ea2e2fb384e",
+    "variants/thesis2-zh/chapters/03-4-frontiers.tex": "0371035d07690815d49fd8bbada5c78254b54d9c76e9cc8012afd2e6be931f19",
+    "variants/thesis2-zh/chapters/03-6-validity.tex": "5157a7331405e1861cb2d0af94ec1dea2b3e8cad38463790627b3e44a218bd5c",
+    "variants/thesis2-zh/chapters/03-methodology.tex": "ba8cbe29dda58ac9b603cc30049e87593b8a4f461e4954af03a2bf9562853481",
+    "variants/thesis2-zh/chapters/04-1-boundaries.tex": "280afc465244ba6f704a3410dbe3b7031bf4b20d6556259ecbfbcb91e82c41fe",
+    "variants/thesis2-zh/chapters/04-2-training.tex": "9bbd54fdb5b1af5a8d915d62454d5317d2fab378ae9bb77a7483a814c337db34",
+    "variants/thesis2-zh/chapters/04-3-layout.tex": "1e3fa081d093aa505b93546146af8969da36060ebd571b322d32c8d825effcb3",
+    "variants/thesis2-zh/chapters/04-4-lifecycle.tex": "e9f7f15bfa7cb2825dc67ee889e6de4e3d2fcbb781d1456a3fa723f80a8887a9",
+    "variants/thesis2-zh/chapters/04-5-construction.tex": "b96e5825527b3795542ec27dd288d29478c17378c5d01fe5e85bb28292589105",
+    "variants/thesis2-zh/chapters/04-6-contracts.tex": "60cb954dbc5096368bb0541a3573fcc689e01bf864ce941efede64a174805ac9",
+    "variants/thesis2-zh/chapters/04-architecture.tex": "f2de7a018766e61b8af6f4fca6340d4295b0c07a88b9184bfdb48e985c5f3632",
+    "variants/thesis2-zh/chapters/05-1-query-path.tex": "d021cdde76dbc9c75e7faf4b5b94b522a30a35a9352c302f6869d90f8fc7a4c5",
+    "variants/thesis2-zh/chapters/05-2-lut.tex": "802895a236b4ce0897854908728e651c3aff5e435c7e2ef6a577896db6e214f6",
+    "variants/thesis2-zh/chapters/05-3-packed-access.tex": "e687df9391c40077e95144845f56a4156b5f6e7822160d9b1e3d6e4b728d0341",
+    "variants/thesis2-zh/chapters/05-4-global-selection.tex": "e8ecea581d71bd7a408991177c7a8b3199e4dccb2f51a57910ac484f8e3c4c28",
+    "variants/thesis2-zh/chapters/05-5-bound-scheduling.tex": "e31668665422ecd5079847bf5f25266b48ebad19c1067f988178fc0b77ce7628",
+    "variants/thesis2-zh/chapters/05-6-refinement.tex": "a301d392cdf50f34d210e21b5af47e8414c4640dec40ea2f3f7d24bb68f0caa6",
+    "variants/thesis2-zh/chapters/05-7-probe.tex": "06a3cb994f1232a751a6c4974f39c2091f5de3ad41be22d72920f25d2bef35e0",
+    "variants/thesis2-zh/chapters/05-gpu-execution.tex": "d3b027cfea1f3a7256854dbbd518e1cc462410418bfe62552a90a2a655a00fb7",
+    "variants/thesis2-zh/chapters/06-1-motivation.tex": "1dafe39aca76c0c479bf26540b821ca78c8e13b5c6dcb4c39b3376c47bb7773b",
+    "variants/thesis2-zh/chapters/06-2-agreement.tex": "a6b1e6d22d2f6fc981fd07fb204d4dc5a1611420c900ccefaebf42958657b639",
+    "variants/thesis2-zh/chapters/06-3-search.tex": "52497b7a1eedb79dd5c70191ba4ea650b387d1579a0e507c1ba5d162a6f6ccf3",
+    "variants/thesis2-zh/chapters/06-4-controls.tex": "cd006e4a7ac26aac6b4b3c081605fdfac961e101d3d777f14370501f6336140c",
+    "variants/thesis2-zh/chapters/06-5-economics.tex": "d0a41fc958356855c5c9d9e1745c40bc00c86cf4b9ab7b414cc4cfe1ce1a96bf",
+    "variants/thesis2-zh/chapters/06-6-scope.tex": "6db491e4d6fd014812041615bce78019197b15360469ca16e80237bf1834ef26",
+    "variants/thesis2-zh/chapters/06-refinement.tex": "5a0ae69be3ebcc824431540382b44f989ca31d05f080d311b69de583efdc753d",
+    "variants/thesis2-zh/chapters/07-evaluation.tex": "bda77492749673fbda8b3100ae80cd5b6b150e2a0efcc5776df7dd1932d62695",
+    "variants/thesis2-zh/chapters/07-supp-budget.tex": "7299387d1d1fce8a53be5550a4ce14b2a94f78bbed2c66bd6f00afcd68e55c6f",
+    "variants/thesis2-zh/chapters/07-supp-precision.tex": "c60f106826cd6d6f8587ddc05ff130cf8f46b8a9143b2cbc2b8dcd129e8f3792",
+    "variants/thesis2-zh/chapters/07-supp-selection.tex": "90c5e2bb968ad37c81bf04f788f39e5ab2df291492279194ba695c7e8e65f8e4",
+    "variants/thesis2-zh/chapters/07-supp-smallbatch.tex": "26a715a5c7d17ef8f0cc6fcc8ade8e8de36f904975ec5e3ae51a8415ebd2dd57",
+    "variants/thesis2-zh/chapters/09-conclusion.tex": "26c0a52c56870149ca505cb82fad3fb383c24c7e87279d0a55d517ffe63f94e1",
+    "variants/thesis2-zh/frontmatter/abstract.tex": "273b034b2c2e53410d50fca37fc821536cb62c2012d550be3306c36523f7eca8",
+    "variants/thesis2-zh/frontmatter/acknowledgements.tex": "02d827a8e9cba0f0cb7b6aa18d4cf0e2b99ff6e2ae3e0065cd4ed7ed397416a7",
+    "variants/thesis2-zh/frontmatter/notation.tex": "3859c931789585fc5f1bb74cb198561b6b0d7167cf02d4d185a783a4b09881f4",
+    "variants/thesis2-zh/frontmatter/research-assistance.tex": "05c7ca51478d0ab0bc586ca4d0dff25505ce2cf5ad2694ab07a28afa9e7f940e",
+    "variants/thesis2-zh/frontmatter/title.tex": "00217050aa7c8ef05bf0c2a7f29782c8d3e8b80ff5039f545940c6a7218c14c8",
+    "variants/thesis2-zh/main.tex": "f5e74de95fa1f456036e6141787c566009d29f5f7dfcb73110a2cfb77deba320",
+    "variants/thesis2-zh/preamble.tex": "37eded810e6f89a3be4f7a2c01ca95b183094546d20cdcd4792f11ff6547c795",
+    "variants/thesis2-zh/tables/ch3/datasets.tex": "6aa6eae048a6eaccfedbbdb8256ace12f50fe99c564de8379ae7742f256dab48",
+    "variants/thesis2-zh/tables/ch7/budget_cost.tex": "a46c8fa657dead9f8b591aac8407d368ef98ad681fe6cba5ce27351aa4bc21fa",
+    "variants/thesis2-zh/tables/ch7/budget_full.tex": "1e4a1d01d265cbbe6698408ded12562986dcd2e540c9589ce2b8b0f6dcf92b42",
+    "variants/thesis2-zh/tables/ch7/budget_quality.tex": "6311ce9f0876cda650b822e16953f566648407ca71d89827bf2119be8fc1bf24",
+    "variants/thesis2-zh/tables/ch7/build_memory.tex": "31e85b24995889006f96f584cf811a9ea78c796e147ab23f8a29ef18e0498ca4",
+    "variants/thesis2-zh/tables/ch7/e1_memory.tex": "745e0cb6afe36a058ae9d2fe01f97de7e8d78573c91e1a8da867a7c772172e10",
+    "variants/thesis2-zh/tables/ch7/matched97.tex": "93c41674f6b7ccd71ddd3868b26bbdb48e6dc2ee8f528898cb2a7f86f64d99de",
+    "variants/thesis2-zh/tables/ch7/probe.tex": "806b9f6936267f85fdfba09e154e89a583bdda10b3c43f6a2afc6674ad4e5e72",
+    "variants/thesis2-zh/tables/ch7/refinement.tex": "e97ba0bf691c61f67ee3ee1381135723912c37f4933c7b6e0c4384bbe7bac392",
+    "variants/thesis2-zh/tables/ch7/scheduling.tex": "bb0b1f12b6d6cb084654ce6255b8c5c0f07211b0844e47217ac452813ebedd14",
+    "variants/thesis2-zh/tables/full-review/precision-anchors.tex": "029370b9f12f0bdc7c1742d733ac69f458481a1f3fa899f30631edf5409e73ea",
+    "variants/thesis2-zh/tables/supplement/precision.tex": "f2c9381f8672c0fb1f06e52ee2a5410ce7db1d952cae17d10a7bc5cbe2114bc0",
+    "variants/thesis2-zh/tables/supplement/representation.tex": "f6429bac128b6143ef3c60e24d7879f354a9e2f6f4e4686de2aecd44947a8805",
+    "variants/thesis2-zh/tables/supplement/stream.tex": "db1a750a3739a585aaae9cc1d1ec0d792802971db36cc94718f3928a2ade595d",
+    "variants/thesis2-zh/tables/t4-t5/smallbatch.tex": "422d32f54bdd6de256e182443d5ad9a6defbe2fe983e0e0d9cd837b15c92a87f",
+    "variants/thesis2-zh/tables/t4-t5/strict-selection.tex": "f04252eb7bafc381031b54dbeb5a12bd316ccdaa238aa1ca245bd1cdf1881884"
+  },
+  "input_sha256": {
+    "/Users/apple/github/8800_report/data/ch8/audit.json": "0e6a418394716cee91613773ff3578e4ef639cb6d0981495e4efe91291d47fe1",
+    "/Users/apple/github/8800_report/figures/ch8/negative-evidence.pdf": "7bc3158ead5654f9a1a40b94cd25df60cd2c65328f264d997b41e56ff42fb1de",
+    "/Users/apple/github/JHQ_GPU/experiments/local_first_refinement/LOCAL_FIRST_REPORT.md": "05d3595967a374a6ea7e3127b81ab00b30688b8841be9c447a500d0508f16985",
+    "/Users/apple/github/JHQ_GPU/experiments/progressive_primary/PROGRESSIVE_PRIMARY_REPORT.md": "b0cdd82a19ad2a4ab519210c770ee2db7ca3049185b6ae5aa89884d0bd7741da",
+    "/Users/apple/github/JHQ_GPU/experiments/residual_aware_bound/RESIDUAL_BOUND_PILOT_REPORT.md": "0b87d1f7f71a50a4488aca90c49fae5377581efa869886641ab4543926d943fe",
+    "/Users/apple/github/JHQ_GPU/experiments/seq_calibration/SEQUENTIAL_CALIBRATION_REPORT.md": "21eb0b267e027de9cf1a1f6d04d1dbc877574a662f55fa1bed72807649f48e6b",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_cent_arxiv-768_np128.txt": "225afa06e2f7cb4665519a33eb995aecc27864c5b4c304e7364e0ef5d2f0699c",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_cent_arxiv-768_np512.txt": "b64bcb287ea8e06b5fbaf17903168713f10bdce4487602b1deacc7111993aca9",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_cent_openai3-1536_np128.txt": "cf48d8f1cfc674d0dda122912adeb67bbd1032feb011963c6c73ab0938d9c945",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_cent_openai3-1536_np512.txt": "bb752ea9b970f6a66ae51d7f08e4b41d250f2ce302d2132a0ed9a9f113a41b25",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_cent_vogue-768_np128.txt": "ec44575fb3096281d1425ae4e81ebe4b08037ef35c17e3457a68de4f3b6df03c",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_cent_vogue-768_np512.txt": "ac44a3f1dac0b911d19c34a4bb924fbb341e8e4b85cffc59160d14c990d6a327",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_orig_arxiv-768_np128.txt": "acf7388cba3983011d9ccd285641f18ee18f8a0474baaa821ac05b3ee34395b5",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_orig_arxiv-768_np512.txt": "05f21808087f167b57e515482b132dca8a92518929844675d4617db5015c3113",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_orig_openai3-1536_np128.txt": "5b2e196e95e7ff0a81443c39722e27e6a295cf82bdc92c2d6914651158c745ee",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_orig_openai3-1536_np512.txt": "1f8cd3d6e52322af3ac294566efb81e58159cb0e3abe42c6cb1b3dbea67f6e15",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_orig_vogue-768_np128.txt": "525f6676488191a7f26c68d85e6691fcff963c75d49edfd4923067316919f294",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/budget_orig_vogue-768_np512.txt": "ee8a4ae3d89e665c3071ca1f1cd59053a6646173bb361863b6a021ac7d9c5792",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_arxiv-768_np128.txt": "e9f7a7c16c77b7d111b36f3b2ca81cb9dfee22750b0bdca6399de175ecabd51b",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_arxiv-768_np192.txt": "3d422a75156301c9a6430fb182fca16958cf9599f3213bcb2f9790074a3e39d4",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_arxiv-768_np256.txt": "ab391e14bde63decb84a22afbb1bf98373a6634462056cf9da81e6f22a7d2243",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_arxiv-768_np96.txt": "e63d46f0def8dadf5e3e0e70c7ca569e6c0ad60e278067f5e22f439728addfb6",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_openai3-1536_np256.txt": "81490a8fae24a9e28af9fbf5adf400c43166a82980328843749e79599ca76716",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_openai3-1536_np384.txt": "ccbb518a571098c8358a5ecbf8c7caa86a25f5087f09507934f0eea3b7f3e51e",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_openai3-1536_np512.txt": "e42198a0192c5df72b11f01ae465131778cbb1e5fd1fc63d3a2eba6337d7a0ea",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_vogue-768_np128.txt": "ab13e630f1abfcb436fb246d780d1c5ee0bd7a8691f1235ccccfb1aced26d837",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_vogue-768_np192.txt": "f61ca3259dde5a83d93df44486b411a0fa3de8c0b958012357996e7186e6f028",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_vogue-768_np256.txt": "d889914a412cf95d07a2700bd53d9c107d3b64a34c70a2d8a79c3353da5adf33",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_cent_vogue-768_np384.txt": "9501beb7e34e28961d204cf6c093bdfee462ca80ec788a471d0e2422f6564276",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_arxiv-768_np128.txt": "dde2578b82acfed6a181c0e6e016a6bba04a8e49d25c9e462a1197ec459fc4e8",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_arxiv-768_np192.txt": "f31d5ba142f27f79b362d6f0e320a63b95d4852d2706231dd23e204345055ecd",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_arxiv-768_np256.txt": "298e936cb60c1fddf6db2f667add1594cd80054609a41502c7f39e14a2fd707b",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_arxiv-768_np96.txt": "2c58a45da78ca7139735aeeb32467d159ded4c4123bdecdf48e8b77341676fd7",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_openai3-1536_np256.txt": "69315d59c5cee22ac2127377be0ca77e188ed09a59271849604962b025bbc650",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_openai3-1536_np384.txt": "cdaa7b764eba67318b847b95ea1eb945f4a6f9aa75b5468989acafc2f69a4f26",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_openai3-1536_np512.txt": "f8596366e633d9f3357a00869357adf9e6a332ede247c93651fb2b941c67f0f0",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_vogue-768_np128.txt": "0fa162d9f96c3b1db3376f812b8701f7b458b1b775d1c5c5fc562e1e391b2747",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_vogue-768_np192.txt": "b26e298dd458a747efb0d7df4d21e6d70a94f20f985e73f5aecd8fae0aa0513a",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_vogue-768_np256.txt": "42b2ad4d16f7e49f238b346ef828d3b8401b75de7774abc63b64cc51f3f37831",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/front_orig_vogue-768_np384.txt": "a7ea618394d7c862591ad780e9e1bdb091daba0de1716b9dc82f79f4e869f7ca",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/RAW_T2/prep.txt": "71774e97be0f9506e905e1cdcef951bab7144d0b25066042a758e973c9ab2add",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/REPORT_CN.md": "9b8544881e4f5602b7ca8f84bbe74af1ae230fbba9a09cff83ccd8791a07d47f",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/T2_SUMMARY.md": "2e4c91bad5e7a9a78f7a6d4cd4fcd7cb45ccb898f20f6eb894821e4fed058738",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/analyze_t2.py": "fc0fc473dbcaef10d74e0a3e6486addd2c2b32c1c246c6d3654f8bc5c1522f22",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/t2_center_data.py": "c24852a84df33134166c8cca8dfd1114034df873349ada2481dbc916c5970717",
+    "/Users/apple/github/JHQ_GPU/experiments/thesis_evidence/t2_centering.sh": "452e0bb6500f125c2fedf0c0b7bde41fa0ea9ac0f3044122bbae7f51465207ba",
+    "/Users/apple/github/JHQ_GPU/results/front6/NEGATIVES.md": "82ef6c14a3917e7ac9e9510403cce0102f50810964ba8721b13b598657a6dedc",
+    "/Users/apple/github/JHQ_GPU/results/front6/V54_SIGN_IP.md": "ab094794ed745ee3a9d47357350cfae49434f1c3a9a6b6fa13fc564b1d82bc8f"
+  },
+  "t2": {
+    "arxiv-768": {
+      "mean_norm": 0.8368080309622946,
+      "original_front": [
+        [
+          0.8918,
+          360672.0
+        ],
+        [
+          0.9381,
+          351569.0
+        ],
+        [
+          0.9595,
+          328307.0
+        ],
+        [
+          0.9689,
+          295318.0
+        ],
+        [
+          0.97,
+          261617.0
+        ],
+        [
+          0.9753,
+          246915.0
+        ],
+        [
+          0.9766,
+          222450.0
+        ],
+        [
+          0.9807,
+          189887.0
+        ],
+        [
+          0.9831,
+          175066.0
+        ],
+        [
+          0.9856,
+          144545.0
+        ],
+        [
+          0.9865,
+          119000.0
+        ]
+      ],
+      "centred_front": [
+        [
+          0.9384,
+          360428.0
+        ],
+        [
+          0.9626,
+          350416.0
+        ],
+        [
+          0.9709,
+          328918.0
+        ],
+        [
+          0.973,
+          294974.0
+        ],
+        [
+          0.9772,
+          273207.0
+        ],
+        [
+          0.9796,
+          248811.0
+        ],
+        [
+          0.9799,
+          224700.0
+        ],
+        [
+          0.9839,
+          203679.0
+        ],
+        [
+          0.9865,
+          190460.0
+        ],
+        [
+          0.9866,
+          175314.0
+        ],
+        [
+          0.9888,
+          154664.0
+        ],
+        [
+          0.9891,
+          145036.0
+        ],
+        [
+          0.9893,
+          119669.0
+        ]
+      ],
+      "original_qps97": 261617.0,
+      "centred_qps97": 331183.8617811674,
+      "ratio97": 1.2659110905681488,
+      "budgets": {
+        "128": {
+          "orig": {
+            "fixed": {
+              "200": [
+                0.976,
+                150897.0
+              ],
+              "100": [
+                0.9748,
+                207082.0
+              ],
+              "64": [
+                0.9736,
+                229693.0
+              ],
+              "32": [
+                0.9626,
+                241872.0
+              ],
+              "16": [
+                0.9412,
+                265832.0
+              ],
+              "8": [
+                0.894,
+                271332.0
+              ],
+              "4": [
+                0.8084,
+                276057.0
+              ],
+              "2": [
+                0.678,
+                278043.0
+              ]
+            },
+            "full": [
+              200,
+              0.976,
+              150897.0
+            ],
+            "D": "0,5,13,69,204,451,887,1545",
+            "oracle": 200,
+            "rule128": [
+              100,
+              0.625,
+              188132.0
+            ]
+          },
+          "cent": {
+            "fixed": {
+              "200": [
+                0.9772,
+                152278.0
+              ],
+              "100": [
+                0.977,
+                208080.0
+              ],
+              "64": [
+                0.9764,
+                231776.0
+              ],
+              "32": [
+                0.973,
+                251915.0
+              ],
+              "16": [
+                0.9636,
+                267306.0
+              ],
+              "8": [
+                0.9386,
+                271338.0
+              ],
+              "4": [
+                0.8858,
+                276191.0
+              ],
+              "2": [
+                0.77,
+                278109.0
+              ]
+            },
+            "full": [
+              64,
+              0.9764,
+              231776.0
+            ],
+            "D": "0,0,1,12,59,197,504,1074",
+            "oracle": 64,
+            "rule128": [
+              64,
+              0.109,
+              233978.0
+            ]
+          }
+        },
+        "512": {
+          "orig": {
+            "fixed": {
+              "200": [
+                0.9894,
+                69326.0
+              ],
+              "100": [
+                0.9878,
+                83796.0
+              ],
+              "64": [
+                0.9844,
+                87930.0
+              ],
+              "32": [
+                0.9724,
+                90530.0
+              ],
+              "16": [
+                0.9486,
+                92241.0
+              ],
+              "8": [
+                0.8964,
+                92286.0
+              ],
+              "4": [
+                0.812,
+                92000.0
+              ],
+              "2": [
+                0.6794,
+                92166.0
+              ]
+            },
+            "full": [
+              200,
+              0.9894,
+              69326.0
+            ],
+            "D": "0,6,18,77,219,475,924,1559",
+            "oracle": 200,
+            "rule128": [
+              200,
+              0.5,
+              76690.0
+            ]
+          },
+          "cent": {
+            "fixed": {
+              "200": [
+                0.9914,
+                68279.0
+              ],
+              "100": [
+                0.991,
+                83907.0
+              ],
+              "64": [
+                0.9904,
+                87789.0
+              ],
+              "32": [
+                0.9858,
+                90333.0
+              ],
+              "16": [
+                0.975,
+                90932.0
+              ],
+              "8": [
+                0.9496,
+                91270.0
+              ],
+              "4": [
+                0.8926,
+                91341.0
+              ],
+              "2": [
+                0.7732,
+                91540.0
+              ]
+            },
+            "full": [
+              100,
+              0.991,
+              83907.0
+            ],
+            "D": "0,0,4,15,66,204,516,1082",
+            "oracle": 64,
+            "rule128": [
+              64,
+              0.703,
+              86914.0
+            ]
+          }
+        }
+      }
+    },
+    "vogue-768": {
+      "mean_norm": 0.48044534013571016,
+      "original_front": [
+        [
+          0.9317,
+          304491.0
+        ],
+        [
+          0.9541,
+          299814.0
+        ],
+        [
+          0.9622,
+          282890.0
+        ],
+        [
+          0.9644,
+          243934.0
+        ],
+        [
+          0.9657,
+          231991.0
+        ],
+        [
+          0.9739,
+          222494.0
+        ],
+        [
+          0.9767,
+          196498.0
+        ],
+        [
+          0.9796,
+          184575.0
+        ],
+        [
+          0.9827,
+          166469.0
+        ],
+        [
+          0.9853,
+          140055.0
+        ],
+        [
+          0.9884,
+          129496.0
+        ],
+        [
+          0.9887,
+          111695.0
+        ]
+      ],
+      "centred_front": [
+        [
+          0.9422,
+          305316.0
+        ],
+        [
+          0.9574,
+          298347.0
+        ],
+        [
+          0.9632,
+          282264.0
+        ],
+        [
+          0.9645,
+          242921.0
+        ],
+        [
+          0.9693,
+          231356.0
+        ],
+        [
+          0.9755,
+          222773.0
+        ],
+        [
+          0.9767,
+          196355.0
+        ],
+        [
+          0.9816,
+          184388.0
+        ],
+        [
+          0.9828,
+          166074.0
+        ],
+        [
+          0.987,
+          140322.0
+        ],
+        [
+          0.9885,
+          129500.0
+        ],
+        [
+          0.9887,
+          112226.0
+        ]
+      ],
+      "original_qps97": 226961.38256822422,
+      "centred_qps97": 230370.6234935266,
+      "ratio97": 1.0150212379160035,
+      "budgets": {
+        "128": {
+          "orig": {
+            "fixed": {
+              "200": [
+                0.968,
+                149094.0
+              ],
+              "100": [
+                0.968,
+                202721.0
+              ],
+              "64": [
+                0.9678,
+                220026.0
+              ],
+              "32": [
+                0.9658,
+                253417.0
+              ],
+              "16": [
+                0.9576,
+                225121.0
+              ],
+              "8": [
+                0.9356,
+                273896.0
+              ],
+              "4": [
+                0.8876,
+                276760.0
+              ],
+              "2": [
+                0.799,
+                278308.0
+              ]
+            },
+            "full": [
+              100,
+              0.968,
+              202721.0
+            ],
+            "D": "0,1,2,16,65,198,467,943",
+            "oracle": 64,
+            "rule128": [
+              64,
+              0.078,
+              221283.0
+            ]
+          },
+          "cent": {
+            "fixed": {
+              "200": [
+                0.9666,
+                149126.0
+              ],
+              "100": [
+                0.9664,
+                203350.0
+              ],
+              "64": [
+                0.9664,
+                222104.0
+              ],
+              "32": [
+                0.965,
+                251987.0
+              ],
+              "16": [
+                0.9598,
+                271520.0
+              ],
+              "8": [
+                0.9448,
+                273377.0
+              ],
+              "4": [
+                0.896,
+                272501.0
+              ],
+              "2": [
+                0.813,
+                277047.0
+              ]
+            },
+            "full": [
+              64,
+              0.9664,
+              222104.0
+            ],
+            "D": "0,1,1,10,50,137,387,823",
+            "oracle": 64,
+            "rule128": [
+              64,
+              0.344,
+              232376.0
+            ]
+          }
+        },
+        "512": {
+          "orig": {
+            "fixed": {
+              "200": [
+                0.9918,
+                83028.0
+              ],
+              "100": [
+                0.9916,
+                98023.0
+              ],
+              "64": [
+                0.9916,
+                102879.0
+              ],
+              "32": [
+                0.9888,
+                110640.0
+              ],
+              "16": [
+                0.9806,
+                113277.0
+              ],
+              "8": [
+                0.9558,
+                113186.0
+              ],
+              "4": [
+                0.9034,
+                114879.0
+              ],
+              "2": [
+                0.8134,
+                103176.0
+              ]
+            },
+            "full": [
+              100,
+              0.9916,
+              98023.0
+            ],
+            "D": "0,1,4,23,73,210,483,946",
+            "oracle": 64,
+            "rule128": [
+              64,
+              0.031,
+              102135.0
+            ]
+          },
+          "cent": {
+            "fixed": {
+              "200": [
+                0.9896,
+                82657.0
+              ],
+              "100": [
+                0.9894,
+                99977.0
+              ],
+              "64": [
+                0.9892,
+                103009.0
+              ],
+              "32": [
+                0.9876,
+                108846.0
+              ],
+              "16": [
+                0.9826,
+                111694.0
+              ],
+              "8": [
+                0.9648,
+                114699.0
+              ],
+              "4": [
+                0.9162,
+                113724.0
+              ],
+              "2": [
+                0.827,
+                104658.0
+              ]
+            },
+            "full": [
+              100,
+              0.9894,
+              99977.0
+            ],
+            "D": "0,1,2,11,55,146,395,820",
+            "oracle": 64,
+            "rule128": [
+              64,
+              0.25,
+              104421.0
+            ]
+          }
+        }
+      }
+    },
+    "openai3-1536": {
+      "mean_norm": 0.2930048916479404,
+      "original_front": [
+        [
+          0.9309,
+          210205.0
+        ],
+        [
+          0.9523,
+          207709.0
+        ],
+        [
+          0.9545,
+          204162.0
+        ],
+        [
+          0.9646,
+          150595.0
+        ],
+        [
+          0.9669,
+          149622.0
+        ],
+        [
+          0.9719,
+          117665.0
+        ],
+        [
+          0.9746,
+          116584.0
+        ]
+      ],
+      "centred_front": [
+        [
+          0.9331,
+          209526.0
+        ],
+        [
+          0.9535,
+          206824.0
+        ],
+        [
+          0.9552,
+          203713.0
+        ],
+        [
+          0.9555,
+          197799.0
+        ],
+        [
+          0.9556,
+          184132.0
+        ],
+        [
+          0.9654,
+          150916.0
+        ],
+        [
+          0.9673,
+          148943.0
+        ],
+        [
+          0.9676,
+          145526.0
+        ],
+        [
+          0.9677,
+          137817.0
+        ],
+        [
+          0.9728,
+          117523.0
+        ],
+        [
+          0.9747,
+          116171.0
+        ],
+        [
+          0.975,
+          114084.0
+        ],
+        [
+          0.9751,
+          109403.0
+        ]
+      ],
+      "original_qps97": 128913.85589591898,
+      "centred_qps97": 128263.7707196208,
+      "ratio97": 0.994957212537161,
+      "budgets": {
+        "128": {
+          "orig": {
+            "fixed": {
+              "200": [
+                0.928,
+                114254.0
+              ],
+              "100": [
+                0.928,
+                169065.0
+              ],
+              "64": [
+                0.928,
+                198696.0
+              ],
+              "32": [
+                0.928,
+                257563.0
+              ],
+              "16": [
+                0.928,
+                283305.0
+              ],
+              "8": [
+                0.928,
+                295545.0
+              ],
+              "4": [
+                0.9262,
+                302630.0
+              ],
+              "2": [
+                0.9056,
+                307881.0
+              ]
+            },
+            "full": [
+              8,
+              0.928,
+              295545.0
+            ],
+            "D": "0,0,0,0,0,0,16,144",
+            "oracle": 8,
+            "rule128": [
+              8,
+              0.062,
+              295988.0
+            ]
+          },
+          "cent": {
+            "fixed": {
+              "200": [
+                0.9302,
+                110895.0
+              ],
+              "100": [
+                0.9302,
+                167016.0
+              ],
+              "64": [
+                0.9302,
+                196774.0
+              ],
+              "32": [
+                0.9302,
+                256863.0
+              ],
+              "16": [
+                0.9302,
+                285488.0
+              ],
+              "8": [
+                0.93,
+                298182.0
+              ],
+              "4": [
+                0.9286,
+                304947.0
+              ],
+              "2": [
+                0.91,
+                310175.0
+              ]
+            },
+            "full": [
+              16,
+              0.9302,
+              285488.0
+            ],
+            "D": "0,0,0,0,1,2,10,131",
+            "oracle": 8,
+            "rule128": [
+              8,
+              0.219,
+              295497.0
+            ]
+          }
+        },
+        "512": {
+          "orig": {
+            "fixed": {
+              "200": [
+                0.974,
+                60690.0
+              ],
+              "100": [
+                0.974,
+                86358.0
+              ],
+              "64": [
+                0.974,
+                92777.0
+              ],
+              "32": [
+                0.974,
+                109061.0
+              ],
+              "16": [
+                0.974,
+                112677.0
+              ],
+              "8": [
+                0.974,
+                113934.0
+              ],
+              "4": [
+                0.9714,
+                114351.0
+              ],
+              "2": [
+                0.9468,
+                115174.0
+              ]
+            },
+            "full": [
+              8,
+              0.974,
+              113934.0
+            ],
+            "D": "0,0,0,0,0,0,16,144",
+            "oracle": 8,
+            "rule128": [
+              8,
+              0.062,
+              113960.0
+            ]
+          },
+          "cent": {
+            "fixed": {
+              "200": [
+                0.9756,
+                60609.0
+              ],
+              "100": [
+                0.9756,
+                86462.0
+              ],
+              "64": [
+                0.9756,
+                93111.0
+              ],
+              "32": [
+                0.9756,
+                108618.0
+              ],
+              "16": [
+                0.9756,
+                112781.0
+              ],
+              "8": [
+                0.9752,
+                113306.0
+              ],
+              "4": [
+                0.9728,
+                113925.0
+              ],
+              "2": [
+                0.9488,
+                114490.0
+              ]
+            },
+            "full": [
+              16,
+              0.9756,
+              112781.0
+            ],
+            "D": "0,0,0,0,1,2,13,139",
+            "oracle": 8,
+            "rule128": [
+              8,
+              0.125,
+              113211.0
+            ]
+          }
+        }
+      }
+    }
+  },
+  "expected_table_delta": 1,
+  "new_table_label": "tab:8-stopped",
+  "new_labels": [
+    "sec:8-centring",
+    "sec:8-residual-bound",
+    "sec:8-stopped",
+    "tab:8-stopped"
+  ],
+  "authorised_table_rewording": "chapters/08-3-validity.tex",
+  "decisions": [
+    "Adopt problem-first interpretation of construction capacity, lookup cost, scheduling overhead, score-selection correctness and ANN quality.",
+    "Preserve the sensitivity align block and both existing display-math blocks verbatim; add only the explicit translation-invariance inline identity.",
+    "Correct two-way LUT storage to 32 entries per subspace, versus 16 for four/eight-way splits.",
+    "Grouping is useful for small batches and imbalance; reject the claim that it helps only at small batches because Vogue uses grouping at batch 1000.",
+    "Add T2 using raw-run frontier recomputation and original-versus-centred budget traces, not baseline ratios multiplied across sessions.",
+    "T2 refits the centred index against an archived original state; do not ascribe every change exclusively to centring, explain all RaBitQ rankings, or infer a general monotone mean-norm law from three datasets.",
+    "Include counterexamples: arXiv np512 selects 100 not 64; Vogue high-budget recall declines; OpenAI calibration changes 8 to 16 despite near-equal frontier speed.",
+    "Separate the FP64 offline median-threshold target 0.97775 and GPU follow-up target 0.9766, which also retrains residuals.",
+    "Add the FP64 residual-bound pilot as evidence that mathematical safety is insufficient without useful pruning; GPU end-to-end speed remains unmeasured.",
+    "Summarise six representative earlier alternatives in one table; distinguish GPU timings from offline replay and model estimates instead of copying every historical experiment.",
+    "Correct sequential-controller wording to offline replay with fitted cost-model predictions, not integrated GPU timings.",
+    "Preserve the preceding CPU correction paragraph verbatim.",
+    "Use explicit tests for future directions; avoid promising billion-scale capacity from residual offload because primary/routing storage must also fit.",
+    "Restrict deployment advice to tested operating regions; reject a blanket advantage at all recalls below 0.97.",
+    "Add T2 navigation only; preserve all existing experiment navigation rows and component-table contents."
+  ],
+  "validation": {
+    "english_verifier_passed": true,
+    "chinese_verifier_passed": true,
+    "english_pages": 70,
+    "english_body_pages": 60,
+    "chinese_pages": 68,
+    "english_pdf_sha256": "6fc9ca3c79a5d188207d103e3a2695fd50a3e2c16105bf759d1796248a46b4a5",
+    "chinese_pdf_sha256": "154550a443b24a31f1e5ca9a5f28cb6b28a1ffc670737f7e48522ac735e0e485",
+    "english_visual_review_pages": [
+      18,
+      19,
+      62,
+      63,
+      64,
+      65,
+      66
+    ],
+    "chinese_visual_review_pages": [
+      17,
+      18,
+      60,
+      61,
+      62,
+      63,
+      64
+    ],
+    "figures": 25,
+    "tables": 31,
+    "proofs": 6,
+    "no_compiler_issues": true,
+    "source_word_estimate_before": 695,
+    "source_word_estimate_after": 1745,
+    "github_pushed": false
+  },
+  "threat_table_identifier_tokens_reworded": [
+    "T4",
+    "T5",
+    "int8",
+    "TF32",
+    "FP32"
+  ]
+}

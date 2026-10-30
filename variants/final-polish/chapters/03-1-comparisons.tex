@@ -1,0 +1,43 @@
+Each test configuration fixes a dataset, index and
+workload. Component comparisons vary the mechanism under study while
+holding the trained index, queries, probes, refinement budget and scoring
+representation fixed where applicable. Cross-system comparisons use each
+system's own parameter grid (\cref{sec:7-2}). \Cref{tab:3-design} maps the
+research questions to these controls and their measurements. Paired tests
+measure the effect of an execution change; explaining hardware causes,
+such as cache behaviour, requires separate profiling.
+
+Let $Q$ denote throughput in queries per second (QPS). A paired speed
+ratio is $Q_{\rm treatment}/Q_{\rm control}$; values above one favour
+the treatment. The summary is the geometric mean across $J$ configurations,
+weighting each configuration equally:
+\[
+ G=\exp\!\left(\frac1J\sum_{j=1}^{J}
+ \log\frac{Q_{{\rm treatment},j}}{Q_{{\rm control},j}}\right).
+\]
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Research questions and experimental controls]{Research questions, controlled comparisons and checks. Construction,
+execution, budget selection and cross-system search require different controls.}
+\label{tab:3-design}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.19\linewidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Research question & Comparison & Shared conditions & Measures and checks \\
+\midrule
+RQ1: GPU index construction and capacity & Cold construction and reuse of trained models; compressed versus raw storage
+& $N,d$, representation, routing and construction timing boundary
+& Training/encoding time and resident/peak memory; measured versus modelled memory \\
+RQ2: Representation-aware execution & Table grouping, packed reads, cooperative refinement, grouped scanning, shared bounds and probe selection
+& Same index, workload and budget; common score definitions
+& Host-call QPS, stage times and differences in scores and returned IDs under the relevant tie rule \\
+RQ3: Workload-level refinement calibration & Unlabelled sampled/full-pool calibration; fixed 64, 100, 200; full budget-grid search and a GT-based diagnostic choice
+& Same index and routing; separate calibration and evaluation queries
+& Test-query recall loss versus the best tested budget, selected-budget QPS and calibration cost; assess quality and payback \\
+RQ4: Cross-system search performance & Separately tuned JHQ, CAGRA, IVF-PQ and IVF-RaBitQ across batch sizes; brute-force reference
+& Same exported vectors, GT, $k$, GPU and host-call boundary; memory reported separately
+& Matched-recall QPS, memory and coverage; record wins and losses \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

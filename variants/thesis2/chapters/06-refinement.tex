@@ -1,7 +1,13 @@
 % Structure follows 6.pdf; all six sections use audited implementation/evidence.
 \chapter{Workload-Level Budget Calibration}
 \label{ch:refinement}
-Unlabelled agreement with a larger-budget reference selects one multiplier for later batches. Reuse must repay calibration at the required quality.
+A fixed refinement budget need not suit every workload: full-pool
+calibration selects multipliers from 4 to 200 in the tested settings
+(\cref{tab:7-budget-full}). New workloads may lack ground truth for
+tuning. This chapter answers RQ3 by checking on unlabelled queries
+whether a smaller budget changes the neighbours returned by a larger
+reference budget, then reusing the selected multiplier for later batches.
+Both quality and the cost of calibration determine whether reuse helps.
 
 \section{Refinement Budget and Search Cost}
 \label{sec:6-1}

@@ -1,0 +1,27 @@
+Moving JHQ to a GPU raises three technical challenges.
+
+First, compressed codes reduce storage but can still be expensive to scan.
+Each eight-bit primary code addresses a 256-entry distance lookup table
+(LUT); these tables must be built and may be too large for fast on-chip memory.
+Because JHQ combines per-coordinate quantisation levels, this table can
+be split exactly in real arithmetic into two 16-entry tables, one for
+each four-bit half of the byte. The challenge is whether the smaller
+tables repay the extra lookups and additions on the GPU.
+
+Second, small batches can contain too few queries to keep the GPU busy.
+Splitting each query's candidates across thread blocks creates parallel
+work, but equal local quotas can discard global winners if the best
+candidates fall in one block. One solution is to let each group retain
+its own full shortlist before merging, at the cost of memory and merging
+work. The challenge
+is to retain all potential winners while keeping this overhead below
+the parallelism gain. This thesis studies shared cutoffs and batch-dependent
+scheduling as ways to reduce that overhead.
+
+Third, the refinement work needed for a target recall varies by workload.
+Too few candidates can discard true neighbours; too many spend time
+reading and scoring residual codes without improving the answers.
+The aim is to choose a reusable budget without ground-truth labels.
+A larger-budget search provides a reference, but can itself miss true
+neighbours. Agreement with it therefore needs separate checks of recall
+on test queries, alongside the cost of calibration and subsequent search.

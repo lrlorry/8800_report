@@ -1,16 +1,16 @@
 % Native schematic of the implemented decision and its offline evaluation.
 \begin{tikzpicture}[
- font=\footnotesize\linespread{1}\selectfont,
+ font=\small\linespread{1}\selectfont,
  box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
  text width=2.8cm,minimum height=1.45cm,inner sep=4pt},
  arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
 \node[box] (sample) at (0,0) {Calibration pool\\Even indices\\Sample $S$ queries};
 \node[box,fill=ThesisNavy!7] (ref) at (3.6,0) {Reference search\\$\alpha_{\rm ref}=200$\\Top-$k$ IDs};
-\node[box,fill=ThesisNavy!7] (test) at (7.2,0) {Bisection\\$D_S(\alpha)\leq1$\\Shared sample};
+\node[box,fill=ThesisNavy!7] (test) at (7.2,0) {Bisection\\$D_S(\alpha)\leq1$\\same $S$ queries};
 \node[box] (choice) at (10.8,0) {Chosen $\alpha$\\Caller applies it\\For batch reuse};
 \node[box] (held) at (0,-2.0) {Held-out pool\\Odd query indices\\GT for evaluation};
 \node[box,text width=6.4cm] (eval) at (7.2,-2.0)
- {Evaluate the selected arm\\Look up held-out recall and QPS\\from previously timed grid arms};
+ {Evaluate the selected budget\\Look up held-out recall and QPS\\from fixed-budget runs};
 \draw[arr] (sample) -- (ref);
 \draw[arr] (ref) -- (test);
 \draw[arr] (test) -- (choice);

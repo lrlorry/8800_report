@@ -1,10 +1,10 @@
 {
   "output": "thesis2.pdf",
-  "pages": 66,
-  "body_pages": 56,
+  "pages": 71,
+  "body_pages": 61,
   "front_pages": 7,
-  "sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715",
-  "protected_files_unchanged": 887,
+  "sha256": "8c6ca83968e1aa136aceaa5b05d41fc799c6855762b62cc062f07b9e5c36d60d",
+  "protected_files_unchanged": 886,
   "missing_preexisting_derived_files": [
     "thesis1-part1.pdf",
     "thesis1-part2.pdf"
@@ -15,8 +15,8 @@
   "unmarked_mapped_sentences_preserved": true,
   "theorem_statements_preserved": true,
   "body_numerical_tables_preserved": true,
-  "figures": 28,
-  "tables": 28,
+  "figures": 25,
+  "tables": 31,
   "proofs": 6,
   "statement_proof_same_page": true,
   "proof_alignment": [
@@ -41,12 +41,12 @@
       "body_x": 76.132
     },
     {
-      "page": 42,
+      "page": 44,
       "heading_x": 76.535,
       "body_x": 76.535
     },
     {
-      "page": 43,
+      "page": 44,
       "heading_x": 76.535,
       "body_x": 76.535
     }
@@ -57,7 +57,7 @@
   "words_outside_page": 0,
   "counts": {
     "body_abstract_before": 14119,
-    "body_abstract_after": 14406,
+    "body_abstract_after": 19502,
     "appendix_prose_removed": 1042,
     "edited_blocks": 201,
     "word_count_scope": "Same source-level prose estimator applied to reachable chapters and abstract; not an official word count",
@@ -95,9 +95,81 @@
       "variants/thesis2/chapters/07-supp-budget.tex",
       "variants/thesis2/chapters/07-supp-selection.tex",
       "variants/thesis2/chapters/08-discussion.tex"
-    ]
+    ],
+    "architecture_replacement_recorded": true,
+    "shared_architecture_unchanged": true,
+    "short_architecture_captions_verified": true
   },
   "new_detector_result": null,
+  "technical_figure_review": {
+    "shared_sources_unchanged": true,
+    "formal_mathematics_and_proofs_preserved": true,
+    "measured_tables_preserved": true,
+    "constructed_table_rows_preserved": true,
+    "removed_figures": [
+      "fig:2-memory-lifetimes",
+      "fig:6-budget-scope"
+    ],
+    "figure_converted_to_table": true,
+    "captions_shortened": true,
+    "scope_checked": true
+  },
+  "final_editorial_review": {
+    "raw_records_recalculated": true,
+    "formal_mathematics_preserved": true,
+    "measured_tables_preserved": true,
+    "descriptive_experiment_names": true,
+    "one_navigation_table": true,
+    "source_paths_and_labels_preserved": true,
+    "numerical_rounding_corrected": true,
+    "precision_plot_data_preserved": true
+  },
+  "authorised_protected_document_updates": [
+    "assessment/ch7-pending-experiments.txt"
+  ],
+  "chapter7_structure_review": {
+    "result_first_structure_reviewed": true,
+    "all_figure_and_table_blocks_preserved": true,
+    "all_formal_equations_and_proofs_preserved": true,
+    "all_measured_artifacts_preserved": true,
+    "historical_cpu_frontier_scope_checked": true,
+    "full_pool_and_recall_pilot_recalculated": true,
+    "sampled_and_full_pool_paybacks_separated": true,
+    "net_memory_boundary_corrected": true,
+    "other_sources_preserved": true
+  },
+  "chapter8_structure_review": {
+    "section_by_section_discussion_reviewed": true,
+    "other_sources_unchanged": true,
+    "all_formal_equations_and_proofs_preserved": true,
+    "existing_numerical_table_cells_preserved": true,
+    "t2_frontiers_and_budgets_recomputed": true,
+    "cpu_qualification_preserved": true,
+    "one_new_evidence_summary_table": true,
+    "offline_and_gpu_evidence_separated": true
+  },
+  "cpu_conclusion_review": {
+    "exact_before_images_replayed": true,
+    "other_sources_unchanged": true,
+    "all_equations_proofs_and_table_payloads_preserved": true,
+    "historical_cpu_ratios_recomputed": true,
+    "thread_count_and_version_scope_explicit": true
+  },
+  "chapter56_structure_review": {
+    "section_by_section_structure_reviewed": true,
+    "exact_before_images_replayed": true,
+    "all_equations_and_formal_proofs_preserved": true,
+    "numerical_table_cells_preserved": true,
+    "scheduler_setup_display_moved_verbatim": true,
+    "other_chapters_and_diagrams_unchanged": true,
+    "bilingual_sources_reviewed": true
+  },
+  "chapter3_readability_followup": {
+    "equations_and_proofs_unchanged": true,
+    "existing_table_numbers_preserved": true,
+    "new_navigation_table": true,
+    "unrelated_sources_unchanged": true
+  },
   "individual_contribution_author_confirmed": true,
   "individual_contribution_record": "audit/individual-contribution-2026-10-30.json",
   "targeted_review_record": "audit/review-02a4467-2026-10-30.json",
@@ -111,5 +183,19 @@
     "duplicate_sign_derivation_retained_in_chapter4": true,
     "all_measured_tables_unchanged": true,
     "figure_and_table_counts_unchanged": true
+  },
+  "chapter3_protocol_review": {
+    "chapters_1_and_2_unchanged": true,
+    "all_display_mathematics_and_proofs_preserved": true,
+    "numerical_table_cells_preserved": true,
+    "unused_section_alias_removed": true,
+    "contract_prefixes_disambiguated": true
+  },
+  "rq_alignment_followup": {
+    "names_aligned": true,
+    "peak_memory_retained": true,
+    "batch_sizes_explicit": true,
+    "unlabelled_reference_distinguished_from_quality_baseline": true,
+    "numbers_and_formulas_preserved": true
   }
 }

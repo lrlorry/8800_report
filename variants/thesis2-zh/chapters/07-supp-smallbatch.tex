@@ -1,28 +1,28 @@
-\subsection{小 Batch 改变竞争区间}
+\subsection{小 batch 改变竞争区间}
 \label{sec:7-smallbatch}
 
-T5 在四个 E1 数据集、batch 8/32 上比较调度 JHQ、CAGRA fp32／int8 和 IVF-RaBitQ。五轮同步主机到主机测量分别使用 1,000/992 查询。1,808 个测点包含 JHQ 单 block 对照，不含 IVF-PQ／暴力搜索。\Cref{fig:7-smallbatch,tab:7-smallbatch} 比较所得区间。
+batch 为 8、召回率为 0.97 时，CAGRA fp32 在两种估计器下都快于全部四个数据集的 JHQ。较低召回率时 JHQ 仍有竞争力，但接近持平的比较依赖如何使用实测端点。小 batch 研究在四个主比较数据集上，以 batch 为 8、32 比较调度 JHQ、CAGRA fp32／int8 和 IVF-RaBitQ。五轮同步主机到主机测试分别使用 1,000、992 条查询。1,808 个测量包含单 block JHQ 对照；IVF-PQ 和暴力搜索不在这项研究中。
 
 \suppressfloats[t]
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
 \includegraphics[width=\linewidth]{t4-t5/smallbatch.pdf}
-\captionof{figure}[小 Batch 竞争区间]{T5 的 JHQ／最快对手 QPS 比，采用保留合格实测端点的插值。大于一有利于 JHQ。严格阈值见 \Cref{tab:7-smallbatch}。}
+\captionof{figure}[小 Batch 竞争区间]{小批量研究 的 JHQ／最快对手 QPS 比，采用保留合格实测端点的插值。大于一有利于 JHQ。严格阈值见 \Cref{tab:7-smallbatch}。}
 \label{fig:7-smallbatch}
 \end{minipage}\par\medskip
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\captionof{table}[小 Batch 匹配召回比]{T5 QPS 比：保留合格端点的插值／严格实测阈值。各估计器独立选择最快对手；满足阈值的更高召回端点可入选，无需外推。}
+\captionof{table}[小 Batch 匹配召回比]{小批量研究 QPS 比：保留合格端点的插值／严格实测阈值。各估计器独立选择最快对手；满足阈值的更高召回端点可入选，无需外推。}
 \label{tab:7-smallbatch}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \input{variants/thesis2-zh/tables/t4-t5/smallbatch}
 \end{minipage}\par\medskip
 
-batch 8／召回率 0.97 时，CAGRA fp32 在两种估计器下均赢得全部四个数据集，JHQ 比为 0.641--0.893。batch 32 时比为 0.622--1.008；实测阈值下 OpenAI-3072 有利于 JHQ。Vogue 的 batch-8／0.95 领先需要插值。网格分辨率会改变接近持平的结果。
+召回率 0.97 时，插值得到的 JHQ／最快对手比值，batch 为 8 时为 0.641--0.893，batch 为 32 时为 0.622--1.008。OpenAI-3072 在 batch 32 的实测阈值下有利于 JHQ，而 Vogue 在 batch 为 8、召回率为 0.95 时的领先依赖插值（\cref{tab:7-smallbatch}）。
 
-纳入合格端点时，召回率 0.90 比值为 batch 8 的 1.032--1.479、32 的 0.866--1.166；严格实测下 JHQ 分别赢三／一个。省略端点会夸大收益。调度在 0.95 处相对单 block 提升 $1.7$--$3.3\times$，但不保证跨系统获胜。
+召回率 0.90 时，包含达标端点的插值在 batch 为 8 时有利于 JHQ，比值为 1.032--1.479；严格阈值却只有三个胜出。batch 为 32 时比值为 0.866--1.166，严格阈值只有一个胜出。调度在召回率 0.95 时相对单 block 提升 $1.7$--$3.3\times$，改善 JHQ 执行，但不能保证跨系统领先。
 
-空调用中位数为 0.012--0.072\,ms，仍计入总时间。CAGRA 使用 Python，JHQ／RaBitQ 使用 C++；预热不同（\cref{sec:a-t4-t5}）。
+边界包含接口成本。仅含传输和同步的空调用中位数为 0.012--0.072\,ms，搜索计时保留了这一成本。CAGRA 使用 Python，JHQ／RaBitQ 使用 C++；预热约定见 \cref{sec:a-t4-t5}。

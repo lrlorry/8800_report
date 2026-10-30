@@ -1,18 +1,44 @@
-实验代号区分不同的测量家族。E1 是 batch-1,000 的主要前沿扫描；D 将采用 TensorFloat-32（TF32）和 FP32 算术的 JHQ 与存档基线比较，T1 则在同一会话重测基线。T4 对 GPU 分数进行 CPU 排序；T5 测试小 batch。A1／A2／A3 分别表示重复建库、共享阈值指令和数据集对齐；B 记录预算决策；C1 审计表示。
-
 \subsection{来源与可用记录}
 \label{app:reproducibility}
 \label{sec:b-artifacts}
-\href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{项目资料库}保留版本、配置、计时、输出，以及选定的 T1、T4/T5 和 A2 输入。成对运行共享索引状态。完整向量、训练状态和历史可执行文件／哈希并非全部可用。T4 候选转储已删除，保留的汇总无法支持独立重新排序。抽样与泛化限制见 \cref{sec:6-2,sec:6-3,sec:8-3}。
+\href{https://github.com/lrlorry/8800_report/blob/001579c9771759b672ef377b10dbc3dd959c7979/docs/artifact-access.md}{项目资料库}提供源码、配置、计时和选定输入。完整向量、训练状态及历史可执行文件哈希并非全部可用。严格选择检查中已删除的候选数组需要重新生成，才能独立重新排序。\Cref{tab:a-components} 将版本对应到组件对照；各加速比不能相乘得到整系统结果。抽样与泛化限制见\cref{sec:6-2,sec:6-3,sec:8-3}。
 
-\begin{table}[!htbp]
+\Cref{tab:3-campaigns}列出后文采用的描述性名称；记录标签仅用于查找项目资料库中的原始数据。
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[实验名称与记录标签]{实验名称与记录标签.}
+\label{tab:3-campaigns}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}l>{\raggedright\arraybackslash}Xl@{}}
+\toprule
+正文名称 & 记录 & 检查内容 & 结果位置 \\
+\midrule
+主比较 & E1 & JHQ-GPU 与五类基线；四数据集，batch 1,000 & \cref{sec:7-2} \\
+精度检查 & D & FP32 与 TF32；沿用存档基线 & \cref{sec:7-precision} \\
+同场次检查 & T1 & 同场次重测 JHQ 与基线 & \cref{sec:b-precision-anchors} \\
+严格选择检查 & T4 & CPU 重排 GPU 计算的候选分数 & \cref{sec:7-strict-selection} \\
+小批量研究 & T5 & batch 8、32 的跨系统搜索 & \cref{sec:7-smallbatch} \\
+重复冷建库 & A1 & 建库耗时与采样显存峰值 & \cref{sec:7-7} \\
+指令检查 & A2 & 共享界读写的编译指令 & \cref{sec:5-5} \\
+对齐检查 & A3 & 两个 OpenAI 导出的行对齐 & \cref{sec:7-2} \\
+预算决策记录 & B & 校准选择与全枚举核对 & \cref{sec:7-budget-trace} \\
+表示审计 & C1 & 从原输入重编码及放置检查 & \cref{sec:4-representation-audit} \\
+中心化测试 & T2 & 原始与减均值表示的比较 & \cref{sec:8-centring} \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
 \centering
-\caption[组件实现]{组件测试使用的实现家族。各实验有自己的对照；版本号不表示连续累积的整系统加速。}
+\captionsetup{hypcap=false}
+\captionof{table}[组件实现]{组件测试使用的实现家族。各实验有自己的对照；版本号不表示连续累积的整系统加速。}
 \label{tab:a-components}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
 \toprule
 版本 & 机制／实验作用\\\midrule
+v57 & 历史 CPU／GPU 比较中的较早 GPU 实现\\
 v61 & Word 载入与 lane 精排对照\\
 v62 / v63 & 分组完整键选择／共享阈值\\
 v65 / v69 & Batch／偏斜调度及 radix probe 选择\\
@@ -20,18 +46,26 @@ v69 / v71 / v73 & 预算校准／LUT 扫描／严格分数导出\\
 v69 / v72 & OpenAI：同一训练缓存上的 TF32 与 FP32 add／查询算术\\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{minipage}\par\medskip
 
 \subsection{计时与校准约定}
 \label{sec:a-e1-protocol}
-预热使 E1 中 274 个测点的调用数减少；首次转换／验证不同于稳态计时。369 个重复 ID 标记包含并列重排；401 的口径还计入跨协议差异。仅凭标记不排除测点，JHQ 没有同样的标记。
+评测配置显式启用十六 lane 精排及自动扫描调度，在单 block 与 2／4／8 组之间选择，多组时启用共享界；库默认使用标量精排及单 block。可选配额式近似选择器关闭。一次性调度器校准不计入稳态搜索时间，下列三项分别为伪查询收集、首次调用及重复调用中位数的调度器启动耗时：
+\[
+ T_{\rm gather}\in[0.81,7.04]\,\mathrm{ms},\quad
+ T_{\rm first}\in[6.00,27.77]\,\mathrm{ms},\quad
+ \operatorname{median}(T_{\rm repeat})\in[2.72,18.13]\,\mathrm{ms}.
+\]
+
+主比较中，JHQ 每个变体／轮次预热一次，基线起初预热三次。驱动即时（just-in-time，JIT）编译和 JHQ CUDA Graph 捕获均在计时前完成；后者记录 GPU 操作，供后续重复执行。慢基线配置依据预热耗时估计，使用较少的计时调用。重复调用间的 ID 顺序变化可能包括并列重排，本身不排除测点；这不同于单次结果内部含有重复 ID。JHQ 没有同样的重复调用诊断标记。
+
+打包载入比较为每个变体保留一项汇总计时。采样预算表同时报告 64 个样本的所选预算中位数与平均质量；平均召回由打印的最佳召回减去已记录平均损失重建，因此两项统计未必对应同一个固定预算。
 
 \label{sec:a-budget-contract}
 \label{sec:a-supplement}
 \label{sec:a-t4-t5}
-实验显式设置以 200 开始的网格。固定实验臂预热一次、计时三次。校准计时包含完整搜索与 $O(Sk^2)$ 主机比较，不含查询收集／扫描调度校准，且绕过图捕获。预热遍历全部查询，但不将输出／GT 传入一致性判定。调用方使用 \texttt{set\_alpha(A[index])} 应用返回的索引；所选实验臂速率复用固定臂计时（\cref{sec:6-5}）。对排序后的 64 个损失，记录分位数为
+预算实验中，每个固定预算预热一次、计时三次。校准时间包括参考搜索、试验预算下的搜索，以及在主机上比较这些搜索的结果（$O(Sk^2)$）；不包括收集样本查询、一次性的调度器校准和图捕获。预热遍历全部查询，但其输出不参与预算选择，校准过程也不使用 GT。所选预算 QPS 使用固定预算计时，直接复用测试见 \cref{sec:6-5}。对排序后的 64 个召回损失，报告分位数采用
 \[
  L_{95}=L^{\rm sorted}_{\lfloor0.95(64-1)\rfloor}
        =L^{\rm sorted}_{59}\qquad\text{(zero-based)}.
 \]
-除非另有说明，后续会话使用独立状态／边界。A2 佐证 PTX 约束（\cref{sec:5-5}）；T4 分数导出的范围见 \cref{sec:7-strict-selection}。T5 包含空调用／int8 查询量化，也存在 API／预热差异（\cref{sec:7-smallbatch}）。

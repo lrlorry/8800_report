@@ -1,0 +1,27 @@
+{
+  "output": "u8076655_Rui_Luo_COMP8800_Thesis_revised.pdf",
+  "pages": 71,
+  "changed_sources": [
+    "chapters/07-supp-budget.tex",
+    "chapters/03-2-data.tex",
+    "chapters/03-1-comparisons.tex",
+    "chapters/07-evaluation.tex",
+    "chapters/09-conclusion.tex",
+    "chapters/02-7-gap.tex",
+    "chapters/01-1-context.tex",
+    "chapters/04-4-lifecycle.tex",
+    "chapters/06-5-economics.tex",
+    "chapters/04-2-training.tex",
+    "chapters/04-5-construction.tex",
+    "frontmatter/abstract.tex"
+  ],
+  "original_pdfs_preserved": true,
+  "formal_mathematics_and_six_proofs_preserved": true,
+  "existing_table_payloads_preserved": true,
+  "figures": 25,
+  "tables": 31,
+  "compiler_issues": [],
+  "sha256": "2e60729b4ce256495fec6b297f8a698a3c9eadd6629c36ddb3e0000e5eeafdc1",
+  "chinese_version_updated": false,
+  "scope": "English variant: abstract calibration result, attribution, Chapter 4 compression, critical synthesis, consistent prose terms; no new experiments."
+}

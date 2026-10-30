@@ -1,6 +1,6 @@
 \chapter{面向表示的 GPU 搜索}
 \label{ch:gpu-execution}
-GPU 评分／选择使用 JHQ 的层级结构 \cite{jhq}。\Cref{ch:evaluation,ch:refinement} 分别评估执行并设置预算。
+本章回答 RQ2：如何利用 JHQ 的编码结构组织 GPU 搜索。查表、访存和并行选择利用这一层级表示 \cite{jhq}，同时保持规定的计算分数排序。\Cref{ch:evaluation} 测量这些机制，\Cref{ch:refinement} 再选择各负载的精排预算。
 
 \section{查询流程与排序分数}
 \label{sec:5-1}

@@ -1,6 +1,6 @@
 \chapter{GPU 索引设计与构建}
 \label{ch:architecture}
-训练／编码生成有界内存、按列表排序的 GPU 数组 \cite{jhq}；搜索与成本见 \cref{ch:gpu-execution,sec:7-7}。
+压缩 GPU 索引既需要可搜索的表示，也需要能在设备显存内完成的构建过程。本章说明 JHQ 的训练、编码和按列表组织的存储 \cite{jhq}，再检查构建后的表示。查询执行与实测构建成本见 \cref{ch:gpu-execution,sec:7-7}。
 
 \section{构建与搜索流程}
 \label{sec:4-1}

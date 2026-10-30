@@ -1,21 +1,23 @@
-Train fits models; add encodes/list-orders rows; search uses the completed index. Cache hits skip fitting, not encoding, so cold-build and cached-search costs differ.
+Index construction separates reusable models from database-specific
+arrays. Training fits the models; add encodes the database and places
+each row in IVF-list order. Search then uses this completed, GPU-resident
+representation.
 
 \begin{figure}[!htbp]
 \centering
-\input{figures/ch4/architecture}
-\caption[Build and query architecture]{Implemented build and query boundaries. Host work includes
-sampling, orthogonal-matrix construction and analytical primary-codebook
-generation; the evaluated configuration fits IVF and residual models on
-the GPU. The cache stores trained state, whereas the completed database
-representation resides on the device. Dashed arrows: model reuse. The staging bound excludes other scratch.}
+\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/architecture-layout}}
+\caption[Build and search workflow]{Build and search workflow.}
 \label{fig:4-architecture}
 \end{figure}
 
-Hosts prepare samples/rotation/primary codebooks; GPUs rotate, fit IVF/residual models and encode bounded batches into list order.
+The host prepares samples, the rotation matrix and the analytical primary
+codebook; the GPU applies the rotation, fits or loads the IVF/residual
+models, and encodes database batches into the resident index. Reusable
+model state comprises the rotation, codebooks and centroids. The dashed
+path shows saving and loading this state: a cache hit skips model fitting,
+while add still encodes and orders database rows.
 
-Models hold rotation, codebooks and centroids; database state holds offsets, IDs, codes and corrections. CUDA Graphs replay recorded GPU operations and reference reused query buffers.
-
-One successful \texttt{add} fixes positions. Further adds are rejected; updates require rebuilding. Mutable/transactional publication is unimplemented.
-
-Host IDs/scores and call timing follow \cref{eq:5-refined-constant,sec:3-3}.
-
+One successful \texttt{add} fixes the physical positions. Further adds
+are rejected, and updates require rebuilding. Returned scores and the
+host-call timing boundary are defined in
+\cref{eq:5-refined-constant,sec:3-3}.

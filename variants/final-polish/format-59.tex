@@ -1,0 +1,17 @@
+% Revision-specific layout: typography and margins remain unchanged.
+\usepackage{flafter}
+\setlength{\textfloatsep}{9pt plus 2pt minus 2pt}
+\setlength{\floatsep}{9pt plus 2pt minus 2pt}
+
+% Compact mathematical blocks and keep page-end spacing flexible.
+\AtBeginDocument{%
+ \setlength{\abovedisplayskip}{5.5pt plus 2pt minus 2pt}%
+ \setlength{\belowdisplayskip}{5.5pt plus 2pt minus 2pt}%
+ \setlength{\abovedisplayshortskip}{3pt plus 1pt}%
+ \setlength{\belowdisplayshortskip}{3pt plus 1pt minus 1pt}}
+
+% Keep diagram captions close to the figure.
+\captionsetup[figure]{skip=4pt}
+
+% Let long caption continuations use the full text width.
+\captionsetup{format=plain}

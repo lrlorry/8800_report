@@ -1,16 +1,12 @@
-train 拟合模型，add 将行编码并按列表排序，search 使用完成的索引。缓存命中跳过拟合，但不跳过编码，因此冷构建与缓存搜索的成本不同。
+索引构建将可复用模型与具体数据库的数组分开。训练阶段拟合模型，add 编码数据库并将各行放入 IVF 列表顺序，搜索随后使用这一完成的 GPU 常驻表示。
 
 \begin{figure}[!htbp]
 \centering
-\input{figures/ch4/architecture}
-\caption[构建与查询架构]{实现中的构建与查询边界。主机工作包括抽样、正交矩阵构造和解析主码本生成；评测配置在 GPU 上拟合 IVF 与残差模型。缓存保存训练状态，完整数据库表示则位于设备上。虚线表示模型复用。暂存上限不包含其他临时空间。}
+\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/architecture-layout}}
+\caption[构建与搜索流程]{构建与搜索流程。}
 \label{fig:4-architecture}
 \end{figure}
 
-主机准备样本、旋转和主码本；GPU 执行旋转，拟合 IVF／残差模型，并将有界 batch 编码为列表顺序。
+主机准备样本、旋转矩阵和解析主码本；GPU 应用旋转，拟合或载入 IVF／残差模型，并将数据库 batch 编码为常驻索引。可复用模型状态包含旋转、码本和质心。虚线路径表示这一状态的保存与载入：缓存命中会跳过模型拟合，add 仍需编码数据库并按列表排序。
 
-模型保存旋转、码本和质心；数据库状态保存 offsets、ID、编码和校正项。CUDA Graph 重放已记录的 GPU 操作，并引用复用的查询缓冲。
-
-一次成功的 \texttt{add} 固定物理位置。后续 add 被拒绝，更新需要重建。可变／事务性发布尚未实现。
-
-主机 ID／分数及调用计时遵循 \cref{eq:5-refined-constant,sec:3-3}。
+一次成功的 \texttt{add} 固定物理位置，后续 add 被拒绝，更新需要重建。返回分数与主机调用计时边界的定义见 \cref{eq:5-refined-constant,sec:3-3}。

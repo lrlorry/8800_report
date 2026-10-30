@@ -1,7 +1,8 @@
 \subsection{Bisection and complete enumeration}
 
-Write $J=|A|$. The implementation computes the sample reference once,
-then searches for the largest acceptable index in the descending grid:
+Budgets are listed from largest to smallest, so the desired answer is
+the last acceptable grid index. Put $J=|A|$. After computing the sample
+reference once, the implementation searches as follows:
 \par\noindent\begin{minipage}{\linewidth}
 \begin{enumerate}[leftmargin=*,itemsep=0.15em]
 \item Set $l=0$, $h=J-1$. Zero is the fallback.
@@ -11,12 +12,20 @@ $A[j]$ and computing $D_S(A[j])$.
 \item Return $A[l]$. Apply it before reuse.
 \end{enumerate}
 \end{minipage}\par\medskip
-The eight-point grid needs at most three complete candidate searches
-in addition to the reference. \Cref{sec:a-budget-contract} specifies invocation/timing.
-
-Enumeration reruns reference plus seven arms on the same sample. It handles acceptance holes; bisection finds its minimum only for prefix acceptance. Both timers include the reference.
+The eight-point grid needs at most three trial searches plus the
+reference. Enumeration instead tries the reference and all seven other
+budgets on the same sample. It finds the minimum even if accepted
+budgets are separated by rejected ones; bisection is guaranteed to find it when
+all accepted indices form a prefix. Both timers include the reference
+search (\cref{sec:a-budget-contract}).
 
 \subsection{A sufficient condition for monotonicity}
+
+A sufficient structure is nested shortlists: every candidate retained at
+a smaller budget is also present at a larger one. With fixed refined
+scores and final tie ordering, a reference answer that survives the
+shortlist must survive final selection. The proposition makes this
+precise and shows why disagreement then falls as the budget grows.
 
 \par\noindent\begin{minipage}{\linewidth}
 \begin{proposition}[Nested survivors preserve reference membership]
@@ -50,26 +59,34 @@ Summing missing reference counts over queries proves
 $D_S(\alpha)\geq D_S(\beta)$.
 \end{proof}
 \end{minipage}\par\medskip
-
-Fixed-key exact primary top-$c$ gives nesting; fixed-key refinement then gives monotone agreement. This supports bisection, without making GT recall or runtime monotone as the pool grows.
+Exact primary top-$c$ under one fixed key gives nested prefixes. This
+makes the reference-agreement test monotone under the proposition's
+other premises; GT recall and runtime need not be monotone.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch6/nesting-example}
-\captionof{figure}[Nested and non-nested candidate pools]{Constructed $k=1$ example with refined order $a\prec b\prec c$
-and reference $\{a\}$. The nested case preserves reference membership.
-With all primary scores tied, different tie choices can produce the
-non-nested middle pool and break monotonicity. These are explanatory
-sets, not measured GPU outputs.}
-\label{fig:6-nesting}
+\captionof{table}[Nested and non-nested candidate pools]{Nested and non-nested candidate pools.}
+\label{tab:6-nesting}
+\input{variants/thesis2/figures/nesting-example}
 \end{minipage}\par\medskip
+\Cref{tab:6-nesting} gives a $k=1$ example with refined order
+$a\prec b\prec c$ and reference $\{a\}$. Nested pools preserve reference
+membership. If primary scores all tie, changing cutoff choices can
+instead make the middle pool exclude an answer retained by the smaller
+pool; overlap falls from 1 to 0 before returning to 1.
 
 \subsection{A corollary for the evaluated grouped path}
 
-Within a draw, $S$, routing and scan threads are fixed; \texttt{scheduled\_groups(S)} ignores $c$. Grouped budgets use the same LUT sums. Fixed $B_r$, 16 lanes and final $(\refineddist,\mathrm{ID})$ order keep candidate scores fixed.
+Within one calibration sample, $S$, routing and the scan thread count
+are fixed. The scheduler chooses group count without using $c$, so
+reference and trial budgets use the same scan path and LUT sums.
+Fixed $B_r$, sixteen-lane refinement and final
+$(\refineddist,\mathrm{ID})$ ordering keep each candidate's refined
+score and tie order independent of the budget. Grouped selection then
+supplies the nested primary shortlists required above.
 
-\par\noindent\begin{minipage}{\linewidth}
+\par\addvspace{7pt}\noindent\begin{minipage}{\linewidth}
 \begin{corollary}[Grouped calibration]
 \label[corollary]{cor:6-grouped-calibration}
 For the evaluated grouped configuration, under the representation and
@@ -83,17 +100,27 @@ primary top-$c$ under the common key $(\primarydist,\mathrm{position})$.
 Its prefixes nest as $c$ grows. Fixed refinement/final order supplies \cref{prop:6-monotonicity}'s remaining premises.
 \end{proof}
 \end{minipage}\par\medskip
-
-The corollary covers 2,176 draws; 128 OpenAI-3072/$S=128$ draws use distance-only selection. All 2,304 recorded curves are monotone and match enumeration (\cref{sec:7-budget-trace}); this is finite evidence.
+The corollary covers 2,176 calibration samples. Another 128 samples,
+OpenAI-3072 at $S=128$, use distance-only selection, where cutoff ties
+can break nesting. In the recorded experiment, all 2,304 curves were
+monotone and bisection matched enumeration
+(\cref{sec:7-budget-trace}). This validates the recorded choices, while
+the corollary supplies the guarantee for the grouped path.
 
 \paragraph{Full-pool coverage.}
-Two FULL cells group Vogue; ten use $\gscan=0$. All twelve match enumeration. Ten distance-only cells remain outside \cref{cor:6-grouped-calibration}: nesting needs a common cutoff order or no crossing ties. A matching held-out path does not ensure this.
+Two full-pool settings use grouped scans on Vogue; the other ten use
+$\gscan=0$. All twelve match enumeration. The ten distance-only settings
+still lie outside \cref{cor:6-grouped-calibration}: they need a common
+cutoff order, or no tied reference answers that cross the cutoff.
+Using the same path for calibration and testing does not establish nesting.
 
 \paragraph{A rank-based extension.}
-Under the same nesting/fixed-score premises, one-based primary ranks give
+Under the same nesting and fixed-score premises, storing the primary
+rank of each reference answer would reveal when each budget loses it:
 \begin{equation}
  D_S(\alpha)=\sum_{q\in\mathcal Q_S}\sum_{x\in\mathcal R_{\rm ref}(q)}
  \mathbf1\{\operatorname{rank}_{\rm P}(x)>c(\alpha)\}.
  \label{eq:6-rank-curve}
 \end{equation}
-Exporting reference ranks could replace repeated budget searches. This is unimplemented.
+This could produce the whole agreement curve from exported reference
+ranks instead of repeated searches; it is not implemented.

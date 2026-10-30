@@ -1,39 +1,36 @@
-subspace-major 编码使相邻 lanes／候选对齐；拆分减少 LUT 存储。
+主码扫描将相邻候选分配给相邻线程。原有 byte 布局已将同一子空间的编码放在连续地址；打包进一步让每个线程通过一次 word 读取取得四个子空间编码，减少读取操作数。
 
 \subsection{地址映射与四字节打包}
 
-列表 $\ell$ 的行 $r$ 映射为
+在列表 $\ell$ 中，行 $r$ 的物理位置为
 \[
  p=o_\ell+r,\qquad \operatorname{offset}(Z[m,p])=mN+p.
 \]
-固定 $m$ 时，$\Delta\operatorname{offset}=\Delta p$。列表边界可能破坏相邻性。
-
-为每个候选打包四个子空间 byte：
+固定 $m$ 时，$\Delta\operatorname{offset}=\Delta p$，所以相邻候选拥有相邻编码 byte；跨列表边界时可能失去这种相邻性。打包布局将同一候选的四个子空间编码组合起来：
 \begin{equation}
  \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
  \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
  \label{eq:5-packed-layout}
 \end{equation}
-对 $0\leq t<4$ 和八位 $Z$，
+移位和掩码可以恢复各个原始八位值：
 \[
  (\mathsf w[j,p]\gg8t)\mathbin{\&}255=Z[4j+t,p].
 \]
-nibbles 索引 \cref{eq:5-lut-factorisation}。
+编码的高、低 nibble 随后索引 \cref{eq:5-lut-factorisation} 中的两张表。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch5/packed-access}
-\captionof{figure}[候选并行的打包访问]{候选并行的打包访问，展示部分 warp lanes。固定 word group $j$ 时，连续位置访问相邻四字节 word。每个 word 含同一候选的四个子空间码。解包保留各编码 byte；LUT 拆分在其后进行。该图示意地址，不表示实测内存事务次数。}
+\input{variants/thesis2/figures/packed-access}
+\captionof{figure}[候选并行的打包访问]{候选并行的打包访问.}
 \label{fig:5-packed-access}
 \end{minipage}\par\medskip
-
-构建将 $[M,N]$ bytes 映射为 $[M/4,N]$ words（$4\mid M$）。直接类型转换会将不同候选的 bytes 混在一起。编码 byte 成本为
+\cref{fig:5-packed-access} 中每个 lane 读取并解包自己的 word，各 lane 的候选分数彼此独立。构建将 $[M,N]$ bytes 转为 $[M/4,N]$ words，要求 $4\mid M$。直接把原数组转换成 word 类型会将不同候选的 bytes 混在一起，因此需要单独重打包。读写字节量及临时存储为
 \[
  R=W=NM,\qquad S_{\rm old+new}=2NM.
 \]
-重打包不计入搜索时间。
+这次重打包不计入搜索时间。
 
 \subsection{访存开销与评分一致性}
 
-一次 word 载入／解包代替四次 byte 载入。逻辑 warp 窗口为 $32\times4=128$ bytes；事务依赖对齐和活跃 lanes。每候选载荷仍为 $M$ bytes。两条路径均为 subspace-major，因此没有单独分离转置／缓存效应。
+一次 word 读取替代每候选四次 byte 读取。对 32 个 lane，逻辑 word 窗口覆盖 $32\times4=128$ 个连续 bytes；实际事务数取决于对齐和活跃 lane。每候选载荷仍为 $M$ bytes，解包保留每个编码。两种被测试布局都按子空间组织候选，因而该对比没有单独分离转置或缓存效应。\Cref{sec:7-3} 测量其集成吞吐变化。

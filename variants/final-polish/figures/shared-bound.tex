@@ -1,0 +1,25 @@
+% One group loops over chunks; Q is shared across groups of one query.
+\begin{tikzpicture}[font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!60,rounded corners=2pt,align=center,text width=5.1cm,minimum height=.85cm,inner sep=4pt},
+ side/.style={box,text width=3.2cm,fill=ThesisNavy!5},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (score) at (0,0) {Score next chunk\\Read shared bound once};
+\node[box,fill=ThesisNavy!5] (admit) at (0,-1.5) {Key below local threshold\\and at or below shared bound?};
+\node[box] (append) at (0,-3.0) {Append admitted keys};
+\node[side] (discard) at (5.2,-1.5) {Discard candidate};
+\node[box] (compact) at (0,-4.3) {If buffer needs space: compact\\Keep best $c$ keys};
+\node[box] (publish) at (0,-5.8) {After compaction, with $c$ valid keys:\\publish worst retained key};
+\node[box,fill=ThesisNavy!5] (more) at (0,-7.3) {More chunks?};
+\node[side,text width=3.3cm] (shared) at (9.5,-4.0) {Shared query bound $Q$\\Initial value: no restriction\\Update: atomic minimum};
+\node[box,text width=6.1cm] (final) at (7.5,-7.3) {Final compact; publish if $c$ valid\\Trim to latest shared bound\\Send retained prefix to merge};
+\draw[arr] (score)--(admit);\draw[arr] (admit)--node[right] {yes}(append);
+\draw[arr] (admit)--node[above] {no}(discard);
+\draw[arr] (append)--(compact);
+\draw[arr] (discard.south)--(5.2,-3.65)--(0,-3.65);
+\draw[arr] (compact)--(publish);\draw[arr] (publish)--(more);
+\draw[arr] (more.west)--node[above,pos=.45] {yes}(-3.3,-7.3)--(-3.3,0)--(score.west);
+\draw[arr] (more.east)--node[above] {no}(final.west);
+\draw[arr] (publish.east)--(9.5,-5.8)--(shared.south);
+\draw[arr,dashed] (shared.north)--(9.5,0)--(score.east);
+\draw[arr] (final.east)--(11.6,-7.3)--(11.6,-4.0)--(shared.east);
+\end{tikzpicture}

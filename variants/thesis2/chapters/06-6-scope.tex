@@ -1,5 +1,6 @@
-Reuse needs stable index/$k$/routing/queries (\cref{sec:6-3}); quality/tails/cost follow \cref{sec:6-5}. Drift detection is unimplemented.
-
-The caller must explicitly install $\alpha$ before reuse.
-
-Budget evidence uses v69/OpenAI TF32; FP32 frontier checks do not recalibrate it.
+Reuse assumes a stable index, $k$, routing configuration and query
+workload (\cref{sec:6-3}). The caller must apply the chosen $\alpha$
+before subsequent searches. \Cref{sec:6-5} defines how quality and
+reuse cost are assessed. The recorded budget experiments use the evaluated version,
+including TF32 arithmetic on OpenAI; the FP32 sensitivity checks did
+not repeat budget calibration.

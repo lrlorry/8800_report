@@ -1,5 +1,5 @@
 论文补证状态与剩余实验（沿用原文件名）
-最近更新：2026-10-28；已核对Claude完成的thesis_evidence结果。
+最近更新：2026-10-30；本轮整理第7章，复算既有记录，未新增GPU实验。
 当前入口：JHQ_GPU/experiments/thesis_evidence/REPORT_CN.md。
 离线复算：python3 scripts/audit_supplement.py；python3 scripts/audit_t4_t5.py。
 机器清单：data/supplement/audit.json；写作核对：assessment/supplement-integration.txt。
@@ -69,12 +69,16 @@
 
 [x] T1（全文审稿F02补入）：后续同会话重测两种JHQ及0.97附近RaBitQ/CAGRA基线。
     每OpenAI数据集12配对配置、各两次重复、每次五轮，E1 workspace pools开启。
-    结果单列附录B；不替换D表、历史E1前沿或伪装为全FP32重训。
+    结果已在正文7.2的同会话基线小节；不替换D表、历史E1前沿或伪装为全FP32重训。
     插值/实测阈值分列；OpenAI3072的RaBitQ区间0.9669--0.9796，幅度受网格影响。
     data/full-review/audit.json和evidence/review/提供输入与复算入口。
 
 仍需补充的实验／取证
 ==================
+[ ] 完整分阶段召回归因（若要分别声称路由、主码截断和残差表示的GT损失）：
+    固定训练态、查询和GT，分别记录probe候选的GT覆盖、主码top-c的GT覆盖、
+    以及候选上的FP64重建排序。现有pilot只能给特定配置的合并差距；本稿据此限定结论，
+    不把该补实验作为当前提交前置条件。
 [ ] T4键序列重新归档（全文审稿F04的更强复核要求）：如需从期望／实际键序列
     独立重做每条查询的完整排序，需要在固定同一case后补跑并保留.topc原始数组。
     当前归档包含checker源码、JSONL及stdout计数，但实验脚本已删除原数组。
@@ -95,8 +99,8 @@
     现有五次固定工作点recall范围及旧前沿局部斜率只能给敏感性尺度。
 [ ] 数据身份：完整历史base/query/GT及cache哈希、source-row ID／过滤映射；
     A3向量对应不是原entity ID的全库连接。历史binary身份仍按家族分别取证。
-[ ] 若要给CPU/GPU倍数，另做匹配nlist/编码/GT/查询池/线程数的官方CPU对照。
-    旧CPU记录不能与E1拼接倍数；T5已补小batch跨系统，其他GPU、漂移／在线更新仍未测。
+[ ] 若要给当前评测版本的匹配CPU/GPU倍数，另做匹配nlist/编码/GT/查询池/线程数的官方CPU对照。
+    历史v57的52–108倍比较已独立写入7.2，不能与E1拼接成当前版本倍数；T5已补小batch跨系统，其他GPU、漂移／在线更新仍未测。
 [~] 可访问证据归档：209文件v71局部包已随报告发布；补证完整原始数据仍位于JHQ_GPU，
     report仓库的哈希和派生图表不等于所有raw、向量、cache、binary已发布。
 

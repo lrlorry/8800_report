@@ -1,0 +1,27 @@
+\Cref{tab:2-position} summarises the preceding methods. Neither code
+size nor search organisation alone establishes superiority: graph
+traversal, compressed estimation and two-level refinement spend memory
+and candidate work differently. At nine bits per dimension, IVF-RaBitQ
+matches JHQ's one-bit primary plus eight-bit residual payload; four- and
+eight-bit variants are also tested. Chapters 4--6 investigate JHQ's
+construction, selection and budget choices. Chapter 7 compares achieved
+recall, total memory and query cost under Chapter 3's controls.
+
+\begin{table}[!htbp]
+\centering
+\caption[Related approaches and JHQ-GPU design questions]{Related approaches and the design questions they motivate for JHQ-GPU.}
+\label{tab:2-position}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.20\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Approach & Main trade-off & Question for JHQ-GPU \\
+\midrule
+IVF-PQ / OPQ & Codebooks are trained for low reconstruction error; coordinates within a subspace may be coupled & How can the primary code's coordinate structure simplify GPU scoring? \\
+Fast Scan / Quicker ADC & Small tables accelerate lookup under hardware and precision constraints & Does splitting tables repay extra GPU lookups? \\
+SONG / CAGRA & Graph navigation reduces scoring but adds graph storage and dependent access & Where can a compressed scan compete with resident graph search? \\
+BANG & Host storage extends capacity at the cost of communication & What can a complete compressed index resident on one GPU achieve? \\
+IVF-RaBitQ & Multi-bit codes trade storage and probe effort against distance-estimation quality & How does JHQ's two-stage search compare with IVF-RaBitQ at matched recall? \\
+Adaptive effort & Quality control may require labels, prediction or calibration & Can workload agreement select a useful budget at acceptable quality and cost? \\
+\bottomrule
+\end{tabularx}
+\end{table}

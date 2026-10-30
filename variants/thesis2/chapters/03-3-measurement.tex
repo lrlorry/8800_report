@@ -1,43 +1,54 @@
-The measured interval is the host search call:
-\[
- t_{\rm call}=t_{\rm return}-t_{\rm entry},
- \quad
- \begin{cases}
- \text{entry: FP32 queries in host memory},\\
- \text{return: host IDs/scores after stream completion}.
- \end{cases}
-\]
-Staging, transfers, query work and int8 query quantisation are timed; build/fitting are excluded (\cref{fig:3-boundary}). Handles/outputs are reused. JHQ uses pageable/C++, CAGRA/PQ pinned/Python, RaBitQ pinned/C++; these costs matter to small margins.
+Search throughput uses the synchronous host-to-host boundary in
+\cref{fig:3-boundary}, including query staging, transfers and preprocessing,
+such as JHQ's rotation and CAGRA int8 query quantisation. All methods
+upload through pinned (page-locked) host buffers; JHQ returns results to
+ordinary pageable memory and the baselines to pinned memory. C++ drives
+JHQ/RaBitQ and Python drives CAGRA/IVF-PQ. Handles and output buffers
+are reused. These interface costs are
+included and matter for small batches and near ties.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\resizebox{\linewidth}{!}{\input{figures/ch3/measurement-boundary}}
-\captionof{figure}[Host and device timing boundaries]{Timing boundaries. The host interval includes transfers and
-query-specific computation. Device-stage profiles explain parts of that
-interval; separate profiling and synchronisation can change execution, so
-their sum is not an interchangeable end-to-end latency.}
+\resizebox{\linewidth}{!}{\input{variants/thesis2/figures/measurement-boundary}}
+\captionof{figure}[Host and device timing boundaries]{Timing starts with FP32 queries in host memory and ends with
+results back on the host. It includes input staging, host-to-device (H2D)
+transfer, query preprocessing, GPU search, device-to-host (D2H) transfer
+and synchronisation. Construction, warm-up and budget calibration are
+excluded; construction and calibration costs are reported separately.
+GPU stage times come from separate profiling runs and need not sum to
+this end-to-end interval.}
 \label{fig:3-boundary}
 \end{minipage}\par\medskip
 
-Times are in seconds:
+The main comparison uses batches of 1,000, five measurement rounds and normally 24 calls
+per round after warm-up. For batch size $b$, round $r$ has $m_r$ calls with
+durations $t_{ri}$ in seconds. Throughput divides the batch size by the
+mean call time within each round, then reports the median across rounds:
 \begin{equation}
  \bar t_r=\frac1{m_r}\sum_{i=1}^{m_r}t_{ri},
  \qquad Q_r=\frac b{\bar t_r},
  \qquad Q=\operatorname{median}_r Q_r.
  \label{eq:3-throughput}
 \end{equation}
-E1: batch 1,000, five rounds, normally 24 calls. JHQ warms once per variant/round; baselines three times initially. Slow baseline points use fewer calls. Just-in-time (JIT) compilation and CUDA Graph capture are excluded; call percentiles do not describe concurrent requests.
+The mean retains valid slow calls. Results measure synchronous batch
+throughput, rather than concurrent-request tail latency. Rounds share an
+index; separate cold builds assess training variation (\cref{sec:7-7}).
+Warm-up and setup details are in \cref{sec:a-e1-protocol}.
 
-Slow valid calls stay. For illustrative call times $(1,1,10)$\,ms,
-\[
- \bar t=4\,\mathrm{ms}\ne\operatorname{median}(t)=1\,\mathrm{ms},
- \qquad b/\bar t\ne b/\operatorname{median}(t).
-\]
-Shared indexes/pools do not provide independent builds.
+The main comparison ran on an RTX 5090 (32,607\,MiB; 575\,W power limit), driver 595.71.05,
+CUDA 13.0 and cuVS 26.08.01. OpenMP used 16 threads with 25 logical CPUs
+available. JHQ's kernels target compute\_80 PTX and are compiled for the GPU by
+the driver before timing \cite{cuda_platform}. GPU clocks and background host activity were not
+controlled and may contribute to timing variation. Follow-up experiments
+ran in later sessions. Their reports identify which methods were timed
+together, whether trained models were reused and which arithmetic
+precision was used
+(\cref{sec:a-supplement,sec:4-2,sec:7-precision}).
 
-RTX 5090/32,607\,MiB; driver 595.71.05; CUDA 13.0; cuVS 26.08.01. OpenMP uses 16 of 25 CPUs; E1 records 575\,W. Clocks/load can vary. JHQ supplies compute\_80 PTX intermediate GPU code for driver compilation \cite{cuda_platform}; library builds/device profiles are separate.
-
-Resident totals include model, workspace and context. CAGRA index deltas and JHQ context-subtracted totals differ (\cref{sec:4-4,sec:7-7}). Pools/scratch prevent peak matching. Build peaks use 20\,ms sampling; train/add excludes loading/host setup.
-
-\paragraph{Supplementary sessions.}
-Campaigns are separate (\cref{sec:a-supplement}); cached-state/precision changes follow \cref{sec:4-2,sec:7-precision}. Historical baseline ratios remain cross-session.
+Memory reporting distinguishes index allocation, whole-process search
+allocation, including context and workspace, and construction peak.
+JHQ's net figure subtracts a background allocation; CAGRA's figure measures
+the index allocation, so their boundaries differ (\cref{sec:4-4,sec:7-7}).
+Construction peaks are sampled every 20\,ms and may miss shorter
+transients. Construction time covers train/add calls, excluding input
+loading.

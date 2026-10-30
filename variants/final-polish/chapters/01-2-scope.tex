@@ -1,0 +1,28 @@
+Given a vector database $\mathcal X\subset\mathbb R^d$ and query $q$,
+the task is to return $k$ approximate nearest neighbours under squared
+Euclidean distance. The research problem is to construct and search
+JHQ's compressed index within a single GPU's memory, and improve query
+throughput at a given recall target.
+
+Search first selects relevant IVF lists, screens their vectors using
+primary codes, then uses residual codes to rescore a smaller shortlist.
+The refinement budget controls how many candidates enter this last stage.
+Ground truth (GT) gives exact neighbours in the original vector space;
+recall is the fraction of these neighbours recovered.
+
+The study retains JHQ's dimension-preserving orthogonal transform and
+hierarchical codes (\cref{sec:2-3}), and investigates GPU construction,
+data layout, search execution and refinement-budget selection.
+Calibration compares smaller-budget outputs with a larger-budget
+reference without GT, then reuses one chosen multiplier for a fixed
+index and an assumed stable query distribution. GT evaluation checks
+the resulting recall.
+
+Evaluation uses one RTX 5090 and squared-L2 top-10. The main cross-system
+comparison uses four datasets and batch 1,000; lookup-table, memory-layout
+and budget tests cover six datasets. A small-batch study adds batches
+8/32 (\cref{sec:7-smallbatch}). The index and core search computation
+remain on the GPU; preparing and transferring queries within the search
+call are included in its timing. Dynamic updates, host paging and
+multi-GPU execution are outside the implementation; billion-scale
+search is not evaluated.

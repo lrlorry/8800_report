@@ -1,0 +1,101 @@
+\subsection{Bounded input batches and two-pass construction}
+
+Keeping whole-database raw and rotated arrays on the GPU would require
+$4Nd+4Nd=8Nd$ bytes. Bounded staging limits these arrays while the
+compressed index remains resident. For $n_b$ pipeline buffers,
+configured add rows $a_{\rm add}$ and per-array budget $S_{\rm stage}$,
+the staged row count and raw/rotated device storage are
+\begin{equation}
+ a_{\rm in}=\max\!\left\{1,\min\!\left(a_{\rm add},
+ \left\lfloor\frac{S_{\rm stage}}{4d}\right\rfloor\right)\right\},
+ \qquad S_{\rm float}=8n_ba_{\rm in}d.
+ \label{eq:4-staging-rows}
+\end{equation}
+\[
+ 4d\leq S_{\rm stage},\quad n_b=3,\ S_{\rm stage}=128\,\mathrm{MiB}
+ \Longrightarrow S_{\rm float}\leq2n_bS_{\rm stage}=768\,\mathrm{MiB}.
+\]
+The bound covers these floating-point arrays; assignment and encoder
+scratch are additional. One-pass construction encodes rows in input
+order and gathers them into list order. Two-pass construction first
+assigns and orders rows, then rereads and encodes directly into their
+final positions, trading an extra traversal for fewer compressed copies.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/final-polish/figures/add-paths}
+\captionof{figure}[One- and two-pass construction]{One- and two-pass construction.}
+\label{fig:2-add-paths}
+\end{minipage}\par\medskip
+
+For Stella, analytical row-array occupancy is 40.59\,GiB for one-pass gather and 21.32\,GiB for two-pass repack (\cref{tab:4-phase-storage}). One pass holds both input-order and list-order encodings; two passes write directly into list order. In the first assignment pass, centroids are transformed back with $\Pi^\top$, avoiding rotation of database rows.
+
+\subsection{Memory use across construction phases}
+
+The implementation estimates one-pass memory from the row arrays and
+an allowance for other allocations:
+\begin{equation}
+ H_{\rm single}=N(2b_r+3M+20)+2^{30}\quad\text{bytes}.
+ \label{eq:4-peak-heuristic}
+\end{equation}
+The ten live arrays contribute
+\[
+ 3NM+2Nb_r+20N=N(3M+2b_r+20).
+\]
+The 1\,GiB allowance is heuristic. During final two-pass repacking,
+IDs, residuals, corrections and two primary copies instead require
+\begin{equation}
+ S_{\rm repack,2}=N(b_r+2M+8).
+ \label{eq:4-two-pass-repack}
+\end{equation}
+Whole-build peak also includes models, sorting, context, earlier
+pipeline/inverse scratch and later query workspace. The phase values in
+\Cref{tab:4-phase-storage} isolate row arrays, rather than whole-process
+peaks.
+
+\begin{table}[!htbp]
+\centering
+\caption[Analytical row-array occupancy by construction phase]{Analytical row-array occupancy (GiB), $d=1{,}024$, $M=128$,
+$B_r=8$. BGE uses one pass; Stella uses two. The one-pass Stella column
+is counterfactual capacity analysis. Pipeline, model, offsets and runtime
+costs are excluded from these phase values.}
+\label{tab:4-phase-storage}
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Dataset & Final row payload & One-pass gather & Two-pass repack \\
+\midrule
+BGE & 10.90 & 23.05 & 12.11 \\
+Stella & 19.20 & 40.59 & 21.32 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Assignment-product buffers have a separate capacity $a_{\rm assign}$,
+configurable independently of staged input. The evaluated default is 32,768
+for at least 8,192 lists, otherwise 8,192. Their storage is
+\begin{equation}
+ S_{\rm dots}=4n_b n_{\rm list}a_{\rm assign}\quad\text{bytes}.
+ \label{eq:4-assignment-scratch}
+\end{equation}
+Allocation capacity is independent of the active/staged rows. At
+$d=1536/3072$, both defaults allocate 3\,GiB. For BGE/Stella,
+$3\times4=12$\,GiB assignment scratch is released before gathering.
+For BGE, the 12\,GiB scratch and the 23.05\,GiB row-array gather therefore do not coexist. The peak is
+the largest sum of allocations live at the same time:
+\[
+ S_{\rm peak}=\max_t\sum_{A\ {\rm live\ at}\ t}|A|.
+\]
+
+
+
+Stella's cold-build log selects two passes: the one-pass estimate in
+\cref{eq:4-peak-heuristic} is 41.6\,GiB, versus the log's reported
+30.6\,GiB tail-stage availability. Separately sampled resident process
+totals, including context and query workspace, are 11.93\,GiB for BGE
+and 20.44\,GiB for Stella (\cref{sec:4-4}). Supplementary 20\,ms device
+samples observe a 26.08\,GiB BGE peak near the start of add and a
+22.58\,GiB Stella peak during repack. The smaller two-pass repack is
+consistent with Stella's lower observed peak. These sampled device
+totals include context and can miss shorter-lived peaks.

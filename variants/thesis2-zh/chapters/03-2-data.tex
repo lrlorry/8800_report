@@ -1,28 +1,29 @@
-\Cref{tab:3-data} 记录本文使用的六个数据集。主要跨系统比较（E1）使用前四个；预算、LUT 和规模测试覆盖全部六个。Vogue 是服装图像嵌入；arXiv 是摘要嵌入；两个 OpenAI 数据集来自 Qdrant 的 DBpedia 导出 \cite{data_vogue,data_arxiv,data_openai1536,data_openai3072}。BGE 使用意大利语 Wikipedia 配置，Stella 使用 TREC24 BioGen 语料导出 \cite{data_bge,data_stella}。规模描述的是准备后实际测量的导出版本，而非上游当前数据卡。
+\Cref{tab:3-data} 列出六个数据集。主要跨系统比较使用前四个；预算、查找表和规模测试覆盖全部六个。Vogue 是服装图像嵌入，arXiv 是摘要嵌入。两组 OpenAI 数据来自 Qdrant 的不同维度 DBpedia 导出 \cite{data_vogue,data_arxiv,data_openai1536,data_openai3072}，共享语料来源；对齐检查见\cref{sec:7-precision,sec:7-2}。BGE 使用意大利语 Wikipedia，Stella 使用 TREC24 BioGen 语料 \cite{data_bge,data_stella}。下表规模对应准备后的导出数据。 JHQ 使用 $M=d/8$、$B=B_r=8$、八次粗量化训练迭代及 100,000 个数据库行进行残差训练。缓存运行复用模型但重新编码数据库；冷运行重新拟合模型。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[数据集与训练配置]{数据与 JHQ 训练配置。$n_q$ 为实际查询数，$n_t=39n_{\rm list}$ 为请求的粗量化训练样本数。E1 使用前四行。所有配置使用平方 L2 距离及 $k=10$。}
+\captionof{table}[数据集与训练配置]{数据与 JHQ 训练配置。$n_q$ 为实际查询数，$n_t=39n_{\rm list}$ 为请求的粗量化训练样本数。主比较 使用前四行。所有配置使用平方 L2 距离及 $k=10$。}
 \label{tab:3-data}
 \small\setlength{\tabcolsep}{4pt}
 \input{variants/thesis2-zh/tables/ch3/datasets}
 \end{minipage}\par\medskip
 
-OpenAI／BGE／Stella 准备阶段删除非有限行，并使用
+OpenAI／BGE／Stella 的准备过程删除含 NaN 或无穷值的向量（非有限行），并归一化非零向量：
 \[
  x\leftarrow x/\|x\|\quad(\|x\|>10^{-12}).
 \]
-种子 42 用于无放回抽样。Stella 使用 999 个语料内查询，替代原有 65 个查询的基准；没有相关性标签。OpenAI 检查覆盖全部查询和 10,299 个基础行，支持行序对齐，但未按原始 ID 连接（\cref{sec:7-precision,sec:7-2}）。
+准备脚本使用种子 42 无放回抽取查询行，并将这些行从 base 集合中移除。Stella 最终保留 999 个这类语料查询，替代上游的 65 条查询。本实验因此评估留出语料嵌入的向量近邻，而非带相关性标签的用户查询。
 
-各方法共享导出的查询／GT 文件。对 FP32 向量进行分块穷举平方 L2 搜索，维护 GT top-$k$，包括并列：
+各方法使用相同的导出查询和 GT 文件。准备代码通过 Faiss FlatL2 或显存有界的分块扫描，对 FP32 向量执行穷举平方 L2 搜索来生成 GT。对查询集 $\mathcal Q$、返回 ID 集合 $\mathcal R_k(q)$ 和存档 GT 前缀 $\mathcal T_k(q)$，召回率为
 \begin{equation}
 \Recall@k=\frac{1}{|\mathcal Q|k}
 \sum_{q\in\mathcal Q}|\mathcal R_k(q)\cap\mathcal T_k(q)|.
 \label{eq:3-recall}
 \end{equation}
-这里 $\mathcal T_k$ 是存储 GT 的前缀，$\mathcal R_k$ 是返回 ID 集合。GT 宽度在 Vogue／arXiv 上为 100，其余为 20；只计前十项。重复 ID 不获得额外命中。越界、重复和重复调用检查分别进行。
+Vogue／arXiv 的 GT 文件包含 100 个近邻，其余为 20 个，只计前十个。前缀之外的等距候选不会自动计为命中，重复返回的 ID 也不增加命中数。
 
-JHQ 使用 $M=d/8$、$B=B_r=8$、八次粗量化迭代和 100,000 行残差训练数据。参数扫描重新载入／编码；冷构建重新拟合。训练使用数据库行。\[
+第 6 章从校准查询中选择精排预算，不使用 GT。偶数下标查询构成校准池，奇数下标查询留作测试，下标从零开始：
+\[
  \begin{aligned}
  \mathcal Q_{\rm cal}&=\{q_i:i\bmod2=0\},&
  \mathcal Q_{\rm hold}&=\{q_i:i\bmod2=1\},\\
@@ -30,4 +31,4 @@ JHQ 使用 $M=d/8$、$B=B_r=8$、八次粗量化迭代和 100,000 行残差训�
  &=\begin{cases}(500,499),&\text{Stella},\\(500,500),&\text{otherwise}.\end{cases}
  \end{aligned}
  \]
-每个单元对大小为 32、64、128 的带种子子样本各抽取 64 次；FULL 使用全部 500 个校准查询。标签用于评估 oracle 与留出集；一致性只使用输出（\cref{sec:6-2,sec:a-budget-contract}）。
+为检验抽样对预算选择的影响，使用种子 12345，在每种样本量 $S\in\{32,64,128\}$ 下分别抽取 64 个子集；全池校准（FULL）使用全部 500 条校准查询。选择预算时只比较搜索返回的 ID。GT 用于后续召回率评估，以及另行构造一个使用标签的预算对照（\cref{sec:6-2,sec:a-budget-contract}）。各子集重复使用同一个查询池，因此这些抽样结果描述该池上的选择变化；推广到未来查询所需的假设见第 6 章。

@@ -1,0 +1,138 @@
+Calibration needs a comparison available without labelled neighbours.
+It uses the IDs returned by a larger budget on the same trained index.
+Let $\mathcal R_\alpha(q)$ contain $k$ valid, unique returned IDs and
+write $\mathcal R_{\rm ref}(q)=\mathcal R_{\alpha_{\rm ref}}(q)$. The
+tested grid and reference are
+\begin{equation}
+ A=(200,100,64,32,16,8,4,2),\qquad \alpha_{\rm ref}=A[0]=200.
+ \label{eq:6-grid}
+\end{equation}
+For the same $S$ queries $\mathcal Q_S$, count how many reference IDs
+the smaller budget fails to return, ignoring result order and distances:
+\begin{equation}
+ \begin{aligned}
+ D_S(\alpha)
+ &=\sum_{q\in\mathcal Q_S}
+   \left(k-|\mathcal R_\alpha(q)\cap\mathcal R_{\rm ref}(q)|\right)\\
+ &=\frac12\sum_{q\in\mathcal Q_S}
+   |\mathcal R_\alpha(q)\triangle\mathcal R_{\rm ref}(q)|.
+ \end{aligned}
+ \label{eq:6-agreement}
+\end{equation}
+The acceptance rule $D_S(\alpha)\leq\epsilon=1$ permits at most one
+missing reference ID across the whole sample. The objective is to find
+the smallest grid budget that passes:
+\begin{equation}
+ \widehat\alpha=\min\{\alpha\in A:D_S(\alpha)\leq\epsilon\}.
+ \label{eq:6-selection-objective}
+\end{equation}
+If no smaller budget is accepted, the reference budget 200 is used.
+\Cref{sec:6-3} states when bisection finds this minimum exactly.
+
+Because the allowance stays at one ID, increasing the sample lowers
+the permitted fraction of missing reference answers. For $k=10$,
+\[
+ \begin{array}{c|rrrr}S&32&64&128&500\\\hline
+ \epsilon/(Sk)&0.003125&0.0015625&0.00078125&0.0002
+ \end{array}
+\]
+The larger sample both covers more queries and imposes a stricter
+relative threshold. The disjoint test queries in \cref{sec:7-5} measure
+whether a budget chosen from the calibration pool retains quality.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/final-polish/figures/calibration-flow-layout}
+\captionof{figure}[Workload-level calibration and evaluation]{Workload-level calibration and evaluation.}
+\label{fig:6-calibration}
+\end{minipage}\par\medskip
+Reference and trial searches in \cref{fig:6-calibration} use the same
+$S$ queries. GT evaluates their choices afterwards on held-out queries;
+selected-budget throughput comes from fixed-budget measurements.
+\Cref{sec:a-budget-contract} defines the calls included in these timings.
+
+\subsection{What agreement controls}
+
+With nested survivors and fixed final ordering, disagreement has a
+direct interpretation: it counts reference answers excluded by primary
+screening. Under \Cref{prop:6-monotonicity},
+\begin{equation}
+ D_S(\alpha)=\sum_{q\in\mathcal Q_S}
+       |\mathcal R_{\rm ref}(q)\setminus C_\alpha(q)|.
+ \label{eq:6-reference-coverage}
+\end{equation}
+For any $k$-element outputs and GT set $\mathcal T_k$, the loss in GT
+hits cannot exceed the missing reference IDs:
+\[
+ |\mathcal R_{\rm ref}\cap\mathcal T_k|-|\mathcal R_\alpha\cap\mathcal T_k|
+ \leq|\mathcal R_{\rm ref}\setminus\mathcal R_\alpha|.
+\]
+Summing over the sample and dividing by $Sk$ yields
+\begin{equation}
+ \begin{aligned}
+ r_{\mathcal Q_S}(\alpha)
+ &\geq r_{\mathcal Q_S}({\rm ref})-\frac{D_S(\alpha)}{Sk},\\
+ D_S(\alpha)\leq\epsilon
+ &\implies r_{\mathcal Q_S}(\alpha)
+       \geq r_{\mathcal Q_S}({\rm ref})-\frac{\epsilon}{Sk}.
+ \end{aligned}
+ \label{eq:6-relative-recall}
+\end{equation}
+This is a recall bound on the calibration sample relative to its
+reference. It leaves the reference's own error to GT evaluation
+(\cref{sec:7-recall-attribution}); it does not transfer automatically
+to unseen queries.
+
+\subsection{Sampling resolution and ordered testing}
+
+A small sample can miss an infrequent change in returned IDs. The
+following models describe how often such changes could remain unseen.
+First count queries with any missing reference ID: call this $H_S$.
+Since $H_S\leq D_S$, an accepted budget has $H_S\leq1$.
+For a prespecified budget and independent, identically distributed
+queries, let $u$ be that query-event probability. Its one-event
+one-sided 95\% binomial limit satisfies \cite{nist_binomial}
+\begin{equation}
+ (1-u)^S+Su(1-u)^{S-1}=0.05.
+ \label{eq:6-binomial-limit}
+\end{equation}
+A stronger model treats each returned-neighbour position as an
+independent event with the same probability. Applying the limit to all
+result slots gives the second row below:
+\[
+ \begin{array}{c|cc}
+ &S=128&S=500\\\hline
+ \text{i.i.d. query events}&0.03652&0.009452\\
+ \text{i.i.d. homogeneous result slots}&0.003701&0.0009484
+ \end{array}
+\]
+The slot model gives approximately $4.74/(Sk)$: at $S=500$ the scale is
+about one missing reference result in a thousand; at $S=128$ it is about
+four in a thousand. Queries being independent does not make their
+result slots independent. These are model-based resolutions of reference
+disagreement, rather than guarantees for the repeated fixed-pool samples.
+
+Monotonicity allows budgets to be tested in a fixed sequence only when
+each test has a valid statistical error bound \cite{learn_then_test}.
+The implemented one-ID acceptance threshold checks agreement and does
+not by itself certify future GT recall.
+
+\paragraph{A finite-pool extension.}
+For the actual sampling scheme, acceptance probability can instead be
+computed from the composition of the calibration pool. Let
+$X_q(\alpha)$ count the missing reference IDs of query $q$; assume it
+stays fixed when that query moves between subsets or positions within
+the execution regime. For pool size $N_{\rm cal}$, let
+$n_j=|\{q:X_q=j\}|$. A uniformly sampled subset without replacement
+passes only if all its queries have zero missing IDs, or exactly one
+query has one missing ID \cite{nist_hypergeometric}:
+\begin{equation}
+ \Pr\{D_S(\alpha)\leq1\}
+ =\frac{\binom{n_0}{S}+n_1\binom{n_0}{S-1}}{\binom{N_{\rm cal}}{S}}.
+ \label{eq:6-finite-pool}
+\end{equation}
+Out-of-range binomial coefficients are zero. To turn acceptance
+probabilities into GT-loss predictions also requires knowing which
+budgets pass and their held-out quality. \Cref{sec:7-budget-trace}
+checks the recorded subset sums against this calculation.

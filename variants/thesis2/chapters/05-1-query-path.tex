@@ -1,8 +1,7 @@
-Queries rotate, route, screen and refine to return $k$ IDs/scores. \Cref{fig:5-query-path} distinguishes the
-three runtime selection decisions; the ground-truth ordering is an
-external evaluation object.
-
-Four quantities must be kept separate:
+A query first chooses IVF lists, screens their candidates with primary
+codes, and refines the retained candidates before returning $k$ IDs and
+scores. These decisions use different scores. Ground truth supplies a
+fourth ordering for evaluation, outside the search itself:
 \begin{align}
  s_i(q)&=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
                    &&\text{centroid routing score},\nonumber\\
@@ -15,32 +14,26 @@ Four quantities must be kept separate:
                    &&\text{raw-space distance}.
  \label{eq:5-ranking-objects}
 \end{align}
-$\mu_i$ is a transformed centroid; $\widehat p,\widehat r$ are decoded primary/residual vectors. The runtime refined score includes a query-only
-constant, as derived from the implemented correction in \Cref{sec:5-6}.
-It preserves the ordering of reconstructed distances for a fixed query,
-but neither it nor the primary score is the original-vector distance.
+Here $\mu_i$ is a transformed centroid and $\widehat p,\widehat r$ are
+the decoded primary and residual reconstructions. The refined score adds
+a query-only constant to reconstructed squared distance, so it preserves
+that distance's ordering for one query (\cref{sec:5-6}). Original-vector
+recall is evaluated separately in Chapter 7.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch5/query-path}
-\captionof{figure}[Query stages and selection boundaries]{Query execution and its separate selection boundaries. Routing
-selects lists, primary screening selects vector candidates, and final
-selection ranks refined survivors. Raw-space ground truth is used for
-evaluation; it is not an input to these search decisions.}
+\input{variants/thesis2/figures/query-path}
+\captionof{figure}[Query workflow]{Query workflow.}
 \label{fig:5-query-path}
 \end{minipage}\par\medskip
-
-Routing defines the visited universe $U$ of $n_c$ candidate occurrences;
-primary screening retains up to $c=\max\{k,\lceil\alpha k\rceil\}$ for
-residual scoring. \Cref{tab:5-query-stages} records each stage's inputs,
-reads and costs; \cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}
-develop their implementations.
-
-The ordering and exactness columns of \cref{tab:5-query-stages}
-attach each claim to its score and tie rule. Chapter 7 tests survivor
-sets, ordered outputs and raw-space recall separately.
-
+Routing defines a visited universe $U$ of $n_c$ candidate occurrences.
+Primary screening keeps up to $c=\max\{k,\lceil\alpha k\rceil\}$ for
+residual scoring. Shading in \cref{fig:5-query-path} marks the work that
+depends on this capacity: candidate retention, residual scoring and
+final selection. At fixed query, index and probe count, routing and the
+number of primary scores stay fixed. The stage comparison below gives
+the data read, work and ordering used at each step.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
@@ -58,18 +51,16 @@ Stage & Input $\to$ output & Data read & Main work & Order / exactness \\
 Transform & $q\to q'$ & Query; transform & Apply $\Pi$ & Transform (precision in \cref{sec:7-precision}) \\
 Probe & $n_{\rm list}\to n_{\rm probe}$ lists & FP32 centroids; list lengths & Score; radix; rank count & $(s_i,i)$; exact probe selection \\
 LUT & $q'\to$ tables & Primary codebook & $MD_s2^{8/\glut}$ terms & Real-arithmetic factorisation; FP32 rounding \\
-Primary, $\gscan=0$ & $n_c\to c_v$ & Packed primary codes; LUT & $O(n_cM)$ scoring; compaction & Exact distance-order selection; arbitrary cutoff ties \\
+Primary, $\gscan=0$ & $n_c\to c_v$ & Packed primary codes; LUT & $O(n_cM)$ scoring; compaction & Exact distance-order selection; tied candidates at the cutoff may differ \\
 Primary, $\gscan\geq1$ & $n_c\to c_v$ & Same primary representation & Score; compact; merge & $(\primarydist,p)$; exact under stated premises \\
-Refine & $c_v\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed $\refineddist$; lane-dependent FP32 association \\
-Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\mathrm{ID})$; exact with $k$ finite valid entries \\
+Refine & $c_v\to c_v$ scores & Residual codes; correction & $O(c_vd)$ & Computed $\refineddist$; FP32 rounding varies with lane grouping \\
+Final & $c_v\to k$ & Refined scores; IDs & $O(kc)$ slot scans & $(\refineddist,\mathrm{ID})$; exact if $k$ finite valid entries exist \\
 \bottomrule
 \end{tabularx}
 \end{minipage}\par\medskip
-
-
-\Cref{tab:5-query-stages} gives the stage contracts. The E1/budget
-harness explicitly selects 16 refinement lanes and scan policy $-1$
-(scheduling among 0/2/4/8), versus library defaults of scalar refinement
-and policy 0. Shared bounds are enabled but used only at $\gscan>1$;
-the harness calibrates scheduling with 512 database pseudoqueries,
-a step the library does not perform automatically. Component overrides and implementation versions are in \cref{tab:a-components}.
+The evaluated searches use sixteen-lane refinement and automatic scan
+scheduling. These settings differ from the library defaults; their
+configuration is recorded in \cref{sec:a-e1-protocol,tab:a-components}.
+The following sections develop table lookup, packed access, grouped
+selection, shared bounds, refinement and probe selection
+(\cref{sec:5-2,sec:5-3,sec:5-4,sec:5-5,sec:5-6,sec:5-7}).

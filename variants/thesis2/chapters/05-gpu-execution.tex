@@ -1,7 +1,11 @@
 % Section structure adapted from 6.pdf; draft prompts are not thesis prose.
 \chapter{Representation-Aware GPU Search}
 \label{ch:gpu-execution}
-GPU scoring/selection uses JHQ's hierarchy \cite{jhq}. \Cref{ch:evaluation,ch:refinement} evaluate it and set budgets.
+This chapter answers RQ2 by mapping JHQ's code structure to GPU search.
+Table lookup, memory access and parallel selection exploit this hierarchy
+\cite{jhq} while preserving specified computed-score ordering. \Cref{ch:evaluation} measures these
+mechanisms; \Cref{ch:refinement} then selects a refinement budget for each
+workload.
 
 \section{Query Workflow and Ranking Scores}
 \label{sec:5-1}

@@ -1,6 +1,6 @@
 \subsection{二分与完整枚举}
 
-记 $J=|A|$。实现先计算一次样本参考结果，再在降序网格中寻找最大的可接受索引：
+预算按由大到小排列，因而要找的是最后一个被接受的网格下标。记 $J=|A|$，先计算一次样本参考结果，再按以下步骤搜索：
 \par\noindent\begin{minipage}{\linewidth}
 \begin{enumerate}[leftmargin=*,itemsep=0.15em]
 \item 设置 $l=0$、$h=J-1$。零是回退项。
@@ -9,11 +9,11 @@
 \item 返回 $A[l]$，复用前应用它。
 \end{enumerate}
 \end{minipage}\par\medskip
-八点网格除参考搜索外，最多需要三次完整候选搜索。调用／计时见 \Cref{sec:a-budget-contract}。
-
-枚举在相同样本上重跑参考及七个实验臂。它能处理接受集合中的空洞；二分只有在接受索引构成前缀时才能找到其最小预算。两种计时都包含参考搜索。
+八点网格最多需要三次试验搜索及一次参考搜索。枚举则在同一样本上测试参考及另外七个预算。即使被接受预算之间存在被拒预算，枚举也能找到最小值；所有接受下标构成前缀时，二分保证找到该最小值。两种计时均包含参考搜索（\cref{sec:a-budget-contract}）。
 
 \subsection{单调性的一个充分条件}
+
+一个充分结构是短名单嵌套：较小预算保留的每个候选也出现在较大预算中。精排分数及最终并列顺序固定时，参考答案一旦通过短名单，就必然通过最终选择。下面命题精确表述这一点，并说明为何不一致随预算增大而下降。
 
 \par\noindent\begin{minipage}{\linewidth}
 \begin{proposition}[嵌套保留集合保持参考成员资格]
@@ -37,22 +37,22 @@
  \leq|C_\beta\cap\mathcal R_{\rm ref}|$。对查询的缺失参考计数求和，得到 $D_S(\alpha)\geq D_S(\beta)$。
 \end{proof}
 \end{minipage}\par\medskip
-
-固定键下精确主码 top-$c$ 产生嵌套；固定键精排进一步产生单调一致性。这支持二分，但不意味着池扩大时 GT 召回率或运行时间单调。
+固定键下的精确主码 top-$c$ 产生嵌套前缀。在命题的其他前提下，这使参考一致性检验单调；GT 召回率和运行时间未必单调。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch6/nesting-example}
-\captionof{figure}[嵌套与非嵌套候选池]{构造的 $k=1$ 示例，精排顺序为 $a\prec b\prec c$，参考为 $\{a\}$。嵌套情况保持参考成员资格。当主码分数全部并列时，不同并列选择可产生非嵌套中间池，破坏单调性。这些是解释性集合，不是实测 GPU 输出。}
-\label{fig:6-nesting}
+\captionof{table}[嵌套与非嵌套候选池]{嵌套与非嵌套候选池.}
+\label{tab:6-nesting}
+\input{variants/thesis2/figures/nesting-example}
 \end{minipage}\par\medskip
+\Cref{tab:6-nesting} 给出 $k=1$、精排顺序为 $a\prec b\prec c$、参考为 $\{a\}$ 的示例。嵌套池保持参考成员资格。当主码分数全部并列时，改变截断选择可使中间池排除较小池曾保留的答案，使重叠从 1 降至 0，再回到 1。
 
 \subsection{已评测分组路径的推论}
 
-同次抽样内，$S$、路由和扫描线程固定；\texttt{scheduled\_groups(S)} 不依赖 $c$。分组预算使用相同 LUT 求和。固定 $B_r$、16 lanes 及最终 $(\refineddist,\mathrm{ID})$ 顺序，使候选分数固定。
+同一校准样本内，$S$、路由及扫描线程数固定。调度器选择组数不使用 $c$，所以参考与试验预算使用相同扫描路径和 LUT 求和。固定 $B_r$、十六 lane 精排及最终 $(\refineddist,\mathrm{ID})$ 排序，使每候选的精排分数与并列顺序独立于预算；分组选择进一步提供所需的嵌套主码短名单。
 
-\par\noindent\begin{minipage}{\linewidth}
+\par\addvspace{7pt}\noindent\begin{minipage}{\linewidth}
 \begin{corollary}[分组校准]
 \label[corollary]{cor:6-grouped-calibration}
 对已评测分组配置，在第 4、5 章的表示与共享阈值约束下，各预算的主码保留集合嵌套。因此 \Cref{prop:6-monotonicity} 适用，二分与枚举返回相同的网格最小接受预算。
@@ -61,17 +61,16 @@
 \Cref{lem:5-buffer,prop:5-local-coverage,prop:5-shared-bound} 在共同键 $(\primarydist,\mathrm{position})$ 下给出精确主码 top-$c$。其前缀随 $c$ 增大而嵌套。固定精排／最终顺序满足 \cref{prop:6-monotonicity} 的其余前提。
 \end{proof}
 \end{minipage}\par\medskip
-
-推论覆盖 2,176 次抽样；128 次 OpenAI-3072／$S=128$ 抽样仅按距离选择。记录的全部 2,304 条曲线均单调并与枚举一致（\cref{sec:7-budget-trace}）；这是有限实验证据。
+推论覆盖 2,176 个校准样本。另有 128 个样本，即 OpenAI-3072 的 $S=128$ 情形，使用仅按距离的选择，截断并列可能破坏嵌套。记录实验的全部 2,304 条曲线单调，二分与枚举相同（\cref{sec:7-budget-trace}）。这验证了存档中的选择；分组路径的保证则来自推论。
 
 \paragraph{全池覆盖。}
-两个 FULL 单元对 Vogue 分组，十个使用 $\gscan=0$。十二个均与枚举一致。十个仅按距离的单元不在 \cref{cor:6-grouped-calibration} 范围内：嵌套需要共同 cutoff 顺序，或没有跨截断并列。校准与留出使用相同路径并不能保证这一点。
+两个全池配置对 Vogue 使用分组扫描，其余十个使用 $\gscan=0$。全部十二个与枚举相同，但十个仅按距离的配置仍不在 \cref{cor:6-grouped-calibration} 内：它们需要共同截断顺序，或没有跨越截断处的并列参考答案。校准和测试使用相同路径并不能建立嵌套。
 
 \paragraph{基于排名的扩展。}
-在同样的嵌套／固定分数前提下，从一开始的主码排名给出
+在相同嵌套与固定分数前提下，存储每个参考答案的主码排名，就能知道各预算何时将其丢失：
 \begin{equation}
  D_S(\alpha)=\sum_{q\in\mathcal Q_S}\sum_{x\in\mathcal R_{\rm ref}(q)}
  \mathbf1\{\operatorname{rank}_{\rm P}(x)>c(\alpha)\}.
  \label{eq:6-rank-curve}
 \end{equation}
-导出参考排名可以替代重复预算搜索。这尚未实现。
+这样可以从导出的参考排名产生整条一致性曲线，代替重复搜索；目前尚未实现。

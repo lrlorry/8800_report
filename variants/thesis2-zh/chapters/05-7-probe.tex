@@ -1,28 +1,26 @@
-probe 选择发生在主码扫描前，选择倒排列表，而非数据库向量保留候选。对 IVF 质心 $\mu_i$，选择器排序计算得到的 FP32 值路由分数：
+路由须从数千个质心中选择少量 IVF 列表。对全部质心分数排序，比只寻找所需前缀做了更多工作。实现先用 radix 分趟确定截断值，再只排序被选中的列表。它在主码扫描前选择列表，与选择向量保留候选不同。
+
+对质心 $\mu_i$，计算路由分数及其并列顺序为
 \begin{equation}
  s_i=\|\mu_i\|_2^2-2\langle q',\mu_i\rangle,
  \qquad (s_i,i)\ \text{ordered lexicographically}.
  \label{eq:5-probe-score}
 \end{equation}
-省略共同查询范数不改变质心顺序。与主码平方距离表不同，这些分数可能为负。输出为
+去掉共同查询范数不改变质心排名。不同于主码平方距离，这些分数可以为负。选择器返回
 \[
  n_{\rm sel}=\min(n_{\rm probe},n_{\rm list}),\qquad
  I=\operatorname{Top}^{(s_i,i)}_{n_{\rm sel}}\{0,\ldots,n_{\rm list}-1\},
 \]
-并附列表长度前缀 offsets。
-
-OpenAI v69 使用 TF32 旋转／质心 GEMM 和 FP32 累加。probe 精确性针对其计算分数；FP32 \texttt{fma} 不会消除此前舍入（\cref{sec:7-precision}）。
+以及选定列表长度的前缀 offsets。在 OpenAI 上，评测旋转与质心 GEMM 使用 TF32 乘法和 FP32 累加；这里的精确性针对这些计算分数，精度检查见 \cref{sec:7-precision}。
 
 \subsection{Radix 选择与确定性排序}
 
-一个 block 进行四趟从最高有效位开始的 radix。对前缀限制直方图 $H_t$ 和从一开始的剩余排名 $r_t$（$r_0=n_{\rm sel}$），
+一个 block 由最高有效字节至最低有效字节执行四趟 radix。直方图统计具有已选前缀的键；下一个字节选择首个达到剩余目标排名的桶。对该直方图 $H_t$ 及排名 $r_t$，其中 $r_0=n_{\rm sel}$，
 \[
  b_t=\min\Bigl\{b:\sum_{a\leq b}H_t[a]\geq r_t\Bigr\},\qquad
  r_{t+1}=r_t-\sum_{a<b_t}H_t[a].
 \]
-选中的 bin 扩展前缀。四个 bytes 确定 cutoff／等键数量。
-
-将带符号零规范化为正零，再按下式映射 bits $u$：
+重复此步骤，在四个 bytes 后确定截断键。为使整数的字节比较遵循带符号浮点分数顺序，先将带符号零规范化为正零，再映射分数位 $u$：
 \begin{equation}
  F(u)=\begin{cases}
        \mathop{\sim}u,&\text{if the sign bit is set},\\
@@ -30,7 +28,7 @@ OpenAI v69 使用 TF32 旋转／质心 GEMM 和 FP32 累加。probe 精确性针
       \end{cases}
  \label{eq:5-probe-key}
 \end{equation}
-对非 NaN 分数，分类可得单调性：
+对非 NaN 分数，负数、非负数及异号三种情况给出
 \[
  \begin{aligned}
  D_1<D_2<0&\Rightarrow u_1>u_2\Rightarrow{\sim}u_1<{\sim}u_2,\\
@@ -39,36 +37,29 @@ OpenAI v69 使用 TF32 旋转／质心 GEMM 和 FP32 累加。probe 精确性针
  D_1<0\leq D_2&\Rightarrow F(u_1)<2^{31}\leq F(u_2).
  \end{aligned}
 \]
-该映射覆盖无穷／零，不同于仅适用于非负值的 \cref{eq:5-packed-key}。重复使用 \texttt{fma} 固定重算键。
+该映射处理负值、无穷及零，而 \cref{eq:5-packed-key} 只适用于非负分数。各趟按相同的融合乘加舍入方式重算分数，因此截断检测和收集阶段比较的是相同计算键。
 
-直方图存储为
+各 warp lane 有自己的直方图副本以减少冲突，合计需要
 \[
  256\ \text{bins}\times32\ \text{lane replicas}\times4\ \text{bytes}=32\,\mathrm{KiB}.
 \]
-复制减少同 warp 冲突，但仍有 warp 间竞争／归约成本。
-
-令 $h$ 为 cutoff 键。收集阶段形成
+这些副本仍需归约，并可能在 warp 间产生竞争。确定截断键 $h$ 后，收集阶段区分小于它与等于它的键：
 \[
  A_< =\{i:F(u_i)<h\},\quad A_= =\{i:F(u_i)=h\},\quad
  m=n_{\rm sel}-|A_<|.
 \]
-取 $A_<$ 及 $A_=$ 中 ID 最小的 $m$ 项，使用有序 ballot／前缀计数，而非原子到达顺序。对所得集合 $A$，
+保留 $A_<$ 及 $A_=$ 中 ID 最小的 $m$ 项。有序 warp ballot 用位掩码记录 lane 决策，结合前缀计数，使选择不依赖原子到达顺序。对选中集合 $A$，各成员的精确排名决定输出槽位：
 \[
  \operatorname{rank}(i)=|\{j\in A:(s_j,j)\prec(s_i,i)\}|,
  \qquad\mathrm{out}[\operatorname{rank}(i)]=i.
 \]
-
-选定长度产生前缀 offsets。对超出数量的 probes，
+最后，列表长度形成 probe 前缀 offsets。若请求 probes 多于列表数，补位项长度为零：
 \[
  i_j=i_{n_{\rm sel}-1},\quad L_j=0\quad(j\geq n_{\rm sel}),
  \qquad\omega_{j+1}=\omega_j+L_j.
 \]
-零长度避免重复扫描。要求 $n_{\rm list},n_{\rm probe}>0$。
+重复最后一个列表 ID 无害，因为补位长度为零，不会再次扫描；要求 $n_{\rm list},n_{\rm probe}>0$。
 
 \subsection{成本与独立正确性约束}
 
-直方图／收集重新读取分数；排名成本为 $O(n_{\rm sel}^2)$，共享内存随之增长。小规模选择也需支付固定直方图存储；这是确定性集成，不是统一的线性成本。
-
-测试覆盖并列、零、无穷、极值和超量 probes（\cref{sec:7-4}）。
-
-FP16 近似和跨进程检查另行处理（\cref{sec:7-4}）。
+Radix 各趟及收集阶段反复读取分数。选定列表的排序需要 $O(n_{\rm sel}^2)$ 工作及随之增长的共享存储，所以选择规模很小时仍要支付固定直方图开销。\Cref{sec:7-4} 比较吞吐并检查并列、带符号零、无穷、极值及超量 probes。FP16 近似与跨进程波动在那里另行检查；确定性选择器并不能消除其输入分数的差异。

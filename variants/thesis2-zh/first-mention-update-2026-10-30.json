@@ -6,15 +6,15 @@
   "updated_protected": {
     "variants/thesis2/verify.py": {
       "before_sha256": "d2138ece9f20657befa3a131690f3bd72aef28330993a3c25a5c8d3323261311",
-      "after_sha256": "005f4c03f5e50182723d6fbd1013a78ab0305c0ec7a470f10afd089eed592626"
+      "after_sha256": "bb19ef929ec8ae67eaf65e2e4f4f731aaa2715779b7a06e88df3b9c29da05479"
     },
     "variants/thesis2/checks.json": {
       "before_sha256": "b4d91c9a115cce4d1950c7e173db2c18ad4a33848538ff2720c2097fa8e1fdbf",
-      "after_sha256": "fd37a78143224e58c3f2aef2aea4893caa8285563993c11b923aacee0a2b0e7a"
+      "after_sha256": "644bf385bba490bd2839d1a4961518cb95121674c412a78a94ef781095b9d9ce"
     },
     "thesis2.pdf": {
       "before_sha256": "15b10bb12b558f9dc9962ac2911fb9f925c344ff3940cf6da3b115f5e1c36a32",
-      "after_sha256": "01a326dc8c069494060958e8d40d571bd0a744ab72e3762bfc339fe2b4531715"
+      "after_sha256": "8c6ca83968e1aa136aceaa5b05d41fc799c6855762b62cc062f07b9e5c36d60d"
     },
     "variants/thesis2/chapters/01-2-scope.tex": {
       "before_sha256": "9e79a10f78bd4e84d036ee5edbcae469eb87c1f66778fe67b230323f50fd6e06",
@@ -22,31 +22,31 @@
     },
     "variants/thesis2/chapters/08-1-insights.tex": {
       "before_sha256": "fac0e1d3f7cb9108872b8870468f16094e29fd8016dff3311eb194a6d4c0bcf6",
-      "after_sha256": "8d538d390743340d740e616589c7b57a83685d75ead6638090f60603bc6da430"
+      "after_sha256": "acb09ade2d3bba8fa9b76d93c0a99ca34d9b8d4f69dbd962fb89064e13504403"
     },
     "variants/thesis2/chapters/02-1-objective.tex": {
       "before_sha256": "6bea79e8046f405fb0b84ae53fc660cae4a6f6b2007ff0a2a4445b3171b1999f",
-      "after_sha256": "690e37e5739e3bfffe3bbd58b9345dd9b36da51ccd0b28c42011e299e8be2ef8"
+      "after_sha256": "f928fb403f0f5353d10a9c31dc9b356f9b5a24dd7d1864dfb8ca47e41020267e"
     },
     "variants/thesis2/chapters/03-2-data.tex": {
       "before_sha256": "cbd15ecd9aa4d30690fb0a411a0262fbb5ad83b5c939e3e69a184527fe0994ae",
-      "after_sha256": "79bf49e9cb1840284adbf2f77404c282081249907afd8745e91af4d9b315b48d"
+      "after_sha256": "ceebc4c1f7a84999c4899e4e610cd5823d55e5c0999a88efa39c0f4bbbe7b69a"
     },
     "variants/thesis2/chapters/02-4-gpu.tex": {
       "before_sha256": "e70114ae18f2ed1a5237cc4bd8fee9828375c0d20729ad0fe2213b2f253b19a9",
-      "after_sha256": "96f4837a23ffba7829f7dcb8c7346a72ba827c93b16b063323896b3f243d8846"
+      "after_sha256": "20d107d81e623e611ca360ee930323fd6016368a4dc33fa9fed7834322d858e2"
     },
     "variants/thesis2/chapters/03-5-ledger.tex": {
       "before_sha256": "edf5f01e29ab3b0df763d51d3253aa9c4c05445c0a6bbe914664db663e26854e",
-      "after_sha256": "84de72f2ff8cded336844a592301d42348385914a5b6946329f5e8c5c0882c80"
+      "after_sha256": "7f63547d8bf714131a2dcb0a170c342a91028a34232b2fb730088b1db0f91219"
     },
     "variants/thesis2/chapters/03-3-measurement.tex": {
       "before_sha256": "5bcc2f8dbc68cc077ca684ac3083e0d6c8d752fb9bf13e9abe9950cc474b153d",
-      "after_sha256": "5af7c0a90189ce0e77de5cc980a1b1e04190167c04b6c34b08cb03a09f4809af"
+      "after_sha256": "87ca477f4dff381862738e72462e08957a8a3b98a53448cd563e034e3cb7c01b"
     },
     "variants/thesis2/chapters/02-3-jhq.tex": {
       "before_sha256": "74dc5f2b1ce4db4fbba2198752422dc0ea184cacad020e9f7daead2e8c841f6c",
-      "after_sha256": "52b72b8239c65a1c2e07961504d377c245730da851eb5a8e65065571de008877"
+      "after_sha256": "b0c6a6973fe1b79c881742819cb3c0ff48587109eed752519fa434f1711340a5"
     },
     "variants/thesis2/chapters/02-2-hierarchy.tex": {
       "before_sha256": "80baefe11c29e36acacdda3b542257f14aa1ac19844551360d9df2f62f47aec1",
@@ -54,7 +54,7 @@
     },
     "variants/thesis2/chapters/04-1-boundaries.tex": {
       "before_sha256": "896e0be0d8fad7ce08c8f0bf899f04591cbf675baf4d979a37509fe6ab757d03",
-      "after_sha256": "1fd6549f6c23190a88e3d58e92a008e48bf4eaa31468fbe4ec60e521b2fa14db"
+      "after_sha256": "7e27cb5217c2a22dc700b43a78db86fd3b1dc2e1e34aabbb87cb017d102a99f7"
     },
     "variants/thesis2/chapters/02-6-quantised.tex": {
       "before_sha256": "13562544a9b2d8780d430f8e65ecb4f39837f845bcc9e142ab64ba0db97cd990",
@@ -62,7 +62,7 @@
     },
     "variants/thesis2/chapters/07-evaluation.tex": {
       "before_sha256": "d4ec719e00a0f11bcc4416792d56c19393106bc6c46fc36a85dfa443b8f5a09d",
-      "after_sha256": "1c1fbb494a3c83f7612fbd2c004b9163da01bd00a9b4506a090f9a85aea29b21"
+      "after_sha256": "3328a68d40e4f1342dab1b5b1db3788a4479e4f5758e6d2acb7191679a25505b"
     },
     "variants/thesis2/chapters/01-3-challenges.tex": {
       "before_sha256": "1b27f8110bf1eeda50c0e276feab99b4d683e44424aeb1e3dca7effd1cac28fa",
@@ -78,15 +78,15 @@
     },
     "variants/thesis2/chapters/04-4-lifecycle.tex": {
       "before_sha256": "33762358fe50095adcb13e0fd6592ee6e0be8c12e6b0e138d7304363b8f80ba9",
-      "after_sha256": "b28e72b284a11046b89c03d25e956e8b6a7156df012d8afffff49bf500c2f8fd"
+      "after_sha256": "303498a1f246dbd82988ac6cc52320d4d56ab55c492a0707db8889bbaefdde55"
     },
     "variants/thesis2/chapters/04-2-training.tex": {
       "before_sha256": "c86e615d80175d550d615ae08abad7c831c8ae63bbcaa3f2d1f72d9d860fa9a1",
-      "after_sha256": "7d6db39dff402d1725932cb9a4f90da2763fac5281021a9b228b6258d7506d46"
+      "after_sha256": "fedee03646b86d42bdca4a2aa9ee94d256a199af6e1502ee6013f688e42506b8"
     },
     "variants/thesis2/chapters/08-2-negative.tex": {
       "before_sha256": "4cc1a7d8f2682160e8b8d388c241e148cf0f38dd60ac5916962f4822863da590",
-      "after_sha256": "d7ff88a379c3a69f0820941f3061e17ef84a4a440bfd2ebed40746c1a945280b"
+      "after_sha256": "e974d8fe2aef96c4dc97166843eeb0535f275c5388149639781605cde8d03bc8"
     },
     "variants/thesis2/frontmatter/abstract.tex": {
       "before_sha256": "7de139c44760816b46deebc1d46a1c72f38ba3c1c5688e456282be08e464c917",
@@ -102,55 +102,55 @@
     },
     "variants/thesis2/chapters/03-methodology.tex": {
       "before_sha256": "9129f3526a48abe811c4f8b19f4825f5790473246518abdd5fa8b2282ed286c7",
-      "after_sha256": "4e86e185539e7631bd8d8ac6b46cde60a02304868bf5961551b3817eda523ffa"
+      "after_sha256": "1040c4124175462107253204a5672cf0b7b3b48b1f32e5dfd424d09953a99b76"
     },
     "variants/thesis2/chapters/04-architecture.tex": {
       "before_sha256": "c8753f19dea22faa89e2a2fef05459c73cde9832b1d5efb5ecdebcd03c1a0ef4",
-      "after_sha256": "422c71ced3eea441ef0c40be5227b4eb444ac972041f02c4f27cfd03aa259d21"
+      "after_sha256": "7c1cc299358496dd81aa337c70c65cfc539881e5f6d267a928ee825000993035"
     },
     "variants/thesis2/chapters/04-5-construction.tex": {
       "before_sha256": "138947b57d998049692ab34f9cbd60f39382f5e5d6903aecd0e058ceb543aec9",
-      "after_sha256": "76b07e672397da170b48b807813d382a7e45cbdd7819aae7f6591b973c915db5"
+      "after_sha256": "3bef76d872e48d5301faafde014a513e156de66b2c55d78f504217a95dda6b1d"
     },
     "variants/thesis2/chapters/04-6-contracts.tex": {
       "before_sha256": "32126962a774a060442fe5b88155a4f8fbca50ac8ccd8732281f0828bf68ec1d",
-      "after_sha256": "a8f7c95b7c73eb58234d84e3a6008cde8d427b465492405a7ab2085bbdab61d4"
+      "after_sha256": "482122b1c2338c453c31123392343e65774e48e9104b517cd0f51aca34a5b046"
     },
     "variants/thesis2/chapters/05-gpu-execution.tex": {
       "before_sha256": "8cc56f87778e70da803c2d52bd8e8028c54b1ecb2231095ebebd05ddd4e1cbe7",
-      "after_sha256": "26ee6c44fceb886304bfcadc82e21971f0c2eb65c3fc6f885fcdac5777ab5372"
+      "after_sha256": "c607088cc5bebb40a1b7ff102f7cba4f86947a52fd26779560c74ee81c18fdc8"
     },
     "variants/thesis2/chapters/05-3-packed-access.tex": {
       "before_sha256": "8dde5fdc3fc2fadd696e281ab790e800fa14c1860acbf8e5bf7b7042dfa99873",
-      "after_sha256": "92c96503a69b43c822f86e428d5aab8134c899988c348d925c4a271e08bbcde9"
+      "after_sha256": "a567654185296f977b54448647c255974319d16c6146eb30df1662e211ee5773"
     },
     "variants/thesis2/chapters/06-refinement.tex": {
       "before_sha256": "98fcc99346ee6c054046f8cd74bd19964fe2070902a2939090b032e832e9b3aa",
-      "after_sha256": "d56e9fa415fe23fd9311fdc503a41376d9d4f8f0c7732b18f590b3e3823d823a"
+      "after_sha256": "49e9d56aae82bd79348e50bef2313389a9ca2c3f741d284ac7c680e5cf36b135"
     },
     "variants/thesis2/chapters/07-supp-precision.tex": {
       "before_sha256": "e98408f730c3d5ab5c90ce503851f0177d48f00c5ed2d98b88a9327ac96e3fa4",
-      "after_sha256": "8f820592893d9aacd39db4ca5e437349529eff72c15988044f2419e438833180"
+      "after_sha256": "bd898d0ce61f6c8d2c19170b81f6f8f5fede7a039c306ed2777f95b7b976fcda"
     },
     "variants/thesis2/chapters/08-discussion.tex": {
       "before_sha256": "2e7b01895dd53048cad4e41e474d76bb4991d1138d0b56550b3768dfb63a3b43",
-      "after_sha256": "c52803516de172afb3f0c09e803c10746d68b92014987cdff83eb80795ee5984"
+      "after_sha256": "0d687513f9deaf4cd97d46010779cf3de4f7dfb13d9ffbea6e93de41c8567083"
     },
     "variants/thesis2/chapters/08-4-directions.tex": {
       "before_sha256": "0d1cab6450f9e3daf83019800654ad27823456e2a9436cc6f92da08a617caff6",
-      "after_sha256": "d3a79ab032b3e469e025abf05905fb20f16536860a13503b7786c877d71b51f5"
+      "after_sha256": "ed1e25b445cae63314e56773520463c1d708f559aa2878b8aa7b3126907c8689"
     },
     "variants/thesis2/chapters/09-conclusion.tex": {
       "before_sha256": "561386e573036c35e5eb6999c40e8c4bc8b083d53351d7f28519fe5d5fa260ba",
-      "after_sha256": "c5fda700d211f0f4bbbf9bf693bb8bc739c19797b240e4bdfb2202dff26e9fca"
+      "after_sha256": "23a6a7f7a46af45631627b1be23352293f0aaf71e58563ee2ce519955c2b603f"
     },
     "variants/thesis2/chapters/01-4-questions.tex": {
       "before_sha256": "9514e89b231a374170ed6817bcdb5af76eb0699b1b5af81d4595b34fc644cfbb",
-      "after_sha256": "31a2f9f52e4977e9ae65bd2c1f393a3b0c6f1b9d6da28a567978b94d70f1738c"
+      "after_sha256": "e890a75cad4a4b90298074076424f1c6cf1c15f7ff2c067f86f63944ab36c26c"
     },
     "variants/thesis2/chapters/03-4-frontiers.tex": {
       "before_sha256": "a6cb7e3706ce5ff3b69db4c86914b30dd64f0bce0252804025d8dfdf4a935638",
-      "after_sha256": "857b4d47f05f5c02e8e2859a88a9a1a69056fca407d6e6e1c384a2f3159cc1bc"
+      "after_sha256": "50f829007105cdb5827de4a1db9cf821e43d926ba670e13efb580f0801da15a6"
     },
     "variants/thesis2/chapters/02-5-graphs.tex": {
       "before_sha256": "9624b524a36f1f30ca688adae5d6ec7a912d9407044a931f5b5e0d62b774b2ee",
@@ -158,7 +158,107 @@
     },
     "variants/thesis2/chapters/02-7-gap.tex": {
       "before_sha256": "e9fdb307ffedd20da7b7af8072aa7a0324f25cdca28848bd54f16989f2577fd4",
-      "after_sha256": "762ad65cccb25cfb82d8a0d4e19875c98ce3e998829b762cd815b8e4c293afd9"
+      "after_sha256": "6479141ea0ea172fab2bdf7f1ff191d41542941fcf3503e561a2934d39ce71fd"
+    },
+    "variants/thesis2/chapters/03-1-comparisons.tex": {
+      "before_sha256": "e7cad5f93cffb81cc6b2fad3d39cd0dc042b2899b8de855dba0c083d4542f155",
+      "after_sha256": "4f17d6ce9b565180b205a74931f99cf0a07a099cdf49de61763ebfa469caf5c2"
+    },
+    "variants/thesis2/chapters/04-3-layout.tex": {
+      "before_sha256": "4b5becae76071ce615fd8e6088ad1ee4804520ab2652fb5dff41ba30d44f8b37",
+      "after_sha256": "764d7af6b1abca37a46c482a5a8a7e8d232356499e24599c243467de11861a71"
+    },
+    "variants/thesis2/chapters/05-2-lut.tex": {
+      "before_sha256": "889e75b5b4c7f6efa5c8c94368ca120434539bfad2ce3dc8279510c4ff3244bf",
+      "after_sha256": "65a1b57ad5d7e9c723cef2d3f25c9f82dbe3c98202e7afc7ad7b3d299b49995c"
+    },
+    "variants/thesis2/chapters/05-5-bound-scheduling.tex": {
+      "before_sha256": "889533722cbae13cad0db555fb1e505ca926b3044f670a3402db7c4d0a889482",
+      "after_sha256": "029605319836a92f3ceff0d4a248591bbcfa383d3f381577b33958b28f70dc60"
+    },
+    "variants/thesis2/chapters/05-6-refinement.tex": {
+      "before_sha256": "f5d5054a77ff0391334722a5a86ffe614c3714afde8351bee733cc8b8f94865c",
+      "after_sha256": "2d8466f9daa15ba337d80f793875099595355c03326c634cb4dc00149e84d906"
+    },
+    "variants/thesis2/chapters/05-7-probe.tex": {
+      "before_sha256": "d186d8c8da3ebf9a602b38fa58083a01aa09d6e1462a593fe731f3dc78ad2866",
+      "after_sha256": "f9352ba1f1b8fdd6186f1d65aea5e9a05ee559df73bde9b1bc9221c472e1421f"
+    },
+    "variants/thesis2/chapters/06-1-motivation.tex": {
+      "before_sha256": "e97364a32dbe6e8fbc400e3b27e707c9f67a025fe98bc25846c80a3195da64f8",
+      "after_sha256": "3657c956a4db4cbda3a98ddce928c6cb9e19a34906b10a9902f11b7f991a58ac"
+    },
+    "variants/thesis2/chapters/06-2-agreement.tex": {
+      "before_sha256": "c1c67be506f4dcd3efd4aaa165a224b061e478cc59c43c8d2332490d54c96c4c",
+      "after_sha256": "d06af234b2b6854234987362b74fc1385ee1b91b2f5936d86c2e48f4933e7baf"
+    },
+    "variants/thesis2/chapters/06-3-search.tex": {
+      "before_sha256": "2a9a5cf4366bdf57abfc9e35c4d0b07e7c6563bdafcc82c7302eb59a5830402f",
+      "after_sha256": "dbbc64358018f0c8eade87b416d110994fa95e72a4d26e33b9f067ffc2c3833f"
+    },
+    "variants/thesis2/chapters/06-5-economics.tex": {
+      "before_sha256": "d1f9ca6939d07f987524f2f268a795a11bce50352cd5f7545ac243b828903e0b",
+      "after_sha256": "bbfc9663cf37214a939ec8e8034829f0b161a2013d5d905159ee5842d2fc54df"
+    },
+    "variants/thesis2/chapters/07-supp-smallbatch.tex": {
+      "before_sha256": "62874353c5b50a9b270f7d41d52be3be9955e8f5c892a05311e58c2bc20f9e36",
+      "after_sha256": "b47b6d6db3090d792252cd6240621002540fbb02b7ad47e1898f0e4742f1504e"
+    },
+    "variants/thesis2/chapters/06-6-scope.tex": {
+      "before_sha256": "291e4deb25346ff9e3a552529a0dbf2b7ac034a40e52cb9c3eabf8f0e517cc34",
+      "after_sha256": "2de536aa6608166ff0cc1780a338ac25227ca724d67726cbf20a8e55d92e6732"
+    },
+    "variants/thesis2/validate_figure_layout.py": {
+      "before_sha256": "361c019ff52224b9bb6ee7b251f8420d5e1ecb4d32ad14a1f2e588b77d1aa210",
+      "after_sha256": "9608aac419b88bba4d11e46fab13874794079cbb9b174c27103fa5f954493783"
+    },
+    "variants/thesis2/__pycache__/validate_figure_layout.cpython-313.pyc": {
+      "before_sha256": "d3315f7ee5b7095109f15ebf861635068df8459635750622d1459cec78e7a0b2",
+      "after_sha256": "87fdc6edb86f30fa5a3aa9c30fec67ab8e1503e2941f9d9461abe30368bbc7de"
+    },
+    "variants/thesis2/chapters/05-1-query-path.tex": {
+      "before_sha256": "03804f4368ca9bd6865a358fd888fad0c78ad4feafaa401b88e213f7cc61b77e",
+      "after_sha256": "3cac427de8d67343783377af6b3bff59c3d354c1a6dbd428e6fe5826c193d07e"
+    },
+    "variants/thesis2/figures/physical-layout.tex": {
+      "before_sha256": "7df8cd5632d2ffb8351303a91fa70759118ef5239684ab4525d5ff621dd8266c",
+      "after_sha256": "d370b8381cf9b99b782f14188db9db6f0076721228b95a0c64eb2698b54f19aa"
+    },
+    "variants/thesis2/figures/calibration-flow-layout.tex": {
+      "before_sha256": "9b4ebf11f976644f1828e9684062ab92303beb7059112dfdbf7c54bb0ea62a17",
+      "after_sha256": "031ee5a5874c2994ae2a88702dd30457d248c0c23ecf7431c5d3943fcf125d51"
+    },
+    "variants/thesis2/figures/cartesian-lut.tex": {
+      "before_sha256": "0735da00bea84620caa40d831181617caff329c1ef6871e47d7186cf96f1742f",
+      "after_sha256": "2865799df544891da913fcc72d1caba13ff22c83ad7d831e82763e3986bd1ee8"
+    },
+    "variants/thesis2/figures/add-paths.tex": {
+      "before_sha256": "b092f6b0e06ac633c358a567ba8aab5bccc0e6c2c19fde5255dab6318f42e72f",
+      "after_sha256": "65b1f7b00b7d769542c28c70d487f1d28b9090f204848f9292b5bf95dd2adf24"
+    },
+    "variants/thesis2/chapters/05-4-global-selection.tex": {
+      "before_sha256": "964cc61966c07c2bcb9a7ec4dd6f770abc01d75c8bcf12c9a9b1f6b957a2bdc1",
+      "after_sha256": "fb82951c6bf4db78b25dba6c6ca4b77bc8a2ccc49dfc0c24b6a0d6a33adfc5ad"
+    },
+    "variants/thesis2/chapters/06-4-controls.tex": {
+      "before_sha256": "c951f5915674cbd26d0bd90bdd22a20c2312682b7ae4e941dd5a2e0a06a5ff41",
+      "after_sha256": "f90fd87840576e7b580d8300a327728e09d6ee34200073ad2e538c56a17f9de1"
+    },
+    "variants/thesis2/chapters/08-3-validity.tex": {
+      "before_sha256": "d556397c103382cfdfa308ac5e0798fabdb55dfa68acbb46c09b232923f2bae8",
+      "after_sha256": "f776b2fd2dcea32f222eea25c46d7f806cbbd6e59787a61085baeb82809e0d04"
+    },
+    "variants/thesis2/chapters/08-5-deployment.tex": {
+      "before_sha256": "70768671c1fe19c88d4ccd2dba450df313e743f51d0ab7f6cef9d0e6e73c0d47",
+      "after_sha256": "48a8b0318815a233938fd89685731f8ea45b28289f34e1b21eb79100fc96ada0"
+    },
+    "variants/thesis2/chapters/07-supp-budget.tex": {
+      "before_sha256": "99ed5dc483733ae43536ec386c1803a62eb56375c16e81db84d92eb7535765b6",
+      "after_sha256": "3e9dc21e410dd8460f205cc261efd8172771ab9b68be106884cce226e4773c6e"
+    },
+    "variants/thesis2/chapters/07-supp-selection.tex": {
+      "before_sha256": "0605323d8cfcc0511b5c9f9208769a7aeebd6e55274538426a9c4df1aa7beb6e",
+      "after_sha256": "433bc2b947b4e13f9f348b6b0aa9dd945b1a546eb6f7d3742cd855a9d5c6a3fb"
     }
   }
 }

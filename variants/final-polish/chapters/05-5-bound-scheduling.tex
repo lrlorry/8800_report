@@ -1,0 +1,178 @@
+Independent groups can maintain $\gscan c$ entries to find only $c$
+winners. Sharing a safe upper bound lets them reduce this maintenance.
+The bound is a complete key, including its tie position: once a group
+holds $c$ distinct, fully scored candidates, its worst key bounds the
+global cutoff. Other groups can reject keys later than that bound.
+Scheduling separately chooses how many groups to run; both mechanisms
+use a fixed refinement budget, chosen in \Cref{ch:refinement}.
+
+\subsection{A complete-key upper bound with explicit witnesses}
+
+Let $K_{(c)}$ be the global $c$th key when $|U|\geq c$. A group's
+$c$ fully scored candidates are witnesses: their existence justifies an
+upper bound. If their largest key is $\tau_j$, then
+$K_{(c)}\preceq\tau_j$, because at least $c$ candidates precede or equal
+it. Initialise the shared bound to the top sentinel and tighten it by
+\begin{equation}
+ \tau\leftarrow\min_{\prec}(\tau,\tau_j).
+ \label{eq:5-shared-update}
+\end{equation}
+A group with fewer than $c$ valid candidates publishes no bound. If the
+whole universe has fewer than $c$, all valid candidates remain eligible.
+The next proposition guarantees that filtering by a complete published
+bound preserves global winners, even if groups read older updates.
+
+\begin{resultblock}
+\begin{proposition}[Safe rejection by a witnessed bound]
+\label{prop:5-shared-bound}
+Assume fixed keys, publications backed by $c$ distinct candidates, and
+reads that return either the initial sentinel or one complete published
+key. Rejecting a candidate only when $K_q(x)\succ\tau$ cannot remove a
+global top-$c$ candidate, irrespective of publication timing.
+\end{proposition}
+\begin{proof}
+A publication has a set $W_\tau$ of $c$ distinct witnesses:
+\[
+ \max_{x\in W_\tau}K_q(x)\preceq\tau
+ \quad\Longrightarrow\quad K_{(c)}\preceq\tau.
+\]
+Sentinel reads and minima of published keys obey the same inequality. Thus
+\[
+ x\in\operatorname{Top}_c(U)
+ \ \Longrightarrow\ K_q(x)\preceq K_{(c)}\preceq\tau_{\rm seen}
+ \ \Longrightarrow\ x\text{ is not rejected}.
+\]
+Stale reads only loosen the bound. Publications
+made after earlier safe rejections remain valid: any $c$ retained
+distinct candidates still supply $c$ witnesses, whether or not they are
+the best $c$ of their group.
+\end{proof}
+\end{resultblock}
+Combined with the coverage condition in \cref{prop:5-local-coverage},
+this permits local and shared filtering together:
+\begin{equation}
+ K_q(x)\prec\lambda_j
+ \quad\text{and}\quad
+ K_q(x)\preceq\tau_{\rm seen},
+ \label{eq:5-admission}
+\end{equation}
+Here $\lambda_j$ is the local compaction threshold and $\tau_{\rm seen}$
+is the last shared key read. The local test is strict; the shared test
+retains equality, including the candidate that supplied the bound.
+
+\subsection{Publication, filtering and implementation limits}
+
+The GPU encodes a complete key as one 64-bit integer. For nonnegative
+FP32 scores, canonical positive zero and valid nonnegative positions,
+\begin{equation}
+ \kappa(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
+ \label{eq:5-packed-key}
+\end{equation}
+On this non-NaN domain, comparing the packed integers has the same order
+as comparing the score and then the position:
+\[
+ (D_1,p_1)\prec(D_2,p_2)\iff\kappa(D_1,p_1)<\kappa(D_2,p_2).
+\]
+Finite keys precede infinity and the all-one sentinel; invalid positions
+cannot publish a bound.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/final-polish/figures/shared-bound}
+\captionof{figure}[Shared-key filtering over scan chunks]{Shared-key filtering over scan chunks.}
+\label{fig:5-shared-bound}
+\end{minipage}\par\medskip
+A designated thread reads the bound once per scanned chunk. The block
+first computes full primary scores, then admits eligible keys and
+compacts when space is needed. With $c$ valid keys after compaction,
+an atomic minimum can publish its worst retained key. After the last
+chunk, final compaction and trimming against the latest bound produce
+the prefix sent to merging. An older read may leave extra candidates,
+which exact merging removes. Reset, scan and merge are ordered in one
+GPU stream; groups do not wait for one another.
+
+The proof requires an aligned, whole-key read. Generated 64-bit loads
+and atomic updates support this premise under the PTX memory model
+\cite{ptx_isa}; C++ \texttt{volatile} alone does not provide it
+\cite{cuda_programming_guide}.\footnote{The check uses CUDA 13.0.88
+\texttt{ptxas} for \texttt{sm\_120}, with
+\path{ld.volatile.global.u64} and \path{atom.global.min.u64}. It did not
+capture the native instructions produced by the driver's runtime JIT.}
+As \cref{fig:5-shared-bound} shows, filtering follows full primary
+scoring. It saves buffer and merge maintenance while adding bound reads
+and atomic updates; \cref{sec:7-4} measures this trade-off.
+
+\subsection{Choosing parallelism without changing the budget}
+
+Using $b\gscan$ blocks for a batch of $b$ queries exposes more parallel
+work, but each group also needs a table, buffer and merge input. The
+scheduler balances extra parallelism against this repeated work. Define
+the block size, device thread capacity and variation in candidate counts:
+\[
+ T_{\rm blk}=\text{scan threads/block},\quad
+ H=n_{\rm SM}T_{\rm resident/SM},\quad
+ v=\frac{\operatorname{sd}(n_c)}{\operatorname{mean}(n_c)}.
+\]
+The fill rule adds groups when the batch would otherwise use only part
+of that capacity. A second rule adds groups when query workloads are
+uneven:
+\begin{align}
+ g_{\rm fill}
+ &=\max\!\left(\{1\}\cup
+       \{h\in\{2,4,8\}:bhT_{\rm blk}\leq0.6H\}\right),
+       \label{eq:5-fill-rule}\\
+ g_{\rm skew}&=
+   \begin{cases}4,&v\geq0.3,\\1,&v<0.3,\end{cases}
+ \qquad
+ g_{\rm chosen}=\max(g_{\rm fill},g_{\rm skew}).
+ \label{eq:5-skew-rule}
+\end{align}
+The skew rule can override the fill limit. To estimate $v$, the evaluation
+uses 512 database vectors as pseudoqueries under fixed routing. It needs
+no GT and is separate from Chapter 6's output-agreement calibration.
+Later searches use the stored statistic and batch size without an extra
+host readback. The constants were fitted on four pilot configurations,
+then tested on further settings. The one-time scheduler calibration is
+outside steady-state timing; its recorded setup times are in
+\cref{sec:a-supplement}.
+
+Choosing one group dispatches $\gscan=0$ with the same index, probes and
+budget. Its cutoff-tie behaviour is described in \cref{sec:5-4}; integrated
+gains and scheduling losses are evaluated in \cref{sec:7-6}.
+
+\subsection{Observed execution paths}
+
+The batch size explains which path supplies the main cross-system results.
+For 1,000 queries with 512 scan threads, two groups already exceed the
+fill target on the 170-SM RTX 5090, which supports 48 warps per SM
+\cite{blackwell_tuning}:
+\[
+ 1000\cdot2\cdot512=1{,}024{,}000
+ >0.6\cdot170\cdot48\cdot32=156{,}672.
+\]
+The fill rule therefore chooses one group, while the skew rule can still
+choose four. In the main comparison, all 9 of 38 routing records above $v=0.3$ are Vogue
+($0.338$--$0.622$). Its 27 settings use four groups; all 105 arXiv/OpenAI
+settings use $\gscan=0$. Those settings benefit from LUTs, packing,
+cooperative refinement and probe selection, rather than grouped merging.
+Vogue comparisons show 3--15 cutoff-tie differences per 1,000 queries,
+no non-tie differences and identical final outputs; at 128 probes the
+tie range is 7--11.
+
+The budget study uses 128-query calibration samples and larger held-out
+batches. Their path counts are
+\[
+ \begin{array}{c|rrr}
+ &G=0&G=2&G=4\\\hline
+ \text{held-out}&10&0&2\\
+ S=128&2&8&2
+ \end{array}
+\]
+Eight of twelve settings switch paths. The benefit depends on both
+batch size and workload skew, rather than a fixed batch-256 boundary.
+The heuristic does not model residency, compaction or merge cost, and
+pseudoquery statistics can become outdated. Its regret is the speedup
+of the best tested fixed group count divided by the scheduler's speedup;
+the worst observed value is 1.217 at batch 256. Refinement budgets remain
+fixed in these tests; \cref{sec:5-6} describes the refinement itself.

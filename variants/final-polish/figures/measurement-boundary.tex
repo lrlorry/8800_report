@@ -1,0 +1,26 @@
+% Method-neutral search-call boundary; not a stage-time plot.
+\begin{tikzpicture}[
+ font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!65,rounded corners=2pt,align=center,
+ text width=2.9cm,minimum height=1.7cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box] (host) at (0,0) {\mbox{Host FP32 queries}\\\mbox{Pinned staging}};
+\node[box,fill=ThesisNavy!7] (upload) at (3.65,0)
+ {\mbox{H2D transfer}\\Query\\\mbox{preprocessing}};
+\node[box,fill=ThesisNavy!7] (gpu) at (7.3,0)
+ {GPU search\\kernels\\\mbox{(method-specific)}};
+\node[box] (result) at (10.95,0)
+ {D2H results\\GPU\\\mbox{synchronisation}};
+\draw[arr] (host) -- (upload);
+\draw[arr] (upload) -- (gpu);
+\draw[arr] (gpu) -- (result);
+\draw[ThesisNavy,thick] (-1.6,1.15) -- (-1.6,1.45)
+ -- (12.55,1.45) -- (12.55,1.15);
+\node[fill=white,inner sep=3pt] at (5.475,1.45)
+ {Search timing: host to host};
+\node[box,text width=6.2cm,minimum height=1.5cm] (setup) at (1.75,-2.45)
+ {Outside search timing\\Data loading; model training/loading\\Index construction; warm-up};
+\node[box,text width=6.2cm,minimum height=1.5cm] (cal) at (9.2,-2.45)
+ {Budget calibration (Chapter 6)\\Timed separately from search};
+\draw[densely dashed,ThesisNavy!60] (-1.6,-1.1) -- (12.55,-1.1);
+\end{tikzpicture}

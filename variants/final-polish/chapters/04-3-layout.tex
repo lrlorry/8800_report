@@ -1,0 +1,83 @@
+\subsection{From database IDs to list-ordered positions}
+
+List ordering makes the vectors assigned to one IVF centroid contiguous.
+An input row has identifier $i\in\{0,\ldots,N-1\}$; coarse assignment
+uses computed centroid scores with the mathematical target
+\begin{equation}
+ a(i)=\operatorname*{arg\,min}_{0\leq\ell<n_{\rm list}}
+       \|\Pi x_i-\mu_\ell\|_2^2.
+ \label{eq:4-assignment}
+\end{equation}
+The implementation uses the numerical assignment path described above.
+Primary and residual encoding do not subtract $\mu_{a(i)}$: list
+membership restricts the search universe independently of those
+reconstructions.
+
+The builder sorts assignments together with input IDs. Let $\rho(p)$
+be the input ID at sorted physical position $p$, and $o_\ell$ the start
+of list $\ell$. The completed arrays satisfy
+\begin{equation}
+ 0=o_0\leq o_1\leq\cdots\leq o_{n_{\rm list}}=N,
+ \qquad p\in[o_\ell,o_{\ell+1})\Longrightarrow a(\rho(p))=\ell.
+ \label{eq:4-offsets}
+\end{equation}
+Lower-bound searches find each list's first position; equal offsets
+therefore mark an empty list:
+\[
+ o_\ell=o_{\ell+1}\Longleftrightarrow\text{list }\ell\text{ is empty}.
+\]
+Positions stay fixed in a completed index but can change after
+rebuilding. All arrays use the same $\rho(p)$, and IDs map
+$p\mapsto\rho(p)$ back to input rows. Two-pass add temporarily builds
+$\rho^{-1}$ to write new encodings directly at their destination
+(scatter). Primary ties use physical positions; final ties use database
+IDs.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/final-polish/figures/physical-layout}
+\captionof{figure}[Physical GPU index layout]{Physical GPU index layout.}
+\label{fig:4-layout}
+\end{minipage}\par\medskip
+
+The example uses $N=8$ and offsets $o=[0,3,3,8]$, so list~1 is empty. The shaded column marks $p=3$: four separate arrays use the same physical position, and byte offsets are relative to each array's base. At fixed word group $j$, adjacent candidates occupy consecutive 32-bit words, allowing threads scanning adjacent candidates to coalesce their reads. In the eight-bit residual configuration, each row holds the $b_r$ code bytes of one vector.
+
+\subsection{Exact addresses and representation widths}
+
+The primary representation groups candidates by subspace. For primary
+byte $Z[m,p]$, its address is
+\[
+ \operatorname{offset}_{\rm byte}(Z[m,p])=mN+p.
+\]
+Final packing combines four subspace bytes of one vector into each word:
+\begin{equation}
+ \mathsf w[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{addr}_{\rm byte}(\mathsf w[j,p])=4(jN+p).
+ \label{eq:4-primary-address}
+\end{equation}
+Here $j=0,\ldots,M/4-1$. $\text{word-layout build}\Longrightarrow M\bmod4=0$;
+other $M$ are rejected, while a separate byte-layout compilation retains
+the byte representation. Each array occupies $NM$ bytes; repacking
+temporarily holds both copies, costing $2NM$. The one-pass builder
+reorders existing codes (gather) into a vector-major $[N,M]$ array,
+transposes it and repacks, freeing obsolete copies. Two-pass construction
+scatters directly into subspace-major storage before the same repack.
+The search-time lane mapping is discussed in \Cref{sec:5-3}.
+
+Residual codes remain row-major, with $b_r=\lceil dB_r/8\rceil$ bytes per
+vector. In the eight-bit configuration, coordinate $t$ of row $p$ is
+at byte offset $pb_r+t$. In the four-bit path it is in byte
+$pb_r+\lfloor t/2\rfloor$, with even coordinates in the low four bits
+(low nibble) and odd coordinates in the high four bits (high nibble).
+A four-byte correction per physical row stores
+\begin{equation}
+ \gamma[ p ]=2\langle\widehat p(x_{\rho(p)}),
+                              \widehat r(x_{\rho(p)})\rangle.
+ \label{eq:4-correction}
+\end{equation}
+The correction must move with its row's codes during gathering or
+scattering. List-order scans can then fetch residuals only for retained
+candidates. Refinement uses compressed reconstructions; raw FP32
+reranking would require an additional $4Nd$ device bytes. Chapter 7
+evaluates the resulting recall.

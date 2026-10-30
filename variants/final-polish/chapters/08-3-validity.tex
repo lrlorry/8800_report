@@ -1,0 +1,38 @@
+\Cref{tab:8-threats} identifies how the main interpretations could fail
+and which controls address them. Measurement definitions remain in
+Chapter 3; repeated build and precision checks are in \cref{sec:7-8}.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Threats to validity]{Threats to validity and remaining checks.}
+\label{tab:8-threats}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Claim at risk & Alternative explanation & Control and remaining test \\
+\midrule
+Execution gain & Changed scores, ties or index state cause the apparent gain & CPU re-sorting and table-score checks; finite coverage, with candidate arrays requiring regeneration for further tests \\
+Budget quality & Calibration samples miss difficult queries or the workload changes & Separate labelled test queries, recorded decision curves and full-pool enumeration; untested query subsets and future distributions remain \\
+Competitive margin & Parameter grids, slow calls or interface overhead change the ranking & Both recall estimators, retained slow calls, int8 and precision checks; small-batch comparison; other devices untested \\
+Capacity/build claim & Short-lived allocations escape peak sampling & Allocation lifetimes, repeated cold builds and 20\,ms memory sampling; shorter peaks and complete retrained frontiers remain unmeasured \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+The earlier CPU comparison in \cref{sec:7-cpu} establishes the observed
+throughput difference at matched recall for historical implementations.
+Separate training, unequal list counts on the OpenAI datasets and sparse
+CPU timing repeats limit its interpretation. A comparison against the
+evaluated GPU version with matched index and timing controls remains
+unmeasured.
+
+Six datasets do not represent six independent user workloads. The two
+OpenAI exports share a DBpedia corpus, and Stella uses queries held out
+from its corpus rather than the original query set (\cref{sec:3-2}).
+The comparisons include transfers and host interfaces; differences in
+memory types and C++ versus Python calling costs can affect small-batch
+margins, so those margins cannot all be attributed to GPU search kernels
+(\cref{sec:3-3}). Evidence covers one GPU, static indexes and squared-L2
+top-10 search. Near duplicates may remain and relevance labels are
+absent; updates, concurrent services, drift, billion-scale capacity and
+multiple GPUs have not been evaluated.

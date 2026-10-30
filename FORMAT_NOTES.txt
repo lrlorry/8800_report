@@ -29,7 +29,7 @@ Online Submission 要求电子声明，并要求通过 Turnitin 提交，除非�
 
 assessment/thesis-marking-guide.txt 是质量分档指南，不是格式规范。
 assessment/Poster Marking Rubric2.pdf 适用于 poster，不用于 thesis 排版。
-6.pdf 是用户的写作蓝图，不是学校格式要求来源。
+thesis-outline.pdf（原名 6.pdf）是用户的写作蓝图，不是学校格式要求来源。
 
 3. 学院提供的模板与本稿采用方式（2026-10-28补充核查）
 此前仅核对课程页的强制参数，模板检索不完整。现已找到：

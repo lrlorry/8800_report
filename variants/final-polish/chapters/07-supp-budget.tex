@@ -1,0 +1,82 @@
+\subsection{Complete decision traces and finite-pool risk}
+\label{sec:7-budget-trace}
+
+Replaying the recorded calibration choices confirms the finite-pool
+calculation: all 2,304 sampled decisions and twelve full-pool decisions
+match enumeration. Their recorded discrepancy curves are monotone, and
+summing per-query counts reproduces all 18,432 tested grid counts
+(\cref{eq:6-finite-pool}). This validates the observed traces; it does
+not establish nesting for every distance-tied subset or query ordering
+(\cref{sec:6-3}).
+
+At $S=32$, maximum individual loss reaches 0.0294, versus at most
+0.0006 for full-pool calibration.
+
+For arXiv at 128 probes, the predicted and observed probabilities of
+exceeding the loss target are 0.965 versus 0.984 with $S=32$,
+0.875 versus 0.875 with $S=64$, and 0.620 versus 0.625 with $S=128$
+(\cref{fig:7-finite-pool}). The largest of 36 gaps occurs on BGE at
+512 probes: 0.519 predicted versus 0.375 observed, a difference of
+0.144. These predictions concern samples from the fixed calibration
+pool, using each selected budget's measured held-out quality; calibration
+itself uses no labels.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{supplement/finite-pool.pdf}
+\caption[Finite-pool risk prediction and observation]{Finite-pool prediction and observed arXiv quality-target violations. Bars
+show one estimated standard error over 64 independently drawn subsets
+conditional on the fixed pool, not uncertainty over future workloads.}
+\label{fig:7-finite-pool}
+\end{figure}
+
+Ten alternating timing repeats show a low-budget plateau, rather than
+a general rule that each smaller budget is faster.
+
+\subsection{Direct calibration-plus-reuse measurement}
+\label{sec:7-stream-cost}
+
+Four settings compare fixed budgets 64 and 100,
+128-query calibration and full-pool calibration across five rotated
+rounds of 500 reuse batches. Every batch repeats the same held-out query
+pool. This measures amortisation on a stable workload, not performance
+under new-query arrivals or drift. Timing includes sample gathering,
+calibration, budget installation and initial graph setup, but excludes
+construction, warm-up and scan-scheduler calibration.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Direct costs for 500 reuse batches]{Direct total milliseconds for 500 reuse batches, averaged over
+five rounds, including budget calibration for sampled and full-pool policies.
+Each batch has 500 queries. Quality is discussed with the timing results.}
+\label{tab:7-stream-cost}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{variants/final-polish/tables/supplement/stream}
+\end{minipage}\par\medskip
+
+Both calibrated OpenAI-3072 policies choose budget 4 with recall 0.9252,
+matching fixed 100. OpenAI-1536 full-pool calibration and fixed 100 give
+0.9280, while sampling gives 0.9276. BGE at 512 probes gives 0.9658
+for sampling, 0.9670 for fixed 100 and 0.9664 for full-pool calibration.
+ArXiv's full-pool policy selects the slower budget 200 to meet quality,
+while its fixed controls fail the target.
+
+For 128-query calibration, mean cumulative cost first falls below
+fixed 100 after four batches on each OpenAI dataset. Against fixed 64,
+it crosses after six batches on OpenAI-1536 and nine on OpenAI-3072.
+Full-pool calibration requires nine and fourteen batches on OpenAI-1536,
+and eleven and twenty-seven on OpenAI-3072, respectively
+(\cref{fig:7-stream-cost}). These measured break-even points complement the
+steady-rate model; policies with different recall cannot be ranked by
+time alone.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{supplement/stream-cost.pdf}
+\captionof{figure}[Direct cumulative calibrated-reuse time]{Direct mean cumulative time, including budget calibration and
+first-batch setup. Each curve replays one fixed held-out query pool.
+Policies can have different recall; timings alone are not a quality-matched
+ranking. Dataset/probe settings match \cref{tab:7-stream-cost}.}
+\label{fig:7-stream-cost}
+\end{minipage}\par\medskip

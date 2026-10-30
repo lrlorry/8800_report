@@ -1,0 +1,51 @@
+\subsection{Small batches change the competitive region}
+\label{sec:7-smallbatch}
+
+At batch 8 and recall 0.97, CAGRA fp32 is faster on all four datasets
+under both estimators. JHQ remains competitive at lower recall, but
+near ties depend on how measured endpoints are used. The small-batch
+study compares scheduled JHQ, CAGRA fp32/int8 and IVF-RaBitQ at
+batches 8 and 32 on the four main-comparison datasets. Five synchronous
+host-to-host rounds use 1,000 and 992 queries, respectively. The
+1,808 measurements include a one-block JHQ control; IVF-PQ and brute
+force are outside this study.
+
+\suppressfloats[t]
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\includegraphics[width=\linewidth]{t4-t5/smallbatch.pdf}
+\captionof{figure}[Small-batch competitive regions]{Small-batch JHQ / fastest-competitor
+QPS under interpolation with qualifying measured endpoints. Above one
+favours JHQ. \Cref{tab:7-smallbatch} gives strict thresholds.}
+\label{fig:7-smallbatch}
+\end{minipage}\par\medskip
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Small-batch matched-recall ratios]{Small-batch QPS ratios:
+interpolation with qualifying endpoints / strict measured threshold.
+The fastest competitor is selected independently for each estimator;
+higher-recall qualifying endpoints remain eligible without extrapolation.}
+\label{tab:7-smallbatch}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\input{tables/t4-t5/smallbatch}
+\end{minipage}\par\medskip
+
+At recall 0.97, interpolated JHQ/fastest-competitor ratios are
+0.641--0.893 for batch 8 and 0.622--1.008 for batch 32.
+OpenAI-3072 favours JHQ under the batch-32 measured threshold, while
+Vogue's batch-8 lead at recall 0.95 requires interpolation
+(\cref{tab:7-smallbatch}).
+
+At recall 0.90, interpolation with qualifying endpoints favours JHQ
+by 1.032--1.479 at batch 8; the strict threshold gives only three
+wins. Batch-32 ratios range from 0.866 to 1.166, with one strict win.
+Scheduling gives $1.7$--$3.3\times$ over one block at recall 0.95,
+which improves JHQ's execution without ensuring a cross-system lead.
+
+The boundary includes interface costs. Null calls containing transfers
+and synchronisation take median 0.012--0.072\,ms; this cost remains in
+the search timings. CAGRA uses Python and JHQ/RaBitQ use C++, with
+warm-up conventions recorded in \cref{sec:a-t4-t5}.

@@ -1,5 +1,20 @@
 # COMP8800 / JHQ-GPU Thesis
 
+## 最终稿（2026-10-31）
+
+- [英文论文 thesis.pdf](thesis.pdf)：71 页，正文 61 页；正文与摘要约 19,502 个源码词（工具估算）。
+- [中文核对稿 thesis-zh.pdf](thesis-zh.pdf)：69 页。
+- [论文骨架 thesis-outline.pdf](thesis-outline.pdf)。
+- 英文编译入口：[variants/thesis2/main.tex](variants/thesis2/main.tex)；中文入口：[variants/thesis2-zh/main.tex](variants/thesis2-zh/main.tex)。源码目录沿用原名，根目录 PDF 使用统一名称。
+- [最后一轮审核](assessment/final-thesis2-review-2026-10-30.md) · [当前状态](assessment/thesis2-current-state.json) · [命名与旧版清理记录](assessment/canonical-pdf-names-2026-10-31.json)。
+
+运行 `make pdf` 或 `make pdf-zh` 编译对应最终稿；`make verify-pdfs` 核对已发布文件的哈希、页数、字体和文本完整性。
+原稿和其他变体的源码及历史审计保留，用于追溯；它们不是根目录最终稿的编译入口。
+
+## 历史工作记录
+
+以下记录描述此前各轮修订，历史页数、路径及待办不代表当前状态。
+
 按形式化／精简审计继续合并重复说明：英文正文与摘要同口径估算为22,258词，
 PDF为81页（九章正文65页），中文阅读稿79页。正式PDF保留26幅图、31张表；
 移出的13张辅助表、1张估算图及2处重复公式完整保存在[仓库补充材料](docs/supplementary-evidence.md)，不增加PDF附录。
@@ -46,12 +61,12 @@ PDF为81页（九章正文65页），中文阅读稿79页。正式PDF保留26幅
 个人分工、声明签署与最终工具披露仍需作者确认，见
 [作者确认项](assessment/author-confirmation.txt)。研究来源与工具披露已缩为致谢内一段；个人课程签署由作者按实际任务办理。
 
-第 3 章已按 `6.pdf` 的六节骨架完成中英文正文；统一研究对照、数据／GT／划分、
+第 3 章已按 `thesis-outline.pdf` 的六节骨架完成中英文正文；统一研究对照、数据／GT／划分、
 计时与显存口径、基线前沿和证据等级。见
 [第 3 章证据说明](assessment/ch3-evidence.txt)；离线核对入口为
 `python3 scripts/audit_ch3.py`，机器清单为 `data/ch3/audit.json`。
 
-总稿按本目录 `6.pdf` 的九章骨架组织，采用学院提供的 KOMA-Script 长论文模板结构及有记录的电子提交适配。
+总稿按本目录 `thesis-outline.pdf` 的九章骨架组织，采用学院提供的 KOMA-Script 长论文模板结构及有记录的电子提交适配。
 学院模板允许调整；没有据此宣称本届 COMP8800 强制使用某套排版。
 蓝图文字、旧 ADC 数字和未经核验的结果不自动成为当前实验结论。
 
@@ -96,17 +111,20 @@ FP32敏感性，基线未同会话重跑。A2支持已提取PTX的完整64位读
 
 ## 编译
 
-在本目录运行：
+在仓库根目录运行：
 
 ```sh
-latexmk -pdf main.tex
+make pdf
+make pdf-zh
+make verify-pdfs
 ```
 
-直接编译输出为 `build/main.pdf`。运行 `make pdf` 会将论文总稿更新到根目录的 `thesis.pdf`，第七章已放入总稿。模板采用 pdfLaTeX + BibTeX；不需要 shell escape、外部字体、Python 或额外绘图程序。
+英文使用 pdfLaTeX + BibTeX，入口为 `variants/thesis2/main.tex`，输出 `build/thesis2/thesis2.pdf` 并更新根目录 `thesis.pdf`。
+中文使用 XeLaTeX + BibTeX，入口为 `variants/thesis2-zh/main.tex`，输出 `build/thesis2-zh/thsis2-zh.pdf` 并更新根目录 `thesis-zh.pdf`。
+常规编译不重跑数据分析、不重绘图表。需要重新生成图表时另用相应分析脚本，并按原始证据说明取得输入。
 
-Overleaf：上传源文件，选择 `main.tex` 为主文档，编译器设为 **pdfLaTeX**。若修改编译输出目录，请同步检查输出路径。避免将 `build/` 中的历史中间文件上传为源文件。
-
-中文阅读稿运行 `make pdf-zh`，输出为 `thesis-zh.pdf`。它使用 `main-zh.tex`、XeLaTeX 和 TeX 随附的 Fandol 中文字体，保持英文稿的章节与图表编号。中文正文位于 `zh/chapters/`；图内英文标签保留，第七章表格数字由 `scripts/build_zh_tables.py` 从英文表格复用。英文提交稿仍使用原来的 `make pdf`。
+Overleaf 从仓库上传源码，英文主文档选择 `variants/thesis2/main.tex`（pdfLaTeX），中文选择 `variants/thesis2-zh/main.tex`（XeLaTeX）；编译路径以仓库根目录为基准。
+根目录 `main.tex` 和 `main-zh.tex` 是历史版本入口。
 
 ## 从哪里开始
 

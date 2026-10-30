@@ -1,24 +1,50 @@
-Experiment labels identify distinct measurement families. E1 names the main
-batch-1,000 frontier sweep; D compares TensorFloat-32 (TF32) and FP32
-JHQ arithmetic against archived
-baselines, while T1 remeasures the baselines in-session. T4 sorts GPU
-scores on CPU; T5 covers small batches. A1/A2/A3 denote construction
-repeats, shared-bound instructions and dataset alignment; B records
-budget decisions; C1 audits representation.
-
 \subsection{Sources and available records}
 \label{app:reproducibility}
 \label{sec:b-artifacts}
-The \href{https://github.com/lrlorry/8800_report/blob/main/docs/artifact-access.md}{project archive} retains versions, settings, timings, outputs and selected T1, T4/T5 and A2 inputs. Paired runs share index state. Complete vectors, trained states and historical executables/hashes are not all available. T4 candidate dumps were deleted; retained summaries cannot support an independent resort. Sampling and generalisation limits follow \cref{sec:6-2,sec:6-3,sec:8-3}.
+The \href{https://github.com/lrlorry/8800_report/blob/001579c9771759b672ef377b10dbc3dd959c7979/docs/artifact-access.md}{project archive}
+provides source, settings, timings and selected inputs. Complete vectors,
+trained states and historical executable hashes are not all available.
+Deleted candidate arrays from the strict selection check require regeneration for an independent
+re-sort. \Cref{tab:a-components} maps versions to component controls;
+their speedups cannot be multiplied into a whole-system result.
+Sampling and generalisation limits follow \cref{sec:6-2,sec:6-3,sec:8-3}.
 
-\begin{table}[!htbp]
+\Cref{tab:3-campaigns} gives the names used in later chapters; record labels locate the raw data in the project archive.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Experiments and their records]{Experiments and their records.}
+\label{tab:3-campaigns}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}l>{\raggedright\arraybackslash}Xl@{}}
+\toprule
+Name in the text & Record & What it measures & Results \\
+\midrule
+Main comparison & E1 & JHQ-GPU and five baselines; four datasets, batch 1,000 & \cref{sec:7-2} \\
+Precision check & D & FP32 versus TF32; archived baseline measurements & \cref{sec:7-precision} \\
+Same-session check & T1 & JHQ and baselines measured together & \cref{sec:b-precision-anchors} \\
+Strict selection check & T4 & CPU re-sort of GPU-computed candidate scores & \cref{sec:7-strict-selection} \\
+Small-batch study & T5 & Cross-system search at batches 8 and 32 & \cref{sec:7-smallbatch} \\
+Repeated cold builds & A1 & Build time and sampled memory peaks & \cref{sec:7-7} \\
+Instruction check & A2 & Compiled shared-bound read/update instructions & \cref{sec:5-5} \\
+Alignment check & A3 & Row alignment of the two OpenAI exports & \cref{sec:7-2} \\
+Budget decision traces & B & Calibration choices and complete enumeration & \cref{sec:7-budget-trace} \\
+Representation audit & C1 & Original-input recoding and placement checks & \cref{sec:4-representation-audit} \\
+Centring test & T2 & Original versus mean-centred representations & \cref{sec:8-centring} \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
 \centering
-\caption[Component implementations]{Implementation families used by component tests. Each experiment retains its own control; versions are not successive whole-system speedups.}
+\captionsetup{hypcap=false}
+\captionof{table}[Component implementations]{Implementation families used by component tests. Each experiment retains its own control; versions are not successive whole-system speedups.}
 \label{tab:a-components}
 \small\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X@{}}
 \toprule
 Version & Mechanism / experimental role\\\midrule
+v57 & Earlier GPU implementation in the historical CPU comparison\\
 v61 & Word-load and lane-refinement controls\\
 v62 / v63 & Grouped full-key selection / shared bound\\
 v65 / v69 & Batch/skew scheduling / radix probe selection\\
@@ -26,18 +52,47 @@ v69 / v71 / v73 & Budget calibration / LUT sweep / strict-score export\\
 v69 / v72 & OpenAI: TF32 versus FP32 add/query arithmetic on the same trained cache\\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{minipage}\par\medskip
 
 \subsection{Timing and calibration conventions}
 \label{sec:a-e1-protocol}
-Warm-up reduces E1 call counts at 274 points; initial conversion/validation differs from steady-state timing. The 369 repeat-ID flags include tied reordering; 401 also counts cross-protocol differences. Flags alone exclude no points, and JHQ lacks the same flag.
+The evaluation explicitly enables sixteen-lane refinement and automatic
+scan scheduling among one block and 2/4/8 groups, with shared bounds for
+multiple groups. The library defaults to scalar refinement and one block;
+the optional quota-based approximate selector is disabled. One-time
+scheduler calibration is excluded from steady-state timing. These scheduler-only ranges cover
+pseudoquery gathering, the first calibration call and the median of repeated calls:
+\[
+ T_{\rm gather}\in[0.81,7.04]\,\mathrm{ms},\quad
+ T_{\rm first}\in[6.00,27.77]\,\mathrm{ms},\quad
+ \operatorname{median}(T_{\rm repeat})\in[2.72,18.13]\,\mathrm{ms}.
+\]
+
+For the main comparison, JHQ warms once per variant/round and baselines warm three times
+initially. Driver just-in-time (JIT) compilation and JHQ CUDA Graph
+capture, which records GPU operations for replay, precede timing.
+Slow baseline configurations use fewer timed calls based on a warm-up
+estimate. Repeat-call ID-order changes can include tied reordering and
+exclude no points by themselves; this differs from duplicate IDs within
+one result. JHQ lacks the same repeat-call diagnostic flag.
+
+The packed-load comparison retains one aggregated timing per variant.
+Sampled-budget tables combine the median selected budget with mean quality
+over 64 samples; mean recall is reconstructed from printed best recall
+minus logged mean loss. These summaries need not describe one fixed budget.
 
 \label{sec:a-budget-contract}
 \label{sec:a-supplement}
 \label{sec:a-t4-t5}
-The campaign sets the 200-start grid explicitly. Fixed arms use one warm-up/three timed calls. Calibration times full searches and $O(Sk^2)$ host comparison, excluding gathering/scan calibration and bypassing graph capture. Warm-up visits every query without passing outputs/GT to agreement. Callers install the returned index with \texttt{set\_alpha(A[index])}; selected-arm rates reuse fixed-arm timing (\cref{sec:6-5}). For 64 sorted losses, the recorded quantile is
+Budget experiments use one warm-up and three timed calls per fixed
+budget. Calibration time includes the reference search, searches at trial
+budgets and the host-side comparison of their results ($O(Sk^2)$). It
+excludes gathering the sample queries, the one-time scheduler calibration
+and graph capture. Warm-up runs over all queries, but its outputs are
+not used for budget selection, and calibration never uses GT. Selected-budget QPS uses fixed-budget timing; direct
+reuse tests follow \cref{sec:6-5}. For 64 sorted recall losses, the
+reported percentile uses
 \[
  L_{95}=L^{\rm sorted}_{\lfloor0.95(64-1)\rfloor}
        =L^{\rm sorted}_{59}\qquad\text{(zero-based)}.
 \]
-Follow-up sessions have separate states/boundaries unless stated. A2 corroborates the PTX contract (\cref{sec:5-5}); T4's score-export scope is in \cref{sec:7-strict-selection}. T5 includes null calls/int8 query quantisation, with API/warm-up differences (\cref{sec:7-smallbatch}).

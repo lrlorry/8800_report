@@ -1,39 +1,125 @@
 \subsection{Mailman-style shared-sum scoring}
 \label{sec:8-mailman}
 
-Mailman reuses finite-alphabet sums \cite{mailman}. Frozen Vogue/arXiv/OpenAI-3072 streams compare atomic buckets/private histograms at widths 4/6/8 with packed two-table scoring: 128 probes, batches 8/1,000, fixed codes/mathematical scores.
+JHQ's finite sign patterns suggest reusing partial sums across
+candidates, following the Mailman idea \cite{mailman}. A four-bit half-code
+has only 16 patterns, so many candidates can share intermediate work.
+The test freezes the primary codes and candidate streams on Vogue,
+arXiv and OpenAI-3072. Atomic buckets and private histograms at group
+widths 4, 6 and 8 are compared with packed two-table scoring, using
+128 probes and batches of 8 and 1,000.
 
-The best alternatives reach only 0.187--0.581 of baseline QPS (\cref{fig:8-negative}). Biased bucket destinations dominate profiles; private histograms add state/shared updates. Narrower groups sometimes help, but none wins. Other finite-alphabet designs remain open.
-
-Only scores were tested, so cutoff checks do not establish neighbour-pipeline equivalence. The replacement model gives
+The best replacement reaches only 0.187--0.581 of the scorer baseline's
+throughput. Profiles show concentrated bucket updates, while private
+histograms introduce more state and shared-memory updates. Arithmetic
+reuse is insufficient when obtaining it costs more than the saved
+lookup work. These are scorer measurements, not an integrated search
+comparison. If $f$ is the baseline time fraction spent scoring and $s$
+the replacement's relative scorer speed, the unchanged-rest model gives
 \[
  \frac{T'}T=1+f\left(\frac1s-1\right)>1
  \quad(0<f\leq1,\ 0<s<1).
 \]
-This model is not measured end-to-end performance; integration stopped. A dictionary study also stopped at structural statistics. Neither contributes a system-frontier point.
+Thus even this model predicts no whole-search gain. Integration stopped;
+other finite-alphabet implementations remain possible. The left panel
+of \cref{fig:8-negative} shows the six scorer comparisons.
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
 \includegraphics[width=\linewidth]{ch8/negative-evidence.pdf}
-\captionof{figure}[Mailman and rank-oriented coding]{Two distinct evidence boundaries. Left: best measured
-Mailman scorer / packed-table scorer speed on an RTX 5090, with Vogue,
-arXiv and OpenAI-3072 at two batches and 128 probes; all ratios are below
-one. Right: minimum survivor
-counts meeting the original JHQ recall target on arXiv's 400-query FP64
-offline test split. The candidate reduction is not a GPU speedup.}
+\captionof{figure}[Mailman and rank-oriented coding]{Mailman scorer throughput (left) and offline shortlist size (right).}
 \label{fig:8-negative}
 \end{minipage}\par\medskip
 
 \subsection{Rank-oriented coding experiments}
 \label{sec:8-rank}
 
-FP64 candidate replay uses 400/200/400 calibration/\allowbreak{}validation/\allowbreak{}test queries. It tests weighted scores, median/list thresholds, learned losses and linear minimum mean-square-error (MMSE) decoding. Lower MSE can worsen neighbour order; primary-level changes also move residual reference points.
+Minimising reconstruction error need not preserve neighbour order.
+FP64 offline replay tests weighted scores, median and list-dependent
+thresholds, learned losses and linear minimum mean-square-error decoding,
+with 400 calibration, 200 validation and 400 test queries. On arXiv,
+median thresholds reduce the smallest tested shortlist reaching recall
+0.97775 from 875 to 375 candidates; the other two workloads fail their
+respective targets. These are the offline counts in the right panel of
+\cref{fig:8-negative}.
 
-Median thresholds reduce arXiv's minimum tested qualifying count 875$\to$375; two other workloads fail. For orthogonal $\Pi$,
+A separate GPU follow-up changes the primary representation and retrains
+the residual codes. At its own arXiv target of 0.9766, throughput improves
+$1.40\times$ at batch 8 and $1.21\times$ at batch 1,000. Vogue instead
+peaks at recall 0.9630, below its 0.9644 target, and OpenAI-3072 nearly
+ties. The offline count reduction and GPU speedup use different queries,
+states and targets; they do not establish a threshold-only speedup.
+Changing primary codes also changes what the residuals must reconstruct.
+
+\subsection{Removing a shared mean}
+\label{sec:8-centring}
+
+A global data mean can consume sign-code resolution. Rotation preserves
+that mean's norm: for orthogonal $\Pi$,
 \[
  \bar y=\frac1N\sum_i\Pi x_i=\Pi\bar x,
  \qquad \|\bar y\|^2=\bar x^\top\Pi^\top\Pi\bar x=\|\bar x\|^2.
 \]
-Rotation therefore preserves mean-vector norm rather than removing bias. Centring must also preserve the refined-score ceiling.
+In real arithmetic, subtracting the same mean $\mu$ from queries and
+database vectors preserves distances,
+$\|(q-\mu)-(x-\mu)\|^2=\|q-x\|^2$,
+but changes the quantisation problem.
 
-Median-level GPU follow-up retrains residuals. ArXiv's original $\alpha=100$ target gains $1.40/1.21\times$ at batch 8/1,000; Vogue reaches 0.9630 below 0.9644, OpenAI-3072 ties. Three rounds use separate states/queries, outside E1.
+A follow-up compares the archived original index with a fresh index
+trained on centred data, alternating both in one session. On arXiv,
+whose mean norm is 0.837, full-pool calibration at 128 probes changes
+$\alpha=200$ to $\alpha=64$, and the recall-0.97 frontier improves
+$1.266\times$. At 512 probes the selected budget becomes 100, not 64.
+The change is not uniformly beneficial: Vogue's high-budget recall at
+512 probes falls from 0.9918 to 0.9896, and OpenAI-1536's selected budget
+rises from 8 to 16 despite a nearly unchanged recall-0.97 throughput
+ratio of 0.995. The arXiv result supports mean removal as a useful
+representation change. Retraining also changes centroids and residuals,
+so repeated, equally retrained controls are needed to isolate its
+contribution. These runs extend the analysis, not the main comparison
+with other systems.
+
+\subsection{A safe bound can still prune too little}
+\label{sec:8-residual-bound}
+
+A separate FP64 pilot constructs a lower bound on squared distance to
+the reconstructed vector using only primary codes. For each sign
+pattern, a box encloses residual coordinates from all indexed vectors.
+Shifting it by the primary reconstruction gives a lower bound via
+distance from the query. Across seven search
+settings and 72.8 million candidate checks, no violation is observed.
+Yet median bound-to-distance ratios are only 0.13--0.24. Even an ideal
+final threshold leaves almost all probed candidates for refinement,
+usually far more than the existing shortlist. The pilot therefore
+stopped before an integrated GPU implementation. Safety alone is
+insufficient: pruning must be selective enough to repay evaluating the
+bound and reading surviving residuals. A GPU version would also need
+rounding-safe envelopes.
+
+\subsection{Further alternatives and stopping decisions}
+\label{sec:8-stopped}
+
+\Cref{tab:8-stopped} summarises representative earlier alternatives.
+They use their own versions and controls rather than the final
+cross-system protocol. GPU timings and offline cost estimates are
+identified separately; the latter are not additional system-frontier
+measurements.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Alternative designs and stopping decisions]{Alternative designs and stopping decisions.}
+\label{tab:8-stopped}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}p{.24\linewidth}X@{}}
+\toprule
+Alternative & Expected saving & Evidence and decision \\
+\midrule
+Larger selection buffer & Fewer compaction sorts & GPU tests lose up to 24\% throughput; added shared memory reduces the possible resident blocks in affected cases \\
+Fused scan and refinement & Fewer launches and intermediate transfers & GPU tests lose up to 15\%; the saved transfer is small relative to the combined kernel's resource demand \\
+Partial-score early exit & Skip remaining subspaces & GPU changes range from $-2.8$ to $+4.2\%$; warp-wide checks give no consistent gain \\
+Table-free sign scoring & Remove lookup-table storage & GPU throughput falls 30--52\% despite the smaller shared-memory footprint \\
+Progressive primary reads & Read full codes only for survivors & Offline replay and traffic estimates expose scattered second-stage reads; no new GPU search kernel was timed \\
+Local-first refinement & Avoid a global primary merge & Offline quota policies do not beat global selection at equal work; a favourable oracle allocation is unavailable online \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip

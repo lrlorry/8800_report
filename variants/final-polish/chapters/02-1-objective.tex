@@ -1,0 +1,10 @@
+For the search task introduced in Chapter 1, squared Euclidean distance is
+\begin{equation}
+ \rawdist(q,x)=\|q-x\|_2^2.
+ \label{eq:2-raw}
+\end{equation}
+Evaluation uses the ten stored ground-truth (GT) neighbour IDs for each
+query. Recall is the fraction of these IDs returned, averaged over
+queries; equal-distance alternatives outside those ten receive no credit
+(\cref{eq:3-recall}).
+

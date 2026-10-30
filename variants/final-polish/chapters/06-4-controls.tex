@@ -1,0 +1,47 @@
+The comparisons separate three questions: whether calibration improves
+on a fixed budget, whether bisection finds the same budget as complete
+enumeration, and how much speed remains available at an acceptable
+held-out quality. \Cref{tab:6-controls} lists their selection information.
+All fixed-budget comparisons share the index, routing and held-out
+queries; \cref{sec:a-budget-contract} gives their timing boundaries.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\captionof{table}[Budget controls and their roles]{Budget controls and the questions they answer. Held-out GT is
+used to assess every result, but only the diagnostic oracle uses it to
+choose a budget. The reference is fixed at 200 for agreement-based searches.}
+\label{tab:6-controls}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.7cm}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Control & Selection information & Question \\
+\midrule
+Fixed 100 & No calibration & Gain relative to the inherited default? \\
+Fixed 64 and smaller grid budgets & No calibration & Does a simple fixed choice remove the need for calibration? \\
+Sampled bisection & $S$ unlabelled queries; returned-ID agreement & How well does a low-cost sample choose a reusable budget? \\
+Same-sample enumeration & Same $S$, reference and threshold; all grid budgets & Did bisection miss the smallest accepted grid budget? \\
+Full-pool calibration & All 500 calibration queries; same bisection rule & What changes with broader coverage and a stricter normalised allowance? \\
+Held-out oracle & GT recall and timed QPS for all budgets & Which measured budget is fastest under the diagnostic quality constraint? \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+For a labelled diagnostic, let $\widehat r,\widehat Q$ be held-out recall
+and measured QPS, and
+$\widehat r^*=\max_{\alpha\in A}\widehat r(\alpha)$ the best recall on
+the tested grid. The oracle chooses the fastest budget within the
+allowed loss:
+\begin{equation}
+ \alpha_{\rm oracle}\in\operatorname*{arg\,max}_{\alpha\in A}
+ \left\{\widehat Q(\alpha):
+ \widehat r(\alpha)\geq\widehat r^*-\delta\right\},\qquad\delta=10^{-3}.
+ \label{eq:6-oracle}
+\end{equation}
+This oracle is an evaluation benchmark that uses GT and timings;
+calibration itself does not see those labels. Its recall slack $\delta$
+differs from the agreement allowance $\epsilon$. Agreement minimises
+the accepted budget; the oracle maximises speed under a quality constraint.
+Enumeration checks the budget search, while full-pool calibration tests
+broader sample coverage at the stricter fraction $\epsilon/(Sk)$.
+Fixed 64/200 provide smaller and higher-budget comparisons
+(\cref{sec:7-5,tab:7-budget-quality}).

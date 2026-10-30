@@ -4,5 +4,7 @@ For the search task introduced in Chapter 1, squared Euclidean distance is
  \label{eq:2-raw}
 \end{equation}
 Evaluation uses the ten stored ground-truth (GT) neighbour IDs for each
-query. Ties follow this fixed GT prefix (\cref{eq:3-recall}).
+query. Recall is the fraction of these IDs returned, averaged over
+queries; equal-distance alternatives outside those ten receive no credit
+(\cref{eq:3-recall}).
 

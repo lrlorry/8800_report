@@ -1,0 +1,82 @@
+\subsection{Stored bytes and allocated bytes}
+
+Persistent row data are only part of device allocation: models, query
+workspace and temporary copies are additional. For byte-sized primary
+codes, row and list-offset storage are
+\begin{equation}
+ S_{\rm rows}=N\left(M+\left\lceil\frac{dB_r}{8}\right\rceil+8\right),
+ \qquad S_{\rm offsets}=4(n_{\rm list}+1).
+ \label{eq:4-row-storage}
+\end{equation}
+IDs and corrections contribute $8N$ bytes. With $M=d/8$, $B_r=8$,
+the code payload alone is
+\[
+ b_{\rm code}=d/8+d=9d/8=1.125d.
+\]
+This exceeds 8-bit scalar quantisation (SQ8) by 12.5\%; graph storage
+and vector-code bytes must therefore be considered together.
+
+\begin{table}[!htbp]
+\centering
+\caption[Per-vector storage model]{Per-vector bytes. JHQ includes codes, ID and correction; SQ8 is
+vector codes alone; CAGRA int8 models vector codes plus 32 four-byte
+neighbours. Offsets, model parameters, workspace and other runtime
+allocations are excluded. These components are not complete process totals.}
+\label{tab:4-bytes}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}rrrrrrrr@{}}
+\toprule
+$d$ & Primary & Residual & ID + corr. & JHQ & SQ8 & \shortstack{CAGRA\\int8} & FP32 \\
+\midrule
+768 & 96 & 768 & 8 & 872 & 768 & 896 & 3,072 \\
+1,024 & 128 & 1,024 & 8 & 1,160 & 1,024 & 1,152 & 4,096 \\
+1,536 & 192 & 1,536 & 8 & 1,736 & 1,536 & 1,664 & 6,144 \\
+3,072 & 384 & 3,072 & 8 & 3,464 & 3,072 & 3,200 & 12,288 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At graph degree $d_g=32$, CAGRA int8 uses $d+4d_g$ row bytes. Stella's
+JHQ row payload (19.20\,GiB) is close to int8 CAGRA's reported index
+allocation of 19,656\,MiB, with different accounting boundaries.
+Changing $\alpha$ changes residual reads, not the stored row bytes.
+
+Basic model storage accounts for the rotation matrix, primary and
+residual codebooks, and centroids with their norms:
+\[
+ S_{\rm model}
+ =4d^2+4MKD_s+4MK_r+4n_{\rm list}(d+1)
+ \quad\text{bytes}.
+\]
+Derived arrays are additional. Query workspace holds two query matrices,
+centroid scores, primary LUTs, probes and retained candidates; refinement
+scores residuals directly. The reported 128-probe configuration reserves
+about 93.8\,MiB for scan groups even when unused
+(\cref{eq:5-group-workspace}). Allocated capacity therefore also affects
+resident memory.
+
+The input remains caller-owned. For $n_b$ pipeline buffers with
+$a_{\rm in}$ staged rows each, pinned host staging and device ordering
+arrays use
+\[
+ S_{\rm pinned}=4n_ba_{\rm in}d,\qquad
+ S_{\rm order}=S_{\rm inverse}=4N.
+\]
+The inverse map is temporary. Assignment scratch is freed before
+gathering (\cref{eq:4-staging-rows,eq:4-assignment-scratch}), so host
+staging, resident data and construction peaks have distinct lifetimes.
+
+\subsection{Cache reuse and invalidation}
+
+Cache keys omit code versions and full-data hashes, so code/data changes
+require invalidation. Parameter sweeps reuse models; cold builds refit
+them. Similar recall alone does not establish model identity. A cache
+hit still incurs QR, model upload and add; warm-up and scheduler setup
+are also needed before steady-state search. Construction and startup
+timing boundaries are compared in \cref{sec:7-7}.
+
+Changing $\alpha$ needs no retraining. Query buffers are reused by CUDA
+Graph replay, and workspace grows before capture. With the result count
+fixed, changes to batch size, survivors, probes, lanes, groups or bounds
+trigger recapture. Calibration may bypass capture; index-owned buffers
+remain allocated until release.

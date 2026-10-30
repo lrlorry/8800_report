@@ -1,0 +1,70 @@
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+\section{Answers to the Four Research Questions}
+\label{sec:9-1}
+
+\paragraph{RQ1: GPU index construction and capacity.}
+A complete JHQ index can be built and searched on one GPU without keeping
+the raw database vectors on the device. Training and encoding run on the
+GPU, with bounded batches and a two-pass build controlling temporary
+storage. Stella's 17.78 million vectors require 67.81\,GiB in FP32;
+JHQ-GPU's resident process occupies 20.44\,GiB, including context and
+workspace. Index-cold construction takes 10.54--10.65\,s, with a sampled peak of
+22.58\,GiB on the 32\,GB device (\cref{sec:7-7}).
+
+\paragraph{RQ2: Representation-aware execution.}
+JHQ's code structure supports small lookup tables, contiguous reads and
+parallel candidate selection. Splitting each 256-entry primary table
+into two 16-entry tables preserves the real-arithmetic score and is the
+fastest tested table form in 22 of 24 settings. Packing codes into words
+makes adjacent scanning threads read consecutive memory, while threads
+can cooperate to refine one candidate. For small batches, splitting a
+query across blocks adds useful parallelism: scheduling gives
+$2.727\times$ throughput at batch 8 relative to the single-block baseline
+with cooperative refinement. Grouped selection matches a CPU sort of the
+GPU-computed scores in all 55,296 checked query instances; single-block
+differences occur only at tied cut-offs
+(\cref{sec:7-3,sec:7-6,sec:7-strict-selection}).
+
+\paragraph{RQ3: Workload-level refinement calibration.}
+Unlabelled queries can select a reusable refinement budget that meets
+the tested quality target, but sample size matters. Using all 500
+calibration queries keeps held-out recall within $10^{-3}$ of the
+highest measured recall across tested budgets in all twelve settings;
+the maximum observed loss is 0.0006. Smaller samples can miss queries
+that need more refinement: with 128 queries, arXiv exceeds the target
+in 40 of 64 calibration samples at 128 probes and 32 of 64 at 512 probes. With 128-query calibration, direct OpenAI tests recover overhead
+within 4--9 batches relative to the fixed-budget controls. On arXiv, the selected budget instead
+spends more time to reach the quality target (\cref{sec:7-5}).
+
+\paragraph{RQ4: Cross-system search performance.}
+The main comparison favours JHQ-GPU at high batch throughput. At recall
+0.97 and batch 1,000, it delivers $1.32$--$1.75\times$ the throughput of
+CAGRA fp32 across four datasets. Across the tested grid, net process memory excluding CUDA context is
+0.29--0.39 of CAGRA's index allocation. It leads the tested methods on Vogue and
+both OpenAI datasets, while arXiv is nearly tied with IVF-RaBitQ;
+Vogue's lead depends on grouped scanning (\cref{sec:7-2}). The OpenAI
+measurements use TF32 multiplication; FP32 checks retain the lead over
+CAGRA fp32 using the same trained model
+(\cref{sec:b-precision-anchors}). This advantage has a batch-size boundary:
+at batch 8 and recall 0.97, CAGRA fp32 is faster on all four datasets
+(\cref{sec:7-smallbatch}).
+
+\section{Contributions, Limitations and Outlook}
+\label{sec:9-2}
+
+Compression delivers capacity and speed when codes are cheap to access,
+parallelism matches the batch and refinement meets the workload's
+quality needs.
+
+The evidence covers one GPU, six prepared datasets, squared-L2 top-10
+search and static indexes. Historical CPU comparisons do not quantify a
+speedup for the evaluated version (\cref{sec:7-cpu}). Reference agreement
+on the calibration pool leaves future-query quality uncertain.
+
+Two extensions follow. Risk-controlled calibration should account for
+workload drift and expected reuse, and be compared with a quality-matched
+fixed budget on total time, including calibration. Fetching residual
+codes from host memory could expand capacity; transfer volume, overlap
+and tail latency would determine when it pays off (\cref{sec:8-4}).

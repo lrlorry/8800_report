@@ -61,6 +61,111 @@ if mention_update:
   if change['path'].startswith('variants/thesis2-zh/'):
    if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese first-mention before-image',change['path'])
    expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('rq_alignment_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   assert expected_sources[change['path']]==change['before'],('Chinese RQ follow-up before-image',change['path'])
+   expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('terminology_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese terminology before-image',change['path'])
+   else:
+    rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+    assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese terminology baseline',rel)
+   expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('timing_boundary_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   assert expected_sources[change['path']]==change['before'],('Chinese timing before-image',change['path'])
+   expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('concise_prose_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese concise prose before-image',change['path'])
+   else:
+    rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+    assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese concise prose baseline',rel)
+   expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('chapter3_structure_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   assert expected_sources[change['path']]==change['before'],('Chinese Chapter 3 structure before-image',change['path'])
+   expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('chapter4_structure_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese Chapter 4 before-image',change['path'])
+   else:
+    rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+    assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese Chapter 4 baseline',rel)
+   expected_sources[change['path']]=change['after']
+if mention_update:
+ for change in mention_record.get('architecture_figure_followup',{}).get('changes',[]):
+  if change['path'].startswith('variants/thesis2-zh/'):
+   assert expected_sources[change['path']]==change['before'],('Chinese architecture before-image',change['path'])
+   expected_sources[change['path']]=change['after']
+if mention_update and mention_record.get('technical_figure_followup'):
+ technical_figures=json.loads((r/mention_record['technical_figure_followup']['record']).read_text())
+ for change in technical_figures['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese technical-figure before-image',change['path'])
+  else:
+   rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+   assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese technical-figure baseline',rel)
+  expected_sources[change['path']]=change['after']
+if mention_update and mention_record.get('chapter3_readability_followup'):
+ ch3_followup=json.loads((r/mention_record['chapter3_readability_followup']['record']).read_text())
+ for change in ch3_followup['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  assert expected_sources[change['path']]==change['before'],('Chinese Chapter 3 follow-up before-image',change['path'])
+  expected_sources[change['path']]=change['after']
+if mention_update and mention_record.get('chapter56_structure_followup'):
+ ch56_review=json.loads((r/mention_record['chapter56_structure_followup']['record']).read_text())
+ for change in ch56_review['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese Chapter 5/6 before-image',change['path'])
+  else:
+   rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+   assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese Chapter 5/6 baseline',rel)
+  expected_sources[change['path']]=change['after']
+if mention_update and mention_record.get('cpu_conclusion_followup'):
+ cpu_conclusion=json.loads((r/mention_record['cpu_conclusion_followup']['record']).read_text())
+ for change in cpu_conclusion['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese CPU/conclusion before-image',change['path'])
+  else:
+   rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+   assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese CPU/conclusion baseline',rel)
+  expected_sources[change['path']]=change['after']
+if mention_update and mention_record.get('chapter8_structure_followup'):
+ ch8_review=json.loads((r/mention_record['chapter8_structure_followup']['record']).read_text())
+ for change in ch8_review['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese Chapter 8 before-image',change['path'])
+  else:
+   rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+   assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese Chapter 8 baseline',rel)
+  expected_sources[change['path']]=change['after']
+if mention_update and mention_record.get('chapter7_structure_followup'):
+ ch7_review=json.loads((r/mention_record['chapter7_structure_followup']['record']).read_text())
+ for change in ch7_review['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese Chapter 7 before-image',change['path'])
+  else:
+   rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+   assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese Chapter 7 baseline',rel)
+  expected_sources[change['path']]=change['after']
+final_path=en/'audit/final-review-2026-10-30.json'
+if final_path.exists():
+ final_record=json.loads(final_path.read_text())
+ for change in final_record['changes']:
+  if not change['path'].startswith('variants/thesis2-zh/'):continue
+  if change['path'] in expected_sources:assert expected_sources[change['path']]==change['before'],('Chinese final before-image',change['path'])
+  else:
+   rel=str(Path(change['path']).relative_to('variants/thesis2-zh'))
+   assert hashlib.sha256(change['before'].encode()).hexdigest()==ledger['chinese_source_sha256'][rel],('Chinese final baseline',rel)
+  expected_sources[change['path']]=change['after']
 for name,source in expected_sources.items():assert (r/name).read_text()==source,('Unrecorded Chinese source',name)
 mathpat=re.compile(r'\\begin\{(?:equation\*?|align\*?)\}[\s\S]*?\\end\{(?:equation\*?|align\*?)\}|\\\[[\s\S]*?\\\]|(?<!\\)\$(?:\\.|[^$])*?(?<!\\)\$')
 parallel=list(ledger['source_files'])

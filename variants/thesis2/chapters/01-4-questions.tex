@@ -16,9 +16,10 @@ candidate selection to improve throughput while maintaining each stage's
 specified ranking and tie rules (\cref{sec:7-3,sec:7-4,sec:7-6})?
 
 \paragraph{RQ3: Workload-level refinement calibration.}
-Can a refinement budget calibrated once per workload without ground-truth
-labels keep recall on separate test queries close to that of a larger-budget
-search and repay its calibration cost (\cref{sec:7-5})?
+Can agreement with a larger-budget reference select a reusable
+workload-level budget without labels, keeping recall on separate test
+queries close to the highest measured recall across tested budgets and
+repaying calibration cost (\cref{sec:7-5})?
 
 \paragraph{RQ4: Cross-system search performance.}
 Under host-to-host timing, at which recall targets and batch sizes does

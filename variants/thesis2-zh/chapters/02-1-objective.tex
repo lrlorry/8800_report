@@ -3,4 +3,4 @@
  \rawdist(q,x)=\|q-x\|_2^2.
  \label{eq:2-raw}
 \end{equation}
-评测对每条查询使用十个存档真值（ground truth，GT）近邻 ID。等距结果也沿用该固定 GT 前缀的选择（\cref{eq:3-recall}）。
+评测对每条查询使用十个存档真值（ground truth，GT）近邻 ID。召回率是返回结果命中这十个 ID 的比例，再对查询取平均；这十个 ID 之外的等距候选不计为命中（\cref{eq:3-recall}）。

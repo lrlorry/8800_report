@@ -1,0 +1,11 @@
+\begin{tikzpicture}[font=\small\linespread{1}\selectfont,
+ box/.style={draw=ThesisNavy!60,rounded corners=2pt,align=center,text width=6.0cm,minimum height=1.25cm,inner sep=4pt},
+ arr/.style={-{Latex[length=2mm]},draw=ThesisNavy!80,thick}]
+\node[box,fill=ThesisNavy!8] (a) at (0,0) {Warp lanes 0--15: candidate $x_0$\\Local lane $a$: words $a,a+16,\ldots$};
+\node[box,fill=ThesisNavy!8] (b) at (7.3,0) {Warp lanes 16--31: candidate $x_1$\\Local lane $a$: words $a,a+16,\ldots$};
+\node[box] (ar) at (0,-1.9) {Decode and accumulate\\Sum within lanes 0--15};
+\node[box] (br) at (7.3,-1.9) {Decode and accumulate\\Sum within lanes 16--31};
+\node[box,fill=ThesisNavy!3] (outa) at (0,-3.8) {Lane 0 writes $D_H(q,x_0)$\\Add own primary score and correction};
+\node[box,fill=ThesisNavy!3] (outb) at (7.3,-3.8) {Lane 16 writes $D_H(q,x_1)$\\Add own primary score and correction};
+\foreach \x/\y in {a/ar,b/br,ar/outa,br/outb}\draw[arr] (\x)--(\y);
+\end{tikzpicture}

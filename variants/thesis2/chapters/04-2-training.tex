@@ -1,26 +1,40 @@
 \subsection{Transform and sampling}
 
-Host QR factorisation of a seeded Gaussian matrix produces square $\Pi$:
+QR factorisation on the host splits a seeded Gaussian matrix into
+orthogonal and upper-triangular factors; its orthogonal factor gives
+square $\Pi$. Training samples and database vectors use the same transform:
 \begin{equation}
  Y_t=X_t\Pi^{\mathsf T},\qquad y=\Pi x,\qquad
  \|\Pi(q-x)\|_2^2=\|q-x\|_2^2
  \quad\text{when }\Pi^{\mathsf T}\Pi=I.
  \label{eq:4-transform}
 \end{equation}
-The geometry contract (C0) checks finite-precision QR/GEMM error;
-dimension remains $d$ (\cref{sec:4-6}).
+Dimension remains $d$. The validation in \cref{sec:4-6} distinguishes
+stored-matrix geometry (K0) from rounding in general matrix
+multiplication (GEMM).
 
-Strided primary/IVF training takes $n_t=39n_{\rm list}$:
+The evaluated version (v69) stores FP32 matrices but enables cuBLAS
+TF32 tensor-core math for $d\geq1{,}536$. This affects
+training/add/query rotation and centroid GEMMs on both OpenAI datasets;
+the implementation's environment switch cannot disable this mode. Thus FP32 storage does
+not imply full FP32 multiplication. The FP32 variant (v72)
+corrects this switch. Its sensitivity experiment reuses the same
+TF32-trained cache and changes add/query arithmetic, rather than retraining
+the model in FP32 (\cref{sec:7-precision}).
+
+Primary/IVF training selects regularly spaced database rows, requesting
+$n_t=39n_{\rm list}$:
 \[
  n_t=\begin{cases}159{,}744,&\text{Vogue},\\319{,}488,&\text{arXiv/OpenAI},\\1{,}277{,}952,&\text{BGE/Stella}.\end{cases}
 \]
-This is Faiss's warning threshold, not a quality guarantee \cite{faiss_clustering}. Residual fitting uses 100,000 rows.
-
-An older twelve-cell Vogue/OpenAI-3072 sweep ($B_r=4/8$, probes 32/128/256) fixed primary/IVF models. With 25 Lloyd iterations, 100K rather than all rows lost at most 0.0018 recall (eleven losses/one tie). Intermediate sizes were non-monotone; this supports bounded training only within that protocol.
+This is Faiss's sample-count warning threshold, rather than a guarantee
+of quantisation quality \cite{faiss_clustering}.
 
 \subsection{Analytical primary codebook}
 
-Sample scale and Cartesian levels are
+The primary codebook is generated from the sample scale. Its Cartesian
+levels preserve the coordinate structure used by the encoder and lookup
+tables:
 \begin{equation}
  \sigma^2=\frac{1}{n_t d}\sum_{i=0}^{n_t-1}\|x_i\|_2^2,
  \qquad D_s=d/M,\qquad K=2^B.
@@ -30,9 +44,10 @@ Sample scale and Cartesian levels are
  B=D_s=8\Longrightarrow
  \mathcal C_m=\{-a,+a\}^{8},\quad a=0.674\sigma.
 \]
-Eight signs fit a byte, enabling $O(d)$ encoding/split LUTs \cite{jhq} (\cref{sec:5-2}). Arbitrary Lloyd updates may break Cartesian structure.
-
-For fixed sign vector $s\in\{-1,+1\}^d$,
+Eight signs fit a byte, enabling $O(d)$ encoding and split LUTs
+\cite{jhq} (\cref{sec:5-2}). Unconstrained Lloyd updates can break this
+Cartesian structure. For fixed sign vector $s\in\{-1,+1\}^d$, the
+squared distance expands as
 \begin{equation}
  \|q'-a s\|^2=\|q'\|^2+da^2-2a\langle q',s\rangle.
  \label{eq:4-sign-ranking}
@@ -41,13 +56,17 @@ For fixed sign vector $s\in\{-1,+1\}^d$,
  a>0\Longrightarrow
  \arg\min_s\|q'-as\|^2=\arg\max_s\langle q',s\rangle.
 \]
-The order needs $a>0$, not Gaussian data. Residuals depend on $a$; zero scale/FP32 ties are separate cases.
-
-
+For $a>0$, primary ranking therefore depends on the query/sign inner
+product without requiring Gaussian data. Residuals still depend on $a$;
+zero scale and FP32 ties need separate handling.
 
 \subsection{Coarse assignment as filter and refine}
 
-IVF initialises spaced rotated rows and runs eight iterations using $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$. Supported dimensions use int8 filtering, resolving ambiguity in FP32.
+IVF initialises centroids from spaced rotated rows and runs eight
+iterations using $s_\ell=\|\mu_\ell\|^2-2\langle y,\mu_\ell\rangle$.
+Supported dimensions use int8 scores to filter candidates, then resolve
+ambiguity in FP32. The following lemma states the condition under which
+interval filtering preserves the assignment.
 
 \begin{resultblock}
 \begin{lemma}[Assignment with certified score intervals]
@@ -88,43 +107,49 @@ The strict inequality excludes $\ell$; equality stays eligible.
 \end{proof}
 \end{resultblock}
 
-FP32 headroom lacks a bitwise certificate without accumulation-error bounds. FP16 differs on 0/14,838 Vogue, 6/31,748 BGE and 3/16,359 Stella tail assignments. Cold logs do not identify precision.
+Valid score intervals are essential: an FP32 safety margin without an
+accumulation-error bound does not certify identical assignments. Archived
+FP16 tail-assignment comparisons report differences on 0/14,838 Vogue,
+6/31,748 BGE and 3/16,359 Stella assignments. Cold-build logs do not
+identify the assignment precision used.
 
 \subsection{Residual fitting and the iteration budget}
 
-Residuals stay $r=\Pi x-\widehat p(x)$. Per subspace, GPU sorting/Lloyd fits $K_r=2^{B_r}$ sorted scalar levels shared across coordinates, capped at 2,000 updates.
+Residuals are defined relative to the primary reconstruction,
+$r=\Pi x-\widehat p(x)$. Residual fitting uses 100,000 rows. Within each
+subspace, GPU sorting and Lloyd updates fit $K_r=2^{B_r}$ sorted scalar
+levels shared across coordinates, with a cap of 2,000 updates.
 
-Historical 100K training gained 0.0063--0.0076 recall at 25$\to$2,000 updates. Tail-bin/BGE/Stella changes persisted: the cap is not convergence, without contradicting exact Lloyd descent. At 20,000 updates, historical Stella all-row/100K recall was 0.9921/0.9920.
+An older twelve-cell Vogue/OpenAI-3072 sweep ($B_r=4/8$, probes 32/128/256)
+held the primary/IVF models fixed. At 25 Lloyd iterations, using 100K
+rather than all rows lost at most 0.0018 recall (eleven losses/one tie).
+Intermediate sample sizes were non-monotone, so this evidence supports
+bounded residual training within that protocol.
 
-\subsection{Construction work and observed imbalance}
+Increasing historical 100K training from 25$\to$2,000 updates gained
+0.0063--0.0076 recall. Tail-bin updates and BGE/Stella results continued
+to change: reaching the cap does not establish convergence or contradict
+exact Lloyd descent. At 20,000 updates, historical Stella all-row/100K
+recall was 0.9921/0.9920.
 
+\subsection{Training work and list imbalance}
+
+The training-work model separates transform generation, sample rotation,
+primary-codebook generation and residual extraction. If $n_r$ denotes
+the residual-training row count, the transform terms are
 \[
  W_{\rm QR}=O(d^3),\qquad W_{\rm rotate}=O(n_t d^2).
 \]
-Direct coarse assignment costs $O(n_t n_{\rm list}d)$ per iteration.
+Direct coarse assignment costs $O(n_t n_{\rm list}d)$ per iteration;
+the remaining terms are
 \[
  W_{\rm primary}=O(MKD_s),\qquad
  W_{\rm residual\ extraction}=O(n_rd),
 \]
-followed by sorting and scalar updates. These describe work, rather than predict latency.
-Synchronised phase diagnostics place about 83\% of BGE/Stella training
-in IVF k-means (about 2.97\,s). They use one add buffer and forced
-synchronisation, separately from the normal overlapped timings in
-\cref{sec:7-7}.
-
-
-List-size imbalance enters the scan rule in \cref{sec:5-5}. The
-individual contributions of eight IVF iterations, spaced seeds and
-finite sampling to that imbalance were not isolated.
-
-
-\paragraph{Arithmetic used in the measured implementation.}
-The evaluated implementation (v69) stores FP32 matrices but enables cuBLAS
-TF32 tensor-core math for $d\geq1{,}536$. In its compiled faithful branch,
-a null override falls through to the dimension-based default. This affects
-training/add/query rotation and centroid GEMMs on both OpenAI datasets;
-an environment override cannot disable that branch. Thus FP32 storage does
-not imply full FP32 multiplication. The supplementary FP32 variant (v72)
-corrects this switch. Its sensitivity experiment reuses the same
-TF32-trained cache and changes add/query arithmetic, rather than retraining
-the model in FP32 (\cref{sec:7-precision}).
+followed by sorting and scalar updates. These are operation counts.
+Synchronised diagnostics place about 83\% of BGE/Stella training in IVF
+k-means (about 2.97\,s). They use one add buffer and forced
+synchronisation, separately from the normal overlapped measurements in
+\cref{sec:7-7}. Unequal list lengths affect subsequent scan work and
+motivate \cref{sec:5-5}; the effects of eight IVF iterations, spaced seeds
+and finite sampling on that imbalance were not measured separately.

@@ -1,0 +1,14 @@
+Graph indexes connect nearby vectors and navigate these links to find
+promising candidates, rather than scanning all vectors in selected lists.
+HNSW uses a hierarchy of proximity graphs for coarse-to-fine navigation
+\cite{hnsw}. On GPUs, the challenge is to expose parallel work during
+traversal. SONG studies parallel graph search \cite{song}; CAGRA designs
+graph construction and search for GPUs \cite{cagra}. CAGRA is the resident
+graph baseline here, tested with both FP32 and quantised vectors.
+
+Other designs extend capacity across storage boundaries. DiskANN combines
+graph search with SSD storage for databases larger than main memory
+\cite{diskann}; BANG combines a host-resident graph with compressed GPU
+scoring \cite{bang}. Their capacity gains depend on communication across
+storage boundaries.
+

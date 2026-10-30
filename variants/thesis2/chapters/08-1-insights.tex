@@ -1,16 +1,55 @@
+\subsection{Index residency and construction workspace}
+
+Compression determines whether an index can remain on the GPU, but
+construction has its own capacity constraint. BGE occupies 11.93\,GiB
+during search yet reaches a sampled 26.08\,GiB during construction.
+Assignment buffers cause this peak before the gather buffers are
+allocated. The two-pass build limits gather storage; it does not remove
+all other temporary allocations. Feasibility therefore requires both
+a resident-byte model and a phase-by-phase allocation model
+(\cref{sec:4-5,sec:7-7}).
+
 \subsection{Codebook structure and lookup cost}
 
-Mailman, a method that reuses sums for finite-alphabet codes, gains no
-speed here; two-group LUTs usually win (\cref{fig:7-lut}). Codebook quality must therefore be evaluated with achievable table placement/access cost (\cref{sec:5-2,sec:5-3}).
+The smallest table is not the fastest. Four- and eight-way splitting
+store 16 entries per subspace, compared with 32 for the two-way split,
+but need more lookups and additions. Two tables are fastest in 22 of
+24 settings (\cref{sec:7-3}). Likewise, removing the table altogether
+saves shared memory but loses speed in the earlier tests summarised in
+\cref{tab:8-stopped}. The useful comparison is therefore reconstruction quality at the actual
+GPU scoring cost.
 
-\subsection{Parallelism and selection overhead}
+\subsection{Parallelism must repay selection and merging}
 
-Once queries supply enough parallelism, staging/selection/merge overhead can dominate (\cref{fig:7-batch}). Vogue/BGE expose missing absolute-work/decomposition features (\cref{sec:7-2,sec:7-6}). Richer scheduling must repay calibration; bounds alone are not isolated.
+Small batches leave too few independent queries to fill the GPU.
+Splitting each query across blocks supplies more work, but repeats table
+staging and local selection and adds a merge. Eight groups gain
+$2.06$--$2.76\times$ at batch 8; at batch 1,000, independent-bound
+grouping falls to $0.46\times$ one-block throughput in the profiled
+high-budget case (\cref{sec:7-6}). This does not mean that large batches
+should always use one block: grouping also handles uneven workloads,
+and supplies Vogue's lead at recall 0.97. Its 0.895 throughput ratio on
+a low-probe setting shows the rule's limit. The spread of candidate
+counts does not measure their total volume; a better scheduler would
+price scan, selection and merge work together.
+
+\subsection{Selection correctness and search quality}
+
+Exact selection of computed scores is a separate requirement from
+finding the nearest original vectors. The grouped selector's proof and
+CPU sorting checks establish that parallel decomposition retains the
+specified primary shortlist (\cref{sec:5-4,sec:7-strict-selection}).
+They do not remove IVF routing losses or quantisation error. Testing
+these layers separately distinguishes an implementation defect from a
+limitation of the representation or refinement budget.
 
 \subsection{Refinement speed and budget savings}
 
-Assume fixed $T_0>0$, refinement times $F_h\geq F_\ell>0$ and common multiplier $\eta\in(0,1]$. The low-budget speedup and
-its derivatives are
+How much a smaller budget saves depends on the rest of the search.
+Let $T_0>0$ be fixed non-refinement time, $F_h\geq F_\ell>0$ the
+refinement times at high and low budgets, and $\eta\in(0,1]$ a common
+multiplier that makes both refinement kernels faster. The low-budget
+speedup and its derivatives are
 \begin{align}
  S(\eta,T_0)&=\frac{T_0+\eta F_h}{T_0+\eta F_\ell},
  \label{eq:8-refinement-sensitivity}\\
@@ -19,9 +58,10 @@ its derivatives are
  \frac{\partial S}{\partial T_0}
  =\frac{\eta(F_\ell-F_h)}{(T_0+\eta F_\ell)^2}\leq0.\nonumber
 \end{align}
-For $F_h>F_\ell$, faster refinement reduces the value of cutting its
-budget; lower fixed cost increases it. The derivatives hold with
-non-refinement work fixed. Budget-dependent scan maintenance and
-resource transitions require the controlled comparisons of
-\cref{sec:7-5,sec:7-stream-cost}. Quality and reuse remain constraints
-(\cref{tab:7-budget-full,fig:7-budget-risk}).
+For $F_h>F_\ell$, reducing $\eta$ reduces the relative benefit of
+cutting the budget, whereas reducing $T_0$ increases it. This model
+explains why kernel optimisation and budget reduction cannot be treated
+as independent multiplicative gains. It assumes the same refinement
+speedup at both budgets and fixed non-refinement work. Actual scan
+maintenance can change with the budget, so adoption still depends on
+measured total time and quality (\cref{sec:7-5,sec:7-stream-cost}).

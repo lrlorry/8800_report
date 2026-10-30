@@ -1,0 +1,54 @@
+The primary scan gives neighbouring threads neighbouring candidates.
+Its byte layout already places one subspace's codes at consecutive
+addresses. Packing also lets each thread obtain four subspace codes in
+one word load, reducing the number of load operations.
+
+\subsection{Address mapping and four-byte packing}
+
+Within list $\ell$, row $r$ has physical position
+\[
+ p=o_\ell+r,\qquad \operatorname{offset}(Z[m,p])=mN+p.
+\]
+At fixed $m$, $\Delta\operatorname{offset}=\Delta p$, so adjacent
+candidates have adjacent code bytes; crossing list boundaries can break
+this adjacency. The packed layout combines four subspace codes of the
+same candidate:
+\begin{equation}
+ \mathsf{w}[j,p]=\sum_{t=0}^{3}2^{8t}Z[4j+t,p],\qquad
+ \operatorname{offset}_{\rm bytes}(\mathsf{w}[j,p])=4(jN+p).
+ \label{eq:5-packed-layout}
+\end{equation}
+Shifts and masks recover each of the original eight-bit values:
+\[
+ (\mathsf w[j,p]\gg8t)\mathbin{\&}255=Z[4j+t,p].
+\]
+Its high and low nibbles then index the two tables in
+\cref{eq:5-lut-factorisation}.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\captionsetup{hypcap=false}
+\centering
+\input{variants/final-polish/figures/packed-access}
+\captionof{figure}[Packed candidate-parallel access]{Packed candidate-parallel access.}
+\label{fig:5-packed-access}
+\end{minipage}\par\medskip
+Each lane in \cref{fig:5-packed-access} reads and unpacks its own word;
+the lanes keep their candidate scores separate. Construction converts
+$[M,N]$ bytes into $[M/4,N]$ words, requiring $4\mid M$. Simply casting
+the original array to words would combine bytes from different
+candidates, so a separate repacking step is needed. The byte read and
+write volumes and temporary storage are
+\[
+ R=W=NM,\qquad S_{\rm old+new}=2NM.
+\]
+This one-time repacking is outside search timing.
+
+\subsection{Memory traffic and score consistency}
+
+One word load replaces four byte loads per candidate. Across 32 lanes,
+the logical word window covers $32\times4=128$ consecutive bytes;
+the transactions actually issued depend on alignment and active lanes.
+The candidate payload remains $M$ bytes, and unpacking preserves every
+code. Both tested layouts arrange candidates by subspace, so their
+comparison does not isolate a transpose or cache effect. \Cref{sec:7-3}
+measures the integrated throughput change.

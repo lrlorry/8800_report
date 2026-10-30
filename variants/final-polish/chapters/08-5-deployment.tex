@@ -1,0 +1,8 @@
+The tested results make JHQ-GPU a candidate for memory-limited,
+batch-throughput workloads near recall 0.97 (\cref{sec:7-2,sec:7-7}).
+They do not establish a uniform advantage up to that recall: compressed
+baselines win some lower-recall regions, and CAGRA fp32 wins at batch 8
+and recall 0.97. For a stable workload, the tested 500-query calibration
+is a useful initial setting, followed by an independent quality check
+and a comparison of total reuse time with a fixed budget. Changes to
+the index or query distribution require renewed validation.

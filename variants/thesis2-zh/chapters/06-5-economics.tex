@@ -1,40 +1,38 @@
 \subsection{选择校准规模}
 
-较强的独立槽位模型提示
+为了分辨千分之一量级的参考不一致，\cref{sec:6-2} 的独立槽位模型提示
 \[
  \frac{4.74}{Sk}\simeq10^{-3},\quad k=10
  \quad\Longrightarrow\quad S\simeq474\approx500.
 \]
-这分辨的是参考不一致，不是 GT 风险（\cref{sec:6-2}）。FULL 质量与抽样风险见 \cref{tab:7-budget-full,fig:7-budget-risk}。
+这为除小样本外测试整个 500 条查询的校准池提供了理由。该模型针对参考一致性；实测留出质量及抽样风险见 \cref{tab:7-budget-full,fig:7-budget-risk}。全池二分的搜索顺序条件仍为 \cref{sec:6-3} 所述条件。
 
-FULL 仍需满足 \cref{sec:6-3} 的路径／排序条件。
+\subsection{风险与所选预算性能}
 
-\subsection{风险与所选实验臂性能}
-
-在 $m$ 次校准抽样中，令第 $r$ 次选择 $\widehat\alpha_r$。定义留出损失与越阈频率为
+令 $m$ 个随机校准样本分别选择预算 $\widehat\alpha_r$。以最佳已测留出召回率为参考，定义第 $r$ 个样本的损失及损失超过目标的比例：
 \begin{equation}
  L_r=\widehat r^*-\widehat r(\widehat\alpha_r),\qquad
  \widehat p_\delta=\frac{1}{m}\sum_{r=1}^{m}\mathbf1\{L_r>\delta\}.
  \label{eq:6-risk}
 \end{equation}
-平均损失、越阈频率和尾部大小回答不同问题。\Cref{tab:7-budget-quality,fig:7-budget-risk} 报告存档汇总；补充逐抽样最大损失见 \cref{sec:7-budget-trace}。
+平均损失说明平均质量，越阈频率说明多常未达标，尾部损失则说明未达标时的幅度。\Cref{tab:7-budget-quality,fig:7-budget-risk} 报告这些汇总，逐样本最大损失见 \cref{sec:7-budget-trace}。
 
-报告的所选实验臂速率为 $\overline Q=m^{-1}\sum_r\widehat Q(\widehat\alpha_r)$，由已计时固定臂查表得到。它不同于中位预算的速率，也不同于校准后查询流的吞吐。质量与速度必须结合阅读（\cref{tab:7-budget-cost}）。
+报告速率 $\overline Q=m^{-1}\sum_r\widehat Q(\widehat\alpha_r)$ 将各样本选中预算的既有实测吞吐取平均。这是基于固定预算运行的估计，不同于中位预算的速率，也不同于直接计时校准后的查询流。\Cref{tab:7-budget-cost} 将其与质量一起报告。
 
 \subsection{复用成本}
 
-对后续 $B_{\rm reuse}$ 个等大小 batches，建立模型
+只有后续搜索节省足够时间，校准才能回本。令 $T_{\rm cal}$ 为一次性校准成本，$T_{\rm chosen}$ 为所选预算下每 batch 耗时，$T_f$ 为固定预算下同样 batch 的耗时。对后续 $B_{\rm reuse}$ 个等大小 batch，
 \begin{equation}
  T_{\rm policy}(B_{\rm reuse})=T_{\rm cal}+B_{\rm reuse}T_{\rm chosen},\qquad
  T_{\rm fixed}(B_{\rm reuse})=B_{\rm reuse}T_f.
  \label{eq:6-total-cost}
 \end{equation}
-当 $T_{\rm chosen}<T_f$ 时，回本次数为
+当 $T_{\rm chosen}<T_f$ 时，用启动成本除以每 batch 节省时间，得到回本次数：
 \begin{equation}
  B_{\rm reuse}^*=\frac{T_{\rm cal}}{T_f-T_{\rm chosen}}.
  \label{eq:6-payback}
 \end{equation}
-确有
+严格节省时间的条件直接由下式得到：
 \[
  \begin{aligned}
  T_{\rm policy}<T_{\rm fixed}
@@ -43,6 +41,6 @@ FULL 仍需满足 \cref{sec:6-3} 的路径／排序条件。
  \qquad(T_{\rm chosen}<T_f).
  \end{aligned}
 \]
-若 $T_{\rm chosen}\geq T_f$，则没有吞吐回本。batch 时间为 $T=1000n/Q$ 毫秒。选择变化时，凸性给出 $1/\mathbb E[Q]\leq\mathbb E[1/Q]$：平均 QPS 的倒数低估平均时间。边界／直接检查见 \cref{sec:a-budget-contract,sec:7-stream-cost}，该 campaign 的估计见 \cref{tab:7-budget-cost}。
+若 $T_{\rm chosen}\geq T_f$，则无论多少 batch 都不能靠吞吐收回校准成本。每 batch 有 $n$ 条查询时，$T=1000n/Q$ 将 QPS 转为毫秒。当所选预算变化时，$1/\mathbb E[Q]\leq\mathbb E[1/Q]$，取平均 QPS 的倒数会低估平均 batch 时间。计时边界和直接查询流检查见 \cref{sec:a-budget-contract,sec:7-stream-cost}，模型估计见 \cref{tab:7-budget-cost}。
 
-周期校准为每个 batch 增加 $T_{\rm cal}/H$。自动漂移检测／更新留待后续工作。
+每隔 $H$ 个 batch 重新校准，会增加平均每 batch 的 $T_{\rm cal}/H$ 成本。自动检测工作负载变化及更新校准仍属后续工作。

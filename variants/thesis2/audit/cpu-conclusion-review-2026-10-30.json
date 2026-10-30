@@ -1,0 +1,707 @@
+{
+  "date": "2026-10-30",
+  "scope": "Historical CPU comparison and Chapter 9 reader-centred review",
+  "changes": [
+    {
+      "path": "variants/thesis2/chapters/07-evaluation.tex",
+      "before": "\\chapter{Experimental Evaluation}\n\\label{ch:evaluation}\n\\chaptermark{Experimental Evaluation}\n\nWe test construction/capacity (RQ1), execution (RQ2), budget quality/reuse (RQ3) and competitive regions (RQ4).\n\n\\section{Experimental Protocol}\n\\label{sec:7-1}\n\n\\subsection{Comparison protocol and reproducibility}\n\n\\Cref{sec:3-2,sec:3-3,sec:3-5} define the protocol. Search excludes construction/calibration; each ablation has its own baseline.\n\nCPU JHQ uses unmatched settings/protocols: October Vogue has 1,024 lists and $[8,4]$ bits versus E1's 4,096 lists. A matched CPU/GPU speedup is unavailable.\n\nReduced timing-call counts are explained in \\cref{sec:a-e1-protocol}.\n\nMetrics and frontier estimators follow \\cref{sec:3-2,sec:3-4};\n$\\glut$ and $\\gscan$ retain the distinct meanings in \\cref{sec:5-1}.\n\n\n\n\n\n\\section{Cross-System Recall--Throughput Comparison}\n\\label{sec:7-2}\n\n\\subsection{Comparison scope and frontier construction}\n\n\\Cref{fig:7-frontiers} compares JHQ-GPU with the graph, compressed-IVF\nand brute-force baselines of \\cref{sec:3-4} \\cite{cagra,pq,ivfrabitq},\nusing the first four datasets in \\cref{tab:3-data}. E1 uses batch 1,000/common GT; T5 covers small batches (\\cref{sec:7-smallbatch}), with internal ablations in \\cref{sec:7-6}.\n\n\n\nE1 dispatches 105 arXiv/OpenAI cells to $\\gscan=0$ and 27 Vogue cells to $\\gscan=4$, triggered by a coefficient of variation (CV) of 0.338--0.622. Only Vogue exercises grouped retention/bounds/merging (\\cref{sec:5-5}).\n\nE1 has 1,590 valid points: JHQ 27--39/dataset, baseline families 54--264. No failure/invalid-ID/duplicate-row flags occur. Sweeps share indexes (\\cref{sec:3-4}).\n\n\\Cref{tab:3-grids,sec:b-grids} define finite coverage; targets beyond it remain unmeasured.\n\n\n\n\nStorage differs: nine-bit RaBitQ shares $9d/8$ nominal code bytes; 4/8-bit codes use less.\n\\Cref{tab:4-bytes,sec:7-7} give representation costs and measured\nallocations alongside this performance envelope.\n\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/frontiers.pdf}\n\\caption[E1 recall--throughput frontiers]{Measured host-to-host recall--QPS frontiers on the four E1 datasets.\nThe displayed recall window begins at 0.90, with a vertical line at 0.97;\nall baseline families,\nincluding CAGRA int8, participate in frontier construction. Lines connect\nmeasured points; throughput uses a logarithmic axis.}\n\\label{fig:7-frontiers}\n\\end{figure}\n\n\\subsection{Throughput at matched recall}\n\n\\Cref{tab:7-matched} reports recall 0.97 using the interpolated and\nqualifying-measured estimators defined in \\cref{sec:3-4}.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[Cross-system comparison at recall 0.97]{Recall 0.97 comparison. Each ratio is interpolated / measured;\nvalues above one favour JHQ. JHQ kQPS is the interpolated estimate.\nThe small arXiv--RaBitQ difference changes direction with the estimator.}\n\\label{tab:7-matched}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/matched97}\n\\end{minipage}\\par\\medskip\n\nRemoving grouping lowers Vogue's JHQ/RaBitQ ratio at recall 0.97 from 1.059 to 0.933 at fixed index/probes/budget/final outputs (batch 1,000). This isolates the integrated grouping path, not bounds alone.\n\nCAGRA int8 leads $1.20$--$1.98\\times$ at 0.90--0.92, without 0.97 coverage. RaBitQ wins some 0.98+ targets; CAGRA fp32 wins near 0.99 on arXiv (\\cref{fig:7-frontiers}).\n\n\\newpage\n\\input{variants/thesis2/chapters/07-supp-precision}\n\n\\subsection{Interpretation and comparison limits}\n\nBoth OpenAI datasets use Qdrant DBpedia embeddings \\cite{data_openai1536,data_openai3072}. After truncation/renormalisation, 1,000 query and 10,299 sampled base rows have cosine $\\geq0.9980$ (median 1.000000), with GT overlap 9.046/10. Without entity IDs, these checks support row alignment. Doubling width leaves CAGRA ratios at 1.747 and RaBitQ at 1.130/1.157, so width alone is insufficient.\n\nAt 128 probes, larger gains accompany smaller refinement multipliers: OpenAI 4--8, Vogue 64, arXiv 100 (later FULL 200). This is an observed association; matched-recall comparisons may select other settings.\n\n\\Cref{sec:7-8} checks sensitivity to small margins and the interface/memory/compilation differences of \\cref{sec:3-3}.\n\n\n\\input{variants/thesis2/chapters/07-supp-smallbatch}\n\n\\section{Cartesian LUT, Packed Loads and Lane Refinement}\n\\label{sec:7-3}\n\nThe RQ2 ablations measure both kernel and application effects.\n\n\\subsection{LUT factorisation and throughput}\n\nThe LUT ablation tests the cost model in \\cref{sec:5-2} and FP32 ranking\neffects.\n\n\\Cref{fig:7-lut} compares Cartesian table grouping on six datasets,\nprobe counts 8/32/128/512,\nfixed $\\alpha=100$, and $\\glut\\in\\{1,2,4,8\\}$. Five rounds use batch 1,000 (Stella 999). Two groups lead in 22/24 cells. Exceptions are near ties: arXiv/128 favours one group by 0.23\\%; OpenAI-3072/8 favours four by 0.84\\%. Paired two-versus-one wins are 23/24; all dataset geometric means exceed one (1.021--1.318). Shared-index cells are not independent trials.\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/lutgroups.pdf}\n\\caption[Cartesian lookup-table grouping]{Cartesian table grouping at fixed $\\alpha=100$ (v71).\nGroup counts describe $\\glut$, not parallel scan groups. Curves are medians\nof per-dataset QPS ratios to the one-group arm; shading shows their range.}\n\\label{fig:7-lut}\n\\end{figure}\n\nThe two-group/one-group ratio ranges from $0.998$ to $1.914$.\nFour and eight groups each store 16 entries but require more lookups\nand additions. These arms show that smaller tables need not improve\nthroughput; occupancy and instruction costs were not isolated. The maximum\nreported recall spread within any four-arm cell is $10^{-4}$.\nAt 128 probes and $\\alpha=100$, T4 compares identical candidates on\nVogue, arXiv and OpenAI-3072. Full versus $16+16$ tables differ in\n22.6--26.1\\% of candidate-score bit patterns, with maximum relative error\n$4.53\\times10^{-7}$. Across all forms, 20.5--29.4\\% differ, with maximum\nrelative error $4.64\\times10^{-7}$. Vogue has 2--4/256 final-ID\ndifferences, while arXiv/OpenAI have none. Unchanged primary survivor\nsets can still produce different final IDs because the rounded primary\nscore enters refinement (\\cref{sec:a-t4-t5}).\n\n\n\\subsection{Packed access and cooperative residual scoring}\n\nPacking wins $1.012$--$1.658\\times$ across 48 matched pairs (six datasets, four probe counts, $\\glut\\in\\{1,2\\}$), with recall differences at most $10^{-4}$. Both layouts are subspace-major. Packing/load/unpack change together. One aggregate per arm gives less timing evidence than five-round v71.\n\n\\Cref{fig:7-packing-refinement,tab:7-refinement} then separate wider loads\nfrom lane cooperation in residual refinement. L0 is the original scalar\npath; L1 changes the load path without distributing a candidate across\nmultiple lanes; L16 assigns 16 lanes to a candidate. The same process\nrotates arm order across five timing rounds, with three search calls per\narm per round. Across twelve ordinary cells, L16 gains $1.015$--$1.789\\times$ overall. The separate high-budget arXiv/$\\alpha=200$ control reaches $2.383\\times$.\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/packing_refinement.pdf}\n\\caption[Packed access and refinement controls]{Packing and refinement controls. Left: median packed-load QPS\n gain across six datasets, with shaded minimum--maximum ranges, for each\n table grouping and probe count. Right: measured load-only and 16-lane\n end-to-end gains at 128 probes and the ordinary dataset-specific budgets.\n Panels use different experiment families.}\n\\label{fig:7-packing-refinement}\n\\end{figure}\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Refinement gains at 128 probes]{Refinement at 128 probes. Ratios are paired end-to-end gains over\n L0, except the last column, which is the profiled refinement-kernel gain.\n The kernel and application gains must not be interchanged.}\n\\label{tab:7-refinement}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/refinement}\n\\end{table}\n\nLoad-only L1 matches L0 bits yet gains $1.368\\times$ on arXiv. With lanes at $\\alpha=100$, refinement drops 4,277.5$\\to$716.8\\,$\\mu$s ($5.97\\times$) versus $1.789\\times$ overall. OpenAI-3072 gains $8.81\\times$ in-kernel/$1.171\\times$ overall. Other stages remain.\n\nFor baseline wall-time fraction $f$ and refinement speedup $s$, the replacement model gives\n\\[\n \\frac{T'}T=(1-f)+\\frac f s,\\qquad\n \\frac T{T'}=\\frac1{1-f+f/s}.\n\\]\nArXiv/OpenAI-3072 $f=0.529/0.168$ predicts $1.787/1.175\\times$, versus measured $1.789/1.171\\times$. Separate profiling gives an explanatory estimate.\n\nRegrouping FP32 additions across lanes reaches relative distance error $\\approx1.6\\times10^{-6}$ and occasionally changes order. Sanitizer coverage is limited to recorded subsets; general bit identity is not claimed.\n\n\\section{Selection Correctness and Performance}\n\\label{sec:7-4}\n\n\n\n\n\\input{variants/thesis2/chapters/07-supp-selection}\n\n\\subsection{Shared bounds preserve the selection target}\n\n\n\nAll 48 outputs agree; QPS ratios span $0.994$--$1.562\\times$. At arXiv $\\alpha=200$, batch 1,000 and eight groups, sharing cuts merge 2,629$\\to$471\\,$\\mu$s and scan 7,968$\\to$5,513\\,$\\mu$s. Some cells regress slightly.\n\nThe pilot's first group holds 46--81\\% of winners. Equal quotas need fallback; unequal ones retain a bottleneck. Bounds avoid fixed quotas.\n\n\\subsection{Probe selection and output consistency}\n\nRadix retains score arithmetic/OpenAI TF32 (\\cref{sec:7-precision}). All 1,792 synthetic cases pass. Probes and primary scores/positions match on all 1,000 arXiv/Vogue/OpenAI-3072 queries.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[Probe-selection throughput ratios]{v69/v65 end-to-end throughput ratios for the exact computed-score probe\n change. Each workload--batch comparison has ten timing rounds per binary,\n collected in alternating runs. Ratios $>1$ favour v69.}\n\\label{tab:7-probe}\n\\small\n\\input{tables/ch7/probe}\n\\end{minipage}\\par\\medskip\n\n\\Cref{tab:7-probe} shows end-to-end improvements of $1.034$--$1.167\\times$.\nAt batch 8, the profiled probe stage falls from 56.5 to 22.6\\,$\\mu$s\non arXiv, 52.7 to 14.7\\,$\\mu$s on Vogue, and 77.8 to 16.7\\,$\\mu$s\non OpenAI-3072. Unchanged stages limit full-batch gains; each ratio uses its own baseline.\n\nVogue probe/primary dumps match bytewise on 1,000 queries across binaries (one-group/batch-8), yet final recall differs 0.9642/0.9644. The baseline alone also changes from 0.9642 to 0.9644 across identity/timing runs. Variation follows primary selection in this check and is unresolved. Within-process scheduled/one-block outputs match (\\cref{app:reproducibility}).\n\nOptional FP16 probe sets match v69 on 936/979/998 of 1,000 arXiv/Vogue/OpenAI-3072 queries. High overlap does not establish exactness. Those results are excluded from the main E1 frontier\nand from the exact-probe claim.\n\n\\section{Held-out Budget Quality, Throughput and Payback}\n\\label{sec:7-5}\n\nRQ3 compares the policy of \\cref{ch:refinement} with fixed\n$\\alpha=100$ and the stronger universal control $\\alpha=64$.\n\n\\subsection{Unlabelled selection and a labelled diagnostic oracle}\n\nThe six datasets are tested at 128 and 512 probes with the fixed,\nsampled, FULL, enumeration and oracle controls in \\cref{sec:6-4}.\nThe disjoint pools and 64 draws per sample size follow \\cref{sec:3-2}.\n\n\nAll rule variants use \\cref{eq:6-agreement} with $k=10$ and $\\epsilon=1$.\nFULL uses all calibration queries; the diagnostic oracle uses held-out\nlabels (\\cref{tab:6-controls}).\n\n\n\\subsection{Full-pool calibration as the quality-first working point}\n\nFull-pool calibration uses all 500 calibration queries once per cell.\nIts selected arms meet the held-out $10^{-3}$ loss target in 12/12 cells;\nthe largest observed loss is 0.0006. Their rates are 0.908--1.000 of the\nGT oracle's, and calibration costs 9.5--60.3\\,ms. The geometric-mean\nrate ratio to fixed 100 is $1.111\\times$, or $1.193\\times$ over the ten\ncells where fixed 100 also meets the target. \\Cref{tab:7-budget-full}\nshows the complete comparison. Against fixed 64, full-pool selection is\nfaster in six cells, equal in two and slower in four: its main advantage\nis the observed coverage of all twelve quality targets.\n\nThese cells favour FULL for quality and $S=128$ for calibration cost (\\cref{sec:6-2}).\n\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Full-pool budget calibration]{Full-pool calibration ($S=500$). Loss is relative to the best\nmeasured held-out recall; rates are kQPS from the selected fixed arm.\n``Cal.'' is one full-pool calibration call per cell, not a repeated\nstream timing. Held-out counts are 500, or 499 for Stella.}\n\\label{tab:7-budget-full}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/budget_full}\n\\end{table}\n\n\\subsection{Lower-cost sampling and its quality risk}\n\n\\Cref{tab:7-budget-quality} reports the $S=128$ result. The median selected\nbudget matches the oracle budget in ten of twelve cells; it differs on\narXiv at 128 probes and OpenAI-3072 at 512. Budgets span 4--200 across workloads. Median budget and\nmean recall need not describe one arm. Mean recall uses printed best recall minus mean loss, approximately to four decimals.\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Sampled-budget held-out quality]{Held-out quality at $S=128$. Rule $\\alpha$ is the median across\n64 draws; oracle $\\alpha$ uses held-out labels. $\\overline R_{\\rm rule}$\nis reconstructed mean recall. ``Losses'' counts draws with recall loss\n$>10^{-3}$ relative to the best tested held-out recall; $L_{95}$ is the\nlogged lower-order 95th-percentile loss estimate. $R_{100}$ is\nfixed-budget recall.}\n\\label{tab:7-budget-quality}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/budget_quality}\n\\end{table}\n\nArXiv has 40/64 and 32/64 loss crossings at 128/512 probes, despite mean loss 0.0009. Fixed 100 loses 0.0012/0.0016: better than default need not meet the target. BGE/512 has 24 crossings and $L_{95}=0.0014$; Stella reaches 0.0030; OpenAI-3072 has none (\\cref{tab:7-budget-quality}). Four losses can coexist with reported $L_{95}=0$ (\\cref{sec:a-budget-contract}).\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=0.82\\linewidth]{ch7/budget_risk.pdf}\n\\caption[Held-out risk across sample sizes]{Held-out risk across sample sizes. The vertical axis is the\npercentage of calibration draws losing more than $10^{-3}$ held-out recall\nrelative to the best tested budget. Increasing $S$ also tightens the allowed\nslot-disagreement fraction because \\cref{eq:6-agreement} keeps threshold one.}\n\\label{fig:7-budget-risk}\n\\end{figure}\n\n\n\n\n\n\\subsection{Estimated throughput and calibration economics}\n\nWith \\cref{sec:a-budget-contract}'s mean selected-arm estimate, $S=128$ beats fixed 100 in ten cells ($1.028$--$1.691\\times$). ArXiv gives 0.908/0.917 with better mean recall: no throughput payback.\n\nAgainst fixed 64, sampling wins 9/12 cells: geometric mean $1.054\\times$, range $0.821$--$1.367\\times$ (OpenAI $1.052$--$1.367\\times$). Both fixed controls fail arXiv quality, preventing a uniformly quality-matched comparison.\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Sampled-calibration economics]{Calibration economics, $S=128$. Rates are kQPS and rule rate is\nmean selected-arm QPS. Ratios compare with fixed 100 and fixed 64.\nThe ``Batches'' column gives payback relative to fixed 100 using 500\nqueries, or 499 for Stella; ``Never'' denotes no throughput payback.\nThe quality column separately marks whether fixed 100 meets the\nheld-out loss target.}\n\\label{tab:7-budget-cost}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/budget_cost}\n\\end{table}\n\nCalibration costs 3.9--21.3\\,ms. Maximum positive estimated paybacks against fixed 100/64 are 0.54/2.72\\,s, or FULL 1.52/2.25\\,s (\\cref{sec:6-5,eq:6-payback,tab:7-budget-cost}). ArXiv controls fail quality; direct reuse below measures both cost and recall.\n\n\\input{variants/thesis2/chapters/07-supp-budget}\n\n\\section{Batch Size, Scheduling and Workload Imbalance}\n\\label{sec:7-6}\n\n\n\n\\subsection{Parallelism versus repeated selection work}\n\nBatch-8 eight-group gains are $2.06$--$2.76\\times$; arXiv scan is 849$\\to$216\\,$\\mu$s plus 16.7\\,$\\mu$s merge. At batch 1,000 and $\\alpha=200$, independent grouping instead raises scan 3,530$\\to$7,652\\,$\\mu$s plus 2,624\\,$\\mu$s merging, reaching only $0.46\\times$ one-block QPS. Shared bounds reduce work, without removing this regime change.\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/batch_execution.pdf}\n\\caption[Batch-dependent execution regimes]{Execution regimes. Left: fixed shared-bound group counts and\nscheduled execution relative to the lane-refined one-block baseline\n(13 cells at small batches, 11 at batch 1,000). Right: paired scan and\nmerge profiles at batches 8 and 1,000 for arXiv budgets 100 and 200.\nHatching denotes merge time. The right panels use the independent-bound\nscan experiment; they explain a cost, not the scheduler's entire speedup.}\n\\label{fig:7-batch}\n\\end{figure}\n\n\\subsection{A fixed rule evaluated on further configurations}\n\nThe scheduler follows the fill/skew rule and pseudoquery calibration\nin \\cref{sec:5-5}. Four configurations set the constants before the\nadditional configurations were measured.\n\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Integrated execution and scheduling gains]{Integrated execution gains over v61 L16. Entries are geometric\n means of per-cell median paired speedups from five rounds. ``Held out''\n excludes the four configurations used to set the rule; it means held-out\n configurations, not the budget experiment's held-out query split.}\n\\label{tab:7-scheduling}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/scheduling}\n\\end{table}\n\nThe means use thirteen small-batch configurations and eleven full-batch ones (Stella has 999 queries); held-out subsets use nine/seven (\\cref{tab:7-scheduling}). At batch 1,000, eight groups give $0.886\\times$; worst regret is 1.217 (BGE/256).\n\nVogue's CV 0.338--0.622 selects four groups at batch 1,000. Ratios span 0.895--1.175; $(n_{\\rm probe},\\alpha)=(16,16),(16,64),(32,64)$ give 0.955, 0.895, 0.955. CV measures spread, not total work: it enables the 0.97 lead yet overgroups low-probe loads (\\cref{sec:7-2}).\n\nAcross 250 variant/configuration pairs and 234,320 query comparisons, there are no non-tie primary differences or final-ID-set differences. Tied output order can differ. These are sequential synchronous throughput tests, not open-loop tail-latency tests.\n\n\\section{Cold Construction, Resident Memory and Tested Scale}\n\\label{sec:7-7}\n\nRQ1 is assessed through cold construction, resident memory and completed\nlarge-dataset searches; the E1 memory comparison also informs RQ4.\n\n\\subsection{Cold builds and the lifecycle boundary}\n\nThree empty-cache repeats give Vogue 298--303\\,ms training and $\\approx0.56$\\,s total, versus the slow archived 1.33\\,s. Stella takes 10.54--10.65\\,s versus archived 10.40\\,s (\\cref{tab:7-build-memory}).\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Cold construction and resident memory]{Cold JHQ construction and separately measured resident memory.\nTrain/add are component medians of three supplementary normal builds;\nTotal is the median paired sum. Memory comes\nfrom v71's two-group, 128-probe, $\\alpha=100$ runs and includes context\nand workspace. ``Residual'' is the modelled residual-code share of the\nmeasured used total, not the fraction read per query.}\n\\label{tab:7-build-memory}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/build_memory}\n\\end{table}\n\n\\Cref{sec:3-3,sec:a-e1-protocol} define startup/build boundaries; \\cref{fig:7-build} compares repeated builds.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/construction.pdf}\n\\captionof{figure}[Recorded construction costs]{Recorded construction costs, with CAGRA int8 included. JHQ is\nthe median and range of three supplementary normal cold builds with warm\ninput pages; other bars are medians across successful\nmeasured index configurations, with minimum--maximum whiskers. Int8\nincludes dataset quantization; RaBitQ excludes the required serialization\nround trip. Missing large-dataset bars denote unattempted configurations,\nnot measured build failures. The vertical axis is logarithmic.}\n\\label{fig:7-build}\n\\end{minipage}\\par\\medskip\n\nStella takes 74.55/82.45\\,s with isolated CAGRA int8 (quantisation included), and median 86.59\\,s across three IVF-PQ configurations, versus JHQ's 10.54--10.65\\,s. Quality/resident memory are separate comparisons.\n\nFive arXiv builds span 0.0012 recall. Stella startup takes 18.2--18.6\\,s with inputs cached by the operating system, 129.9\\,s on first read. Sampled 20\\,ms peaks are BGE 26.08\\,GiB and Stella 22.58\\,GiB. BGE's 12\\,GiB assignment buffers precede its 23.05\\,GiB gather payload, so they must not be summed (\\cref{eq:4-assignment-scratch}).\n\n\\subsection{Resident allocation and where compression helps}\n\n\\Cref{fig:7-memory} combines the component model in \\cref{sec:4-4}\nwith measured resident totals. Its unattributed remainder is retained,\nand the preceding construction measurements give the sampled peaks.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/memory.pdf}\n\\captionof{figure}[Resident-memory decomposition]{Resident-memory decomposition at two-group tables, 128 probes\nand $\\alpha=100$. Component sizes are modelled, markers are measured used\ntotals, and hatching is the unattributed remainder. The totals include\ncontext and workspace. The preceding construction measurements give sampled peaks; these\nresident markers are not peaks.}\n\\label{fig:7-memory}\n\\end{minipage}\\par\\medskip\n\nResiduals occupy 80.7\\% of BGE's 11.93\\,GiB and 82.9\\% of Stella's 20.44\\,GiB totals, including context/workspace. Raw vectors need 38.50/67.81\\,GiB. Smaller $\\alpha$ saves reads, not stored residual bytes (\\cref{sec:4-4}).\n\n\n\nThe E1 measurements provide a separate cross-system view in\n\\cref{tab:7-e1-memory}. Subtracting the baseline-measured 507.2\\,MiB\ncontext from JHQ's process total gives approximately 0.29--0.39 of\nCAGRA fp32's index allocation. JHQ's figure includes workspace, whereas\nCAGRA's is the build-time index delta. These are parameter-sweep ranges,\nnot memory-matched recall points or a comparison of equal peak budgets.\nThe CAGRA int8 allocations in the same table are of a similar order to\nJHQ's: compression relative to fp32 is shared by competing designs.\nThe component model in \\cref{tab:4-bytes} explains this comparison.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[E1 allocation ranges]{E1 allocation ranges. JHQ is process total minus a 507.2\\,MiB\ncontext estimate, including query workspace; both CAGRA columns are index\nallocations measured during build. Ranges cover the parameter sweep.}\n\\label{tab:7-e1-memory}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/e1_memory}\n\\end{minipage}\\par\\medskip\n\n\\subsection{Large-dataset feasibility and competitive regions}\n\nBGE contains 10,091,524 vectors and Stella 17,776,615, both with\n1,024 dimensions and 32,768 IVF lists. Stella's queries are sampled from\nthe corpus; its result therefore characterizes that benchmark rather\nthan an independently collected external-query distribution.\n\\Cref{fig:7-large} includes\nsuccessful CAGRA int8 and IVF-PQ measurements. Full-precision CAGRA/RaBitQ/FP32 brute force were excluded where predicted storage exceeded capacity. These are planned exclusions; no out-of-memory or recall failure was measured.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/large_frontiers.pdf}\n\\captionof{figure}[Large-dataset search frontiers]{Large-dataset host-to-host frontiers, including the successful\nisolated CAGRA int8 reruns. BGE/Stella use 1,000/999 queries. Endpoints mark tested-grid coverage.}\n\\label{fig:7-large}\n\\end{minipage}\\par\\medskip\n\nCAGRA int8 fits Stella. On BGE it leads $1.35$--$2.96\\times$ at recall 0.88--0.95; JHQ leads $1.086\\times$ at int8's maximum 0.9579. Maximum BGE/Stella recall: int8 0.9579/0.9783, JHQ 0.9663/0.9952, PQ 0.9525/0.9896.\n\nStella gives JHQ 185.4 kQPS at 0.978679 recall versus int8 66.3 at 0.978278. The $2.80\\times$ point ratio is not recall-matched; int8 lacks upper-region coverage (\\cref{fig:7-large}).\n\n\n\n\\section{Numerical Checks and Recall Analysis}\n\\label{sec:7-8}\n\n\n\n\\subsection{Quality resolution and repeated execution}\n\nA single GT hit changes Recall@10 by\n\\[\n \\Delta r=\\frac1{nk}=\n \\begin{cases}10^{-4},&n=1000,\\\\2\\times10^{-4},&n=500.\\end{cases}\n\\]\nStella's $n=499$ step is slightly larger. This step size is not an uncertainty interval.\n\nAll 369 E1 baseline repeat-ID flags stay, including tied reordering. The 401 convention adds cross-protocol differences (\\cref{sec:a-e1-protocol}); these are not independent builds.\n\nNear 0.97, local slopes imply 1.01--3.17\\% QPS change/$10^{-3}$ recall before snapping. Five-build recall ranges are Vogue/arXiv/OpenAI-1536/3072: 0.0008/0.0012/0.0004/0.0002. This suggests local sensitivity, not a retrained-frontier bound. Cached-model FP32 checks retain OpenAI's advantage (\\cref{sec:7-precision}); arXiv/LUT near ties remain inconclusive.\n\nRaBitQ's median five-round ranges are 3.79\\%, 3.34\\%, 2.87\\%, 5.25\\% of median QPS on Vogue/arXiv/OpenAI-1536/3072. These spreads are not confidence intervals. To reduce occasional 30--60\\,ms calls' influence, we recompute the 1,000-query rate as $10^6/\\operatorname{median}(\\text{call ms})$.\nAt recall 0.97, the resulting JHQ/RaBitQ ratios are 1.063, 0.995,\n1.118 and 1.100. The three favourable directions and arXiv near parity\nremain, so the result is not solely a consequence of long calls.\n\n\\subsection{Reconstructed scores and recall loss}\n\\label{sec:7-recall-attribution}\n\nThe stage contracts in \\cref{tab:5-query-stages} distinguish computed-score\nselection from raw-space kNN; lane rounding, cutoff ties and process\nvariation qualify different stages.\n\n\nThe archived reconstruction pilot measures the remaining gap to\nfull-probe reconstructed scoring.\nAcross seven workload--budget arms of 128 queries each, scoring all\nprobed candidates in FP64 improves recall over GPU outputs at selected budgets by\n0--0.002344. For arXiv at 128 probes, $\\alpha=200$ matches the full-IVF\nreconstructed answer set on all 128 queries. At 100, the recall is\n0.9734375 versus 0.9750 for full-IVF scoring: an additional 0.0015625\nbudget deficit beside the joint routing/reconstruction deficit of\n0.0250 (\\cref{sec:6-2}). These pilot aggregates include two budgets on one dataset--probe workload. FP64/GPU arithmetic differences prevent pure budget attribution in every arm. Separating routing/representation needs stage-wise GT coverage.\n",
+      "after": "\\chapter{Experimental Evaluation}\n\\label{ch:evaluation}\n\\chaptermark{Experimental Evaluation}\n\nWe test construction/capacity (RQ1), execution (RQ2), budget quality/reuse (RQ3) and competitive regions (RQ4).\n\n\\section{Experimental Protocol}\n\\label{sec:7-1}\n\n\\subsection{Comparison protocol and reproducibility}\n\n\\Cref{sec:3-2,sec:3-3,sec:3-5} define the protocol. Search excludes construction/calibration; each ablation has its own baseline.\n\nAn earlier comparison used the JHQ authors' CPU implementation, with local\ncompatibility and Recall@10 fixes, on the same server's Xeon Platinum\n8470Q. CPU search used 32 threads, also testing 16 threads on Vogue and\nOpenAI-3072 and retaining the faster result. The CPU frontier swept\n$\\alpha\\in\\{2,4,8,16,32,100\\}$ and used 128--1,024 probes, excluding\nsmaller probe counts affected by thread-startup overhead. Interpolating\nlog throughput at equal recall gave GPU/CPU ratios of 52--85 on Vogue,\n56--98 on arXiv, 85--108 on OpenAI-1536 and 75--77 on OpenAI-3072.\n\nThese historical ratios describe the scale of the observed difference,\nrather than the hardware speedup of the implementation evaluated here.\nThe GPU runs used an earlier implementation (v57); CPU codebooks were\ntrained separately, and the two OpenAI datasets used 4,096 CPU lists\nrather than 8,192 GPU lists. Most CPU settings were timed once. The later\nOctober CPU refinement study also used unmatched settings: Vogue had\n1,024 lists and $[8,4]$ bits, versus 4,096 lists in the main comparison.\nA comparison with the evaluated GPU version under matched index and\ntiming controls remains to be measured.\n\nReduced timing-call counts are explained in \\cref{sec:a-e1-protocol}.\n\nMetrics and frontier estimators follow \\cref{sec:3-2,sec:3-4};\n$\\glut$ and $\\gscan$ retain the distinct meanings in \\cref{sec:5-1}.\n\n\n\n\n\n\\section{Cross-System Recall--Throughput Comparison}\n\\label{sec:7-2}\n\n\\subsection{Comparison scope and frontier construction}\n\n\\Cref{fig:7-frontiers} compares JHQ-GPU with the graph, compressed-IVF\nand brute-force baselines of \\cref{sec:3-4} \\cite{cagra,pq,ivfrabitq},\nusing the first four datasets in \\cref{tab:3-data}. E1 uses batch 1,000/common GT; T5 covers small batches (\\cref{sec:7-smallbatch}), with internal ablations in \\cref{sec:7-6}.\n\n\n\nE1 dispatches 105 arXiv/OpenAI cells to $\\gscan=0$ and 27 Vogue cells to $\\gscan=4$, triggered by a coefficient of variation (CV) of 0.338--0.622. Only Vogue exercises grouped retention/bounds/merging (\\cref{sec:5-5}).\n\nE1 has 1,590 valid points: JHQ 27--39/dataset, baseline families 54--264. No failure/invalid-ID/duplicate-row flags occur. Sweeps share indexes (\\cref{sec:3-4}).\n\n\\Cref{tab:3-grids,sec:b-grids} define finite coverage; targets beyond it remain unmeasured.\n\n\n\n\nStorage differs: nine-bit RaBitQ shares $9d/8$ nominal code bytes; 4/8-bit codes use less.\n\\Cref{tab:4-bytes,sec:7-7} give representation costs and measured\nallocations alongside this performance envelope.\n\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/frontiers.pdf}\n\\caption[E1 recall--throughput frontiers]{Measured host-to-host recall--QPS frontiers on the four E1 datasets.\nThe displayed recall window begins at 0.90, with a vertical line at 0.97;\nall baseline families,\nincluding CAGRA int8, participate in frontier construction. Lines connect\nmeasured points; throughput uses a logarithmic axis.}\n\\label{fig:7-frontiers}\n\\end{figure}\n\n\\subsection{Throughput at matched recall}\n\n\\Cref{tab:7-matched} reports recall 0.97 using the interpolated and\nqualifying-measured estimators defined in \\cref{sec:3-4}.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[Cross-system comparison at recall 0.97]{Recall 0.97 comparison. Each ratio is interpolated / measured;\nvalues above one favour JHQ. JHQ kQPS is the interpolated estimate.\nThe small arXiv--RaBitQ difference changes direction with the estimator.}\n\\label{tab:7-matched}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/matched97}\n\\end{minipage}\\par\\medskip\n\nRemoving grouping lowers Vogue's JHQ/RaBitQ ratio at recall 0.97 from 1.059 to 0.933 at fixed index/probes/budget/final outputs (batch 1,000). This isolates the integrated grouping path, not bounds alone.\n\nCAGRA int8 leads $1.20$--$1.98\\times$ at 0.90--0.92, without 0.97 coverage. RaBitQ wins some 0.98+ targets; CAGRA fp32 wins near 0.99 on arXiv (\\cref{fig:7-frontiers}).\n\n\\newpage\n\\input{variants/thesis2/chapters/07-supp-precision}\n\n\\subsection{Interpretation and comparison limits}\n\nBoth OpenAI datasets use Qdrant DBpedia embeddings \\cite{data_openai1536,data_openai3072}. After truncation/renormalisation, 1,000 query and 10,299 sampled base rows have cosine $\\geq0.9980$ (median 1.000000), with GT overlap 9.046/10. Without entity IDs, these checks support row alignment. Doubling width leaves CAGRA ratios at 1.747 and RaBitQ at 1.130/1.157, so width alone is insufficient.\n\nAt 128 probes, larger gains accompany smaller refinement multipliers: OpenAI 4--8, Vogue 64, arXiv 100 (later FULL 200). This is an observed association; matched-recall comparisons may select other settings.\n\n\\Cref{sec:7-8} checks sensitivity to small margins and the interface/memory/compilation differences of \\cref{sec:3-3}.\n\n\n\\input{variants/thesis2/chapters/07-supp-smallbatch}\n\n\\section{Cartesian LUT, Packed Loads and Lane Refinement}\n\\label{sec:7-3}\n\nThe RQ2 ablations measure both kernel and application effects.\n\n\\subsection{LUT factorisation and throughput}\n\nThe LUT ablation tests the cost model in \\cref{sec:5-2} and FP32 ranking\neffects.\n\n\\Cref{fig:7-lut} compares Cartesian table grouping on six datasets,\nprobe counts 8/32/128/512,\nfixed $\\alpha=100$, and $\\glut\\in\\{1,2,4,8\\}$. Five rounds use batch 1,000 (Stella 999). Two groups lead in 22/24 cells. Exceptions are near ties: arXiv/128 favours one group by 0.23\\%; OpenAI-3072/8 favours four by 0.84\\%. Paired two-versus-one wins are 23/24; all dataset geometric means exceed one (1.021--1.318). Shared-index cells are not independent trials.\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/lutgroups.pdf}\n\\caption[Cartesian lookup-table grouping]{Cartesian table grouping at fixed $\\alpha=100$ (v71).\nGroup counts describe $\\glut$, not parallel scan groups. Curves are medians\nof per-dataset QPS ratios to the one-group arm; shading shows their range.}\n\\label{fig:7-lut}\n\\end{figure}\n\nThe two-group/one-group ratio ranges from $0.998$ to $1.914$.\nFour and eight groups each store 16 entries but require more lookups\nand additions. These arms show that smaller tables need not improve\nthroughput; occupancy and instruction costs were not isolated. The maximum\nreported recall spread within any four-arm cell is $10^{-4}$.\nAt 128 probes and $\\alpha=100$, T4 compares identical candidates on\nVogue, arXiv and OpenAI-3072. Full versus $16+16$ tables differ in\n22.6--26.1\\% of candidate-score bit patterns, with maximum relative error\n$4.53\\times10^{-7}$. Across all forms, 20.5--29.4\\% differ, with maximum\nrelative error $4.64\\times10^{-7}$. Vogue has 2--4/256 final-ID\ndifferences, while arXiv/OpenAI have none. Unchanged primary survivor\nsets can still produce different final IDs because the rounded primary\nscore enters refinement (\\cref{sec:a-t4-t5}).\n\n\n\\subsection{Packed access and cooperative residual scoring}\n\nPacking wins $1.012$--$1.658\\times$ across 48 matched pairs (six datasets, four probe counts, $\\glut\\in\\{1,2\\}$), with recall differences at most $10^{-4}$. Both layouts are subspace-major. Packing/load/unpack change together. One aggregate per arm gives less timing evidence than five-round v71.\n\n\\Cref{fig:7-packing-refinement,tab:7-refinement} then separate wider loads\nfrom lane cooperation in residual refinement. L0 is the original scalar\npath; L1 changes the load path without distributing a candidate across\nmultiple lanes; L16 assigns 16 lanes to a candidate. The same process\nrotates arm order across five timing rounds, with three search calls per\narm per round. Across twelve ordinary cells, L16 gains $1.015$--$1.789\\times$ overall. The separate high-budget arXiv/$\\alpha=200$ control reaches $2.383\\times$.\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/packing_refinement.pdf}\n\\caption[Packed access and refinement controls]{Packing and refinement controls. Left: median packed-load QPS\n gain across six datasets, with shaded minimum--maximum ranges, for each\n table grouping and probe count. Right: measured load-only and 16-lane\n end-to-end gains at 128 probes and the ordinary dataset-specific budgets.\n Panels use different experiment families.}\n\\label{fig:7-packing-refinement}\n\\end{figure}\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Refinement gains at 128 probes]{Refinement at 128 probes. Ratios are paired end-to-end gains over\n L0, except the last column, which is the profiled refinement-kernel gain.\n The kernel and application gains must not be interchanged.}\n\\label{tab:7-refinement}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/refinement}\n\\end{table}\n\nLoad-only L1 matches L0 bits yet gains $1.368\\times$ on arXiv. With lanes at $\\alpha=100$, refinement drops 4,277.5$\\to$716.8\\,$\\mu$s ($5.97\\times$) versus $1.789\\times$ overall. OpenAI-3072 gains $8.81\\times$ in-kernel/$1.171\\times$ overall. Other stages remain.\n\nFor baseline wall-time fraction $f$ and refinement speedup $s$, the replacement model gives\n\\[\n \\frac{T'}T=(1-f)+\\frac f s,\\qquad\n \\frac T{T'}=\\frac1{1-f+f/s}.\n\\]\nArXiv/OpenAI-3072 $f=0.529/0.168$ predicts $1.787/1.175\\times$, versus measured $1.789/1.171\\times$. Separate profiling gives an explanatory estimate.\n\nRegrouping FP32 additions across lanes reaches relative distance error $\\approx1.6\\times10^{-6}$ and occasionally changes order. Sanitizer coverage is limited to recorded subsets; general bit identity is not claimed.\n\n\\section{Selection Correctness and Performance}\n\\label{sec:7-4}\n\n\n\n\n\\input{variants/thesis2/chapters/07-supp-selection}\n\n\\subsection{Shared bounds preserve the selection target}\n\n\n\nAll 48 outputs agree; QPS ratios span $0.994$--$1.562\\times$. At arXiv $\\alpha=200$, batch 1,000 and eight groups, sharing cuts merge 2,629$\\to$471\\,$\\mu$s and scan 7,968$\\to$5,513\\,$\\mu$s. Some cells regress slightly.\n\nThe pilot's first group holds 46--81\\% of winners. Equal quotas need fallback; unequal ones retain a bottleneck. Bounds avoid fixed quotas.\n\n\\subsection{Probe selection and output consistency}\n\nRadix retains score arithmetic/OpenAI TF32 (\\cref{sec:7-precision}). All 1,792 synthetic cases pass. Probes and primary scores/positions match on all 1,000 arXiv/Vogue/OpenAI-3072 queries.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[Probe-selection throughput ratios]{v69/v65 end-to-end throughput ratios for the exact computed-score probe\n change. Each workload--batch comparison has ten timing rounds per binary,\n collected in alternating runs. Ratios $>1$ favour v69.}\n\\label{tab:7-probe}\n\\small\n\\input{tables/ch7/probe}\n\\end{minipage}\\par\\medskip\n\n\\Cref{tab:7-probe} shows end-to-end improvements of $1.034$--$1.167\\times$.\nAt batch 8, the profiled probe stage falls from 56.5 to 22.6\\,$\\mu$s\non arXiv, 52.7 to 14.7\\,$\\mu$s on Vogue, and 77.8 to 16.7\\,$\\mu$s\non OpenAI-3072. Unchanged stages limit full-batch gains; each ratio uses its own baseline.\n\nVogue probe/primary dumps match bytewise on 1,000 queries across binaries (one-group/batch-8), yet final recall differs 0.9642/0.9644. The baseline alone also changes from 0.9642 to 0.9644 across identity/timing runs. Variation follows primary selection in this check and is unresolved. Within-process scheduled/one-block outputs match (\\cref{app:reproducibility}).\n\nOptional FP16 probe sets match v69 on 936/979/998 of 1,000 arXiv/Vogue/OpenAI-3072 queries. High overlap does not establish exactness. Those results are excluded from the main E1 frontier\nand from the exact-probe claim.\n\n\\section{Held-out Budget Quality, Throughput and Payback}\n\\label{sec:7-5}\n\nRQ3 compares the policy of \\cref{ch:refinement} with fixed\n$\\alpha=100$ and the stronger universal control $\\alpha=64$.\n\n\\subsection{Unlabelled selection and a labelled diagnostic oracle}\n\nThe six datasets are tested at 128 and 512 probes with the fixed,\nsampled, FULL, enumeration and oracle controls in \\cref{sec:6-4}.\nThe disjoint pools and 64 draws per sample size follow \\cref{sec:3-2}.\n\n\nAll rule variants use \\cref{eq:6-agreement} with $k=10$ and $\\epsilon=1$.\nFULL uses all calibration queries; the diagnostic oracle uses held-out\nlabels (\\cref{tab:6-controls}).\n\n\n\\subsection{Full-pool calibration as the quality-first working point}\n\nFull-pool calibration uses all 500 calibration queries once per cell.\nIts selected arms meet the held-out $10^{-3}$ loss target in 12/12 cells;\nthe largest observed loss is 0.0006. Their rates are 0.908--1.000 of the\nGT oracle's, and calibration costs 9.5--60.3\\,ms. The geometric-mean\nrate ratio to fixed 100 is $1.111\\times$, or $1.193\\times$ over the ten\ncells where fixed 100 also meets the target. \\Cref{tab:7-budget-full}\nshows the complete comparison. Against fixed 64, full-pool selection is\nfaster in six cells, equal in two and slower in four: its main advantage\nis the observed coverage of all twelve quality targets.\n\nThese cells favour FULL for quality and $S=128$ for calibration cost (\\cref{sec:6-2}).\n\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Full-pool budget calibration]{Full-pool calibration ($S=500$). Loss is relative to the best\nmeasured held-out recall; rates are kQPS from the selected fixed arm.\n``Cal.'' is one full-pool calibration call per cell, not a repeated\nstream timing. Held-out counts are 500, or 499 for Stella.}\n\\label{tab:7-budget-full}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/budget_full}\n\\end{table}\n\n\\subsection{Lower-cost sampling and its quality risk}\n\n\\Cref{tab:7-budget-quality} reports the $S=128$ result. The median selected\nbudget matches the oracle budget in ten of twelve cells; it differs on\narXiv at 128 probes and OpenAI-3072 at 512. Budgets span 4--200 across workloads. Median budget and\nmean recall need not describe one arm. Mean recall uses printed best recall minus mean loss, approximately to four decimals.\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Sampled-budget held-out quality]{Held-out quality at $S=128$. Rule $\\alpha$ is the median across\n64 draws; oracle $\\alpha$ uses held-out labels. $\\overline R_{\\rm rule}$\nis reconstructed mean recall. ``Losses'' counts draws with recall loss\n$>10^{-3}$ relative to the best tested held-out recall; $L_{95}$ is the\nlogged lower-order 95th-percentile loss estimate. $R_{100}$ is\nfixed-budget recall.}\n\\label{tab:7-budget-quality}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/budget_quality}\n\\end{table}\n\nArXiv has 40/64 and 32/64 loss crossings at 128/512 probes, despite mean loss 0.0009. Fixed 100 loses 0.0012/0.0016: better than default need not meet the target. BGE/512 has 24 crossings and $L_{95}=0.0014$; Stella reaches 0.0030; OpenAI-3072 has none (\\cref{tab:7-budget-quality}). Four losses can coexist with reported $L_{95}=0$ (\\cref{sec:a-budget-contract}).\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=0.82\\linewidth]{ch7/budget_risk.pdf}\n\\caption[Held-out risk across sample sizes]{Held-out risk across sample sizes. The vertical axis is the\npercentage of calibration draws losing more than $10^{-3}$ held-out recall\nrelative to the best tested budget. Increasing $S$ also tightens the allowed\nslot-disagreement fraction because \\cref{eq:6-agreement} keeps threshold one.}\n\\label{fig:7-budget-risk}\n\\end{figure}\n\n\n\n\n\n\\subsection{Estimated throughput and calibration economics}\n\nWith \\cref{sec:a-budget-contract}'s mean selected-arm estimate, $S=128$ beats fixed 100 in ten cells ($1.028$--$1.691\\times$). ArXiv gives 0.908/0.917 with better mean recall: no throughput payback.\n\nAgainst fixed 64, sampling wins 9/12 cells: geometric mean $1.054\\times$, range $0.821$--$1.367\\times$ (OpenAI $1.052$--$1.367\\times$). Both fixed controls fail arXiv quality, preventing a uniformly quality-matched comparison.\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Sampled-calibration economics]{Calibration economics, $S=128$. Rates are kQPS and rule rate is\nmean selected-arm QPS. Ratios compare with fixed 100 and fixed 64.\nThe ``Batches'' column gives payback relative to fixed 100 using 500\nqueries, or 499 for Stella; ``Never'' denotes no throughput payback.\nThe quality column separately marks whether fixed 100 meets the\nheld-out loss target.}\n\\label{tab:7-budget-cost}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/budget_cost}\n\\end{table}\n\nCalibration costs 3.9--21.3\\,ms. Maximum positive estimated paybacks against fixed 100/64 are 0.54/2.72\\,s, or FULL 1.52/2.25\\,s (\\cref{sec:6-5,eq:6-payback,tab:7-budget-cost}). ArXiv controls fail quality; direct reuse below measures both cost and recall.\n\n\\input{variants/thesis2/chapters/07-supp-budget}\n\n\\section{Batch Size, Scheduling and Workload Imbalance}\n\\label{sec:7-6}\n\n\n\n\\subsection{Parallelism versus repeated selection work}\n\nBatch-8 eight-group gains are $2.06$--$2.76\\times$; arXiv scan is 849$\\to$216\\,$\\mu$s plus 16.7\\,$\\mu$s merge. At batch 1,000 and $\\alpha=200$, independent grouping instead raises scan 3,530$\\to$7,652\\,$\\mu$s plus 2,624\\,$\\mu$s merging, reaching only $0.46\\times$ one-block QPS. Shared bounds reduce work, without removing this regime change.\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/batch_execution.pdf}\n\\caption[Batch-dependent execution regimes]{Execution regimes. Left: fixed shared-bound group counts and\nscheduled execution relative to the lane-refined one-block baseline\n(13 cells at small batches, 11 at batch 1,000). Right: paired scan and\nmerge profiles at batches 8 and 1,000 for arXiv budgets 100 and 200.\nHatching denotes merge time. The right panels use the independent-bound\nscan experiment; they explain a cost, not the scheduler's entire speedup.}\n\\label{fig:7-batch}\n\\end{figure}\n\n\\subsection{A fixed rule evaluated on further configurations}\n\nThe scheduler follows the fill/skew rule and pseudoquery calibration\nin \\cref{sec:5-5}. Four configurations set the constants before the\nadditional configurations were measured.\n\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Integrated execution and scheduling gains]{Integrated execution gains over v61 L16. Entries are geometric\n means of per-cell median paired speedups from five rounds. ``Held out''\n excludes the four configurations used to set the rule; it means held-out\n configurations, not the budget experiment's held-out query split.}\n\\label{tab:7-scheduling}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/scheduling}\n\\end{table}\n\nThe means use thirteen small-batch configurations and eleven full-batch ones (Stella has 999 queries); held-out subsets use nine/seven (\\cref{tab:7-scheduling}). At batch 1,000, eight groups give $0.886\\times$; worst regret is 1.217 (BGE/256).\n\nVogue's CV 0.338--0.622 selects four groups at batch 1,000. Ratios span 0.895--1.175; $(n_{\\rm probe},\\alpha)=(16,16),(16,64),(32,64)$ give 0.955, 0.895, 0.955. CV measures spread, not total work: it enables the 0.97 lead yet overgroups low-probe loads (\\cref{sec:7-2}).\n\nAcross 250 variant/configuration pairs and 234,320 query comparisons, there are no non-tie primary differences or final-ID-set differences. Tied output order can differ. These are sequential synchronous throughput tests, not open-loop tail-latency tests.\n\n\\section{Cold Construction, Resident Memory and Tested Scale}\n\\label{sec:7-7}\n\nRQ1 is assessed through cold construction, resident memory and completed\nlarge-dataset searches; the E1 memory comparison also informs RQ4.\n\n\\subsection{Cold builds and the lifecycle boundary}\n\nThree empty-cache repeats give Vogue 298--303\\,ms training and $\\approx0.56$\\,s total, versus the slow archived 1.33\\,s. Stella takes 10.54--10.65\\,s versus archived 10.40\\,s (\\cref{tab:7-build-memory}).\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[Cold construction and resident memory]{Cold JHQ construction and separately measured resident memory.\nTrain/add are component medians of three supplementary normal builds;\nTotal is the median paired sum. Memory comes\nfrom v71's two-group, 128-probe, $\\alpha=100$ runs and includes context\nand workspace. ``Residual'' is the modelled residual-code share of the\nmeasured used total, not the fraction read per query.}\n\\label{tab:7-build-memory}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{tables/ch7/build_memory}\n\\end{table}\n\n\\Cref{sec:3-3,sec:a-e1-protocol} define startup/build boundaries; \\cref{fig:7-build} compares repeated builds.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/construction.pdf}\n\\captionof{figure}[Recorded construction costs]{Recorded construction costs, with CAGRA int8 included. JHQ is\nthe median and range of three supplementary normal cold builds with warm\ninput pages; other bars are medians across successful\nmeasured index configurations, with minimum--maximum whiskers. Int8\nincludes dataset quantization; RaBitQ excludes the required serialization\nround trip. Missing large-dataset bars denote unattempted configurations,\nnot measured build failures. The vertical axis is logarithmic.}\n\\label{fig:7-build}\n\\end{minipage}\\par\\medskip\n\nStella takes 74.55/82.45\\,s with isolated CAGRA int8 (quantisation included), and median 86.59\\,s across three IVF-PQ configurations, versus JHQ's 10.54--10.65\\,s. Quality/resident memory are separate comparisons.\n\nFive arXiv builds span 0.0012 recall. Stella startup takes 18.2--18.6\\,s with inputs cached by the operating system, 129.9\\,s on first read. Sampled 20\\,ms peaks are BGE 26.08\\,GiB and Stella 22.58\\,GiB. BGE's 12\\,GiB assignment buffers precede its 23.05\\,GiB gather payload, so they must not be summed (\\cref{eq:4-assignment-scratch}).\n\n\\subsection{Resident allocation and where compression helps}\n\n\\Cref{fig:7-memory} combines the component model in \\cref{sec:4-4}\nwith measured resident totals. Its unattributed remainder is retained,\nand the preceding construction measurements give the sampled peaks.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/memory.pdf}\n\\captionof{figure}[Resident-memory decomposition]{Resident-memory decomposition at two-group tables, 128 probes\nand $\\alpha=100$. Component sizes are modelled, markers are measured used\ntotals, and hatching is the unattributed remainder. The totals include\ncontext and workspace. The preceding construction measurements give sampled peaks; these\nresident markers are not peaks.}\n\\label{fig:7-memory}\n\\end{minipage}\\par\\medskip\n\nResiduals occupy 80.7\\% of BGE's 11.93\\,GiB and 82.9\\% of Stella's 20.44\\,GiB totals, including context/workspace. Raw vectors need 38.50/67.81\\,GiB. Smaller $\\alpha$ saves reads, not stored residual bytes (\\cref{sec:4-4}).\n\n\n\nThe E1 measurements provide a separate cross-system view in\n\\cref{tab:7-e1-memory}. Subtracting the baseline-measured 507.2\\,MiB\ncontext from JHQ's process total gives approximately 0.29--0.39 of\nCAGRA fp32's index allocation. JHQ's figure includes workspace, whereas\nCAGRA's is the build-time index delta. These are parameter-sweep ranges,\nnot memory-matched recall points or a comparison of equal peak budgets.\nThe CAGRA int8 allocations in the same table are of a similar order to\nJHQ's: compression relative to fp32 is shared by competing designs.\nThe component model in \\cref{tab:4-bytes} explains this comparison.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[E1 allocation ranges]{E1 allocation ranges. JHQ is process total minus a 507.2\\,MiB\ncontext estimate, including query workspace; both CAGRA columns are index\nallocations measured during build. Ranges cover the parameter sweep.}\n\\label{tab:7-e1-memory}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\input{tables/ch7/e1_memory}\n\\end{minipage}\\par\\medskip\n\n\\subsection{Large-dataset feasibility and competitive regions}\n\nBGE contains 10,091,524 vectors and Stella 17,776,615, both with\n1,024 dimensions and 32,768 IVF lists. Stella's queries are sampled from\nthe corpus; its result therefore characterizes that benchmark rather\nthan an independently collected external-query distribution.\n\\Cref{fig:7-large} includes\nsuccessful CAGRA int8 and IVF-PQ measurements. Full-precision CAGRA/RaBitQ/FP32 brute force were excluded where predicted storage exceeded capacity. These are planned exclusions; no out-of-memory or recall failure was measured.\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/large_frontiers.pdf}\n\\captionof{figure}[Large-dataset search frontiers]{Large-dataset host-to-host frontiers, including the successful\nisolated CAGRA int8 reruns. BGE/Stella use 1,000/999 queries. Endpoints mark tested-grid coverage.}\n\\label{fig:7-large}\n\\end{minipage}\\par\\medskip\n\nCAGRA int8 fits Stella. On BGE it leads $1.35$--$2.96\\times$ at recall 0.88--0.95; JHQ leads $1.086\\times$ at int8's maximum 0.9579. Maximum BGE/Stella recall: int8 0.9579/0.9783, JHQ 0.9663/0.9952, PQ 0.9525/0.9896.\n\nStella gives JHQ 185.4 kQPS at 0.978679 recall versus int8 66.3 at 0.978278. The $2.80\\times$ point ratio is not recall-matched; int8 lacks upper-region coverage (\\cref{fig:7-large}).\n\n\n\n\\section{Numerical Checks and Recall Analysis}\n\\label{sec:7-8}\n\n\n\n\\subsection{Quality resolution and repeated execution}\n\nA single GT hit changes Recall@10 by\n\\[\n \\Delta r=\\frac1{nk}=\n \\begin{cases}10^{-4},&n=1000,\\\\2\\times10^{-4},&n=500.\\end{cases}\n\\]\nStella's $n=499$ step is slightly larger. This step size is not an uncertainty interval.\n\nAll 369 E1 baseline repeat-ID flags stay, including tied reordering. The 401 convention adds cross-protocol differences (\\cref{sec:a-e1-protocol}); these are not independent builds.\n\nNear 0.97, local slopes imply 1.01--3.17\\% QPS change/$10^{-3}$ recall before snapping. Five-build recall ranges are Vogue/arXiv/OpenAI-1536/3072: 0.0008/0.0012/0.0004/0.0002. This suggests local sensitivity, not a retrained-frontier bound. Cached-model FP32 checks retain OpenAI's advantage (\\cref{sec:7-precision}); arXiv/LUT near ties remain inconclusive.\n\nRaBitQ's median five-round ranges are 3.79\\%, 3.34\\%, 2.87\\%, 5.25\\% of median QPS on Vogue/arXiv/OpenAI-1536/3072. These spreads are not confidence intervals. To reduce occasional 30--60\\,ms calls' influence, we recompute the 1,000-query rate as $10^6/\\operatorname{median}(\\text{call ms})$.\nAt recall 0.97, the resulting JHQ/RaBitQ ratios are 1.063, 0.995,\n1.118 and 1.100. The three favourable directions and arXiv near parity\nremain, so the result is not solely a consequence of long calls.\n\n\\subsection{Reconstructed scores and recall loss}\n\\label{sec:7-recall-attribution}\n\nThe stage contracts in \\cref{tab:5-query-stages} distinguish computed-score\nselection from raw-space kNN; lane rounding, cutoff ties and process\nvariation qualify different stages.\n\n\nThe archived reconstruction pilot measures the remaining gap to\nfull-probe reconstructed scoring.\nAcross seven workload--budget arms of 128 queries each, scoring all\nprobed candidates in FP64 improves recall over GPU outputs at selected budgets by\n0--0.002344. For arXiv at 128 probes, $\\alpha=200$ matches the full-IVF\nreconstructed answer set on all 128 queries. At 100, the recall is\n0.9734375 versus 0.9750 for full-IVF scoring: an additional 0.0015625\nbudget deficit beside the joint routing/reconstruction deficit of\n0.0250 (\\cref{sec:6-2}). These pilot aggregates include two budgets on one dataset--probe workload. FP64/GPU arithmetic differences prevent pure budget attribution in every arm. Separating routing/representation needs stage-wise GT coverage.\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/08-3-validity.tex",
+      "before": "\\Cref{tab:8-threats} consolidates threats to the main interpretations.\nControls are in Chapter 3; repeat/build/precision checks are in \\cref{sec:7-8}.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Threats to validity]{Threats that can reverse or narrow a conclusion.}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nClaim at risk & Alternative or reversal & Control and remaining test \\\\\n\\midrule\nExecution gain & Changed scores, ties or index state explain an apparent\nspeedup & Strict T4 CPU sorting and table-form diagnostics; finite\ncoverage, with candidate dumps no longer retained \\\\\nBudget quality & Finite-pool sampling or drift hides damaging queries\n& Disjoint GT evaluation, full traces, subset-sum checks and FULL\nenumeration; future-query and arbitrary-subset invariance remain untested \\\\\nCompetitive margin & Grid density, call tails or API overhead changes\nthe ordering & Both recall estimators, retained slow calls and int8\nbaseline; TF32/FP32 sensitivity; T5 exposes small-batch reversals;\ncross-device comparisons remain unmeasured \\\\\nCapacity/build claim & Transient allocations exceed a resident sample\n& Phase bytes, repeated empty-cache builds and 20\\,ms device peaks;\nsub-interval allocations and full retrained frontiers remain unmeasured \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\nHistorical CPU JHQ runs use different index parameters and recall/timing\nprotocols from E1 (\\cref{sec:7-1}). Their throughput cannot establish a\nmatched-quality CPU/GPU speedup; that comparison remains unmeasured.\n\nEvidence covers one GPU, six prepared datasets and squared-L2 top-10 (\\cref{sec:7-smallbatch}). Near duplicates may remain; relevance labels are absent. Updates, concurrency, drift, service latency, billion-scale and multi-device use are untested.\n",
+      "after": "\\Cref{tab:8-threats} consolidates threats to the main interpretations.\nControls are in Chapter 3; repeat/build/precision checks are in \\cref{sec:7-8}.\n\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[Threats to validity]{Threats that can reverse or narrow a conclusion.}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\nClaim at risk & Alternative or reversal & Control and remaining test \\\\\n\\midrule\nExecution gain & Changed scores, ties or index state explain an apparent\nspeedup & Strict T4 CPU sorting and table-form diagnostics; finite\ncoverage, with candidate dumps no longer retained \\\\\nBudget quality & Finite-pool sampling or drift hides damaging queries\n& Disjoint GT evaluation, full traces, subset-sum checks and FULL\nenumeration; future-query and arbitrary-subset invariance remain untested \\\\\nCompetitive margin & Grid density, call tails or API overhead changes\nthe ordering & Both recall estimators, retained slow calls and int8\nbaseline; TF32/FP32 sensitivity; T5 exposes small-batch reversals;\ncross-device comparisons remain unmeasured \\\\\nCapacity/build claim & Transient allocations exceed a resident sample\n& Phase bytes, repeated empty-cache builds and 20\\,ms device peaks;\nsub-interval allocations and full retrained frontiers remain unmeasured \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\nThe earlier CPU comparison in \\cref{sec:7-1} establishes the observed\nthroughput difference at matched recall for historical implementations.\nSeparate training, unequal list counts on the OpenAI datasets and sparse\nCPU timing repeats limit its interpretation. A comparison against the\nevaluated GPU version with matched index and timing controls remains\nunmeasured.\n\nEvidence covers one GPU, six prepared datasets and squared-L2 top-10 (\\cref{sec:7-smallbatch}). Near duplicates may remain; relevance labels are absent. Updates, concurrency, drift, service latency, billion-scale and multi-device use are untested.\n"
+    },
+    {
+      "path": "variants/thesis2/chapters/09-conclusion.tex",
+      "before": "\\chapter{Conclusion}\n\\label{ch:conclusion}\n\n\\section{Answers to the Four Research Questions}\n\\label{sec:9-1}\n\\paragraph{RQ1: GPU index construction and capacity.}\nGPU construction produces a searchable resident hierarchy. The largest test holds 17.78 million vectors at 20.44\\,GiB, built in 10.54--10.65\\,s; \\cref{sec:7-7} reports construction peaks.\n\n\\paragraph{RQ2: Representation-aware execution.}\nCartesian splitting preserves real-arithmetic scores; complete-key retention/merge and witnessed bounds preserve grouped selection under their premises. Two-group LUTs win 22/24 cells. Scheduling gains $2.727/1.015\\times$ at batch 8/1,000 against lane refinement (\\cref{sec:7-3,sec:7-6}). Strict CPU checks confirm grouped order; one-block differences are cutoff ties (\\cref{sec:7-strict-selection}).\n\n\\paragraph{RQ3: Workload-level refinement calibration.}\nFULL calibration meets the recall-loss target relative to the best tested\nbudget in 12/12 cells, with maximum observed loss 0.0006.\n$S=128$ reaches 40/64 crossings in one cell (\\cref{sec:7-5}). FULL matches enumeration; ten distance-only cells lack general nesting. Reference agreement is not population GT recall. Four direct reuse tests show workload-dependent quality/time gains.\n\n\\paragraph{RQ4: Cross-system search performance.}\nAt batch 1,000/recall 0.97, JHQ leads on three datasets and nearly ties RaBitQ on arXiv; Vogue's lead needs grouping (\\cref{sec:7-2}). OpenAI E1 uses TF32. FP32 checks retain gains on the TF32-trained cache (\\cref{sec:b-precision-anchors}). Int8/RaBitQ win other recall regions; CAGRA fp32 wins all batch-8 datasets. Batch-32 near ties depend on the estimator (\\cref{sec:7-smallbatch}).\n\n\\section{Summary and Outlook}\n\\label{sec:9-2}\nJHQ's Cartesian structure is useful when the execution path makes its\nsmall tables and packed codes cheap to access. Parallel decomposition\nthen depends on workload: grouping exposes work for small batches,\nwhile large batches can already provide enough independent queries.\nRefinement calibration adds a separate quality decision, since agreement\non a finite query pool does not ensure future recall. The next step is\nto join risk-controlled calibration with measured reuse cost, then study\nresidual placement when device memory becomes the limiting resource\n(\\cref{sec:8-4}).\n",
+      "after": "\\chapter{Conclusion}\n\\label{ch:conclusion}\n\n\\section{Answers to the Four Research Questions}\n\\label{sec:9-1}\n\n\\paragraph{RQ1: GPU index construction and capacity.}\nA complete JHQ index can be built and searched on one GPU without keeping\nthe raw database vectors on the device. Training and encoding run on the\nGPU, with bounded batches and a two-pass build controlling temporary\nstorage. Stella's 17.78 million vectors require 67.81\\,GiB in FP32;\nJHQ-GPU's resident process occupies 20.44\\,GiB, including context and\nworkspace. Cold construction takes 10.54--10.65\\,s, with a sampled peak of\n22.58\\,GiB on the 32\\,GB device (\\cref{sec:7-7}).\n\n\\paragraph{RQ2: Representation-aware execution.}\nJHQ's code structure supports small lookup tables, contiguous reads and\nparallel candidate selection. Splitting each 256-entry primary table\ninto two 16-entry tables preserves the real-arithmetic score and is the\nfastest tested table form in 22 of 24 settings. Packing codes into words\nmakes adjacent scanning threads read consecutive memory, while threads\ncan cooperate to refine one candidate. For small batches, splitting a\nquery across blocks adds useful parallelism: scheduling gives\n$2.727\\times$ throughput at batch 8 relative to the single-block baseline\nwith cooperative refinement. Grouped selection matches a CPU sort of the\nGPU-computed scores in all 55,296 checked query instances; single-block\ndifferences occur only at tied cut-offs\n(\\cref{sec:7-3,sec:7-6,sec:7-strict-selection}).\n\n\\paragraph{RQ3: Workload-level refinement calibration.}\nUnlabelled queries can select a reusable refinement budget that meets\nthe tested quality target, but sample size matters. Using all 500\ncalibration queries keeps held-out recall within $10^{-3}$ of the\nhighest measured recall across tested budgets in all twelve settings;\nthe maximum observed loss is 0.0006. Smaller samples can miss queries\nthat need more refinement: with 128 queries, arXiv exceeds the target\nin 40 of 64 draws at 128 probes and 32 of 64 at 512 probes. Direct OpenAI\nreuse tests recover calibration overhead within 4--9 batches relative\nto the fixed-budget controls. On arXiv, the selected budget instead\nspends more time to reach the quality target (\\cref{sec:7-5}).\n\n\\paragraph{RQ4: Cross-system search performance.}\nThe main comparison favours JHQ-GPU at high batch throughput. At recall\n0.97 and batch 1,000, it delivers $1.32$--$1.75\\times$ the throughput of\nCAGRA fp32 across four datasets. Its total process memory is 0.29--0.39\nof CAGRA's index allocation. It leads the tested methods on Vogue and\nboth OpenAI datasets, while arXiv is nearly tied with IVF-RaBitQ;\nVogue's lead depends on grouped scanning (\\cref{sec:7-2}). The OpenAI\nmeasurements use TF32 multiplication; FP32 checks retain the lead over\nCAGRA fp32 using the same trained model\n(\\cref{sec:b-precision-anchors}). This advantage has a batch-size boundary:\nat batch 8 and recall 0.97, CAGRA fp32 is faster on all four datasets\n(\\cref{sec:7-smallbatch}).\n\n\\section{Contributions, Limitations and Outlook}\n\\label{sec:9-2}\n\nThe three contributions connect GPU construction, representation-aware\nexecution and workload-level budget selection. Compression delivers\ncapacity and speed when execution makes the codes cheap to access,\nparallelism matches the batch, and refinement meets the workload's\nquality needs.\n\nThe evidence covers one GPU, six prepared datasets, squared-L2 top-10\nsearch and static indexes. Historical CPU comparisons do not quantify a\nspeedup for the evaluated version (\\cref{sec:7-1}). Reference agreement\non the calibration pool leaves future-query quality uncertain.\n\nTwo extensions follow. Risk-controlled calibration should account for\nworkload drift and expected reuse, and be compared with a quality-matched\nfixed budget on total time, including calibration. Fetching residual\ncodes from host memory could expand capacity; transfer volume, overlap\nand tail latency would determine when it pays off (\\cref{sec:8-4}).\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/07-evaluation.tex",
+      "before": "\\chapter{实验评估}\n\\label{ch:evaluation}\n\\chaptermark{实验评估}\n\n本文测试构建／容量（RQ1）、执行（RQ2）、预算质量／复用（RQ3）和竞争区间（RQ4）。\n\n\\section{实验协议}\n\\label{sec:7-1}\n\n\\subsection{比较协议与可复现性}\n\n\\Cref{sec:3-2,sec:3-3,sec:3-5} 定义协议。搜索不计构建／校准；各消融使用自己的基线。\n\nCPU JHQ 的设置／协议未匹配：十月 Vogue 使用 1,024 个列表、$[8,4]$ 位，而 E1 为 4,096 个列表。因此没有可匹配的 CPU／GPU 加速比。\n\n减少计时调用次数的规则见 \\cref{sec:a-e1-protocol}。\n\n指标与前沿估计器遵循 \\cref{sec:3-2,sec:3-4}；$\\glut$ 和 $\\gscan$ 保持 \\cref{sec:5-1} 中不同的含义。\n\n\\section{跨系统召回率与吞吐比较}\n\\label{sec:7-2}\n\n\\subsection{比较范围与前沿构造}\n\n\\Cref{fig:7-frontiers} 在 \\cref{tab:3-data} 的前四个数据集上，将 JHQ-GPU 与 \\cref{sec:3-4} 的图、压缩 IVF 和暴力搜索基线比较 \\cite{cagra,pq,ivfrabitq}。E1 使用 batch 1,000 和共同 GT；T5 覆盖小 batch（\\cref{sec:7-smallbatch}），内部消融见 \\cref{sec:7-6}。\n\nE1 将 105 个 arXiv／OpenAI 单元分派到 $\\gscan=0$，27 个 Vogue 单元因变异系数（coefficient of variation，CV）为 0.338--0.622 分派到 $\\gscan=4$。只有 Vogue 使用分组保留、共享阈值和归并（\\cref{sec:5-5}）。\n\nE1 有 1,590 个有效点：JHQ 每数据集 27--39 个，各基线家族 54--264 个。未出现失败、无效 ID 或重复行标记。参数扫描共享索引（\\cref{sec:3-4}）。\n\n\\Cref{tab:3-grids,sec:b-grids} 定义有限覆盖，超出目标未测量。\n\n存储不同：九位 RaBitQ 的名义编码字节为 $9d/8$；4/8 位码更少。\\Cref{tab:4-bytes,sec:7-7} 在性能包络之外给出表示成本和实测分配。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/frontiers.pdf}\n\\caption[E1 召回率—吞吐前沿]{四个 E1 数据集上的实测主机到主机召回率—QPS 前沿。显示范围从 0.90 开始，0.97 处画垂线。包括 CAGRA int8 在内的所有基线家族均参与前沿构造。线连接实测点；吞吐轴为对数。}\n\\label{fig:7-frontiers}\n\\end{figure}\n\n\\subsection{相同召回率下的吞吐}\n\n\\Cref{tab:7-matched} 使用 \\cref{sec:3-4} 定义的插值和满足阈值的实测估计器报告召回率 0.97。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[召回率 0.97 时的跨系统比较]{召回率 0.97 的比较。每个比值为“插值／实测”；大于一有利于 JHQ。JHQ kQPS 为插值估计。arXiv 与 RaBitQ 的小幅差异随估计器改变方向。}\n\\label{tab:7-matched}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/matched97}\n\\end{minipage}\\par\\medskip\n\n在索引、probes、预算及最终输出固定、batch 1,000 下，去掉分组使 Vogue 在召回率 0.97 时的 JHQ／RaBitQ 比从 1.059 降至 0.933。这分离的是集成分组路径，不只是共享阈值。\n\nCAGRA int8 在 0.90--0.92 领先 $1.20$--$1.98\\times$，但不覆盖 0.97。RaBitQ 赢得部分 0.98+ 目标；CAGRA fp32 在 arXiv 接近 0.99 时领先（\\cref{fig:7-frontiers}）。\n\n\\newpage\n\\input{variants/thesis2-zh/chapters/07-supp-precision}\n\n\\subsection{解释与比较限制}\n\n两个 OpenAI 数据集均使用 Qdrant DBpedia 嵌入 \\cite{data_openai1536,data_openai3072}。截断／重新归一化后，1,000 个查询行与 10,299 个抽样基础行的余弦为 $\\geq0.9980$，中位数 1.000000，GT 重合度 9.046/10。没有实体 ID，这些检查支持行序对齐。维度翻倍后，CAGRA 比值仍为 1.747，RaBitQ 为 1.130/1.157，因此仅凭维度无法解释。\n\n在 128 probes 下，较小的精排倍率伴随较大的收益：OpenAI 为 4--8，Vogue 为 64，arXiv 为 100，后续 FULL 为 200。这是观察到的相关关系；匹配召回率比较可能选用其他参数。\n\n\\Cref{sec:7-8} 检查小幅领先的敏感性，以及 \\cref{sec:3-3} 中接口、显存和编译差异的影响。\n\n\\input{variants/thesis2-zh/chapters/07-supp-smallbatch}\n\n\\section{Cartesian LUT、打包载入与 Lane 精排}\n\\label{sec:7-3}\n\nRQ2 消融同时测量内核与应用效应。\n\n\\subsection{LUT 分解与吞吐}\n\nLUT 消融测试 \\cref{sec:5-2} 成本模型与 FP32 排序效应。\n\n\\Cref{fig:7-lut} 比较六个数据集上的 Cartesian 表分组，probe 数为 8/32/128/512，固定 $\\alpha=100$，$\\glut\\in\\{1,2,4,8\\}$。五轮使用 batch 1,000，Stella 为 999。两组在 22/24 单元领先，例外接近持平：arXiv／128 的一组快 0.23\\%，OpenAI-3072／8 的四组快 0.84\\%。两组对一组成对获胜 23/24，全部数据集几何平均大于一，范围 1.021--1.318。共享索引单元并非独立试验。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/lutgroups.pdf}\n\\caption[Cartesian 查找表分组]{固定 $\\alpha=100$ 下的 Cartesian 表分组（v71）。组数表示 $\\glut$，不是并行扫描组。曲线为各数据集相对一组实验臂 QPS 比的中位数；阴影表示范围。}\n\\label{fig:7-lut}\n\\end{figure}\n\n两组／一组比值从 $0.998$ 到 $1.914$。四组和八组均存 16 项，但需要更多查表与加法。这说明表更小不一定提高吞吐；占用率和指令成本未被单独分离。任意四臂单元中报告的最大召回差为 $10^{-4}$。128 probes、$\\alpha=100$ 下，T4 在 Vogue、arXiv 和 OpenAI-3072 上比较相同候选。整表与 $16+16$ 表有 22.6--26.1\\% 的候选分数 bit 模式不同，最大相对误差 $4.53\\times10^{-7}$。跨全部形式，20.5--29.4\\% 不同，最大相对误差 $4.64\\times10^{-7}$。Vogue 有 2--4/256 个最终 ID 差异，arXiv／OpenAI 没有。主码保留集合不变时，最终 ID 仍可变化，因为舍入后的主码分数进入精排（\\cref{sec:a-t4-t5}）。\n\n\\subsection{打包访问与协作残差评分}\n\n打包在 48 对匹配配置中获胜 $1.012$--$1.658\\times$，覆盖六个数据集、四个 probe 数及 $\\glut\\in\\{1,2\\}$，召回差最多 $10^{-4}$。两个布局均为 subspace-major。打包／载入／解包一起改变。每臂仅一个汇总计时，比五轮 v71 的计时证据少。\n\n\\Cref{fig:7-packing-refinement,tab:7-refinement} 进一步区分残差精排中的宽载入和 lane 协作。L0 是原始标量路径；L1 只改变载入路径，不把一个候选分到多个 lanes；L16 为每候选分配 16 lanes。同一进程在五轮计时中轮换实验臂顺序，每轮每臂三次搜索。十二个普通单元中，L16 整体提升 $1.015$--$1.789\\times$；独立的高预算 arXiv／$\\alpha=200$ 对照达到 $2.383\\times$。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/packing_refinement.pdf}\n\\caption[打包访问与精排对照]{打包与精排对照。左：各表分组／probe 数下，六个数据集的打包载入 QPS 收益中位数及最小—最大阴影范围。右：128 probes、各数据集普通预算下，仅改变载入和16-lane 的实测端到端收益。两个面板使用不同实验家族。}\n\\label{fig:7-packing-refinement}\n\\end{figure}\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[128 probes 下的精排收益]{128 probes 下的精排。比值为相对 L0 的成对端到端收益；末列除外，它是剖析得到的精排内核收益。内核与应用收益不能互换。}\n\\label{tab:7-refinement}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/refinement}\n\\end{table}\n\n仅改变载入的 L1 与 L0 逐位相同，却在 arXiv 获得 $1.368\\times$。在 $\\alpha=100$ 下使用 lanes，精排从 4,277.5$\\to$716.8\\,$\\mu$s，内核提升 $5.97\\times$，而整体为 $1.789\\times$。OpenAI-3072 的内核／整体提升分别为 $8.81\\times$／$1.171\\times$。其他阶段仍存在。\n\n基线 wall time 占比为 $f$、精排加速比为 $s$ 时，替换模型给出\n\\[\n \\frac{T'}T=(1-f)+\\frac f s,\\qquad\n \\frac T{T'}=\\frac1{1-f+f/s}.\n\\]\narXiv／OpenAI-3072 的 $f=0.529/0.168$ 预测 $1.787/1.175\\times$，实测为 $1.789/1.171\\times$。独立剖析提供解释性估计。\n\n改变各 lane 之间 FP32 加法的结合顺序时，相对距离误差达到 $\\approx1.6\\times10^{-6}$，偶尔改变顺序。Sanitizer 只覆盖记录的子集，未声称普遍逐位相同。\n\n\\section{选择正确性与性能}\n\\label{sec:7-4}\n\n\\input{variants/thesis2-zh/chapters/07-supp-selection}\n\n\\subsection{共享阈值保持选择目标}\n\n48 组输出全部一致，QPS 比为 $0.994$--$1.562\\times$。在 arXiv $\\alpha=200$、batch 1,000、八组下，共享使归并从 2,629$\\to$471\\,$\\mu$s，扫描从 7,968$\\to$5,513\\,$\\mu$s。部分单元略有退步。\n\n试验第一组包含 46--81\\% 的优胜者。相同配额需要回退，不同配额仍留有瓶颈。阈值避免固定配额。\n\n\\subsection{探测列表选择与输出一致性}\n\nRadix 保持评分算术／OpenAI TF32（\\cref{sec:7-precision}）。全部 1,792 个合成用例通过。对 arXiv／Vogue／OpenAI-3072 的全部 1,000 个查询，probes 以及主码分数／位置均匹配。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[Probe 选择吞吐比]{精确计算分数 probe 改动的 v69／v65 端到端吞吐比。每个工作负载—batch 比较中，每个二进制有十轮计时，交替运行收集。$>1$ 的比值有利于 v69。}\n\\label{tab:7-probe}\n\\small\n\\input{variants/thesis2-zh/tables/ch7/probe}\n\\end{minipage}\\par\\medskip\n\n\\Cref{tab:7-probe} 显示端到端提升 $1.034$--$1.167\\times$。batch 8 下，剖析的 probe 阶段在 arXiv 从 56.5 降至 22.6\\,$\\mu$s，Vogue 从 52.7 降至 14.7\\,$\\mu$s，OpenAI-3072 从 77.8 降至 16.7\\,$\\mu$s。未改阶段限制全 batch 收益，各比值使用自己的基线。\n\nVogue 在跨二进制的 1,000 查询转储中，probe／主码逐字节一致（一组／batch-8），最终召回却为 0.9642/0.9644。基线自身在一致性／计时运行间也由 0.9642 变为 0.9644。本次检查中，变化发生在主码选择之后，原因未解决。同进程内调度／单 block 输出匹配（\\cref{app:reproducibility}）。\n\n可选 FP16 probe 集合在 arXiv／Vogue／OpenAI-3072 的 1,000 查询中分别有 936/979/998 个与 v69 一致。高度重合不等于精确。这些结果不纳入主 E1 前沿，也不纳入精确 probe 主张。\n\n\\section{留出预算质量、吞吐与回本}\n\\label{sec:7-5}\n\nRQ3 将 \\cref{ch:refinement} 的策略与固定 $\\alpha=100$ 及更强的通用对照 $\\alpha=64$ 比较。\n\n\\subsection{无标签选择与有标签诊断 Oracle}\n\n六个数据集在 128、512 probes 下测试 \\cref{sec:6-4} 的固定、抽样、FULL、枚举和 oracle 对照。不相交查询池及每样本量 64 次抽样遵循 \\cref{sec:3-2}。\n\n所有规则变体均使用 \\cref{eq:6-agreement}，取 $k=10$、$\\epsilon=1$。FULL 使用全部校准查询；诊断 oracle 使用留出标签（\\cref{tab:6-controls}）。\n\n\\subsection{全池校准作为质量优先工作点}\n\n每个单元对全部 500 个校准查询执行一次全池校准。所选实验臂在 12/12 单元满足留出 $10^{-3}$ 损失目标，最大观测损失为 0.0006。其速率为 GT oracle 的 0.908--1.000，校准成本 9.5--60.3\\,ms。相对固定 100 的速率几何平均比为 $1.111\\times$；只看固定 100 也达标的十个单元，则为 $1.193\\times$。\\Cref{tab:7-budget-full} 给出完整比较。相对固定 64，全池选择在六个单元更快、两个持平、四个更慢；主要优势是观测中覆盖了全部十二个质量目标。\n\n这些单元支持质量优先时用 FULL，校准成本优先时用 $S=128$（\\cref{sec:6-2}）。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[全池预算校准]{全池校准（$S=500$）。损失相对最佳实测留出召回率；速率为所选固定臂的 kQPS。“Cal.”是每单元一次全池校准调用，不是重复查询流计时。留出查询为 500 个，Stella 为 499 个。}\n\\label{tab:7-budget-full}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/budget_full}\n\\end{table}\n\n\\subsection{低成本抽样及其质量风险}\n\n\\Cref{tab:7-budget-quality} 报告 $S=128$ 结果。十二个单元中，十个所选预算中位数匹配 oracle；arXiv／128 probes 和 OpenAI-3072／512 不同。预算跨工作负载为 4--200。预算中位数与平均召回不一定对应同一实验臂。平均召回由打印的最佳召回减去平均损失重建，约保留四位小数。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[抽样预算的留出质量]{$S=128$ 下的留出质量。规则 $\\alpha$ 为 64 次抽样中位数；oracle $\\alpha$ 使用留出标签。$\\overline R_{\\rm rule}$ 为重建的平均召回。“Losses”计数相对最佳已测留出召回损失 $>10^{-3}$ 的抽样次数；$L_{95}$ 为日志中的较低次序 95 分位损失估计。$R_{100}$ 为固定预算召回。}\n\\label{tab:7-budget-quality}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/budget_quality}\n\\end{table}\n\narXiv 在 128/512 probes 下分别有 40/64、32/64 次损失越阈，尽管平均损失只有 0.0009。固定 100 损失 0.0012/0.0016：比默认更好未必达标。BGE／512 有 24 次越阈且 $L_{95}=0.0014$；Stella 达到 0.0030；OpenAI-3072 没有越阈（\\cref{tab:7-budget-quality}）。四次损失可与报告 $L_{95}=0$ 同时出现（\\cref{sec:a-budget-contract}）。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=0.82\\linewidth]{ch7/budget_risk.pdf}\n\\caption[不同样本量下的留出风险]{不同样本量下的留出风险。纵轴为相对最佳已测预算，留出召回损失超过 $10^{-3}$ 的校准抽样百分比。因为 \\cref{eq:6-agreement} 保持阈值为一，增加 $S$ 也会收紧允许的槽位不一致比例。}\n\\label{fig:7-budget-risk}\n\\end{figure}\n\n\\subsection{吞吐估计与校准经济性}\n\n按 \\cref{sec:a-budget-contract} 的平均所选臂估计，$S=128$ 在十个单元超过固定 100，幅度 $1.028$--$1.691\\times$。arXiv 为 0.908/0.917，但平均召回更好，没有吞吐回本。\n\n相对固定 64，抽样赢得 9/12 单元：几何平均 $1.054\\times$，范围 $0.821$--$1.367\\times$，OpenAI 为 $1.052$--$1.367\\times$。两个固定对照均未满足 arXiv 质量，无法作统一质量匹配比较。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[抽样校准经济性]{$S=128$ 下的校准经济性。速率单位为 kQPS；规则速率是平均所选臂 QPS。比值分别比较固定 100 和 64。“Batches”用 500 查询、Stella 为 499，给出相对固定 100 的回本次数；“Never”表示无吞吐回本。质量列单独标明固定 100 是否满足留出损失目标。}\n\\label{tab:7-budget-cost}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/budget_cost}\n\\end{table}\n\n校准成本 3.9--21.3\\,ms。相对固定 100/64，最大正收益预计回本时间为 0.54/2.72\\,s，FULL 为 1.52/2.25\\,s（\\cref{sec:6-5,eq:6-payback,tab:7-budget-cost}）。arXiv 固定对照质量不达标；下面的直接复用同时测成本和召回。\n\n\\input{variants/thesis2-zh/chapters/07-supp-budget}\n\n\\section{批量大小、调度与负载不均}\n\\label{sec:7-6}\n\n\\subsection{并行度与重复选择工作}\n\nbatch-8 的八组提升 $2.06$--$2.76\\times$；arXiv 扫描从 849$\\to$216\\,$\\mu$s，另加 16.7\\,$\\mu$s 归并。batch 1,000、$\\alpha=200$ 时，独立分组反而将扫描从 3,530$\\to$7,652\\,$\\mu$s，另加 2,624\\,$\\mu$s 归并，仅达到单 block QPS 的 $0.46\\times$。共享阈值减少工作，但未消除区间变化。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/batch_execution.pdf}\n\\caption[依赖 Batch 的执行区间]{执行区间。左：固定共享阈值组数及调度执行，相对 lane 精排单 block 基线的速率；小 batch 有 13 单元，batch 1,000 有 11。右：arXiv 预算 100、200 在 batch 8、1,000 下的成对扫描／归并剖析。斜纹表示归并。右侧来自独立阈值扫描实验，解释一种成本，不是调度器的完整加速。}\n\\label{fig:7-batch}\n\\end{figure}\n\n\\subsection{在更多配置上评估固定规则}\n\n调度遵循 \\cref{sec:5-5} 的填充／偏斜规则与伪查询校准。四个配置先确定常数，再测量其他配置。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[集成执行与调度收益]{相对 v61 L16 的集成执行收益。条目为五轮逐单元成对加速比中位数的几何平均。“Held out”排除确定规则的四个配置，表示留出配置，而非预算实验的留出查询划分。}\n\\label{tab:7-scheduling}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/scheduling}\n\\end{table}\n\n平均值使用十三个小 batch 配置、十一个全 batch 配置；Stella 有 999 查询。留出子集分别为九／七个（\\cref{tab:7-scheduling}）。batch 1,000 下，八组为 $0.886\\times$；最坏 regret 为 1.217（BGE／256）。\n\nVogue 的 CV 0.338--0.622 在 batch 1,000 时选择四组。比值范围 0.895--1.175；$(n_{\\rm probe},\\alpha)=(16,16),(16,64),(32,64)$ 对应 0.955、0.895、0.955。CV 测量离散程度，而非总工作量：它使 0.97 处领先，却在低 probe 负载上过度分组（\\cref{sec:7-2}）。\n\n250 个变体／配置对、234,320 次查询比较中，没有非并列主码差异或最终 ID 集合差异。并列输出顺序可能不同。这些是顺序同步吞吐测试，不是开放到达流尾延迟测试。\n\n\\section{冷构建、常驻显存与已测规模}\n\\label{sec:7-7}\n\n冷构建、常驻显存和完成的大数据集搜索用于评估 RQ1；E1 显存比较也支持 RQ4。\n\n\\subsection{冷构建与生命周期边界}\n\n三次空缓存重复得到 Vogue 训练 298--303\\,ms，总计 $\\approx0.56$\\,s，而较慢存档为 1.33\\,s。Stella 为 10.54--10.65\\,s，存档为 10.40\\,s（\\cref{tab:7-build-memory}）。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[冷构建与常驻显存]{冷 JHQ 构建与单独测量的常驻显存。Train／add 为三次补充正常构建的组件中位数；Total 为成对总和中位数。显存来自 v71 的两组、128 probes、$\\alpha=100$ 运行，包含上下文和工作区。“Residual”是残差编码模型大小占实测使用总量的比例，不是每查询读取比例。}\n\\label{tab:7-build-memory}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/build_memory}\n\\end{table}\n\n\\Cref{sec:3-3,sec:a-e1-protocol} 定义启动／构建边界；\\cref{fig:7-build} 比较重复构建。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/construction.pdf}\n\\captionof{figure}[记录的构建成本]{记录的构建成本，纳入 CAGRA int8。JHQ 为输入页已热时三次补充正常冷构建的中位数及范围；其他柱为成功测量索引配置的中位数，误差线为最小—最大值。Int8 包含数据集量化；RaBitQ 不含所需序列化往返。缺失大数据集柱表示未尝试，不是实测构建失败。纵轴为对数。}\n\\label{fig:7-build}\n\\end{minipage}\\par\\medskip\n\nStella 的隔离 CAGRA int8 为 74.55/82.45\\,s，含量化；三个 IVF-PQ 配置的中位数为 86.59\\,s，而 JHQ 为 10.54--10.65\\,s。质量／常驻显存另行比较。\n\n五次 arXiv 构建的召回范围为 0.0012。Stella 启动在输入已进入操作系统文件缓存时为 18.2--18.6\\,s，首次读取为 129.9\\,s。20\\,ms 采样峰值为 BGE 26.08\\,GiB、Stella 22.58\\,GiB。BGE 的 12\\,GiB 分配缓冲先于 23.05\\,GiB gather 载荷存活，不能相加（\\cref{eq:4-assignment-scratch}）。\n\n\\subsection{常驻分配与压缩的作用}\n\n\\Cref{fig:7-memory} 将 \\cref{sec:4-4} 组件模型与实测常驻总量结合，保留未归属余量。前述构建测量给出采样峰值。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/memory.pdf}\n\\captionof{figure}[常驻显存分解]{两组表、128 probes、$\\alpha=100$ 下的常驻显存分解。组件大小为模型值，标记为实测使用总量，斜纹为未归属余量。总量包含上下文和工作区。前述构建测量给出采样峰值；这些常驻标记不是峰值。}\n\\label{fig:7-memory}\n\\end{minipage}\\par\\medskip\n\n残差占 BGE 11.93\\,GiB 总量的 80.7\\%，占 Stella 20.44\\,GiB 的 82.9\\%，总量含上下文／工作区。原向量需要 38.50/67.81\\,GiB。更小 $\\alpha$ 节省读取，不减少存储残差 bytes（\\cref{sec:4-4}）。\n\nE1 测量在 \\cref{tab:7-e1-memory} 提供独立跨系统视角。从 JHQ 进程总量减去基线测得的 507.2\\,MiB 上下文，约为 CAGRA fp32 索引分配的 0.29--0.39。JHQ 包含工作区，CAGRA 则为构建时索引增量。这些是参数扫描范围，不是显存匹配召回点或等峰值预算比较。同表 CAGRA int8 与 JHQ 分配同量级：相对 fp32 的压缩并非 JHQ 独有。\\cref{tab:4-bytes} 组件模型解释这一比较。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[E1 分配范围]{E1 分配范围。JHQ 为进程总量减去估计的 507.2\\,MiB 上下文，包含查询工作区；两个 CAGRA 列是构建时测得的索引分配。范围覆盖参数扫描。}\n\\label{tab:7-e1-memory}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/e1_memory}\n\\end{minipage}\\par\\medskip\n\n\\subsection{大数据集可行性与竞争区间}\n\nBGE 包含 10,091,524 个向量，Stella 为 17,776,615；二者均为 1,024 维、32,768 个 IVF 列表。Stella 查询从语料中抽取，因此结果刻画这一基准，不是独立采集的外部查询分布。\\Cref{fig:7-large} 纳入成功的 CAGRA int8 与 IVF-PQ 测量。预计存储超容量时，完整精度 CAGRA／RaBitQ／FP32 暴力搜索被预先排除。这是计划排除，不是实测 OOM 或召回失败。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/large_frontiers.pdf}\n\\captionof{figure}[大数据集搜索前沿]{大数据集主机到主机前沿，纳入成功的隔离 CAGRA int8 重跑。BGE／Stella 使用 1,000/999 查询。端点标记已测网格覆盖。}\n\\label{fig:7-large}\n\\end{minipage}\\par\\medskip\n\nCAGRA int8 可容纳 Stella。在 BGE 召回率 0.88--0.95 上，它领先 $1.35$--$2.96\\times$；在 int8 最高召回率 0.9579 处，JHQ 领先 $1.086\\times$。BGE／Stella 最高召回分别为：int8 0.9579/0.9783，JHQ 0.9663/0.9952，PQ 0.9525/0.9896。\n\nStella 上，JHQ 在召回 0.978679 时为 185.4 kQPS，int8 在 0.978278 时为 66.3。$2.80\\times$ 的测点比并未匹配召回；int8 不覆盖更高区间（\\cref{fig:7-large}）。\n\n\\section{数值检查与召回分析}\n\\label{sec:7-8}\n\n\\subsection{质量分辨率与重复执行}\n\n一个 GT 命中使 Recall@10 改变\n\\[\n \\Delta r=\\frac1{nk}=\n \\begin{cases}10^{-4},&n=1000,\\\\2\\times10^{-4},&n=500.\\end{cases}\n\\]\nStella 的 $n=499$ 步长略大。这个步长不是不确定区间。\n\n全部 369 个 E1 基线重复 ID 标记均保留，包括并列重排。401 口径增加跨协议差异（\\cref{sec:a-e1-protocol}）；这些不是独立构建。\n\n0.97 附近，吸附前的局部斜率对应每 $10^{-3}$ 召回变化 1.01--3.17\\% QPS。五次构建的召回范围在 Vogue／arXiv／OpenAI-1536/3072 上为 0.0008/0.0012/0.0004/0.0002。这提示局部敏感性，不是重新训练前沿的界。缓存模型 FP32 检查保持 OpenAI 优势（\\cref{sec:7-precision}）；arXiv／LUT 的接近持平仍无定论。\n\nRaBitQ 在 Vogue／arXiv／OpenAI-1536/3072 上，五轮范围占中位 QPS 的中位数为 3.79\\%、3.34\\%、2.87\\%、5.25\\%。这些离散范围不是置信区间。为降低偶发 30--60\\,ms 调用的影响，本文将 1,000 查询速率重算为 $10^6/\\operatorname{median}(\\text{call ms})$。召回率 0.97 时，所得 JHQ／RaBitQ 比为 1.063、0.995、1.118、1.100。三个有利方向和 arXiv 接近持平仍保持，因此结果并非仅由长调用造成。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{2em}\n\\subsection{重建评分与召回损失}\n\\label{sec:7-recall-attribution}\n\n\\cref{tab:5-query-stages} 的阶段约束区分计算分数选择与原始空间 kNN；lane 舍入、cutoff 并列和进程变化分别限定不同阶段。\n\n存档重建试验测量距全 probe 重建评分的剩余差距。七个工作负载—预算臂各有 128 查询，对全部 probed 候选做 FP64 评分，相比所选预算的 GPU 输出，召回提高 0--0.002344。arXiv／128 probes 下，$\\alpha=200$ 在全部 128 查询上匹配全 IVF 重建答案集。预算为 100 时，召回 0.9734375，全 IVF 为 0.9750；在路由／重建共同缺口 0.0250 之外，还有 0.0015625 的预算缺口（\\cref{sec:6-2}）。这些汇总包含同一数据集—probe 工作负载的两个预算。FP64／GPU 算术差异使部分实验臂不能纯粹归因为预算。分离路由／表示需要逐阶段 GT 覆盖。\n\\end{minipage}\\par\n",
+      "after": "\\chapter{实验评估}\n\\label{ch:evaluation}\n\\chaptermark{实验评估}\n\n本文测试构建／容量（RQ1）、执行（RQ2）、预算质量／复用（RQ3）和竞争区间（RQ4）。\n\n\\section{实验协议}\n\\label{sec:7-1}\n\n\\subsection{比较协议与可复现性}\n\n\\Cref{sec:3-2,sec:3-3,sec:3-5} 定义协议。搜索不计构建／校准；各消融使用自己的基线。\n\n较早的一次比较在同一服务器的 Xeon Platinum 8470Q 上运行 JHQ 作者的 CPU 实现，并加入本地兼容性修复和 Recall@10 修复。CPU 搜索使用 32 线程；Vogue 和 OpenAI-3072 还测试了 16 线程，取较快结果。CPU 前沿扫描 $\\alpha\\in\\{2,4,8,16,32,100\\}$，并采用 128--1,024 个 probes，排除受线程启动开销影响的较小 probe 数。在相同召回率处对吞吐的对数插值，得到 GPU／CPU 比值：Vogue 为 52--85，arXiv 为 56--98，OpenAI-1536 为 85--108，OpenAI-3072 为 75--77。\n\n这些历史比值说明当时观测差异的量级，不能作为本文评测版本的硬件加速比。GPU 测试采用较早实现（v57）；CPU 码本单独训练，两个 OpenAI 数据集的 CPU 使用 4,096 个列表，而 GPU 为 8,192 个。多数 CPU 配置只计时一次。后续十月的 CPU 精排研究也未匹配设置：Vogue 使用 1,024 个列表和 $[8,4]$ 位，而主比较为 4,096 个列表。针对本文评测 GPU 版本、匹配索引与计时条件的比较仍待完成。\n\n减少计时调用次数的规则见 \\cref{sec:a-e1-protocol}。\n\n指标与前沿估计器遵循 \\cref{sec:3-2,sec:3-4}；$\\glut$ 和 $\\gscan$ 保持 \\cref{sec:5-1} 中不同的含义。\n\n\\section{跨系统召回率与吞吐比较}\n\\label{sec:7-2}\n\n\\subsection{比较范围与前沿构造}\n\n\\Cref{fig:7-frontiers} 在 \\cref{tab:3-data} 的前四个数据集上，将 JHQ-GPU 与 \\cref{sec:3-4} 的图、压缩 IVF 和暴力搜索基线比较 \\cite{cagra,pq,ivfrabitq}。E1 使用 batch 1,000 和共同 GT；T5 覆盖小 batch（\\cref{sec:7-smallbatch}），内部消融见 \\cref{sec:7-6}。\n\nE1 将 105 个 arXiv／OpenAI 单元分派到 $\\gscan=0$，27 个 Vogue 单元因变异系数（coefficient of variation，CV）为 0.338--0.622 分派到 $\\gscan=4$。只有 Vogue 使用分组保留、共享阈值和归并（\\cref{sec:5-5}）。\n\nE1 有 1,590 个有效点：JHQ 每数据集 27--39 个，各基线家族 54--264 个。未出现失败、无效 ID 或重复行标记。参数扫描共享索引（\\cref{sec:3-4}）。\n\n\\Cref{tab:3-grids,sec:b-grids} 定义有限覆盖，超出目标未测量。\n\n存储不同：九位 RaBitQ 的名义编码字节为 $9d/8$；4/8 位码更少。\\Cref{tab:4-bytes,sec:7-7} 在性能包络之外给出表示成本和实测分配。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/frontiers.pdf}\n\\caption[E1 召回率—吞吐前沿]{四个 E1 数据集上的实测主机到主机召回率—QPS 前沿。显示范围从 0.90 开始，0.97 处画垂线。包括 CAGRA int8 在内的所有基线家族均参与前沿构造。线连接实测点；吞吐轴为对数。}\n\\label{fig:7-frontiers}\n\\end{figure}\n\n\\subsection{相同召回率下的吞吐}\n\n\\Cref{tab:7-matched} 使用 \\cref{sec:3-4} 定义的插值和满足阈值的实测估计器报告召回率 0.97。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[召回率 0.97 时的跨系统比较]{召回率 0.97 的比较。每个比值为“插值／实测”；大于一有利于 JHQ。JHQ kQPS 为插值估计。arXiv 与 RaBitQ 的小幅差异随估计器改变方向。}\n\\label{tab:7-matched}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/matched97}\n\\end{minipage}\\par\\medskip\n\n在索引、probes、预算及最终输出固定、batch 1,000 下，去掉分组使 Vogue 在召回率 0.97 时的 JHQ／RaBitQ 比从 1.059 降至 0.933。这分离的是集成分组路径，不只是共享阈值。\n\nCAGRA int8 在 0.90--0.92 领先 $1.20$--$1.98\\times$，但不覆盖 0.97。RaBitQ 赢得部分 0.98+ 目标；CAGRA fp32 在 arXiv 接近 0.99 时领先（\\cref{fig:7-frontiers}）。\n\n\\newpage\n\\input{variants/thesis2-zh/chapters/07-supp-precision}\n\n\\subsection{解释与比较限制}\n\n两个 OpenAI 数据集均使用 Qdrant DBpedia 嵌入 \\cite{data_openai1536,data_openai3072}。截断／重新归一化后，1,000 个查询行与 10,299 个抽样基础行的余弦为 $\\geq0.9980$，中位数 1.000000，GT 重合度 9.046/10。没有实体 ID，这些检查支持行序对齐。维度翻倍后，CAGRA 比值仍为 1.747，RaBitQ 为 1.130/1.157，因此仅凭维度无法解释。\n\n在 128 probes 下，较小的精排倍率伴随较大的收益：OpenAI 为 4--8，Vogue 为 64，arXiv 为 100，后续 FULL 为 200。这是观察到的相关关系；匹配召回率比较可能选用其他参数。\n\n\\Cref{sec:7-8} 检查小幅领先的敏感性，以及 \\cref{sec:3-3} 中接口、显存和编译差异的影响。\n\n\\input{variants/thesis2-zh/chapters/07-supp-smallbatch}\n\n\\section{Cartesian LUT、打包载入与 Lane 精排}\n\\label{sec:7-3}\n\nRQ2 消融同时测量内核与应用效应。\n\n\\subsection{LUT 分解与吞吐}\n\nLUT 消融测试 \\cref{sec:5-2} 成本模型与 FP32 排序效应。\n\n\\Cref{fig:7-lut} 比较六个数据集上的 Cartesian 表分组，probe 数为 8/32/128/512，固定 $\\alpha=100$，$\\glut\\in\\{1,2,4,8\\}$。五轮使用 batch 1,000，Stella 为 999。两组在 22/24 单元领先，例外接近持平：arXiv／128 的一组快 0.23\\%，OpenAI-3072／8 的四组快 0.84\\%。两组对一组成对获胜 23/24，全部数据集几何平均大于一，范围 1.021--1.318。共享索引单元并非独立试验。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/lutgroups.pdf}\n\\caption[Cartesian 查找表分组]{固定 $\\alpha=100$ 下的 Cartesian 表分组（v71）。组数表示 $\\glut$，不是并行扫描组。曲线为各数据集相对一组实验臂 QPS 比的中位数；阴影表示范围。}\n\\label{fig:7-lut}\n\\end{figure}\n\n两组／一组比值从 $0.998$ 到 $1.914$。四组和八组均存 16 项，但需要更多查表与加法。这说明表更小不一定提高吞吐；占用率和指令成本未被单独分离。任意四臂单元中报告的最大召回差为 $10^{-4}$。128 probes、$\\alpha=100$ 下，T4 在 Vogue、arXiv 和 OpenAI-3072 上比较相同候选。整表与 $16+16$ 表有 22.6--26.1\\% 的候选分数 bit 模式不同，最大相对误差 $4.53\\times10^{-7}$。跨全部形式，20.5--29.4\\% 不同，最大相对误差 $4.64\\times10^{-7}$。Vogue 有 2--4/256 个最终 ID 差异，arXiv／OpenAI 没有。主码保留集合不变时，最终 ID 仍可变化，因为舍入后的主码分数进入精排（\\cref{sec:a-t4-t5}）。\n\n\\subsection{打包访问与协作残差评分}\n\n打包在 48 对匹配配置中获胜 $1.012$--$1.658\\times$，覆盖六个数据集、四个 probe 数及 $\\glut\\in\\{1,2\\}$，召回差最多 $10^{-4}$。两个布局均为 subspace-major。打包／载入／解包一起改变。每臂仅一个汇总计时，比五轮 v71 的计时证据少。\n\n\\Cref{fig:7-packing-refinement,tab:7-refinement} 进一步区分残差精排中的宽载入和 lane 协作。L0 是原始标量路径；L1 只改变载入路径，不把一个候选分到多个 lanes；L16 为每候选分配 16 lanes。同一进程在五轮计时中轮换实验臂顺序，每轮每臂三次搜索。十二个普通单元中，L16 整体提升 $1.015$--$1.789\\times$；独立的高预算 arXiv／$\\alpha=200$ 对照达到 $2.383\\times$。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/packing_refinement.pdf}\n\\caption[打包访问与精排对照]{打包与精排对照。左：各表分组／probe 数下，六个数据集的打包载入 QPS 收益中位数及最小—最大阴影范围。右：128 probes、各数据集普通预算下，仅改变载入和16-lane 的实测端到端收益。两个面板使用不同实验家族。}\n\\label{fig:7-packing-refinement}\n\\end{figure}\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[128 probes 下的精排收益]{128 probes 下的精排。比值为相对 L0 的成对端到端收益；末列除外，它是剖析得到的精排内核收益。内核与应用收益不能互换。}\n\\label{tab:7-refinement}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/refinement}\n\\end{table}\n\n仅改变载入的 L1 与 L0 逐位相同，却在 arXiv 获得 $1.368\\times$。在 $\\alpha=100$ 下使用 lanes，精排从 4,277.5$\\to$716.8\\,$\\mu$s，内核提升 $5.97\\times$，而整体为 $1.789\\times$。OpenAI-3072 的内核／整体提升分别为 $8.81\\times$／$1.171\\times$。其他阶段仍存在。\n\n基线 wall time 占比为 $f$、精排加速比为 $s$ 时，替换模型给出\n\\[\n \\frac{T'}T=(1-f)+\\frac f s,\\qquad\n \\frac T{T'}=\\frac1{1-f+f/s}.\n\\]\narXiv／OpenAI-3072 的 $f=0.529/0.168$ 预测 $1.787/1.175\\times$，实测为 $1.789/1.171\\times$。独立剖析提供解释性估计。\n\n改变各 lane 之间 FP32 加法的结合顺序时，相对距离误差达到 $\\approx1.6\\times10^{-6}$，偶尔改变顺序。Sanitizer 只覆盖记录的子集，未声称普遍逐位相同。\n\n\\section{选择正确性与性能}\n\\label{sec:7-4}\n\n\\input{variants/thesis2-zh/chapters/07-supp-selection}\n\n\\subsection{共享阈值保持选择目标}\n\n48 组输出全部一致，QPS 比为 $0.994$--$1.562\\times$。在 arXiv $\\alpha=200$、batch 1,000、八组下，共享使归并从 2,629$\\to$471\\,$\\mu$s，扫描从 7,968$\\to$5,513\\,$\\mu$s。部分单元略有退步。\n\n试验第一组包含 46--81\\% 的优胜者。相同配额需要回退，不同配额仍留有瓶颈。阈值避免固定配额。\n\n\\subsection{探测列表选择与输出一致性}\n\nRadix 保持评分算术／OpenAI TF32（\\cref{sec:7-precision}）。全部 1,792 个合成用例通过。对 arXiv／Vogue／OpenAI-3072 的全部 1,000 个查询，probes 以及主码分数／位置均匹配。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[Probe 选择吞吐比]{精确计算分数 probe 改动的 v69／v65 端到端吞吐比。每个工作负载—batch 比较中，每个二进制有十轮计时，交替运行收集。$>1$ 的比值有利于 v69。}\n\\label{tab:7-probe}\n\\small\n\\input{variants/thesis2-zh/tables/ch7/probe}\n\\end{minipage}\\par\\medskip\n\n\\Cref{tab:7-probe} 显示端到端提升 $1.034$--$1.167\\times$。batch 8 下，剖析的 probe 阶段在 arXiv 从 56.5 降至 22.6\\,$\\mu$s，Vogue 从 52.7 降至 14.7\\,$\\mu$s，OpenAI-3072 从 77.8 降至 16.7\\,$\\mu$s。未改阶段限制全 batch 收益，各比值使用自己的基线。\n\nVogue 在跨二进制的 1,000 查询转储中，probe／主码逐字节一致（一组／batch-8），最终召回却为 0.9642/0.9644。基线自身在一致性／计时运行间也由 0.9642 变为 0.9644。本次检查中，变化发生在主码选择之后，原因未解决。同进程内调度／单 block 输出匹配（\\cref{app:reproducibility}）。\n\n可选 FP16 probe 集合在 arXiv／Vogue／OpenAI-3072 的 1,000 查询中分别有 936/979/998 个与 v69 一致。高度重合不等于精确。这些结果不纳入主 E1 前沿，也不纳入精确 probe 主张。\n\n\\section{留出预算质量、吞吐与回本}\n\\label{sec:7-5}\n\nRQ3 将 \\cref{ch:refinement} 的策略与固定 $\\alpha=100$ 及更强的通用对照 $\\alpha=64$ 比较。\n\n\\subsection{无标签选择与有标签诊断 Oracle}\n\n六个数据集在 128、512 probes 下测试 \\cref{sec:6-4} 的固定、抽样、FULL、枚举和 oracle 对照。不相交查询池及每样本量 64 次抽样遵循 \\cref{sec:3-2}。\n\n所有规则变体均使用 \\cref{eq:6-agreement}，取 $k=10$、$\\epsilon=1$。FULL 使用全部校准查询；诊断 oracle 使用留出标签（\\cref{tab:6-controls}）。\n\n\\subsection{全池校准作为质量优先工作点}\n\n每个单元对全部 500 个校准查询执行一次全池校准。所选实验臂在 12/12 单元满足留出 $10^{-3}$ 损失目标，最大观测损失为 0.0006。其速率为 GT oracle 的 0.908--1.000，校准成本 9.5--60.3\\,ms。相对固定 100 的速率几何平均比为 $1.111\\times$；只看固定 100 也达标的十个单元，则为 $1.193\\times$。\\Cref{tab:7-budget-full} 给出完整比较。相对固定 64，全池选择在六个单元更快、两个持平、四个更慢；主要优势是观测中覆盖了全部十二个质量目标。\n\n这些单元支持质量优先时用 FULL，校准成本优先时用 $S=128$（\\cref{sec:6-2}）。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[全池预算校准]{全池校准（$S=500$）。损失相对最佳实测留出召回率；速率为所选固定臂的 kQPS。“Cal.”是每单元一次全池校准调用，不是重复查询流计时。留出查询为 500 个，Stella 为 499 个。}\n\\label{tab:7-budget-full}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/budget_full}\n\\end{table}\n\n\\subsection{低成本抽样及其质量风险}\n\n\\Cref{tab:7-budget-quality} 报告 $S=128$ 结果。十二个单元中，十个所选预算中位数匹配 oracle；arXiv／128 probes 和 OpenAI-3072／512 不同。预算跨工作负载为 4--200。预算中位数与平均召回不一定对应同一实验臂。平均召回由打印的最佳召回减去平均损失重建，约保留四位小数。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[抽样预算的留出质量]{$S=128$ 下的留出质量。规则 $\\alpha$ 为 64 次抽样中位数；oracle $\\alpha$ 使用留出标签。$\\overline R_{\\rm rule}$ 为重建的平均召回。“Losses”计数相对最佳已测留出召回损失 $>10^{-3}$ 的抽样次数；$L_{95}$ 为日志中的较低次序 95 分位损失估计。$R_{100}$ 为固定预算召回。}\n\\label{tab:7-budget-quality}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/budget_quality}\n\\end{table}\n\narXiv 在 128/512 probes 下分别有 40/64、32/64 次损失越阈，尽管平均损失只有 0.0009。固定 100 损失 0.0012/0.0016：比默认更好未必达标。BGE／512 有 24 次越阈且 $L_{95}=0.0014$；Stella 达到 0.0030；OpenAI-3072 没有越阈（\\cref{tab:7-budget-quality}）。四次损失可与报告 $L_{95}=0$ 同时出现（\\cref{sec:a-budget-contract}）。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=0.82\\linewidth]{ch7/budget_risk.pdf}\n\\caption[不同样本量下的留出风险]{不同样本量下的留出风险。纵轴为相对最佳已测预算，留出召回损失超过 $10^{-3}$ 的校准抽样百分比。因为 \\cref{eq:6-agreement} 保持阈值为一，增加 $S$ 也会收紧允许的槽位不一致比例。}\n\\label{fig:7-budget-risk}\n\\end{figure}\n\n\\subsection{吞吐估计与校准经济性}\n\n按 \\cref{sec:a-budget-contract} 的平均所选臂估计，$S=128$ 在十个单元超过固定 100，幅度 $1.028$--$1.691\\times$。arXiv 为 0.908/0.917，但平均召回更好，没有吞吐回本。\n\n相对固定 64，抽样赢得 9/12 单元：几何平均 $1.054\\times$，范围 $0.821$--$1.367\\times$，OpenAI 为 $1.052$--$1.367\\times$。两个固定对照均未满足 arXiv 质量，无法作统一质量匹配比较。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[抽样校准经济性]{$S=128$ 下的校准经济性。速率单位为 kQPS；规则速率是平均所选臂 QPS。比值分别比较固定 100 和 64。“Batches”用 500 查询、Stella 为 499，给出相对固定 100 的回本次数；“Never”表示无吞吐回本。质量列单独标明固定 100 是否满足留出损失目标。}\n\\label{tab:7-budget-cost}\n\\footnotesize\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/budget_cost}\n\\end{table}\n\n校准成本 3.9--21.3\\,ms。相对固定 100/64，最大正收益预计回本时间为 0.54/2.72\\,s，FULL 为 1.52/2.25\\,s（\\cref{sec:6-5,eq:6-payback,tab:7-budget-cost}）。arXiv 固定对照质量不达标；下面的直接复用同时测成本和召回。\n\n\\input{variants/thesis2-zh/chapters/07-supp-budget}\n\n\\section{批量大小、调度与负载不均}\n\\label{sec:7-6}\n\n\\subsection{并行度与重复选择工作}\n\nbatch-8 的八组提升 $2.06$--$2.76\\times$；arXiv 扫描从 849$\\to$216\\,$\\mu$s，另加 16.7\\,$\\mu$s 归并。batch 1,000、$\\alpha=200$ 时，独立分组反而将扫描从 3,530$\\to$7,652\\,$\\mu$s，另加 2,624\\,$\\mu$s 归并，仅达到单 block QPS 的 $0.46\\times$。共享阈值减少工作，但未消除区间变化。\n\n\\begin{figure}[!htbp]\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/batch_execution.pdf}\n\\caption[依赖 Batch 的执行区间]{执行区间。左：固定共享阈值组数及调度执行，相对 lane 精排单 block 基线的速率；小 batch 有 13 单元，batch 1,000 有 11。右：arXiv 预算 100、200 在 batch 8、1,000 下的成对扫描／归并剖析。斜纹表示归并。右侧来自独立阈值扫描实验，解释一种成本，不是调度器的完整加速。}\n\\label{fig:7-batch}\n\\end{figure}\n\n\\subsection{在更多配置上评估固定规则}\n\n调度遵循 \\cref{sec:5-5} 的填充／偏斜规则与伪查询校准。四个配置先确定常数，再测量其他配置。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[集成执行与调度收益]{相对 v61 L16 的集成执行收益。条目为五轮逐单元成对加速比中位数的几何平均。“Held out”排除确定规则的四个配置，表示留出配置，而非预算实验的留出查询划分。}\n\\label{tab:7-scheduling}\n\\small\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/scheduling}\n\\end{table}\n\n平均值使用十三个小 batch 配置、十一个全 batch 配置；Stella 有 999 查询。留出子集分别为九／七个（\\cref{tab:7-scheduling}）。batch 1,000 下，八组为 $0.886\\times$；最坏 regret 为 1.217（BGE／256）。\n\nVogue 的 CV 0.338--0.622 在 batch 1,000 时选择四组。比值范围 0.895--1.175；$(n_{\\rm probe},\\alpha)=(16,16),(16,64),(32,64)$ 对应 0.955、0.895、0.955。CV 测量离散程度，而非总工作量：它使 0.97 处领先，却在低 probe 负载上过度分组（\\cref{sec:7-2}）。\n\n250 个变体／配置对、234,320 次查询比较中，没有非并列主码差异或最终 ID 集合差异。并列输出顺序可能不同。这些是顺序同步吞吐测试，不是开放到达流尾延迟测试。\n\n\\section{冷构建、常驻显存与已测规模}\n\\label{sec:7-7}\n\n冷构建、常驻显存和完成的大数据集搜索用于评估 RQ1；E1 显存比较也支持 RQ4。\n\n\\subsection{冷构建与生命周期边界}\n\n三次空缓存重复得到 Vogue 训练 298--303\\,ms，总计 $\\approx0.56$\\,s，而较慢存档为 1.33\\,s。Stella 为 10.54--10.65\\,s，存档为 10.40\\,s（\\cref{tab:7-build-memory}）。\n\n\\begin{table}[!htbp]\n\\centering\n\\caption[冷构建与常驻显存]{冷 JHQ 构建与单独测量的常驻显存。Train／add 为三次补充正常构建的组件中位数；Total 为成对总和中位数。显存来自 v71 的两组、128 probes、$\\alpha=100$ 运行，包含上下文和工作区。“Residual”是残差编码模型大小占实测使用总量的比例，不是每查询读取比例。}\n\\label{tab:7-build-memory}\n\\small\\setlength{\\tabcolsep}{3pt}\n\\input{variants/thesis2-zh/tables/ch7/build_memory}\n\\end{table}\n\n\\Cref{sec:3-3,sec:a-e1-protocol} 定义启动／构建边界；\\cref{fig:7-build} 比较重复构建。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/construction.pdf}\n\\captionof{figure}[记录的构建成本]{记录的构建成本，纳入 CAGRA int8。JHQ 为输入页已热时三次补充正常冷构建的中位数及范围；其他柱为成功测量索引配置的中位数，误差线为最小—最大值。Int8 包含数据集量化；RaBitQ 不含所需序列化往返。缺失大数据集柱表示未尝试，不是实测构建失败。纵轴为对数。}\n\\label{fig:7-build}\n\\end{minipage}\\par\\medskip\n\nStella 的隔离 CAGRA int8 为 74.55/82.45\\,s，含量化；三个 IVF-PQ 配置的中位数为 86.59\\,s，而 JHQ 为 10.54--10.65\\,s。质量／常驻显存另行比较。\n\n五次 arXiv 构建的召回范围为 0.0012。Stella 启动在输入已进入操作系统文件缓存时为 18.2--18.6\\,s，首次读取为 129.9\\,s。20\\,ms 采样峰值为 BGE 26.08\\,GiB、Stella 22.58\\,GiB。BGE 的 12\\,GiB 分配缓冲先于 23.05\\,GiB gather 载荷存活，不能相加（\\cref{eq:4-assignment-scratch}）。\n\n\\subsection{常驻分配与压缩的作用}\n\n\\Cref{fig:7-memory} 将 \\cref{sec:4-4} 组件模型与实测常驻总量结合，保留未归属余量。前述构建测量给出采样峰值。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/memory.pdf}\n\\captionof{figure}[常驻显存分解]{两组表、128 probes、$\\alpha=100$ 下的常驻显存分解。组件大小为模型值，标记为实测使用总量，斜纹为未归属余量。总量包含上下文和工作区。前述构建测量给出采样峰值；这些常驻标记不是峰值。}\n\\label{fig:7-memory}\n\\end{minipage}\\par\\medskip\n\n残差占 BGE 11.93\\,GiB 总量的 80.7\\%，占 Stella 20.44\\,GiB 的 82.9\\%，总量含上下文／工作区。原向量需要 38.50/67.81\\,GiB。更小 $\\alpha$ 节省读取，不减少存储残差 bytes（\\cref{sec:4-4}）。\n\nE1 测量在 \\cref{tab:7-e1-memory} 提供独立跨系统视角。从 JHQ 进程总量减去基线测得的 507.2\\,MiB 上下文，约为 CAGRA fp32 索引分配的 0.29--0.39。JHQ 包含工作区，CAGRA 则为构建时索引增量。这些是参数扫描范围，不是显存匹配召回点或等峰值预算比较。同表 CAGRA int8 与 JHQ 分配同量级：相对 fp32 的压缩并非 JHQ 独有。\\cref{tab:4-bytes} 组件模型解释这一比较。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\captionof{table}[E1 分配范围]{E1 分配范围。JHQ 为进程总量减去估计的 507.2\\,MiB 上下文，包含查询工作区；两个 CAGRA 列是构建时测得的索引分配。范围覆盖参数扫描。}\n\\label{tab:7-e1-memory}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\input{variants/thesis2-zh/tables/ch7/e1_memory}\n\\end{minipage}\\par\\medskip\n\n\\subsection{大数据集可行性与竞争区间}\n\nBGE 包含 10,091,524 个向量，Stella 为 17,776,615；二者均为 1,024 维、32,768 个 IVF 列表。Stella 查询从语料中抽取，因此结果刻画这一基准，不是独立采集的外部查询分布。\\Cref{fig:7-large} 纳入成功的 CAGRA int8 与 IVF-PQ 测量。预计存储超容量时，完整精度 CAGRA／RaBitQ／FP32 暴力搜索被预先排除。这是计划排除，不是实测 OOM 或召回失败。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\captionsetup{hypcap=false}\n\\centering\n\\includegraphics[width=\\linewidth]{ch7/large_frontiers.pdf}\n\\captionof{figure}[大数据集搜索前沿]{大数据集主机到主机前沿，纳入成功的隔离 CAGRA int8 重跑。BGE／Stella 使用 1,000/999 查询。端点标记已测网格覆盖。}\n\\label{fig:7-large}\n\\end{minipage}\\par\\medskip\n\nCAGRA int8 可容纳 Stella。在 BGE 召回率 0.88--0.95 上，它领先 $1.35$--$2.96\\times$；在 int8 最高召回率 0.9579 处，JHQ 领先 $1.086\\times$。BGE／Stella 最高召回分别为：int8 0.9579/0.9783，JHQ 0.9663/0.9952，PQ 0.9525/0.9896。\n\nStella 上，JHQ 在召回 0.978679 时为 185.4 kQPS，int8 在 0.978278 时为 66.3。$2.80\\times$ 的测点比并未匹配召回；int8 不覆盖更高区间（\\cref{fig:7-large}）。\n\n\\section{数值检查与召回分析}\n\\label{sec:7-8}\n\n\\subsection{质量分辨率与重复执行}\n\n一个 GT 命中使 Recall@10 改变\n\\[\n \\Delta r=\\frac1{nk}=\n \\begin{cases}10^{-4},&n=1000,\\\\2\\times10^{-4},&n=500.\\end{cases}\n\\]\nStella 的 $n=499$ 步长略大。这个步长不是不确定区间。\n\n全部 369 个 E1 基线重复 ID 标记均保留，包括并列重排。401 口径增加跨协议差异（\\cref{sec:a-e1-protocol}）；这些不是独立构建。\n\n0.97 附近，吸附前的局部斜率对应每 $10^{-3}$ 召回变化 1.01--3.17\\% QPS。五次构建的召回范围在 Vogue／arXiv／OpenAI-1536/3072 上为 0.0008/0.0012/0.0004/0.0002。这提示局部敏感性，不是重新训练前沿的界。缓存模型 FP32 检查保持 OpenAI 优势（\\cref{sec:7-precision}）；arXiv／LUT 的接近持平仍无定论。\n\nRaBitQ 在 Vogue／arXiv／OpenAI-1536/3072 上，五轮范围占中位 QPS 的中位数为 3.79\\%、3.34\\%、2.87\\%、5.25\\%。这些离散范围不是置信区间。为降低偶发 30--60\\,ms 调用的影响，本文将 1,000 查询速率重算为 $10^6/\\operatorname{median}(\\text{call ms})$。召回率 0.97 时，所得 JHQ／RaBitQ 比为 1.063、0.995、1.118、1.100。三个有利方向和 arXiv 接近持平仍保持，因此结果并非仅由长调用造成。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\setlength{\\parindent}{2em}\n\\subsection{重建评分与召回损失}\n\\label{sec:7-recall-attribution}\n\n\\cref{tab:5-query-stages} 的阶段约束区分计算分数选择与原始空间 kNN；lane 舍入、cutoff 并列和进程变化分别限定不同阶段。\n\n存档重建试验测量距全 probe 重建评分的剩余差距。七个工作负载—预算臂各有 128 查询，对全部 probed 候选做 FP64 评分，相比所选预算的 GPU 输出，召回提高 0--0.002344。arXiv／128 probes 下，$\\alpha=200$ 在全部 128 查询上匹配全 IVF 重建答案集。预算为 100 时，召回 0.9734375，全 IVF 为 0.9750；在路由／重建共同缺口 0.0250 之外，还有 0.0015625 的预算缺口（\\cref{sec:6-2}）。这些汇总包含同一数据集—probe 工作负载的两个预算。FP64／GPU 算术差异使部分实验臂不能纯粹归因为预算。分离路由／表示需要逐阶段 GT 覆盖。\n\\end{minipage}\\par\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/08-3-validity.tex",
+      "before": "\\Cref{tab:8-threats} 汇总主要解释的有效性威胁。对照见第 3 章，重复／构建／精度检查见 \\cref{sec:7-8}。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[有效性威胁]{可能逆转结论或缩小适用范围的威胁。}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n受威胁主张 & 替代解释或反转 & 对照与剩余测试 \\\\\n\\midrule\n执行收益 & 分数、并列或索引状态变化解释表观加速 & 严格 T4 CPU 排序与表形式诊断；覆盖有限，候选转储已不保留 \\\\\n预算质量 & 有限池抽样或漂移隐藏有害查询 & 不相交 GT 评估、完整轨迹、子集和检查及 FULL 枚举；未来查询和任意子集不变性未测试 \\\\\n竞争优势 & 网格密度、调用尾部或 API 开销改变排序 & 两种召回估计器、保留慢调用及 int8 基线；TF32／FP32 敏感性；T5 暴露小 batch 反转；跨设备未测 \\\\\n容量／构建主张 & 瞬时分配超过常驻采样 & 阶段字节、重复空缓存构建和 20\\,ms 设备峰值；采样间分配及完整重训练前沿未测 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n历史 CPU JHQ 测试与 E1 的索引参数、召回率口径和计时协议不同（\\cref{sec:7-1}）。这些吞吐数字不能构成相同质量下的 CPU／GPU 加速比；该对照仍未测量。\n\n证据覆盖一张 GPU、六个准备后的数据集和平方 L2 top-10（\\cref{sec:7-smallbatch}）。可能仍有近重复，没有相关性标签。更新、并发、漂移、服务延迟、十亿规模和多设备均未测试。\n",
+      "after": "\\Cref{tab:8-threats} 汇总主要解释的有效性威胁。对照见第 3 章，重复／构建／精度检查见 \\cref{sec:7-8}。\n\n\\par\\medskip\\noindent\\begin{minipage}{\\linewidth}\n\\centering\\captionsetup{hypcap=false}\n\\captionof{table}[有效性威胁]{可能逆转结论或缩小适用范围的威胁。}\n\\label{tab:8-threats}\n\\footnotesize\\setlength{\\tabcolsep}{4pt}\n\\begin{tabularx}{\\linewidth}{@{}*{3}{>{\\raggedright\\arraybackslash}X}@{}}\n\\toprule\n受威胁主张 & 替代解释或反转 & 对照与剩余测试 \\\\\n\\midrule\n执行收益 & 分数、并列或索引状态变化解释表观加速 & 严格 T4 CPU 排序与表形式诊断；覆盖有限，候选转储已不保留 \\\\\n预算质量 & 有限池抽样或漂移隐藏有害查询 & 不相交 GT 评估、完整轨迹、子集和检查及 FULL 枚举；未来查询和任意子集不变性未测试 \\\\\n竞争优势 & 网格密度、调用尾部或 API 开销改变排序 & 两种召回估计器、保留慢调用及 int8 基线；TF32／FP32 敏感性；T5 暴露小 batch 反转；跨设备未测 \\\\\n容量／构建主张 & 瞬时分配超过常驻采样 & 阶段字节、重复空缓存构建和 20\\,ms 设备峰值；采样间分配及完整重训练前沿未测 \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{minipage}\\par\\medskip\n\n\\cref{sec:7-1} 中较早的 CPU 比较给出了历史实现在相同召回率下的吞吐差异。独立训练、OpenAI 数据集的列表数不等以及 CPU 计时重复较少，限制了这些比值的解释。针对本文评测 GPU 版本、匹配索引和计时条件的比较仍未完成。\n\n证据覆盖一张 GPU、六个准备后的数据集和平方 L2 top-10（\\cref{sec:7-smallbatch}）。可能仍有近重复，没有相关性标签。更新、并发、漂移、服务延迟、十亿规模和多设备均未测试。\n"
+    },
+    {
+      "path": "variants/thesis2-zh/chapters/09-conclusion.tex",
+      "before": "\\chapter{结论}\n\\label{ch:conclusion}\n\n\\section{对四个研究问题的回答}\n\\label{sec:9-1}\n\\paragraph{RQ1：GPU 索引构建与容量。}\nGPU 构建生成可搜索的常驻层级。最大测试容纳 17.78 百万个向量，常驻 20.44\\,GiB，构建耗时 10.54--10.65\\,s；构建峰值见 \\cref{sec:7-7}。\n\n\\paragraph{RQ2：面向表示结构的执行。}\nCartesian 拆分保持实数算术分数；完整键保留／归并和见证阈值在其前提下保持分组选择。两组 LUT 在 22/24 单元获胜。调度在 batch 8/1,000 下相对 lane 精排提升 $2.727/1.015\\times$（\\cref{sec:7-3,sec:7-6}）。严格 CPU 检查确认分组顺序；单 block 差异均为 cutoff 并列（\\cref{sec:7-strict-selection}）。\n\n\\paragraph{RQ3：工作负载级精排校准。}\nFULL 在 12/12 单元满足相对最佳已测预算的召回损失目标，最大观测损失 0.0006。$S=128$ 在一个单元有 40/64 次越阈（\\cref{sec:7-5}）。FULL 与枚举一致；十个仅距离单元缺少一般嵌套保证。参考一致性不是总体 GT 召回率。四项直接复用测试显示质量／时间收益依赖工作负载。\n\n\\paragraph{RQ4：跨系统搜索性能。}\nbatch 1,000／召回率 0.97 时，JHQ 在三个数据集领先，在 arXiv 与 RaBitQ 接近持平；Vogue 的领先依赖分组（\\cref{sec:7-2}）。OpenAI E1 使用 TF32。在 TF32 训练缓存上，FP32 检查保持有利方向（\\cref{sec:b-precision-anchors}）。Int8／RaBitQ 在其他召回区间获胜；CAGRA fp32 赢得全部 batch-8 数据集。batch-32 接近持平时依赖估计器（\\cref{sec:7-smallbatch}）。\n\n\\section{总结与展望}\n\\label{sec:9-2}\nJHQ 的 Cartesian 结构需要由执行路径将小表和打包编码转化为低成本访问。并行分解的收益随后取决于工作负载：分组为小 batch 暴露更多工作，而大 batch 本身可能已有足够多的独立查询。精排校准还引入了单独的质量决策，因为有限查询池上的一致性不能保证未来召回率。下一步应把风险受控的校准与实测复用成本结合，再研究显存成为主要约束时的残差放置（\\cref{sec:8-4}）。\n",
+      "after": "\\chapter{结论}\n\\label{ch:conclusion}\n\n\\section{对四个研究问题的回答}\n\\label{sec:9-1}\n\n\\paragraph{RQ1：GPU 索引构建与容量。}\n完整 JHQ 索引能够在单张 GPU 上构建和搜索，无须把原始数据库向量保存在设备上。训练和编码均在 GPU 执行，通过有界批处理与两遍构建控制临时存储。Stella 的 17.78 百万个向量若以 FP32 保存，需要 67.81\\,GiB；JHQ-GPU 的常驻进程占用为 20.44\\,GiB，包括上下文与工作区。冷构建耗时 10.54--10.65\\,s，在这张 32\\,GB 设备上采样到的峰值为 22.58\\,GiB（\\cref{sec:7-7}）。\n\n\\paragraph{RQ2：面向表示结构的执行。}\nJHQ 的编码结构支持小查找表、连续读取和并行候选选择。每张 256 项主码表拆成两张 16 项表后保持实数算术分数，并在 24 个配置中的 22 个成为最快的已测表形式。编码按字打包，使扫描相邻候选的线程读取连续内存；多个线程还可以协作精排一个候选。小 batch 下，将一个查询分到多个 block 能增加有效并行度：batch 为 8 时，调度相对采用协作精排的单 block 基线获得 $2.727\\times$ 吞吐。分组选择在全部 55,296 个已查查询实例中，与 CPU 对 GPU 分数严格排序的结果一致；单 block 的差异仅出现在截断边界的并列候选上（\\cref{sec:7-3,sec:7-6,sec:7-strict-selection}）。\n\n\\paragraph{RQ3：工作负载级精排校准。}\n无标签查询能够选出可复用且满足已测质量目标的精排预算，但样本数量会影响结果。使用全部 500 条校准查询时，十二个配置的留出集召回率与已测预算中最高召回率的差距均在 $10^{-3}$ 以内，最大观测损失为 0.0006。小样本可能漏掉需要更多精排的查询：采用 128 条查询时，arXiv 在 128 probes 下有 64 次抽样中的 40 次超出目标，在 512 probes 下为 64 次中的 32 次。OpenAI 的直接复用测试中，相对固定预算对照，校准开销在 4--9 个 batch 内收回。arXiv 选出的预算则需要花更多时间来达到质量目标（\\cref{sec:7-5}）。\n\n\\paragraph{RQ4：跨系统搜索性能。}\n主比较显示 JHQ-GPU 适合大 batch 吞吐场景。在召回率 0.97、batch 为 1,000 时，它在四个数据集上达到 CAGRA fp32 的 $1.32$--$1.75\\times$ 吞吐；其进程总显存为 CAGRA 索引分配量的 0.29--0.39。它在 Vogue 和两个 OpenAI 数据集上领先已测方法，在 arXiv 上与 IVF-RaBitQ 接近持平；Vogue 的领先依赖分组扫描（\\cref{sec:7-2}）。OpenAI 测量使用 TF32 乘法；复用相同训练模型的 FP32 检查仍领先 CAGRA fp32（\\cref{sec:b-precision-anchors}）。这一优势受到 batch 大小限制：batch 为 8、召回率为 0.97 时，CAGRA fp32 在四个数据集上均更快（\\cref{sec:7-smallbatch}）。\n\n\\section{贡献、局限与展望}\n\\label{sec:9-2}\n\n三项贡献连接了 GPU 建库、面向表示结构的执行和工作负载级预算选择。当执行方式使编码访问成本降低、并行度匹配 batch、精排满足工作负载的质量需求时，压缩才能带来容量和速度收益。\n\n证据覆盖一张 GPU、六个准备后的数据集、平方 L2 top-10 搜索和静态索引。历史 CPU 比较不能量化本文评测版本的加速比（\\cref{sec:7-1}）。在校准池上与参考结果一致，也仍不能确定未来查询的质量。\n\n由此可以继续研究两个方向。风险受控的校准应考虑工作负载漂移和预计复用次数，并与质量匹配的固定预算比较包含校准开销的总时间。从主机内存取回残差码有望增加容量；测量传输量、传输与计算的重叠以及尾延迟，可判断增加容量的代价是否值得（\\cref{sec:8-4}）。\n"
+    }
+  ],
+  "unchanged_source_sha256": {
+    "variants/thesis2/appendices/a-reproducibility.tex": "cf318de6926c56d6484b1b8cc93a2d2aa7dee1d0ebc23252a9825b9dfeeeb34b",
+    "variants/thesis2/appendices/b-supplementary.tex": "538f6694dc3f1bc880023e1da0171afbd8d57a93b8822308fb70e2d32badd726",
+    "variants/thesis2/chapters/01-1-context.tex": "e16cdd35989c4b3ac7d4d548d0663fa14a719bbde9ec4388e449392236b74cf0",
+    "variants/thesis2/chapters/01-2-scope.tex": "b15b700673c198bbcd7cce37172915c7a3041e5d89a6233e94e315915758cdd3",
+    "variants/thesis2/chapters/01-3-challenges.tex": "beee66498a4c66d0ee536661c488a6d58c07dc68d01fa1ddd90cce75b7ae19b7",
+    "variants/thesis2/chapters/01-4-questions.tex": "e890a75cad4a4b90298074076424f1c6cf1c15f7ff2c067f86f63944ab36c26c",
+    "variants/thesis2/chapters/01-5-contributions.tex": "4f29ae7313fcf48cd3b70114a538649224e38abbb55320370b11a85f0d83ff27",
+    "variants/thesis2/chapters/01-introduction.tex": "00ff7fdde6d4b2a7e77e4d0ce881c3cc106f78d1cf3135ac99a085ad6afa7c08",
+    "variants/thesis2/chapters/02-1-objective.tex": "f928fb403f0f5353d10a9c31dc9b356f9b5a24dd7d1864dfb8ca47e41020267e",
+    "variants/thesis2/chapters/02-2-hierarchy.tex": "b4466c59c56adc0abfb4bc103eb993efbcddb8eb0a337d376e0c89c7ae26a1a5",
+    "variants/thesis2/chapters/02-3-jhq.tex": "52b72b8239c65a1c2e07961504d377c245730da851eb5a8e65065571de008877",
+    "variants/thesis2/chapters/02-4-gpu.tex": "20d107d81e623e611ca360ee930323fd6016368a4dc33fa9fed7834322d858e2",
+    "variants/thesis2/chapters/02-5-graphs.tex": "bf2d2cd9e978e1b2dbad26b4b1accacf6bb305c885ce4ce7df2d1857d01611fa",
+    "variants/thesis2/chapters/02-6-quantised.tex": "3bfbcf3069248d12a405e71a96b1493eb62d3b4c9dd54148536387b982b83f5b",
+    "variants/thesis2/chapters/02-7-gap.tex": "6479141ea0ea172fab2bdf7f1ff191d41542941fcf3503e561a2934d39ce71fd",
+    "variants/thesis2/chapters/02-background.tex": "fcf72e7f6b7b702d8a332f5682554f7d6080243388d8b2ecf25b7dcad62a133f",
+    "variants/thesis2/chapters/03-1-comparisons.tex": "4f17d6ce9b565180b205a74931f99cf0a07a099cdf49de61763ebfa469caf5c2",
+    "variants/thesis2/chapters/03-2-data.tex": "446ed487db20d60a9f8da3f66cd30982c62404980e3d4f7c60ad083fd546ef9f",
+    "variants/thesis2/chapters/03-3-measurement.tex": "a9c232b89792725074961e19e05f18e27342203bcda0cf2f81c7c9dea1e52e67",
+    "variants/thesis2/chapters/03-4-frontiers.tex": "6e4814217440efbfc42d9d1a2f4b347fccdf16bdb9570dbb3dd3919be07b5bd2",
+    "variants/thesis2/chapters/03-5-ledger.tex": "3aaab47b4db966e4ddbace56ec89a0caaefc16346d47e308ab42c3ac84a16db9",
+    "variants/thesis2/chapters/03-6-validity.tex": "179e02a8ef5476721a87f68ae03085a5fed5c9faaab6becdc53c073ea3eb0545",
+    "variants/thesis2/chapters/03-methodology.tex": "1040c4124175462107253204a5672cf0b7b3b48b1f32e5dfd424d09953a99b76",
+    "variants/thesis2/chapters/04-1-boundaries.tex": "7e27cb5217c2a22dc700b43a78db86fd3b1dc2e1e34aabbb87cb017d102a99f7",
+    "variants/thesis2/chapters/04-2-training.tex": "5dfb719e92caaabea31b29993be233acaa9996ed2d39940715301e614eef4536",
+    "variants/thesis2/chapters/04-3-layout.tex": "764d7af6b1abca37a46c482a5a8a7e8d232356499e24599c243467de11861a71",
+    "variants/thesis2/chapters/04-4-lifecycle.tex": "303498a1f246dbd82988ac6cc52320d4d56ab55c492a0707db8889bbaefdde55",
+    "variants/thesis2/chapters/04-5-construction.tex": "3bef76d872e48d5301faafde014a513e156de66b2c55d78f504217a95dda6b1d",
+    "variants/thesis2/chapters/04-6-contracts.tex": "08dc621a9de5f3b669c610ba578782e8397b2ef1fcb38ab88418acba450a5e42",
+    "variants/thesis2/chapters/04-architecture.tex": "7c1cc299358496dd81aa337c70c65cfc539881e5f6d267a928ee825000993035",
+    "variants/thesis2/chapters/05-1-query-path.tex": "3cac427de8d67343783377af6b3bff59c3d354c1a6dbd428e6fe5826c193d07e",
+    "variants/thesis2/chapters/05-2-lut.tex": "65a1b57ad5d7e9c723cef2d3f25c9f82dbe3c98202e7afc7ad7b3d299b49995c",
+    "variants/thesis2/chapters/05-3-packed-access.tex": "a567654185296f977b54448647c255974319d16c6146eb30df1662e211ee5773",
+    "variants/thesis2/chapters/05-4-global-selection.tex": "fb82951c6bf4db78b25dba6c6ca4b77bc8a2ccc49dfc0c24b6a0d6a33adfc5ad",
+    "variants/thesis2/chapters/05-5-bound-scheduling.tex": "9ef05c1b9df2b7220d6e43aee4326c6d8412a7b94024c96234877e9a505e9f91",
+    "variants/thesis2/chapters/05-6-refinement.tex": "2d8466f9daa15ba337d80f793875099595355c03326c634cb4dc00149e84d906",
+    "variants/thesis2/chapters/05-7-probe.tex": "f9352ba1f1b8fdd6186f1d65aea5e9a05ee559df73bde9b1bc9221c472e1421f",
+    "variants/thesis2/chapters/05-gpu-execution.tex": "ca008d7326f0e13a2eaac10236e5840557dbeb08d4076de6ecaa7591284412ed",
+    "variants/thesis2/chapters/06-1-motivation.tex": "3657c956a4db4cbda3a98ddce928c6cb9e19a34906b10a9902f11b7f991a58ac",
+    "variants/thesis2/chapters/06-2-agreement.tex": "d06af234b2b6854234987362b74fc1385ee1b91b2f5936d86c2e48f4933e7baf",
+    "variants/thesis2/chapters/06-3-search.tex": "dbbc64358018f0c8eade87b416d110994fa95e72a4d26e33b9f067ffc2c3833f",
+    "variants/thesis2/chapters/06-4-controls.tex": "f90fd87840576e7b580d8300a327728e09d6ee34200073ad2e538c56a17f9de1",
+    "variants/thesis2/chapters/06-5-economics.tex": "bbfc9663cf37214a939ec8e8034829f0b161a2013d5d905159ee5842d2fc54df",
+    "variants/thesis2/chapters/06-6-scope.tex": "b7628b6784b27d7bbca7e464ca4a1a82fbb52ac1ef1f30787c2150929a732600",
+    "variants/thesis2/chapters/06-refinement.tex": "49e9d56aae82bd79348e50bef2313389a9ca2c3f741d284ac7c680e5cf36b135",
+    "variants/thesis2/chapters/07-supp-budget.tex": "99ed5dc483733ae43536ec386c1803a62eb56375c16e81db84d92eb7535765b6",
+    "variants/thesis2/chapters/07-supp-precision.tex": "b4ba5003f92275f4eed708cf4b199c09db1617dc61abd563f099425fa3ca60e7",
+    "variants/thesis2/chapters/07-supp-selection.tex": "0605323d8cfcc0511b5c9f9208769a7aeebd6e55274538426a9c4df1aa7beb6e",
+    "variants/thesis2/chapters/07-supp-smallbatch.tex": "be19b70140a2d8a5169cf829ccd7894de105462d7be504b4697f6f7091027fa3",
+    "variants/thesis2/chapters/08-1-insights.tex": "920d348514f1acc358a6ea20692f5d83631d76b2243d787691dc8fbd2254e76e",
+    "variants/thesis2/chapters/08-2-negative.tex": "4b4ce7d50c707771cef2d49a98389d43134cc4d13d9fc4b7a8f5e7deba438d3c",
+    "variants/thesis2/chapters/08-4-directions.tex": "d3a79ab032b3e469e025abf05905fb20f16536860a13503b7786c877d71b51f5",
+    "variants/thesis2/chapters/08-5-deployment.tex": "70768671c1fe19c88d4ccd2dba450df313e743f51d0ab7f6cef9d0e6e73c0d47",
+    "variants/thesis2/chapters/08-discussion.tex": "c52803516de172afb3f0c09e803c10746d68b92014987cdff83eb80795ee5984",
+    "variants/thesis2/figures/add-paths.tex": "65b1f7b00b7d769542c28c70d487f1d28b9090f204848f9292b5bf95dd2adf24",
+    "variants/thesis2/figures/architecture-layout.tex": "6396652d47a240e82033298652583d15cd3cbc420c2589da043580e02cf627dc",
+    "variants/thesis2/figures/budget-scope-layout.tex": "570abe21e95e4076a6880d8e8a5c0fac98a43a221cf0b5f4c940e5fb84476388",
+    "variants/thesis2/figures/calibration-flow-layout.tex": "031ee5a5874c2994ae2a88702dd30457d248c0c23ecf7431c5d3943fcf125d51",
+    "variants/thesis2/figures/cartesian-lut.tex": "2865799df544891da913fcc72d1caba13ff22c83ad7d831e82763e3986bd1ee8",
+    "variants/thesis2/figures/challenges-layout.tex": "9e0d75c4c59b495a61e029aba0fdd552879c631e58116f9467e3c5ad7c425eff",
+    "variants/thesis2/figures/lane-refinement.tex": "ddbed74a4927edf31ed9e6a12ad183824634bb100fe2988e864490a1c01ac74c",
+    "variants/thesis2/figures/measurement-boundary.tex": "6a43b9b84e8d1daca8d60a308031a72e2f31a003e327694da3fffaec1c6fd5bc",
+    "variants/thesis2/figures/memory-lifetimes.tex": "b0f1a7683e98f53d486368aeb61d8e2efdc9bc8f4ce344e43fa035876b9b9b27",
+    "variants/thesis2/figures/nesting-example.tex": "9672b6a82748da142c498cbeec9244288142f304b0db6b560ca61657240b459d",
+    "variants/thesis2/figures/packed-access.tex": "1c143ff90375aca2a0632fdf8c08bc64ae3c9c0092214b683a5751abfa5cf60f",
+    "variants/thesis2/figures/physical-layout.tex": "d370b8381cf9b99b782f14188db9db6f0076721228b95a0c64eb2698b54f19aa",
+    "variants/thesis2/figures/query-path.tex": "f5212833c3a541905a02f72fc108eaa63f73860cb1033adff74d404c4615c40b",
+    "variants/thesis2/figures/shared-bound.tex": "9343aba6676aee93fa281a83c7faf91c13e0ef3afe7c689d40127af002fcd68d",
+    "variants/thesis2/format-59.tex": "970fff5ae853d15ddd7b4edd0c95af7c1221d66e93beef5d27c9b0fa14b9a338",
+    "variants/thesis2/frontmatter/abstract.tex": "372c2d74ee127fe3d8faa2428377306f53716c8231c9058548de2e8b2bf2fc2d",
+    "variants/thesis2/frontmatter/acknowledgements.tex": "a470ffcbdcb9548562980f68a235570b2b5ba5249f874a3a176387778e1c6491",
+    "variants/thesis2/frontmatter/notation.tex": "0430c95f66221eb87a762fdd8153d67b8f1deeade8e61c5fd4675d3479cd1eff",
+    "variants/thesis2/frontmatter/research-assistance.tex": "c0b387002b46848e818ed71d3941ba08fbc70e9b246317f1c0cff116f76a15f4",
+    "variants/thesis2/main.tex": "af544a37f98117605e805aa8d63eb40fd06b1f3aa7e90d3ccc7b29f380c42891",
+    "variants/thesis2-zh/chapters/01-1-context.tex": "dc5a8dcd95b01af60250821d766b612d74c554b6077253ef1b2dd5a6e27f6bf1",
+    "variants/thesis2-zh/chapters/01-2-scope.tex": "0b1ede93c3835736a791ca253bdd91a97bb9bb6be73f3622f0312252c5b5aa0a",
+    "variants/thesis2-zh/chapters/01-3-challenges.tex": "4001c57c0e7cbe005326b2badee84c54c8d60ba61d98057312f9c237d6bd24fc",
+    "variants/thesis2-zh/chapters/01-4-questions.tex": "c565cbc3dd53d0f7992941d8ea86a141d3fd879b960976b1d8bf058b0f6da9d3",
+    "variants/thesis2-zh/chapters/01-5-contributions.tex": "528c9fed8a78ad139cecf5352c4ee46c1854b25a1d124452ec1790288f7f18a5",
+    "variants/thesis2-zh/chapters/01-introduction.tex": "8b2a1228fdd4bc696ea93a3c38e833d765e3b3c89f1799bdb43678c95f0c5004",
+    "variants/thesis2-zh/chapters/02-1-objective.tex": "7ede173ce47a4ed9382d6528d6e533005023b48983703991fed4c77f34faac46",
+    "variants/thesis2-zh/chapters/02-2-hierarchy.tex": "5ff1c606e8cfa01a73a4a4250194e93adabae5e4f87ab4afd95d35ed71043b61",
+    "variants/thesis2-zh/chapters/02-3-jhq.tex": "68cb41daf42a2097c3a913dac22f6b4114728c38abb86d19871c4e8ba2f81838",
+    "variants/thesis2-zh/chapters/02-4-gpu.tex": "884f7c82c854172eb7f068a90885f74bed5899d27638b5cbf60c84ca58be8746",
+    "variants/thesis2-zh/chapters/02-5-graphs.tex": "b4a48c5762f3a36d8091ee55e435ebd0eed381789e85c96339fea2ce58f4e937",
+    "variants/thesis2-zh/chapters/02-6-quantised.tex": "a21ed751ad1b1a938477326ed0e830642ba8b884c93130016b4ef2b08c619838",
+    "variants/thesis2-zh/chapters/02-7-gap.tex": "bb7abe091bfd90bcb8487e51a503bdec9ec13b6c5432258fa0cac83f2b2c03b7",
+    "variants/thesis2-zh/chapters/02-background.tex": "be50983f23371838d48b81e5076b5eb0a008a0c3e0dc5bb429ec46a42702d6aa",
+    "variants/thesis2-zh/chapters/03-1-comparisons.tex": "7cbb9f1da019af666d06912ae4da4e1dc9a49aaeff178cb21052918373767789",
+    "variants/thesis2-zh/chapters/03-2-data.tex": "7a13b64ab31b4afed45525c95beb745945b830849cc0a5245a3eabcd9b65199d",
+    "variants/thesis2-zh/chapters/03-3-measurement.tex": "c2a1eceba547b6239f982219ed0194b2bc1fc039627569fb2f226ea2e2fb384e",
+    "variants/thesis2-zh/chapters/03-4-frontiers.tex": "0371035d07690815d49fd8bbada5c78254b54d9c76e9cc8012afd2e6be931f19",
+    "variants/thesis2-zh/chapters/03-5-ledger.tex": "f72985fe7585c7c1017a0e4c32c9f63ff828511f5b879442ec1294702ee23f6f",
+    "variants/thesis2-zh/chapters/03-6-validity.tex": "5157a7331405e1861cb2d0af94ec1dea2b3e8cad38463790627b3e44a218bd5c",
+    "variants/thesis2-zh/chapters/03-methodology.tex": "ba8cbe29dda58ac9b603cc30049e87593b8a4f461e4954af03a2bf9562853481",
+    "variants/thesis2-zh/chapters/04-1-boundaries.tex": "280afc465244ba6f704a3410dbe3b7031bf4b20d6556259ecbfbcb91e82c41fe",
+    "variants/thesis2-zh/chapters/04-2-training.tex": "9bbd54fdb5b1af5a8d915d62454d5317d2fab378ae9bb77a7483a814c337db34",
+    "variants/thesis2-zh/chapters/04-3-layout.tex": "1e3fa081d093aa505b93546146af8969da36060ebd571b322d32c8d825effcb3",
+    "variants/thesis2-zh/chapters/04-4-lifecycle.tex": "e9f7f15bfa7cb2825dc67ee889e6de4e3d2fcbb781d1456a3fa723f80a8887a9",
+    "variants/thesis2-zh/chapters/04-5-construction.tex": "b96e5825527b3795542ec27dd288d29478c17378c5d01fe5e85bb28292589105",
+    "variants/thesis2-zh/chapters/04-6-contracts.tex": "60cb954dbc5096368bb0541a3573fcc689e01bf864ce941efede64a174805ac9",
+    "variants/thesis2-zh/chapters/04-architecture.tex": "f2de7a018766e61b8af6f4fca6340d4295b0c07a88b9184bfdb48e985c5f3632",
+    "variants/thesis2-zh/chapters/05-1-query-path.tex": "d021cdde76dbc9c75e7faf4b5b94b522a30a35a9352c302f6869d90f8fc7a4c5",
+    "variants/thesis2-zh/chapters/05-2-lut.tex": "802895a236b4ce0897854908728e651c3aff5e435c7e2ef6a577896db6e214f6",
+    "variants/thesis2-zh/chapters/05-3-packed-access.tex": "e687df9391c40077e95144845f56a4156b5f6e7822160d9b1e3d6e4b728d0341",
+    "variants/thesis2-zh/chapters/05-4-global-selection.tex": "e8ecea581d71bd7a408991177c7a8b3199e4dccb2f51a57910ac484f8e3c4c28",
+    "variants/thesis2-zh/chapters/05-5-bound-scheduling.tex": "e31668665422ecd5079847bf5f25266b48ebad19c1067f988178fc0b77ce7628",
+    "variants/thesis2-zh/chapters/05-6-refinement.tex": "a301d392cdf50f34d210e21b5af47e8414c4640dec40ea2f3f7d24bb68f0caa6",
+    "variants/thesis2-zh/chapters/05-7-probe.tex": "06a3cb994f1232a751a6c4974f39c2091f5de3ad41be22d72920f25d2bef35e0",
+    "variants/thesis2-zh/chapters/05-gpu-execution.tex": "d3b027cfea1f3a7256854dbbd518e1cc462410418bfe62552a90a2a655a00fb7",
+    "variants/thesis2-zh/chapters/06-1-motivation.tex": "1dafe39aca76c0c479bf26540b821ca78c8e13b5c6dcb4c39b3376c47bb7773b",
+    "variants/thesis2-zh/chapters/06-2-agreement.tex": "a6b1e6d22d2f6fc981fd07fb204d4dc5a1611420c900ccefaebf42958657b639",
+    "variants/thesis2-zh/chapters/06-3-search.tex": "52497b7a1eedb79dd5c70191ba4ea650b387d1579a0e507c1ba5d162a6f6ccf3",
+    "variants/thesis2-zh/chapters/06-4-controls.tex": "cd006e4a7ac26aac6b4b3c081605fdfac961e101d3d777f14370501f6336140c",
+    "variants/thesis2-zh/chapters/06-5-economics.tex": "d0a41fc958356855c5c9d9e1745c40bc00c86cf4b9ab7b414cc4cfe1ce1a96bf",
+    "variants/thesis2-zh/chapters/06-6-scope.tex": "6db491e4d6fd014812041615bce78019197b15360469ca16e80237bf1834ef26",
+    "variants/thesis2-zh/chapters/06-refinement.tex": "5a0ae69be3ebcc824431540382b44f989ca31d05f080d311b69de583efdc753d",
+    "variants/thesis2-zh/chapters/07-supp-budget.tex": "7299387d1d1fce8a53be5550a4ce14b2a94f78bbed2c66bd6f00afcd68e55c6f",
+    "variants/thesis2-zh/chapters/07-supp-precision.tex": "c60f106826cd6d6f8587ddc05ff130cf8f46b8a9143b2cbc2b8dcd129e8f3792",
+    "variants/thesis2-zh/chapters/07-supp-selection.tex": "90c5e2bb968ad37c81bf04f788f39e5ab2df291492279194ba695c7e8e65f8e4",
+    "variants/thesis2-zh/chapters/07-supp-smallbatch.tex": "26a715a5c7d17ef8f0cc6fcc8ade8e8de36f904975ec5e3ae51a8415ebd2dd57",
+    "variants/thesis2-zh/chapters/08-1-insights.tex": "fe876cb277a4b8939eaf6fe5981ee8256a98f9002daaff587c348115d25fe111",
+    "variants/thesis2-zh/chapters/08-2-negative.tex": "32b75ee351be40eb182c36948479b1aefd4a39602eefe91738cd732251e620b2",
+    "variants/thesis2-zh/chapters/08-4-directions.tex": "cf34fdcfc4323e2eca3eafbd37ac7bb966b57945197028b5bd5f17404315a2c9",
+    "variants/thesis2-zh/chapters/08-5-deployment.tex": "a569441194382949cdc5bf7d816e6c869af229077fc286a2be1b110a7c4c9526",
+    "variants/thesis2-zh/chapters/08-discussion.tex": "e189f56d410cffc6adbc8bfa6ffd039b7e00bfcbced75f1f9a3d71b8dc313dc6",
+    "variants/thesis2-zh/frontmatter/abstract.tex": "273b034b2c2e53410d50fca37fc821536cb62c2012d550be3306c36523f7eca8",
+    "variants/thesis2-zh/frontmatter/acknowledgements.tex": "02d827a8e9cba0f0cb7b6aa18d4cf0e2b99ff6e2ae3e0065cd4ed7ed397416a7",
+    "variants/thesis2-zh/frontmatter/notation.tex": "3859c931789585fc5f1bb74cb198561b6b0d7167cf02d4d185a783a4b09881f4",
+    "variants/thesis2-zh/frontmatter/research-assistance.tex": "05c7ca51478d0ab0bc586ca4d0dff25505ce2cf5ad2694ab07a28afa9e7f940e",
+    "variants/thesis2-zh/frontmatter/title.tex": "00217050aa7c8ef05bf0c2a7f29782c8d3e8b80ff5039f545940c6a7218c14c8",
+    "variants/thesis2-zh/main.tex": "f5e74de95fa1f456036e6141787c566009d29f5f7dfcb73110a2cfb77deba320",
+    "variants/thesis2-zh/preamble.tex": "37eded810e6f89a3be4f7a2c01ca95b183094546d20cdcd4792f11ff6547c795",
+    "variants/thesis2-zh/tables/ch3/datasets.tex": "6aa6eae048a6eaccfedbbdb8256ace12f50fe99c564de8379ae7742f256dab48",
+    "variants/thesis2-zh/tables/ch7/budget_cost.tex": "a46c8fa657dead9f8b591aac8407d368ef98ad681fe6cba5ce27351aa4bc21fa",
+    "variants/thesis2-zh/tables/ch7/budget_full.tex": "1e4a1d01d265cbbe6698408ded12562986dcd2e540c9589ce2b8b0f6dcf92b42",
+    "variants/thesis2-zh/tables/ch7/budget_quality.tex": "6311ce9f0876cda650b822e16953f566648407ca71d89827bf2119be8fc1bf24",
+    "variants/thesis2-zh/tables/ch7/build_memory.tex": "31e85b24995889006f96f584cf811a9ea78c796e147ab23f8a29ef18e0498ca4",
+    "variants/thesis2-zh/tables/ch7/e1_memory.tex": "745e0cb6afe36a058ae9d2fe01f97de7e8d78573c91e1a8da867a7c772172e10",
+    "variants/thesis2-zh/tables/ch7/matched97.tex": "93c41674f6b7ccd71ddd3868b26bbdb48e6dc2ee8f528898cb2a7f86f64d99de",
+    "variants/thesis2-zh/tables/ch7/probe.tex": "806b9f6936267f85fdfba09e154e89a583bdda10b3c43f6a2afc6674ad4e5e72",
+    "variants/thesis2-zh/tables/ch7/refinement.tex": "e97ba0bf691c61f67ee3ee1381135723912c37f4933c7b6e0c4384bbe7bac392",
+    "variants/thesis2-zh/tables/ch7/scheduling.tex": "bb0b1f12b6d6cb084654ce6255b8c5c0f07211b0844e47217ac452813ebedd14",
+    "variants/thesis2-zh/tables/full-review/precision-anchors.tex": "029370b9f12f0bdc7c1742d733ac69f458481a1f3fa899f30631edf5409e73ea",
+    "variants/thesis2-zh/tables/supplement/precision.tex": "f2c9381f8672c0fb1f06e52ee2a5410ce7db1d952cae17d10a7bc5cbe2114bc0",
+    "variants/thesis2-zh/tables/supplement/representation.tex": "f6429bac128b6143ef3c60e24d7879f354a9e2f6f4e4686de2aecd44947a8805",
+    "variants/thesis2-zh/tables/supplement/stream.tex": "db1a750a3739a585aaae9cc1d1ec0d792802971db36cc94718f3928a2ade595d",
+    "variants/thesis2-zh/tables/t4-t5/smallbatch.tex": "422d32f54bdd6de256e182443d5ad9a6defbe2fe983e0e0d9cd837b15c92a87f",
+    "variants/thesis2-zh/tables/t4-t5/strict-selection.tex": "f04252eb7bafc381031b54dbeb5a12bd316ccdaa238aa1ca245bd1cdf1881884"
+  },
+  "historical_cpu": {
+    "cpu_log": "paper_adc2026/data/cpu6.log",
+    "gpu_version": "v57",
+    "recall_bucket": 0.001,
+    "interpolation": "log-linear; no extrapolation; ratios at in-range GPU frontier vertices",
+    "cpu_probe_floor": 128,
+    "input_sha256": {
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/cpu6.log": "efd9dee37005454c3d08badc9dd75745cb6b83f87463b392dc1a4372865204a8",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/cpu5.log": "38b19b293af9c70be421e36be30091d94355a66ee0907467edbed845102934b4",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/cpu5_remeasured.log": "3eeb79c47dbc55f0095b915b2dcbe2f0e70e1a76ffddf05233e73a8f6e616db4",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/cpu_four.log": "4162241e518565bab4c9b7008d00c4a0e691a58ac0b2ebb7916d9de3c00174d1",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/cpu_provenance.md": "26208e6ce7013554a4592a8ed749478b1b9b88fe8376d89a82ad7c2313f340f2",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/paper_fronts.log": "ba0da73acfacfaddbed2d7b4ec97b829f6cd91dea032569623c5574f72c4caa6",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/data/openai3072_v57_front.log": "821ca4d78e36687c8072518a7d04e173aae68ccdbf908dc45d87216a910dac52",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/figures/cpu_gpu_envelope.py": "498fd3443675f2aa9f059017c4c157f7de4405daacbde881bee91745155f832d",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/figures/fig_cpu.py": "62d76c9ca942bdb314b8f8d2352c182513d4865fa1f3b656ebe82be86dec186b",
+      "/Users/apple/github/JHQ_GPU/paper_adc2026/ADC/Experiment_ADC.tex": "69c300671bc2229c3052e0f959228be884c8789bd8a533524f9f40bb8ee765ae",
+      "/Users/apple/github/JHQ_GPU/results/cpu_baseline/README.md": "8fcd9e1815661a50ff91e1c505d69395102e41f3645ef6791d8a847f82e41c5e"
+    },
+    "results": {
+      "vogue-768": {
+        "cpu_threads": [
+          16,
+          32
+        ],
+        "cpu_lists": 4096,
+        "cpu_front": [
+          [
+            0.9513,
+            4385.8,
+            "a=8 np=128 t16"
+          ],
+          [
+            0.9515,
+            4181.2,
+            "a=8 np=128 t32"
+          ],
+          [
+            0.9623,
+            4077.7,
+            "a=32 np=128 t32"
+          ],
+          [
+            0.9632,
+            3489.8,
+            "a=100 np=128 t32"
+          ],
+          [
+            0.9686,
+            2579.2,
+            "a=8 np=256 t32"
+          ],
+          [
+            0.981,
+            2510.2,
+            "a=32 np=256 t32"
+          ],
+          [
+            0.9821,
+            2488.6,
+            "a=100 np=256 t32"
+          ],
+          [
+            0.9851,
+            1666.5,
+            "a=16 np=512 t32"
+          ],
+          [
+            0.9874,
+            1645.4,
+            "a=32 np=512 t32"
+          ],
+          [
+            0.9886,
+            1640.4,
+            "a=100 np=512 t32"
+          ],
+          [
+            0.9899,
+            1027.4,
+            "a=32 np=1024 t32"
+          ],
+          [
+            0.9911,
+            1003.2,
+            "a=100 np=1024 t32"
+          ]
+        ],
+        "gpu_front": [
+          [
+            0.6596,
+            658128,
+            "RULE"
+          ],
+          [
+            0.8609,
+            373439,
+            "RULE"
+          ],
+          [
+            0.9645,
+            169748,
+            "RULE"
+          ],
+          [
+            0.9828,
+            121215,
+            "RULE"
+          ],
+          [
+            0.9905,
+            86583,
+            "RULE"
+          ],
+          [
+            0.9935,
+            63837,
+            "RULE"
+          ]
+        ],
+        "gpu_arm": "RULE",
+        "ratios": [
+          {
+            "recall": 0.9645,
+            "gpu_qps": 169748,
+            "cpu_qps": 3244.7970852047665,
+            "ratio": 52.31390300921941
+          },
+          {
+            "recall": 0.9828,
+            "gpu_qps": 121215,
+            "cpu_qps": 2266.314348515227,
+            "ratio": 53.48551937616856
+          },
+          {
+            "recall": 0.9905,
+            "gpu_qps": 86583,
+            "cpu_qps": 1015.2278955978297,
+            "ratio": 85.28429958971381
+          }
+        ],
+        "rounded_range": [
+          52,
+          85
+        ]
+      },
+      "arxiv-768": {
+        "cpu_threads": [
+          32
+        ],
+        "cpu_lists": 8192,
+        "cpu_front": [
+          [
+            0.9567,
+            2948.0,
+            "a=8 np=128 t32"
+          ],
+          [
+            0.9714,
+            2494.5,
+            "a=16 np=128 t32"
+          ],
+          [
+            0.9738,
+            2419.5,
+            "a=32 np=128 t32"
+          ],
+          [
+            0.9828,
+            1655.1,
+            "a=32 np=256 t32"
+          ],
+          [
+            0.985,
+            963.0,
+            "a=16 np=512 t32"
+          ],
+          [
+            0.988,
+            955.5,
+            "a=32 np=512 t32"
+          ],
+          [
+            0.9886,
+            923.1,
+            "a=100 np=512 t32"
+          ],
+          [
+            0.9899,
+            539.0,
+            "a=32 np=1024 t32"
+          ]
+        ],
+        "gpu_front": [
+          [
+            0.7885,
+            518890,
+            "RULE"
+          ],
+          [
+            0.9245,
+            275471,
+            "RULE"
+          ],
+          [
+            0.9763,
+            122383,
+            "RULE"
+          ],
+          [
+            0.9852,
+            94494,
+            "RULE"
+          ],
+          [
+            0.9881,
+            63463,
+            "RULE"
+          ],
+          [
+            0.9898,
+            42392,
+            "RULE"
+          ]
+        ],
+        "gpu_arm": "RULE",
+        "ratios": [
+          {
+            "recall": 0.9763,
+            "gpu_qps": 122383,
+            "cpu_qps": 2177.3070830971255,
+            "ratio": 56.20842413552224
+          },
+          {
+            "recall": 0.9852,
+            "gpu_qps": 94494,
+            "cpu_qps": 962.498173589004,
+            "ratio": 98.1757707109685
+          },
+          {
+            "recall": 0.9881,
+            "gpu_qps": 63463,
+            "cpu_qps": 950.0220848798222,
+            "ratio": 66.80160494166626
+          },
+          {
+            "recall": 0.9898,
+            "gpu_qps": 42392,
+            "cpu_qps": 561.7752610849956,
+            "ratio": 75.46078109264795
+          }
+        ],
+        "rounded_range": [
+          56,
+          98
+        ]
+      },
+      "openai3-1536": {
+        "cpu_threads": [
+          32
+        ],
+        "cpu_lists": 4096,
+        "cpu_front": [
+          [
+            0.925,
+            2438.4,
+            "a=2 np=128 t32"
+          ],
+          [
+            0.9407,
+            2401.6,
+            "a=4 np=128 t32"
+          ],
+          [
+            0.9421,
+            2383.0,
+            "a=32 np=128 t32"
+          ],
+          [
+            0.9654,
+            1567.1,
+            "a=8 np=256 t32"
+          ],
+          [
+            0.9655,
+            1563.9,
+            "a=16 np=256 t32"
+          ],
+          [
+            0.9789,
+            951.2,
+            "a=4 np=512 t32"
+          ],
+          [
+            0.9808,
+            902.7,
+            "a=8 np=512 t32"
+          ],
+          [
+            0.9878,
+            502.7,
+            "a=4 np=1024 t32"
+          ],
+          [
+            0.9898,
+            499.1,
+            "a=16 np=1024 t32"
+          ]
+        ],
+        "gpu_front": [
+          [
+            0.7293,
+            482186,
+            "RULE"
+          ],
+          [
+            0.846,
+            417537,
+            "RULE"
+          ],
+          [
+            0.9298,
+            262471,
+            "RULE"
+          ],
+          [
+            0.9527,
+            179927,
+            "RULE"
+          ],
+          [
+            0.9721,
+            103813,
+            "RULE"
+          ],
+          [
+            0.9836,
+            63611,
+            "RULE"
+          ]
+        ],
+        "gpu_arm": "RULE",
+        "ratios": [
+          {
+            "recall": 0.9298,
+            "gpu_qps": 262471,
+            "cpu_qps": 2427.089594463625,
+            "ratio": 108.14227896601601
+          },
+          {
+            "recall": 0.9527,
+            "gpu_qps": 179927,
+            "cpu_qps": 1969.3065478145804,
+            "ratio": 91.36566381687621
+          },
+          {
+            "recall": 0.9721,
+            "gpu_qps": 103813,
+            "cpu_qps": 1224.1986093191606,
+            "ratio": 84.800782495363
+          },
+          {
+            "recall": 0.9836,
+            "gpu_qps": 63611,
+            "cpu_qps": 714.2489647317974,
+            "ratio": 89.05998208045862
+          }
+        ],
+        "rounded_range": [
+          85,
+          108
+        ]
+      },
+      "openai3-3072": {
+        "cpu_threads": [
+          16,
+          32
+        ],
+        "cpu_lists": 4096,
+        "cpu_front": [
+          [
+            0.9376,
+            1284.1,
+            "a=4 np=128 t32"
+          ],
+          [
+            0.9573,
+            804.7,
+            "a=2 np=256 t32"
+          ],
+          [
+            0.9628,
+            769.4,
+            "a=4 np=256 t32"
+          ],
+          [
+            0.9737,
+            441.2,
+            "a=2 np=512 t32"
+          ],
+          [
+            0.9802,
+            428.4,
+            "a=4 np=512 t32"
+          ],
+          [
+            0.9806,
+            412.9,
+            "a=8 np=512 t32"
+          ],
+          [
+            0.99,
+            219.9,
+            "a=4 np=1024 t32"
+          ]
+        ],
+        "gpu_front": [
+          [
+            0.7464,
+            227274,
+            "RULE"
+          ],
+          [
+            0.8648,
+            170248,
+            "RULE"
+          ],
+          [
+            0.9414,
+            87683,
+            "RULE"
+          ],
+          [
+            0.9647,
+            53581,
+            "RULE"
+          ],
+          [
+            0.9813,
+            30082,
+            "RULE"
+          ],
+          [
+            0.9926,
+            15759,
+            "RULE"
+          ]
+        ],
+        "gpu_arm": "RULE",
+        "ratios": [
+          {
+            "recall": 0.9414,
+            "gpu_qps": 87683,
+            "cpu_qps": 1173.4058979522097,
+            "ratio": 74.72520817648996
+          },
+          {
+            "recall": 0.9647,
+            "gpu_qps": 53581,
+            "cpu_qps": 698.3175302085624,
+            "ratio": 76.72870532692667
+          },
+          {
+            "recall": 0.9813,
+            "gpu_qps": 30082,
+            "cpu_qps": 393.97526038725306,
+            "ratio": 76.35504820894407
+          }
+        ],
+        "rounded_range": [
+          75,
+          77
+        ]
+      }
+    }
+  },
+  "evidence": {
+    "capacity": "tables/ch7/build_memory.tex; Chapter 7.7",
+    "selection": "Chapter 7.3, 7.6 and 7.4.1",
+    "calibration": "Chapter 7.5 including direct stream-cost measurements",
+    "competition": "tables/ch7/matched97.tex; tables/full-review/precision-anchors.tex; Chapter 7 small-batch comparison"
+  },
+  "decisions": [
+    "Accept historical 52–108x as separately trained, interpolated historical comparisons, not current v69 hardware speedup.",
+    "Correct reviewer provenance: final CPU figure uses cpu6.log; 16/32-thread envelope only on Vogue and OpenAI-3072, 32 threads alone on arXiv and OpenAI-1536.",
+    "Identify CPU reference sorting (T4) separately from running the authors CPU search implementation.",
+    "Do not claim multi-threading makes the overall comparison conservative, because index, timing and implementation confounds remain.",
+    "Answer the four RQs before evidence, align their headings with Chapter 1, replace FULL/cells/crossings and numeric slashes with prose.",
+    "Keep representative component results rather than repeat all ablation ranges or imply speedups multiply.",
+    "Do not replace measured 1.015x by an assertion that batch-1000 performance is unchanged.",
+    "Qualify the FP32 checks by same trained-model reuse and CAGRA comparison; do not promise all rankings are invariant.",
+    "Use tested full-pool calibration results, not a general guarantee that enough queries ensure recall.",
+    "Keep two feasible extensions with evaluation criteria rather than add unverified centring novelty."
+  ],
+  "validation": {
+    "english_verifier_passed": true,
+    "chinese_verifier_passed": true,
+    "english_pages": 68,
+    "chinese_pages": 66,
+    "english_pdf_sha256": "0955c13811123724935315b612054b219cbbe118281a1e4ff80abdc4c09476fa",
+    "chinese_pdf_sha256": "752f750162f038b9eabf00c470b8a40ea01a9d5c7c0b30e51a1d7fe14822bb56",
+    "english_visual_review_pages": [
+      47,
+      64,
+      65,
+      66
+    ],
+    "chinese_visual_review_pages": [
+      45,
+      62,
+      63,
+      64
+    ],
+    "conclusion_fits_one_page": true,
+    "figures": 25,
+    "tables": 30,
+    "proofs": 6,
+    "no_compiler_issues": true,
+    "github_pushed": false
+  }
+}

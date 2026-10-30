@@ -1,16 +1,18 @@
-\begin{tikzpicture}[font=\footnotesize,
+\begin{tikzpicture}[font=\small\linespread{1}\selectfont,
  stage/.style={draw=ThesisNavy!55,fill=ThesisNavy!4,rounded corners=2pt,
- text width=2.5cm,align=center,minimum height=11mm,inner sep=3pt},
+ text width=3.0cm,align=center,minimum height=12mm,inner sep=3pt},
  arrow/.style={-{Latex[length=2mm]},draw=ThesisNavy!70}]
-\node[stage] (a) at (0,0) {Read + rotate};
-\node[stage] (b) at (3.15,0) {Assign + encode\\Input-order arrays};
-\node[stage] (c) at (6.3,0) {Gather\\Both copies live};
-\node[stage] (d) at (9.45,0) {Repack\\Primary words};
-\node[stage] (e) at (0,-1.8) {Assign raw rows\\+ sort};
-\node[stage] (f) at (3.15,-1.8) {Reread + rotate\\+ encode};
-\node[stage] (g) at (6.3,-1.8) {Scatter directly\\List-order arrays};
-\node[stage] (h) at (9.45,-1.8) {Repack\\Primary words};
+\node[stage] (a) at (0,0) {Read and rotate};
+\node[stage] (b) at (3.85,0) {Assign and encode\\Input order};
+\node[stage,fill=ThesisNavy!12] (c) at (7.70,0) {Gather\\List-order copy};
+\node[stage] (d) at (11.55,0) {Repack\\Primary codes};
+\node[stage] (e) at (0,-2.3) {Assign raw rows\\Sort positions};
+\node[stage] (f) at (3.85,-2.3) {Reread and rotate\\Encode};
+\node[stage] (g) at (7.70,-2.3) {Write directly\\Into list order};
+\node[stage,fill=ThesisNavy!12] (h) at (11.55,-2.3) {Repack\\Primary codes};
 \foreach \x/\y in {a/b,b/c,c/d,e/f,f/g,g/h}\draw[arrow] (\x)--(\y);
-\node[anchor=south west,font=\footnotesize\bfseries] at (-1.3,.7) {One pass};
-\node[anchor=south west,font=\footnotesize\bfseries] at (-1.3,-1.1) {Two passes};
+\node[anchor=south west,font=\small\bfseries] at (-1.5,.85) {One pass};
+\node[anchor=south west,font=\small\bfseries] at (-1.5,-1.45) {Two passes};
+\node[align=center] at (7.70,-1.0) {Stella row arrays: 40.59 GiB};
+\node[align=center] at (11.55,-3.3) {Stella row arrays: 21.32 GiB};
 \end{tikzpicture}

@@ -1,13 +1,13 @@
-局部 top-$c$ 可能为 $c$ 个优胜者输出 $\gscan c$ 个中间条目。共享阈值减少维护工作，调度器随后选择扫描并行度。二者均在固定精排预算下工作；预算选择是 \Cref{ch:refinement} 的独立问题。
+独立分组最多维护 $\gscan c$ 个条目，却只需找出 $c$ 个优胜者。共享安全上界能减少这项维护。该界是包含并列位置的完整键：一组持有 $c$ 个不同且已完整评分的候选后，其最差键便是全局截断键的上界；其他组可以拒绝排在该界之后的键。调度器另行选择组数。两个机制均使用固定精排预算，预算由 \Cref{ch:refinement} 的方法选择。
 
 \subsection{具有显式见证的完整键上界}
 
-当 $|U|\geq c$ 时，令 $K_{(c)}$ 为全局第 $c$ 个键。若某组持有 $c$ 个不同、已完整评分的候选，其见证最大键 $\tau_j$ 满足 $K_{(c)}\preceq\tau_j$。全局空间中已有 $c$ 个候选不晚于 $\tau_j$。共享阈值初始化为顶部哨兵，并通过下式更新：
+当 $|U|\geq c$ 时，令 $K_{(c)}$ 为全局第 $c$ 个键。一组已完整评分的 $c$ 个候选称为见证，因为它们的存在足以支持一个上界。若最大键为 $\tau_j$，则 $K_{(c)}\preceq\tau_j$，因为已有至少 $c$ 个候选排在它之前或与之相同。共享界初始化为顶部哨兵，并通过下式收紧：
 \begin{equation}
  \tau\leftarrow\min_{\prec}(\tau,\tau_j).
  \label{eq:5-shared-update}
 \end{equation}
-有效候选少于 $c$ 时不发布阈值。若整个空间少于 $c$，则没有组能发布该阈值，所有有效候选仍可准入。
+少于 $c$ 个有效候选的组不发布界。若整个候选空间少于 $c$，所有有效候选仍可进入。下一命题保证，即使各组读到较早的更新，按完整发布键过滤也不会丢失全局优胜者。
 
 \begin{resultblock}
 \begin{proposition}[见证阈值下的安全拒绝]
@@ -29,53 +29,48 @@
 陈旧读取只会放宽阈值。先前安全拒绝后的发布仍然有效：保留的任意 $c$ 个不同候选仍提供 $c$ 个见证，无论它们是否是该组最佳的 $c$ 个。
 \end{proof}
 \end{resultblock}
-
-共享过滤保持全局覆盖（\cref{prop:5-local-coverage}）。准入条件为
+结合 \cref{prop:5-local-coverage} 的覆盖条件，可以同时应用局部与共享过滤：
 \begin{equation}
  K_q(x)\prec\lambda_j
  \quad\text{and}\quad
  K_q(x)\preceq\tau_{\rm seen},
  \label{eq:5-admission}
 \end{equation}
-其中 $\lambda_j$ 为局部压缩阈值，$\tau_{\rm seen}$ 为最后读取的共享键。共享比较保留等号。
+其中 $\lambda_j$ 是局部压缩阈值，$\tau_{\rm seen}$ 是最后读取的共享键。局部比较严格小于，共享比较保留等号，因而也保留提供该界的候选。
 
 \subsection{发布、过滤与实现限制}
 
-对非负 FP32 分数、规范化正零和有效非负位置，
+GPU 将完整键编码为一个 64 位整数。对非负 FP32 分数、规范化正零及有效非负位置，
 \begin{equation}
  \kappa(D,p)=2^{32}\operatorname{uintbits}_{32}(D)+p.
  \label{eq:5-packed-key}
 \end{equation}
-在此非 NaN 定义域上，浮点 bits 单调性给出
+在此非 NaN 定义域中，整数比较与先比较分数、再比较位置的顺序相同：
 \[
  (D_1,p_1)\prec(D_2,p_2)\iff\kappa(D_1,p_1)<\kappa(D_2,p_2).
 \]
-有限键排在无穷与全一哨兵之前。无效位置不能发布。
+有限键排在无穷和全一哨兵之前，无效位置不能发布界。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
-\input{figures/ch5/shared-bound}
-\captionof{figure}[共享完整键过滤]{一个扫描组中的共享完整键过滤。候选在准入前已计算完整主码分数。有效的 $c$ 候选见证集可收紧逐查询阈值；陈旧但完整的阈值只会减弱过滤。最终前缀裁剪减少有效归并输入，但分配的工作区容量不变。完整键读取的前提限定见正文。}
+\input{variants/thesis2/figures/shared-bound}
+\captionof{figure}[共享键过滤与 chunk 循环]{共享键过滤与 chunk 循环.}
 \label{fig:5-shared-bound}
 \end{minipage}\par\medskip
+每个扫描 chunk 由指定线程读取一次共享界。block 先计算完整主码分数，再准入符合条件的键，需要空间时压缩。压缩后持有 $c$ 个有效键，便可用原子最小值发布最差保留键。最后一个 chunk 后，再次压缩并按最新共享界裁剪，得到送往归并的前缀。较早读取可能多保留一些候选，精确归并会移除它们。重置、扫描和归并在同一 GPU stream 中依次执行，各组不互相等待。
 
-每个 chunk 由一个线程轮询。压缩后，$c$ 个有效键允许执行 64 位 \texttt{atomicMin}。最终发布／搜索裁剪前缀，精确归并处理陈旧额外项。流内重置先于扫描，扫描后归并；组之间从不等待。
-
-完整键前提依赖对齐八字节强 PTX \path{ld.volatile.global.u64}/\path{atom.global.min.u64} \cite{ptx_isa}，超出 C++ \texttt{volatile} 自身保证 \cite{cuda_programming_guide}。CUDA 13.0.88 的 \texttt{ptxas}、\texttt{sm\_120} 提供佐证；没有捕获驱动 JIT 后的 SASS。
-
-过滤发生在完整主码评分后（\cref{fig:5-shared-bound}）：维护节省与轮询／原子操作开销相互竞争（\cref{sec:7-4}）。
+证明要求对齐的完整键读取。生成的 64 位读取及原子更新支持 PTX 内存模型下的这一前提 \cite{ptx_isa}，C++ 的 \texttt{volatile} 本身不提供该保证 \cite{cuda_programming_guide}。\footnote{检查使用 CUDA 13.0.88 的 \texttt{ptxas}、目标 \texttt{sm\_120}，涉及 \path{ld.volatile.global.u64} 与 \path{atom.global.min.u64}；没有捕获驱动运行时 JIT 生成的原生指令。}如 \cref{fig:5-shared-bound} 所示，过滤发生在完整主码评分之后。它节省缓冲和归并维护，却增加共享界读取与原子更新；\cref{sec:7-4} 测量这一权衡。
 
 \subsection{不改变预算地选择并行度}
 
-$b\gscan$ 个 block 增加并行度，也增加暂存／选择／归并成本。更小配额需要证明或回退。试验中优胜者集中分布，促成了见证阈值设计（\cref{sec:7-4}）。
-
-定义
+对 $b$ 个查询使用 $b\gscan$ 个 block 能提供更多并行工作，但每组也需要查表、缓冲和归并输入。调度器需要平衡并行度与重复工作。定义 block 大小、设备线程容量及候选数量的变化程度：
 \[
  T_{\rm blk}=\text{scan threads/block},\quad
  H=n_{\rm SM}T_{\rm resident/SM},\quad
  v=\frac{\operatorname{sd}(n_c)}{\operatorname{mean}(n_c)}.
-\] 对应规则为
+\]
+填充规则在 batch 只使用部分设备容量时增加组数；另一规则在查询工作量不均时增加组数：
 \begin{align}
  g_{\rm fill}
  &=\max\!\left(\{1\}\cup
@@ -87,29 +82,20 @@ $b\gscan$ 个 block 增加并行度，也增加暂存／选择／归并成本。
  g_{\rm chosen}=\max(g_{\rm fill},g_{\rm skew}).
  \label{eq:5-skew-rule}
 \end{align}
-偏斜规则可覆盖填充上限。评测 harness 使用 512 个数据库向量作为伪查询，在固定路由配置下校准 $v$，不使用 GT 标签。这不同于第 6 章的抽样输出一致性校准。校准后，调度仅用 batch 大小和存储统计量，无需每次搜索额外主机回读。常数由四个试验配置拟合，再在更多配置上评估。一次性伪查询校准不计入报告的稳态搜索时间。启动耗时观测范围独立于精排预算校准（\cref{sec:a-supplement}），为
-\[
- T_{\rm gather}\in[0.81,7.04]\,\mathrm{ms},\quad
- T_{\rm first}\in[6.00,27.77]\,\mathrm{ms},\quad
- \operatorname{median}(T_{\rm repeat})\in[2.72,18.13]\,\mathrm{ms}.
-\]
+偏斜规则可覆盖填充上限。评测使用 512 个数据库向量作为伪查询，在固定路由下估计 $v$，无需 GT；这与第 6 章的输出一致性校准不同。后续搜索直接使用已存统计量与 batch 大小，不额外回读主机。常数由四个试验配置拟合，再用于更多配置的测试。一次性调度校准不计入稳态计时，记录的启动时间见 \cref{sec:a-supplement}。
 
-选择一组时，在索引／probes／预算固定下分派 $\gscan=0$。它仅按距离处理并列；要获得相同保留集合，需检查共同排序。集成收益／regret 见 \cref{sec:7-6}。
+选择一组时，在相同索引、probes 和预算下分派 $\gscan=0$。其截断并列行为见 \cref{sec:5-4}；集成收益与调度损失在 \cref{sec:7-6} 评估。
 
 \subsection{观测到的执行路径}
 
-对有 170 个 SM、每 SM 48 个 warp 的 RTX 5090 \cite{blackwell_tuning}，
+batch 大小解释了哪条路径支撑主要跨系统结果。对 1,000 个查询、512 个扫描线程，两组便已超过填充目标；RTX 5090 有 170 个 SM，每 SM 支持 48 个 warp \cite{blackwell_tuning}：
 \[
  1000\cdot2\cdot512=1{,}024{,}000
  >0.6\cdot170\cdot48\cdot32=156{,}672.
 \]
-因此填充规则选择一组；偏斜可覆盖为四组。
+因此填充规则选择一组，偏斜规则仍可选择四组。主比较中，38 条路由记录有 9 条超过 $v=0.3$，全部是 Vogue（$0.338$--$0.622$）。Vogue 的 27 个配置使用四组，全部 105 个 arXiv／OpenAI 配置使用 $\gscan=0$。后者获益于 LUT、打包、协作精排及 probe 选择，而非分组归并。Vogue 对比中，每 1,000 个查询有 3--15 个截断并列差异，没有非并列差异，最终输出相同；128 probes 下的并列范围为 7--11。
 
-E1 中，9/38 条记录超过 $v=0.3$，全部为 Vogue（$0.338$--$0.622$）。Vogue 的 27 个单元使用四组，105 个 arXiv／OpenAI 单元使用 $\gscan=0$。后者的收益来自 LUT、打包、lanes 和 probe 选择，不涉及分组保留／共享阈值。
-
-Vogue 每 1,000 个查询有 3--15 个纯并列差异，非并列差异为零，最终输出完全相同。128 probes 下，并列范围为 7--11。
-
-观测到的单元数为
+预算研究使用 128 条查询的校准样本与较大的留出 batch，路径计数为
 \[
  \begin{array}{c|rrr}
  &G=0&G=2&G=4\\\hline
@@ -117,6 +103,4 @@ Vogue 每 1,000 个查询有 3--15 个纯并列差异，非并列差异为零，
  S=128&2&8&2
  \end{array}
 \]
-十二个单元中有八个换路径。收益取决于负载大小／偏斜，不存在固定 batch-256 分界。
-
-启发式未计入驻留、压缩和归并成本；伪查询统计也可能过时。最大实测 regret 为 batch 256 时的 1.217。预算保持固定；\cref{sec:5-6} 处理精排。
+十二个配置有八个换路径。收益同时取决于 batch 大小与工作量偏斜，并无固定 batch-256 边界。启发式未建模驻留、压缩和归并成本，伪查询统计也可能过时。其遗憾值是已测最佳固定组数的加速比除以调度器加速比，最差观测为 batch 256 时的 1.217。上述测试中精排预算固定，精排机制见 \cref{sec:5-6}。

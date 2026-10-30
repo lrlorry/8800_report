@@ -1,0 +1,66 @@
+\Cref{tab:3-data} lists the six datasets. The main cross-system comparison
+uses the first four; budget, lookup-table and scale tests cover all six.
+Vogue contains fashion-image embeddings and arXiv contains abstract
+embeddings. The two OpenAI datasets are different-dimensional Qdrant
+DBpedia exports \cite{data_vogue,data_arxiv,data_openai1536,data_openai3072};
+they share a corpus source. Alignment checks are reported in
+\cref{sec:7-precision,sec:7-2}. BGE uses Italian Wikipedia, and Stella uses
+the TREC24 BioGen corpus \cite{data_bge,data_stella}. The sizes below
+describe the prepared exports. JHQ uses $M=d/8$, $B=B_r=8$, eight coarse-training iterations and
+100,000 database rows for residual training. Cached runs reuse models
+but re-encode the database; cold runs refit them.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Dataset and training configuration]{Data and JHQ training configuration. $n_q$ is the actual query count;
+$n_t=39n_{\rm list}$ is the requested coarse-training sample size. The main comparison uses
+the first four rows. All rows use squared L2 and $k=10$.}
+\label{tab:3-data}
+\small\setlength{\tabcolsep}{4pt}
+\input{tables/ch3/datasets}
+\end{minipage}\par\medskip
+
+OpenAI/BGE/Stella preparation removes vectors containing NaN or infinite
+values (non-finite rows) and normalises nonzero vectors:
+\[
+ x\leftarrow x/\|x\|\quad(\|x\|>10^{-12}).
+\]
+Preparation scripts sample query rows without replacement using seed 42
+and remove those rows from the base set. Stella retains 999 such corpus
+queries, rather than the upstream 65-query set. This evaluates vector
+neighbours of held-out corpus embeddings rather than relevance-labelled
+user queries.
+
+All methods use the same exported query and GT files. Preparation code
+provides exhaustive squared-L2 GT over FP32 vectors through Faiss FlatL2
+or a memory-bounded tiled scan. For query set $\mathcal Q$, returned ID
+sets $\mathcal R_k(q)$ and stored GT prefixes $\mathcal T_k(q)$, recall is
+\begin{equation}
+\Recall@k=\frac{1}{|\mathcal Q|k}
+\sum_{q\in\mathcal Q}|\mathcal R_k(q)\cap\mathcal T_k(q)|.
+\label{eq:3-recall}
+\end{equation}
+GT files contain 100 neighbours for Vogue/arXiv and 20 for the others;
+only the first ten count. Equal-distance alternatives outside that prefix
+receive no automatic credit, and duplicate returned IDs add no hits.
+
+Chapter 6 chooses a refinement budget from calibration queries without GT.
+Even-indexed queries form the calibration pool and odd-indexed queries
+are held out for testing, with zero-based indices:
+\[
+ \begin{aligned}
+ \mathcal Q_{\rm cal}&=\{q_i:i\bmod2=0\},&
+ \mathcal Q_{\rm hold}&=\{q_i:i\bmod2=1\},\\
+ (|\mathcal Q_{\rm cal}|,|\mathcal Q_{\rm hold}|)
+ &=\begin{cases}(500,499),&\text{Stella},\\(500,500),&\text{otherwise}.\end{cases}
+ \end{aligned}
+ \]
+To examine how sampling changes the chosen budget, 64 random subsets
+are drawn at each sample size $S\in\{32,64,128\}$ using seed 12345;
+full-pool calibration uses all 500 calibration queries. Budget
+selection compares returned IDs. GT is used afterwards to measure recall
+and to construct a separate label-based budget comparison
+(\cref{sec:6-2,sec:a-budget-contract}). Since the subsets reuse the same
+query pool, these trials describe variation within that pool; Chapter 6
+examines the assumptions needed to extend the result to future queries.
+

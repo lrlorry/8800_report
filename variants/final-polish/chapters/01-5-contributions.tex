@@ -1,0 +1,40 @@
+The contributions are a GPU index-construction pipeline, search execution
+designed around JHQ's codes, and workload-level refinement calibration.
+\Cref{tab:1-contributions} distinguishes these additions from JHQ's
+quantisation method and established GPU algorithms, which are prior work.
+
+\par\medskip\noindent\begin{minipage}{\linewidth}
+\centering\captionsetup{hypcap=false}
+\captionof{table}[Technical contributions and supporting evidence]{Technical contributions and supporting evidence.}
+\label{tab:1-contributions}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}p{.23\linewidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+ & Inherited foundation & Project contribution & Evidence \\
+\midrule
+C1 & JHQ's transform and hierarchical codes & GPU model fitting/encoding,
+batched construction and codes arranged in list order
+& Search of 17.78M vectors at 20.44\,GiB resident; fitting and encoding
+10.54--10.65\,s; sampled construction peak 22.58\,GiB \\
+C2 & JHQ code structure and existing GPU algorithms & Two-table lookup,
+efficient code reads, parallel selection with shared cutoffs and
+cooperative scoring & Two-table lookup leads in 22/24 settings;
+scheduling gives $2.727\times$ single-block throughput at batch 8;
+grouped-selection tests match CPU sorting of the same scores \\
+C3 & Candidate expansion and output comparison & An unlabelled budget
+rule, its search conditions, and quality/cost evaluation on separate queries
+& Using the whole calibration set: at most 0.0006 recall loss versus the
+best tested budget in 12/12 settings; direct reuse timing in four settings \\
+\bottomrule
+\end{tabularx}
+\end{minipage}\par\medskip
+
+\paragraph*{Individual contribution.}
+My supervisor, Dr Mengxuan Zhang, proposed the direction of bringing JHQ
+to GPUs and provided guidance through regular discussions. I carried out
+the work summarised in \cref{tab:1-contributions}, including its
+experimental design, baseline comparisons and analysis, and decided which
+approaches and conclusions to retain. AI tools provided substantial
+assistance, as detailed in the
+\hyperref[front:provenance]{research and AI assistance statement}.
+

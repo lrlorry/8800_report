@@ -1,15 +1,15 @@
-CAGRA fp32／int8、IVF-PQ 和 IVF-RaBitQ \cite{cagra,pq,ivfrabitq} 使用各自的网格（\cref{tab:3-grids}）；FP32 brute force 为穷举搜索。存储和重建精度可能不同。因此，主前沿衡量的是各自网格内达到质量目标时可实现的速度，并附单独的显存统计。
+CAGRA fp32／int8、IVF-PQ 与 IVF-RaBitQ \cite{cagra,pq,ivfrabitq} 使用不同参数网格（\cref{tab:3-grids}）；FP32 暴力搜索执行穷举。比较在各自网格内匹配召回率，显存单独报告，并未规定相同存储或调参成本。 JHQ 的初始精排倍率在 Vogue／arXiv／OpenAI-1536／OpenAI-3072 上分别为 64、100、8、4；额外测点将 JHQ 的网格向更高和更低召回率扩展，全部保留在原始记录中。
 
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \centering\captionsetup{hypcap=false}
-\captionof{table}[E1 主要调参维度]{E1 的主要调参维度。精确逐点参数与覆盖扩展保留在原始记录中。网格有限，且不同方法的网格不同。}
+\captionof{table}[主比较 主要调参维度]{主比较 的主要调参维度。逐点参数及额外测点保留在原始记录中。网格有限，且不同方法的网格不同。}
 \label{tab:3-grids}
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
 家族 & 记录的搜索维度 \\
 \midrule
-JHQ & Probes 与 $\alpha$；初始 probes 为 64/128/256，预算为工作负载预算的 $0.5/1/2$ 倍；覆盖扩展至 probe 1,024 和更大／更小预算 \\
+JHQ & Probes 与 $\alpha$；初始 probes 为 64/128/256，预算为工作负载预算的 $0.5/1/2$ 倍；额外测点使用最多 1,024 个 probes 及更大／更小预算 \\
 CAGRA fp32/int8 & 图度数 32/64；搜索宽度 1/2/4/8；中间 top-$k$ 容量 32--512 \\
 IVF-PQ & 八位子码；$d=768$ 时编码 192/384/768 bytes，更高维为 384/768/1,536；fp16/fp32 查表；probes 16--512 \\
 IVF-RaBitQ & 每维 4/8/9 位、支持的搜索模式、probes 16--1,024；额外 4,096 列表 OpenAI 索引 \\
@@ -18,21 +18,23 @@ GPU 暴力搜索 & FP32 平方 L2 穷举，共同主机边界 \\
 \end{tabularx}
 \end{minipage}\par\medskip
 
-支配关系与实测前沿定义为
+对实测点 $a,b$，以 $R$ 表示召回率、$Q$ 表示吞吐。前沿保留未被支配的点：若另一点的召回率和吞吐均不低，且至少一项更好，则该点被支配：
 \[
  a\succ b\iff R_a\geq R_b,\ Q_a\geq Q_b,\
  (R_a,Q_a)\ne(R_b,Q_b).
 \]
+对目标召回率 $r$，达标实测吞吐为
 \begin{equation}
 Q_{\rm meas}(r)=\max\{Q_i:R_i\geq r\}.
 \label{eq:3-measured-frontier}
 \end{equation}
-没有满足要求的实测点时，结果未定义。对相邻前沿点，
+没有达标测点时，该值未定义。对夹住目标的相邻前沿点，使用对数吞吐插值：
 \begin{equation}
 \log Q_{\rm int}(r)=(1-\lambda)\log Q_a+\lambda\log Q_b,
 \qquad \lambda=\frac{r-R_a}{R_b-R_a}.
 \label{eq:3-interpolated-frontier}
 \end{equation}
-在 $5\times10^{-4}$ 内，解析器吸附到测点；否则只做插值，不外推。小批量比较中满足阈值的端点仍可入选。接近持平时同时报告两个估计器；显存未做匹配。
+插值估计中，若有实测前沿点与目标召回率之差不超过 $5\times10^{-4}$，则按召回率升序使用第一个这样的点，即使它略低于目标。该容差只用于插值估计；上述达标实测吞吐仍要求召回率达到目标。否则，在目标两侧的相邻前沿点之间对吞吐取对数后插值；没有近邻点或两侧测点时，不报告插值估计。
 
-失败／无效输出被排除；仅有重复 ID 标记不会导致排除。隔离重跑替代受污染的构建；跳过的 Stella batch-1,000 运行不产生测点（\cref{sec:a-e1-protocol}）。Int8 仍纳入比较（\cref{fig:7-frontiers}）；ADC／海报图使用各自范围。
+小 batch 比较还允许使用达标的实测端点：若最低实测召回率已超过目标，就使用该点的吞吐，无需外推。当结果接近持平，或两种估计给出的快慢顺序不同时，同时报告两种估计。
+失败或输出无效的运行不进入前沿。重复调用间返回 ID 顺序变化，本身不会导致测点排除（\cref{sec:a-e1-protocol}）。CAGRA int8 仍纳入比较（\cref{fig:7-frontiers}）。

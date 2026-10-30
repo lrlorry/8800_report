@@ -1,28 +1,28 @@
-各组并行扫描，并合并按计算主码分数保留的候选 \cite{johnson_gpu}。
+小 batch 可能没有足够的查询来占满 GPU。把一个查询的候选分给多个 block 能提供更多并行工作，但这些 block 必须共同保留全局最佳候选。因此，各 block 需要完整短名单的容量，再归并各列表 \cite{johnson_gpu}。这里的精确性使用共同的分数与位置顺序；只按距离截断时，并列候选可能不同。
 
 \subsection{候选分区与确定性排序}
 
-对固定查询，按 probe 顺序串接选定倒排列表，得到 $n_c$ 个候选出现实例。假设每个访问的数据库行仅出现一次，且搜索期间索引固定。对 $\gscan\in\{1,2,4,8\}$，block $(q,j)$ 拥有区间
+对一个查询，按 probe 顺序将选定 IVF 列表串接为 $n_c$ 个候选出现实例。假设每个被访问行只出现一次，且索引保持固定。对 $\gscan\in\{1,2,4,8\}$，block $(q,j)$ 扫描
 \begin{equation}
  U_j=\left[\left\lfloor\frac{j n_c}{\gscan}\right\rfloor,
               \left\lfloor\frac{(j+1)n_c}{\gscan}\right\rfloor\right),
  \qquad j=0,\ldots,\gscan-1.
  \label{eq:5-partition}
 \end{equation}
-这里的区间表示对应候选，而非数据库 ID。设备根据路由候选数计算端点。各组大小最多相差一个候选；长列表可能跨组边界。这平衡的是候选数，平均分配列表个数未必能做到。每线程通过 probe 前缀 offsets 找到首个列表，并在扫描自身区间时推进列表游标。本阶段不读残差码。
+区间表示串接序列中的候选，而非数据库 ID。各区间大小最多相差一项，长列表可能跨越边界。这比按相同列表个数分配更能平衡候选数量。probe 前缀 offsets 定位每线程的首个列表，随后以游标推进至后续列表；本阶段只读取主码。
 
-选择键为
+为了使局部和归并选择一致，相同分数按物理位置排序：
 \begin{equation}
  K_q(x)=\bigl(\primarydist(q,x),p(x)\bigr),
  \qquad
  (a,p)\prec(b,r)\iff a<b\ \text{or}\ (a=b\ \text{and}\ p<r),
  \label{eq:5-primary-key}
 \end{equation}
-其中 $p(x)$ 是固定倒排存储中的物理行位置，在该查询候选中唯一，且独立于原子追加顺序。它不是最终结果并列时使用的数据库 ID。非 NaN 分数下，该键定义不同候选的全序。局部选择和归并均使用此顺序。分区独立性还要求各路径计算分数相同。
+位置 $p(x)$ 在固定索引中唯一，也不依赖原子追加顺序。对非 NaN 分数，这个完整键可以确定所有候选的先后。最终结果的并列则使用数据库 ID。只要各路径计算分数和排序规则相同，改变分区就不改变选中的键。
 
 \subsection{精确局部保留与全局覆盖}
 
-$\operatorname{Top}_c(V)$ 包含前 $\min(c,|V|)$ 个键，其中 $c=\max\{k,\lceil\alpha k\rceil\}$。各组最多保留 $c$，因为所有全局优胜者都可能位于同组；$c/\gscan$ 配额不安全。
+以 $\operatorname{Top}_c(V)$ 表示前 $\min(c,|V|)$ 个键，其中 $c=\max\{k,\lceil\alpha k\rceil\}$。所有全局优胜者都可能落在同一组，因而每组只给 $c/\gscan$ 配额并不安全；每组须有保留至多 $c$ 项的容量。下面的缓冲保证说明：压缩保留仍符合共享界的局部优胜者。共享界 $\beta_t$ 在 \cref{sec:5-5} 介绍；不共享时，它是排在一切有效键之后的占位键，称为哨兵。
 
 \begin{resultblock}
 \begin{lemma}[局部缓冲保留]
@@ -56,6 +56,7 @@ $\operatorname{Top}_c(V)$ 包含前 $\min(c,|V|)$ 个键，其中 $c=\max\{k,\lc
 所以精确压缩保留 $x$。过滤移除 $K>\beta_{\rm seen}$；运行最小值覆盖陈旧读取。上述步骤通过归纳保持不变量。
 \end{proof}
 \end{resultblock}
+一旦保留列表覆盖全部全局优胜者，就能从中恢复精确的 top-$c$。下一命题还允许每次归并只留下前 $c$ 项。
 
 \begin{resultblock}
 \begin{proposition}[覆盖与截断归并]
@@ -75,7 +76,6 @@ $\operatorname{Top}_c(V)$ 包含前 $\min(c,|V|)$ 个键，其中 $c=\max\{k,\lc
 归并时，两个有序列表的前 $c$ 项就是并集的 top-$c$。被丢弃候选在该并集中已有至少 $c$ 个前驱，无法进入任何更大并集的 top-$c$。对归并树归纳即可得到结论。
 \end{proof}
 \end{resultblock}
-
 \par\medskip\noindent\begin{minipage}{\linewidth}
 \captionsetup{hypcap=false}
 \centering
@@ -83,40 +83,35 @@ $\operatorname{Top}_c(V)$ 包含前 $\min(c,|V|)$ 个键，其中 $c=\max\{k,\lc
 \captionof{figure}[局部覆盖与截断成对归并]{局部覆盖与截断成对归并，示例取 $c=3$、$\gscan=4$。条目是示意的 $(\primarydist,p)$ 键，粗体为全局优胜者。短组／空组贡献有效前缀。归并按相同顺序最多保留 $c$ 项。}
 \label{fig:5-global-selection}
 \end{minipage}\par\medskip
+每个 block 在共享内存中保存容量为 $C_{\rm buf}$ 的键对缓冲，该容量为二的幂。对 $T_{\rm blk}$ 个扫描线程，预留 $C_{\rm buf}\geq c+T_{\rm blk}$ 项，容纳保留键及下一个 chunk。bitonic 压缩排序缓冲并最多保留 $c$ 个有效键。有 $c$ 个键后，最差保留键成为局部阈值 $\lambda_j$；此前阈值为哨兵。新候选只有在 $K\prec\lambda_j$ 时进入。这 $c$ 个已保留键使候选继续到达时阈值仍然有效。
 
-CUDA 实现维护一个共享内存缓冲，包含 $C_{\rm buf}$ 个键对。其中 $C_{\rm buf}$ 是二的幂；扫描 block 含 $T_{\rm blk}$ 个线程，满足 $C_{\rm buf}\geq c+T_{\rm blk}$。bitonic 压缩最多保留 $c$ 个有效键；有效键达到 $c$ 时，阈值设为最后一个键。此前，阈值是高于一切有效键的哨兵。两次压缩间的准入条件为 $K\prec\lambda_j$。阈值具有 $c$ 个见证，所以候选继续到达时，它仍是前缀第 $c$ 个键的上界。
-
-容量由下式保证：
+压缩之后，一个 chunk 每线程最多添加一个键，因此
 \[
  |B|+|\Delta V|\leq c+T_{\rm blk}\leq C_{\rm buf}.
 \]
-这满足 \cref{lem:5-buffer} 的追加前提。结合 \cref{prop:5-shared-bound,prop:5-local-coverage}，过滤／归并可保留全局优胜者。
-
-显式分数需要 $O(n_c)$ 的写入／存储。融合缓冲输出 $O(\gscan c)$ 个键对；寄存器选择是另一种方案 \cite{johnson_gpu}。
+这给出 \cref{lem:5-buffer} 的追加容量前提。结合 \cref{prop:5-shared-bound,prop:5-local-coverage}，便将缓冲实现连接到全局覆盖。写出全部主码分数需要 $O(n_c)$ 的存储和写入；扫描中直接保留候选则输出 $O(\gscan c)$ 个键对。寄存器选择也是另一种方案 \cite{johnson_gpu}。
 
 \subsection{归并实现、存储与边界情况}
 
-在 $\gscan>1$ 下，256 线程 block 对每个查询进行 $\log_2\gscan$ 轮归并。每对列表用 Merge Path 切片输出 $\min(c,a+b)$ 项 \cite{gpu_merge_path}。所有比较使用 \cref{eq:5-primary-key}，轮间以 block 屏障分隔。\Cref{fig:5-global-selection} 展示截断不变量。除分区搜索和同步工作外，归并树内部节点合计最多输出 $c(\gscan-1)$ 个键对。
+对 $\gscan>1$，一个 256 线程 block 为每查询执行 $\log_2\gscan$ 轮归并。长度为 $a,b$ 的一对列表通过 Merge Path 切片输出 $\min(c,a+b)$ 个键 \cite{gpu_merge_path}。比较遵循 \cref{eq:5-primary-key}，轮间使用 block 屏障。\Cref{fig:5-global-selection} 展示截断为何安全。除划分归并工作的搜索和同步开销外，内部节点最多输出 $c(\gscan-1)$ 个键对。
 
-两个交替键对工作区的形状为 $[b_{\rm cap},\gscan,c]$ 与 $[b_{\rm cap},\gscan/2,c]$：
+两块缓冲在各轮间交替使用，形状为 $[b_{\rm cap},\gscan,c]$ 与 $[b_{\rm cap},\gscan/2,c]$；其中 $b_{\rm cap}$ 为预留查询容量：
 \begin{equation}
  S_{\rm pairs}=8b_{\rm cap}c\left(\gscan+\frac{\gscan}{2}\right)
  \quad\text{bytes},\qquad \gscan>1.
  \label{eq:5-group-workspace}
 \end{equation}
-计数／阈值另加 $4b_{\rm cap}\gscan$，以及预分配时的 $8b_{\rm cap}$ bytes；保留候选／其他工作区另计。分配在图捕获前扩容后持续保留。归并共享内存保存长度，而非全部键。
+计数另占 $4b_{\rm cap}\gscan$ bytes，已预分配的共享界另占 $8b_{\rm cap}$ bytes，候选和其他工作区另计。这些分配在图捕获前扩容，之后持续保留以复用。归并 block 的共享内存保存列表长度，而非全部键。
 
-计数界定有效前缀：
+短组或空组只贡献有效前缀。排序与输出使用不同补位键：
 \[
  K_{\rm sort\ pad}=(+\infty,\mathrm{INT\_MAX}),\qquad
  K_{\rm output\ pad}=(+\infty,-1).
 \]
-有效位置小于 $\mathrm{INT\_MAX}$；空组计数为零。负位置被跳过／排除。$\gscan=1$ 直接写出。
+有效位置非负且小于 $\mathrm{INT\_MAX}$；负输出位置表示未使用条目。空组计数为零，$\gscan=1$ 无需归并，直接写出。
 
-单 block（$\gscan=0$）按距离精确，截断处并列可任取。有损 \texttt{K\_LOCAL=4} 需要 \texttt{JHQ\_EXACT\_TOPCK=0}，在 paper-faithful 构建中关闭。
-
-对非空 $V$，令 $h=\min(c,|V|)$，第 $h$ 个分数为 $d_h$。仅按距离压缩得到
+单 block 路径 $\gscan=0$ 最多保留 $c$ 个最小计算分数，但截断处完全并列时不固定保留哪些候选。对非空 $V$，令 $h=\min(c,|V|)$，$d_h$ 为其第 $h$ 个分数：
 \[
  \{x:d_x<d_h\}\subseteq B\subseteq\{x:d_x\leq d_h\},\qquad |B|=h.
 \]
-每个拒绝项都有 $c$ 个不大于它的见证；并列 ID 可自由选择。T4 通过 CPU 排序 GPU 生成分数，检查这一约束和分组完整键顺序（\cref{sec:7-strict-selection}）。
+因此，所有严格更小的分数都被保留，保留项也都不大于截断值；并列候选身份可以变化。评测构建关闭了可选的配额式近似选择器。\Cref{sec:7-strict-selection} 通过 CPU 排序 GPU 已计算分数，检查这一距离顺序约束及分组完整键排序。
